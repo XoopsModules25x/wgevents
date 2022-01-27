@@ -1,0 +1,16 @@
+verification email testen
+
+create plugin for extcal
+
+implementation fullcalendar
+Implementation of recurring events
+
+maintenance????
+- additionals ohne gültigen addinfo
+- delete old registration data
+
+Activate and adapt notification system
+
+
+
+
