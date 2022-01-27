@@ -168,6 +168,7 @@ Participation without agreement to this conditions is not possible.
 \define('_MA_WGEVENTS_ADDITIONALS_DESC', 'Additionals description');
 \define('_MA_WGEVENTS_ADDITIONALS_CREATE', 'Create Additionals');
 \define('_MA_WGEVENTS_ADDITIONALS_PREVIEW', 'Show preview of registration form');
+\define('_MA_WGEVENTS_ADDITIONALS_CURR', 'Number of current Additionals');
 // Caption of Additional
 \define('_MA_WGEVENTS_ADDITIONAL_ID', 'Id');
 \define('_MA_WGEVENTS_ADDITIONAL_EVID', 'Event');

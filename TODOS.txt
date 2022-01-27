@@ -1,4 +1,6 @@
-verification email testen
+sending mails:
+test verification email
+add default mail account
 
 print a ticket
 

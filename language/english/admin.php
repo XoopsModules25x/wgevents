@@ -71,7 +71,7 @@ require_once __DIR__ . '/main.php';
 \define('_AM_WGEVENTS_LIST_ANSWERS', 'List of Answers');
 \define('_AM_WGEVENTS_LIST_TEXTBLOCKS', 'List of Textblocks');
 \define('_AM_WGEVENTS_LIST_ADDTYPES', 'List of Additional Type');
-\define('_AM_WGEVENTS_LIST_REGISTRATIONS_LAST', 'List of last %s registrations');
+\define('_AM_WGEVENTS_LIST_EVENTS_LAST', 'List of last %s Events');
 // ---------------- Admin Classes ----------------
 // Category add/edit
 \define('_AM_WGEVENTS_CATEGORY_ADD', 'Add Category');

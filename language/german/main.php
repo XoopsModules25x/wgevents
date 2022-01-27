@@ -168,6 +168,7 @@ Eine Teilnahme an der Veranstaltung ohne Zustimmung zu diesen Bestimmungen ist l
 \define('_MA_WGEVENTS_ADDITIONALS_DESC', 'Zusatzinfo Beschreibung');
 \define('_MA_WGEVENTS_ADDITIONALS_CREATE', 'Zusatzinfos erstellen');
 \define('_MA_WGEVENTS_ADDITIONALS_PREVIEW', 'Vorschau Anmeldeformular anzeigen');
+\define('_MA_WGEVENTS_ADDITIONALS_CURR', 'Anzahl der aktuellen Zusatzinfos');
 // Caption of Additional
 \define('_MA_WGEVENTS_ADDITIONAL_ID', 'Id');
 \define('_MA_WGEVENTS_ADDITIONAL_EVID', 'Veranstaltung');
