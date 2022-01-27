@@ -1,9 +1,11 @@
 verification email testen
 
+print a ticket
+
 create plugin for extcal
 
-implementation fullcalendar
-Implementation of recurring events
+implementation fullcalendar?
+Implementation of recurring events?
 
 maintenance????
 - additionals ohne gültigen addinfo
