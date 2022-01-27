@@ -8,7 +8,7 @@
 # PHP Version: 8.0.1
 
 #
-# Structure table for `wgevents_events` 20
+# Structure table for `wgevents_events`
 #
 
 CREATE TABLE `wgevents_events` (
@@ -44,7 +44,7 @@ CREATE TABLE `wgevents_events` (
 ) ENGINE=InnoDB;
 
 #
-# Structure table for `wgevents_additionals` 10
+# Structure table for `wgevents_additionals`
 #
 
 CREATE TABLE `wgevents_additionals` (
@@ -65,7 +65,7 @@ CREATE TABLE `wgevents_additionals` (
 ) ENGINE=InnoDB;
 
 #
-# Structure table for `wgevents_answers` 7
+# Structure table for `wgevents_answers`
 #
 
 CREATE TABLE `wgevents_answers` (
@@ -80,7 +80,7 @@ CREATE TABLE `wgevents_answers` (
 ) ENGINE=InnoDB;
 
 #
-# Structure table for `wgevents_answers_hist` 11
+# Structure table for `wgevents_answers_hist`
 #
 
 CREATE TABLE `wgevents_answers_hist` (
@@ -99,7 +99,7 @@ CREATE TABLE `wgevents_answers_hist` (
 ) ENGINE=InnoDB;
 
 #
-# Structure table for `wgevents_registrations` 5
+# Structure table for `wgevents_registrations`
 #
 
 CREATE TABLE `wgevents_registrations` (
@@ -123,7 +123,7 @@ CREATE TABLE `wgevents_registrations` (
 
 
 #
-# Structure table for `wgevents_registrations_hist` 5
+# Structure table for `wgevents_registrations_hist`
 #
 
 CREATE TABLE `wgevents_registrations_hist` (
@@ -150,7 +150,7 @@ CREATE TABLE `wgevents_registrations_hist` (
 ) ENGINE=InnoDB;
 
 #
-# Structure table for `wgevents_categories` 10
+# Structure table for `wgevents_categories`
 #
 
 CREATE TABLE `wgevents_categories` (
@@ -171,7 +171,7 @@ CREATE TABLE `wgevents_categories` (
 ) ENGINE=InnoDB;
 
 #
-# Structure table for `wgevents_addtypes` 9
+# Structure table for `wgevents_addtypes`
 #
 
 CREATE TABLE `wgevents_addtypes` (
@@ -196,7 +196,7 @@ CREATE TABLE `wgevents_addtypes` (
 ) ENGINE=InnoDB;
 
 #
-# Structure table for `wgevents_textblocks` 6
+# Structure table for `wgevents_textblocks`
 #
 
 CREATE TABLE `wgevents_textblocks` (
@@ -210,7 +210,7 @@ CREATE TABLE `wgevents_textblocks` (
 ) ENGINE=InnoDB;
 
 #
-# Structure table for `wgevents_logs` 4
+# Structure table for `wgevents_logs`
 #
 
 CREATE TABLE `wgevents_logs` (
@@ -222,7 +222,7 @@ CREATE TABLE `wgevents_logs` (
 ) ENGINE=InnoDB;
 
 #
-# Structure table for `wgevents_accounts` 18
+# Structure table for `wgevents_accounts`
 #
 
 CREATE TABLE `wgevents_accounts` (

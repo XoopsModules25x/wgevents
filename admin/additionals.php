@@ -76,6 +76,24 @@ switch ($op) {
                 $GLOBALS['xoopsTpl']->assign('error', \_AM_WGEVENTS_THEREARENT_ADDITIONALS);
             }
         } else {
+            $GLOBALS['xoopsTpl']->assign('eventsHeader', \sprintf(_AM_WGEVENTS_LIST_EVENTS_LAST, $limit));
+            $eventsCount = $eventsHandler->getCountEvents();
+            $GLOBALS['xoopsTpl']->append('events_count', $eventsCount);
+            // Table view events
+            if ($eventsCount > 0) {
+                $eventsAll = $eventsHandler->getAllEvents($start, $limit);
+                foreach (\array_keys($eventsAll) as $i) {
+                    $event = $eventsAll[$i]->getValuesEvents();
+                    $crAdditionals = new \CriteriaCompo();
+                    $crAdditionals->add(new \Criteria('add_evid', $i));
+                    $additionalsCount = $additionalsHandler->getCount($crAdditionals);
+                    $event['additionals'] = $additionalsCount;
+                    $GLOBALS['xoopsTpl']->append('events_list', $event);
+                    unset($event);
+                }
+            }
+
+
             $form = $eventsHandler->getFormEventSelect();
             $GLOBALS['xoopsTpl']->assign('form', $form->render());
         }

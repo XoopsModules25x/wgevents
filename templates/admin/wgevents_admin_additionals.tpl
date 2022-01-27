@@ -1,6 +1,35 @@
 <!-- Header -->
 <{include file='db:wgevents_admin_header.tpl' }>
 
+<!-- Table overview events -->
+<{if $events_count|default:0 > 0}>
+    <h3><{$eventsHeader}></h3>
+    <table class='table table-bordered' style="max-width:500px">
+        <thead>
+        <tr class='head'>
+            <th class="center"><{$smarty.const._MA_WGEVENTS_EVENT_NAME}></th>
+            <th class="center"><{$smarty.const._MA_WGEVENTS_ADDITIONALS_CURR}></th>
+            <th class="center"><{$smarty.const._MA_WGEVENTS_ACTION}></th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <{foreach item=event from=$events_list}>
+            <tr class='<{cycle values='odd, even'}>'>
+                <td class='center'><{$event.name}></td>
+                <td class='center'><{$event.additionals}></td>
+                <td class="center ">
+                    <a href="additionals.php?op=list&amp;ev_id=<{$event.id}>&amp;start=<{$start}>&amp;limit=<{$limit}>" title="<{$smarty.const._DETAILS}>"><img src="<{xoModuleIcons16 view.png}>" alt="<{$smarty.const._DETAILS}> events" ></a>
+                </td>
+            </tr>
+            <{/foreach}>
+        </tbody>
+
+    </table>
+    <div class="clear">&nbsp;</div>
+    <br><br>
+<{/if}>
+
 <{if $additionals_list|default:''}>
     <table class='table table-bordered'>
         <thead>

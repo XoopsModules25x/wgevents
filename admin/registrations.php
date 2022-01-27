@@ -75,7 +75,7 @@ switch ($op) {
                 $GLOBALS['xoopsTpl']->assign('error', \_AM_WGEVENTS_THEREARENT_REGISTRATIONS);
             }
         } else {
-            $GLOBALS['xoopsTpl']->assign('eventsHeader', \sprintf(_AM_WGEVENTS_LIST_REGISTRATIONS_LAST, $limit));
+            $GLOBALS['xoopsTpl']->assign('eventsHeader', \sprintf(_AM_WGEVENTS_LIST_EVENTS_LAST, $limit));
             $eventsCount = $eventsHandler->getCountEvents();
             $GLOBALS['xoopsTpl']->append('events_count', $eventsCount);
             // Table view events
