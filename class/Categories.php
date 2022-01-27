@@ -51,10 +51,10 @@ class Categories extends \XoopsObject
      */
     public function __construct()
     {
-        $this->initVar('cat_id', \XOBJ_DTYPE_INT);
+        $this->initVar('cfd_id', \XOBJ_DTYPE_INT);
         $this->initVar('cat_pid', \XOBJ_DTYPE_INT);
         $this->initVar('cat_name', \XOBJ_DTYPE_TXTBOX);
-        $this->initVar('cat_desc', \XOBJ_DTYPE_OTHER);
+        $this->initVar('cfd_desc', \XOBJ_DTYPE_OTHER);
         $this->initVar('cat_logo', \XOBJ_DTYPE_TXTBOX);
         $this->initVar('cat_color', \XOBJ_DTYPE_TXTBOX);
         $this->initVar('cat_bordercolor', \XOBJ_DTYPE_TXTBOX);
@@ -121,14 +121,14 @@ class Categories extends \XoopsObject
         } else {
             $editor = $helper->getConfig('editor_user');
         }
-        $editorConfigs['name'] = 'cat_desc';
-        $editorConfigs['value'] = $this->getVar('cat_desc', 'e');
+        $editorConfigs['name'] = 'cfd_desc';
+        $editorConfigs['value'] = $this->getVar('cfd_desc', 'e');
         $editorConfigs['rows'] = 5;
         $editorConfigs['cols'] = 40;
         $editorConfigs['width'] = '100%';
         $editorConfigs['height'] = '400px';
         $editorConfigs['editor'] = $editor;
-        $form->addElement(new \XoopsFormEditor(\_AM_WGEVENTS_CATEGORY_DESC, 'cat_desc', $editorConfigs));
+        $form->addElement(new \XoopsFormEditor(\_AM_WGEVENTS_CATEGORY_DESC, 'cfd_desc', $editorConfigs));
         // Form Image catLogo
         // Form Image catLogo: Select Uploaded Image 
         $getCatLogo = $this->getVar('cat_logo');
@@ -192,22 +192,22 @@ class Categories extends \XoopsObject
             $groupsCanSubmitRegsCheckbox = new \XoopsFormCheckBox(\_AM_WGEVENTS_PERMISSIONS_CAT_REGS_SUBMIT, 'groups_submit_cat_regs[]', $fullList);
             $groupsCanViewRegsCheckbox = new \XoopsFormCheckBox(\_AM_WGEVENTS_PERMISSIONS_CAT_REGS_VIEW, 'groups_view_cat_regs[]', $fullList);
         } else {
-            $groupsIdsApproveEvents = $grouppermHandler->getGroupIds('wgevents_approve_cat_events', $this->getVar('cat_id'), $GLOBALS['xoopsModule']->getVar('mid'));
+            $groupsIdsApproveEvents = $grouppermHandler->getGroupIds('wgevents_approve_cat_events', $this->getVar('cfd_id'), $GLOBALS['xoopsModule']->getVar('mid'));
             $groupsIdsApproveEvents[] = \array_values($groupsIdsApproveEvents);
             $groupsCanApproveEventsCheckbox = new \XoopsFormCheckBox(\_AM_WGEVENTS_PERMISSIONS_CAT_EVENTS_APPROVE, 'groups_approve_cat_events[]', $groupsIdsApproveEvents);
-            $groupsIdsSubmitEvents = $grouppermHandler->getGroupIds('wgevents_submit_cat_events', $this->getVar('cat_id'), $GLOBALS['xoopsModule']->getVar('mid'));
+            $groupsIdsSubmitEvents = $grouppermHandler->getGroupIds('wgevents_submit_cat_events', $this->getVar('cfd_id'), $GLOBALS['xoopsModule']->getVar('mid'));
             $groupsIdsSubmitEvents[] = \array_values($groupsIdsSubmitEvents);
             $groupsCanSubmitEventsCheckbox = new \XoopsFormCheckBox(\_AM_WGEVENTS_PERMISSIONS_CAT_EVENTS_SUBMIT, 'groups_submit_cat_events[]', $groupsIdsSubmitEvents);
-            $groupsIdsViewEvents = $grouppermHandler->getGroupIds('wgevents_view_cat_events', $this->getVar('cat_id'), $GLOBALS['xoopsModule']->getVar('mid'));
+            $groupsIdsViewEvents = $grouppermHandler->getGroupIds('wgevents_view_cat_events', $this->getVar('cfd_id'), $GLOBALS['xoopsModule']->getVar('mid'));
             $groupsIdsViewEvents[] = \array_values($groupsIdsViewEvents);
             $groupsCanViewEventsCheckbox = new \XoopsFormCheckBox(\_AM_WGEVENTS_PERMISSIONS_CAT_EVENTS_VIEW, 'groups_view_cat_events[]', $groupsIdsViewEvents);
-            $groupsIdsApproveRegs = $grouppermHandler->getGroupIds('wgevents_approve_cat_regs', $this->getVar('cat_id'), $GLOBALS['xoopsModule']->getVar('mid'));
+            $groupsIdsApproveRegs = $grouppermHandler->getGroupIds('wgevents_approve_cat_regs', $this->getVar('cfd_id'), $GLOBALS['xoopsModule']->getVar('mid'));
             $groupsIdsApproveRegs[] = \array_values($groupsIdsApproveRegs);
             $groupsCanApproveRegsCheckbox = new \XoopsFormCheckBox(\_AM_WGEVENTS_PERMISSIONS_CAT_REGS_APPROVE, 'groups_approve_cat_regs[]', $groupsIdsApproveRegs);
-            $groupsIdsSubmitRegs = $grouppermHandler->getGroupIds('wgevents_submit_cat_regs', $this->getVar('cat_id'), $GLOBALS['xoopsModule']->getVar('mid'));
+            $groupsIdsSubmitRegs = $grouppermHandler->getGroupIds('wgevents_submit_cat_regs', $this->getVar('cfd_id'), $GLOBALS['xoopsModule']->getVar('mid'));
             $groupsIdsSubmitRegs[] = \array_values($groupsIdsSubmitRegs);
             $groupsCanSubmitRegsCheckbox = new \XoopsFormCheckBox(\_AM_WGEVENTS_PERMISSIONS_CAT_REGS_SUBMIT, 'groups_submit_cat_regs[]', $groupsIdsSubmitRegs);
-            $groupsIdsViewRegs = $grouppermHandler->getGroupIds('wgevents_view_cat_regs', $this->getVar('cat_id'), $GLOBALS['xoopsModule']->getVar('mid'));
+            $groupsIdsViewRegs = $grouppermHandler->getGroupIds('wgevents_view_cat_regs', $this->getVar('cfd_id'), $GLOBALS['xoopsModule']->getVar('mid'));
             $groupsIdsViewRegs[] = \array_values($groupsIdsViewRegs);
             $groupsCanViewRegsCheckbox = new \XoopsFormCheckBox(\_AM_WGEVENTS_PERMISSIONS_CAT_REGS_VIEW, 'groups_view_cat_regs[]', $groupsIdsViewRegs);
         }
@@ -250,12 +250,12 @@ class Categories extends \XoopsObject
         $helper  = \XoopsModules\Wgevents\Helper::getInstance();
         $utility = new \XoopsModules\Wgevents\Utility();
         $ret = $this->getValues($keys, $format, $maxDepth);
-        $ret['id']          = $this->getVar('cat_id');
+        $ret['id']          = $this->getVar('cfd_id');
         $categoriesHandler = $helper->getHandler('Categories');
         $categoriesObj = $categoriesHandler->get($this->getVar('cat_pid'));
         $ret['pid']         = $categoriesObj->getVar('cat_name');
         $ret['name']        = $this->getVar('cat_name');
-        $ret['desc']        = $this->getVar('cat_desc', 'e');
+        $ret['desc']        = $this->getVar('cfd_desc', 'e');
         $editorMaxchar = $helper->getConfig('admin_maxchar');
         $ret['desc_short']  = $utility::truncateHtml($ret['desc'], $editorMaxchar);
         $ret['logo']        = $this->getVar('cat_logo');

@@ -46,7 +46,7 @@ class Answershist extends \XoopsObject
         $this->initVar('hist_submitter', \XOBJ_DTYPE_INT);
         $this->initVar('ans_id', \XOBJ_DTYPE_INT);
         $this->initVar('ans_regid', \XOBJ_DTYPE_INT);
-        $this->initVar('ans_addid', \XOBJ_DTYPE_INT);
+        $this->initVar('ans_queid', \XOBJ_DTYPE_INT);
         $this->initVar('ans_evid', \XOBJ_DTYPE_INT);
         $this->initVar('ans_text', \XOBJ_DTYPE_TXTBOX);
         $this->initVar('ans_datecreated', \XOBJ_DTYPE_INT);

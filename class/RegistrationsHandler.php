@@ -1,6 +1,5 @@
 <?php declare(strict_types=1);
 
-
 namespace XoopsModules\Wgevents;
 
 /*
@@ -189,11 +188,11 @@ class RegistrationsHandler extends \XoopsPersistableObjectHandler
     /**
      * get all registrations/answers of given event
      * @param int $evId // id of event
-     * @param array $additionalsArr // array with all additionals for this event
+     * @param array $questionsArr // array with all questions for this event
      * @param bool $currentUserOnly // true: filter result for current user - false: return all for given event
      * @return bool|array
      */
-    public function getRegistrationDetailsByEvent(int $evId, array $additionalsArr, $currentUserOnly = true)
+    public function getRegistrationDetailsByEvent(int $evId, array $questionsArr, $currentUserOnly = true)
     {
         if ($evId > 0) {
             $helper  = \XoopsModules\Wgevents\Helper::getInstance();
@@ -240,7 +239,7 @@ class RegistrationsHandler extends \XoopsPersistableObjectHandler
                                                                         );
                     $registrations[$regId]['permRegistrationApprove'] = $permissionsHandler->getPermRegistrationsApprove($evSubmitter, $evStatus);
                     // get all answers for this event
-                    $answers = $answersHandler->getAnswersDetailsByRegistration($regId, $additionalsArr);
+                    $answers = $answersHandler->getAnswersDetailsByRegistration($regId, $questionsArr);
                     $registrations[$regId]['answers'] = $answers;
                 }
                 return $registrations;

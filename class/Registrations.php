@@ -106,7 +106,7 @@ class Registrations extends \XoopsObject
         $helper = \XoopsModules\Wgevents\Helper::getInstance();
 
         $eventsHandler = $helper->getHandler('Events');
-        $additionalsHandler = $helper->getHandler('Additionals');
+        $questionsHandler = $helper->getHandler('Questions');
         $answersHandler = $helper->getHandler('Answers');
         $permissionsHandler = $helper->getHandler('Permissions');
 
@@ -117,7 +117,7 @@ class Registrations extends \XoopsObject
         $answersExist = true;
         // Title
         if ($this->isNew()) {
-            $title = $test ? \sprintf(\_MA_WGEVENTS_ADDITIONALS_PREVIEW) : \sprintf(\_MA_WGEVENTS_REGISTRATION_ADD);
+            $title = $test ? \sprintf(\_MA_WGEVENTS_QUESTIONS_PREVIEW) : \sprintf(\_MA_WGEVENTS_REGISTRATION_ADD);
             $answersExist = false;
         } else {
             $title =\_MA_WGEVENTS_REGISTRATION_EDIT;
@@ -160,32 +160,32 @@ class Registrations extends \XoopsObject
         $regEmailRadio = new \XoopsFormRadioYN(\_MA_WGEVENTS_REGISTRATION_EMAIL_CONFIRM, 'reg_email_send', $regEmailSend);
         $regEmailTray->addElement($regEmailRadio);
         $form->addElement($regEmailTray);
-        // get all additionals
-        $crAdditionals = new \CriteriaCompo();
-        $crAdditionals->add(new \Criteria('add_evid', $regEvid));
-        $crAdditionals->setSort('add_weight ASC, add_id');
-        $crAdditionals->setOrder('DESC');
-        $additionalsCount = $additionalsHandler->getCount($crAdditionals);
-        if ($additionalsCount > 0) {
-            $additionalsAll = $additionalsHandler->getAll($crAdditionals);
-            foreach (\array_keys($additionalsAll) as $addId) {
+        // get all questions
+        $crQuestions = new \CriteriaCompo();
+        $crQuestions->add(new \Criteria('que_evid', $regEvid));
+        $crQuestions->setSort('que_weight ASC, que_id');
+        $crQuestions->setOrder('DESC');
+        $questionsCount = $questionsHandler->getCount($crQuestions);
+        if ($questionsCount > 0) {
+            $questionsAll = $questionsHandler->getAll($crQuestions);
+            foreach (\array_keys($questionsAll) as $queId) {
                 $formelementsHandler = new FormelementsHandler();
-                $formelementsHandler->name = 'add_id[' . $addId . ']';
-                $addType = (int)$additionalsAll[$addId]->getVar('add_type');
-                $addValue = (string)$additionalsAll[$addId]->getVar('add_values');
-                $formelementsHandler->type = $addType;
-                $formelementsHandler->caption = $additionalsAll[$addId]->getVar('add_caption');
+                $formelementsHandler->name = 'que_id[' . $queId . ']';
+                $queType = (int)$questionsAll[$queId]->getVar('que_type');
+                $addValue = (string)$questionsAll[$queId]->getVar('que_values');
+                $formelementsHandler->type = $queType;
+                $formelementsHandler->caption = $questionsAll[$queId]->getVar('que_caption');
                 if ($answersExist) {
                     $value = '';
-                    // get answers for this additionals
+                    // get answers for this questions
                     $crAnswers = new \CriteriaCompo();
                     $crAnswers->add(new \Criteria('ans_regid', $this->getVar('reg_id')));
-                    $crAnswers->add(new \Criteria('ans_addid', $addId));
+                    $crAnswers->add(new \Criteria('ans_queid', $queId));
                     $answersCount = $answersHandler->getCount($crAnswers);
                     if ($answersCount > 0) {
                         $answersAll = $answersHandler->getAll($crAnswers);
                         foreach (\array_keys($answersAll) as $ansId) {
-                            if (Constants::ADDTYPE_DATE == $addType) {
+                            if (Constants::FIELD_DATE == $queType) {
                                 $answerDateObj = \DateTime::createFromFormat(\_SHORTDATESTRING, $answersAll[$ansId]->getVar('ans_text'));
                                 $value = $answerDateObj->getTimestamp();
                             } else {
@@ -197,23 +197,23 @@ class Registrations extends \XoopsObject
                 //} else {
                     //TODO
                 }
-                if (Constants::ADDTYPE_RADIO == $addType ||
-                    Constants::ADDTYPE_SELECTBOX == $addType ||
-                    Constants::ADDTYPE_COMBOBOX == $addType) {
-                        //$formelementsHandler->options = preg_split('/\r\n|\r|\n/', $additionalsAll[$addId]->getVar('add_values'));
+                if (Constants::FIELD_RADIO == $queType ||
+                    Constants::FIELD_SELECTBOX == $queType ||
+                    Constants::FIELD_COMBOBOX == $queType) {
+                        //$formelementsHandler->options = preg_split('/\r\n|\r|\n/', $questionsAll[$queId]->getVar('que_values'));
                         $formelementsHandler->optionsArr = \unserialize($addValue);
                 }
-                if (Constants::ADDTYPE_CHECKBOX == $addType) {
+                if (Constants::FIELD_CHECKBOX == $queType) {
                     $addValueArr = \unserialize($addValue);
                     $formelementsHandler->optionsText = $addValueArr[0];
                 }
-                $formelementsHandler->placeholder = $additionalsAll[$addId]->getVar('add_placeholder');
-                $formelementsHandler->desc = $additionalsAll[$addId]->getVar('add_desc');
-                $required = $additionalsAll[$addId]->getVar('add_required');
+                $formelementsHandler->placeholder = $questionsAll[$queId]->getVar('que_placeholder');
+                $formelementsHandler->desc = $questionsAll[$queId]->getVar('que_desc');
+                $required = $questionsAll[$queId]->getVar('que_required');
                 $form->addElement($formelementsHandler->render(), $required);
-                $form->addElement(new \XoopsFormHidden('add_type[' . $additionalsAll[$addId]->getVar('add_id') . ']', $additionalsAll[$addId]->getVar('add_type')));
+                $form->addElement(new \XoopsFormHidden('que_type[' . $questionsAll[$queId]->getVar('que_id') . ']', $questionsAll[$queId]->getVar('que_type')));
             }
-            unset($additionals);
+            unset($questions);
         }
         // Form checkbox regGdpr
         $regGdpr = new \XoopsFormCheckBox(\_MA_WGEVENTS_REGISTRATION_GDPR, 'reg_gdpr', '');
@@ -279,7 +279,7 @@ class Registrations extends \XoopsObject
         if ($isAdmin) {
             $form->addElement(new \XoopsFormText(\_MA_WGEVENTS_REGISTRATION_IP, 'reg_ip', 20, 150, $regIp));
             $form->addElement(new \XoopsFormText(\_MA_WGEVENTS_REGISTRATION_VERIFKEY, 'reg_verifkey', 20, 150, $resVerifkey));
-            // Form Text Date Select addDatecreated
+            // Form Text Date Select queDatecreated
             $form->addElement(new \XoopsFormTextDateSelect(\_MA_WGEVENTS_DATECREATED, 'reg_datecreated', '', $regDatecreated));
             $form->addElement(new \XoopsFormSelectUser(\_MA_WGEVENTS_SUBMITTER, 'reg_submitter', false, $regSubmitter));
         } else {

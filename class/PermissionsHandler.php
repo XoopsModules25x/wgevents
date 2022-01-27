@@ -249,14 +249,14 @@ class PermissionsHandler extends \XoopsPersistableObjectHandler
     }
 
     /**
-     * @public function getPermAdditionalsAdmin
-     * returns right for submit/edit/delete additionals
+     * @public function getPermQuestionsAdmin
+     * returns right for submit/edit/delete questions
      *  - User must have perm edit the event
      * @param $evSubmitter
      * @param $evStatus
      * @return bool
      */
-    public function getPermAdditionalsAdmin($evSubmitter, $evStatus)
+    public function getPermQuestionsAdmin($evSubmitter, $evStatus)
     {
         if ($this->getPermEventsEdit($evSubmitter, $evStatus)) {
             return true;
@@ -283,7 +283,7 @@ class PermissionsHandler extends \XoopsPersistableObjectHandler
 
     /**
      * @public function getPermRegistrationsVerif
-     * returns right for submit registrations without additional verification by mail
+     * returns right for submit registrations without question verification by mail
      *  - User must have perm to submit registrations
      * @param null
      * @return bool

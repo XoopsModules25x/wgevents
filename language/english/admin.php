@@ -30,8 +30,8 @@ require_once __DIR__ . '/main.php';
 \define('_AM_WGEVENTS_THEREARE_EVENTS', "There are <span class='bold'>%s</span> events in the database");
 \define('_AM_WGEVENTS_THEREARE_CATEGORIES', "There are <span class='bold'>%s</span> categories in the database");
 \define('_AM_WGEVENTS_THEREARE_REGISTRATIONS', "There are <span class='bold'>%s</span> registrations in the database");
-\define('_AM_WGEVENTS_THEREARE_ADDITIONALS', "There are <span class='bold'>%s</span> additionals in the database");
-\define('_AM_WGEVENTS_THEREARE_ADDTYPES', "There are <span class='bold'>%s</span> types of additionals in the database");
+\define('_AM_WGEVENTS_THEREARE_QUESTIONS', "There are <span class='bold'>%s</span> questions in the database");
+\define('_AM_WGEVENTS_THEREARE_FIELDS', "There are <span class='bold'>%s</span> types of questions in the database");
 \define('_AM_WGEVENTS_THEREARE_ANSWERS', "There are <span class='bold'>%s</span> answers in the database");
 \define('_AM_WGEVENTS_THEREARE_TEXTBLOCKS', "There are <span class='bold'>%s</span> textblocks in the database");
 \define('_AM_WGEVENTS_THEREARE_LOGS', "There are <span class='bold'>%s</span> logs in the database");
@@ -41,10 +41,10 @@ require_once __DIR__ . '/main.php';
 \define('_AM_WGEVENTS_THEREARENT_EVENTS', "There aren't events");
 \define('_AM_WGEVENTS_THEREARENT_CATEGORIES', "There aren't categories");
 \define('_AM_WGEVENTS_THEREARENT_REGISTRATIONS', "There aren't registrations");
-\define('_AM_WGEVENTS_THEREARENT_ADDITIONALS', "There aren't additionals");
+\define('_AM_WGEVENTS_THEREARENT_QUESTIONS', "There aren't questions");
 \define('_AM_WGEVENTS_THEREARENT_ANSWERS', "There aren't answers");
 \define('_AM_WGEVENTS_THEREARENT_TEXTBLOCKS', "There aren't textblocks");
-\define('_AM_WGEVENTS_THEREARENT_ADDTYPES', "There aren't addtypes");
+\define('_AM_WGEVENTS_THEREARENT_FIELDS', "There aren't fields");
 \define('_AM_WGEVENTS_THEREARENT_LOGS', "There aren't logs");
 \define('_AM_WGEVENTS_THEREARENT_ACCOUNTS', 'There are no Email accounts in the Database');
 // timezones
@@ -58,19 +58,19 @@ require_once __DIR__ . '/main.php';
 \define('_AM_WGEVENTS_ADD_EVENT', 'Add New Event');
 \define('_AM_WGEVENTS_ADD_CATEGORY', 'Add New Category');
 \define('_AM_WGEVENTS_ADD_REGISTRATION', 'Add New Registration');
-\define('_AM_WGEVENTS_ADD_ADDITIONAL', 'Add New Additional');
+\define('_AM_WGEVENTS_ADD_QUESTION', 'Add New Question');
 \define('_AM_WGEVENTS_ADD_ANSWER', 'Add New Answer');
 \define('_AM_WGEVENTS_ADD_TEXTBLOCK', 'Add New Textblock');
-\define('_AM_WGEVENTS_ADD_ADDTYPE', 'Add New Additional Type');
+\define('_AM_WGEVENTS_ADD_FIELD', 'Add New Question Type');
 \define('_AM_WGEVENTS_GOTO_FORMSELECT', 'Back to form select');
 // Lists
 \define('_AM_WGEVENTS_LIST_EVENTS', 'List of Events');
 \define('_AM_WGEVENTS_LIST_CATEGORIES', 'List of Categories');
 \define('_AM_WGEVENTS_LIST_REGISTRATIONS', 'List of Registrations');
-\define('_AM_WGEVENTS_LIST_ADDITIONALS', 'List of Additionals');
+\define('_AM_WGEVENTS_LIST_QUESTIONS', 'List of Questions');
 \define('_AM_WGEVENTS_LIST_ANSWERS', 'List of Answers');
 \define('_AM_WGEVENTS_LIST_TEXTBLOCKS', 'List of Textblocks');
-\define('_AM_WGEVENTS_LIST_ADDTYPES', 'List of Additional Type');
+\define('_AM_WGEVENTS_LIST_FIELDS', 'List of Question Type');
 \define('_AM_WGEVENTS_LIST_EVENTS_LAST', 'List of last %s Events');
 // ---------------- Admin Classes ----------------
 // Category add/edit
@@ -88,36 +88,36 @@ require_once __DIR__ . '/main.php';
 \define('_AM_WGEVENTS_CATEGORY_BGCOLOR', 'Background Color');
 \define('_AM_WGEVENTS_CATEGORY_OTHERCSS', 'Other css-styles');
 // Addtype add/edit
-\define('_AM_WGEVENTS_ADDTYPE_ADD', 'Add Additional Type');
-\define('_AM_WGEVENTS_ADDTYPE_EDIT', 'Edit Additional Type');
+\define('_AM_WGEVENTS_FIELD_ADD', 'Add Question Type');
+\define('_AM_WGEVENTS_FIELD_EDIT', 'Edit Question Type');
 // Elements of Addtype
-\define('_AM_WGEVENTS_ADDTYPE_ID', 'Id');
-\define('_AM_WGEVENTS_ADDTYPE_CAPTION', 'Caption');
-\define('_AM_WGEVENTS_ADDTYPE_TYPE', 'Type');
-\define('_AM_WGEVENTS_ADDTYPE_DESC', 'Description');
-\define('_AM_WGEVENTS_ADDTYPE_VALUE', 'Value');
-\define('_AM_WGEVENTS_ADDTYPE_PLACEHOLDER', 'Placeholder');
-\define('_AM_WGEVENTS_ADDTYPE_REQUIRED', 'Required');
-\define('_AM_WGEVENTS_ADDTYPE_DEFAULT', 'Default');
-\define('_AM_WGEVENTS_ADDTYPE_DISPLAY_VALUES', "Display field 'Value'");
-\define('_AM_WGEVENTS_ADDTYPE_DISPLAY_PLACEHOLDER', "Display field 'Placeholder'");
+\define('_AM_WGEVENTS_FIELD_ID', 'Id');
+\define('_AM_WGEVENTS_FIELD_CAPTION', 'Caption');
+\define('_AM_WGEVENTS_FIELD_TYPE', 'Type');
+\define('_AM_WGEVENTS_FIELD_DESC', 'Description');
+\define('_AM_WGEVENTS_FIELD_VALUE', 'Value');
+\define('_AM_WGEVENTS_FIELD_PLACEHOLDER', 'Placeholder');
+\define('_AM_WGEVENTS_FIELD_REQUIRED', 'Required');
+\define('_AM_WGEVENTS_FIELD_DEFAULT', 'Default');
+\define('_AM_WGEVENTS_FIELD_DISPLAY_VALUES', "Display field 'Value'");
+\define('_AM_WGEVENTS_FIELD_DISPLAY_PLACEHOLDER', "Display field 'Placeholder'");
 // Elements of default Addtype
-\define('_AM_WGEVENTS_ADDTYPE_CREATE_DEFAULT', 'Create default set');
-\define('_AM_WGEVENTS_ADDTYPE_SURE_DELETE', 'Pay attention! All exising additional types will be delete! Are you sure to delete?');
-\define('_AM_WGEVENTS_ADDTYPE_ADDRESS', 'Address');
-\define('_AM_WGEVENTS_ADDTYPE_ADDRESS_VALUE', 'Please Enter Address');
-\define('_AM_WGEVENTS_ADDTYPE_AGE', 'Age');
-\define('_AM_WGEVENTS_ADDTYPE_AGE_VALUE', 'Please Enter Your Age');
-\define('_AM_WGEVENTS_ADDTYPE_BIRTHDAY', 'Birthday');
-\define('_AM_WGEVENTS_ADDTYPE_BIRTHDAY_VALUE', 'Please Enter Birthday');
-\define('_AM_WGEVENTS_ADDTYPE_PHONE', 'Phone');
-\define('_AM_WGEVENTS_ADDTYPE_PHONE_VALUE', 'Please Enter phone number');
-\define('_AM_WGEVENTS_ADDTYPE_POSTAL', 'Postal code');
-\define('_AM_WGEVENTS_ADDTYPE_POSTAL_VALUE', 'Please Enter Postal code');
-\define('_AM_WGEVENTS_ADDTYPE_CITY', 'City');
-\define('_AM_WGEVENTS_ADDTYPE_CITY_VALUE', 'Please Enter City');
-\define('_AM_WGEVENTS_ADDTYPE_COUNTRY', 'Country');
-\define('_AM_WGEVENTS_ADDTYPE_COUNTRY_VALUE', 'Please Enter Country');
+\define('_AM_WGEVENTS_FIELD_CREATE_DEFAULT', 'Create default set');
+\define('_AM_WGEVENTS_FIELD_SURE_DELETE', 'Pay attention! All exising question types will be delete! Are you sure to delete?');
+\define('_AM_WGEVENTS_FIELD_ADDRESS', 'Address');
+\define('_AM_WGEVENTS_FIELD_ADDRESS_VALUE', 'Please Enter Address');
+\define('_AM_WGEVENTS_FIELD_AGE', 'Age');
+\define('_AM_WGEVENTS_FIELD_AGE_VALUE', 'Please Enter Your Age');
+\define('_AM_WGEVENTS_FIELD_BIRTHDAY', 'Birthday');
+\define('_AM_WGEVENTS_FIELD_BIRTHDAY_VALUE', 'Please Enter Birthday');
+\define('_AM_WGEVENTS_FIELD_PHONE', 'Phone');
+\define('_AM_WGEVENTS_FIELD_PHONE_VALUE', 'Please Enter phone number');
+\define('_AM_WGEVENTS_FIELD_POSTAL', 'Postal code');
+\define('_AM_WGEVENTS_FIELD_POSTAL_VALUE', 'Please Enter Postal code');
+\define('_AM_WGEVENTS_FIELD_CITY', 'City');
+\define('_AM_WGEVENTS_FIELD_CITY_VALUE', 'Please Enter City');
+\define('_AM_WGEVENTS_FIELD_COUNTRY', 'Country');
+\define('_AM_WGEVENTS_FIELD_COUNTRY_VALUE', 'Please Enter Country');
 // Log add/edit
 \define('_AM_WGEVENTS_ADD_LOG', 'Add Log');
 \define('_AM_WGEVENTS_EDIT_LOG', 'Edit Log');
@@ -185,7 +185,7 @@ require_once __DIR__ . '/main.php';
 \define('_AM_WGEVENTS_ACCOUNT_CHECK_SKIPPED', 'skipped');
 \define('_AM_WGEVENTS_ACCOUNT_CHECK', 'Check');
 \define('_AM_WGEVENTS_ACCOUNT_CHECK_RESULT', 'Check result');
-\define('_AM_WGEVENTS_ACCOUNT_CHECK_INFO', 'Additional info');
+\define('_AM_WGEVENTS_ACCOUNT_CHECK_INFO', 'Question info');
 \define('_AM_WGEVENTS_ACCOUNT_CHECK_OPEN_MAILBOX', 'Open mailbox ');
 \define('_AM_WGEVENTS_ACCOUNT_CHECK_LIST_FOLDERS', 'Read folder list');
 \define('_AM_WGEVENTS_ACCOUNT_CHECK_SENDTEST', 'Send test mail');
@@ -193,10 +193,10 @@ require_once __DIR__ . '/main.php';
 \define('_AM_WGEVENTS_MAINTENANCE_TYP', 'Type of maintenance');
 \define('_AM_WGEVENTS_MAINTENANCE_DESC', 'Description of maintenance');
 \define('_AM_WGEVENTS_MAINTENANCE_RESULTS', 'Maintenance results');
-\define('_AM_WGEVENTS_MAINTENANCE_INVALID_ADDS', 'Check table additionals');
-\define('_AM_WGEVENTS_MAINTENANCE_INVALID_ADDS_DESC', 'Check the table additionals and search for additionals without link to a valid event');
+\define('_AM_WGEVENTS_MAINTENANCE_INVALID_ADDS', 'Check table questions');
+\define('_AM_WGEVENTS_MAINTENANCE_INVALID_ADDS_DESC', 'Check the table questions and search for questions without link to a valid event');
 \define('_AM_WGEVENTS_MAINTENANCE_INVALID_ANSWERS', 'Check table answers');
-\define('_AM_WGEVENTS_MAINTENANCE_INVALID_ANSWERS_DESC', 'Check the table answers and search for answers without link to a valid additional');
+\define('_AM_WGEVENTS_MAINTENANCE_INVALID_ANSWERS_DESC', 'Check the table answers and search for answers without link to a valid question');
 \define('_AM_WGEVENTS_MAINTENANCE_CHECKTABLE_SUCCESS', 'Check table successfully finished');
 \define('_AM_WGEVENTS_MAINTENANCE_ANON_DATA', 'Anonymize old registration data');
 \define('_AM_WGEVENTS_MAINTENANCE_ANON_DATA_DESC', 'In order to fullfill the opbligations of data protection data of events, which will be not needed anymore, has to be deleted.<br>
@@ -250,7 +250,7 @@ Please define, until which date all data should be anonymized.');
 <ul>
 <li>Permissions to approve all events</li>
 <li>Permissions to edit all events</li>
-<li>Permissions to admin additionals for registrations for all events</li>
+<li>Permissions to admin questions for registrations for all events</li>
 <li>Permissions to admin registrations for all events</li>
 </ul>
 ');
@@ -261,7 +261,7 @@ Please define, until which date all data should be anonymized.');
 <ul>
 <li>Permissions to submit events</li>
 <li>Permissions to edit own events</li>
-<li>Permissions to admin additionals for registrations for own events</li>
+<li>Permissions to admin questions for registrations for own events</li>
 <li>Permissions to admin registrations for own events</li>
 <li>Permissions to create and admin own textblocks</li>
 </ul>
@@ -269,11 +269,11 @@ Please define, until which date all data should be anonymized.');
 \define('_AM_WGEVENTS_PERMISSIONS_EVENTS_VIEW', 'Permissions to view events');
 
 
-//\define('_AM_WGEVENTS_PERMISSIONS_ADDITIONALS_VIEW', 'Permissions to view additionals');
-//\define('_AM_WGEVENTS_PERMISSIONS_ADDITIONALS_SUBMIT', 'Permissions to submit additionals');
+//\define('_AM_WGEVENTS_PERMISSIONS_QUESTIONS_VIEW', 'Permissions to view questions');
+//\define('_AM_WGEVENTS_PERMISSIONS_QUESTIONS_SUBMIT', 'Permissions to submit questions');
 //\define('_AM_WGEVENTS_PERMISSIONS_REGISTRATIONS_VIEW', 'Permissions to view registrations');
-\define('_AM_WGEVENTS_PERMISSIONS_REGISTRATIONS_AUTOVERIF', 'Permissions to submit registrations without additional verification');
-\define('_AM_WGEVENTS_PERMISSIONS_REGISTRATIONS_AUTOVERIF_DESC', '5) Permissions to submit registrations without additional verification: Registrations, sent by this group, will be automatically verified. There is no additional verification by mail necessary<br>');
+\define('_AM_WGEVENTS_PERMISSIONS_REGISTRATIONS_AUTOVERIF', 'Permissions to submit registrations without question verification');
+\define('_AM_WGEVENTS_PERMISSIONS_REGISTRATIONS_AUTOVERIF_DESC', '5) Permissions to submit registrations without question verification: Registrations, sent by this group, will be automatically verified. There is no question verification by mail necessary<br>');
 \define('_AM_WGEVENTS_PERMISSIONS_REGISTRATIONS_SUBMIT', 'Permissions to submit registrations');
 \define('_AM_WGEVENTS_PERMISSIONS_REGISTRATIONS_SUBMIT_DESC', '6)Permissions to submit registrations: Registrations, sent by this group, must be verified with a link, which is sent by mail<br>');
 //\define('_AM_WGEVENTS_PERMISSIONS_REGISTRATIONS_APPROVE', 'Permissions to approve registrations');

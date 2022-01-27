@@ -52,7 +52,7 @@ class Answers extends \XoopsObject
     {
         $this->initVar('ans_id', \XOBJ_DTYPE_INT);
         $this->initVar('ans_regid', \XOBJ_DTYPE_INT);
-        $this->initVar('ans_addid', \XOBJ_DTYPE_INT);
+        $this->initVar('ans_queid', \XOBJ_DTYPE_INT);
         $this->initVar('ans_evid', \XOBJ_DTYPE_INT);
         $this->initVar('ans_text', \XOBJ_DTYPE_TXTBOX);
         $this->initVar('ans_datecreated', \XOBJ_DTYPE_INT);
@@ -104,19 +104,19 @@ class Answers extends \XoopsObject
         $ansResidSelect = new \XoopsFormSelect(\_MA_WGEVENTS_ANSWER_REGID, 'ans_regid', $this->getVar('ans_regid'));
         $ansResidSelect->addOptionArray($registrationsHandler->getList());
         $form->addElement($ansResidSelect);
-        // Form Table additionals
-        $additionalsHandler = $helper->getHandler('Additionals');
-        $ansAddidSelect = new \XoopsFormSelect(\_MA_WGEVENTS_ANSWER_ADDID, 'ans_addid', $this->getVar('ans_addid'));
-        $crAdditionals = new \CriteriaCompo();
-        $crAdditionals->add(new \Criteria('add_evid', $this->getVar('ans_evid')));
-        $additionalsCount = $additionalsHandler->getCount($crAdditionals);
-        // Table view additionals
-        if ($additionalsCount > 0) {
-            $crAdditionals->setSort('add_weight ASC, add_id');
-            $crAdditionals->setOrder('DESC');
-            $additionalsAll = $additionalsHandler->getAll($crAdditionals);
-            foreach (\array_keys($additionalsAll) as $i) {
-                $ansAddidSelect->addOption($additionalsAll[$i]->getVar('add_id'), $additionalsAll[$i]->getVar('add_caption'));
+        // Form Table questions
+        $questionsHandler = $helper->getHandler('Questions');
+        $ansAddidSelect = new \XoopsFormSelect(\_MA_WGEVENTS_ANSWER_ADDID, 'ans_queid', $this->getVar('ans_queid'));
+        $crQuestions = new \CriteriaCompo();
+        $crQuestions->add(new \Criteria('que_evid', $this->getVar('ans_evid')));
+        $questionsCount = $questionsHandler->getCount($crQuestions);
+        // Table view questions
+        if ($questionsCount > 0) {
+            $crQuestions->setSort('que_weight ASC, que_id');
+            $crQuestions->setOrder('DESC');
+            $questionsAll = $questionsHandler->getAll($crQuestions);
+            foreach (\array_keys($questionsAll) as $i) {
+                $ansAddidSelect->addOption($questionsAll[$i]->getVar('que_id'), $questionsAll[$i]->getVar('que_caption'));
             }
         }
         $form->addElement($ansAddidSelect);
@@ -155,13 +155,13 @@ class Answers extends \XoopsObject
         $ret = $this->getValues($keys, $format, $maxDepth);
         $ret['id']          = $this->getVar('ans_id');
         $ret['regid']       = $this->getVar('ans_regid');
-        $additionalsHandler = $helper->getHandler('Additionals');
-        $additionalsObj = $additionalsHandler->get($this->getVar('ans_addid'));
-        $addCaption = '';
-        if (\is_object($additionalsObj)) {
-            $addCaption = $additionalsObj->getVar('add_caption');
+        $questionsHandler = $helper->getHandler('Questions');
+        $questionsObj = $questionsHandler->get($this->getVar('ans_queid'));
+        $queCaption = '';
+        if (\is_object($questionsObj)) {
+            $queCaption = $questionsObj->getVar('que_caption');
         }
-        $ret['addid']       = $addCaption;
+        $ret['addid']       = $queCaption;
         $eventsHandler = $helper->getHandler('Events');
         $eventsObj = $eventsHandler->get($this->getVar('ans_evid'));
         $evName = 'invalid event';

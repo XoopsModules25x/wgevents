@@ -148,40 +148,40 @@ class AnswersHandler extends \XoopsPersistableObjectHandler
     /**
      * get all answers of given registration
      * @param int    $regId            // id of registration
-     * @param array  $additionalsArr   // array with all additionals for this event
+     * @param array  $questionsArr   // array with all questions for this event
      * @return array
      */
-    public function getAnswersDetailsByRegistration($regId, $additionalsArr)
+    public function getAnswersDetailsByRegistration($regId, $questionsArr)
     {
         $answers = [];
-        foreach ($additionalsArr as $addId => $addItem) {
-            // get answers for this additionals
+        foreach ($questionsArr as $queId => $addItem) {
+            // get answers for this questions
             $crAnswers = new \CriteriaCompo();
             $crAnswers->add(new \Criteria('ans_regid', $regId));
-            $crAnswers->add(new \Criteria('ans_addid', $addId));
+            $crAnswers->add(new \Criteria('ans_queid', $queId));
             $answersCount = $this->getCount($crAnswers);
             if ($answersCount > 0) {
                 $answersAll = $this->getAll($crAnswers);
                 foreach (\array_keys($answersAll) as $i) {
                     $ansText = $answersAll[$i]->getVar('ans_text');
-                    if (Constants::ADDTYPE_RADIOYN == $addItem['type'] ||
-                        Constants::ADDTYPE_CHECKBOX == $addItem['type']) {
+                    if (Constants::FIELD_RADIOYN == $addItem['type'] ||
+                        Constants::FIELD_CHECKBOX == $addItem['type']) {
                         if ((bool)$ansText) {
                             $ansText = \_YES;
                         } else {
                             $ansText = \_NO;
                         }
                     }
-                    if (Constants::ADDTYPE_RADIO == $addItem['type'] ||
-                        Constants::ADDTYPE_COMBOBOX == $addItem['type'] ||
-                        Constants::ADDTYPE_SELECTBOX == $addItem['type']) {
-                        $addValues = \unserialize($addItem['values']);
-                        $ansText = $addValues[$ansText];
+                    if (Constants::FIELD_RADIO == $addItem['type'] ||
+                        Constants::FIELD_COMBOBOX == $addItem['type'] ||
+                        Constants::FIELD_SELECTBOX == $addItem['type']) {
+                        $queValues = \unserialize($addItem['values']);
+                        $ansText = $queValues[$ansText];
                     }
-                    $answers[$addId] = $ansText;
+                    $answers[$queId] = $ansText;
                 }
             } else {
-                $answers[$addId] = '';
+                $answers[$queId] = '';
             }
         }
 
@@ -197,14 +197,14 @@ class AnswersHandler extends \XoopsPersistableObjectHandler
     public function getAnswersCompare($versionOld, $versionNew)
     {
         $helper  = Helper::getInstance();
-        $additionalsHandler = $helper->getHandler('Additionals');
+        $questionsHandler = $helper->getHandler('Questions');
 
         $infotext = '';
         foreach(\array_keys($versionNew) as $key) {
             $caption = '';
-            $additionalsObj = $additionalsHandler->get($key);
-            if (\is_object($additionalsObj)) {
-                $caption = $additionalsObj->getVar('add_caption');
+            $questionsObj = $questionsHandler->get($key);
+            if (\is_object($questionsObj)) {
+                $caption = $questionsObj->getVar('que_caption');
             }
             $valueOld = $versionOld[$key];
             $valueNew = $versionNew[$key];
@@ -215,7 +215,7 @@ class AnswersHandler extends \XoopsPersistableObjectHandler
                     $infotext .= \sprintf(\_MA_WGEVENTS_MAIL_REG_MODIFICATION, $caption, $valueOld, $valueNew) . PHP_EOL;
                 }
             }
-            unset($additionalsObj);
+            unset($questionsObj);
         }
 
         return $infotext;

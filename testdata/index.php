@@ -116,8 +116,13 @@ function saveSampleData()
     Utility::createFolder($exportFolder);
 
     // save module tables
+    $tablesNoData = ['wgevents_accounts'];
     foreach ($tables as $table) {
-        TableLoad::saveTableToYamlFile($table, $exportFolder . $table . '.yml');
+        if (in_array($table, $tablesNoData)) {
+            \file_put_contents($exportFolder . '/' . $table . '.yml', '{}');
+        } else {
+            TableLoad::saveTableToYamlFile($table, $exportFolder . $table . '.yml');
+        }
     }
 
     // save permissions

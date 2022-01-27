@@ -348,7 +348,7 @@ class Events extends \XoopsObject
         $buttonSubmit->setClass('btn-primary');
         $buttonTray->addElement($buttonSubmit);
 
-        $buttonNext = new Forms\FormButton('', 'continue_additionals', \_MA_WGEVENTS_CONTINUE_ADDITIONALY, 'submit');
+        $buttonNext = new Forms\FormButton('', 'continue_questions', \_MA_WGEVENTS_CONTINUE_QUESTIONY, 'submit');
         $buttonNext->setClass('btn-primary');
         if (!$evRegister_use) {
             $buttonNext->setHidden();
@@ -376,7 +376,11 @@ class Events extends \XoopsObject
         $adminMaxchar = $helper->getConfig('admin_maxchar');
         $userMaxchar = $helper->getConfig('user_maxchar');
         $ret['id']               = $this->getVar('ev_id');
-        $ret['catid']            = $categoriesObj->getVar('cat_name');
+        $catName = '';
+        if (\is_object($categoriesObj)) {
+            $catName = $categoriesObj->getVar('cat_name');
+        }
+        $ret['catid']            = $catName;
         $ret['name']             = $this->getVar('ev_name');
         $ret['logo']             = $this->getVar('ev_logo');
         $ret['desc']             = $this->getVar('ev_desc', 'e');

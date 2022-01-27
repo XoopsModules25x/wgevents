@@ -100,7 +100,7 @@ switch ($op) {
         $GLOBALS['xoopsTpl']->assign('form', $form->render());
         break;
     case 'save':
-        $continueAddtionals = Request::hasVar('continue_additionals');
+        $continueAddtionals = Request::hasVar('continue_questions');
         // Security Check
         if (!$GLOBALS['xoopsSecurity']->check()) {
             \redirect_header('events.php', 3, \implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
@@ -206,7 +206,7 @@ switch ($op) {
                     $eventsObj->setVar('ev_register_sendername', '');
                     $eventsObj->setVar('ev_register_signature', '');
                     $registrationsHandler->cleanupRegistrations($evId);
-                    $additionalsHandler->cleanupAdditionals($evId);
+                    $questionsHandler->cleanupQuestions($evId);
                     $answersHandler->cleanupAnswers($evId);
                 }
             }
@@ -223,7 +223,7 @@ switch ($op) {
                 \redirect_header('events.php?op=edit&ev_id=' . $evId, 5, $uploaderErrors);
             } else {
                 if ($continueAddtionals) {
-                    \redirect_header('additionals.php?op=edit&amp;add_evid=' . $newEvId, 2, \_MA_WGEVENTS_FORM_OK);
+                    \redirect_header('questions.php?op=edit&amp;que_evid=' . $newEvId, 2, \_MA_WGEVENTS_FORM_OK);
                 } else {
                     \redirect_header('events.php?op=list&amp;start=' . $start . '&amp;limit=' . $limit, 2, \_MA_WGEVENTS_FORM_OK);
                 }

@@ -39,8 +39,8 @@ $adminmenu[] = [
 ];
 $adminmenu[] = [
     'title' => \_MI_WGEVENTS_ADMENU3,
-    'link' => 'admin/additionals.php',
-    'icon' => 'assets/icons/32/additionals.png',
+    'link' => 'admin/questions.php',
+    'icon' => 'assets/icons/32/questions.png',
 ];
 $adminmenu[] = [
     'title' => \_MI_WGEVENTS_ADMENU5,
@@ -59,8 +59,8 @@ $adminmenu[] = [
 ];
 $adminmenu[] = [
     'title' => \_MI_WGEVENTS_ADMENU8,
-    'link' => 'admin/addtypes.php',
-    'icon' => 'assets/icons/32/addtypes.png',
+    'link' => 'admin/fields.php',
+    'icon' => 'assets/icons/32/fields.png',
 ];
 $adminmenu[] = [
     'title' => \_MI_WGEVENTS_ADMENU10,

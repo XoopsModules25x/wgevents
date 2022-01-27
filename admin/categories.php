@@ -29,7 +29,7 @@ use XoopsModules\Wgevents\Common;
 require __DIR__ . '/header.php';
 // Get all request values
 $op    = Request::getCmd('op', 'list');
-$catId = Request::getInt('cat_id');
+$catId = Request::getInt('cfd_id');
 $start = Request::getInt('start');
 $limit = Request::getInt('limit', $helper->getConfig('adminpager'));
 $GLOBALS['xoopsTpl']->assign('start', $start);
@@ -86,7 +86,7 @@ switch ($op) {
         $adminObject->addItemButton(\_AM_WGEVENTS_ADD_CATEGORY, 'categories.php?op=new');
         $GLOBALS['xoopsTpl']->assign('buttons', $adminObject->displayButton('left'));
         // Request source
-        $catIdSource = Request::getInt('cat_id_source');
+        $catIdSource = Request::getInt('cfd_id_source');
         // Get Form
         $categoriesObjSource = $categoriesHandler->get($catIdSource);
         $categoriesObj = $categoriesObjSource->xoopsClone();
@@ -107,7 +107,7 @@ switch ($op) {
         $uploaderErrors = '';
         $categoriesObj->setVar('cat_pid', Request::getInt('cat_pid'));
         $categoriesObj->setVar('cat_name', Request::getString('cat_name'));
-        $categoriesObj->setVar('cat_desc', Request::getText('cat_desc'));
+        $categoriesObj->setVar('cfd_desc', Request::getText('cfd_desc'));
         // Set Var cat_logo
         require_once \XOOPS_ROOT_PATH . '/class/uploader.php';
         $filename       = $_FILES['cat_logo']['name'];
@@ -158,7 +158,7 @@ switch ($op) {
         // Insert Data
         if ($categoriesHandler->insert($categoriesObj)) {
             $newCatId = $categoriesObj->getNewInsertedIdCategories();
-            $permId = isset($_REQUEST['cat_id']) ? $catId : $newCatId;
+            $permId = isset($_REQUEST['cfd_id']) ? $catId : $newCatId;
             $grouppermHandler = \xoops_getHandler('groupperm');
             $mid = $GLOBALS['xoopsModule']->getVar('mid');
             // Permission to view_cat_events
@@ -204,7 +204,7 @@ switch ($op) {
                 }
             }
             if ('' !== $uploaderErrors) {
-                \redirect_header('categories.php?op=edit&cat_id=' . $catId, 5, $uploaderErrors);
+                \redirect_header('categories.php?op=edit&cfd_id=' . $catId, 5, $uploaderErrors);
             } else {
                 \redirect_header('categories.php?op=list&amp;start=' . $start . '&amp;limit=' . $limit, 2, \_MA_WGEVENTS_FORM_OK);
             }
@@ -243,7 +243,7 @@ switch ($op) {
             }
         } else {
             $customConfirm = new Common\Confirm(
-                ['ok' => 1, 'cat_id' => $catId, 'start' => $start, 'limit' => $limit, 'op' => 'delete'],
+                ['ok' => 1, 'cfd_id' => $catId, 'start' => $start, 'limit' => $limit, 'op' => 'delete'],
                 $_SERVER['REQUEST_URI'],
                 \sprintf(\_MA_WGEVENTS_FORM_SURE_DELETE, $categoriesObj->getVar('cat_name')));
             $form = $customConfirm->getFormConfirm();

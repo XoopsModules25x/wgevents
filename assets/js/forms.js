@@ -23,37 +23,37 @@
 function toogleRegistrationOpts() {
 
     $( "#registeropttray" ).toggle( "slow", function() {});
-    $( "#continue_additionals" ).toggle( "slow", function() {});
+    $( "#continue_questions" ).toggle( "slow", function() {});
     
 }
 
-function fillInAdditionals() {
+function fillInQuestions() {
 
-    var select = document.getElementById('add_type');
+    var select = document.getElementById('que_type');
     var vselected = select.options[select.selectedIndex].value;
 
-    xoopsGetElementById('add_caption').value = xoopsGetElementById('add_caption_def[' + vselected +  ']').value;
-    xoopsGetElementById('add_placeholder').value = xoopsGetElementById('add_placeholder_def[' + vselected +  ']').value;
-    if (xoopsGetElementById('add_required_def[' + vselected +  ']').value > 0) {
-        xoopsGetElementById('add_required1').checked = true;
+    xoopsGetElementById('que_caption').value = xoopsGetElementById('que_caption_def[' + vselected +  ']').value;
+    xoopsGetElementById('que_placeholder').value = xoopsGetElementById('que_placeholder_def[' + vselected +  ']').value;
+    if (xoopsGetElementById('que_required_def[' + vselected +  ']').value > 0) {
+        xoopsGetElementById('que_required1').checked = true;
     } else {
-        xoopsGetElementById('add_required2').checked = true;
+        xoopsGetElementById('que_required2').checked = true;
     }
-    if (xoopsGetElementById('add_print_def[' + vselected +  ']').value > 0) {
-        xoopsGetElementById('add_print1').checked = true;
+    if (xoopsGetElementById('que_print_def[' + vselected +  ']').value > 0) {
+        xoopsGetElementById('que_print1').checked = true;
     } else {
-        xoopsGetElementById('add_print2').checked = true;
+        xoopsGetElementById('que_print2').checked = true;
     }
 
     if (xoopsGetElementById('add_display_values[' + vselected +  ']').value > 0) {
-        xoopsGetElementById('add_values').removeAttribute("disabled");
+        xoopsGetElementById('que_values').removeAttribute("disabled");
     } else {
-        xoopsGetElementById('add_values').setAttribute("disabled", "disabled");
+        xoopsGetElementById('que_values').setAttribute("disabled", "disabled");
     }
     if (xoopsGetElementById('add_display_placeholder[' + vselected +  ']').value > 0) {
-        xoopsGetElementById('add_placeholder').removeAttribute("disabled");
+        xoopsGetElementById('que_placeholder').removeAttribute("disabled");
     } else {
-        xoopsGetElementById('add_placeholder').setAttribute("disabled", "disabled");
+        xoopsGetElementById('que_placeholder').setAttribute("disabled", "disabled");
     }
 
 }

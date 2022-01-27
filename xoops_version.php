@@ -83,10 +83,10 @@ $modversion['templates'] = [
     ['file' => 'wgevents_admin_events.tpl', 'description' => '', 'type' => 'admin'],
     ['file' => 'wgevents_admin_categories.tpl', 'description' => '', 'type' => 'admin'],
     ['file' => 'wgevents_admin_registrations.tpl', 'description' => '', 'type' => 'admin'],
-    ['file' => 'wgevents_admin_additionals.tpl', 'description' => '', 'type' => 'admin'],
+    ['file' => 'wgevents_admin_questions.tpl', 'description' => '', 'type' => 'admin'],
     ['file' => 'wgevents_admin_answers.tpl', 'description' => '', 'type' => 'admin'],
     ['file' => 'wgevents_admin_textblocks.tpl', 'description' => '', 'type' => 'admin'],
-    ['file' => 'wgevents_admin_addtypes.tpl', 'description' => '', 'type' => 'admin'],
+    ['file' => 'wgevents_admin_fields.tpl', 'description' => '', 'type' => 'admin'],
     ['file' => 'wgevents_admin_logs.tpl', 'description' => '', 'type' => 'admin'],
     ['file' => 'wgevents_admin_accounts.tpl', 'description' => '', 'type' => 'admin'],
     ['file' => 'wgevents_admin_maintenance.tpl', 'description' => '', 'type' => 'admin'],
@@ -95,8 +95,8 @@ $modversion['templates'] = [
     ['file' => 'wgevents_admin_footer.tpl', 'description' => '', 'type' => 'admin'],
     // User templates
     ['file' => 'wgevents_header.tpl', 'description' => ''],
-    ['file' => 'wgevents_additionals.tpl', 'description' => ''],
-    ['file' => 'wgevents_additionals_item.tpl', 'description' => ''],
+    ['file' => 'wgevents_questions.tpl', 'description' => ''],
+    ['file' => 'wgevents_questions_item.tpl', 'description' => ''],
     ['file' => 'wgevents_breadcrumbs.tpl', 'description' => ''],
     ['file' => 'wgevents_calendar.tpl', 'description' => ''],
     ['file' => 'wgevents_events.tpl', 'description' => ''],
@@ -120,11 +120,11 @@ $modversion['tables'] = [
     'wgevents_categories',
     'wgevents_registrations',
     'wgevents_registrations_hist',
-    'wgevents_additionals',
+    'wgevents_questions',
     'wgevents_answers',
     'wgevents_answers_hist',
     'wgevents_textblocks',
-    'wgevents_addtypes',
+    'wgevents_fields',
     'wgevents_logs',
     'wgevents_accounts',
 ];
@@ -183,7 +183,7 @@ if ($currdirname == $moduleDirName) {
     // Sub Submit
     $modversion['sub'][] = [
         'name' => \_MI_WGEVENTS_SMNAME6,
-        'url'  => 'additionals.php?op=new',
+        'url'  => 'questions.php?op=new',
     ];
     // Sub Submit
     $modversion['sub'][] = [
@@ -634,7 +634,7 @@ $modversion['config'][] = [
     'description' => '\_MI_WGEVENTS_KEYWORDS_DESC',
     'formtype'    => 'textbox',
     'valuetype'   => 'text',
-    'default'     => 'wgevents, events, categories, registrations, additionals, answers, textblocks, addtypes',
+    'default'     => 'wgevents, events, categories, registrations, questions, answers, textblocks, fields',
 ];
 // Paypal ID
 $modversion['config'][] = [

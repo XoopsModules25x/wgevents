@@ -33,7 +33,7 @@ If you like the wgEvents module and thanks to the long process for giving the op
 - Usage of categories for events
 - Possibility to customize registration forms with unlimited number of fields
 - Detailed permission settings
-    - for each group for events, additionals, registrations
+    - for each group for events, questions, registrations
         - permission to view
         - permission to submit
         - permission to approve
