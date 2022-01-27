@@ -92,6 +92,8 @@ $modversion['templates'] = [
     ['file' => 'wgevents_admin_permissions.tpl', 'description' => '', 'type' => 'admin'],
     ['file' => 'wgevents_admin_clone.tpl', 'description' => '', 'type' => 'admin'],
     ['file' => 'wgevents_admin_footer.tpl', 'description' => '', 'type' => 'admin'],
+    ['file' => 'wgevents_admin_maintenance.tpl', 'description' => '', 'type' => 'admin'],
+
     // User templates
     ['file' => 'wgevents_header.tpl', 'description' => ''],
     ['file' => 'wgevents_additionals.tpl', 'description' => ''],
