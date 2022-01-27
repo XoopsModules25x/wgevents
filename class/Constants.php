@@ -33,10 +33,10 @@ interface Constants
     public const TABLE_EVENTS             = 1;
     public const TABLE_CATEGORIES         = 2;
     public const TABLE_REGISTRATIONS      = 3;
-    public const TABLE_ADDITIONALS        = 4;
+    public const TABLE_QUESTIONS          = 4;
     public const TABLE_ANSWERS            = 5;
     public const TABLE_TEXTBLOCKS         = 6;
-    public const TABLE_ADDTYPES           = 7;
+    public const TABLE_FIELDS             = 7;
     public const TABLE_REGISTRATIONS_HIST = 8;
     public const TABLE_ANSWERS_HIST       = 9;
 
@@ -62,21 +62,21 @@ interface Constants
     public const PERM_REGISTRATIONS_AUTOVERIF = 8;
     public const PERM_REGISTRATIONS_SUBMIT    = 9;
 
-    // Constants for additional types
-    public const ADDTYPE_NONE      = 0;
-    public const ADDTYPE_LABEL     = 1;
-    public const ADDTYPE_TEXTBOX   = 2;
-    public const ADDTYPE_TEXTAREA  = 3;
-    public const ADDTYPE_RADIO     = 4;
-    public const ADDTYPE_RADIOYN   = 5;
-    public const ADDTYPE_SELECTBOX = 6;
-    public const ADDTYPE_COMBOBOX  = 7;
-    public const ADDTYPE_CHECKBOX  = 8;
-    public const ADDTYPE_DATE      = 9;
-    public const ADDTYPE_DATETIME  = 10;
-    public const ADDTYPE_NAME      = 11;
-    public const ADDTYPE_EMAIL     = 12;
-    public const ADDTYPE_COUNTRY   = 13;
+    // Constants for question types
+    public const FIELD_NONE      = 0;
+    public const FIELD_LABEL     = 1;
+    public const FIELD_TEXTBOX   = 2;
+    public const FIELD_TEXTAREA  = 3;
+    public const FIELD_RADIO     = 4;
+    public const FIELD_RADIOYN   = 5;
+    public const FIELD_SELECTBOX = 6;
+    public const FIELD_COMBOBOX  = 7;
+    public const FIELD_CHECKBOX  = 8;
+    public const FIELD_DATE      = 9;
+    public const FIELD_DATETIME  = 10;
+    public const FIELD_NAME      = 11;
+    public const FIELD_EMAIL     = 12;
+    public const FIELD_COUNTRY   = 13;
 
     // Constants for salutation
     public const SALUTATION_NONE  = 0;

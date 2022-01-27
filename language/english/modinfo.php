@@ -29,12 +29,12 @@ require_once __DIR__ . '/common.php';
 // ---------------- Admin Menu ----------------
 \define('_MI_WGEVENTS_ADMENU1', 'Dashboard');
 \define('_MI_WGEVENTS_ADMENU2', 'Events');
-\define('_MI_WGEVENTS_ADMENU3', 'Additionals');
+\define('_MI_WGEVENTS_ADMENU3', 'Questions');
 \define('_MI_WGEVENTS_ADMENU4', 'Answers');
 \define('_MI_WGEVENTS_ADMENU5', 'Registrations');
 \define('_MI_WGEVENTS_ADMENU6', 'Textblocks');
 \define('_MI_WGEVENTS_ADMENU7', 'Categories');
-\define('_MI_WGEVENTS_ADMENU8', 'Types Additionals');
+\define('_MI_WGEVENTS_ADMENU8', 'Types Questions');
 \define('_MI_WGEVENTS_ADMENU9', 'Maintenances');
 \define('_MI_WGEVENTS_ADMENU10', 'Permissions');
 \define('_MI_WGEVENTS_ADMENU11', 'Registrations History');

@@ -31,11 +31,11 @@ $templateMain = 'wgevents_admin_index.tpl';
 
 // Count elements
 $countEvents = $eventsHandler->getCount();
-$countAdditionals = $additionalsHandler->getCount();
+$countQuestions = $questionsHandler->getCount();
 $countAnswers = $answersHandler->getCount();
 $countRegistrations = $registrationsHandler->getCount();
 $countCategories = $categoriesHandler->getCount();
-$countAddtypes = $addtypesHandler->getCount();
+$countFields = $fieldsHandler->getCount();
 $countTextblocks = $textblocksHandler->getCount();
 $countLogs = $logsHandler->getCount();
 
@@ -43,11 +43,11 @@ $countLogs = $logsHandler->getCount();
 $adminObject->addInfoBox(\_AM_WGEVENTS_STATISTICS);
 // Info elements
 $adminObject->addInfoBoxLine(\sprintf( '<label>' . \_AM_WGEVENTS_THEREARE_EVENTS . '</label>', $countEvents));
-$adminObject->addInfoBoxLine(\sprintf( '<label>' . \_AM_WGEVENTS_THEREARE_ADDITIONALS . '</label>', $countAdditionals));
+$adminObject->addInfoBoxLine(\sprintf( '<label>' . \_AM_WGEVENTS_THEREARE_QUESTIONS . '</label>', $countQuestions));
 $adminObject->addInfoBoxLine(\sprintf( '<label>' . \_AM_WGEVENTS_THEREARE_ANSWERS . '</label>', $countAnswers));
 $adminObject->addInfoBoxLine(\sprintf( '<label>' . \_AM_WGEVENTS_THEREARE_REGISTRATIONS . '</label>', $countRegistrations));
 $adminObject->addInfoBoxLine(\sprintf( '<label>' . \_AM_WGEVENTS_THEREARE_CATEGORIES . '</label>', $countCategories));
-$adminObject->addInfoBoxLine(\sprintf( '<label>' . \_AM_WGEVENTS_THEREARE_ADDTYPES . '</label>', $countAddtypes));
+$adminObject->addInfoBoxLine(\sprintf( '<label>' . \_AM_WGEVENTS_THEREARE_FIELDS . '</label>', $countFields));
 $adminObject->addInfoBoxLine(\sprintf( '<label>' . \_AM_WGEVENTS_THEREARE_TEXTBLOCKS . '</label>', $countTextblocks));
 $adminObject->addInfoBoxLine(\sprintf( '<label>' . \_AM_WGEVENTS_THEREARE_LOGS . '</label>', $countLogs));
 

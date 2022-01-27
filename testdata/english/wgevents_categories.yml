@@ -1,0 +1,14 @@
+-
+    cfd_id: '1'
+    cat_pid: '0'
+    cat_name: Default
+    cfd_desc: ''
+    cat_logo: defaultcat.61d49de6769d3.jpg
+    cat_color: '#000000'
+    cat_bordercolor: '#003366'
+    cat_bgcolor: '#3399ff'
+    cat_othercss: 'margin:1px 0;padding:8px 5px 20px 5px;border-radius:5px;'
+    cat_status: '3'
+    cat_weight: '1'
+    cat_datecreated: '1641338794'
+    cat_submitter: '1'

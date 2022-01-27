@@ -28,9 +28,9 @@ use XoopsModules\Wgevents;
 
 
 /**
- * Class Object Handler Addtypes
+ * Class Object Handler Fields
  */
-class AddtypesHandler extends \XoopsPersistableObjectHandler
+class FieldsHandler extends \XoopsPersistableObjectHandler
 {
     /**
      * Constructor
@@ -39,7 +39,7 @@ class AddtypesHandler extends \XoopsPersistableObjectHandler
      */
     public function __construct(\XoopsDatabase $db)
     {
-        parent::__construct($db, 'wgevents_addtypes', Addtypes::class, 'at_id', 'at_caption');
+        parent::__construct($db, 'wgevents_fields', Fields::class, 'fd_id', 'fd_caption');
     }
 
     /**
@@ -76,51 +76,51 @@ class AddtypesHandler extends \XoopsPersistableObjectHandler
     }
 
     /**
-     * Get Count Addtypes in the database
+     * Get Count Fields in the database
      * @param int    $start
      * @param int    $limit
      * @param string $sort
      * @param string $order
      * @return int
      */
-    public function getCountAddtypes($start = 0, $limit = 0, $sort = 'at_id ASC, at_caption', $order = 'ASC')
+    public function getCountFields($start = 0, $limit = 0, $sort = 'fd_id ASC, fd_caption', $order = 'ASC')
     {
-        $crCountAddtypes = new \CriteriaCompo();
-        $crCountAddtypes = $this->getAddtypesCriteria($crCountAddtypes, $start, $limit, $sort, $order);
-        return $this->getCount($crCountAddtypes);
+        $crCountFields = new \CriteriaCompo();
+        $crCountFields = $this->getFieldsCriteria($crCountFields, $start, $limit, $sort, $order);
+        return $this->getCount($crCountFields);
     }
 
     /**
-     * Get All Addtypes in the database
+     * Get All Fields in the database
      * @param int    $start
      * @param int    $limit
      * @param string $sort
      * @param string $order
      * @return array
      */
-    public function getAllAddtypes($start = 0, $limit = 0, $sort = 'at_id ASC, at_caption', $order = 'ASC')
+    public function getAllFields($start = 0, $limit = 0, $sort = 'fd_id ASC, fd_caption', $order = 'ASC')
     {
-        $crAllAddtypes = new \CriteriaCompo();
-        $crAllAddtypes = $this->getAddtypesCriteria($crAllAddtypes, $start, $limit, $sort, $order);
-        return $this->getAll($crAllAddtypes);
+        $crAllFields = new \CriteriaCompo();
+        $crAllFields = $this->getFieldsCriteria($crAllFields, $start, $limit, $sort, $order);
+        return $this->getAll($crAllFields);
     }
 
     /**
-     * Get Criteria Addtypes
-     * @param        $crAddtypes
+     * Get Criteria Fields
+     * @param        $crFields
      * @param int $start
      * @param int $limit
      * @param string $sort
      * @param string $order
      * @return int
      */
-    private function getAddtypesCriteria($crAddtypes, int $start, int $limit, string $sort, string $order)
+    private function getFieldsCriteria($crFields, int $start, int $limit, string $sort, string $order)
     {
-        $crAddtypes->setStart($start);
-        $crAddtypes->setLimit($limit);
-        $crAddtypes->setSort($sort);
-        $crAddtypes->setOrder($order);
-        return $crAddtypes;
+        $crFields->setStart($start);
+        $crFields->setLimit($limit);
+        $crFields->setSort($sort);
+        $crFields->setOrder($order);
+        return $crFields;
     }
 
     /**
@@ -132,15 +132,15 @@ class AddtypesHandler extends \XoopsPersistableObjectHandler
     {
         $nextValue = 0;
 
-        $crAddtypes = new \CriteriaCompo();
-        $crAddtypes->setSort('at_weight');
-        $crAddtypes->setOrder('DESC');
-        $crAddtypes->setLimit(1);
-        $addtypesCount = $this->getCount($crAddtypes);
-        if ($addtypesCount > 0) {
-            $addtypesAll = $this->getAll($crAddtypes);
-            foreach (\array_keys($addtypesAll) as $i) {
-                $nextValue = $addtypesAll[$i]->getVar('at_weight');
+        $crFields = new \CriteriaCompo();
+        $crFields->setSort('fd_weight');
+        $crFields->setOrder('DESC');
+        $crFields->setLimit(1);
+        $fieldsCount = $this->getCount($crFields);
+        if ($fieldsCount > 0) {
+            $fieldsAll = $this->getAll($crFields);
+            foreach (\array_keys($fieldsAll) as $i) {
+                $nextValue = $fieldsAll[$i]->getVar('fd_weight');
             }
         }
 

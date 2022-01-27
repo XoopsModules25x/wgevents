@@ -75,14 +75,14 @@ switch ($op) {
 
                 if ($registrationsCount > 0) {
                     $i = 0;
-                    // get all additionals for this event
-                    $additionalsArr = $additionalsHandler->getAdditionalsByEvent($evId);
+                    // get all questions for this event
+                    $questionsArr = $questionsHandler->getQuestionsByEvent($evId);
                     //add field names
                     if ('xlsx' == $outType) {
                         $data[$i] = [\_MA_WGEVENTS_REGISTRATION_SALUTATION, \_MA_WGEVENTS_REGISTRATION_FIRSTNAME, \_MA_WGEVENTS_REGISTRATION_LASTNAME,
                             \_MA_WGEVENTS_REGISTRATION_EMAIL];
-                        foreach ($additionalsArr as $additional) {
-                            $data[$i][] = $additional['caption'];
+                        foreach ($questionsArr as $question) {
+                            $data[$i][] = $question['caption'];
                         }
                         if ($eventFee > 0) {
                             $data[$i][] = \_MA_WGEVENTS_REGISTRATION_FINANCIAL;
@@ -99,8 +99,8 @@ switch ($op) {
                             '"' . \_MA_WGEVENTS_REGISTRATION_LASTNAME . '"',
                             '"' . \_MA_WGEVENTS_REGISTRATION_EMAIL . '"'
                         ];
-                        foreach ($additionalsArr as $additional) {
-                            $data[$i][] = '"' . $additional['caption'] . '"';
+                        foreach ($questionsArr as $question) {
+                            $data[$i][] = '"' . $question['caption'] . '"';
                         }
                         if ($eventFee > 0) {
                             $data[$i][] = '"' . \_MA_WGEVENTS_REGISTRATION_FINANCIAL . '"';
@@ -112,7 +112,7 @@ switch ($op) {
                         $data[$i][] = '"' . \_MA_WGEVENTS_SUBMITTER . '"';
                     }
                     //get list of existing registrations for current user/current IP
-                    $registrations = $registrationsHandler->getRegistrationDetailsByEvent($evId, $additionalsArr, false);
+                    $registrations = $registrationsHandler->getRegistrationDetailsByEvent($evId, $questionsArr, false);
                     // Get All Transactions
                     foreach ($registrations as $registration) {
                         $i++;

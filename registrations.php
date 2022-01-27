@@ -95,15 +95,15 @@ switch ($op) {
             ];
         }
         foreach ($events as $evId => $event) {
-            // get all additionals for this event
+            // get all questions for this event
             $GLOBALS['xoopsTpl']->assign('redir', 'listmy');
-            // get all additionals for this event
-            $additionalsArr = $additionalsHandler->getAdditionalsByEvent($evId);
-            $registrations[$evId]['additionals'] = $additionalsArr;
-            $registrations[$evId]['footerCols'] = \count($additionalsArr) + 9;
+            // get all questions for this event
+            $questionsArr = $questionsHandler->getQuestionsByEvent($evId);
+            $registrations[$evId]['questions'] = $questionsArr;
+            $registrations[$evId]['footerCols'] = \count($questionsArr) + 9;
             //get list of existing registrations for current user/current IP
             $registrations[$evId]['event_name'] = $event['ev_name'];
-            $registrations[$evId]['details'] = $registrationsHandler->getRegistrationDetailsByEvent($evId, $additionalsArr);
+            $registrations[$evId]['details'] = $registrationsHandler->getRegistrationDetailsByEvent($evId, $questionsArr);
         }
         if (\count($registrations) > 0) {
             $GLOBALS['xoopsTpl']->assign('registrations', $registrations);
@@ -132,8 +132,8 @@ switch ($op) {
         $GLOBALS['xoopsTpl']->assign('redir', $redir);
         // Breadcrumbs
         $xoBreadcrumbs[] = ['title' => \_MA_WGEVENTS_REGISTRATION_ADD];
-        // get all additionals for this event
-        $additionalsArr = $additionalsHandler->getAdditionalsByEvent($regEvid);
+        // get all questions for this event
+        $questionsArr = $questionsHandler->getQuestionsByEvent($regEvid);
 
         //get list of existing registrations for current user/current IP
         $eventsObj = $eventsHandler->get($regEvid);
@@ -142,9 +142,9 @@ switch ($op) {
         $registrations[$regEvid]['event_name'] = $event_name;
         $registrations[$regEvid]['event_fee'] = $eventsObj->getVar('ev_fee');
         $registrations[$regEvid]['event_register_max'] = $eventsObj->getVar('ev_register_max');
-        $registrations[$regEvid]['additionals'] = $additionalsArr;
-        $registrations[$regEvid]['footerCols'] = \count($additionalsArr) + 9;
-        $registrations[$regEvid]['details'] = $registrationsHandler->getRegistrationDetailsByEvent($regEvid, $additionalsArr, $currentUserOnly);
+        $registrations[$regEvid]['questions'] = $questionsArr;
+        $registrations[$regEvid]['footerCols'] = \count($questionsArr) + 9;
+        $registrations[$regEvid]['details'] = $registrationsHandler->getRegistrationDetailsByEvent($regEvid, $questionsArr, $currentUserOnly);
         if ($registrations) {
             $GLOBALS['xoopsTpl']->assign('registrations', $registrations);
             unset($registrations);
@@ -203,8 +203,8 @@ switch ($op) {
         // create item in table registrations
         $answersValueArr = [];
         $answersTypeArr = [];
-        $answersValueArr = Request::getArray('add_id');
-        $answersTypeArr = Request::getArray('add_type');
+        $answersValueArr = Request::getArray('que_id');
+        $answersTypeArr = Request::getArray('que_type');
         $registrationsObj->setVar('reg_evid', $regEvid);
         $registrationsObj->setVar('reg_salutation', Request::getInt('reg_salutation'));
         $registrationsObj->setVar('reg_firstname', Request::getString('reg_firstname'));
@@ -249,10 +249,10 @@ switch ($op) {
             $newRegId = $regId > 0 ? $regId : $registrationsObj->getNewInsertedIdRegistrations();
             if ($regId > 0) {
                 // create copy before deleting
-                // get all additionals for this event
-                $additionalsArr = $additionalsHandler->getAdditionalsByEvent($regEvid);
-                // get old answers for this additionals
-                $answersOld = $answersHandler->getAnswersDetailsByRegistration($newRegId, $additionalsArr);
+                // get all questions for this event
+                $questionsArr = $questionsHandler->getQuestionsByEvent($regEvid);
+                // get old answers for this questions
+                $answersOld = $answersHandler->getAnswersDetailsByRegistration($newRegId, $questionsArr);
                 // delete all existing answers
                 $answersHandler->cleanupAnswers($regEvid, $regId);
             }
@@ -260,7 +260,7 @@ switch ($op) {
             foreach ($answersValueArr as $key => $value) {
                 $answer = '';
                 switch ($answersTypeArr[$key]) {
-                    case Constants::ADDTYPE_CHECKBOX:
+                    case Constants::FIELD_CHECKBOX:
                         $answer = 1;
                         break;
                     default:
@@ -270,7 +270,7 @@ switch ($op) {
                 if ('' != $answer) {
                     $answersObj = $answersHandler->create();
                     $answersObj->setVar('ans_regid', $newRegId);
-                    $answersObj->setVar('ans_addid', $key);
+                    $answersObj->setVar('ans_queid', $key);
                     $answersObj->setVar('ans_evid', $regEvid);
                     $answersObj->setVar('ans_text', $answer);
                     $answersObj->setVar('ans_datecreated', \time());
@@ -307,8 +307,8 @@ switch ($op) {
                 }
                 // find changes in table answers
                 if (\is_array($answersOld)) {
-                    // get new answers for this additionals
-                    $answersNew = $answersHandler->getAnswersDetailsByRegistration($newRegId, $additionalsArr);
+                    // get new answers for this questions
+                    $answersNew = $answersHandler->getAnswersDetailsByRegistration($newRegId, $questionsArr);
                     $result = $answersHandler->getAnswersCompare($answersOld, $answersNew);
                     if ('' != $result) {
                         // create history

@@ -14,8 +14,8 @@
                         <th><{$smarty.const._MA_WGEVENTS_REGISTRATION_FIRSTNAME}></th>
                         <th><{$smarty.const._MA_WGEVENTS_REGISTRATION_LASTNAME}></th>
                         <th><{$smarty.const._MA_WGEVENTS_REGISTRATION_EMAIL}></th>
-                        <{foreach item=additional from=$registration.additionals}>
-                            <th><{$additional.caption|default:'false'}></th>
+                        <{foreach item=question from=$registration.questions}>
+                            <th><{$question.caption|default:'false'}></th>
                         <{/foreach}>
                         <th><{$smarty.const._MA_WGEVENTS_STATUS}></th>
                         <{if $registration.event_fee|default:0 > 0}>

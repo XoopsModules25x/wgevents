@@ -156,35 +156,35 @@ Participation without agreement to this conditions is not possible.
 \define('_MA_WGEVENTS_REGISTRATION_LISTWAIT_Y', 'On waiting list');
 \define('_MA_WGEVENTS_REGISTRATION_LISTWAIT_N', 'On final list of participants');
 \define('_MA_WGEVENTS_REGISTRATION_VERIFKEY', 'Verification key');
-// Additional
-\define('_MA_WGEVENTS_ADDITIONAL', 'Additional');
-\define('_MA_WGEVENTS_ADDITIONAL_ADD', 'Add Additional');
-\define('_MA_WGEVENTS_ADDITIONAL_EDIT', 'Edit Additional');
-\define('_MA_WGEVENTS_ADDITIONAL_DELETE', 'Delete Additional');
-\define('_MA_WGEVENTS_ADDITIONAL_CLONE', 'Clone Additional');
-\define('_MA_WGEVENTS_ADDITIONALS', 'Additionals');
-\define('_MA_WGEVENTS_ADDITIONALS_LIST', 'List of Additionals');
-\define('_MA_WGEVENTS_ADDITIONALS_TITLE', 'Additionals title');
-\define('_MA_WGEVENTS_ADDITIONALS_DESC', 'Additionals description');
-\define('_MA_WGEVENTS_ADDITIONALS_CREATE', 'Create Additionals');
-\define('_MA_WGEVENTS_ADDITIONALS_PREVIEW', 'Show preview of registration form');
-\define('_MA_WGEVENTS_ADDITIONALS_CURR', 'Number of current Additionals');
-// Caption of Additional
-\define('_MA_WGEVENTS_ADDITIONAL_ID', 'Id');
-\define('_MA_WGEVENTS_ADDITIONAL_EVID', 'Event');
-\define('_MA_WGEVENTS_ADDITIONAL_TYPE', 'Type');
-\define('_MA_WGEVENTS_ADDITIONAL_CAPTION', 'Caption');
-\define('_MA_WGEVENTS_ADDITIONAL_CAPTION_DESC', 'The caption will be shown as field caption and used also as column header in output lists');
-\define('_MA_WGEVENTS_ADDITIONAL_DESC', 'Description');
-\define('_MA_WGEVENTS_ADDITIONAL_DESC_DESC', 'The description will be shown beside the fields as additional information');
-\define('_MA_WGEVENTS_ADDITIONAL_VALUE', 'Values');
-\define('_MA_WGEVENTS_ADDITIONAL_PLACEHOLDER', 'Placeholder');
-\define('_MA_WGEVENTS_ADDITIONAL_PLACEHOLDER_DESC', 'Placeholder will be shown as info in textboxes');
-\define('_MA_WGEVENTS_ADDITIONAL_VALUE_DESC', 'Please enter allowed values for selected field type. For radio or selectbox use new line for each options');
-\define('_MA_WGEVENTS_ADDITIONAL_REQUIRED', 'Required Value');
-\define('_MA_WGEVENTS_ADDITIONAL_REQUIRED_DESC', 'If you set Required to yes, then user must fill in this field');
-\define('_MA_WGEVENTS_ADDITIONAL_PRINT', 'Print');
-\define('_MA_WGEVENTS_ADDITIONAL_PRINT_DESC', 'Show/print this field in lists?<br>No means, that this field will be shown only in registration form.');
+// Question
+\define('_MA_WGEVENTS_QUESTION', 'Question');
+\define('_MA_WGEVENTS_QUESTION_ADD', 'Add Question');
+\define('_MA_WGEVENTS_QUESTION_EDIT', 'Edit Question');
+\define('_MA_WGEVENTS_QUESTION_DELETE', 'Delete Question');
+\define('_MA_WGEVENTS_QUESTION_CLONE', 'Clone Question');
+\define('_MA_WGEVENTS_QUESTIONS', 'Questions');
+\define('_MA_WGEVENTS_QUESTIONS_LIST', 'List of Questions');
+\define('_MA_WGEVENTS_QUESTIONS_TITLE', 'Questions title');
+\define('_MA_WGEVENTS_QUESTIONS_DESC', 'Questions description');
+\define('_MA_WGEVENTS_QUESTIONS_CREATE', 'Create Questions');
+\define('_MA_WGEVENTS_QUESTIONS_PREVIEW', 'Show preview of registration form');
+\define('_MA_WGEVENTS_QUESTIONS_CURR', 'Number of current Questions');
+// Caption of Question
+\define('_MA_WGEVENTS_QUESTION_ID', 'Id');
+\define('_MA_WGEVENTS_QUESTION_EVID', 'Event');
+\define('_MA_WGEVENTS_QUESTION_TYPE', 'Type');
+\define('_MA_WGEVENTS_QUESTION_CAPTION', 'Caption');
+\define('_MA_WGEVENTS_QUESTION_CAPTION_DESC', 'The caption will be shown as field caption and used also as column header in output lists');
+\define('_MA_WGEVENTS_QUESTION_DESC', 'Description');
+\define('_MA_WGEVENTS_QUESTION_DESC_DESC', 'The description will be shown beside the fields as question information');
+\define('_MA_WGEVENTS_QUESTION_VALUE', 'Values');
+\define('_MA_WGEVENTS_QUESTION_PLACEHOLDER', 'Placeholder');
+\define('_MA_WGEVENTS_QUESTION_PLACEHOLDER_DESC', 'Placeholder will be shown as info in textboxes');
+\define('_MA_WGEVENTS_QUESTION_VALUE_DESC', 'Please enter allowed values for selected field type. For radio or selectbox use new line for each options');
+\define('_MA_WGEVENTS_QUESTION_REQUIRED', 'Required Value');
+\define('_MA_WGEVENTS_QUESTION_REQUIRED_DESC', 'If you set Required to yes, then user must fill in this field');
+\define('_MA_WGEVENTS_QUESTION_PRINT', 'Print');
+\define('_MA_WGEVENTS_QUESTION_PRINT_DESC', 'Show/print this field in lists?<br>No means, that this field will be shown only in registration form.');
 // Answer
 \define('_MA_WGEVENTS_ANSWER', 'Answer');
 \define('_MA_WGEVENTS_ANSWER_ADD', 'Add Answer');
@@ -200,7 +200,7 @@ Participation without agreement to this conditions is not possible.
 \define('_MA_WGEVENTS_ANSWER_ID', 'Id');
 \define('_MA_WGEVENTS_ANSWER_EVID', 'Event Id');
 \define('_MA_WGEVENTS_ANSWER_REGID', 'Registration Id');
-\define('_MA_WGEVENTS_ANSWER_ADDID', 'Additional Id');
+\define('_MA_WGEVENTS_ANSWER_ADDID', 'Question Id');
 \define('_MA_WGEVENTS_ANSWER_TEXT', 'Text');
 // Textblock
 \define('_MA_WGEVENTS_TEXTBLOCK', 'Textblock');
@@ -217,26 +217,26 @@ Participation without agreement to this conditions is not possible.
 \define('_MA_WGEVENTS_TEXTBLOCK_NAME', 'Name');
 \define('_MA_WGEVENTS_TEXTBLOCK_TEXT', 'Text');
 // Elements of Addtype
-\define('_MA_WGEVENTS_ADDTYPE_NONE', 'None');
-\define('_MA_WGEVENTS_ADDTYPE_LABEL', 'Label');
-\define('_MA_WGEVENTS_ADDTYPE_TEXTBOX', 'Textbox');
-\define('_MA_WGEVENTS_ADDTYPE_TEXTAREA', 'Multiline Textarea field');
-\define('_MA_WGEVENTS_ADDTYPE_SELECTBOX', 'Dropdown');
-\define('_MA_WGEVENTS_ADDTYPE_COMBOBOX', 'Combobox');
-\define('_MA_WGEVENTS_ADDTYPE_CHECKBOX', 'Checkbox');
-\define('_MA_WGEVENTS_ADDTYPE_RADIO', 'Radio');
-\define('_MA_WGEVENTS_ADDTYPE_RADIOYN', 'Radio yes/no');
-\define('_MA_WGEVENTS_ADDTYPE_DATE', 'Date field');
-\define('_MA_WGEVENTS_ADDTYPE_DATETIME', 'Date/Time field');
-\define('_MA_WGEVENTS_ADDTYPE_NAME', 'Textbox Name');
-\define('_MA_WGEVENTS_ADDTYPE_EMAIL', 'Textbox Email');
-\define('_MA_WGEVENTS_ADDTYPE_COUNTRY', 'Dropdown Country');
+\define('_MA_WGEVENTS_FIELD_NONE', 'None');
+\define('_MA_WGEVENTS_FIELD_LABEL', 'Label');
+\define('_MA_WGEVENTS_FIELD_TEXTBOX', 'Textbox');
+\define('_MA_WGEVENTS_FIELD_TEXTAREA', 'Multiline Textarea field');
+\define('_MA_WGEVENTS_FIELD_SELECTBOX', 'Dropdown');
+\define('_MA_WGEVENTS_FIELD_COMBOBOX', 'Combobox');
+\define('_MA_WGEVENTS_FIELD_CHECKBOX', 'Checkbox');
+\define('_MA_WGEVENTS_FIELD_RADIO', 'Radio');
+\define('_MA_WGEVENTS_FIELD_RADIOYN', 'Radio yes/no');
+\define('_MA_WGEVENTS_FIELD_DATE', 'Date field');
+\define('_MA_WGEVENTS_FIELD_DATETIME', 'Date/Time field');
+\define('_MA_WGEVENTS_FIELD_NAME', 'Textbox Name');
+\define('_MA_WGEVENTS_FIELD_EMAIL', 'Textbox Email');
+\define('_MA_WGEVENTS_FIELD_COUNTRY', 'Dropdown Country');
 // Submit
 \define('_MA_WGEVENTS_SAVE', 'Save');
 \define('_MA_WGEVENTS_EXEC', 'Execute');
-\define('_MA_WGEVENTS_CONTINUE_ADDITIONALY', 'Save and continue with additional informations');
+\define('_MA_WGEVENTS_CONTINUE_QUESTIONY', 'Save and continue with question informations');
 \define('_MA_WGEVENTS_GOTO_REGISTRATION', 'Goto registration');
-\define('_MA_WGEVENTS_GOTO_ADDITIONALS', 'Goto additionals');
+\define('_MA_WGEVENTS_GOTO_QUESTIONS', 'Goto questions');
 \define('_MA_WGEVENTS_GOTO_EVENT', 'Goto event');
 \define('_MA_WGEVENTS_GOTO_EVENTSLIST', 'Goto eventlist');
 \define('_MA_WGEVENTS_OUTPUT_EXCEL', 'Output to Excel');
@@ -252,7 +252,7 @@ Participation without agreement to this conditions is not possible.
 \define('_MA_WGEVENTS_CONFIRMDELETE_REGISTRATION', "Registration for: <b><span style='color : Red;'>%s</span></b>");
 \define('_MA_WGEVENTS_CONFIRMDELETE_TEXTBLOCK', "Textblock: <b><span style='color : Red;'>%s</span></b>");
 \define('_MA_WGEVENTS_CONFIRMDELETE_EVENT', "Event: <b><span style='color : Red;'>%s</span></b>");
-\define('_MA_WGEVENTS_CONFIRMDELETE_ADDITIONAL', "Additional: <b><span style='color : Red;'>%s</span></b>");
+\define('_MA_WGEVENTS_CONFIRMDELETE_QUESTION', "Question: <b><span style='color : Red;'>%s</span></b>");
 \define('_MA_WGEVENTS_CONFIRMCANCEL_TITLE', 'Cancel event');
 \define('_MA_WGEVENTS_CONFIRMCANCEL_LABEL', 'Du you really want to cancel:');
 \define('_MA_WGEVENTS_CONFIRMCANCEL_EVENT', "Attention: also all registrations will be canceled automatically! Do youi really want to cancel <b><span style='color : Red;'>%s</span></b> finally?");

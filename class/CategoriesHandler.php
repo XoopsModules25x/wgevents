@@ -39,7 +39,7 @@ class CategoriesHandler extends \XoopsPersistableObjectHandler
      */
     public function __construct(\XoopsDatabase $db)
     {
-        parent::__construct($db, 'wgevents_categories', Categories::class, 'cat_id', 'cat_name');
+        parent::__construct($db, 'wgevents_categories', Categories::class, 'cfd_id', 'cat_name');
     }
 
     /**
@@ -83,7 +83,7 @@ class CategoriesHandler extends \XoopsPersistableObjectHandler
      * @param string $order
      * @return int
      */
-    public function getCountCategories($start = 0, $limit = 0, $sort = 'cat_weight ASC, cat_id', $order = 'ASC')
+    public function getCountCategories($start = 0, $limit = 0, $sort = 'cat_weight ASC, cfd_id', $order = 'ASC')
     {
         $crCountCategories = new \CriteriaCompo();
         $crCountCategories = $this->getCategoriesCriteria($crCountCategories, $start, $limit, $sort, $order);
@@ -98,7 +98,7 @@ class CategoriesHandler extends \XoopsPersistableObjectHandler
      * @param string $order
      * @return array
      */
-    public function getAllCategories($start = 0, $limit = 0, $sort = 'cat_weight ASC, cat_id', $order = 'ASC')
+    public function getAllCategories($start = 0, $limit = 0, $sort = 'cat_weight ASC, cfd_id', $order = 'ASC')
     {
         $crAllCategories = new \CriteriaCompo();
         $crAllCategories = $this->getCategoriesCriteria($crAllCategories, $start, $limit, $sort, $order);

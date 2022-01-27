@@ -89,51 +89,51 @@ wgevents_events:
         PRIMARY:
             columns: ev_id
             unique: true
-wgevents_additionals:
+wgevents_questions:
     options: 'ENGINE=InnoDB'
     columns: 
         -
-            name: add_id
+            name: que_id
             attributes: ' INT(8) UNSIGNED NOT NULL AUTO_INCREMENT '
         -
-            name: add_evid
+            name: que_evid
             attributes: ' INT(10)         NOT NULL DEFAULT ''0'' '
         -
-            name: add_atid
+            name: que_fdid
             attributes: ' INT(10)         NOT NULL DEFAULT ''0'' '
         -
-            name: add_type
+            name: que_type
             attributes: ' INT(10)         NOT NULL DEFAULT ''0'' '
         -
-            name: add_caption
+            name: que_caption
             attributes: ' VARCHAR(255)    NOT NULL DEFAULT '''''''' '
         -
-            name: add_desc
+            name: que_desc
             attributes: ' TEXT            NULL  '
         -
-            name: add_values
+            name: que_values
             attributes: ' TEXT            NULL '
         -
-            name: add_placeholder
+            name: que_placeholder
             attributes: ' VARCHAR(255)    NOT NULL DEFAULT '''''''' '
         -
-            name: add_required
+            name: que_required
             attributes: ' INT(1)          NOT NULL DEFAULT ''0'' '
         -
-            name: add_print
+            name: que_print
             attributes: ' INT(1)          NOT NULL DEFAULT ''0'' '
         -
-            name: add_weight
+            name: que_weight
             attributes: ' INT(10)         NOT NULL DEFAULT ''0'' '
         -
-            name: add_datecreated
+            name: que_datecreated
             attributes: ' INT(11)         NOT NULL DEFAULT ''0'' '
         -
-            name: add_submitter
+            name: que_submitter
             attributes: ' INT(10)         NOT NULL DEFAULT ''0'' '
     keys:
         PRIMARY:
-            columns: add_id
+            columns: que_id
             unique: true
 wgevents_answers:
     options: 'ENGINE=InnoDB'
@@ -148,7 +148,7 @@ wgevents_answers:
             name: ans_regid
             attributes: ' INT(10)         NOT NULL DEFAULT ''0'' '
         -
-            name: ans_addid
+            name: ans_queid
             attributes: ' INT(10)         NOT NULL DEFAULT ''0'' '
         -
             name: ans_text
@@ -188,7 +188,7 @@ wgevents_answers_hist:
             name: ans_regid
             attributes: ' INT(10)         NOT NULL DEFAULT ''0'' '
         -
-            name: ans_addid
+            name: ans_queid
             attributes: ' INT(10)         NOT NULL DEFAULT ''0'' '
         -
             name: ans_text
@@ -323,7 +323,7 @@ wgevents_categories:
     options: 'ENGINE=InnoDB'
     columns: 
         -
-            name: cat_id
+            name: cfd_id
             attributes: ' INT(8) UNSIGNED NOT NULL AUTO_INCREMENT '
         -
             name: cat_pid
@@ -332,7 +332,7 @@ wgevents_categories:
             name: cat_name
             attributes: ' VARCHAR(255)    NOT NULL DEFAULT '''''''' '
         -
-            name: cat_desc
+            name: cfd_desc
             attributes: ' TEXT            NULL '
         -
             name: cat_logo
@@ -363,65 +363,65 @@ wgevents_categories:
             attributes: ' INT(10)         NOT NULL DEFAULT ''0'' '
     keys:
         PRIMARY:
-            columns: cat_id
+            columns: cfd_id
             unique: true
-wgevents_addtypes:
+wgevents_fields:
     options: 'ENGINE=InnoDB'
     columns: 
         -
-            name: at_id
+            name: fd_id
             attributes: ' INT(8) UNSIGNED NOT NULL AUTO_INCREMENT '
         -
-            name: at_type
+            name: fd_type
             attributes: ' INT(10)         NOT NULL DEFAULT ''0'' '
         -
-            name: at_caption
+            name: fd_caption
             attributes: ' VARCHAR(255)    NOT NULL DEFAULT '''''''' '
         -
-            name: at_desc
+            name: fd_desc
             attributes: ' TEXT            NULL '
         -
-            name: at_values
+            name: fd_values
             attributes: ' TEXT            NULL '
         -
-            name: at_placeholder
+            name: fd_placeholder
             attributes: ' VARCHAR(255)    NOT NULL DEFAULT '''''''' '
         -
-            name: at_required
+            name: fd_required
             attributes: ' INT(1)          NOT NULL DEFAULT ''0'' '
         -
-            name: at_default
+            name: fd_default
             attributes: ' INT(1)          NOT NULL DEFAULT ''0'' '
         -
-            name: at_print
+            name: fd_print
             attributes: ' INT(1)          NOT NULL DEFAULT ''0'' '
         -
-            name: at_display_values
+            name: fd_display_values
             attributes: ' INT(1)          NOT NULL DEFAULT ''0'' '
         -
-            name: at_display_placeholder
+            name: fd_display_placeholder
             attributes: ' INT(1)          NOT NULL DEFAULT ''0'' '
         -
-            name: at_status
+            name: fd_status
             attributes: ' INT(1)          NOT NULL DEFAULT ''0'' '
         -
-            name: at_custom
+            name: fd_custom
             attributes: ' INT(1)          NOT NULL DEFAULT ''0'' '
         -
-            name: at_weight
+            name: fd_weight
             attributes: ' INT(10)         NOT NULL DEFAULT ''0'' '
         -
-            name: at_setid
+            name: fd_setid
             attributes: ' INT(10)         NOT NULL DEFAULT ''0'' '
         -
-            name: at_datecreated
+            name: fd_datecreated
             attributes: ' INT(11)         NOT NULL DEFAULT ''0'' '
         -
-            name: at_submitter
+            name: fd_submitter
             attributes: ' INT(10)         NOT NULL DEFAULT ''0'' '
     keys:
         PRIMARY:
-            columns: at_id
+            columns: fd_id
             unique: true
 wgevents_textblocks:
     options: 'ENGINE=InnoDB'

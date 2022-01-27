@@ -31,7 +31,7 @@ use XoopsModules\Wgevents\{
 
 
 /**
- * Class Object Handler Additionals
+ * Class Object Handler Questions
  */
 class FormelementsHandler extends \XoopsPersistableObjectHandler
 {
@@ -107,50 +107,50 @@ class FormelementsHandler extends \XoopsPersistableObjectHandler
         $field = null;
 
         switch ($this->type) {
-            case Constants::ADDTYPE_LABEL:
+            case Constants::FIELD_LABEL:
                 $field = new \XoopsFormLabel($this->caption, $this->value);
                 break;
-            case Constants::ADDTYPE_TEXTBOX:
-            case Constants::ADDTYPE_NAME:
-            case Constants::ADDTYPE_EMAIL:
+            case Constants::FIELD_TEXTBOX:
+            case Constants::FIELD_NAME:
+            case Constants::FIELD_EMAIL:
                 $field = new \XoopsFormText($this->caption, $this->name, $this->size, $this->maxlength, $this->value);
                 $field->setExtra('placeholder="' . $this->placeholder . '"');
                 $field->setDescription($this->desc);
                 break;
-            case Constants::ADDTYPE_TEXTAREA:
+            case Constants::FIELD_TEXTAREA:
                 $field = new \XoopsFormTextArea($this->caption, $this->name, $this->value, $this->rows, $this->cols);
                 $field->setDescription($this->desc);
                 break;
-            case Constants::ADDTYPE_RADIO:
+            case Constants::FIELD_RADIO:
                 $field = new \XoopsFormRadio($this->caption, $this->name, $this->value);
                 $field->addOptionArray($this->optionsArr);
                 $field->setDescription($this->desc);
                 break;
-            case Constants::ADDTYPE_RADIOYN:
+            case Constants::FIELD_RADIOYN:
                 $field = new \XoopsFormRadioYN($this->caption, $this->name, $this->value);
                 $field->setDescription($this->desc);
                 break;
-            case Constants::ADDTYPE_SELECTBOX:
+            case Constants::FIELD_SELECTBOX:
                 $field = new \XoopsFormSelect($this->caption, $this->name, $this->value);
                 //$field->addOption('');
                 $field->addOptionArray($this->optionsArr);
                 $field->setDescription($this->desc);
                 break;
-            case Constants::ADDTYPE_COMBOBOX:
+            case Constants::FIELD_COMBOBOX:
                 $field = new \XoopsFormSelect($this->caption, $this->name, $this->value, 5);
                 //$field->addOption('');
                 $field->addOptionArray($this->optionsArr);
                 $field->setDescription($this->desc);
                 break;
-            case Constants::ADDTYPE_DATE:
+            case Constants::FIELD_DATE:
                 $field = new \XoopsFormTextDateSelect($this->caption, $this->name, '', $this->value);
                 $field->setDescription($this->desc);
                 break;
-            case Constants::ADDTYPE_DATETIME:
+            case Constants::FIELD_DATETIME:
                 $field = new \XoopsFormDateTime($this->caption, $this->name, '', $this->value);
                 $field->setDescription($this->desc);
                 break;
-            case Constants::ADDTYPE_CHECKBOX:
+            case Constants::FIELD_CHECKBOX:
                 $field = new \XoopsFormCheckBox($this->caption, $this->name, $this->value);
                 if (\count($this->optionsArr) > 0) {
                     $field->addOptionArray($this->optionsArr);
@@ -159,7 +159,7 @@ class FormelementsHandler extends \XoopsPersistableObjectHandler
                 }
                 $field->setDescription($this->desc);
                 break;
-            case Constants::ADDTYPE_COUNTRY:
+            case Constants::FIELD_COUNTRY:
                 $field = new \XoopsFormSelectCountry($this->caption, $this->name, $this->value);
                 $field->setDescription($this->desc);
                 break;
@@ -180,19 +180,19 @@ class FormelementsHandler extends \XoopsPersistableObjectHandler
     public function getElementsCollection()
     {
         $ret = [];
-        $ret[Constants::ADDTYPE_LABEL]     = \_MA_WGEVENTS_ADDTYPE_LABEL;
-        $ret[Constants::ADDTYPE_TEXTBOX]   = \_MA_WGEVENTS_ADDTYPE_TEXTBOX;
-        $ret[Constants::ADDTYPE_TEXTAREA]  = \_MA_WGEVENTS_ADDTYPE_TEXTAREA;
-        $ret[Constants::ADDTYPE_RADIO]     = \_MA_WGEVENTS_ADDTYPE_RADIO;
-        $ret[Constants::ADDTYPE_RADIOYN]   = \_MA_WGEVENTS_ADDTYPE_RADIOYN;
-        $ret[Constants::ADDTYPE_SELECTBOX] = \_MA_WGEVENTS_ADDTYPE_SELECTBOX;
-        $ret[Constants::ADDTYPE_COMBOBOX]  = \_MA_WGEVENTS_ADDTYPE_COMBOBOX;
-        $ret[Constants::ADDTYPE_CHECKBOX]  = \_MA_WGEVENTS_ADDTYPE_CHECKBOX;
-        $ret[Constants::ADDTYPE_DATE]      = \_MA_WGEVENTS_ADDTYPE_DATE;
-        //$ret[Constants::ADDTYPE_DATETIME]  = \_MA_WGEVENTS_ADDTYPE_DATETIME;
-        $ret[Constants::ADDTYPE_NAME]      = \_MA_WGEVENTS_ADDTYPE_NAME;
-        $ret[Constants::ADDTYPE_EMAIL]     = \_MA_WGEVENTS_ADDTYPE_EMAIL;
-        $ret[Constants::ADDTYPE_COUNTRY]   = \_MA_WGEVENTS_ADDTYPE_COUNTRY;
+        $ret[Constants::FIELD_LABEL]     = \_MA_WGEVENTS_FIELD_LABEL;
+        $ret[Constants::FIELD_TEXTBOX]   = \_MA_WGEVENTS_FIELD_TEXTBOX;
+        $ret[Constants::FIELD_TEXTAREA]  = \_MA_WGEVENTS_FIELD_TEXTAREA;
+        $ret[Constants::FIELD_RADIO]     = \_MA_WGEVENTS_FIELD_RADIO;
+        $ret[Constants::FIELD_RADIOYN]   = \_MA_WGEVENTS_FIELD_RADIOYN;
+        $ret[Constants::FIELD_SELECTBOX] = \_MA_WGEVENTS_FIELD_SELECTBOX;
+        $ret[Constants::FIELD_COMBOBOX]  = \_MA_WGEVENTS_FIELD_COMBOBOX;
+        $ret[Constants::FIELD_CHECKBOX]  = \_MA_WGEVENTS_FIELD_CHECKBOX;
+        $ret[Constants::FIELD_DATE]      = \_MA_WGEVENTS_FIELD_DATE;
+        //$ret[Constants::FIELD_DATETIME]  = \_MA_WGEVENTS_FIELD_DATETIME;
+        $ret[Constants::FIELD_NAME]      = \_MA_WGEVENTS_FIELD_NAME;
+        $ret[Constants::FIELD_EMAIL]     = \_MA_WGEVENTS_FIELD_EMAIL;
+        $ret[Constants::FIELD_COUNTRY]   = \_MA_WGEVENTS_FIELD_COUNTRY;
 
         return $ret;
     }

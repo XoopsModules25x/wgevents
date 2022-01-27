@@ -128,7 +128,7 @@ switch ($op) {
         }
         // Set Vars
         $answersObj->setVar('ans_regid', Request::getInt('ans_regid'));
-        $answersObj->setVar('ans_addid', Request::getInt('ans_addid'));
+        $answersObj->setVar('ans_queid', Request::getInt('ans_queid'));
         $answersObj->setVar('ans_evid', Request::getInt('ans_evid'));
         $answersObj->setVar('ans_text', Request::getString('ans_text'));
         $answerDatecreatedObj = \DateTime::createFromFormat(\_SHORTDATESTRING, Request::getString('ans_datecreated'));

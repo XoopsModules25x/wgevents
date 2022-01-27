@@ -31,11 +31,11 @@ $eventsHandler = $helper->getHandler('Events');
 $categoriesHandler = $helper->getHandler('Categories');
 $registrationsHandler = $helper->getHandler('Registrations');
 $registrationshistHandler = $helper->getHandler('Registrationshist');
-$additionalsHandler = $helper->getHandler('Additionals');
+$questionsHandler = $helper->getHandler('Questions');
 $answersHandler = $helper->getHandler('Answers');
 $answershistHandler = $helper->getHandler('Answershist');
 $textblocksHandler = $helper->getHandler('Textblocks');
-$addtypesHandler = $helper->getHandler('Addtypes');
+$fieldsHandler = $helper->getHandler('Fields');
 $permissionsHandler = $helper->getHandler('Permissions');
 // 
 $myts = MyTextSanitizer::getInstance();

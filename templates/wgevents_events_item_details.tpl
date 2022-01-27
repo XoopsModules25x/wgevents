@@ -68,13 +68,13 @@
             </div>
         <{if $event.permEdit|default:false || $permApprove|default:false}>
             <div class="row">
-                <div class="col-xs-12 col-sm-3"><{$smarty.const._MA_WGEVENTS_ADDITIONALS}>: </div>
-                <div class="col-xs-12 col-sm-4"><{$event.nb_additionals}></div>
+                <div class="col-xs-12 col-sm-3"><{$smarty.const._MA_WGEVENTS_QUESTIONS}>: </div>
+                <div class="col-xs-12 col-sm-4"><{$event.nb_questions}></div>
                 <div class="col-xs-12 col-sm-5 right">
-                    <{if $event.nb_additionals|default:0 > 0 || $event.id|default:0 > 0 }>
-                        <a class='btn btn-success wge-btn' href='additionals.php?op=list&amp;add_evid=<{$event.ev_id}>' title='<{$smarty.const._MA_WGEVENTS_GOTO_ADDITIONALS}>'><{$smarty.const._MA_WGEVENTS_GOTO_ADDITIONALS}></a>
+                    <{if $event.nb_questions|default:0 > 0 || $event.id|default:0 > 0 }>
+                        <a class='btn btn-success wge-btn' href='questions.php?op=list&amp;que_evid=<{$event.ev_id}>' title='<{$smarty.const._MA_WGEVENTS_GOTO_QUESTIONS}>'><{$smarty.const._MA_WGEVENTS_GOTO_QUESTIONS}></a>
                     <{else}>
-                        <a class='btn btn-success wge-btn' href='additionals.php?op=newset&amp;add_evid=<{$event.ev_id}>' title='<{$smarty.const._MA_WGEVENTS_GOTO_ADDITIONALS}>'><{$smarty.const._MA_WGEVENTS_GOTO_ADDITIONALS}></a>
+                        <a class='btn btn-success wge-btn' href='questions.php?op=newset&amp;que_evid=<{$event.ev_id}>' title='<{$smarty.const._MA_WGEVENTS_GOTO_QUESTIONS}>'><{$smarty.const._MA_WGEVENTS_GOTO_QUESTIONS}></a>
                     <{/if}>
                 </div>
             </div>

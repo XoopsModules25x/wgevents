@@ -54,8 +54,8 @@ switch ($op) {
         $templateMain = 'wgevents_admin_maintenance.tpl';
         $err_text     = '';
 
-        $sql = 'DELETE ' . $GLOBALS['xoopsDB']->prefix('wgevents_additionals') . '.* ';
-        $sql .= 'FROM ' . $GLOBALS['xoopsDB']->prefix('wgevents_additionals') . ' LEFT JOIN ' . $GLOBALS['xoopsDB']->prefix('wgevents_events') . ' ON ' . $GLOBALS['xoopsDB']->prefix('wgevents_additionals') . '.add_evid = ' . $GLOBALS['xoopsDB']->prefix('wgevents_events') . '.ev_id ';
+        $sql = 'DELETE ' . $GLOBALS['xoopsDB']->prefix('wgevents_questions') . '.* ';
+        $sql .= 'FROM ' . $GLOBALS['xoopsDB']->prefix('wgevents_questions') . ' LEFT JOIN ' . $GLOBALS['xoopsDB']->prefix('wgevents_events') . ' ON ' . $GLOBALS['xoopsDB']->prefix('wgevents_questions') . '.que_evid = ' . $GLOBALS['xoopsDB']->prefix('wgevents_events') . '.ev_id ';
         $sql .= 'WHERE (((' . $GLOBALS['xoopsDB']->prefix('wgevents_events') . '.ev_id) Is Null))';
         if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
             $errors[] = $GLOBALS['xoopsDB']->error();
@@ -76,8 +76,8 @@ switch ($op) {
         $err_text     = '';
 
         $sql = 'DELETE ' . $GLOBALS['xoopsDB']->prefix('wgevents_answers') . '.* ';
-        $sql .= 'FROM ' . $GLOBALS['xoopsDB']->prefix('wgevents_answers') . ' LEFT JOIN ' . $GLOBALS['xoopsDB']->prefix('wgevents_additionals') . ' ON ' . $GLOBALS['xoopsDB']->prefix('wgevents_answers') . '.ans_addid = ' . $GLOBALS['xoopsDB']->prefix('wgevents_additionals') . '.add_id ';
-        $sql .= 'WHERE (((' . $GLOBALS['xoopsDB']->prefix('wgevents_additionals') . '.add_id) Is Null));';
+        $sql .= 'FROM ' . $GLOBALS['xoopsDB']->prefix('wgevents_answers') . ' LEFT JOIN ' . $GLOBALS['xoopsDB']->prefix('wgevents_questions') . ' ON ' . $GLOBALS['xoopsDB']->prefix('wgevents_answers') . '.ans_queid = ' . $GLOBALS['xoopsDB']->prefix('wgevents_questions') . '.que_id ';
+        $sql .= 'WHERE (((' . $GLOBALS['xoopsDB']->prefix('wgevents_questions') . '.que_id) Is Null));';
         if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
             $errors[] = $GLOBALS['xoopsDB']->error();
         }

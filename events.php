@@ -133,9 +133,9 @@ switch ($op) {
                 $events[$i] = $eventsAll[$i]->getValuesEvents();
                 $permEdit = $permissionsHandler->getPermEventsEdit($eventsAll[$i]->getVar('ev_submitter'), $eventsAll[$i]->getVar('ev_status')) || $uidCurrent == $eventsAll[$i]->getVar('ev_submitter');
                 $events[$i]['permEdit'] = $permEdit;
-                $crAdditionals = new \CriteriaCompo();
-                $crAdditionals->add(new \Criteria('add_evid', $i));
-                $events[$i]['nb_additionals'] = $additionalsHandler->getCount($crAdditionals);
+                $crQuestions = new \CriteriaCompo();
+                $crQuestions->add(new \Criteria('que_evid', $i));
+                $events[$i]['nb_questions'] = $questionsHandler->getCount($crQuestions);
                 $crRegistrations = new \CriteriaCompo();
                 $crRegistrations->add(new \Criteria('reg_evid', $i));
                 $numberRegCurr = $registrationsHandler->getCount($crRegistrations);
@@ -204,7 +204,7 @@ switch ($op) {
             $eventsObj = $eventsHandler->create();
         }
 
-        $continueAddtionals = Request::hasVar('continue_additionals');
+        $continueAddtionals = Request::hasVar('continue_questions');
 
         $uploaderErrors = '';
         $eventsObj->setVar('ev_catid', Request::getInt('ev_catid'));
@@ -381,24 +381,24 @@ switch ($op) {
                 \redirect_header('events.php?op=edit&ev_id=' . $newEvId, 5, $uploaderErrors);
             } else {
                 if ($evRegisterUse) {
-                    // check whether there are already additional infos
-                    $crAdditionals = new \CriteriaCompo();
-                    $crAdditionals->add(new \Criteria('add_evid', $newEvId));
+                    // check whether there are already question infos
+                    $crQuestions = new \CriteriaCompo();
+                    $crQuestions->add(new \Criteria('que_evid', $newEvId));
                     if ($evId > 0) {
                         \redirect_header('events.php?op=show&amp;ev_id=' . $evId . '&amp;start=' . $start . '&amp;limit=' . $limit, 2, \_MA_WGEVENTS_FORM_OK);
                     } else {
-                        if ($additionalsHandler->getCount($crAdditionals) > 0) {
-                            // set of additionals already existing
-                            \redirect_header('additionals.php?op=list&amp;add_evid=' . $newEvId, 2, \_MA_WGEVENTS_FORM_OK);
+                        if ($questionsHandler->getCount($crQuestions) > 0) {
+                            // set of questions already existing
+                            \redirect_header('questions.php?op=list&amp;que_evid=' . $newEvId, 2, \_MA_WGEVENTS_FORM_OK);
                         } else {
-                            // redirect to additionals.php in order to add default set of additionals
-                            \redirect_header('additionals.php?op=newset&amp;add_evid=' . $newEvId, 0, \_MA_WGEVENTS_FORM_OK);
+                            // redirect to questions.php in order to add default set of questions
+                            \redirect_header('questions.php?op=newset&amp;que_evid=' . $newEvId, 0, \_MA_WGEVENTS_FORM_OK);
                         }
                     }
                 } else {
                     if ($evId > 0) {
                         $registrationsHandler->cleanupRegistrations($evId);
-                        $additionalsHandler->cleanupAdditionals($evId);
+                        $questionsHandler->cleanupQuestions($evId);
                         $answersHandler->cleanupAnswers($evId);
                     }
                     \redirect_header('events.php?op=list&amp;start=' . $start . '&amp;limit=' . $limit, 2, \_MA_WGEVENTS_FORM_OK);
@@ -503,7 +503,7 @@ switch ($op) {
                 \redirect_header('events.php', 3, \implode(', ', $GLOBALS['xoopsSecurity']->getErrors()));
             }
             $registrationsHandler->cleanupRegistrations($evId);
-            $additionalsHandler->cleanupAdditionals($evId);
+            $questionsHandler->cleanupQuestions($evId);
             $answersHandler->cleanupAnswers($evId);
             if ($eventsHandler->delete($eventsObj)) {
                 // Event delete notification
@@ -547,9 +547,9 @@ switch ($op) {
             $eventsObj->setVar('ev_status', Constants::STATUS_CANCELED);
             $eventsObj->setVar('ev_datecreated', \time());
             $eventsObj->setVar('ev_submitter', $uidCurrent);
-            // delete all additionals/registrations/answers
+            // delete all questions/registrations/answers
             $registrationsHandler->cleanupRegistrations($evId);
-            $additionalsHandler->cleanupAdditionals($evId);
+            $questionsHandler->cleanupQuestions($evId);
             $answersHandler->cleanupAnswers($evId);
             // Insert Data
             if ($eventsHandler->insert($eventsObj)) {

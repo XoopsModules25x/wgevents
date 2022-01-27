@@ -115,11 +115,11 @@ function wgevents_check_db($module)
     if (!$numRows) {
         // create new table 'wgevents_categories'
         $sql = "CREATE TABLE `$table` (
-                  `cat_id`        INT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
+                  `cfd_id`        INT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
                   `cat_text`      VARCHAR(100)    NOT NULL DEFAULT '',
                   `cat_date`      INT(8)          NOT NULL DEFAULT '0',
                   `cat_submitter` INT(8)          NOT NULL DEFAULT '0',
-                  PRIMARY KEY (`cat_id`)
+                  PRIMARY KEY (`cfd_id`)
                 ) ENGINE=InnoDB;";
         if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
             xoops_error($GLOBALS['xoopsDB']->error() . '<br>' . $sql);

@@ -1,19 +1,19 @@
 <{include file='db:wgevents_header.tpl' }>
 
 <{if $regdefaults|default:0 > 0}>
-<h3><{$smarty.const._MA_WGEVENTS_ADDITIONALS_LIST}>: <{$eventName|default:''}></h3>
+<h3><{$smarty.const._MA_WGEVENTS_QUESTIONS_LIST}>: <{$eventName|default:''}></h3>
 <div class='table-responsivexxx'>
     <table class='table table-<{$table_type|default:false}>'>
         <thead>
             <tr class='head'>
                 <th style="width:30px;">&nbsp;</th>
-                <th><{$smarty.const._MA_WGEVENTS_ADDITIONAL_TYPE}></th>
-                <th><{$smarty.const._MA_WGEVENTS_ADDITIONAL_CAPTION}></th>
-                <th><{$smarty.const._MA_WGEVENTS_ADDITIONAL_DESC}></th>
-                <th><{$smarty.const._MA_WGEVENTS_ADDITIONAL_VALUE}></th>
-                <th><{$smarty.const._MA_WGEVENTS_ADDITIONAL_PLACEHOLDER}></th>
-                <th><{$smarty.const._MA_WGEVENTS_ADDITIONAL_REQUIRED}></th>
-                <th><{$smarty.const._MA_WGEVENTS_ADDITIONAL_PRINT}></th>
+                <th><{$smarty.const._MA_WGEVENTS_QUESTION_TYPE}></th>
+                <th><{$smarty.const._MA_WGEVENTS_QUESTION_CAPTION}></th>
+                <th><{$smarty.const._MA_WGEVENTS_QUESTION_DESC}></th>
+                <th><{$smarty.const._MA_WGEVENTS_QUESTION_VALUE}></th>
+                <th><{$smarty.const._MA_WGEVENTS_QUESTION_PLACEHOLDER}></th>
+                <th><{$smarty.const._MA_WGEVENTS_QUESTION_REQUIRED}></th>
+                <th><{$smarty.const._MA_WGEVENTS_QUESTION_PRINT}></th>
                 <th style="min-width:200px;">&nbsp;</th>
             </tr>
         </thead>
@@ -32,17 +32,17 @@
                 </tr>
             <{/foreach}>
         </tbody>
-        <tbody id="additionals-list">
-            <{foreach item=additional from=$additionals name=additional}>
-                <{include file='db:wgevents_additionals_item.tpl' }>
+        <tbody id="questions-list">
+            <{foreach item=question from=$questions name=question}>
+                <{include file='db:wgevents_questions_item.tpl' }>
             <{/foreach}>
         </tbody>
         <tfoot>
             <tr>
                 <td colspan="9" class="center">
                     <a class='btn btn-success wge-btn' href='events.php?op=show&amp;ev_id=<{$addEvid}>' title='<{$smarty.const._MA_WGEVENTS_GOTO_EVENT}>'><{$smarty.const._MA_WGEVENTS_GOTO_EVENT}></a>
-                    <a class='btn btn-primary wge-btn' href='additionals.php?op=new&amp;add_evid=<{$addEvid}>' title='<{$smarty.const._MA_WGEVENTS_ADDITIONAL_ADD}>'><{$smarty.const._MA_WGEVENTS_ADDITIONAL_ADD}></a>
-                    <a class='btn btn-success wge-btn' href='additionals.php?op=test&amp;add_evid=<{$addEvid}>' title='<{$smarty.const._MA_WGEVENTS_ADDITIONALS_PREVIEW}>'><{$smarty.const._MA_WGEVENTS_ADDITIONALS_PREVIEW}></a>
+                    <a class='btn btn-primary wge-btn' href='questions.php?op=new&amp;que_evid=<{$addEvid}>' title='<{$smarty.const._MA_WGEVENTS_QUESTION_ADD}>'><{$smarty.const._MA_WGEVENTS_QUESTION_ADD}></a>
+                    <a class='btn btn-success wge-btn' href='questions.php?op=test&amp;que_evid=<{$addEvid}>' title='<{$smarty.const._MA_WGEVENTS_QUESTIONS_PREVIEW}>'><{$smarty.const._MA_WGEVENTS_QUESTIONS_PREVIEW}></a>
                 </td>
             </tr>
         </tfoot>
