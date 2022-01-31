@@ -54,9 +54,9 @@ switch ($op) {
         $templateMain = 'wgevents_admin_maintenance.tpl';
         $err_text     = '';
 
-        $sql = 'DELETE ' . $GLOBALS['xoopsDB']->prefix('wgevents_questions') . '.* ';
-        $sql .= 'FROM ' . $GLOBALS['xoopsDB']->prefix('wgevents_questions') . ' LEFT JOIN ' . $GLOBALS['xoopsDB']->prefix('wgevents_events') . ' ON ' . $GLOBALS['xoopsDB']->prefix('wgevents_questions') . '.evid = ' . $GLOBALS['xoopsDB']->prefix('wgevents_events') . '.id ';
-        $sql .= 'WHERE (((' . $GLOBALS['xoopsDB']->prefix('wgevents_events') . '.id) Is Null))';
+        $sql = 'DELETE ' . $GLOBALS['xoopsDB']->prefix('wgevents_question') . '.* ';
+        $sql .= 'FROM ' . $GLOBALS['xoopsDB']->prefix('wgevents_question') . ' LEFT JOIN ' . $GLOBALS['xoopsDB']->prefix('wgevents_event') . ' ON ' . $GLOBALS['xoopsDB']->prefix('wgevents_question') . '.evid = ' . $GLOBALS['xoopsDB']->prefix('wgevents_event') . '.id ';
+        $sql .= 'WHERE (((' . $GLOBALS['xoopsDB']->prefix('wgevents_event') . '.id) Is Null))';
         if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
             $errors[] = $GLOBALS['xoopsDB']->error();
         }
@@ -75,9 +75,9 @@ switch ($op) {
         $templateMain = 'wgevents_admin_maintenance.tpl';
         $err_text     = '';
 
-        $sql = 'DELETE ' . $GLOBALS['xoopsDB']->prefix('wgevents_answers') . '.* ';
-        $sql .= 'FROM ' . $GLOBALS['xoopsDB']->prefix('wgevents_answers') . ' LEFT JOIN ' . $GLOBALS['xoopsDB']->prefix('wgevents_questions') . ' ON ' . $GLOBALS['xoopsDB']->prefix('wgevents_answers') . '.ans_queid = ' . $GLOBALS['xoopsDB']->prefix('wgevents_questions') . '.id ';
-        $sql .= 'WHERE (((' . $GLOBALS['xoopsDB']->prefix('wgevents_questions') . '.id) Is Null));';
+        $sql = 'DELETE ' . $GLOBALS['xoopsDB']->prefix('wgevents_answer') . '.* ';
+        $sql .= 'FROM ' . $GLOBALS['xoopsDB']->prefix('wgevents_answer') . ' LEFT JOIN ' . $GLOBALS['xoopsDB']->prefix('wgevents_question') . ' ON ' . $GLOBALS['xoopsDB']->prefix('wgevents_answer') . '.ans_queid = ' . $GLOBALS['xoopsDB']->prefix('wgevents_question') . '.id ';
+        $sql .= 'WHERE (((' . $GLOBALS['xoopsDB']->prefix('wgevents_question') . '.id) Is Null));';
         if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
             $errors[] = $GLOBALS['xoopsDB']->error();
         }
@@ -98,8 +98,8 @@ switch ($op) {
 
         $dateLimitObj = \DateTime::createFromFormat(\_SHORTDATESTRING, Request::getString('datelimit'));
         $dateLimit = date('Y-m-d', $dateLimitObj->getTimestamp());
-        $sql = 'DELETE ' . $GLOBALS['xoopsDB']->prefix('wgevents_registrations_hist') . '.* ';
-        $sql .= 'FROM ' . $GLOBALS['xoopsDB']->prefix('wgevents_registrations_hist') . ' WHERE (((' . $GLOBALS['xoopsDB']->prefix('wgevents_registrations_hist') . ".hist_datecreated)<='" . $dateLimit . "'))";
+        $sql = 'DELETE ' . $GLOBALS['xoopsDB']->prefix('wgevents_registration_hist') . '.* ';
+        $sql .= 'FROM ' . $GLOBALS['xoopsDB']->prefix('wgevents_registration_hist') . ' WHERE (((' . $GLOBALS['xoopsDB']->prefix('wgevents_registration_hist') . ".hist_datecreated)<='" . $dateLimit . "'))";
         if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
             $errors[] = $GLOBALS['xoopsDB']->error();
         }
@@ -178,11 +178,11 @@ function getUnusedImages(&$unused, $directory)
                             $crImages->add(new \Criteria('img_name', $entry));
                             $crImages->add(new \Criteria('img_namelarge', $entry), 'OR');
                             $crImages->add(new \Criteria('img_nameorig', $entry), 'OR');
-                            $imagesCount = $imagesHandler->getCount($crImages);
+                            $imageCount = $imagesHandler->getCount($crImages);
                             $crAlbums    = new \CriteriaCompo();
                             $crAlbums->add(new \Criteria('alb_image', $entry));
-                            $imagesCount += $albumsHandler->getCount($crAlbums);
-                            if (0 == $imagesCount) {
+                            $imageCount += $albumsHandler->getCount($crAlbums);
+                            if (0 == $imageCount) {
                                 $unused[] = ['name' => $entry, 'path' => $directory . '/' . $entry];
                             }
                             unset($crImages);

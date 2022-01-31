@@ -104,9 +104,9 @@ class Registration extends \XoopsObject
     {
         $helper = \XoopsModules\Wgevents\Helper::getInstance();
 
-        $eventsHandler = $helper->getHandler('Event');
-        $questionsHandler = $helper->getHandler('Question');
-        $answersHandler = $helper->getHandler('Answer');
+        $eventHandler = $helper->getHandler('Event');
+        $questionHandler = $helper->getHandler('Question');
+        $answerHandler = $helper->getHandler('Answer');
         $permissionsHandler = $helper->getHandler('Permission');
 
         if (!$action) {
@@ -123,17 +123,17 @@ class Registration extends \XoopsObject
         }
 
         $regEvid = $this->getVar('evid');
-        $eventsObj = $eventsHandler->get($regEvid);
-        $permRegistrationsApprove = $permissionsHandler->getPermRegistrationsApprove($eventsObj->getVar('submitter'), $eventsObj->getVar('status'));
-        $eventFee = (float)$eventsObj->getVar('fee');
-        $eventRegisterMax = (int)$eventsObj->getVar('register_max');
+        $eventObj = $eventHandler->get($regEvid);
+        $permRegistrationsApprove = $permissionsHandler->getPermRegistrationsApprove($eventObj->getVar('submitter'), $eventObj->getVar('status'));
+        $eventFee = (float)$eventObj->getVar('fee');
+        $eventRegisterMax = (int)$eventObj->getVar('register_max');
 
         // Get Theme Form
         \xoops_load('XoopsFormLoader');
         $form = new \XoopsThemeForm($title, 'form', $action, 'post', true);
         $form->setExtra('enctype="multipart/form-data"');
         // Form Table events
-        $form->addElement(new \XoopsFormLabel(\_MA_WGEVENTS_REGISTRATION_EVID, $eventsObj->getVAr('name')));
+        $form->addElement(new \XoopsFormLabel(\_MA_WGEVENTS_REGISTRATION_EVID, $eventObj->getVAr('name')));
         $form->addElement(new \XoopsFormHidden('evid', $this->getVar('evid')));
         // Form select regSalutation
         $regSalutationSelect = new \XoopsFormSelect(\_MA_WGEVENTS_REGISTRATION_SALUTATION, 'salutation', $this->getVar('salutation'));
@@ -160,13 +160,13 @@ class Registration extends \XoopsObject
         $regEmailTray->addElement($regEmailRadio);
         $form->addElement($regEmailTray);
         // get all questions
-        $crQuestions = new \CriteriaCompo();
-        $crQuestions->add(new \Criteria('evid', $regEvid));
-        $crQuestions->setSort('weight ASC, id');
-        $crQuestions->setOrder('DESC');
-        $questionsCount = $questionsHandler->getCount($crQuestions);
+        $crQuestion = new \CriteriaCompo();
+        $crQuestion->add(new \Criteria('evid', $regEvid));
+        $crQuestion->setSort('weight ASC, id');
+        $crQuestion->setOrder('DESC');
+        $questionsCount = $questionHandler->getCount($crQuestion);
         if ($questionsCount > 0) {
-            $questionsAll = $questionsHandler->getAll($crQuestions);
+            $questionsAll = $questionHandler->getAll($crQuestion);
             foreach (\array_keys($questionsAll) as $queId) {
                 $formelementsHandler = new FormelementsHandler();
                 $formelementsHandler->name = 'id[' . $queId . ']';
@@ -177,12 +177,12 @@ class Registration extends \XoopsObject
                 if ($answersExist) {
                     $value = '';
                     // get answers for this questions
-                    $crAnswers = new \CriteriaCompo();
-                    $crAnswers->add(new \Criteria('regid', $this->getVar('id')));
-                    $crAnswers->add(new \Criteria('queid', $queId));
-                    $answersCount = $answersHandler->getCount($crAnswers);
+                    $crAnswer = new \CriteriaCompo();
+                    $crAnswer->add(new \Criteria('regid', $this->getVar('id')));
+                    $crAnswer->add(new \Criteria('queid', $queId));
+                    $answersCount = $answerHandler->getCount($crAnswer);
                     if ($answersCount > 0) {
-                        $answersAll = $answersHandler->getAll($crAnswers);
+                        $answersAll = $answerHandler->getAll($crAnswer);
                         foreach (\array_keys($answersAll) as $ansId) {
                             if (Constants::FIELD_DATE == $queType) {
                                 $answerDateObj = \DateTime::createFromFormat(\_SHORTDATESTRING, $answersAll[$ansId]->getVar('text'));
@@ -325,9 +325,9 @@ class Registration extends \XoopsObject
     {
         $helper  = \XoopsModules\Wgevents\Helper::getInstance();
         $ret = $this->getValues($keys, $format, $maxDepth);
-        $eventsHandler = $helper->getHandler('Event');
-        $eventsObj = $eventsHandler->get($this->getVar('evid'));
-        $ret['eventname']       = $eventsObj->getVar('name');
+        $eventHandler = $helper->getHandler('Event');
+        $eventObj = $eventHandler->get($this->getVar('evid'));
+        $ret['eventname']       = $eventObj->getVar('name');
         $ret['salutation_text'] = Utility::getSalutationText($this->getVar('salutation'));
         $ret['status_text']     = Utility::getStatusText($this->getVar('status'));
         if ((int)$this->getVar('listwait') > 0) {

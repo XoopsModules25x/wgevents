@@ -27,15 +27,15 @@ $moduleDirName = \basename(__DIR__);
 $xoBreadcrumbs = [];
 // Get instance of module
 $helper = \XoopsModules\Wgevents\Helper::getInstance();
-$eventsHandler = $helper->getHandler('Event');
-$categoriesHandler = $helper->getHandler('Category');
-$registrationsHandler = $helper->getHandler('Registration');
+$eventHandler = $helper->getHandler('Event');
+$categoryHandler = $helper->getHandler('Category');
+$registrationHandler = $helper->getHandler('Registration');
 $registrationshistHandler = $helper->getHandler('Registrationhist');
-$questionsHandler = $helper->getHandler('Question');
-$answersHandler = $helper->getHandler('Answer');
-$answershistHandler = $helper->getHandler('Answerhist');
-$textblocksHandler = $helper->getHandler('Textblock');
-$fieldsHandler = $helper->getHandler('Field');
+$questionHandler = $helper->getHandler('Question');
+$answerHandler = $helper->getHandler('Answer');
+$answerhistHandler = $helper->getHandler('Answerhist');
+$textblockHandler = $helper->getHandler('Textblock');
+$fieldHandler = $helper->getHandler('Field');
 $permissionsHandler = $helper->getHandler('Permission');
 // 
 $myts = MyTextSanitizer::getInstance();

@@ -100,30 +100,30 @@ class Answer extends \XoopsObject
         $form = new \XoopsThemeForm($title, 'form', $action, 'post', true);
         $form->setExtra('enctype="multipart/form-data"');
         // Form Table registrations
-        $registrationsHandler = $helper->getHandler('Registration');
+        $registrationHandler = $helper->getHandler('Registration');
         $ansResidSelect = new \XoopsFormSelect(\_MA_WGEVENTS_ANSWER_REGID, 'regid', $this->getVar('regid'));
-        $ansResidSelect->addOptionArray($registrationsHandler->getList());
+        $ansResidSelect->addOptionArray($registrationHandler->getList());
         $form->addElement($ansResidSelect);
         // Form Table questions
-        $questionsHandler = $helper->getHandler('Question');
+        $questionHandler = $helper->getHandler('Question');
         $ansAddidSelect = new \XoopsFormSelect(\_MA_WGEVENTS_ANSWER_ADDID, 'queid', $this->getVar('queid'));
-        $crQuestions = new \CriteriaCompo();
-        $crQuestions->add(new \Criteria('evid', $this->getVar('evid')));
-        $questionsCount = $questionsHandler->getCount($crQuestions);
+        $crQuestion = new \CriteriaCompo();
+        $crQuestion->add(new \Criteria('evid', $this->getVar('evid')));
+        $questionsCount = $questionHandler->getCount($crQuestion);
         // Table view questions
         if ($questionsCount > 0) {
-            $crQuestions->setSort('weight ASC, id');
-            $crQuestions->setOrder('DESC');
-            $questionsAll = $questionsHandler->getAll($crQuestions);
+            $crQuestion->setSort('weight ASC, id');
+            $crQuestion->setOrder('DESC');
+            $questionsAll = $questionHandler->getAll($crQuestion);
             foreach (\array_keys($questionsAll) as $i) {
                 $ansAddidSelect->addOption($questionsAll[$i]->getVar('id'), $questionsAll[$i]->getVar('caption'));
             }
         }
         $form->addElement($ansAddidSelect);
         // Form Table events
-        $eventsHandler = $helper->getHandler('Event');
+        $eventHandler = $helper->getHandler('Event');
         $ansEvidSelect = new \XoopsFormSelect(\_MA_WGEVENTS_ANSWER_EVID, 'evid', $this->getVar('evid'));
-        $ansEvidSelect->addOptionArray($eventsHandler->getList());
+        $ansEvidSelect->addOptionArray($eventHandler->getList());
         $form->addElement($ansEvidSelect);
         // Form Text ansText
         $form->addElement(new \XoopsFormText(\_MA_WGEVENTS_ANSWER_TEXT, 'text', 50, 255, $this->getVar('text')));
@@ -153,18 +153,18 @@ class Answer extends \XoopsObject
     {
         $helper  = \XoopsModules\Wgevents\Helper::getInstance();
         $ret = $this->getValues($keys, $format, $maxDepth);
-        $questionsHandler = $helper->getHandler('Question');
-        $questionsObj = $questionsHandler->get($this->getVar('queid'));
+        $questionHandler = $helper->getHandler('Question');
+        $questionObj = $questionHandler->get($this->getVar('queid'));
         $queCaption = '';
-        if (\is_object($questionsObj)) {
-            $queCaption = $questionsObj->getVar('caption');
+        if (\is_object($questionObj)) {
+            $queCaption = $questionObj->getVar('caption');
         }
         $ret['quecaption']       = $queCaption;
-        $eventsHandler = $helper->getHandler('Event');
-        $eventsObj = $eventsHandler->get($this->getVar('evid'));
+        $eventHandler = $helper->getHandler('Event');
+        $eventObj = $eventHandler->get($this->getVar('evid'));
         $evName = 'invalid event';
-        if (\is_object($eventsObj)) {
-            $evName = $eventsObj->getVar('name');
+        if (\is_object($eventObj)) {
+            $evName = $eventObj->getVar('name');
         }
         $ret['eventname']        = $evName;
         $ret['datecreated_text'] = \formatTimestamp($this->getVar('datecreated'), 's');

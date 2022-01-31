@@ -38,7 +38,7 @@ class TextblockHandler extends \XoopsPersistableObjectHandler
      */
     public function __construct(\XoopsDatabase $db)
     {
-        parent::__construct($db, 'wgevents_textblocks', Textblock::class, 'id', 'name');
+        parent::__construct($db, 'wgevents_textblock', Textblock::class, 'id', 'name');
     }
 
     /**
@@ -106,19 +106,19 @@ class TextblockHandler extends \XoopsPersistableObjectHandler
 
     /**
      * Get Criteria Textblock
-     * @param        $crTextblocks
+     * @param        $crTextblock
      * @param int $start
      * @param int $limit
      * @param string $sort
      * @param string $order
      * @return int
      */
-    private function getTextblocksCriteria($crTextblocks, int $start, int $limit, string $sort, string $order)
+    private function getTextblocksCriteria($crTextblock, int $start, int $limit, string $sort, string $order)
     {
-        $crTextblocks->setStart($start);
-        $crTextblocks->setLimit($limit);
-        $crTextblocks->setSort($sort);
-        $crTextblocks->setOrder($order);
-        return $crTextblocks;
+        $crTextblock->setStart($start);
+        $crTextblock->setLimit($limit);
+        $crTextblock->setSort($sort);
+        $crTextblock->setOrder($order);
+        return $crTextblock;
     }
 }

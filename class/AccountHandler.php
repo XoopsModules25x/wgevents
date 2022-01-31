@@ -38,7 +38,7 @@ class AccountHandler extends \XoopsPersistableObjectHandler
      */
     public function __construct(\XoopsDatabase $db)
     {
-        parent::__construct($db, 'wgevents_accounts', Account::class, 'id', 'type');
+        parent::__construct($db, 'wgevents_account', Account::class, 'id', 'type');
     }
 
     /**
@@ -106,19 +106,19 @@ class AccountHandler extends \XoopsPersistableObjectHandler
 
     /**
      * Get Criteria Account
-     * @param        $crAccounts
+     * @param        $crAccount
      * @param int $start
      * @param int $limit
      * @param string $sort
      * @param string $order
      * @return int
      */
-    private function getAccountsCriteria($crAccounts, int $start, int $limit, string $sort, string $order)
+    private function getAccountsCriteria($crAccount, int $start, int $limit, string $sort, string $order)
     {
-        $crAccounts->setStart($start);
-        $crAccounts->setLimit($limit);
-        $crAccounts->setSort($sort);
-        $crAccounts->setOrder($order);
-        return $crAccounts;
+        $crAccount->setStart($start);
+        $crAccount->setLimit($limit);
+        $crAccount->setSort($sort);
+        $crAccount->setOrder($order);
+        return $crAccount;
     }
 }

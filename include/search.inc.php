@@ -41,7 +41,7 @@ function wgevents_search($queryarray, $andor, $limit, $offset, $userid)
     // search in table events
     // search keywords
     $elementCount = 0;
-    $eventsHandler = $helper->getHandler('Event');
+    $eventHandler = $helper->getHandler('Event');
     if (\is_array($queryarray)) {
         $elementCount = \count($queryarray);
     }
@@ -75,11 +75,11 @@ function wgevents_search($queryarray, $andor, $limit, $offset, $userid)
     $crSearch->setLimit($limit);
     $crSearch->setSort('datecreated');
     $crSearch->setOrder('DESC');
-    $eventsAll = $eventsHandler->getAll($crSearch);
+    $eventsAll = $eventHandler->getAll($crSearch);
     foreach (\array_keys($eventsAll) as $i) {
         $ret[] = [
             'image'  => 'assets/icons/16/events.png',
-            'link'   => 'events.php?op=show&amp;id=' . $eventsAll[$i]->getVar('id'),
+            'link'   => 'event.php?op=show&amp;id=' . $eventsAll[$i]->getVar('id'),
             'title'  => $eventsAll[$i]->getVar('name'),
             'time'   => $eventsAll[$i]->getVar('datecreated')
         ];

@@ -107,10 +107,10 @@ class Category extends \XoopsObject
         $form = new \XoopsThemeForm($title, 'form', $action, 'post', true);
         $form->setExtra('enctype="multipart/form-data"');
         // Form Table categories
-        $categoriesHandler = $helper->getHandler('Category');
+        $categoryHandler = $helper->getHandler('Category');
         $catPidSelect = new \XoopsFormSelect(\_AM_WGEVENTS_CATEGORY_PID, 'pid', $this->getVar('pid'));
         $catPidSelect->addOption('');
-        $catPidSelect->addOptionArray($categoriesHandler->getList());
+        $catPidSelect->addOptionArray($categoryHandler->getList());
         $form->addElement($catPidSelect);
         // Form Text catName
         $form->addElement(new \XoopsFormText(\_AM_WGEVENTS_CATEGORY_NAME, 'name', 50, 255, $this->getVar('name')), true);
@@ -168,7 +168,7 @@ class Category extends \XoopsObject
         // Form Text catWeight
         $catWeight = $this->getVar('weight');
         if ($this->isNew()) {
-            $catWeight = $categoriesHandler->getNextWeight();
+            $catWeight = $categoryHandler->getNextWeight();
         }
         $form->addElement(new \XoopsFormText(\_MA_WGEVENTS_WEIGHT, 'weight', 50, 255, $catWeight));
         // Form Text Date Select catDatecreated
@@ -250,10 +250,10 @@ class Category extends \XoopsObject
         $helper  = \XoopsModules\Wgevents\Helper::getInstance();
         $utility = new \XoopsModules\Wgevents\Utility();
         $ret = $this->getValues($keys, $format, $maxDepth);
-        $categoriesHandler = $helper->getHandler('Category');
-        $categoriesObj = $categoriesHandler->get($this->getVar('pid'));
+        $categoryHandler = $helper->getHandler('Category');
+        $categoryObj = $categoryHandler->get($this->getVar('pid'));
         $editorMaxchar = $helper->getConfig('admin_maxchar');
-        $ret['pid_text']         = $categoriesObj->getVar('name');
+        $ret['pid_text']         = $categoryObj->getVar('name');
         $ret['desc_text']        = $this->getVar('desc', 'e');
         $ret['desc_short']       = $utility::truncateHtml($ret['desc_text'], $editorMaxchar);
         $ret['status_text']      = Utility::getStatusText($this->getVar('status'));

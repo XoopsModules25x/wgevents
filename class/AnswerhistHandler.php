@@ -38,7 +38,7 @@ class AnswerhistHandler extends \XoopsPersistableObjectHandler
      */
     public function __construct(\XoopsDatabase $db)
     {
-        parent::__construct($db, 'wgevents_answers_hist', Answerhist::class, 'hist_id', 'id');
+        parent::__construct($db, 'wgevents_answer_hist', Answerhist::class, 'hist_id', 'id');
     }
 
     /**
@@ -76,16 +76,16 @@ class AnswerhistHandler extends \XoopsPersistableObjectHandler
         if ($helper->getConfig('use_register_hist')) {
             $submitter = \is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->uid() : 0;
 
-            $answersHandler = $helper->getHandler('Answer');
-            $answershistHandler = $helper->getHandler('Answerhist');
-            $crAnswers = new \CriteriaCompo();
-            $crAnswers->add(new \Criteria('evid', $regEvid));
-            $crAnswers->add(new \Criteria('regid', $regId));
-            $answersCount = $answersHandler->getCount($crAnswers);
+            $answerHandler = $helper->getHandler('Answer');
+            $answerhistHandler = $helper->getHandler('Answerhist');
+            $crAnswer = new \CriteriaCompo();
+            $crAnswer->add(new \Criteria('evid', $regEvid));
+            $crAnswer->add(new \Criteria('regid', $regId));
+            $answersCount = $answerHandler->getCount($crAnswer);
             if ($answersCount > 0) {
-                $answersAll = $answersHandler->getAll($crAnswers);
+                $answersAll = $answerHandler->getAll($crAnswer);
                 foreach (\array_keys($answersAll) as $i) {
-                    $answershistObj = $answershistHandler->create();
+                    $answershistObj = $answerhistHandler->create();
                     $answershistObj->setVar('hist_info', $info);
                     $answershistObj->setVar('hist_datecreated', \time());
                     $answershistObj->setVar('hist_submitter', $submitter);
@@ -93,7 +93,7 @@ class AnswerhistHandler extends \XoopsPersistableObjectHandler
                     foreach (\array_keys($vars) as $var) {
                         $answershistObj->setVar($var, $answersAll[$i]->getVar($var));
                     }
-                    $answershistHandler->insert($answershistObj);
+                    $answerhistHandler->insert($answershistObj);
                 }
             }
 

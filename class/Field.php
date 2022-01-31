@@ -102,7 +102,7 @@ class Field extends \XoopsObject
     {
         $helper = \XoopsModules\Wgevents\Helper::getInstance();
 
-        $fieldsHandler = $helper->getHandler('Field');
+        $fieldHandler = $helper->getHandler('Field');
 
         if (!$action) {
             $action = $_SERVER['REQUEST_URI'];
@@ -150,7 +150,7 @@ class Field extends \XoopsObject
         $fdDisplayPlaceholder = $this->isNew() ? 1 : $this->getVar('display_placeholder');
         $form->addElement(new \XoopsFormRadioYN(\_AM_WGEVENTS_FIELD_DISPLAY_PLACEHOLDER, 'display_placeholder', $fdDisplayPlaceholder));
         // Form Text fdWeight
-        $fdWeight = $this->isNew() ? $fieldsHandler->getNextWeight() : $this->getVar('weight');
+        $fdWeight = $this->isNew() ? $fieldHandler->getNextWeight() : $this->getVar('weight');
         $form->addElement(new \XoopsFormText(\_MA_WGEVENTS_WEIGHT, 'weight', 50, 255, $fdWeight));
         // Form Select Status fdStatus
         $fdStatus = $this->isNew() ? Constants::STATUS_OFFLINE : $this->getVar('status');

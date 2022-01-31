@@ -39,7 +39,7 @@ class EventHandler extends \XoopsPersistableObjectHandler
      */
     public function __construct(\XoopsDatabase $db)
     {
-        parent::__construct($db, 'wgevents_events', Event::class, 'id', 'name');
+        parent::__construct($db, 'wgevents_event', Event::class, 'id', 'name');
     }
 
     /**
@@ -107,20 +107,20 @@ class EventHandler extends \XoopsPersistableObjectHandler
 
     /**
      * Get Criteria Event
-     * @param        $crEvents
+     * @param        $crEvent
      * @param int $start
      * @param int $limit
      * @param string $sort
      * @param string $order
      * @return int
      */
-    private function getEventsCriteria($crEvents, int $start, int $limit, string $sort, string $order)
+    private function getEventsCriteria($crEvent, int $start, int $limit, string $sort, string $order)
     {
-        $crEvents->setStart($start);
-        $crEvents->setLimit($limit);
-        $crEvents->setSort($sort);
-        $crEvents->setOrder($order);
-        return $crEvents;
+        $crEvent->setStart($start);
+        $crEvent->setLimit($limit);
+        $crEvent->setSort($sort);
+        $crEvent->setOrder($order);
+        return $crEvent;
     }
 
     /**
@@ -139,10 +139,10 @@ class EventHandler extends \XoopsPersistableObjectHandler
         $form = new \XoopsThemeForm(\_MA_WGEVENTS_EVENT_SELECT, 'form', $action, 'post', true);
         $form->setExtra('enctype="multipart/form-data"');
         // Form Table categories
-        $eventsHandler = $helper->getHandler('Event');
+        $eventHandler = $helper->getHandler('Event');
         $evidSelect = new \XoopsFormSelect(\_MA_WGEVENTS_EVENT_ID, 'evid', 0);
         $evidSelect->addOption('');
-        $evidSelect->addOptionArray($eventsHandler->getList());
+        $evidSelect->addOptionArray($eventHandler->getList());
         $evidSelect->setExtra("onchange='submit()'");
         $form->addElement($evidSelect);
         // To list
@@ -169,23 +169,23 @@ class EventHandler extends \XoopsPersistableObjectHandler
      */
     public function getEvents($start = 0, $limit = 0, $from = 0, $to = 0, $catid = 0, $sortBy = 'id', $orderBy = 'DESC')
     {
-        $crEvents = new \CriteriaCompo();
+        $crEvent = new \CriteriaCompo();
         if ($catid >  0) {
-            $crEvents->add(new \Criteria('catid', $catid));
+            $crEvent->add(new \Criteria('catid', $catid));
         }
         if ($from >  0) {
-            $crEvents->add(new \Criteria('datefrom', $from, '>='));
-            $crEvents->add(new \Criteria('dateto', $to, '<='));
+            $crEvent->add(new \Criteria('datefrom', $from, '>='));
+            $crEvent->add(new \Criteria('dateto', $to, '<='));
         }
-        $crEvents->setSort($sortBy);
-        $crEvents->setOrder($orderBy);
-        $eventsCount = $this->getCount($crEvents);
+        $crEvent->setSort($sortBy);
+        $crEvent->setOrder($orderBy);
+        $eventsCount = $this->getCount($crEvent);
         if ($eventsCount > 0) {
             if ($limit > 0) {
-                $crEvents->setStart($start);
-                $crEvents->setLimit($limit);
+                $crEvent->setStart($start);
+                $crEvent->setLimit($limit);
             }
-            $eventsAll = $this->getAll($crEvents);
+            $eventsAll = $this->getAll($crEvent);
             // Get All Event
             $events = [];
             foreach (\array_keys($eventsAll) as $i) {

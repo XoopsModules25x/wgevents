@@ -38,7 +38,7 @@ class LogHandler extends \XoopsPersistableObjectHandler
      */
     public function __construct(\XoopsDatabase $db)
     {
-        parent::__construct($db, 'wgevents_logs', Log::class, 'id', 'text');
+        parent::__construct($db, 'wgevents_log', Log::class, 'id', 'text');
     }
 
     /**
@@ -106,20 +106,20 @@ class LogHandler extends \XoopsPersistableObjectHandler
 
     /**
      * Get Criteria Log
-     * @param        $crLogs
+     * @param        $crLog
      * @param int $start
      * @param int $limit
      * @param string $sort
      * @param string $order
      * @return int
      */
-    private function getLogsCriteria($crLogs, int $start, int $limit, string $sort, string $order)
+    private function getLogsCriteria($crLog, int $start, int $limit, string $sort, string $order)
     {
-        $crLogs->setStart($start);
-        $crLogs->setLimit($limit);
-        $crLogs->setSort($sort);
-        $crLogs->setOrder($order);
-        return $crLogs;
+        $crLog->setStart($start);
+        $crLog->setLimit($limit);
+        $crLog->setSort($sort);
+        $crLog->setOrder($order);
+        return $crLog;
     }
 
     /**
@@ -133,13 +133,13 @@ class LogHandler extends \XoopsPersistableObjectHandler
 
         if ($helper->getConfig('use_logs')) {
             $logSubmitter = \is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->uid() : 0;
-            $logsObj = $this->create();
+            $logObj = $this->create();
             // Set Vars
-            $logsObj->setVar('text', $text);
-            $logsObj->setVar('datecreated', \time());
-            $logsObj->setVar('submitter', $logSubmitter);
+            $logObj->setVar('text', $text);
+            $logObj->setVar('datecreated', \time());
+            $logObj->setVar('submitter', $logSubmitter);
             // Insert Data
-            $this->insert($logsObj);
+            $this->insert($logObj);
         }
     }
 }

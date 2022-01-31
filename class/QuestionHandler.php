@@ -38,7 +38,7 @@ class QuestionHandler extends \XoopsPersistableObjectHandler
      */
     public function __construct(\XoopsDatabase $db)
     {
-        parent::__construct($db, 'wgevents_questions', Question::class, 'id', 'id');
+        parent::__construct($db, 'wgevents_question', Question::class, 'id', 'id');
     }
 
     /**
@@ -106,20 +106,20 @@ class QuestionHandler extends \XoopsPersistableObjectHandler
 
     /**
      * Get Criteria Question
-     * @param        $crQuestions
+     * @param        $crQuestion
      * @param int $start
      * @param int $limit
      * @param string $sort
      * @param string $order
      * @return \CriteriaCompo
      */
-    private function getQuestionsCriteria($crQuestions, int $start, int $limit, string $sort, string $order)
+    private function getQuestionsCriteria($crQuestion, int $start, int $limit, string $sort, string $order)
     {
-        $crQuestions->setStart($start);
-        $crQuestions->setLimit($limit);
-        $crQuestions->setSort($sort);
-        $crQuestions->setOrder($order);
-        return $crQuestions;
+        $crQuestion->setStart($start);
+        $crQuestion->setLimit($limit);
+        $crQuestion->setSort($sort);
+        $crQuestion->setOrder($order);
+        return $crQuestion;
     }
 
     /**
@@ -132,32 +132,32 @@ class QuestionHandler extends \XoopsPersistableObjectHandler
         $helper = \XoopsModules\Wgevents\Helper::getInstance();
 
         $uidCurrent = \is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->uid() : 0;
-        $fieldsHandler = $helper->getHandler('Field');
-        $questionsHandler = $helper->getHandler('Question');
+        $fieldHandler = $helper->getHandler('Field');
+        $questionHandler = $helper->getHandler('Question');
 
         $crAddTypes = new \CriteriaCompo();
         $crAddTypes->add(new \Criteria('default', 1));
-        $fieldsCount = $fieldsHandler->getCount($crAddTypes);
+        $fieldsCount = $fieldHandler->getCount($crAddTypes);
         if ($fieldsCount > 0) {
             $crAddTypes->setSort('weight asc, id');
             $crAddTypes->setOrder('ASC');
-            $fieldsAll = $fieldsHandler->getAll($crAddTypes);
+            $fieldsAll = $fieldHandler->getAll($crAddTypes);
             // Get All AddTypes
             foreach (\array_keys($fieldsAll) as $i) {
-                $questionsObj = $questionsHandler->create();
-                $questionsObj->setVar('evid', $addEvid);
-                $questionsObj->setVar('type', $fieldsAll[$i]->getVar('type'));
-                $questionsObj->setVar('caption', $fieldsAll[$i]->getVar('caption'));
-                $questionsObj->setVar('desc', $fieldsAll[$i]->getVar('desc'));
-                $questionsObj->setVar('values', (string)$fieldsAll[$i]->getVar('values'));
-                $questionsObj->setVar('placeholder', $fieldsAll[$i]->getVar('placeholder'));
-                $questionsObj->setVar('required', $fieldsAll[$i]->getVar('required'));
-                $questionsObj->setVar('print', $fieldsAll[$i]->getVar('print'));
-                $questionsObj->setVar('weight', $i);
-                $questionsObj->setVar('datecreated', \time());
-                $questionsObj->setVar('submitter', $uidCurrent);
+                $questionObj = $questionHandler->create();
+                $questionObj->setVar('evid', $addEvid);
+                $questionObj->setVar('type', $fieldsAll[$i]->getVar('type'));
+                $questionObj->setVar('caption', $fieldsAll[$i]->getVar('caption'));
+                $questionObj->setVar('desc', $fieldsAll[$i]->getVar('desc'));
+                $questionObj->setVar('values', (string)$fieldsAll[$i]->getVar('values'));
+                $questionObj->setVar('placeholder', $fieldsAll[$i]->getVar('placeholder'));
+                $questionObj->setVar('required', $fieldsAll[$i]->getVar('required'));
+                $questionObj->setVar('print', $fieldsAll[$i]->getVar('print'));
+                $questionObj->setVar('weight', $i);
+                $questionObj->setVar('datecreated', \time());
+                $questionObj->setVar('submitter', $uidCurrent);
                 // Insert Data
-                $questionsHandler->insert($questionsObj);
+                $questionHandler->insert($questionObj);
             }
         }
 
@@ -172,11 +172,11 @@ class QuestionHandler extends \XoopsPersistableObjectHandler
     public function cleanupQuestions(int $evId)
     {
         if ($evId > 0) {
-            $crQuestions = new \CriteriaCompo();
-            $crQuestions->add(new \Criteria('evid', $evId));
-            $questionsCount = $this->getCount($crQuestions);
+            $crQuestion = new \CriteriaCompo();
+            $crQuestion->add(new \Criteria('evid', $evId));
+            $questionsCount = $this->getCount($crQuestion);
             if ($questionsCount > 0) {
-                return $this->deleteAll($crQuestions, true);
+                return $this->deleteAll($crQuestion, true);
             }
         }
         return true;
@@ -192,16 +192,16 @@ class QuestionHandler extends \XoopsPersistableObjectHandler
     {
         $questionsArr = [];
         if ($evId > 0) {
-            $crQuestions = new \CriteriaCompo();
-            $crQuestions->add(new \Criteria('evid', $evId));
-            $crQuestions->setSort('weight ASC, id');
-            $crQuestions->setOrder('DESC');
+            $crQuestion = new \CriteriaCompo();
+            $crQuestion->add(new \Criteria('evid', $evId));
+            $crQuestion->setSort('weight ASC, id');
+            $crQuestion->setOrder('DESC');
             if ($onlyPrintable) {
-                $crQuestions->add(new \Criteria('print', 1));
+                $crQuestion->add(new \Criteria('print', 1));
             }
-            $questionsCount = $this->getCount($crQuestions);
+            $questionsCount = $this->getCount($crQuestion);
             if ($questionsCount > 0) {
-                $questionsAll = $this->getAll($crQuestions);
+                $questionsAll = $this->getAll($crQuestion);
                 foreach (\array_keys($questionsAll) as $queId) {
                     $questionsArr[$queId] = [
                         'caption' => $questionsAll[$queId]->getVar('caption'),
@@ -225,14 +225,14 @@ class QuestionHandler extends \XoopsPersistableObjectHandler
     {
         $nextValue = 0;
 
-        $crQuestions = new \CriteriaCompo();
-        $crQuestions->add(new \Criteria('evid', $evId));
-        $crQuestions->setSort('weight');
-        $crQuestions->setOrder('DESC');
-        $crQuestions->setLimit(1);
-        $questionsCount = $this->getCount($crQuestions);
+        $crQuestion = new \CriteriaCompo();
+        $crQuestion->add(new \Criteria('evid', $evId));
+        $crQuestion->setSort('weight');
+        $crQuestion->setOrder('DESC');
+        $crQuestion->setLimit(1);
+        $questionsCount = $this->getCount($crQuestion);
         if ($questionsCount > 0) {
-            $questionsAll = $this->getAll($crQuestions);
+            $questionsAll = $this->getAll($crQuestion);
             foreach (\array_keys($questionsAll) as $queId) {
                 $nextValue = $questionsAll[$queId]->getVar('weight');
             }

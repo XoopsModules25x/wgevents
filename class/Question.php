@@ -95,8 +95,8 @@ class Question extends \XoopsObject
     {
         $helper = \XoopsModules\Wgevents\Helper::getInstance();
 
-        $eventsHandler = $helper->getHandler('Event');
-        $questionsHandler = $helper->getHandler('Question');
+        $eventHandler = $helper->getHandler('Event');
+        $questionHandler = $helper->getHandler('Question');
 
         if (!$action) {
             $action = $_SERVER['REQUEST_URI'];
@@ -111,21 +111,21 @@ class Question extends \XoopsObject
         // Form Table events
         $evId = $this->getVar('evid');
         $addEvidSelect = new \XoopsFormSelect(\_MA_WGEVENTS_QUESTION_EVID, 'evid', $evId);
-        $addEvidSelect->addOptionArray($eventsHandler->getList());
+        $addEvidSelect->addOptionArray($eventHandler->getList());
         $form->addElement($addEvidSelect);
         // Form Select queType
         $queType = (int)$this->getVar('fdid') > 0 ? (int)$this->getVar('fdid') : 1; //set default for new as 'Infofield
         $enableValues = true;
         $enablePlaceholder = true;
         $queTypeSelect = new \XoopsFormSelect(\_MA_WGEVENTS_QUESTION_TYPE, 'type', $queType);
-        $fieldsHandler = $helper->getHandler('Field');
-        $crFields = new \CriteriaCompo();
-        $crFields->add(new \Criteria('status', Constants::STATUS_ONLINE));
-        $crFields->setSort('weight');
-        $crFields->setOrder('ASC');
-        $fieldsCount = $fieldsHandler->getCount($crFields);
+        $fieldHandler = $helper->getHandler('Field');
+        $crField = new \CriteriaCompo();
+        $crField->add(new \Criteria('status', Constants::STATUS_ONLINE));
+        $crField->setSort('weight');
+        $crField->setOrder('ASC');
+        $fieldsCount = $fieldHandler->getCount($crField);
         if ($fieldsCount > 0) {
-            $fieldsAll = $fieldsHandler->getAll($crFields);
+            $fieldsAll = $fieldHandler->getAll($crField);
             foreach (\array_keys($fieldsAll) as $i) {
                 $queTypeSelect->addOption($i, $fieldsAll[$i]->getVar('caption'));
                 $form->addElement(new \XoopsFormHidden('caption_def[' . $i . ']', $fieldsAll[$i]->getVar('caption')));
@@ -180,7 +180,7 @@ class Question extends \XoopsObject
         $quePrintField->setDescription(\_MA_WGEVENTS_QUESTION_PRINT_DESC);
         $form->addElement($quePrintField);
         // Form Text queWeight
-        $queWeight = $this->isNew() ? $questionsHandler->getNextWeight($evId) : $this->getVar('weight');
+        $queWeight = $this->isNew() ? $questionHandler->getNextWeight($evId) : $this->getVar('weight');
         if ($isAdmin) {
             $form->addElement(new \XoopsFormText(\_MA_WGEVENTS_WEIGHT, 'weight', 50, 255, $queWeight));
         } else {
@@ -202,7 +202,7 @@ class Question extends \XoopsObject
         $form->addElement(new \XoopsFormHidden('op', 'save'));
         $form->addElement(new \XoopsFormHidden('start', $this->start));
         $form->addElement(new \XoopsFormHidden('limit', $this->limit));
-        $form->addElement(new \XoopsFormButtonTray('', \_SUBMIT, 'submit', '', false));
+        $form->addElement(new \XoopsFormButtonTray('submit', \_SUBMIT, 'submit', '', false));
         return $form;
     }
 
@@ -221,9 +221,9 @@ class Question extends \XoopsObject
         $fieldsAll = $formelementsHandler->getElementsCollection();
         $editorMaxchar = $helper->getConfig('admin_maxchar');
         $ret = $this->getValues($keys, $format, $maxDepth);
-        $eventsHandler = $helper->getHandler('Event');
-        $eventsObj = $eventsHandler->get($this->getVar('evid'));
-        $ret['eventname']  = $eventsObj->getVar('name');
+        $eventHandler = $helper->getHandler('Event');
+        $eventObj = $eventHandler->get($this->getVar('evid'));
+        $ret['eventname']  = $eventObj->getVar('name');
         $ret['type_text']  = $fieldsAll[$this->getVar('type')];
         $ret['desc_text']  = $this->getVar('desc', 'e');
         $ret['desc_short'] = $utility::truncateHtml($ret['desc_text'], $editorMaxchar);

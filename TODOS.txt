@@ -17,6 +17,8 @@ maintenance????
 
 Activate and adapt notification system
 
+maintenance/case 'anon_data_exec': * for table registration
+
 
 
 

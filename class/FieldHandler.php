@@ -38,7 +38,7 @@ class FieldHandler extends \XoopsPersistableObjectHandler
      */
     public function __construct(\XoopsDatabase $db)
     {
-        parent::__construct($db, 'wgevents_fields', Field::class, 'id', 'caption');
+        parent::__construct($db, 'wgevents_field', Field::class, 'id', 'caption');
     }
 
     /**
@@ -106,20 +106,20 @@ class FieldHandler extends \XoopsPersistableObjectHandler
 
     /**
      * Get Criteria Field
-     * @param        $crFields
+     * @param        $crField
      * @param int $start
      * @param int $limit
      * @param string $sort
      * @param string $order
      * @return int
      */
-    private function getFieldsCriteria($crFields, int $start, int $limit, string $sort, string $order)
+    private function getFieldsCriteria($crField, int $start, int $limit, string $sort, string $order)
     {
-        $crFields->setStart($start);
-        $crFields->setLimit($limit);
-        $crFields->setSort($sort);
-        $crFields->setOrder($order);
-        return $crFields;
+        $crField->setStart($start);
+        $crField->setLimit($limit);
+        $crField->setSort($sort);
+        $crField->setOrder($order);
+        return $crField;
     }
 
     /**
@@ -131,13 +131,13 @@ class FieldHandler extends \XoopsPersistableObjectHandler
     {
         $nextValue = 0;
 
-        $crFields = new \CriteriaCompo();
-        $crFields->setSort('weight');
-        $crFields->setOrder('DESC');
-        $crFields->setLimit(1);
-        $fieldsCount = $this->getCount($crFields);
+        $crField = new \CriteriaCompo();
+        $crField->setSort('weight');
+        $crField->setOrder('DESC');
+        $crField->setLimit(1);
+        $fieldsCount = $this->getCount($crField);
         if ($fieldsCount > 0) {
-            $fieldsAll = $this->getAll($crFields);
+            $fieldsAll = $this->getAll($crField);
             foreach (\array_keys($fieldsAll) as $i) {
                 $nextValue = $fieldsAll[$i]->getVar('weight');
             }

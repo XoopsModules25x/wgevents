@@ -39,7 +39,7 @@ class RegistrationhistHandler extends \XoopsPersistableObjectHandler
      */
     public function __construct(\XoopsDatabase $db)
     {
-        parent::__construct($db, 'wgevents_registrations_hist', Registrationhist::class, 'hist_id', 'id');
+        parent::__construct($db, 'wgevents_registration_hist', Registrationhist::class, 'hist_id', 'id');
     }
 
     /**
@@ -66,11 +66,11 @@ class RegistrationhistHandler extends \XoopsPersistableObjectHandler
 
     /**
      * @public function to create history of given dataset
-     * @param object $registrationsObj
+     * @param object $registrationObj
      * @param string $info
      * @return bool
      */
-    public function createHistory(object $registrationsObj, string $info)
+    public function createHistory(object $registrationObj, string $info)
     {
         $helper = \XoopsModules\Wgevents\Helper::getInstance();
         if ($helper->getConfig('use_register_hist')) {
@@ -81,9 +81,9 @@ class RegistrationhistHandler extends \XoopsPersistableObjectHandler
             $registrationshistObj->setVar('hist_info', $info);
             $registrationshistObj->setVar('hist_datecreated', \time());
             $registrationshistObj->setVar('hist_submitter', $submitter);
-            $vars = $registrationsObj->getVars();
+            $vars = $registrationObj->getVars();
             foreach (\array_keys($vars) as $var) {
-                $registrationshistObj->setVar($var, $registrationsObj->getVar($var));
+                $registrationshistObj->setVar($var, $registrationObj->getVar($var));
             }
             $registrationshistHandler->insert($registrationshistObj);
 

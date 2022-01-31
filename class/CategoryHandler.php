@@ -38,7 +38,7 @@ class CategoryHandler extends \XoopsPersistableObjectHandler
      */
     public function __construct(\XoopsDatabase $db)
     {
-        parent::__construct($db, 'wgevents_categories', Category::class, 'id', 'name');
+        parent::__construct($db, 'wgevents_category', Category::class, 'id', 'name');
     }
 
     /**
@@ -106,20 +106,20 @@ class CategoryHandler extends \XoopsPersistableObjectHandler
 
     /**
      * Get Criteria Category
-     * @param        $crCategories
+     * @param        $crCategory
      * @param int $start
      * @param int $limit
      * @param string $sort
      * @param string $order
      * @return int
      */
-    private function getCategoriesCriteria($crCategories, int $start, int $limit, string $sort, string $order)
+    private function getCategoriesCriteria($crCategory, int $start, int $limit, string $sort, string $order)
     {
-        $crCategories->setStart($start);
-        $crCategories->setLimit($limit);
-        $crCategories->setSort($sort);
-        $crCategories->setOrder($order);
-        return $crCategories;
+        $crCategory->setStart($start);
+        $crCategory->setLimit($limit);
+        $crCategory->setSort($sort);
+        $crCategory->setOrder($order);
+        return $crCategory;
     }
 
     /**
@@ -131,13 +131,13 @@ class CategoryHandler extends \XoopsPersistableObjectHandler
     {
         $nextValue = 0;
 
-        $crCategories = new \CriteriaCompo();
-        $crCategories->setSort('weight');
-        $crCategories->setOrder('DESC');
-        $crCategories->setLimit(1);
-        $categoriesCount = $this->getCount($crCategories);
+        $crCategory = new \CriteriaCompo();
+        $crCategory->setSort('weight');
+        $crCategory->setOrder('DESC');
+        $crCategory->setLimit(1);
+        $categoriesCount = $this->getCount($crCategory);
         if ($categoriesCount > 0) {
-            $categoriesAll = $this->getAll($crCategories);
+            $categoriesAll = $this->getAll($crCategory);
             foreach (\array_keys($categoriesAll) as $i) {
                 $nextValue = $categoriesAll[$i]->getVar('weight');
             }

@@ -30,14 +30,14 @@ require __DIR__ . '/header.php';
 $templateMain = 'wgevents_admin_index.tpl';
 
 // Count elements
-$countEvents = $eventsHandler->getCount();
-$countQuestions = $questionsHandler->getCount();
-$countAnswers = $answersHandler->getCount();
-$countRegistrations = $registrationsHandler->getCount();
-$countCategories = $categoriesHandler->getCount();
-$countFields = $fieldsHandler->getCount();
-$countTextblocks = $textblocksHandler->getCount();
-$countLogs = $logsHandler->getCount();
+$countEvents = $eventHandler->getCount();
+$countQuestions = $questionHandler->getCount();
+$countAnswers = $answerHandler->getCount();
+$countRegistrations = $registrationHandler->getCount();
+$countCategories = $categoryHandler->getCount();
+$countFields = $fieldHandler->getCount();
+$countTextblocks = $textblockHandler->getCount();
+$countLogs = $logHandler->getCount();
 
 // InfoBox Statistics
 $adminObject->addInfoBox(\_AM_WGEVENTS_STATISTICS);

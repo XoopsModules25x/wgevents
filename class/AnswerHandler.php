@@ -38,7 +38,7 @@ class AnswerHandler extends \XoopsPersistableObjectHandler
      */
     public function __construct(\XoopsDatabase $db)
     {
-        parent::__construct($db, 'wgevents_answers', Answer::class, 'id', 'evid');
+        parent::__construct($db, 'wgevents_answer', Answer::class, 'id', 'evid');
     }
 
     /**
@@ -106,20 +106,20 @@ class AnswerHandler extends \XoopsPersistableObjectHandler
 
     /**
      * Get Criteria Answer
-     * @param        $crAnswers
+     * @param        $crAnswer
      * @param int $start
      * @param int $limit
      * @param string $sort
      * @param string $order
      * @return \CriteriaCompo
      */
-    private function getAnswersCriteria($crAnswers, int $start, int $limit, string $sort, string $order)
+    private function getAnswersCriteria($crAnswer, int $start, int $limit, string $sort, string $order)
     {
-        $crAnswers->setStart($start);
-        $crAnswers->setLimit($limit);
-        $crAnswers->setSort($sort);
-        $crAnswers->setOrder($order);
-        return $crAnswers;
+        $crAnswer->setStart($start);
+        $crAnswer->setLimit($limit);
+        $crAnswer->setSort($sort);
+        $crAnswer->setOrder($order);
+        return $crAnswer;
     }
 
     /**
@@ -131,14 +131,14 @@ class AnswerHandler extends \XoopsPersistableObjectHandler
     public function cleanupAnswers($evId, $regId = 0)
     {
         if ($evId > 0) {
-            $crAnswers = new \CriteriaCompo();
-            $crAnswers->add(new \Criteria('evid', $evId));
+            $crAnswer = new \CriteriaCompo();
+            $crAnswer->add(new \Criteria('evid', $evId));
             if ($regId > 0) {
-                $crAnswers->add(new \Criteria('regid', $regId));
+                $crAnswer->add(new \Criteria('regid', $regId));
             }
-            $answersCount = $this->getCount($crAnswers);
+            $answersCount = $this->getCount($crAnswer);
             if ($answersCount > 0) {
-                return $this->deleteAll($crAnswers, true);
+                return $this->deleteAll($crAnswer, true);
             }
         }
         return true;
@@ -155,12 +155,12 @@ class AnswerHandler extends \XoopsPersistableObjectHandler
         $answers = [];
         foreach ($questionsArr as $queId => $addItem) {
             // get answers for this questions
-            $crAnswers = new \CriteriaCompo();
-            $crAnswers->add(new \Criteria('regid', $regId));
-            $crAnswers->add(new \Criteria('queid', $queId));
-            $answersCount = $this->getCount($crAnswers);
+            $crAnswer = new \CriteriaCompo();
+            $crAnswer->add(new \Criteria('regid', $regId));
+            $crAnswer->add(new \Criteria('queid', $queId));
+            $answersCount = $this->getCount($crAnswer);
             if ($answersCount > 0) {
-                $answersAll = $this->getAll($crAnswers);
+                $answersAll = $this->getAll($crAnswer);
                 foreach (\array_keys($answersAll) as $i) {
                     $ansText = $answersAll[$i]->getVar('text');
                     if (Constants::FIELD_RADIOYN == $addItem['type'] ||
@@ -196,14 +196,14 @@ class AnswerHandler extends \XoopsPersistableObjectHandler
     public function getAnswersCompare($versionOld, $versionNew)
     {
         $helper  = Helper::getInstance();
-        $questionsHandler = $helper->getHandler('Question');
+        $questionHandler = $helper->getHandler('Question');
 
         $infotext = '';
         foreach(\array_keys($versionNew) as $key) {
             $caption = '';
-            $questionsObj = $questionsHandler->get($key);
-            if (\is_object($questionsObj)) {
-                $caption = $questionsObj->getVar('caption');
+            $questionObj = $questionHandler->get($key);
+            if (\is_object($questionObj)) {
+                $caption = $questionObj->getVar('caption');
             }
             $valueOld = $versionOld[$key];
             $valueNew = $versionNew[$key];
@@ -214,7 +214,7 @@ class AnswerHandler extends \XoopsPersistableObjectHandler
                     $infotext .= \sprintf(\_MA_WGEVENTS_MAIL_REG_MODIFICATION, $caption, $valueOld, $valueNew) . PHP_EOL;
                 }
             }
-            unset($questionsObj);
+            unset($questionObj);
         }
 
         return $infotext;

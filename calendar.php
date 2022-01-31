@@ -155,7 +155,7 @@ switch ($op) {
     case 'filterOwn':
         //$GLOBALS['xoopsTpl']->assign('resultTitle', \_MA_WGEVENTS_FILTER_RESULT);
         if ($uid > 0) {
-            $events = $eventsHandler->getItems($uid, 0, 0, $filterFrom, $filterTo, false, false, 0, $filterCat, $sortBy, $orderBy);
+            $events = $eventHandler->getItems($uid, 0, 0, $filterFrom, $filterTo, false, false, 0, $filterCat, $sortBy, $orderBy);
         }
         $filtered = true;
         break;
@@ -163,9 +163,9 @@ switch ($op) {
         //$GLOBALS['xoopsTpl']->assign('resultTitle', \_MA_WGEVENTS_FILTER_RESULT);
         if ($permissionsHandler->getPermItemsGroupView()) {
             if (Constants::FILTER_TYPEALL == $filterGroup) {
-                $events = $eventsHandler->getItems(0, 0, 0, $filterFrom, $filterTo, true, false, 0, $filterCat, $sortBy, $orderBy);
+                $events = $eventHandler->getItems(0, 0, 0, $filterFrom, $filterTo, true, false, 0, $filterCat, $sortBy, $orderBy);
             } else {
-                $events = $eventsHandler->getItems(0, 0, 0, $filterFrom, $filterTo, false, false, $filterGroup, $filterCat, $sortBy, $orderBy);
+                $events = $eventHandler->getItems(0, 0, 0, $filterFrom, $filterTo, false, false, $filterGroup, $filterCat, $sortBy, $orderBy);
             }
         }
         $filtered = true;
@@ -174,9 +174,9 @@ switch ($op) {
 */
 
 // get categories collection
-$categories = $categoriesHandler->getCategoriesCollection();
+$categories = $categoryHandler->getCategoriesCollection();
 // get events of period
-$events = $eventsHandler->getEvents(0, 0, $filterFrom, $filterTo, $filterCat, $sortBy, $orderBy);
+$events = $eventHandler->getEvents(0, 0, $filterFrom, $filterTo, $filterCat, $sortBy, $orderBy);
 
 $eventsCount = \count($events);
 if ($eventsCount > 0) {
@@ -188,7 +188,7 @@ if ($eventsCount > 0) {
         $linkStyle .= 'background-color:' . $categories[$event['catid']]['bgcolor'] . '!important;';
         $linkStyle .= $categories[$event['catid']]['othercss'];
 
-        $eventLink = '<a href="events.php?op=show&amp;id=' . $event['id'] .'">';
+        $eventLink = '<a href="event.php?op=show&amp;id=' . $event['id'] .'">';
         /*
         if ($event['catlogo']) {
             $eventLink .= '<img class="wg-cal-catlogo" src="' . \WGEVENTS_UPLOAD_CATLOGOS_URL . '/' . $event['catlogo'] .'" alt="' . \_MA_WGEVENTS_CATEGORY_LOGO .'" title="' . \_MA_WGEVENTS_CATEGORY_LOGO .'">';

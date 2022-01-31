@@ -42,18 +42,18 @@ function wgevents_notify_iteminfo($category, $item_id)
             $item['url']  = '';
             return $item;
         case 'events':
-            $sql          = 'SELECT name FROM ' . $xoopsDB->prefix('wgevents_events') . ' WHERE id = '. $item_id;
+            $sql          = 'SELECT name FROM ' . $xoopsDB->prefix('wgevents_event') . ' WHERE id = '. $item_id;
             $result       = $xoopsDB->query($sql);
             $result_array = $xoopsDB->fetchArray($result);
             $item['name'] = $result_array['name'];
-            $item['url']  = \WGEVENTS_URL . '/events.php?id=' . $item_id;
+            $item['url']  = \WGEVENTS_URL . '/event.php?id=' . $item_id;
             return $item;
         case 'registrations':
             $sql          = 'SELECT evid FROM ' . $xoopsDB->prefix('wgevents_registrations') . ' WHERE id = '. $item_id;
             $result       = $xoopsDB->query($sql);
             $result_array = $xoopsDB->fetchArray($result);
             $item['name'] = $result_array['evid'];
-            $item['url']  = \WGEVENTS_URL . '/registrations.php?id=' . $item_id;
+            $item['url']  = \WGEVENTS_URL . '/registration.php?id=' . $item_id;
             return $item;
     }
     return null;

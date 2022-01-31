@@ -116,7 +116,7 @@ class Event extends \XoopsObject
     {
         $helper = Helper::getInstance();
 
-        $categoriesHandler = $helper->getHandler('Category');
+        $categoryHandler = $helper->getHandler('Category');
         $permissionsHandler = $helper->getHandler('Permission');
 
         $utility = new Utility();
@@ -145,7 +145,7 @@ class Event extends \XoopsObject
         $form->setExtra('enctype="multipart/form-data"');
         // Form Table categories
         $evCatidSelect = new \XoopsFormSelect(\_MA_WGEVENTS_EVENT_CATID, 'catid', $this->getVar('catid'));
-        $evCatidSelect->addOptionArray($categoriesHandler->getList());
+        $evCatidSelect->addOptionArray($categoryHandler->getList());
         $form->addElement($evCatidSelect);
         // Form Text evName
         $form->addElement(new \XoopsFormText(\_MA_WGEVENTS_EVENT_NAME, 'name', 50, 255, $this->getVar('name')), true);
@@ -370,13 +370,13 @@ class Event extends \XoopsObject
         $helper  = \XoopsModules\Wgevents\Helper::getInstance();
         $utility = new \XoopsModules\Wgevents\Utility();
         $ret = $this->getValues($keys, $format, $maxDepth);
-        $categoriesHandler = $helper->getHandler('Category');
-        $categoriesObj = $categoriesHandler->get($this->getVar('catid'));
+        $categoryHandler = $helper->getHandler('Category');
+        $categoryObj = $categoryHandler->get($this->getVar('catid'));
         $adminMaxchar = $helper->getConfig('admin_maxchar');
         $userMaxchar = $helper->getConfig('user_maxchar');
         $catName = '';
-        if (\is_object($categoriesObj)) {
-            $catName = $categoriesObj->getVar('name');
+        if (\is_object($categoryObj)) {
+            $catName = $categoryObj->getVar('name');
         }
         $ret['catname']            = $catName;
         $ret['desc_text']          = $this->getVar('desc', 'e');

@@ -38,7 +38,7 @@ class RegistrationHandler extends \XoopsPersistableObjectHandler
      */
     public function __construct(\XoopsDatabase $db)
     {
-        parent::__construct($db, 'wgevents_registrations', Registration::class, 'id', 'evid');
+        parent::__construct($db, 'wgevents_registration', Registration::class, 'id', 'evid');
     }
 
     /**
@@ -106,20 +106,20 @@ class RegistrationHandler extends \XoopsPersistableObjectHandler
 
     /**
      * Get Criteria Registration
-     * @param        $crRegistrations
+     * @param        $crRegistration
      * @param int $start
      * @param int $limit
      * @param string $sort
      * @param string $order
      * @return \CriteriaCompo
      */
-    private function getRegistrationsCriteria($crRegistrations, int $start, int $limit, string $sort, string $order)
+    private function getRegistrationsCriteria($crRegistration, int $start, int $limit, string $sort, string $order)
     {
-        $crRegistrations->setStart($start);
-        $crRegistrations->setLimit($limit);
-        $crRegistrations->setSort($sort);
-        $crRegistrations->setOrder($order);
-        return $crRegistrations;
+        $crRegistration->setStart($start);
+        $crRegistration->setLimit($limit);
+        $crRegistration->setSort($sort);
+        $crRegistration->setOrder($order);
+        return $crRegistration;
     }
 
     /**
@@ -131,20 +131,20 @@ class RegistrationHandler extends \XoopsPersistableObjectHandler
     {
         if ($evId > 0) {
             $helper = Helper::getInstance();
-            $eventsHandler = $helper->getHandler('Event');
+            $eventHandler = $helper->getHandler('Event');
 
-            $crRegistrations = new \CriteriaCompo();
-            $crRegistrations->add(new \Criteria('evid', $evId));
-            $registrationsCount = $this->getCount($crRegistrations);
+            $crRegistration = new \CriteriaCompo();
+            $crRegistration->add(new \Criteria('evid', $evId));
+            $registrationsCount = $this->getCount($crRegistration);
             if ($registrationsCount > 0) {
                 // declare types
                 $typeNotify = Constants::MAIL_REG_NOTIFY_OUT;
                 $typeConfirm = Constants::MAIL_REG_CONFIRM_OUT;
                 // get mail addresses from register_notify
-                $eventsObj = $eventsHandler->get($evId);
-                $registerNotify = (string)$eventsObj->getVar('register_notify', 'e');
+                $eventObj = $eventHandler->get($evId);
+                $registerNotify = (string)$eventObj->getVar('register_notify', 'e');
                 //get all registrations
-                $registrationsAll = $this->getAll($crRegistrations);
+                $registrationsAll = $this->getAll($crRegistration);
                 foreach (\array_keys($registrationsAll) as $i) {
                     $regParams['evid'] = $registrationsAll[$i]->getVar('evid');
                     $regParams['firstname'] = $registrationsAll[$i]->getVar('firstname');
@@ -196,29 +196,29 @@ class RegistrationHandler extends \XoopsPersistableObjectHandler
     {
         if ($evId > 0) {
             $helper  = \XoopsModules\Wgevents\Helper::getInstance();
-            $eventsHandler     = $helper->getHandler('Event');
-            $answersHandler     = $helper->getHandler('Answer');
+            $eventHandler     = $helper->getHandler('Event');
+            $answerHandler     = $helper->getHandler('Answer');
             $permissionsHandler = $helper->getHandler('Permission');
 
-            $eventsObj = $eventsHandler->get($evId);
-            $evSubmitter = $eventsObj->getVar('submitter');
-            $evStatus = $eventsObj->getVar('status');
+            $eventObj = $eventHandler->get($evId);
+            $evSubmitter = $eventObj->getVar('submitter');
+            $evStatus = $eventObj->getVar('status');
 
             $registrations = [];
-            $crRegistrations = new \CriteriaCompo();
-            $crRegistrations->add(new \Criteria('evid', $evId));
+            $crRegistration = new \CriteriaCompo();
+            $crRegistration->add(new \Criteria('evid', $evId));
             if ($currentUserOnly) {
                 $uidCurrent = \is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->uid() : 0;
                 if ($uidCurrent > 0) {
-                    $crRegistrations->add(new \Criteria('submitter', $uidCurrent));
+                    $crRegistration->add(new \Criteria('submitter', $uidCurrent));
                 } else {
                     $regIp = $_SERVER['REMOTE_ADDR'];
-                    $crRegistrations->add(new \Criteria('ip', $regIp));
+                    $crRegistration->add(new \Criteria('ip', $regIp));
                 }
             }
-            $registrationsCount = $this->getCount($crRegistrations);
+            $registrationsCount = $this->getCount($crRegistration);
             $GLOBALS['xoopsTpl']->assign('registrationsCount', $registrationsCount);
-            $registrationsAll = $this->getAll($crRegistrations);
+            $registrationsAll = $this->getAll($crRegistration);
             if ($registrationsCount > 0) {
                 // Get All Registration
                 foreach (\array_keys($registrationsAll) as $regId) {
@@ -239,7 +239,7 @@ class RegistrationHandler extends \XoopsPersistableObjectHandler
                                                                         );
                     $registrations[$regId]['permRegistrationApprove'] = $permissionsHandler->getPermRegistrationsApprove($evSubmitter, $evStatus);
                     // get all answers for this event
-                    $answers = $answersHandler->getAnswersDetailsByRegistration($regId, $questionsArr);
+                    $answers = $answerHandler->getAnswersDetailsByRegistration($regId, $questionsArr);
                     $registrations[$regId]['answers'] = $answers;
                 }
                 return $registrations;

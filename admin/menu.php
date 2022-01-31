@@ -34,42 +34,42 @@ $adminmenu[] = [
 ];
 $adminmenu[] = [
     'title' => \_MI_WGEVENTS_ADMENU2,
-    'link' => 'admin/events.php',
+    'link' => 'admin/event.php',
     'icon' => 'assets/icons/32/events.png',
 ];
 $adminmenu[] = [
     'title' => \_MI_WGEVENTS_ADMENU3,
-    'link' => 'admin/questions.php',
+    'link' => 'admin/question.php',
     'icon' => 'assets/icons/32/questions.png',
 ];
 $adminmenu[] = [
     'title' => \_MI_WGEVENTS_ADMENU5,
-    'link' => 'admin/registrations.php',
+    'link' => 'admin/registration.php',
     'icon' => 'assets/icons/32/registrations.png',
 ];
 $adminmenu[] = [
     'title' => \_MI_WGEVENTS_ADMENU4,
-    'link' => 'admin/answers.php',
+    'link' => 'admin/answer.php',
     'icon' => 'assets/icons/32/answers.png',
 ];
 $adminmenu[] = [
     'title' => \_MI_WGEVENTS_ADMENU7,
-    'link' => 'admin/categories.php',
+    'link' => 'admin/category.php',
     'icon' => 'assets/icons/32/categories.png',
 ];
 $adminmenu[] = [
     'title' => \_MI_WGEVENTS_ADMENU8,
-    'link' => 'admin/fields.php',
+    'link' => 'admin/field.php',
     'icon' => 'assets/icons/32/fields.png',
 ];
 $adminmenu[] = [
     'title' => \_MI_WGEVENTS_ADMENU10,
-    'link' => 'admin/permissions.php',
+    'link' => 'admin/permission.php',
     'icon' => 'assets/icons/32/permissions.png',
 ];
 $adminmenu[] = [
     'title' => \_MI_WGEVENTS_ADMENU13,
-    'link' => 'admin/logs.php',
+    'link' => 'admin/log.php',
     'icon' => 'assets/icons/32/logs.png',
 ];
 /*
@@ -86,7 +86,7 @@ $adminmenu[] = [
 */
 $adminmenu[] = [
     'title' => \_MI_WGEVENTS_ADMENU14,
-    'link' => 'admin/accounts.php',
+    'link' => 'admin/account.php',
     'icon' => 'assets/icons/32/accounts.png',
 ];
 $adminmenu[] = [

@@ -63,35 +63,35 @@ class MailHandler
     public function executeReg(int $regId, int $type)
     {
         $helper = Helper::getInstance();
-        $eventsHandler = $helper->getHandler('Event');
-        $registrationsHandler = $helper->getHandler('Registration');
+        $eventHandler = $helper->getHandler('Event');
+        $registrationHandler = $helper->getHandler('Registration');
         $permissionsHandler = $helper->getHandler('Permission');
-        $logsHandler = $helper->getHandler('Log');
+        $logHandler = $helper->getHandler('Log');
 
-        $logsHandler->createLog('Start MailHandler/executeReg');
+        $logHandler->createLog('Start MailHandler/executeReg');
 
 
-        $registrationsObj = $registrationsHandler->get($regId, true);
-        $regEvid = $registrationsObj->getVar('evid');
-        $eventsObj = $eventsHandler->get($regEvid);
+        $registrationObj = $registrationHandler->get($regId, true);
+        $regEvid = $registrationObj->getVar('evid');
+        $eventObj = $eventHandler->get($regEvid);
         if (!$permissionsHandler->getPermRegistrationsEdit(
-                $registrationsObj->getVar('ip'),
-                $registrationsObj->getVar('submitter'),
-                $eventsObj->getVar('submitter'),
-                $eventsObj->getVar('status'),
+                $registrationObj->getVar('ip'),
+                $registrationObj->getVar('submitter'),
+                $eventObj->getVar('submitter'),
+                $eventObj->getVar('status'),
             )) {
                 return false;
         }
 
-        $eventUrl       = \WGEVENTS_URL . '/events.php?op=show&id=' . $regEvid;
-        $eventName      = $eventsObj->getVar('name');
-        $eventDate      = \formatTimestamp($eventsObj->getVar('datefrom'), 'm');
-        $eventLocation  = $eventsObj->getVar('location');
-        $senderMail     = $eventsObj->getVar('register_sendermail');
-        $senderName     = $eventsObj->getVar('register_sendername');
-        $senderSignatur = $eventsObj->getVar('register_signature');
-        $firstname      = $registrationsObj->getVar('firstname');
-        $lastname       = $registrationsObj->getVar('lastname');
+        $eventUrl       = \WGEVENTS_URL . '/event.php?op=show&id=' . $regEvid;
+        $eventName      = $eventObj->getVar('name');
+        $eventDate      = \formatTimestamp($eventObj->getVar('datefrom'), 'm');
+        $eventLocation  = $eventObj->getVar('location');
+        $senderMail     = $eventObj->getVar('register_sendermail');
+        $senderName     = $eventObj->getVar('register_sendername');
+        $senderSignatur = $eventObj->getVar('register_signature');
+        $firstname      = $registrationObj->getVar('firstname');
+        $lastname       = $registrationObj->getVar('lastname');
         $userName       = $GLOBALS['xoopsConfig']['anonymous'];
         if (\is_object($GLOBALS['xoopsUser'])) {
             $userName  = ('' != (string)$GLOBALS['xoopsUser']->name()) ? $GLOBALS['xoopsUser']->name() : $GLOBALS['xoopsUser']->uname();
@@ -165,9 +165,9 @@ class MailHandler
 
         //send mail
         if ($xoopsMailer->send()) {
-            $logsHandler->createLog('Result MailHandler/executeReg: success');
+            $logHandler->createLog('Result MailHandler/executeReg: success');
         } else {
-            $logsHandler->createLog('Result MailHandler/executeReg: failed' .$xoopsMailer->getErrors());
+            $logHandler->createLog('Result MailHandler/executeReg: failed' .$xoopsMailer->getErrors());
         }
         $xoopsMailer->reset();
 
@@ -184,20 +184,20 @@ class MailHandler
     public function executeRegDelete(array $regParams, int $type)
     {
         $helper = Helper::getInstance();
-        $eventsHandler = $helper->getHandler('Event');
+        $eventHandler = $helper->getHandler('Event');
 
-        $logsHandler = $helper->getHandler('Log');
-        $logsHandler->createLog('Start MailHandler/executeRegDelete');
+        $logHandler = $helper->getHandler('Log');
+        $logHandler->createLog('Start MailHandler/executeRegDelete');
 
-        $eventsObj = $eventsHandler->get($regParams['evid']);
+        $eventObj = $eventHandler->get($regParams['evid']);
 
-        $eventUrl       = \WGEVENTS_URL . '/events.php?op=show&id=' . $regParams['evid'];
-        $eventName      = $eventsObj->getVar('name');
-        $eventDate      = \formatTimestamp($eventsObj->getVar('datefrom'), 'm');
-        $eventLocation  = $eventsObj->getVar('location');
-        $senderMail     = $eventsObj->getVar('register_sendermail');
-        $senderName     = $eventsObj->getVar('register_sendername');
-        $senderSignatur = $eventsObj->getVar('register_signature');
+        $eventUrl       = \WGEVENTS_URL . '/event.php?op=show&id=' . $regParams['evid'];
+        $eventName      = $eventObj->getVar('name');
+        $eventDate      = \formatTimestamp($eventObj->getVar('datefrom'), 'm');
+        $eventLocation  = $eventObj->getVar('location');
+        $senderMail     = $eventObj->getVar('register_sendermail');
+        $senderName     = $eventObj->getVar('register_sendername');
+        $senderSignatur = $eventObj->getVar('register_signature');
         $firstname      = $regParams['firstname'];
         $lastname       = $regParams['lastname'];
         $userName       = $GLOBALS['xoopsConfig']['anonymous'];
@@ -253,9 +253,9 @@ class MailHandler
 
         //send mail
         if ($xoopsMailer->send()) {
-            $logsHandler->createLog('Result MailHandler/executeRegDelete: success');
+            $logHandler->createLog('Result MailHandler/executeRegDelete: success');
         } else {
-            $logsHandler->createLog('Result MailHandler/executeRegDelete: failed');
+            $logHandler->createLog('Result MailHandler/executeRegDelete: failed');
         }
         $xoopsMailer->reset();
 

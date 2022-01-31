@@ -8,10 +8,10 @@
 # PHP Version: 8.0.1
 
 #
-# Structure table for `wgevents_events`
+# Structure table for `wgevents_event`
 #
 
-CREATE TABLE `wgevents_events` (
+CREATE TABLE `wgevents_event` (
   `id`                   INT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
   `catid`                INT(10)         NOT NULL DEFAULT '0',
   `name`                 VARCHAR(255)    NOT NULL DEFAULT '',
@@ -44,10 +44,10 @@ CREATE TABLE `wgevents_events` (
 ) ENGINE=InnoDB;
 
 #
-# Structure table for `wgevents_questions`
+# Structure table for `wgevents_question`
 #
 
-CREATE TABLE `wgevents_questions` (
+CREATE TABLE `wgevents_question` (
   `id`              INT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
   `evid`            INT(10)         NOT NULL DEFAULT '0',
   `fdid`            INT(10)         NOT NULL DEFAULT '0',
@@ -65,10 +65,10 @@ CREATE TABLE `wgevents_questions` (
 ) ENGINE=InnoDB;
 
 #
-# Structure table for `wgevents_answers`
+# Structure table for `wgevents_answer`
 #
 
-CREATE TABLE `wgevents_answers` (
+CREATE TABLE `wgevents_answer` (
   `id`              INT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
   `evid`            INT(10)         NOT NULL DEFAULT '0',
   `regid`           INT(10)         NOT NULL DEFAULT '0',
@@ -80,10 +80,10 @@ CREATE TABLE `wgevents_answers` (
 ) ENGINE=InnoDB;
 
 #
-# Structure table for `wgevents_answers_hist`
+# Structure table for `wgevents_answer_hist`
 #
 
-CREATE TABLE `wgevents_answers_hist` (
+CREATE TABLE `wgevents_answer_hist` (
   `hist_id`             INT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
   `hist_info`           VARCHAR(255)    NOT NULL DEFAULT '',
   `hist_datecreated`    INT(11)         NOT NULL DEFAULT '0',
@@ -99,10 +99,10 @@ CREATE TABLE `wgevents_answers_hist` (
 ) ENGINE=InnoDB;
 
 #
-# Structure table for `wgevents_registrations`
+# Structure table for `wgevents_registration`
 #
 
-CREATE TABLE `wgevents_registrations` (
+CREATE TABLE `wgevents_registration` (
   `id`              INT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
   `evid`            INT(10)         NOT NULL DEFAULT '0',
   `salutation`      INT(10)         NOT NULL DEFAULT '0',
@@ -123,10 +123,10 @@ CREATE TABLE `wgevents_registrations` (
 
 
 #
-# Structure table for `wgevents_registrations_hist`
+# Structure table for `wgevents_registration_hist`
 #
 
-CREATE TABLE `wgevents_registrations_hist` (
+CREATE TABLE `wgevents_registration_hist` (
   `hist_id`             INT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
   `hist_info`           VARCHAR(255)    NOT NULL DEFAULT '',
   `hist_datecreated`    INT(11)         NOT NULL DEFAULT '0',
@@ -150,10 +150,10 @@ CREATE TABLE `wgevents_registrations_hist` (
 ) ENGINE=InnoDB;
 
 #
-# Structure table for `wgevents_categories`
+# Structure table for `wgevents_category`
 #
 
-CREATE TABLE `wgevents_categories` (
+CREATE TABLE `wgevents_category` (
   `id`              INT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
   `pid`             INT(10)         NOT NULL DEFAULT '0',
   `name`            VARCHAR(255)    NOT NULL DEFAULT '',
@@ -171,10 +171,10 @@ CREATE TABLE `wgevents_categories` (
 ) ENGINE=InnoDB;
 
 #
-# Structure table for `wgevents_fields`
+# Structure table for `wgevents_field`
 #
 
-CREATE TABLE `wgevents_fields` (
+CREATE TABLE `wgevents_field` (
   `id`                   INT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
   `type`                 INT(10)         NOT NULL DEFAULT '0',
   `caption`              VARCHAR(255)    NOT NULL DEFAULT '',
@@ -196,10 +196,10 @@ CREATE TABLE `wgevents_fields` (
 ) ENGINE=InnoDB;
 
 #
-# Structure table for `wgevents_textblocks`
+# Structure table for `wgevents_textblock`
 #
 
-CREATE TABLE `wgevents_textblocks` (
+CREATE TABLE `wgevents_textblock` (
   `id`               INT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
   `name`             VARCHAR(255)    NOT NULL DEFAULT '',
   `text`             TEXT            NULL,
@@ -210,10 +210,10 @@ CREATE TABLE `wgevents_textblocks` (
 ) ENGINE=InnoDB;
 
 #
-# Structure table for `wgevents_logs`
+# Structure table for `wgevents_log`
 #
 
-CREATE TABLE `wgevents_logs` (
+CREATE TABLE `wgevents_log` (
   `id` INT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
   `text` VARCHAR(255) NOT NULL DEFAULT '',
   `datecreated` INT(11) NOT NULL DEFAULT '0',
@@ -222,10 +222,10 @@ CREATE TABLE `wgevents_logs` (
 ) ENGINE=InnoDB;
 
 #
-# Structure table for `wgevents_accounts`
+# Structure table for `wgevents_account`
 #
 
-CREATE TABLE `wgevents_accounts` (
+CREATE TABLE `wgevents_account` (
      `id` INT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
      `type` INT(10) NOT NULL DEFAULT '0',
      `name` VARCHAR(100) NOT NULL DEFAULT '',
