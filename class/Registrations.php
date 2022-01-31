@@ -1,6 +1,5 @@
 <?php declare(strict_types=1);
 
-
 namespace XoopsModules\Wgevents;
 
 /*
@@ -56,21 +55,21 @@ class Registrations extends \XoopsObject
      */
     public function __construct()
     {
-        $this->initVar('reg_id', \XOBJ_DTYPE_INT);
-        $this->initVar('reg_evid', \XOBJ_DTYPE_INT);
-        $this->initVar('reg_salutation', \XOBJ_DTYPE_INT);
-        $this->initVar('reg_firstname', \XOBJ_DTYPE_TXTBOX);
-        $this->initVar('reg_lastname', \XOBJ_DTYPE_TXTBOX);
-        $this->initVar('reg_email', \XOBJ_DTYPE_TXTBOX);
-        $this->initVar('reg_email_send', \XOBJ_DTYPE_INT);
-        $this->initVar('reg_gdpr', \XOBJ_DTYPE_INT);
-        $this->initVar('reg_ip', \XOBJ_DTYPE_TXTBOX);
-        $this->initVar('reg_verifkey', \XOBJ_DTYPE_TXTBOX);
-        $this->initVar('reg_status', \XOBJ_DTYPE_INT);
-        $this->initVar('reg_financial', \XOBJ_DTYPE_INT);
-        $this->initVar('reg_listwait', \XOBJ_DTYPE_INT);
-        $this->initVar('reg_datecreated', \XOBJ_DTYPE_INT);
-        $this->initVar('reg_submitter', \XOBJ_DTYPE_INT);
+        $this->initVar('id', \XOBJ_DTYPE_INT);
+        $this->initVar('evid', \XOBJ_DTYPE_INT);
+        $this->initVar('salutation', \XOBJ_DTYPE_INT);
+        $this->initVar('firstname', \XOBJ_DTYPE_TXTBOX);
+        $this->initVar('lastname', \XOBJ_DTYPE_TXTBOX);
+        $this->initVar('email', \XOBJ_DTYPE_TXTBOX);
+        $this->initVar('email_send', \XOBJ_DTYPE_INT);
+        $this->initVar('gdpr', \XOBJ_DTYPE_INT);
+        $this->initVar('ip', \XOBJ_DTYPE_TXTBOX);
+        $this->initVar('verifkey', \XOBJ_DTYPE_TXTBOX);
+        $this->initVar('status', \XOBJ_DTYPE_INT);
+        $this->initVar('financial', \XOBJ_DTYPE_INT);
+        $this->initVar('listwait', \XOBJ_DTYPE_INT);
+        $this->initVar('datecreated', \XOBJ_DTYPE_INT);
+        $this->initVar('submitter', \XOBJ_DTYPE_INT);
     }
 
     /**
@@ -123,73 +122,73 @@ class Registrations extends \XoopsObject
             $title =\_MA_WGEVENTS_REGISTRATION_EDIT;
         }
 
-        $regEvid = $this->getVar('reg_evid');
+        $regEvid = $this->getVar('evid');
         $eventsObj = $eventsHandler->get($regEvid);
-        $permRegistrationsApprove = $permissionsHandler->getPermRegistrationsApprove($eventsObj->getVAr('ev_submitter'), $eventsObj->getVar('ev_status'));
-        $eventFee = (float)$eventsObj->getVar('ev_fee');
-        $eventRegisterMax = (int)$eventsObj->getVar('ev_register_max');
+        $permRegistrationsApprove = $permissionsHandler->getPermRegistrationsApprove($eventsObj->getVar('submitter'), $eventsObj->getVar('status'));
+        $eventFee = (float)$eventsObj->getVar('fee');
+        $eventRegisterMax = (int)$eventsObj->getVar('register_max');
 
         // Get Theme Form
         \xoops_load('XoopsFormLoader');
         $form = new \XoopsThemeForm($title, 'form', $action, 'post', true);
         $form->setExtra('enctype="multipart/form-data"');
         // Form Table events
-        $form->addElement(new \XoopsFormLabel(\_MA_WGEVENTS_REGISTRATION_EVID, $eventsObj->getVAr('ev_name')));
-        $form->addElement(new \XoopsFormHidden('reg_evid', $this->getVar('reg_evid')));
+        $form->addElement(new \XoopsFormLabel(\_MA_WGEVENTS_REGISTRATION_EVID, $eventsObj->getVAr('name')));
+        $form->addElement(new \XoopsFormHidden('evid', $this->getVar('evid')));
         // Form select regSalutation
-        $regSalutationSelect = new \XoopsFormSelect(\_MA_WGEVENTS_REGISTRATION_SALUTATION, 'reg_salutation', $this->getVar('reg_salutation'));
+        $regSalutationSelect = new \XoopsFormSelect(\_MA_WGEVENTS_REGISTRATION_SALUTATION, 'salutation', $this->getVar('salutation'));
         $regSalutationSelect->addOption(Constants::SALUTATION_NONE, ' ');
         $regSalutationSelect->addOption(Constants::SALUTATION_MEN, \_MA_WGEVENTS_REGISTRATION_SALUTATION_MEN);
         $regSalutationSelect->addOption(Constants::SALUTATION_WOMEN, \_MA_WGEVENTS_REGISTRATION_SALUTATION_WOMEN);
         $form->addElement($regSalutationSelect);
         // Form select regFirstname
-        $regFirstname = new Forms\FormText(\_MA_WGEVENTS_REGISTRATION_FIRSTNAME, 'reg_firstname', 50, 255, $this->getVar('reg_firstname'));
+        $regFirstname = new Forms\FormText(\_MA_WGEVENTS_REGISTRATION_FIRSTNAME, 'firstname', 50, 255, $this->getVar('firstname'));
         $regFirstname->setPlaceholder(\_MA_WGEVENTS_REGISTRATION_FIRSTNAME_PLACEHOLDER);
         $form->addElement($regFirstname);
         // Form select regLastname
-        $regLastname = new Forms\FormText(\_MA_WGEVENTS_REGISTRATION_LASTNAME, 'reg_lastname', 50, 255, $this->getVar('reg_lastname'));
+        $regLastname = new Forms\FormText(\_MA_WGEVENTS_REGISTRATION_LASTNAME, 'lastname', 50, 255, $this->getVar('lastname'));
         $regLastname->setPlaceholder(\_MA_WGEVENTS_REGISTRATION_LASTNAME_PLACEHOLDER);
         $form->addElement($regLastname, true);
         // Form select regEmail
         $regEmailTray = new Forms\FormElementTray(\_MA_WGEVENTS_REGISTRATION_EMAIL, '<br>');
-        $regEmail = new Forms\FormText('', 'reg_email', 50, 255, $this->getVar('reg_email'));
+        $regEmail = new Forms\FormText('', 'email', 50, 255, $this->getVar('email'));
         $regEmail->setPlaceholder(\_MA_WGEVENTS_REGISTRATION_EMAIL_PLACEHOLDER);
         $regEmailTray->addElement($regEmail);
         // Form select regEmailSend
-        $regEmailSend = $this->isNew() ? 0 : $this->getVar('reg_email_send');
-        $regEmailRadio = new \XoopsFormRadioYN(\_MA_WGEVENTS_REGISTRATION_EMAIL_CONFIRM, 'reg_email_send', $regEmailSend);
+        $regEmailSend = $this->isNew() ? 0 : $this->getVar('email_send');
+        $regEmailRadio = new \XoopsFormRadioYN(\_MA_WGEVENTS_REGISTRATION_EMAIL_CONFIRM, 'email_send', $regEmailSend);
         $regEmailTray->addElement($regEmailRadio);
         $form->addElement($regEmailTray);
         // get all questions
         $crQuestions = new \CriteriaCompo();
-        $crQuestions->add(new \Criteria('que_evid', $regEvid));
-        $crQuestions->setSort('que_weight ASC, que_id');
+        $crQuestions->add(new \Criteria('evid', $regEvid));
+        $crQuestions->setSort('weight ASC, id');
         $crQuestions->setOrder('DESC');
         $questionsCount = $questionsHandler->getCount($crQuestions);
         if ($questionsCount > 0) {
             $questionsAll = $questionsHandler->getAll($crQuestions);
             foreach (\array_keys($questionsAll) as $queId) {
                 $formelementsHandler = new FormelementsHandler();
-                $formelementsHandler->name = 'que_id[' . $queId . ']';
-                $queType = (int)$questionsAll[$queId]->getVar('que_type');
-                $addValue = (string)$questionsAll[$queId]->getVar('que_values');
+                $formelementsHandler->name = 'id[' . $queId . ']';
+                $queType = (int)$questionsAll[$queId]->getVar('type');
+                $addValue = (string)$questionsAll[$queId]->getVar('values');
                 $formelementsHandler->type = $queType;
-                $formelementsHandler->caption = $questionsAll[$queId]->getVar('que_caption');
+                $formelementsHandler->caption = $questionsAll[$queId]->getVar('caption');
                 if ($answersExist) {
                     $value = '';
                     // get answers for this questions
                     $crAnswers = new \CriteriaCompo();
-                    $crAnswers->add(new \Criteria('ans_regid', $this->getVar('reg_id')));
-                    $crAnswers->add(new \Criteria('ans_queid', $queId));
+                    $crAnswers->add(new \Criteria('regid', $this->getVar('id')));
+                    $crAnswers->add(new \Criteria('queid', $queId));
                     $answersCount = $answersHandler->getCount($crAnswers);
                     if ($answersCount > 0) {
                         $answersAll = $answersHandler->getAll($crAnswers);
                         foreach (\array_keys($answersAll) as $ansId) {
                             if (Constants::FIELD_DATE == $queType) {
-                                $answerDateObj = \DateTime::createFromFormat(\_SHORTDATESTRING, $answersAll[$ansId]->getVar('ans_text'));
+                                $answerDateObj = \DateTime::createFromFormat(\_SHORTDATESTRING, $answersAll[$ansId]->getVar('text'));
                                 $value = $answerDateObj->getTimestamp();
                             } else {
-                                $value = $answersAll[$ansId]->getVar('ans_text');
+                                $value = $answersAll[$ansId]->getVar('text');
                             }
                         }
                     }
@@ -200,29 +199,29 @@ class Registrations extends \XoopsObject
                 if (Constants::FIELD_RADIO == $queType ||
                     Constants::FIELD_SELECTBOX == $queType ||
                     Constants::FIELD_COMBOBOX == $queType) {
-                        //$formelementsHandler->options = preg_split('/\r\n|\r|\n/', $questionsAll[$queId]->getVar('que_values'));
+                        //$formelementsHandler->options = preg_split('/\r\n|\r|\n/', $questionsAll[$queId]->getVar('values'));
                         $formelementsHandler->optionsArr = \unserialize($addValue);
                 }
                 if (Constants::FIELD_CHECKBOX == $queType) {
                     $addValueArr = \unserialize($addValue);
                     $formelementsHandler->optionsText = $addValueArr[0];
                 }
-                $formelementsHandler->placeholder = $questionsAll[$queId]->getVar('que_placeholder');
-                $formelementsHandler->desc = $questionsAll[$queId]->getVar('que_desc');
-                $required = $questionsAll[$queId]->getVar('que_required');
+                $formelementsHandler->placeholder = $questionsAll[$queId]->getVar('placeholder');
+                $formelementsHandler->desc = $questionsAll[$queId]->getVar('desc');
+                $required = $questionsAll[$queId]->getVar('required');
                 $form->addElement($formelementsHandler->render(), $required);
-                $form->addElement(new \XoopsFormHidden('que_type[' . $questionsAll[$queId]->getVar('que_id') . ']', $questionsAll[$queId]->getVar('que_type')));
+                $form->addElement(new \XoopsFormHidden('type[' . $questionsAll[$queId]->getVar('id') . ']', $questionsAll[$queId]->getVar('type')));
             }
             unset($questions);
         }
         // Form checkbox regGdpr
-        $regGdpr = new \XoopsFormCheckBox(\_MA_WGEVENTS_REGISTRATION_GDPR, 'reg_gdpr', '');
+        $regGdpr = new \XoopsFormCheckBox(\_MA_WGEVENTS_REGISTRATION_GDPR, 'gdpr', '');
         $regGdpr->addOption(1, \_MA_WGEVENTS_REGISTRATION_GDPR_VALUE);
         $form->addElement($regGdpr, true);
         // Form Text Date Select regFinancial
-        $regFinancial = $this->isNew() ? Constants::FINANCIAL_UNPAID : $this->getVar('reg_financial');
+        $regFinancial = $this->isNew() ? Constants::FINANCIAL_UNPAID : $this->getVar('financial');
         if ($eventFee > 0 && $permRegistrationsApprove) {
-            $regFinancialRadio = new \XoopsFormRadio(\_MA_WGEVENTS_REGISTRATION_FINANCIAL, 'reg_financial', $regFinancial);
+            $regFinancialRadio = new \XoopsFormRadio(\_MA_WGEVENTS_REGISTRATION_FINANCIAL, 'financial', $regFinancial);
             $regFinancialRadio->addOption(Constants::FINANCIAL_UNPAID, \_MA_WGEVENTS_REGISTRATION_FINANCIAL_UNPAID);
             $regFinancialRadio->addOption(Constants::FINANCIAL_PAID, \_MA_WGEVENTS_REGISTRATION_FINANCIAL_PAID);
             $form->addElement($regFinancialRadio, true);
@@ -230,17 +229,17 @@ class Registrations extends \XoopsObject
             if (!$this->isNew() && $eventFee > 0) {
                 $form->addElement(new \XoopsFormLabel(\_MA_WGEVENTS_REGISTRATION_FINANCIAL, Utility::getFinancialText($regFinancial)));
             }
-            $form->addElement(new \XoopsFormHidden('reg_financial', $regFinancial));
+            $form->addElement(new \XoopsFormHidden('financial', $regFinancial));
         }
         // Form Radio Yes/No regListwait
-        $regListwait = $this->isNew() ? 0 : (int)$this->getVar('reg_listwait');
+        $regListwait = $this->isNew() ? 0 : (int)$this->getVar('listwait');
         if ($eventRegisterMax > 0 && $permRegistrationsApprove) {
-            $form->addElement(new \XoopsFormRadioYN(\_MA_WGEVENTS_REGISTRATION_LISTWAIT, 'reg_listwait', $regListwait));
+            $form->addElement(new \XoopsFormRadioYN(\_MA_WGEVENTS_REGISTRATION_LISTWAIT, 'listwait', $regListwait));
         } else {
             if ($eventRegisterMax > 0 && $regListwait > 0) {
                 $form->addElement(new \XoopsFormLabel(\_MA_WGEVENTS_REGISTRATION_LISTWAIT, \_YES));
             }
-            $form->addElement(new \XoopsFormHidden('reg_listwait', $regListwait));
+            $form->addElement(new \XoopsFormHidden('listwait', $regListwait));
         }
         // Form Text IP resIp
         $regIp = $_SERVER['REMOTE_ADDR'];
@@ -254,16 +253,16 @@ class Registrations extends \XoopsObject
                 $regStatus = Constants::STATUS_APPROVED;
             }
         } else {
-            $regStatus = $this->getVar('reg_status');
+            $regStatus = $this->getVar('status');
         }
         // Form Text resVerifcode
-        $resVerifkey = $this->getVar('reg_verifkey');
+        $resVerifkey = $this->getVar('verifkey');
         // Form Text Date Select regDatecreated
-        $regDatecreated = $this->isNew() ? \time() : $this->getVar('reg_datecreated');
+        $regDatecreated = $this->isNew() ? \time() : $this->getVar('datecreated');
         // Form Select User resSubmitter
         $regSubmitter = \is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->uid() : 0;
         if ($permRegistrationsApprove) {
-            $regStatusSelect = new \XoopsFormSelect(\_MA_WGEVENTS_STATUS, 'reg_status', $regStatus);
+            $regStatusSelect = new \XoopsFormSelect(\_MA_WGEVENTS_STATUS, 'status', $regStatus);
             $regStatusSelect->addOption(Constants::STATUS_NONE, \_MA_WGEVENTS_STATUS_NONE);
             $regStatusSelect->addOption(Constants::STATUS_OFFLINE, \_MA_WGEVENTS_STATUS_OFFLINE);
             $regStatusSelect->addOption(Constants::STATUS_SUBMITTED, \_MA_WGEVENTS_STATUS_SUBMITTED);
@@ -274,19 +273,19 @@ class Registrations extends \XoopsObject
             if (!$this->isNew()) {
                 $form->addElement(new \XoopsFormLabel(\_MA_WGEVENTS_STATUS, Utility::getStatusText($regStatus)));
             }
-            $form->addElement(new \XoopsFormHidden('reg_status', $regStatus));
+            $form->addElement(new \XoopsFormHidden('status', $regStatus));
         }
         if ($isAdmin) {
-            $form->addElement(new \XoopsFormText(\_MA_WGEVENTS_REGISTRATION_IP, 'reg_ip', 20, 150, $regIp));
-            $form->addElement(new \XoopsFormText(\_MA_WGEVENTS_REGISTRATION_VERIFKEY, 'reg_verifkey', 20, 150, $resVerifkey));
+            $form->addElement(new \XoopsFormText(\_MA_WGEVENTS_REGISTRATION_IP, 'ip', 20, 150, $regIp));
+            $form->addElement(new \XoopsFormText(\_MA_WGEVENTS_REGISTRATION_VERIFKEY, 'verifkey', 20, 150, $resVerifkey));
             // Form Text Date Select queDatecreated
-            $form->addElement(new \XoopsFormTextDateSelect(\_MA_WGEVENTS_DATECREATED, 'reg_datecreated', '', $regDatecreated));
-            $form->addElement(new \XoopsFormSelectUser(\_MA_WGEVENTS_SUBMITTER, 'reg_submitter', false, $regSubmitter));
+            $form->addElement(new \XoopsFormTextDateSelect(\_MA_WGEVENTS_DATECREATED, 'datecreated', '', $regDatecreated));
+            $form->addElement(new \XoopsFormSelectUser(\_MA_WGEVENTS_SUBMITTER, 'submitter', false, $regSubmitter));
         } else {
-            $form->addElement(new \XoopsFormHidden('reg_ip', $regIp));
-            $form->addElement(new \XoopsFormHidden('reg_verifkey', $resVerifkey));
-            $form->addElement(new \XoopsFormHidden('reg_datecreated_int', \time()));
-            $form->addElement(new \XoopsFormHidden('reg_submitter', $regSubmitter));
+            $form->addElement(new \XoopsFormHidden('ip', $regIp));
+            $form->addElement(new \XoopsFormHidden('verifkey', $resVerifkey));
+            $form->addElement(new \XoopsFormHidden('datecreated_int', \time()));
+            $form->addElement(new \XoopsFormHidden('submitter', $regSubmitter));
             if (!$this->isNew()) {
                 $form->addElement(new \XoopsFormLabel(\_MA_WGEVENTS_DATECREATED, \formatTimestamp($regDatecreated, 's')));
                 $form->addElement(new \XoopsFormLabel(\_MA_WGEVENTS_SUBMITTER, \XoopsUser::getUnameFromId($regSubmitter)));
@@ -326,31 +325,18 @@ class Registrations extends \XoopsObject
     {
         $helper  = \XoopsModules\Wgevents\Helper::getInstance();
         $ret = $this->getValues($keys, $format, $maxDepth);
-        $ret['id']              = $this->getVar('reg_id');
         $eventsHandler = $helper->getHandler('Events');
-        $eventsObj = $eventsHandler->get($this->getVar('reg_evid'));
-        $ret['evid']            = $eventsObj->getVar('ev_name');
-        $salutation             = $this->getVar('reg_salutation');
-        $ret['salutation']      = $salutation;
-        $ret['salutation_text'] = Utility::getSalutationText($salutation);
-        $ret['firstname']       = $this->getVar('reg_firstname');
-        $ret['lastname']        = $this->getVar('reg_lastname');
-        $ret['email']           = $this->getVar('reg_email');
-        $ret['gdpr']            = $this->getVar('reg_gdpr');
-        $ret['ip']              = $this->getVar('reg_ip');
-        $ret['verifkey']        = $this->getVar('reg_verifkey');
-        $status                 = $this->getVar('reg_status');
-        $ret['status']          = $status;
-        $ret['status_text']     = Utility::getStatusText($status);
-        if ((int)$this->getVar('reg_listwait') > 0) {
-            $ret['status_listwait'] = '(' . \_MA_WGEVENTS_REGISTRATION_LISTWAIT  . ')';
+        $eventsObj = $eventsHandler->get($this->getVar('evid'));
+        $ret['eventname']       = $eventsObj->getVar('name');
+        $ret['salutation_text'] = Utility::getSalutationText($this->getVar('salutation'));
+        $ret['status_text']     = Utility::getStatusText($this->getVar('status'));
+        if ((int)$this->getVar('listwait') > 0) {
+            $ret['listwait_text'] = '(' . \_MA_WGEVENTS_REGISTRATION_LISTWAIT  . ')';
         }
-        $financial              = $this->getVar('reg_financial');
-        $ret['financial']       = $financial;
-        $ret['financial_text']  = Utility::getFinancialText($financial);
-        $ret['listwait']        = (int)$this->getVar('reg_listwait') > 0 ? \_YES : \_NO;
-        $ret['datecreated']     = \formatTimestamp($this->getVar('reg_datecreated'), 'm');
-        $ret['submitter']       = \XoopsUser::getUnameFromId($this->getVar('reg_submitter'));
+        $ret['financial_text']   = Utility::getFinancialText($this->getVar('financial'));
+        $ret['listwait_text']    = (int)$this->getVar('listwait') > 0 ? \_YES : \_NO;
+        $ret['datecreated_text'] = \formatTimestamp($this->getVar('datecreated'), 'm');
+        $ret['submitter_text']   = \XoopsUser::getUnameFromId($this->getVar('submitter'));
         return $ret;
     }
 

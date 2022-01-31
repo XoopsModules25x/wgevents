@@ -31,7 +31,7 @@ $moduleDirNameUpper = \mb_strtoupper($moduleDirName);
 // ------------------- Informations ------------------- //
 $modversion = [
     'name'                => \_MI_WGEVENTS_NAME,
-    'version'             => '1.0.0',
+    'version'             => '1.0.1',
     'description'         => \_MI_WGEVENTS_DESC,
     'author'              => 'Goffy - Wedega',
     'author_mail'         => 'webmaster@wedega.com',
@@ -64,7 +64,7 @@ $modversion = [
     'module_website_url'  => 'www.xoops.org',
     'module_website_name' => 'XOOPS Project',
     'release'             => '25.12.2021',
-    'module_status'       => 'Beta 1',
+    'module_status'       => 'Alpha 1',
     'system_menu'         => 1,
     'hasAdmin'            => 1,
     'hasMain'             => 1,
@@ -694,7 +694,7 @@ $modversion['notification']['category'][] = [
     'title'          => \_MI_WGEVENTS_NOTIFY_EVENT,
     'description'    => '',
     'subscribe_from' => 'events.php',
-    'item_name'      => 'ev_id',
+    'item_name'      => 'id',
     'allow_bookmark' => 1,
 ];
 // Registration Notify
@@ -703,7 +703,7 @@ $modversion['notification']['category'][] = [
     'title'          => \_MI_WGEVENTS_NOTIFY_REGISTRATION,
     'description'    => '',
     'subscribe_from' => 'registrations.php',
-    'item_name'      => 'reg_id',
+    'item_name'      => 'id',
     'allow_bookmark' => 1,
 ];
 // Global events notification

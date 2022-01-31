@@ -42,18 +42,18 @@ function wgevents_notify_iteminfo($category, $item_id)
             $item['url']  = '';
             return $item;
         case 'events':
-            $sql          = 'SELECT ev_name FROM ' . $xoopsDB->prefix('wgevents_events') . ' WHERE ev_id = '. $item_id;
+            $sql          = 'SELECT name FROM ' . $xoopsDB->prefix('wgevents_events') . ' WHERE id = '. $item_id;
             $result       = $xoopsDB->query($sql);
             $result_array = $xoopsDB->fetchArray($result);
-            $item['name'] = $result_array['ev_name'];
-            $item['url']  = \WGEVENTS_URL . '/events.php?ev_id=' . $item_id;
+            $item['name'] = $result_array['name'];
+            $item['url']  = \WGEVENTS_URL . '/events.php?id=' . $item_id;
             return $item;
         case 'registrations':
-            $sql          = 'SELECT reg_evid FROM ' . $xoopsDB->prefix('wgevents_registrations') . ' WHERE reg_id = '. $item_id;
+            $sql          = 'SELECT evid FROM ' . $xoopsDB->prefix('wgevents_registrations') . ' WHERE id = '. $item_id;
             $result       = $xoopsDB->query($sql);
             $result_array = $xoopsDB->fetchArray($result);
-            $item['name'] = $result_array['reg_evid'];
-            $item['url']  = \WGEVENTS_URL . '/registrations.php?reg_id=' . $item_id;
+            $item['name'] = $result_array['evid'];
+            $item['url']  = \WGEVENTS_URL . '/registrations.php?id=' . $item_id;
             return $item;
     }
     return null;

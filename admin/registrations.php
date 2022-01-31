@@ -29,8 +29,8 @@ use XoopsModules\Wgevents\Common;
 require __DIR__ . '/header.php';
 // Get all request values
 $op    = Request::getCmd('op', 'list');
-$regId = Request::getInt('reg_id');
-$evId  = Request::getInt('ev_id');
+$regId = Request::getInt('id');
+$evId  = Request::getInt('evid');
 $start = Request::getInt('start');
 $limit = Request::getInt('limit', $helper->getConfig('adminpager'));
 $GLOBALS['xoopsTpl']->assign('start', $start);
@@ -44,18 +44,18 @@ switch ($op) {
         $templateMain = 'wgevents_admin_registrations.tpl';
         $GLOBALS['xoopsTpl']->assign('navigation', $adminObject->displayNavigation('registrations.php'));
         if ($evId > 0) {
-            $adminObject->addItemButton(\_AM_WGEVENTS_ADD_REGISTRATION, 'registrations.php?op=new&amp;ev_id=' . $evId);
+            $adminObject->addItemButton(\_AM_WGEVENTS_ADD_REGISTRATION, 'registrations.php?op=new&amp;evid=' . $evId);
             $adminObject->addItemButton(\_AM_WGEVENTS_GOTO_FORMSELECT, 'registrations.php', 'list');
             $GLOBALS['xoopsTpl']->assign('buttons', $adminObject->displayButton('left'));
             $crRegistrations = new \CriteriaCompo();
-            $crRegistrations->add(new \Criteria('reg_evid', $evId));
+            $crRegistrations->add(new \Criteria('evid', $evId));
             $registrationsCount = $registrationsHandler->getCount($crRegistrations);
             $GLOBALS['xoopsTpl']->assign('registrations_count', $registrationsCount);
             $GLOBALS['xoopsTpl']->assign('wgevents_url', \WGEVENTS_URL);
             $GLOBALS['xoopsTpl']->assign('wgevents_upload_url', \WGEVENTS_UPLOAD_URL);
             // Table view registrations
             if ($registrationsCount > 0) {
-                $crRegistrations->setSort('reg_id');
+                $crRegistrations->setSort('id');
                 $crRegistrations->setOrder('DESC');
                 $crRegistrations->setStart($start);
                 $crRegistrations->setLimit($limit);
@@ -84,7 +84,7 @@ switch ($op) {
                 foreach (\array_keys($eventsAll) as $i) {
                     $event = $eventsAll[$i]->getValuesEvents();
                     $crRegistrations = new \CriteriaCompo();
-                    $crRegistrations->add(new \Criteria('reg_evid', $i));
+                    $crRegistrations->add(new \Criteria('evid', $i));
                     $registrationsCount = $registrationsHandler->getCount($crRegistrations);
                     $event['registrations'] = $registrationsCount;
                     $GLOBALS['xoopsTpl']->append('events_list', $event);
@@ -102,7 +102,7 @@ switch ($op) {
         $GLOBALS['xoopsTpl']->assign('buttons', $adminObject->displayButton('left'));
         // Form Create
         $registrationsObj = $registrationsHandler->create();
-        $registrationsObj->setVar('reg_evid', $evId);
+        $registrationsObj->setVar('evid', $evId);
         $form = $registrationsObj->getFormRegistrations();
         $GLOBALS['xoopsTpl']->assign('form', $form->render());
         break;
@@ -113,7 +113,7 @@ switch ($op) {
         $adminObject->addItemButton(\_AM_WGEVENTS_ADD_REGISTRATION, 'registrations.php?op=new');
         $GLOBALS['xoopsTpl']->assign('buttons', $adminObject->displayButton('left'));
         // Request source
-        $regIdSource = Request::getInt('reg_id_source');
+        $regIdSource = Request::getInt('id_source');
         // Get Form
         $registrationsObjSource = $registrationsHandler->get($regIdSource);
         $registrationsObj = $registrationsObjSource->xoopsClone();
@@ -131,24 +131,24 @@ switch ($op) {
             $registrationsObj = $registrationsHandler->create();
         }
         // Set Vars
-        $registrationsObj->setVar('reg_evid', Request::getInt('reg_evid'));
-        $registrationsObj->setVar('reg_salutation', Request::getInt('reg_salutation'));
-        $registrationsObj->setVar('reg_firstname', Request::getString('reg_firstname'));
-        $registrationsObj->setVar('reg_lastname', Request::getString('reg_lastname'));
-        $registrationsObj->setVar('reg_email', Request::getString('reg_email'));
-        $registrationsObj->setVar('reg_email_send', Request::getInt('reg_email_send'));
-        $registrationsObj->setVar('reg_gdpr', Request::getInt('reg_gdpr'));
-        $registrationsObj->setVar('reg_ip', Request::getString('reg_ip'));
-        $registrationsObj->setVar('reg_status', Request::getInt('reg_status'));
-        $registrationsObj->setVar('reg_financial', Request::getInt('reg_financial'));
-        $registrationsObj->setVar('reg_listwait', Request::getInt('reg_listwait'));
-        $registrationDatecreatedObj = \DateTime::createFromFormat(\_SHORTDATESTRING, Request::getString('reg_datecreated'));
-        $registrationsObj->setVar('reg_datecreated', $registrationDatecreatedObj->getTimestamp());
-        $registrationsObj->setVar('reg_submitter', Request::getInt('reg_submitter'));
+        $registrationsObj->setVar('evid', Request::getInt('evid'));
+        $registrationsObj->setVar('salutation', Request::getInt('salutation'));
+        $registrationsObj->setVar('firstname', Request::getString('firstname'));
+        $registrationsObj->setVar('lastname', Request::getString('lastname'));
+        $registrationsObj->setVar('email', Request::getString('email'));
+        $registrationsObj->setVar('email_send', Request::getInt('email_send'));
+        $registrationsObj->setVar('gdpr', Request::getInt('gdpr'));
+        $registrationsObj->setVar('ip', Request::getString('ip'));
+        $registrationsObj->setVar('status', Request::getInt('status'));
+        $registrationsObj->setVar('financial', Request::getInt('financial'));
+        $registrationsObj->setVar('listwait', Request::getInt('listwait'));
+        $registrationDatecreatedObj = \DateTime::createFromFormat(\_SHORTDATESTRING, Request::getString('datecreated'));
+        $registrationsObj->setVar('datecreated', $registrationDatecreatedObj->getTimestamp());
+        $registrationsObj->setVar('submitter', Request::getInt('submitter'));
         // Insert Data
         if ($registrationsHandler->insert($registrationsObj)) {
             $newRegId = $registrationsObj->getNewInsertedIdRegistrations();
-            $permId = isset($_REQUEST['reg_id']) ? $regId : $newRegId;
+            $permId = isset($_REQUEST['id']) ? $regId : $newRegId;
             $grouppermHandler = \xoops_getHandler('groupperm');
             $mid = $GLOBALS['xoopsModule']->getVar('mid');
             // Permission to view_registrations
@@ -196,7 +196,7 @@ switch ($op) {
         $templateMain = 'wgevents_admin_registrations.tpl';
         $GLOBALS['xoopsTpl']->assign('navigation', $adminObject->displayNavigation('registrations.php'));
         $registrationsObj = $registrationsHandler->get($regId);
-        $regEvid = $registrationsObj->getVar('reg_evid');
+        $regEvid = $registrationsObj->getVar('evid');
         if (isset($_REQUEST['ok']) && 1 == $_REQUEST['ok']) {
             if (!$GLOBALS['xoopsSecurity']->check()) {
                 \redirect_header('registrations.php', 3, \implode(', ', $GLOBALS['xoopsSecurity']->getErrors()));
@@ -210,9 +210,9 @@ switch ($op) {
             }
         } else {
             $customConfirm = new Common\Confirm(
-                ['ok' => 1, 'reg_id' => $regId, 'start' => $start, 'limit' => $limit, 'op' => 'delete'],
+                ['ok' => 1, 'id' => $regId, 'start' => $start, 'limit' => $limit, 'op' => 'delete'],
                 $_SERVER['REQUEST_URI'],
-                \sprintf(\_MA_WGEVENTS_FORM_SURE_DELETE, $registrationsObj->getVar('reg_evid')));
+                \sprintf(\_MA_WGEVENTS_FORM_SURE_DELETE, $registrationsObj->getVar('evid')));
             $form = $customConfirm->getFormConfirm();
             $GLOBALS['xoopsTpl']->assign('form', $form->render());
         }

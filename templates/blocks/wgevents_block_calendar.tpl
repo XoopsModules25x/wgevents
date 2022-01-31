@@ -22,10 +22,10 @@
     <{foreach item=event from=$events_list}>
         <div class="row wge-block-underline">
             <div class="col-xs-12 col-sm-2">
-                <img class="img-responsive img-fluid" src='<{$wgevents_upload_eventlogos_url|default:false}><{$event.ev_submitter}>/<{$event.logo}>' alt='<{$event.name}>' >
+                <img class="img-responsive img-fluid" src='<{$wgevents_upload_eventlogos_url|default:false}><{$event.submitter}>/<{$event.logo}>' alt='<{$event.name}>' >
             </div>
             <div class="col-xs-12 col-sm-5"><{$event.name}></div>
-            <div class="col-xs-12 col-sm-5"><{$event.datefrom}></div>
+            <div class="col-xs-12 col-sm-5"><{$event.datefrom_text}></div>
         </div>
     <{/foreach}>
 <{/if}>

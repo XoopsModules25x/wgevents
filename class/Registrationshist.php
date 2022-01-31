@@ -1,6 +1,5 @@
 <?php declare(strict_types=1);
 
-
 namespace XoopsModules\Wgevents;
 
 /*
@@ -45,20 +44,20 @@ class Registrationshist extends \XoopsObject
         $this->initVar('hist_info', \XOBJ_DTYPE_TXTBOX);
         $this->initVar('hist_datecreated', \XOBJ_DTYPE_INT);
         $this->initVar('hist_submitter', \XOBJ_DTYPE_INT);
-        $this->initVar('reg_id', \XOBJ_DTYPE_INT);
-        $this->initVar('reg_evid', \XOBJ_DTYPE_INT);
-        $this->initVar('reg_salutation', \XOBJ_DTYPE_INT);
-        $this->initVar('reg_firstname', \XOBJ_DTYPE_TXTBOX);
-        $this->initVar('reg_lastname', \XOBJ_DTYPE_TXTBOX);
-        $this->initVar('reg_email', \XOBJ_DTYPE_TXTBOX);
-        $this->initVar('reg_email_send', \XOBJ_DTYPE_INT);
-        $this->initVar('reg_gdpr', \XOBJ_DTYPE_INT);
-        $this->initVar('reg_ip', \XOBJ_DTYPE_TXTBOX);
-        $this->initVar('reg_status', \XOBJ_DTYPE_INT);
-        $this->initVar('reg_financial', \XOBJ_DTYPE_INT);
-        $this->initVar('reg_listwait', \XOBJ_DTYPE_INT);
-        $this->initVar('reg_datecreated', \XOBJ_DTYPE_INT);
-        $this->initVar('reg_submitter', \XOBJ_DTYPE_INT);
+        $this->initVar('id', \XOBJ_DTYPE_INT);
+        $this->initVar('evid', \XOBJ_DTYPE_INT);
+        $this->initVar('salutation', \XOBJ_DTYPE_INT);
+        $this->initVar('firstname', \XOBJ_DTYPE_TXTBOX);
+        $this->initVar('lastname', \XOBJ_DTYPE_TXTBOX);
+        $this->initVar('email', \XOBJ_DTYPE_TXTBOX);
+        $this->initVar('email_send', \XOBJ_DTYPE_INT);
+        $this->initVar('gdpr', \XOBJ_DTYPE_INT);
+        $this->initVar('ip', \XOBJ_DTYPE_TXTBOX);
+        $this->initVar('status', \XOBJ_DTYPE_INT);
+        $this->initVar('financial', \XOBJ_DTYPE_INT);
+        $this->initVar('listwait', \XOBJ_DTYPE_INT);
+        $this->initVar('datecreated', \XOBJ_DTYPE_INT);
+        $this->initVar('submitter', \XOBJ_DTYPE_INT);
     }
 
     /**

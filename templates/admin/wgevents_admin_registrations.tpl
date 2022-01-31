@@ -19,7 +19,7 @@
                 <td class='center'><{$event.name}></td>
                 <td class='center'><{$event.registrations}></td>
                 <td class="center ">
-                    <a href="registrations.php?op=list&amp;ev_id=<{$event.id}>&amp;start=<{$start}>&amp;limit=<{$limit}>" title="<{$smarty.const._DETAILS}>"><img src="<{xoModuleIcons16 view.png}>" alt="<{$smarty.const._DETAILS}> events" ></a>
+                    <a href="registrations.php?op=list&amp;evid=<{$event.id}>&amp;start=<{$start}>&amp;limit=<{$limit}>" title="<{$smarty.const._MA_WGEVENTS_DETAILS}>"><img src="<{xoModuleIcons16 view.png}>" alt="<{$smarty.const._MA_WGEVENTS_DETAILS}> events" ></a>
                 </td>
             </tr>
             <{/foreach}>
@@ -55,7 +55,7 @@
             <{foreach item=registration from=$registrations_list}>
             <tr class='<{cycle values='odd, even'}>'>
                 <td class='center'><{$registration.id}></td>
-                <td class='center'><{$registration.evid}></td>
+                <td class='center'><{$registration.eventname}></td>
                 <td class='center'><{$registration.salutation_text|default:''}></td>
                 <td class='center'><{$registration.firstname|default:''}></td>
                 <td class='center'><{$registration.lastname|default:''}></td>
@@ -63,13 +63,13 @@
                 <td class='center'><{$registration.ip|default:''}></td>
                 <td class='center'><{$registration.status_text}></td>
                 <td class='center'><{$registration.financial_text}></td>
-                <td class='center'><{$registration.listwait}></td>
-                <td class='center'><{$registration.datecreated}></td>
-                <td class='center'><{$registration.submitter}></td>
+                <td class='center'><{$registration.listwait_text}></td>
+                <td class='center'><{$registration.datecreated_text}></td>
+                <td class='center'><{$registration.submitter_text}></td>
                 <td class="center  width5">
-                    <a href="registrations.php?op=edit&amp;reg_id=<{$registration.id}>&amp;start=<{$start}>&amp;limit=<{$limit}>" title="<{$smarty.const._EDIT}>"><img src="<{xoModuleIcons16 edit.png}>" alt="<{$smarty.const._EDIT}> registrations" ></a>
-                    <a href="registrations.php?op=clone&amp;reg_id_source=<{$registration.id}>" title="<{$smarty.const._CLONE}>"><img src="<{xoModuleIcons16 editcopy.png}>" alt="<{$smarty.const._CLONE}> registrations" ></a>
-                    <a href="registrations.php?op=delete&amp;reg_id=<{$registration.id}>" title="<{$smarty.const._DELETE}>"><img src="<{xoModuleIcons16 delete.png}>" alt="<{$smarty.const._DELETE}> registrations" ></a>
+                    <a href="registrations.php?op=edit&amp;id=<{$registration.id}>&amp;start=<{$start}>&amp;limit=<{$limit}>" title="<{$smarty.const._EDIT}>"><img src="<{xoModuleIcons16 edit.png}>" alt="<{$smarty.const._EDIT}> registrations" ></a>
+                    <a href="registrations.php?op=clone&amp;id_source=<{$registration.id}>" title="<{$smarty.const._CLONE}>"><img src="<{xoModuleIcons16 editcopy.png}>" alt="<{$smarty.const._CLONE}> registrations" ></a>
+                    <a href="registrations.php?op=delete&amp;id=<{$registration.id}>" title="<{$smarty.const._DELETE}>"><img src="<{xoModuleIcons16 delete.png}>" alt="<{$smarty.const._DELETE}> registrations" ></a>
                 </td>
             </tr>
             <{/foreach}>

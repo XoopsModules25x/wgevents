@@ -46,33 +46,35 @@ function b_wgevents_events_show($options)
     \array_shift($options);
 
     // Criteria for status field
-    $crEvents->add(new \Criteria('ev_status', Constants::STATUS_SUBMITTED, '>'));
+    $crEvents->add(new \Criteria('status', Constants::STATUS_SUBMITTED, '>'));
 
     switch ($typeBlock) {
         case 'last':
         default:
             // For the block: events last
-            $crEvents->setSort('ev_datecreated');
+            $crEvents->setSort('datecreated');
             $crEvents->setOrder('DESC');
             break;
         case 'new':
             // For the block: events new
             // new since last week: 7 * 24 * 60 * 60 = 604800
-            $crEvents->add(new \Criteria('ev_datecreated', \time() - 604800, '>='));
-            $crEvents->add(new \Criteria('ev_datecreated', \time(), '<='));
-            $crEvents->setSort('ev_datecreated');
+            $crEvents->add(new \Criteria('datecreated', \time() - 604800, '>='));
+            $crEvents->add(new \Criteria('datecreated', \time(), '<='));
+            $crEvents->setSort('datecreated');
             $crEvents->setOrder('ASC');
             break;
+        /*
         case 'hits':
             // For the block: events hits
-            $crEvents->setSort('ev_hits');
+            $crEvents->setSort('hits');
             $crEvents->setOrder('DESC');
             break;
         case 'top':
             // For the block: events top
-            $crEvents->setSort('ev_top');
+            $crEvents->setSort('top');
             $crEvents->setOrder('ASC');
             break;
+        */    
         case 'random':
             // For the block: events random
             $crEvents->setSort('RAND()');
@@ -95,10 +97,10 @@ function b_wgevents_events_show($options)
              *     }
              *     $block[$i]['title'] =  $myTitle;
              */
-            $block[$i]['id'] = $eventsAll[$i]->getVar('ev_id');
-            $block[$i]['name'] = \htmlspecialchars($eventsAll[$i]->getVar('ev_name'), ENT_QUOTES | ENT_HTML5);
-            $block[$i]['logo'] = $eventsAll[$i]->getVar('ev_logo');
-            $block[$i]['ev_submitter'] = $eventsAll[$i]->getVar('ev_submitter');
+            $block[$i]['id'] = $eventsAll[$i]->getVar('id');
+            $block[$i]['name'] = \htmlspecialchars($eventsAll[$i]->getVar('name'), ENT_QUOTES | ENT_HTML5);
+            $block[$i]['logo'] = $eventsAll[$i]->getVar('logo');
+            $block[$i]['submitter'] = $eventsAll[$i]->getVar('submitter');
         }
     }
 
@@ -125,8 +127,8 @@ function b_wgevents_events_edit($options)
     \array_shift($options);
 
     $crEvents = new \CriteriaCompo();
-    $crEvents->add(new \Criteria('ev_id', 0, '!='));
-    $crEvents->setSort('ev_id');
+    $crEvents->add(new \Criteria('id', 0, '!='));
+    $crEvents->setSort('id');
     $crEvents->setOrder('ASC');
 
     /**
@@ -141,8 +143,8 @@ function b_wgevents_events_edit($options)
     $form .= \_MB_WGEVENTS_EVENTS_TO_DISPLAY . "<br><select name='options[]' multiple='multiple' size='5'>";
     $form .= "<option value='0' " . (!\in_array(0, $options) && !\in_array('0', $options) ? '' : "selected='selected'") . '>' . \_MB_WGEVENTS_ALL_EVENTS . '</option>';
     foreach (\array_keys($eventsAll) as $i) {
-        $ev_id = $eventsAll[$i]->getVar('ev_id');
-        $form .= "<option value='" . $ev_id . "' " . (!\in_array($ev_id, $options) ? '' : "selected='selected'") . '>' . $eventsAll[$i]->getVar('ev_name') . '</option>';
+        $id = $eventsAll[$i]->getVar('id');
+        $form .= "<option value='" . $id . "' " . (!\in_array($id, $options) ? '' : "selected='selected'") . '>' . $eventsAll[$i]->getVar('name') . '</option>';
     }
     $form .= '</select>';
 

@@ -44,23 +44,23 @@ class Accounts extends \XoopsObject
 
     public function __construct()
     {
-        $this->initVar('acc_id', XOBJ_DTYPE_INT, null, false);
-        $this->initVar('acc_type', XOBJ_DTYPE_INT, Constants::ACCOUNT_TYPE_VAL_PHP_MAIL, false);
-        $this->initVar('acc_name', XOBJ_DTYPE_TXTBOX, null, false, 100);
-        $this->initVar('acc_yourname', XOBJ_DTYPE_TXTBOX, null, false, 100);
-        $this->initVar('acc_yourmail', XOBJ_DTYPE_TXTBOX, null, false, 100);
-        $this->initVar('acc_username', XOBJ_DTYPE_TXTBOX, null, false, 100);
-        $this->initVar('acc_password', XOBJ_DTYPE_TXTBOX, null, false, 100);
-        $this->initVar('acc_server_in', XOBJ_DTYPE_TXTBOX, null, false, 100);
-        $this->initVar('acc_port_in', XOBJ_DTYPE_INT, null, false, 100);
-        $this->initVar('acc_securetype_in', XOBJ_DTYPE_TXTBOX, null, false, 20);
-        $this->initVar('acc_server_out', XOBJ_DTYPE_TXTBOX, null, false, 100);
-        $this->initVar('acc_port_out', XOBJ_DTYPE_INT, null, false, 100);
-        $this->initVar('acc_securetype_out', XOBJ_DTYPE_TXTBOX, null, false);
-        $this->initVar('acc_inbox', XOBJ_DTYPE_TXTBOX, null, false, 100);
-        $this->initVar('acc_default', XOBJ_DTYPE_INT, null, false); // boolean
-        $this->initVar('acc_submitter', XOBJ_DTYPE_INT, null, false);
-        $this->initVar('acc_datecreated', XOBJ_DTYPE_INT, time(), false);
+        $this->initVar('id', XOBJ_DTYPE_INT, null, false);
+        $this->initVar('type', XOBJ_DTYPE_INT, Constants::ACCOUNT_TYPE_VAL_PHP_MAIL, false);
+        $this->initVar('name', XOBJ_DTYPE_TXTBOX, null, false, 100);
+        $this->initVar('yourname', XOBJ_DTYPE_TXTBOX, null, false, 100);
+        $this->initVar('yourmail', XOBJ_DTYPE_TXTBOX, null, false, 100);
+        $this->initVar('username', XOBJ_DTYPE_TXTBOX, null, false, 100);
+        $this->initVar('password', XOBJ_DTYPE_TXTBOX, null, false, 100);
+        $this->initVar('server_in', XOBJ_DTYPE_TXTBOX, null, false, 100);
+        $this->initVar('port_in', XOBJ_DTYPE_INT, null, false, 100);
+        $this->initVar('securetype_in', XOBJ_DTYPE_TXTBOX, null, false, 20);
+        $this->initVar('server_out', XOBJ_DTYPE_TXTBOX, null, false, 100);
+        $this->initVar('port_out', XOBJ_DTYPE_INT, null, false, 100);
+        $this->initVar('securetype_out', XOBJ_DTYPE_TXTBOX, null, false);
+        $this->initVar('inbox', XOBJ_DTYPE_TXTBOX, null, false, 100);
+        $this->initVar('default', XOBJ_DTYPE_INT, null, false); // boolean
+        $this->initVar('submitter', XOBJ_DTYPE_INT, null, false);
+        $this->initVar('datecreated', XOBJ_DTYPE_INT, time(), false);
     }
 
     /**
@@ -82,7 +82,7 @@ class Accounts extends \XoopsObject
         $form = new \XoopsThemeForm($title, 'accounts_form', $action, 'post', true);
         $form->setExtra('enctype="multipart/form-data"');
 
-        $default = $this->getVar('acc_type');
+        $default = $this->getVar('type');
 
         switch ($default) {
             case Constants::ACCOUNT_TYPE_VAL_PHP_MAIL:
@@ -108,7 +108,7 @@ class Accounts extends \XoopsObject
                 break;
         }
 
-        $accstd_select = new \XoopsFormSelect(_AM_WGEVENTS_ACCOUNT_TYPE, 'acc_type', $this->getVar('acc_type'));
+        $accstd_select = new \XoopsFormSelect(_AM_WGEVENTS_ACCOUNT_TYPE, 'type', $this->getVar('type'));
         $accstd_select->setExtra('onchange="document.forms.accounts_form.submit()"');
         $accstd_select->addOption(Constants::ACCOUNT_TYPE_VAL_PHP_MAIL, _AM_WGEVENTS_ACCOUNT_TYPE_PHPMAIL);
         $accstd_select->addOption(Constants::ACCOUNT_TYPE_VAL_PHP_SENDMAIL, _AM_WGEVENTS_ACCOUNT_TYPE_PHPSENDMAIL);
@@ -117,22 +117,22 @@ class Accounts extends \XoopsObject
         $accstd_select->addOption(Constants::ACCOUNT_TYPE_VAL_GMAIL, _AM_WGEVENTS_ACCOUNT_TYPE_GMAIL);
         $form->addElement($accstd_select, true);
 
-        $form->addElement(new \XoopsFormText(_AM_WGEVENTS_ACCOUNT_NAME, 'acc_name', 50, 255, $this->getVar('acc_name')), true);
-        $form->addElement(new \XoopsFormText(_AM_WGEVENTS_ACCOUNT_YOURNAME, 'acc_yourname', 50, 255, $this->getVar('acc_yourname')), true);
-        $form->addElement(new \XoopsFormText(_AM_WGEVENTS_ACCOUNT_YOURMAIL, 'acc_yourmail', 50, 255, $this->getVar('acc_yourmail')), true);
+        $form->addElement(new \XoopsFormText(_AM_WGEVENTS_ACCOUNT_NAME, 'name', 50, 255, $this->getVar('name')), true);
+        $form->addElement(new \XoopsFormText(_AM_WGEVENTS_ACCOUNT_YOURNAME, 'yourname', 50, 255, $this->getVar('yourname')), true);
+        $form->addElement(new \XoopsFormText(_AM_WGEVENTS_ACCOUNT_YOURMAIL, 'yourmail', 50, 255, $this->getVar('yourmail')), true);
 
-        $form->addElement(new \XoopsFormRadioYN(_AM_WGEVENTS_ACCOUNT_DEFAULT, 'acc_default', $this->getVar('acc_default'), _YES, _NO), false);
+        $form->addElement(new \XoopsFormRadioYN(_AM_WGEVENTS_ACCOUNT_DEFAULT, 'default', $this->getVar('default'), _YES, _NO), false);
 
         if (false === $dis_acc_userpass) {
-            $form->addElement(new \XoopsFormText(_AM_WGEVENTS_ACCOUNT_USERNAME, 'acc_username', 50, 255, $this->getVar('acc_username')), true);
-            $form->addElement(new \XoopsFormText(_AM_WGEVENTS_ACCOUNT_PASSWORD, 'acc_password', 50, 255, $this->getVar('acc_password')), true);
+            $form->addElement(new \XoopsFormText(_AM_WGEVENTS_ACCOUNT_USERNAME, 'username', 50, 255, $this->getVar('username')), true);
+            $form->addElement(new \XoopsFormText(_AM_WGEVENTS_ACCOUNT_PASSWORD, 'password', 50, 255, $this->getVar('password')), true);
         }
 
         if (false === $dis_acc_server_in) {
             $incomming_tray = new \XoopsFormElementTray(_AM_WGEVENTS_ACCOUNT_INCOMING, '');
-            $incomming_tray->addElement(new \XoopsFormText(_AM_WGEVENTS_ACCOUNT_SERVER_IN, 'acc_server_in', 50, 255, $this->getVar('acc_server_in')));
-            $incomming_tray->addElement(new \XoopsFormText('<br>' . _AM_WGEVENTS_ACCOUNT_PORT_IN, 'acc_port_in', 50, 255, $this->getVar('acc_port_in')));
-            $formfield_securetype_in = new \XoopsFormSelect('<br>' . _AM_WGEVENTS_ACCOUNT_SECURETYPE_IN, 'acc_securetype_in', $this->getVar('acc_securetype_in'));
+            $incomming_tray->addElement(new \XoopsFormText(_AM_WGEVENTS_ACCOUNT_SERVER_IN, 'server_in', 50, 255, $this->getVar('server_in')));
+            $incomming_tray->addElement(new \XoopsFormText('<br>' . _AM_WGEVENTS_ACCOUNT_PORT_IN, 'port_in', 50, 255, $this->getVar('port_in')));
+            $formfield_securetype_in = new \XoopsFormSelect('<br>' . _AM_WGEVENTS_ACCOUNT_SECURETYPE_IN, 'securetype_in', $this->getVar('securetype_in'));
             $formfield_securetype_in->addOption('');
             $formfield_securetype_in->addOption('notls', 'NOTLS / STARTTLS');
             $formfield_securetype_in->addOption('ssl', 'SSL');
@@ -143,9 +143,9 @@ class Accounts extends \XoopsObject
 
         if (false === $dis_acc_server_out) {
             $outcomming_tray = new \XoopsFormElementTray(_AM_WGEVENTS_ACCOUNT_OUTGOING, '');
-            $outcomming_tray->addElement(new \XoopsFormText(_AM_WGEVENTS_ACCOUNT_SERVER_OUT, 'acc_server_out', 50, 255, $this->getVar('acc_server_out')));
-            $outcomming_tray->addElement(new \XoopsFormText('<br>' . _AM_WGEVENTS_ACCOUNT_PORT_OUT, 'acc_port_out', 50, 255, $this->getVar('acc_port_out')));
-            $formfield_securetype_out = new \XoopsFormSelect('<br>' . _AM_WGEVENTS_ACCOUNT_SECURETYPE_OUT, 'acc_securetype_out', $this->getVar('acc_securetype_out'));
+            $outcomming_tray->addElement(new \XoopsFormText(_AM_WGEVENTS_ACCOUNT_SERVER_OUT, 'server_out', 50, 255, $this->getVar('server_out')));
+            $outcomming_tray->addElement(new \XoopsFormText('<br>' . _AM_WGEVENTS_ACCOUNT_PORT_OUT, 'port_out', 50, 255, $this->getVar('port_out')));
+            $formfield_securetype_out = new \XoopsFormSelect('<br>' . _AM_WGEVENTS_ACCOUNT_SECURETYPE_OUT, 'securetype_out', $this->getVar('securetype_out'));
             $formfield_securetype_out->addOption('');
             $formfield_securetype_out->addOption('notls', 'NOTLS / STARTTLS');
             $formfield_securetype_out->addOption('ssl', 'SSL');
@@ -153,9 +153,9 @@ class Accounts extends \XoopsObject
             $outcomming_tray->addElement($formfield_securetype_out);
             $form->addElement($outcomming_tray);
         }
-        $time = $this->isNew() ? time() : $this->getVar('acc_datecreated');
-        $form->addElement(new \XoopsFormHidden('acc_submitter', $GLOBALS['xoopsUser']->uid()));
-        $form->addElement(new \XoopsFormHidden('acc_datecreated', time()));
+        $time = $this->isNew() ? time() : $this->getVar('datecreated');
+        $form->addElement(new \XoopsFormHidden('submitter', $GLOBALS['xoopsUser']->uid()));
+        $form->addElement(new \XoopsFormHidden('datecreated', time()));
 
         $form->addElement(new \XoopsFormLabel(_MA_WGEVENTS_SUBMITTER, $GLOBALS['xoopsUser']->uname()));
         $form->addElement(new \XoopsFormLabel(_MA_WGEVENTS_DATECREATED, formatTimestamp($time, 's')));
@@ -182,7 +182,6 @@ class Accounts extends \XoopsObject
     public function getValuesAccount($keys = null, $format = null, $maxDepth = null)
     {
         $ret = $this->getValues($keys, $format, $maxDepth);
-        $ret['id'] = $this->getVar('acc_id');
         $acc_types = [
             Constants::ACCOUNT_TYPE_VAL_PHP_MAIL     => _AM_WGEVENTS_ACCOUNT_TYPE_PHPMAIL,
             Constants::ACCOUNT_TYPE_VAL_PHP_SENDMAIL => _AM_WGEVENTS_ACCOUNT_TYPE_PHPSENDMAIL,
@@ -190,29 +189,10 @@ class Accounts extends \XoopsObject
             Constants::ACCOUNT_TYPE_VAL_SMTP         => _AM_WGEVENTS_ACCOUNT_TYPE_SMTP,
             Constants::ACCOUNT_TYPE_VAL_GMAIL        => _AM_WGEVENTS_ACCOUNT_TYPE_GMAIL,
         ];
-        $ret['type']           = $this->getVar('acc_type');
-        $ret['type_text']      = $acc_types[$this->getVar('acc_type')];
-        $ret['name']           = $this->getVar('acc_name');
-        $ret['yourname']       = $this->getVar('acc_yourname');
-        $ret['yourmail']       = $this->getVar('acc_yourmail');
-        $ret['username']       = $this->getVar('acc_username');
-        $ret['password']       = $this->getVar('acc_password');
-        $ret['server_in']      = $this->getVar('acc_server_in');
-        $ret['port_in']        = $this->getVar('acc_port_in');
-        $ret['securetype_in']  = $this->getVar('acc_securetype_in');
-        $ret['server_out']     = $this->getVar('acc_server_out');
-        $ret['port_out']       = $this->getVar('acc_port_out');
-        $ret['securetype_out'] = $this->getVar('acc_securetype_out');
-        $ret['use_bmh']        = $this->getVar('acc_use_bmh');
-        $ret['inbox']          = $this->getVar('acc_inbox');
-        $ret['hardbox']        = $this->getVar('acc_hardbox');
-        $ret['movehard']       = $this->getVar('acc_movehard');
-        $ret['softbox']        = $this->getVar('acc_softbox');
-        $ret['movesoft']       = $this->getVar('acc_movesoft');
-        $ret['default']        = $this->getVar('acc_default');
-        $ret['default_text']   = $this->getVar('acc_default') == 1 ? _YES : _NO;
-        $ret['datecreated']    = formatTimestamp($this->getVar('acc_datecreated'), 's');
-        $ret['submitter']      = \XoopsUser::getUnameFromId($this->getVar('acc_submitter'));
+        $ret['type_text']        = $acc_types[$this->getVar('type')];
+        $ret['default_text']     = $this->getVar('default') == 1 ? _YES : _NO;
+        $ret['datecreated_text'] = formatTimestamp($this->getVar('datecreated'), 's');
+        $ret['submitter_text']   = \XoopsUser::getUnameFromId($this->getVar('submitter'));
         return $ret;
     }
 

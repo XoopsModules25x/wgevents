@@ -32,7 +32,7 @@ use XoopsModules\Wgevents\ {
 require __DIR__ . '/header.php';
 // Get all request values
 $op    = Request::getCmd('op', 'list');
-$evId  = Request::getInt('ev_id');
+$evId  = Request::getInt('id');
 $start = Request::getInt('start');
 $limit = Request::getInt('limit', $helper->getConfig('adminpager'));
 $GLOBALS['xoopsTpl']->assign('start', $start);
@@ -92,7 +92,7 @@ switch ($op) {
         $adminObject->addItemButton(\_AM_WGEVENTS_ADD_EVENT, 'events.php?op=new');
         $GLOBALS['xoopsTpl']->assign('buttons', $adminObject->displayButton('left'));
         // Request source
-        $evIdSource = Request::getInt('ev_id_source');
+        $evIdSource = Request::getInt('id_source');
         // Get Form
         $eventsObjSource = $eventsHandler->get($evIdSource);
         $eventsObj = $eventsObjSource->xoopsClone();
@@ -113,13 +113,13 @@ switch ($op) {
         }
         // Set Vars
         $uploaderErrors = '';
-        $eventsObj->setVar('ev_catid', Request::getInt('ev_catid'));
-        $eventsObj->setVar('ev_name', Request::getString('ev_name'));
-        // Set Var ev_logo
+        $eventsObj->setVar('catid', Request::getInt('catid'));
+        $eventsObj->setVar('name', Request::getString('name'));
+        // Set Var logo
         require_once \XOOPS_ROOT_PATH . '/class/uploader.php';
-        $filename       = $_FILES['ev_logo']['name'];
-        $imgMimetype    = $_FILES['ev_logo']['type'];
-        $imgNameDef     = Request::getString('ev_name');
+        $filename       = $_FILES['logo']['name'];
+        $imgMimetype    = $_FILES['logo']['type'];
+        $imgNameDef     = Request::getString('name');
         $uploadPath = \WGEVENTS_UPLOAD_EVENTLOGOS_PATH . '/' . $uidCurrent . '/';
         $uploader = new \XoopsMediaUploader($uploadPath,
                                                     $helper->getConfig('mimetypes_image'), 
@@ -143,7 +143,7 @@ switch ($op) {
                     $imgHandler->maxHeight     = $maxheight;
                     $result                    = $imgHandler->resizeImage();
                 }
-                $eventsObj->setVar('ev_logo', $savedFilename);
+                $eventsObj->setVar('logo', $savedFilename);
             } else {
                 $uploaderErrors .= '<br>' . $uploader->getErrors();
             }
@@ -151,79 +151,79 @@ switch ($op) {
             if ($filename > '') {
                 $uploaderErrors .= '<br>' . $uploader->getErrors();
             }
-            $eventsObj->setVar('ev_logo', Request::getString('ev_logo'));
+            $eventsObj->setVar('logo', Request::getString('logo'));
         }
-        $eventsObj->setVar('ev_desc', Request::getText('ev_desc'));
-        $eventDatefromArr = Request::getArray('ev_datefrom');
+        $eventsObj->setVar('desc', Request::getText('desc'));
+        $eventDatefromArr = Request::getArray('datefrom');
         $eventDatefromObj = \DateTime::createFromFormat(\_SHORTDATESTRING, $eventDatefromArr['date']);
         $eventDatefromObj->setTime(0, 0);
         $eventDatefrom = $eventDatefromObj->getTimestamp() + (int)$eventDatefromArr['time'];
-        $eventsObj->setVar('ev_datefrom', $eventDatefrom);
-        $eventDatetoArr = Request::getArray('ev_dateto');
+        $eventsObj->setVar('datefrom', $eventDatefrom);
+        $eventDatetoArr = Request::getArray('dateto');
         $eventDatetoObj = \DateTime::createFromFormat(\_SHORTDATESTRING, $eventDatetoArr['date']);
         $eventDatetoObj->setTime(0, 0);
         $eventDateto = $eventDatetoObj->getTimestamp() + (int)$eventDatetoArr['time'];
-        $eventsObj->setVar('ev_dateto', $eventDateto);
-        $eventsObj->setVar('ev_contact', Request::getString('ev_contact'));
-        $eventsObj->setVar('ev_email', Request::getString('ev_email'));
-        $eventsObj->setVar('ev_location', Request::getString('ev_location'));
-        $eventsObj->setVar('ev_locgmlat', Request::getFloat('ev_locgmlat'));
-        $eventsObj->setVar('ev_locgmlon', Request::getFloat('ev_locgmlon'));
-        $eventsObj->setVar('ev_locgmzoom', Request::getInt('ev_locgmzoom'));
-        $evFee = Utility::StringToFloat(Request::getString('ev_fee'));
-        $eventsObj->setVar('ev_fee', $evFee);
-        $eventsObj->setVar('ev_register_use', Request::getInt('ev_register_use'));
+        $eventsObj->setVar('dateto', $eventDateto);
+        $eventsObj->setVar('contact', Request::getString('contact'));
+        $eventsObj->setVar('email', Request::getString('email'));
+        $eventsObj->setVar('location', Request::getString('location'));
+        $eventsObj->setVar('locgmlat', Request::getFloat('locgmlat'));
+        $eventsObj->setVar('locgmlon', Request::getFloat('locgmlon'));
+        $eventsObj->setVar('locgmzoom', Request::getInt('locgmzoom'));
+        $evFee = Utility::StringToFloat(Request::getString('fee'));
+        $eventsObj->setVar('fee', $evFee);
+        $eventsObj->setVar('register_use', Request::getInt('register_use'));
         if ($helper->getConfig('use_register')) {
-            $evRegisterUse = Request::getInt('ev_register_use');
-            $eventsObj->setVar('ev_register_use', $evRegisterUse);
+            $evRegisterUse = Request::getInt('register_use');
+            $eventsObj->setVar('register_use', $evRegisterUse);
             if ($evRegisterUse) {
-                $evRegisterfromArr = Request::getArray('ev_register_from');
+                $evRegisterfromArr = Request::getArray('register_from');
                 $evRegisterfromObj = \DateTime::createFromFormat(\_SHORTDATESTRING, $evRegisterfromArr['date']);
                 $evRegisterfromObj->setTime(0, 0);
                 $evRegisterfrom = $evRegisterfromObj->getTimestamp() + (int)$evRegisterfromArr['time'];
-                $eventsObj->setVar('ev_register_from', $evRegisterfrom);
-                $evRegistertoArr = Request::getArray('ev_register_to');
+                $eventsObj->setVar('register_from', $evRegisterfrom);
+                $evRegistertoArr = Request::getArray('register_to');
                 $evRegistertoObj = \DateTime::createFromFormat(\_SHORTDATESTRING, $evRegistertoArr['date']);
                 $evRegistertoObj->setTime(0, 0);
                 $evRegisterto = $evRegistertoObj->getTimestamp() + (int)$evRegistertoArr['time'];
-                $eventsObj->setVar('ev_register_to', $evRegisterto);
-                $eventsObj->setVar('ev_register_max', Request::getInt('ev_register_max'));
-                $eventsObj->setVar('ev_register_listwait', Request::getInt('ev_register_listwait'));
-                $eventsObj->setVar('ev_register_autoaccept', Request::getInt('ev_register_autoaccept'));
-                $eventsObj->setVar('ev_register_notify', Request::getString('ev_register_notify'));
-                $eventsObj->setVar('ev_register_sendermail', Request::getString('ev_register_sendermail'));
-                $eventsObj->setVar('ev_register_sendername', Request::getString('ev_register_sendername'));
-                $eventsObj->setVar('ev_register_signature', Request::getString('ev_register_signature'));
+                $eventsObj->setVar('register_to', $evRegisterto);
+                $eventsObj->setVar('register_max', Request::getInt('register_max'));
+                $eventsObj->setVar('register_listwait', Request::getInt('register_listwait'));
+                $eventsObj->setVar('register_autoaccept', Request::getInt('register_autoaccept'));
+                $eventsObj->setVar('register_notify', Request::getString('register_notify'));
+                $eventsObj->setVar('register_sendermail', Request::getString('register_sendermail'));
+                $eventsObj->setVar('register_sendername', Request::getString('register_sendername'));
+                $eventsObj->setVar('register_signature', Request::getString('register_signature'));
             } else {
                 if ($evId > 0) {
                     //reset previous values
-                    $eventsObj->setVar('ev_register_to', 0);
-                    $eventsObj->setVar('ev_register_max', 0);
-                    $eventsObj->setVar('ev_register_listwait', 0);
-                    $eventsObj->setVar('ev_register_autoaccept', 0);
-                    $eventsObj->setVar('ev_register_notify', '');
-                    $eventsObj->setVar('ev_register_sendermail', '');
-                    $eventsObj->setVar('ev_register_sendername', '');
-                    $eventsObj->setVar('ev_register_signature', '');
+                    $eventsObj->setVar('register_to', 0);
+                    $eventsObj->setVar('register_max', 0);
+                    $eventsObj->setVar('register_listwait', 0);
+                    $eventsObj->setVar('register_autoaccept', 0);
+                    $eventsObj->setVar('register_notify', '');
+                    $eventsObj->setVar('register_sendermail', '');
+                    $eventsObj->setVar('register_sendername', '');
+                    $eventsObj->setVar('register_signature', '');
                     $registrationsHandler->cleanupRegistrations($evId);
                     $questionsHandler->cleanupQuestions($evId);
                     $answersHandler->cleanupAnswers($evId);
                 }
             }
         }
-        $eventsObj->setVar('ev_status', Request::getInt('ev_status'));
-        $eventsObj->setVar('ev_galid', Request::getInt('ev_galid'));
-        $eventDatecreatedObj = \DateTime::createFromFormat(\_SHORTDATESTRING, Request::getString('ev_datecreated'));
-        $eventsObj->setVar('ev_datecreated', $eventDatecreatedObj->getTimestamp());
-        $eventsObj->setVar('ev_submitter', Request::getInt('ev_submitter'));
+        $eventsObj->setVar('status', Request::getInt('status'));
+        $eventsObj->setVar('galid', Request::getInt('galid'));
+        $eventDatecreatedObj = \DateTime::createFromFormat(\_SHORTDATESTRING, Request::getString('datecreated'));
+        $eventsObj->setVar('datecreated', $eventDatecreatedObj->getTimestamp());
+        $eventsObj->setVar('submitter', Request::getInt('submitter'));
         // Insert Data
         if ($eventsHandler->insert($eventsObj)) {
             $newEvId = $eventsObj->getNewInsertedIdEvents();
             if ('' !== $uploaderErrors) {
-                \redirect_header('events.php?op=edit&ev_id=' . $evId, 5, $uploaderErrors);
+                \redirect_header('events.php?op=edit&id=' . $evId, 5, $uploaderErrors);
             } else {
                 if ($continueAddtionals) {
-                    \redirect_header('questions.php?op=edit&amp;que_evid=' . $newEvId, 2, \_MA_WGEVENTS_FORM_OK);
+                    \redirect_header('questions.php?op=edit&amp;evid=' . $newEvId, 2, \_MA_WGEVENTS_FORM_OK);
                 } else {
                     \redirect_header('events.php?op=list&amp;start=' . $start . '&amp;limit=' . $limit, 2, \_MA_WGEVENTS_FORM_OK);
                 }
@@ -252,7 +252,7 @@ switch ($op) {
         $templateMain = 'wgevents_admin_events.tpl';
         $GLOBALS['xoopsTpl']->assign('navigation', $adminObject->displayNavigation('events.php'));
         $eventsObj = $eventsHandler->get($evId);
-        $evName = $eventsObj->getVar('ev_name');
+        $evName = $eventsObj->getVar('name');
         if (isset($_REQUEST['ok']) && 1 == $_REQUEST['ok']) {
             if (!$GLOBALS['xoopsSecurity']->check()) {
                 \redirect_header('events.php', 3, \implode(', ', $GLOBALS['xoopsSecurity']->getErrors()));
@@ -264,9 +264,9 @@ switch ($op) {
             }
         } else {
             $customConfirm = new Common\Confirm(
-                ['ok' => 1, 'ev_id' => $evId, 'start' => $start, 'limit' => $limit, 'op' => 'delete'],
+                ['ok' => 1, 'id' => $evId, 'start' => $start, 'limit' => $limit, 'op' => 'delete'],
                 $_SERVER['REQUEST_URI'],
-                \sprintf(\_MA_WGEVENTS_FORM_SURE_DELETE, $eventsObj->getVar('ev_name')));
+                \sprintf(\_MA_WGEVENTS_FORM_SURE_DELETE, $eventsObj->getVar('name')));
             $form = $customConfirm->getFormConfirm();
             $GLOBALS['xoopsTpl']->assign('form', $form->render());
         }

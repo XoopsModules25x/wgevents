@@ -9,7 +9,7 @@
     <{/foreach}>
     <td>
         <{$regdetails.status_text}>
-        <{if $registration.event_register_max|default:0 > 0 && $regdetails.reg_listwait|default:false}>
+        <{if $registration.event_register_max|default:0 > 0 && $regdetails.listwait|default:false}>
             <br><img src="<{$wgevents_icons_url_16}>/attention.png" alt="<{$smarty.const._MA_WGEVENTS_REGISTRATION_LISTWAIT}>" title="<{$smarty.const._MA_WGEVENTS_REGISTRATION_LISTWAIT}>"><{$smarty.const._MA_WGEVENTS_REGISTRATION_LISTWAIT}>
         <{/if}>
     </td>
@@ -17,23 +17,23 @@
         <td><{$regdetails.financial_text}></td>
     <{/if}>
     <{if $showSubmitter|default:false}>
-        <td><{$regdetails.submitter}></td>
+        <td><{$regdetails.submitter_text}></td>
     <{/if}>
-    <td><{$regdetails.datecreated}></td>
+    <td><{$regdetails.datecreated_text}></td>
     <td>
         <{if $regdetails.permRegistrationApprove|default:''}>
             <{if $regdetails.financial|default:0 > 0}>
-                <a class='btn btn-primary right wge-btn-2' href='registrations.php?op=change_financial&amp;changeto=0&amp;redir=<{$redir}>&amp;reg_id=<{$regdetails.reg_id}>' title='<{$smarty.const._MA_WGEVENTS_REGISTRATION_FINANCIAL_CHANGE_0}>'><img src="<{$wgevents_icons_url_16}>/wallet.png" alt='<{$smarty.const._MA_WGEVENTS_REGISTRATION_FINANCIAL_CHANGE_0}> title='<{$smarty.const._MA_WGEVENTS_REGISTRATION_FINANCIAL_CHANGE_0}>></a>
+                <a class='btn btn-primary right wge-btn-2' href='registrations.php?op=change_financial&amp;changeto=0&amp;redir=<{$redir}>&amp;id=<{$regdetails.id}>' title='<{$smarty.const._MA_WGEVENTS_REGISTRATION_FINANCIAL_CHANGE_0}>'><img src="<{$wgevents_icons_url_16}>/wallet.png" alt='<{$smarty.const._MA_WGEVENTS_REGISTRATION_FINANCIAL_CHANGE_0}> title='<{$smarty.const._MA_WGEVENTS_REGISTRATION_FINANCIAL_CHANGE_0}>></a>
             <{else}>
-                <a class='btn btn-primary right wge-btn-2' href='registrations.php?op=change_financial&amp;changeto=1&amp;redir=<{$redir}>&amp;reg_id=<{$regdetails.reg_id}>' title='<{$smarty.const._MA_WGEVENTS_REGISTRATION_FINANCIAL_CHANGE_1}>'><img src="<{$wgevents_icons_url_16}>/wallet.png" alt='<{$smarty.const._MA_WGEVENTS_REGISTRATION_FINANCIAL_CHANGE_1}> title='<{$smarty.const._MA_WGEVENTS_REGISTRATION_FINANCIAL_CHANGE_1}>></a>
+                <a class='btn btn-primary right wge-btn-2' href='registrations.php?op=change_financial&amp;changeto=1&amp;redir=<{$redir}>&amp;id=<{$regdetails.id}>' title='<{$smarty.const._MA_WGEVENTS_REGISTRATION_FINANCIAL_CHANGE_1}>'><img src="<{$wgevents_icons_url_16}>/wallet.png" alt='<{$smarty.const._MA_WGEVENTS_REGISTRATION_FINANCIAL_CHANGE_1}> title='<{$smarty.const._MA_WGEVENTS_REGISTRATION_FINANCIAL_CHANGE_1}>></a>
             <{/if}>
-            <{if $regdetails.reg_listwait|default:0 > 0}>
-                <a class='btn btn-primary right wge-btn-2' href='registrations.php?op=listwait_takeover&amp;redir=<{$redir}>&amp;reg_id=<{$regdetails.reg_id}>' title='<{$smarty.const._MA_WGEVENTS_REGISTRATION_LISTWAIT_TAKEOVER}>'><i class="fa fa-user-plus fa-fw"></i></a>
+            <{if $regdetails.listwait|default:0 > 0}>
+                <a class='btn btn-primary right wge-btn-2' href='registrations.php?op=listwait_takeover&amp;redir=<{$redir}>&amp;id=<{$regdetails.id}>' title='<{$smarty.const._MA_WGEVENTS_REGISTRATION_LISTWAIT_TAKEOVER}>'><i class="fa fa-user-plus fa-fw"></i></a>
             <{/if}>
         <{/if}>
         <{if $regdetails.permRegistrationEdit|default:''}>
-            <a class='btn btn-primary right wge-btn-2' href='registrations.php?op=edit&amp;redir=<{$redir}>&amp;reg_id=<{$regdetails.reg_id}>' title='<{$smarty.const._EDIT}>'><i class="fa fa-edit fa-fw"></i></i></a>
-            <a class='btn btn-danger right wge-btn-2' href='registrations.php?op=delete&amp;redir=<{$redir}>&amp;reg_evid=<{$regdetails.reg_evid}>&amp;reg_id=<{$regdetails.reg_id}>' title='<{$smarty.const._DELETE}>'><i class="fa fa-trash fa-fw"></i></a>
+            <a class='btn btn-primary right wge-btn-2' href='registrations.php?op=edit&amp;redir=<{$redir}>&amp;id=<{$regdetails.id}>' title='<{$smarty.const._EDIT}>'><i class="fa fa-edit fa-fw"></i></i></a>
+            <a class='btn btn-danger right wge-btn-2' href='registrations.php?op=delete&amp;redir=<{$redir}>&amp;evid=<{$regdetails.evid}>&amp;id=<{$regdetails.id}>' title='<{$smarty.const._DELETE}>'><i class="fa fa-trash fa-fw"></i></a>
         <{/if}>
     </td>
 </tr>

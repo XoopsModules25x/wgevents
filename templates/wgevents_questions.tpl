@@ -21,13 +21,13 @@
             <{foreach item=regdefaults from=$regdefaults}>
                 <tr>
                     <td>&nbsp;</td>
-                    <td><{$regdefaults.type_text}></td>
-                    <td><{$regdefaults.caption}></td>
-                    <td><{$regdefaults.desc}></td>
-                    <td><{$regdefaults.value_list}></td>
-                    <td><{$regdefaults.placeholder}></td>
-                    <td><{$regdefaults.required}></td>
-                    <td><{$regdefaults.print}></td>
+                    <td><{$regdefaults.type_text|default:''}></td>
+                    <td><{$regdefaults.caption|default:''}></td>
+                    <td><{$regdefaults.desc_text|default:''}></td>
+                    <td><{$regdefaults.value_list|default:''}></td>
+                    <td><{$regdefaults.placeholder|default:''}></td>
+                    <td><{$regdefaults.required_text|default:''}></td>
+                    <td><{$regdefaults.print_text|default:''}></td>
                     <td style="min-width:200px;">&nbsp;</td>
                 </tr>
             <{/foreach}>
@@ -40,9 +40,9 @@
         <tfoot>
             <tr>
                 <td colspan="9" class="center">
-                    <a class='btn btn-success wge-btn' href='events.php?op=show&amp;ev_id=<{$addEvid}>' title='<{$smarty.const._MA_WGEVENTS_GOTO_EVENT}>'><{$smarty.const._MA_WGEVENTS_GOTO_EVENT}></a>
-                    <a class='btn btn-primary wge-btn' href='questions.php?op=new&amp;que_evid=<{$addEvid}>' title='<{$smarty.const._MA_WGEVENTS_QUESTION_ADD}>'><{$smarty.const._MA_WGEVENTS_QUESTION_ADD}></a>
-                    <a class='btn btn-success wge-btn' href='questions.php?op=test&amp;que_evid=<{$addEvid}>' title='<{$smarty.const._MA_WGEVENTS_QUESTIONS_PREVIEW}>'><{$smarty.const._MA_WGEVENTS_QUESTIONS_PREVIEW}></a>
+                    <a class='btn btn-success wge-btn' href='events.php?op=show&amp;id=<{$addEvid}>' title='<{$smarty.const._MA_WGEVENTS_GOTO_EVENT}>'><{$smarty.const._MA_WGEVENTS_GOTO_EVENT}></a>
+                    <a class='btn btn-primary wge-btn' href='questions.php?op=new&amp;evid=<{$addEvid}>' title='<{$smarty.const._MA_WGEVENTS_QUESTION_ADD}>'><{$smarty.const._MA_WGEVENTS_QUESTION_ADD}></a>
+                    <a class='btn btn-success wge-btn' href='questions.php?op=test&amp;evid=<{$addEvid}>' title='<{$smarty.const._MA_WGEVENTS_QUESTIONS_PREVIEW}>'><{$smarty.const._MA_WGEVENTS_QUESTIONS_PREVIEW}></a>
                 </td>
             </tr>
         </tfoot>

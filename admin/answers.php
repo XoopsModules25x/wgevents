@@ -29,8 +29,8 @@ use XoopsModules\Wgevents\Common;
 require __DIR__ . '/header.php';
 // Get all request values
 $op    = Request::getCmd('op', 'list');
-$ansId = Request::getInt('ans_id');
-$evId  = Request::getInt('ev_id');
+$ansId = Request::getInt('id');
+$evId  = Request::getInt('evid');
 $start = Request::getInt('start');
 $limit = Request::getInt('limit', $helper->getConfig('adminpager'));
 $GLOBALS['xoopsTpl']->assign('start', $start);
@@ -44,20 +44,22 @@ switch ($op) {
         $templateMain = 'wgevents_admin_answers.tpl';
         $GLOBALS['xoopsTpl']->assign('navigation', $adminObject->displayNavigation('answers.php'));
         if ($evId > 0) {
-            $adminObject->addItemButton(\_AM_WGEVENTS_ADD_ANSWER, 'answers.php?op=new&amp;ev_id=' . $evId);
+            $adminObject->addItemButton(\_AM_WGEVENTS_ADD_ANSWER, 'answers.php?op=new&amp;evId=' . $evId);
             $adminObject->addItemButton(\_AM_WGEVENTS_GOTO_FORMSELECT, 'answers.php', 'list');
             $GLOBALS['xoopsTpl']->assign('buttons', $adminObject->displayButton('left'));
-            $answersCount = $answersHandler->getCountAnswers();
-            $answersAll = $answersHandler->getAllAnswers($start, $limit);
+            $crAnswers = new \CriteriaCompo();
+            $crAnswers->add(new \Criteria('evid', $evId));
+            $answersCount = $answersHandler->getCount($crAnswers);
             $GLOBALS['xoopsTpl']->assign('answers_count', $answersCount);
             $GLOBALS['xoopsTpl']->assign('wgevents_url', \WGEVENTS_URL);
             $GLOBALS['xoopsTpl']->assign('wgevents_upload_url', \WGEVENTS_UPLOAD_URL);
             // Table view answers
             if ($answersCount > 0) {
+                $answersAll = $answersHandler->getAll($crAnswers);
                 foreach (\array_keys($answersAll) as $i) {
                     $answer = $answersAll[$i]->getValuesAnswers();
-                    $registrationsObj = $registrationsHandler->get($answer['ans_regid']);
-                    $answer['regname'] = $registrationsObj->getVar('reg_firstname') . ' ' . $registrationsObj->getVar('reg_lastname');
+                    $registrationsObj = $registrationsHandler->get($answer['regid']);
+                    $answer['regname'] = $registrationsObj->getVar('firstname') . ' ' . $registrationsObj->getVar('lastname');
                     $GLOBALS['xoopsTpl']->append('answers_list', $answer);
                     unset($answer);
                 }
@@ -80,7 +82,7 @@ switch ($op) {
                 foreach (\array_keys($eventsAll) as $i) {
                     $event = $eventsAll[$i]->getValuesEvents();
                     $crAnswers = new \CriteriaCompo();
-                    $crAnswers->add(new \Criteria('ans_evid', $i));
+                    $crAnswers->add(new \Criteria('evid', $i));
                     $answersCount = $answersHandler->getCount($crAnswers);
                     $event['answers'] = $answersCount;
                     $GLOBALS['xoopsTpl']->append('events_list', $event);
@@ -98,7 +100,7 @@ switch ($op) {
         $GLOBALS['xoopsTpl']->assign('buttons', $adminObject->displayButton('left'));
         // Form Create
         $answersObj = $answersHandler->create();
-        $answersObj->setVar('ans_evid', $evId);
+        $answersObj->setVar('evid', $evId);
         $form = $answersObj->getFormAnswers();
         $GLOBALS['xoopsTpl']->assign('form', $form->render());
         break;
@@ -109,7 +111,7 @@ switch ($op) {
         $adminObject->addItemButton(\_AM_WGEVENTS_ADD_ANSWER, 'answers.php?op=new');
         $GLOBALS['xoopsTpl']->assign('buttons', $adminObject->displayButton('left'));
         // Request source
-        $ansIdSource = Request::getInt('ans_id_source');
+        $ansIdSource = Request::getInt('id_source');
         // Get Form
         $answersObjSource = $answersHandler->get($ansIdSource);
         $answersObj = $answersObjSource->xoopsClone();
@@ -127,13 +129,13 @@ switch ($op) {
             $answersObj = $answersHandler->create();
         }
         // Set Vars
-        $answersObj->setVar('ans_regid', Request::getInt('ans_regid'));
-        $answersObj->setVar('ans_queid', Request::getInt('ans_queid'));
-        $answersObj->setVar('ans_evid', Request::getInt('ans_evid'));
-        $answersObj->setVar('ans_text', Request::getString('ans_text'));
-        $answerDatecreatedObj = \DateTime::createFromFormat(\_SHORTDATESTRING, Request::getString('ans_datecreated'));
-        $answersObj->setVar('ans_datecreated', $answerDatecreatedObj->getTimestamp());
-        $answersObj->setVar('ans_submitter', Request::getInt('ans_submitter'));
+        $answersObj->setVar('regid', Request::getInt('regid'));
+        $answersObj->setVar('queid', Request::getInt('queid'));
+        $answersObj->setVar('evid', Request::getInt('evid'));
+        $answersObj->setVar('text', Request::getString('text'));
+        $answerDatecreatedObj = \DateTime::createFromFormat(\_SHORTDATESTRING, Request::getString('datecreated'));
+        $answersObj->setVar('datecreated', $answerDatecreatedObj->getTimestamp());
+        $answersObj->setVar('submitter', Request::getInt('submitter'));
         // Insert Data
         if ($answersHandler->insert($answersObj)) {
                 \redirect_header('answers.php?op=list&amp;start=' . $start . '&amp;limit=' . $limit, 2, \_MA_WGEVENTS_FORM_OK);
@@ -160,7 +162,7 @@ switch ($op) {
         $templateMain = 'wgevents_admin_answers.tpl';
         $GLOBALS['xoopsTpl']->assign('navigation', $adminObject->displayNavigation('answers.php'));
         $answersObj = $answersHandler->get($ansId);
-        $ansEvid = $answersObj->getVar('ans_evid');
+        $ansEvid = $answersObj->getVar('evid');
         if (isset($_REQUEST['ok']) && 1 == $_REQUEST['ok']) {
             if (!$GLOBALS['xoopsSecurity']->check()) {
                 \redirect_header('answers.php', 3, \implode(', ', $GLOBALS['xoopsSecurity']->getErrors()));
@@ -172,9 +174,9 @@ switch ($op) {
             }
         } else {
             $customConfirm = new Common\Confirm(
-                ['ok' => 1, 'ans_id' => $ansId, 'start' => $start, 'limit' => $limit, 'op' => 'delete'],
+                ['ok' => 1, 'id' => $ansId, 'start' => $start, 'limit' => $limit, 'op' => 'delete'],
                 $_SERVER['REQUEST_URI'],
-                \sprintf(\_MA_WGEVENTS_FORM_SURE_DELETE, $answersObj->getVar('ans_evid')));
+                \sprintf(\_MA_WGEVENTS_FORM_SURE_DELETE, $answersObj->getVar('evid')));
             $form = $customConfirm->getFormConfirm();
             $GLOBALS['xoopsTpl']->assign('form', $form->render());
         }

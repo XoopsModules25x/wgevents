@@ -39,7 +39,7 @@ class EventsHandler extends \XoopsPersistableObjectHandler
      */
     public function __construct(\XoopsDatabase $db)
     {
-        parent::__construct($db, 'wgevents_events', Events::class, 'ev_id', 'ev_name');
+        parent::__construct($db, 'wgevents_events', Events::class, 'id', 'name');
     }
 
     /**
@@ -83,7 +83,7 @@ class EventsHandler extends \XoopsPersistableObjectHandler
      * @param string $order
      * @return int
      */
-    public function getCountEvents($start = 0, $limit = 0, $sort = 'ev_id', $order = 'DESC')
+    public function getCountEvents($start = 0, $limit = 0, $sort = 'id', $order = 'DESC')
     {
         $crCountEvents = new \CriteriaCompo();
         $crCountEvents = $this->getEventsCriteria($crCountEvents, $start, $limit, $sort, $order);
@@ -98,7 +98,7 @@ class EventsHandler extends \XoopsPersistableObjectHandler
      * @param string $order
      * @return array
      */
-    public function getAllEvents($start = 0, $limit = 0, $sort = 'ev_id', $order = 'DESC')
+    public function getAllEvents($start = 0, $limit = 0, $sort = 'id', $order = 'DESC')
     {
         $crAllEvents = new \CriteriaCompo();
         $crAllEvents = $this->getEventsCriteria($crAllEvents, $start, $limit, $sort, $order);
@@ -140,7 +140,7 @@ class EventsHandler extends \XoopsPersistableObjectHandler
         $form->setExtra('enctype="multipart/form-data"');
         // Form Table categories
         $eventsHandler = $helper->getHandler('Events');
-        $evidSelect = new \XoopsFormSelect(\_MA_WGEVENTS_EVENT_ID, 'ev_id', 0);
+        $evidSelect = new \XoopsFormSelect(\_MA_WGEVENTS_EVENT_ID, 'evid', 0);
         $evidSelect->addOption('');
         $evidSelect->addOptionArray($eventsHandler->getList());
         $evidSelect->setExtra("onchange='submit()'");
@@ -167,15 +167,15 @@ class EventsHandler extends \XoopsPersistableObjectHandler
      * @param string $orderBy
      * @return array
      */
-    public function getEvents($start = 0, $limit = 0, $from = 0, $to = 0, $catid = 0, $sortBy = 'ev_id', $orderBy = 'DESC')
+    public function getEvents($start = 0, $limit = 0, $from = 0, $to = 0, $catid = 0, $sortBy = 'id', $orderBy = 'DESC')
     {
         $crEvents = new \CriteriaCompo();
         if ($catid >  0) {
-            $crEvents->add(new \Criteria('ev_catid', $catid));
+            $crEvents->add(new \Criteria('catid', $catid));
         }
         if ($from >  0) {
-            $crEvents->add(new \Criteria('ev_datefrom', $from, '>='));
-            $crEvents->add(new \Criteria('ev_dateto', $to, '<='));
+            $crEvents->add(new \Criteria('datefrom', $from, '>='));
+            $crEvents->add(new \Criteria('dateto', $to, '<='));
         }
         $crEvents->setSort($sortBy);
         $crEvents->setOrder($orderBy);
@@ -209,12 +209,12 @@ class EventsHandler extends \XoopsPersistableObjectHandler
         $infotext = '';
         // find changes in important fields of table events
         $fields = [];
-        $fields[] = ['name' => 'ev_name', 'caption' => \_MA_WGEVENTS_EVENT_NAME, 'type' => 'text'];
-        $fields[] = ['name' => 'ev_desc', 'caption' => \_MA_WGEVENTS_EVENT_DESC, 'type' => 'text'];
-        $fields[] = ['name' => 'ev_datefrom', 'caption' => \_MA_WGEVENTS_EVENT_DATEFROM, 'type' => 'datetime'];
-        $fields[] = ['name' => 'ev_dateto', 'caption' => \_MA_WGEVENTS_EVENT_DATETO, 'type' => 'datetime'];
-        $fields[] = ['name' => 'ev_location', 'caption' => \_MA_WGEVENTS_EVENT_LOCATION, 'type' => 'text'];
-        $fields[] = ['name' => 'ev_fee', 'caption' => \_MA_WGEVENTS_EVENT_FEE, 'type' => 'text'];
+        $fields[] = ['name' => 'name', 'caption' => \_MA_WGEVENTS_EVENT_NAME, 'type' => 'text'];
+        $fields[] = ['name' => 'desc', 'caption' => \_MA_WGEVENTS_EVENT_DESC, 'type' => 'text'];
+        $fields[] = ['name' => 'datefrom', 'caption' => \_MA_WGEVENTS_EVENT_DATEFROM, 'type' => 'datetime'];
+        $fields[] = ['name' => 'dateto', 'caption' => \_MA_WGEVENTS_EVENT_DATETO, 'type' => 'datetime'];
+        $fields[] = ['name' => 'location', 'caption' => \_MA_WGEVENTS_EVENT_LOCATION, 'type' => 'text'];
+        $fields[] = ['name' => 'fee', 'caption' => \_MA_WGEVENTS_EVENT_FEE, 'type' => 'text'];
 
         foreach ($fields as $field) {
             $valueOld = $versionOld->getVar($field['name']);

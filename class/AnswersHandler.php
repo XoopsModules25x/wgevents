@@ -1,6 +1,5 @@
 <?php declare(strict_types=1);
 
-
 namespace XoopsModules\Wgevents;
 
 /*
@@ -39,7 +38,7 @@ class AnswersHandler extends \XoopsPersistableObjectHandler
      */
     public function __construct(\XoopsDatabase $db)
     {
-        parent::__construct($db, 'wgevents_answers', Answers::class, 'ans_id', 'ans_evid');
+        parent::__construct($db, 'wgevents_answers', Answers::class, 'id', 'evid');
     }
 
     /**
@@ -83,7 +82,7 @@ class AnswersHandler extends \XoopsPersistableObjectHandler
      * @param string $order
      * @return int
      */
-    public function getCountAnswers($start = 0, $limit = 0, $sort = 'ans_id ASC, ans_evid', $order = 'ASC')
+    public function getCountAnswers($start = 0, $limit = 0, $sort = 'id ASC, evid', $order = 'ASC')
     {
         $crCountAnswers = new \CriteriaCompo();
         $crCountAnswers = $this->getAnswersCriteria($crCountAnswers, $start, $limit, $sort, $order);
@@ -98,7 +97,7 @@ class AnswersHandler extends \XoopsPersistableObjectHandler
      * @param string $order
      * @return array
      */
-    public function getAllAnswers($start = 0, $limit = 0, $sort = 'ans_id ASC, ans_evid', $order = 'ASC')
+    public function getAllAnswers($start = 0, $limit = 0, $sort = 'id ASC, evid', $order = 'ASC')
     {
         $crAllAnswers = new \CriteriaCompo();
         $crAllAnswers = $this->getAnswersCriteria($crAllAnswers, $start, $limit, $sort, $order);
@@ -133,9 +132,9 @@ class AnswersHandler extends \XoopsPersistableObjectHandler
     {
         if ($evId > 0) {
             $crAnswers = new \CriteriaCompo();
-            $crAnswers->add(new \Criteria('ans_evid', $evId));
+            $crAnswers->add(new \Criteria('evid', $evId));
             if ($regId > 0) {
-                $crAnswers->add(new \Criteria('ans_regid', $regId));
+                $crAnswers->add(new \Criteria('regid', $regId));
             }
             $answersCount = $this->getCount($crAnswers);
             if ($answersCount > 0) {
@@ -157,13 +156,13 @@ class AnswersHandler extends \XoopsPersistableObjectHandler
         foreach ($questionsArr as $queId => $addItem) {
             // get answers for this questions
             $crAnswers = new \CriteriaCompo();
-            $crAnswers->add(new \Criteria('ans_regid', $regId));
-            $crAnswers->add(new \Criteria('ans_queid', $queId));
+            $crAnswers->add(new \Criteria('regid', $regId));
+            $crAnswers->add(new \Criteria('queid', $queId));
             $answersCount = $this->getCount($crAnswers);
             if ($answersCount > 0) {
                 $answersAll = $this->getAll($crAnswers);
                 foreach (\array_keys($answersAll) as $i) {
-                    $ansText = $answersAll[$i]->getVar('ans_text');
+                    $ansText = $answersAll[$i]->getVar('text');
                     if (Constants::FIELD_RADIOYN == $addItem['type'] ||
                         Constants::FIELD_CHECKBOX == $addItem['type']) {
                         if ((bool)$ansText) {
@@ -204,7 +203,7 @@ class AnswersHandler extends \XoopsPersistableObjectHandler
             $caption = '';
             $questionsObj = $questionsHandler->get($key);
             if (\is_object($questionsObj)) {
-                $caption = $questionsObj->getVar('que_caption');
+                $caption = $questionsObj->getVar('caption');
             }
             $valueOld = $versionOld[$key];
             $valueNew = $versionNew[$key];

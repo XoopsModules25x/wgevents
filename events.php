@@ -46,7 +46,7 @@ $permRegister = $permissionsHandler->getPermRegistrationsSubmit();
 $GLOBALS['xoopsTpl']->assign('permRegister', $permRegister);
 
 $op     = Request::getCmd('op', 'list');
-$evId   = Request::getInt('ev_id');
+$evId   = Request::getInt('id');
 $filter = Request::getString('filter');
 $start  = Request::getInt('start');
 $limit  = Request::getInt('limit', $helper->getConfig('userpager'));
@@ -83,7 +83,7 @@ switch ($op) {
             case 'list':
                 // get events from the past
                 $crEventsArchieve = new \CriteriaCompo();
-                $crEventsArchieve->add(new \Criteria('ev_datefrom', \time(), '<'));
+                $crEventsArchieve->add(new \Criteria('datefrom', \time(), '<'));
                 $eventsCountArchieve = $eventsHandler->getCount($crEventsArchieve);
                 unset($crEventsArchieve);
                 $GLOBALS['xoopsTpl']->assign('showBtnPast', $eventsCountArchieve > 0);
@@ -97,12 +97,12 @@ switch ($op) {
 
         $crEvents = new \CriteriaCompo();
         if ($evId > 0) {
-            $crEvents->add(new \Criteria('ev_id', $evId));
+            $crEvents->add(new \Criteria('id', $evId));
             $GLOBALS['xoopsTpl']->assign('showList', false);
             $xoBreadcrumbs[] = ['title' => \_MA_WGEVENTS_EVENT_DETAILS];
         } else {
             if ('me' == $filter && $uidCurrent > 0) {
-                $crEvents->add(new \Criteria('ev_submitter', $uidCurrent));
+                $crEvents->add(new \Criteria('submitter', $uidCurrent));
             }
             $GLOBALS['xoopsTpl']->assign('showList', true);
             $xoBreadcrumbs[] = ['title' => \_MA_WGEVENTS_EVENTS_LIST];
@@ -111,12 +111,12 @@ switch ($op) {
         $GLOBALS['xoopsTpl']->assign('eventsCount', $eventsCount);
         if ('past' == $op) {
             // list events before now
-            $crEvents->add(new \Criteria('ev_datefrom', \time(), '<'));
-            $crEvents->setSort('ev_datefrom');
+            $crEvents->add(new \Criteria('datefrom', \time(), '<'));
+            $crEvents->setSort('datefrom');
             $crEvents->setOrder('DESC');
         } else {
-            $crEvents->add(new \Criteria('ev_datefrom', \time(), '>='));
-            $crEvents->setSort('ev_datefrom');
+            $crEvents->add(new \Criteria('datefrom', \time(), '>='));
+            $crEvents->setSort('datefrom');
             $crEvents->setOrder('ASC');
         }
 
@@ -131,13 +131,13 @@ switch ($op) {
             // Get All Events
             foreach (\array_keys($eventsAll) as $i) {
                 $events[$i] = $eventsAll[$i]->getValuesEvents();
-                $permEdit = $permissionsHandler->getPermEventsEdit($eventsAll[$i]->getVar('ev_submitter'), $eventsAll[$i]->getVar('ev_status')) || $uidCurrent == $eventsAll[$i]->getVar('ev_submitter');
+                $permEdit = $permissionsHandler->getPermEventsEdit($eventsAll[$i]->getVar('submitter'), $eventsAll[$i]->getVar('status')) || $uidCurrent == $eventsAll[$i]->getVar('submitter');
                 $events[$i]['permEdit'] = $permEdit;
                 $crQuestions = new \CriteriaCompo();
-                $crQuestions->add(new \Criteria('que_evid', $i));
+                $crQuestions->add(new \Criteria('evid', $i));
                 $events[$i]['nb_questions'] = $questionsHandler->getCount($crQuestions);
                 $crRegistrations = new \CriteriaCompo();
-                $crRegistrations->add(new \Criteria('reg_evid', $i));
+                $crRegistrations->add(new \Criteria('evid', $i));
                 $numberRegCurr = $registrationsHandler->getCount($crRegistrations);
                 $events[$i]['nb_registrations'] = $numberRegCurr;
                 $registerMax = (int)$events[$i]['register_max'];
@@ -145,7 +145,7 @@ switch ($op) {
                     $proportion = $numberRegCurr / $registerMax;
                     if ($proportion >= 1) {
                         $events[$i]['regcurrent'] = \_MA_WGEVENTS_REGISTRATIONS_FULL;
-                        if ($events[$i]['ev_register_listwait'] > 0) {
+                        if ($events[$i]['register_listwait'] > 0) {
                             $events[$i]['regListwait'] = \_MA_WGEVENTS_REGISTRATIONS_FULL_LISTWAIT;
                         }
                     } else {
@@ -163,10 +163,10 @@ switch ($op) {
                         $events[$i]['regcurrent'] = $numberRegCurr;
                     }
                 }
-                $events[$i]['regenabled'] = $permEdit || (\time() >= $events[$i]['ev_register_from'] && \time() <= $events[$i]['ev_register_to']);
-                $events[$i]['locked'] = (Constants::STATUS_LOCKED == $events[$i]['ev_status']);
-                $events[$i]['canceled'] = (Constants::STATUS_CANCELED == $events[$i]['ev_status']);
-                $evName = $eventsAll[$i]->getVar('ev_name');
+                $events[$i]['regenabled'] = $permEdit || (\time() >= $events[$i]['register_from'] && \time() <= $events[$i]['register_to']);
+                $events[$i]['locked'] = (Constants::STATUS_LOCKED == $events[$i]['status']);
+                $events[$i]['canceled'] = (Constants::STATUS_CANCELED == $events[$i]['status']);
+                $evName = $eventsAll[$i]->getVar('name');
                 $keywords[$i] = $evName;
             }
             $GLOBALS['xoopsTpl']->assign('events', $events);
@@ -197,7 +197,7 @@ switch ($op) {
             $eventsObj = $eventsHandler->get($evId);
             $eventsObjOld = $eventsHandler->get($evId);
             // Check permissions
-            if (!$permissionsHandler->getPermEventsEdit($eventsObj->getVar('ev_submitter'), $eventsObj->getVar('ev_status'))) {
+            if (!$permissionsHandler->getPermEventsEdit($eventsObj->getVar('submitter'), $eventsObj->getVar('status'))) {
                 \redirect_header('index.php?op=list', 3, \_NOPERM);
             }
         } else {
@@ -207,13 +207,13 @@ switch ($op) {
         $continueAddtionals = Request::hasVar('continue_questions');
 
         $uploaderErrors = '';
-        $eventsObj->setVar('ev_catid', Request::getInt('ev_catid'));
-        $eventsObj->setVar('ev_name', Request::getString('ev_name'));
-        // Set Var ev_logo
+        $eventsObj->setVar('catid', Request::getInt('catid'));
+        $eventsObj->setVar('name', Request::getString('name'));
+        // Set Var logo
         require_once \XOOPS_ROOT_PATH . '/class/uploader.php';
-        $filename       = $_FILES['ev_logo']['name'];
-        $imgMimetype    = $_FILES['ev_logo']['type'];
-        $imgNameDef     = Request::getString('ev_name');
+        $filename       = $_FILES['logo']['name'];
+        $imgMimetype    = $_FILES['logo']['type'];
+        $imgNameDef     = Request::getString('name');
         $uploadPath = \WGEVENTS_UPLOAD_EVENTLOGOS_PATH . '/' . $uidCurrent . '/';
         $uploader = new \XoopsMediaUploader($uploadPath,
                                                     $helper->getConfig('mimetypes_image'), 
@@ -237,7 +237,7 @@ switch ($op) {
                     $imgHandler->maxHeight     = $maxheight;
                     $result                    = $imgHandler->resizeImage();
                 }
-                $eventsObj->setVar('ev_logo', $savedFilename);
+                $eventsObj->setVar('logo', $savedFilename);
             } else {
                 $uploaderErrors .= '<br>' . $uploader->getErrors();
             }
@@ -245,45 +245,45 @@ switch ($op) {
             if ($filename > '') {
                 $uploaderErrors .= '<br>' . $uploader->getErrors();
             }
-            $eventsObj->setVar('ev_logo', Request::getString('ev_logo'));
+            $eventsObj->setVar('logo', Request::getString('logo'));
         }
-        $eventsObj->setVar('ev_desc', Request::getText('ev_desc'));
-        $eventDatefromArr = Request::getArray('ev_datefrom');
+        $eventsObj->setVar('desc', Request::getText('desc'));
+        $eventDatefromArr = Request::getArray('datefrom');
         $eventDatefromObj = \DateTime::createFromFormat(\_SHORTDATESTRING, $eventDatefromArr['date']);
         $eventDatefromObj->setTime(0, 0);
         $eventDatefrom = $eventDatefromObj->getTimestamp() + (int)$eventDatefromArr['time'];
-        $eventsObj->setVar('ev_datefrom', $eventDatefrom);
-        $eventDatetoArr = Request::getArray('ev_dateto');
+        $eventsObj->setVar('datefrom', $eventDatefrom);
+        $eventDatetoArr = Request::getArray('dateto');
         $eventDatetoObj = \DateTime::createFromFormat(\_SHORTDATESTRING, $eventDatetoArr['date']);
         $eventDatetoObj->setTime(0, 0);
         $eventDateto = $eventDatetoObj->getTimestamp() + (int)$eventDatetoArr['time'];
-        $eventsObj->setVar('ev_dateto', $eventDateto);
-        $eventsObj->setVar('ev_contact', Request::getString('ev_contact'));
-        $eventsObj->setVar('ev_email', Request::getString('ev_email'));
-        $eventsObj->setVar('ev_location', Request::getString('ev_location'));
-        $eventsObj->setVar('ev_locgmlat', Request::getFloat('ev_locgmlat'));
-        $eventsObj->setVar('ev_locgmlon', Request::getFloat('ev_locgmlon'));
-        $eventsObj->setVar('ev_locgmzoom', Request::getInt('ev_locgmzoom'));
-        $evFee = Utility::StringToFloat(Request::getString('ev_fee'));
-        $eventsObj->setVar('ev_fee', $evFee);
-        $evRegisterUse = Request::getInt('ev_register_use');
-        $eventsObj->setVar('ev_register_use', $evRegisterUse);
+        $eventsObj->setVar('dateto', $eventDateto);
+        $eventsObj->setVar('contact', Request::getString('contact'));
+        $eventsObj->setVar('email', Request::getString('email'));
+        $eventsObj->setVar('location', Request::getString('location'));
+        $eventsObj->setVar('locgmlat', Request::getFloat('locgmlat'));
+        $eventsObj->setVar('locgmlon', Request::getFloat('locgmlon'));
+        $eventsObj->setVar('locgmzoom', Request::getInt('locgmzoom'));
+        $evFee = Utility::StringToFloat(Request::getString('fee'));
+        $eventsObj->setVar('fee', $evFee);
+        $evRegisterUse = Request::getInt('register_use');
+        $eventsObj->setVar('register_use', $evRegisterUse);
         if ($evRegisterUse) {
-            $evRegisterfromArr = Request::getArray('ev_register_from');
+            $evRegisterfromArr = Request::getArray('register_from');
             $evRegisterfromObj = \DateTime::createFromFormat(\_SHORTDATESTRING, $evRegisterfromArr['date']);
             $evRegisterfromObj->setTime(0, 0);
             $evRegisterfrom = $evRegisterfromObj->getTimestamp() + (int)$evRegisterfromArr['time'];
-            $eventsObj->setVar('ev_register_from', $evRegisterfrom);
-            $evRegistertoArr = Request::getArray('ev_register_to');
+            $eventsObj->setVar('register_from', $evRegisterfrom);
+            $evRegistertoArr = Request::getArray('register_to');
             $evRegistertoObj = \DateTime::createFromFormat(\_SHORTDATESTRING, $evRegistertoArr['date']);
             $evRegistertoObj->setTime(0, 0);
             $evRegisterto = $evRegistertoObj->getTimestamp() + (int)$evRegistertoArr['time'];
-            $eventsObj->setVar('ev_register_to', $evRegisterto);
-            $eventsObj->setVar('ev_register_max', Request::getInt('ev_register_max'));
-            $eventsObj->setVar('ev_register_listwait', Request::getInt('ev_register_listwait'));
-            $eventsObj->setVar('ev_register_autoaccept', Request::getInt('ev_register_autoaccept'));
-            $eventsObj->setVar('ev_register_notify', Request::getString('ev_register_notify'));
-            $evRegisterSendermail = Request::getString('ev_register_sendermail');
+            $eventsObj->setVar('register_to', $evRegisterto);
+            $eventsObj->setVar('register_max', Request::getInt('register_max'));
+            $eventsObj->setVar('register_listwait', Request::getInt('register_listwait'));
+            $eventsObj->setVar('register_autoaccept', Request::getInt('register_autoaccept'));
+            $eventsObj->setVar('register_notify', Request::getString('register_notify'));
+            $evRegisterSendermail = Request::getString('register_sendermail');
             if ('' == $evRegisterSendermail) {
                 // Get Form Error
                 $GLOBALS['xoopsTpl']->assign('error', \_MA_WGEVENTS_EVENT_REGISTER_SENDERMAIL_ERR);
@@ -291,39 +291,39 @@ switch ($op) {
                 $GLOBALS['xoopsTpl']->assign('form', $form->render());
                 break;
             }
-            $eventsObj->setVar('ev_register_sendermail', $evRegisterSendermail);
-            $eventsObj->setVar('ev_register_sendername', Request::getString('ev_register_sendername'));
-            $eventsObj->setVar('ev_register_signature', Request::getString('ev_register_signature'));
+            $eventsObj->setVar('register_sendermail', $evRegisterSendermail);
+            $eventsObj->setVar('register_sendername', Request::getString('register_sendername'));
+            $eventsObj->setVar('register_signature', Request::getString('register_signature'));
         } else {
             //reset previous values
-            $eventsObj->setVar('ev_register_to', 0);
-            $eventsObj->setVar('ev_register_max', 0);
-            $eventsObj->setVar('ev_register_listwait', 0);
-            $eventsObj->setVar('ev_register_autoaccept', 0);
-            $eventsObj->setVar('ev_register_notify', '');
-            $eventsObj->setVar('ev_register_sendermail', '');
-            $eventsObj->setVar('ev_register_sendername', '');
-            $eventsObj->setVar('ev_register_signature', '');
+            $eventsObj->setVar('register_to', 0);
+            $eventsObj->setVar('register_max', 0);
+            $eventsObj->setVar('register_listwait', 0);
+            $eventsObj->setVar('register_autoaccept', 0);
+            $eventsObj->setVar('register_notify', '');
+            $eventsObj->setVar('register_sendermail', '');
+            $eventsObj->setVar('register_sendername', '');
+            $eventsObj->setVar('register_signature', '');
         }
-        $eventsObj->setVar('ev_status', Request::getInt('ev_status'));
-        $eventsObj->setVar('ev_galid', Request::getInt('ev_galid'));
-        if (Request::hasVar('ev_datecreated_int')) {
-            $eventsObj->setVar('ev_datecreated', Request::getInt('ev_datecreated_int'));
+        $eventsObj->setVar('status', Request::getInt('status'));
+        $eventsObj->setVar('galid', Request::getInt('galid'));
+        if (Request::hasVar('datecreated_int')) {
+            $eventsObj->setVar('datecreated', Request::getInt('datecreated_int'));
         } else {
-            $eventDatecreatedObj = \DateTime::createFromFormat(\_SHORTDATESTRING, Request::getString('ev_datecreated'));
-            $eventsObj->setVar('ev_datecreated', $eventDatecreatedObj->getTimestamp());
+            $eventDatecreatedObj = \DateTime::createFromFormat(\_SHORTDATESTRING, Request::getString('datecreated'));
+            $eventsObj->setVar('datecreated', $eventDatecreatedObj->getTimestamp());
         }
-        $eventsObj->setVar('ev_submitter', Request::getInt('ev_submitter'));
+        $eventsObj->setVar('submitter', Request::getInt('submitter'));
         // Insert Data
         if ($eventsHandler->insert($eventsObj)) {
             $newEvId = $evId > 0 ? $evId : $eventsObj->getNewInsertedIdEvents();
             // Handle notification
             /*
-            $evName = $eventsObj->getVar('ev_name');
-            $evStatus = $eventsObj->getVar('ev_status');
+            $evName = $eventsObj->getVar('name');
+            $evStatus = $eventsObj->getVar('status');
             $tags = [];
             $tags['ITEM_NAME'] = $evName;
-            $tags['ITEM_URL']  = \XOOPS_URL . '/modules/wgevents/events.php?op=show&ev_id=' . $evId;
+            $tags['ITEM_URL']  = \XOOPS_URL . '/modules/wgevents/events.php?op=show&id=' . $evId;
             $notificationHandler = \xoops_getHandler('notification');
             if (Constants::STATUS_SUBMITTED == $evStatus) {
                 // Event approve notification
@@ -349,7 +349,7 @@ switch ($op) {
                 if ('' != $infotext) {
                     $typeConfirm = Constants::MAIL_EVENT_NOTIFY_MODIFY;
                     $crRegistrations = new \CriteriaCompo();
-                    $crRegistrations->add(new \Criteria('reg_evid', $evId));
+                    $crRegistrations->add(new \Criteria('evid', $evId));
                     $registrationsCount = $registrationsHandler->getCount($crRegistrations);
                     if ($registrationsCount > 0) {
                         $registrationsAll = $registrationsHandler->getAll($crRegistrations);
@@ -363,7 +363,7 @@ switch ($op) {
                             $notificationHandler->triggerEvent('registrations', $regId, 'registration_delete', $tags);
                             */
                             // send notifications emails, only to participants
-                            $regEmail = (string)$registrationsAll[$regId]->getVar('reg_email');
+                            $regEmail = (string)$registrationsAll[$regId]->getVar('email');
                             if ('' != $regEmail) {
                                 // send confirmation
                                 $mailsHandler = new MailsHandler();
@@ -378,21 +378,21 @@ switch ($op) {
             }
             // redirect after insert
             if ('' !== $uploaderErrors) {
-                \redirect_header('events.php?op=edit&ev_id=' . $newEvId, 5, $uploaderErrors);
+                \redirect_header('events.php?op=edit&id=' . $newEvId, 5, $uploaderErrors);
             } else {
                 if ($evRegisterUse) {
                     // check whether there are already question infos
                     $crQuestions = new \CriteriaCompo();
-                    $crQuestions->add(new \Criteria('que_evid', $newEvId));
+                    $crQuestions->add(new \Criteria('evid', $newEvId));
                     if ($evId > 0) {
-                        \redirect_header('events.php?op=show&amp;ev_id=' . $evId . '&amp;start=' . $start . '&amp;limit=' . $limit, 2, \_MA_WGEVENTS_FORM_OK);
+                        \redirect_header('events.php?op=show&amp;id=' . $evId . '&amp;start=' . $start . '&amp;limit=' . $limit, 2, \_MA_WGEVENTS_FORM_OK);
                     } else {
                         if ($questionsHandler->getCount($crQuestions) > 0) {
                             // set of questions already existing
-                            \redirect_header('questions.php?op=list&amp;que_evid=' . $newEvId, 2, \_MA_WGEVENTS_FORM_OK);
+                            \redirect_header('questions.php?op=list&amp;evid=' . $newEvId, 2, \_MA_WGEVENTS_FORM_OK);
                         } else {
                             // redirect to questions.php in order to add default set of questions
-                            \redirect_header('questions.php?op=newset&amp;que_evid=' . $newEvId, 0, \_MA_WGEVENTS_FORM_OK);
+                            \redirect_header('questions.php?op=newset&amp;evid=' . $newEvId, 0, \_MA_WGEVENTS_FORM_OK);
                         }
                     }
                 } else {
@@ -421,8 +421,8 @@ switch ($op) {
         // Form Create
         $eventsObj = $eventsHandler->create();
         $eventDate = Request::getInt('eventDate', \time());
-        $eventsObj->setVar('ev_datefrom', $eventDate);
-        $eventsObj->setVar('ev_dateto', $eventDate);
+        $eventsObj->setVar('datefrom', $eventDate);
+        $eventsObj->setVar('dateto', $eventDate);
         $form = $eventsObj->getFormEvents();
         $GLOBALS['xoopsTpl']->assign('form', $form->render());
         break;
@@ -435,7 +435,7 @@ switch ($op) {
         }
         $eventsObj = $eventsHandler->get($evId);
         // Check permissions
-        if (!$permissionsHandler->getPermEventsEdit($eventsObj->getVar('ev_submitter'), $eventsObj->getVar('ev_status'))) {
+        if (!$permissionsHandler->getPermEventsEdit($eventsObj->getVar('submitter'), $eventsObj->getVar('status'))) {
             \redirect_header('index.php?op=list', 3, \_NOPERM);
         }
         $GLOBALS['xoTheme']->addScript(\WGEVENTS_URL . '/assets/js/forms.js');
@@ -449,13 +449,13 @@ switch ($op) {
         break;
     case 'clone':
         // Request source
-        $evIdSource = Request::getInt('ev_id_source');
+        $evIdSource = Request::getInt('id_source');
 
 
 
 
 
-        \redirect_header('events.php?op=show&ev_id=' . $evIdSource, 3, 'Funktion noch nicht fertig!');
+        \redirect_header('events.php?op=show&id=' . $evIdSource, 3, 'Funktion noch nicht fertig!');
 
 
 
@@ -491,13 +491,13 @@ switch ($op) {
             \redirect_header('events.php?op=list', 3, \_MA_WGEVENTS_INVALID_PARAM);
         }
         $crRegistrations = new \CriteriaCompo();
-        $crRegistrations->add(new \Criteria('reg_evid', $evId));
+        $crRegistrations->add(new \Criteria('evid', $evId));
         $registrationsCount = $registrationsHandler->getCount($crRegistrations);
         if ($registrationsCount > 0) {
             \redirect_header('events.php?op=list', 3, \_MA_WGEVENTS_EVENT_DELETE_ERR);
         }
         $eventsObj = $eventsHandler->get($evId);
-        $evName = $eventsObj->getVar('ev_name');
+        $evName = $eventsObj->getVar('name');
         if (isset($_REQUEST['ok']) && 1 == $_REQUEST['ok']) {
             if (!$GLOBALS['xoopsSecurity']->check()) {
                 \redirect_header('events.php', 3, \implode(', ', $GLOBALS['xoopsSecurity']->getErrors()));
@@ -520,9 +520,9 @@ switch ($op) {
             }
         } else {
             $customConfirm = new Common\Confirm(
-                ['ok' => 1, 'ev_id' => $evId, 'start' => $start, 'limit' => $limit, 'op' => 'delete'],
+                ['ok' => 1, 'id' => $evId, 'start' => $start, 'limit' => $limit, 'op' => 'delete'],
                 $_SERVER['REQUEST_URI'],
-                \sprintf(\_MA_WGEVENTS_CONFIRMDELETE_EVENT, $eventsObj->getVar('ev_name')), \_MA_WGEVENTS_CONFIRMDELETE_TITLE, \_MA_WGEVENTS_CONFIRMDELETE_LABEL);
+                \sprintf(\_MA_WGEVENTS_CONFIRMDELETE_EVENT, $eventsObj->getVar('name')), \_MA_WGEVENTS_CONFIRMDELETE_TITLE, \_MA_WGEVENTS_CONFIRMDELETE_LABEL);
             $form = $customConfirm->getFormConfirm();
             $GLOBALS['xoopsTpl']->assign('form', $form->render());
         }
@@ -539,14 +539,14 @@ switch ($op) {
             \redirect_header('events.php?op=list', 3, \_MA_WGEVENTS_INVALID_PARAM);
         }
         $eventsObj = $eventsHandler->get($evId);
-        $evName = $eventsObj->getVar('ev_name');
+        $evName = $eventsObj->getVar('name');
         if (isset($_REQUEST['ok']) && 1 == $_REQUEST['ok']) {
             if (!$GLOBALS['xoopsSecurity']->check()) {
                 \redirect_header('events.php', 3, \implode(', ', $GLOBALS['xoopsSecurity']->getErrors()));
             }
-            $eventsObj->setVar('ev_status', Constants::STATUS_CANCELED);
-            $eventsObj->setVar('ev_datecreated', \time());
-            $eventsObj->setVar('ev_submitter', $uidCurrent);
+            $eventsObj->setVar('status', Constants::STATUS_CANCELED);
+            $eventsObj->setVar('datecreated', \time());
+            $eventsObj->setVar('submitter', $uidCurrent);
             // delete all questions/registrations/answers
             $registrationsHandler->cleanupRegistrations($evId);
             $questionsHandler->cleanupQuestions($evId);
@@ -567,9 +567,9 @@ switch ($op) {
             }
         } else {
             $customConfirm = new Common\Confirm(
-                ['ok' => 1, 'ev_id' => $evId, 'start' => $start, 'limit' => $limit, 'op' => 'cancel'],
+                ['ok' => 1, 'id' => $evId, 'start' => $start, 'limit' => $limit, 'op' => 'cancel'],
                 $_SERVER['REQUEST_URI'],
-                \sprintf(\_MA_WGEVENTS_CONFIRMCANCEL_EVENT, $eventsObj->getVar('ev_name')), \_MA_WGEVENTS_CONFIRMCANCEL_TITLE, \_MA_WGEVENTS_CONFIRMCANCEL_LABEL);
+                \sprintf(\_MA_WGEVENTS_CONFIRMCANCEL_EVENT, $eventsObj->getVar('name')), \_MA_WGEVENTS_CONFIRMCANCEL_TITLE, \_MA_WGEVENTS_CONFIRMCANCEL_LABEL);
             $form = $customConfirm->getFormConfirm();
             $GLOBALS['xoopsTpl']->assign('form', $form->render());
         }

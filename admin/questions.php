@@ -29,8 +29,8 @@ use XoopsModules\Wgevents\Common;
 require __DIR__ . '/header.php';
 // Get all request values
 $op    = Request::getCmd('op', 'list');
-$queId = Request::getInt('que_id');
-$evId  = Request::getInt('ev_id');
+$queId = Request::getInt('id');
+$evId  = Request::getInt('evid');
 $start = Request::getInt('start');
 $limit = Request::getInt('limit', $helper->getConfig('adminpager'));
 $GLOBALS['xoopsTpl']->assign('start', $start);
@@ -44,14 +44,14 @@ switch ($op) {
         $templateMain = 'wgevents_admin_questions.tpl';
         $GLOBALS['xoopsTpl']->assign('navigation', $adminObject->displayNavigation('questions.php'));
         if ($evId > 0) {
-            $adminObject->addItemButton(\_AM_WGEVENTS_ADD_QUESTION, 'questions.php?op=new&amp;ev_id=' . $evId);
+            $adminObject->addItemButton(\_AM_WGEVENTS_ADD_QUESTION, 'questions.php?op=new&amp;id=' . $evId);
             $adminObject->addItemButton(\_AM_WGEVENTS_GOTO_FORMSELECT, 'questions.php', 'list');
             $GLOBALS['xoopsTpl']->assign('buttons', $adminObject->displayButton('left'));
             $crQuestions = new \CriteriaCompo();
-            $crQuestions->add(new \Criteria('que_evid', $evId));
+            $crQuestions->add(new \Criteria('evid', $evId));
             $questionsCount = $questionsHandler->getCount($crQuestions);
             $GLOBALS['xoopsTpl']->assign('questionsCount', $questionsCount);
-            $crQuestions->setSort('que_weight ASC, que_id');
+            $crQuestions->setSort('weight ASC, id');
             $crQuestions->setOrder('DESC');
             $crQuestions->setStart($start);
             $crQuestions->setLimit($limit);
@@ -85,7 +85,7 @@ switch ($op) {
                 foreach (\array_keys($eventsAll) as $i) {
                     $event = $eventsAll[$i]->getValuesEvents();
                     $crQuestions = new \CriteriaCompo();
-                    $crQuestions->add(new \Criteria('que_evid', $i));
+                    $crQuestions->add(new \Criteria('evid', $i));
                     $questionsCount = $questionsHandler->getCount($crQuestions);
                     $event['questions'] = $questionsCount;
                     $GLOBALS['xoopsTpl']->append('events_list', $event);
@@ -106,7 +106,7 @@ switch ($op) {
         $GLOBALS['xoopsTpl']->assign('buttons', $adminObject->displayButton('left'));
         // Form Create
         $questionsObj = $questionsHandler->create();
-        $questionsObj->setVar('que_evid', $evId);
+        $questionsObj->setVar('evid', $evId);
         $form = $questionsObj->getFormQuestions();
         $GLOBALS['xoopsTpl']->assign('form', $form->render());
         break;
@@ -118,7 +118,7 @@ switch ($op) {
         $adminObject->addItemButton(\_AM_WGEVENTS_ADD_QUESTION, 'questions.php?op=new');
         $GLOBALS['xoopsTpl']->assign('buttons', $adminObject->displayButton('left'));
         // Request source
-        $queIdSource = Request::getInt('que_id_source');
+        $queIdSource = Request::getInt('id_source');
         // Get Form
         $questionsObjSource = $questionsHandler->get($queIdSource);
         $questionsObj = $questionsObjSource->xoopsClone();
@@ -136,15 +136,15 @@ switch ($op) {
             $questionsObj = $questionsHandler->create();
         }
         // Set Vars
-        $questionsObj->setVar('que_evid', Request::getInt('que_evid'));
-        $queType = Request::getInt('que_type');
-        $questionsObj->setVar('que_fdid', $queType);
+        $questionsObj->setVar('evid', Request::getInt('evid'));
+        $queType = Request::getInt('type');
+        $questionsObj->setVar('fdid', $queType);
         $fieldsObj = $fieldsHandler->get($queType);
-        $questionsObj->setVar('que_type', $fieldsObj->getVar('fd_type'));
-        $questionsObj->setVar('que_caption', Request::getString('que_caption'));
-        $questionsObj->setVar('que_desc', Request::getText('que_desc'));
+        $questionsObj->setVar('type', $fieldsObj->getVar('type'));
+        $questionsObj->setVar('caption', Request::getString('caption'));
+        $questionsObj->setVar('desc', Request::getText('desc'));
         $queValuesText = '';
-        $queValues = Request::getString('que_values');
+        $queValues = Request::getString('values');
         if ('' != $queValues) {
             if (Constants::FIELD_COMBOBOX == $queType || Constants::FIELD_SELECTBOX == $queType || Constants::FIELD_RADIO == $queType) {
                 $queValuesText = \serialize(\preg_split('/\r\n|\r|\n/', $queValues));
@@ -153,14 +153,14 @@ switch ($op) {
                 $queValuesText = \serialize($tmpArr);
             }
         }
-        $questionsObj->setVar('que_values', $queValuesText);
-        $questionsObj->setVar('que_placeholder', Request::getString('que_placeholder'));
-        $questionsObj->setVar('que_weight', Request::getInt('que_weight'));
-        $questionsObj->setVar('que_required', Request::getInt('que_required'));
-        $questionsObj->setVar('que_print', Request::getInt('que_print'));
-        $questionDatecreatedObj = \DateTime::createFromFormat(\_SHORTDATESTRING, Request::getString('que_datecreated'));
-        $questionsObj->setVar('que_datecreated', $questionDatecreatedObj->getTimestamp());
-        $questionsObj->setVar('que_submitter', Request::getInt('que_submitter'));
+        $questionsObj->setVar('values', $queValuesText);
+        $questionsObj->setVar('placeholder', Request::getString('placeholder'));
+        $questionsObj->setVar('weight', Request::getInt('weight'));
+        $questionsObj->setVar('required', Request::getInt('required'));
+        $questionsObj->setVar('print', Request::getInt('print'));
+        $questionDatecreatedObj = \DateTime::createFromFormat(\_SHORTDATESTRING, Request::getString('datecreated'));
+        $questionsObj->setVar('datecreated', $questionDatecreatedObj->getTimestamp());
+        $questionsObj->setVar('submitter', Request::getInt('submitter'));
         // Insert Data
         if ($questionsHandler->insert($questionsObj)) {
             \redirect_header('questions.php?op=list&amp;start=' . $start . '&amp;limit=' . $limit, 2, \_MA_WGEVENTS_FORM_OK);
@@ -188,7 +188,7 @@ switch ($op) {
         $templateMain = 'wgevents_admin_questions.tpl';
         $GLOBALS['xoopsTpl']->assign('navigation', $adminObject->displayNavigation('questions.php'));
         $questionsObj = $questionsHandler->get($queId);
-        $addEvid = $questionsObj->getVar('que_evid');
+        $addEvid = $questionsObj->getVar('evid');
         if (isset($_REQUEST['ok']) && 1 == $_REQUEST['ok']) {
             if (!$GLOBALS['xoopsSecurity']->check()) {
                 \redirect_header('questions.php', 3, \implode(', ', $GLOBALS['xoopsSecurity']->getErrors()));
@@ -200,9 +200,9 @@ switch ($op) {
             }
         } else {
             $customConfirm = new Common\Confirm(
-                ['ok' => 1, 'que_id' => $queId, 'start' => $start, 'limit' => $limit, 'op' => 'delete'],
+                ['ok' => 1, 'id' => $queId, 'start' => $start, 'limit' => $limit, 'op' => 'delete'],
                 $_SERVER['REQUEST_URI'],
-                \sprintf(\_MA_WGEVENTS_FORM_SURE_DELETE, $questionsObj->getVar('que_evid')));
+                \sprintf(\_MA_WGEVENTS_FORM_SURE_DELETE, $questionsObj->getVar('evid')));
             $form = $customConfirm->getFormConfirm();
             $GLOBALS['xoopsTpl']->assign('form', $form->render());
         }

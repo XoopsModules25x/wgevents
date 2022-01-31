@@ -334,7 +334,7 @@ class PermissionsHandler extends \XoopsPersistableObjectHandler
     /**
      * @public function getPermRegistrationsView
      * returns right for view Registrations
-     *  - user must be the submitter of registration or same IP must be used
+     *  - user must be the submitter_text of registration or same IP must be used
      * @param $regIp
      * @param $regSubmitter
      * @return bool

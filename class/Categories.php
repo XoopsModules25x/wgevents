@@ -51,19 +51,19 @@ class Categories extends \XoopsObject
      */
     public function __construct()
     {
-        $this->initVar('cfd_id', \XOBJ_DTYPE_INT);
-        $this->initVar('cat_pid', \XOBJ_DTYPE_INT);
-        $this->initVar('cat_name', \XOBJ_DTYPE_TXTBOX);
-        $this->initVar('cfd_desc', \XOBJ_DTYPE_OTHER);
-        $this->initVar('cat_logo', \XOBJ_DTYPE_TXTBOX);
-        $this->initVar('cat_color', \XOBJ_DTYPE_TXTBOX);
-        $this->initVar('cat_bordercolor', \XOBJ_DTYPE_TXTBOX);
-        $this->initVar('cat_bgcolor', \XOBJ_DTYPE_TXTBOX);
-        $this->initVar('cat_othercss', \XOBJ_DTYPE_TXTBOX);
-        $this->initVar('cat_status', \XOBJ_DTYPE_INT);
-        $this->initVar('cat_weight', \XOBJ_DTYPE_INT);
-        $this->initVar('cat_datecreated', \XOBJ_DTYPE_INT);
-        $this->initVar('cat_submitter', \XOBJ_DTYPE_INT);
+        $this->initVar('id', \XOBJ_DTYPE_INT);
+        $this->initVar('pid', \XOBJ_DTYPE_INT);
+        $this->initVar('name', \XOBJ_DTYPE_TXTBOX);
+        $this->initVar('desc', \XOBJ_DTYPE_OTHER);
+        $this->initVar('logo', \XOBJ_DTYPE_TXTBOX);
+        $this->initVar('color', \XOBJ_DTYPE_TXTBOX);
+        $this->initVar('bordercolor', \XOBJ_DTYPE_TXTBOX);
+        $this->initVar('bgcolor', \XOBJ_DTYPE_TXTBOX);
+        $this->initVar('othercss', \XOBJ_DTYPE_TXTBOX);
+        $this->initVar('status', \XOBJ_DTYPE_INT);
+        $this->initVar('weight', \XOBJ_DTYPE_INT);
+        $this->initVar('datecreated', \XOBJ_DTYPE_INT);
+        $this->initVar('submitter', \XOBJ_DTYPE_INT);
     }
 
     /**
@@ -108,12 +108,12 @@ class Categories extends \XoopsObject
         $form->setExtra('enctype="multipart/form-data"');
         // Form Table categories
         $categoriesHandler = $helper->getHandler('Categories');
-        $catPidSelect = new \XoopsFormSelect(\_AM_WGEVENTS_CATEGORY_PID, 'cat_pid', $this->getVar('cat_pid'));
+        $catPidSelect = new \XoopsFormSelect(\_AM_WGEVENTS_CATEGORY_PID, 'pid', $this->getVar('pid'));
         $catPidSelect->addOption('');
         $catPidSelect->addOptionArray($categoriesHandler->getList());
         $form->addElement($catPidSelect);
         // Form Text catName
-        $form->addElement(new \XoopsFormText(\_AM_WGEVENTS_CATEGORY_NAME, 'cat_name', 50, 255, $this->getVar('cat_name')), true);
+        $form->addElement(new \XoopsFormText(\_AM_WGEVENTS_CATEGORY_NAME, 'name', 50, 255, $this->getVar('name')), true);
         // Form Editor DhtmlTextArea catDesc
         $editorConfigs = [];
         if ($isAdmin) {
@@ -121,21 +121,21 @@ class Categories extends \XoopsObject
         } else {
             $editor = $helper->getConfig('editor_user');
         }
-        $editorConfigs['name'] = 'cfd_desc';
-        $editorConfigs['value'] = $this->getVar('cfd_desc', 'e');
+        $editorConfigs['name'] = 'desc';
+        $editorConfigs['value'] = $this->getVar('desc', 'e');
         $editorConfigs['rows'] = 5;
         $editorConfigs['cols'] = 40;
         $editorConfigs['width'] = '100%';
         $editorConfigs['height'] = '400px';
         $editorConfigs['editor'] = $editor;
-        $form->addElement(new \XoopsFormEditor(\_AM_WGEVENTS_CATEGORY_DESC, 'cfd_desc', $editorConfigs));
+        $form->addElement(new \XoopsFormEditor(\_AM_WGEVENTS_CATEGORY_DESC, 'desc', $editorConfigs));
         // Form Image catLogo
         // Form Image catLogo: Select Uploaded Image 
-        $getCatLogo = $this->getVar('cat_logo');
+        $getCatLogo = $this->getVar('logo');
         $catLogo = $getCatLogo ?: 'blank.gif';
         $imageDirectory = '/uploads/wgevents/categories/logos';
         $imageTray = new \XoopsFormElementTray(\_AM_WGEVENTS_CATEGORY_LOGO, '<br>');
-        $imageSelect = new \XoopsFormSelect(\sprintf(\_AM_WGEVENTS_CATEGORY_LOGO_UPLOADS, ".{$imageDirectory}/"), 'cat_logo', $catLogo, 5);
+        $imageSelect = new \XoopsFormSelect(\sprintf(\_AM_WGEVENTS_CATEGORY_LOGO_UPLOADS, ".{$imageDirectory}/"), 'logo', $catLogo, 5);
         $imageArray = \XoopsLists::getImgListAsArray( \XOOPS_ROOT_PATH . $imageDirectory );
         foreach ($imageArray as $image1) {
             $imageSelect->addOption(($image1), $image1);
@@ -145,39 +145,39 @@ class Categories extends \XoopsObject
         $imageTray->addElement(new \XoopsFormLabel('', "<br><img src='" . \XOOPS_URL . '/' . $imageDirectory . '/' . $catLogo . "' id='imglabel_cat_logo' alt='' style='max-width:100px' >"));
         // Form Image catLogo: Upload new image
         $maxsize = $helper->getConfig('maxsize_image');
-        $imageTray->addElement(new \XoopsFormFile('<br>' . \_AM_WGEVENTS_FORM_UPLOAD_NEW, 'cat_logo', $maxsize));
+        $imageTray->addElement(new \XoopsFormFile('<br>' . \_AM_WGEVENTS_FORM_UPLOAD_NEW, 'logo', $maxsize));
         $imageTray->addElement(new \XoopsFormLabel(\_AM_WGEVENTS_FORM_UPLOAD_SIZE, ($maxsize / 1048576) . ' '  . \_AM_WGEVENTS_FORM_UPLOAD_SIZE_MB));
         $imageTray->addElement(new \XoopsFormLabel(\_AM_WGEVENTS_FORM_UPLOAD_IMG_WIDTH, $helper->getConfig('maxwidth_image') . ' px'));
         $imageTray->addElement(new \XoopsFormLabel(\_AM_WGEVENTS_FORM_UPLOAD_IMG_HEIGHT, $helper->getConfig('maxheight_image') . ' px'));
         $form->addElement($imageTray);
         // Form Color Picker catColor
-        $form->addElement(new \XoopsFormColorPicker(\_AM_WGEVENTS_CATEGORY_COLOR, 'cat_color', $this->getVar('cat_color')));
+        $form->addElement(new \XoopsFormColorPicker(\_AM_WGEVENTS_CATEGORY_COLOR, 'color', $this->getVar('color')));
         // Form Color Picker catBorderColor
-        $form->addElement(new \XoopsFormColorPicker(\_AM_WGEVENTS_CATEGORY_BORDERCOLOR, 'cat_bordercolor', $this->getVar('cat_bordercolor')));
+        $form->addElement(new \XoopsFormColorPicker(\_AM_WGEVENTS_CATEGORY_BORDERCOLOR, 'bordercolor', $this->getVar('bordercolor')));
         // Form Color Picker catColor
-        $form->addElement(new \XoopsFormColorPicker(\_AM_WGEVENTS_CATEGORY_BGCOLOR, 'cat_bgcolor', $this->getVar('cat_bgcolor')));
+        $form->addElement(new \XoopsFormColorPicker(\_AM_WGEVENTS_CATEGORY_BGCOLOR, 'bgcolor', $this->getVar('bgcolor')));
         // Form Text catOtherstyles
-        $catOtherstyles = $this->isNew() ? 'margin:1px 0;padding:8px 5px 20px 5px;border-radius:5px;' : $this->getVar('cat_othercss');
-        $form->addElement(new \XoopsFormText(\_AM_WGEVENTS_CATEGORY_OTHERCSS, 'cat_othercss', 100, 255, $catOtherstyles));
+        $catOtherstyles = $this->isNew() ? 'margin:1px 0;padding:8px 5px 20px 5px;border-radius:5px;' : $this->getVar('othercss');
+        $form->addElement(new \XoopsFormText(\_AM_WGEVENTS_CATEGORY_OTHERCSS, 'othercss', 100, 255, $catOtherstyles));
         // Form Radio catStatus
-        $catStatus = $this->isNew() ? Constants::STATUS_OFFLINE : $this->getVar('cat_status');
-        $catStatusSelect = new \XoopsFormRadio(\_MA_WGEVENTS_STATUS, 'cat_status', $catStatus);
+        $catStatus = $this->isNew() ? Constants::STATUS_OFFLINE : $this->getVar('status');
+        $catStatusSelect = new \XoopsFormRadio(\_MA_WGEVENTS_STATUS, 'status', $catStatus);
         $catStatusSelect->addOption(Constants::STATUS_OFFLINE, \_MA_WGEVENTS_STATUS_OFFLINE);
         $catStatusSelect->addOption(Constants::STATUS_ONLINE, \_MA_WGEVENTS_STATUS_ONLINE);
         $form->addElement($catStatusSelect);
         // Form Text catWeight
-        $catWeight = $this->getVar('cat_weight');
+        $catWeight = $this->getVar('weight');
         if ($this->isNew()) {
             $catWeight = $categoriesHandler->getNextWeight();
         }
-        $form->addElement(new \XoopsFormText(\_MA_WGEVENTS_WEIGHT, 'cat_weight', 50, 255, $catWeight));
+        $form->addElement(new \XoopsFormText(\_MA_WGEVENTS_WEIGHT, 'weight', 50, 255, $catWeight));
         // Form Text Date Select catDatecreated
-        $catDatecreated = $this->isNew() ? \time() : $this->getVar('cat_datecreated');
-        $form->addElement(new \XoopsFormTextDateSelect(\_MA_WGEVENTS_DATECREATED, 'cat_datecreated', '', $catDatecreated));
+        $catDatecreated = $this->isNew() ? \time() : $this->getVar('datecreated');
+        $form->addElement(new \XoopsFormTextDateSelect(\_MA_WGEVENTS_DATECREATED, 'datecreated', '', $catDatecreated));
         // Form Select User catSubmitter
         $uidCurrent = \is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->uid() : 0;
-        $catSubmitter = $this->isNew() ? $uidCurrent : $this->getVar('cat_submitter');
-        $form->addElement(new \XoopsFormSelectUser(\_MA_WGEVENTS_SUBMITTER, 'cat_submitter', false, $catSubmitter));
+        $catSubmitter = $this->isNew() ? $uidCurrent : $this->getVar('submitter');
+        $form->addElement(new \XoopsFormSelectUser(\_MA_WGEVENTS_SUBMITTER, 'submitter', false, $catSubmitter));
         /*
         // Permissions
         $memberHandler = \xoops_getHandler('member');
@@ -192,22 +192,22 @@ class Categories extends \XoopsObject
             $groupsCanSubmitRegsCheckbox = new \XoopsFormCheckBox(\_AM_WGEVENTS_PERMISSIONS_CAT_REGS_SUBMIT, 'groups_submit_cat_regs[]', $fullList);
             $groupsCanViewRegsCheckbox = new \XoopsFormCheckBox(\_AM_WGEVENTS_PERMISSIONS_CAT_REGS_VIEW, 'groups_view_cat_regs[]', $fullList);
         } else {
-            $groupsIdsApproveEvents = $grouppermHandler->getGroupIds('wgevents_approve_cat_events', $this->getVar('cfd_id'), $GLOBALS['xoopsModule']->getVar('mid'));
+            $groupsIdsApproveEvents = $grouppermHandler->getGroupIds('wgevents_approve_cat_events', $this->getVar('id'), $GLOBALS['xoopsModule']->getVar('mid'));
             $groupsIdsApproveEvents[] = \array_values($groupsIdsApproveEvents);
             $groupsCanApproveEventsCheckbox = new \XoopsFormCheckBox(\_AM_WGEVENTS_PERMISSIONS_CAT_EVENTS_APPROVE, 'groups_approve_cat_events[]', $groupsIdsApproveEvents);
-            $groupsIdsSubmitEvents = $grouppermHandler->getGroupIds('wgevents_submit_cat_events', $this->getVar('cfd_id'), $GLOBALS['xoopsModule']->getVar('mid'));
+            $groupsIdsSubmitEvents = $grouppermHandler->getGroupIds('wgevents_submit_cat_events', $this->getVar('id'), $GLOBALS['xoopsModule']->getVar('mid'));
             $groupsIdsSubmitEvents[] = \array_values($groupsIdsSubmitEvents);
             $groupsCanSubmitEventsCheckbox = new \XoopsFormCheckBox(\_AM_WGEVENTS_PERMISSIONS_CAT_EVENTS_SUBMIT, 'groups_submit_cat_events[]', $groupsIdsSubmitEvents);
-            $groupsIdsViewEvents = $grouppermHandler->getGroupIds('wgevents_view_cat_events', $this->getVar('cfd_id'), $GLOBALS['xoopsModule']->getVar('mid'));
+            $groupsIdsViewEvents = $grouppermHandler->getGroupIds('wgevents_view_cat_events', $this->getVar('id'), $GLOBALS['xoopsModule']->getVar('mid'));
             $groupsIdsViewEvents[] = \array_values($groupsIdsViewEvents);
             $groupsCanViewEventsCheckbox = new \XoopsFormCheckBox(\_AM_WGEVENTS_PERMISSIONS_CAT_EVENTS_VIEW, 'groups_view_cat_events[]', $groupsIdsViewEvents);
-            $groupsIdsApproveRegs = $grouppermHandler->getGroupIds('wgevents_approve_cat_regs', $this->getVar('cfd_id'), $GLOBALS['xoopsModule']->getVar('mid'));
+            $groupsIdsApproveRegs = $grouppermHandler->getGroupIds('wgevents_approve_cat_regs', $this->getVar('id'), $GLOBALS['xoopsModule']->getVar('mid'));
             $groupsIdsApproveRegs[] = \array_values($groupsIdsApproveRegs);
             $groupsCanApproveRegsCheckbox = new \XoopsFormCheckBox(\_AM_WGEVENTS_PERMISSIONS_CAT_REGS_APPROVE, 'groups_approve_cat_regs[]', $groupsIdsApproveRegs);
-            $groupsIdsSubmitRegs = $grouppermHandler->getGroupIds('wgevents_submit_cat_regs', $this->getVar('cfd_id'), $GLOBALS['xoopsModule']->getVar('mid'));
+            $groupsIdsSubmitRegs = $grouppermHandler->getGroupIds('wgevents_submit_cat_regs', $this->getVar('id'), $GLOBALS['xoopsModule']->getVar('mid'));
             $groupsIdsSubmitRegs[] = \array_values($groupsIdsSubmitRegs);
             $groupsCanSubmitRegsCheckbox = new \XoopsFormCheckBox(\_AM_WGEVENTS_PERMISSIONS_CAT_REGS_SUBMIT, 'groups_submit_cat_regs[]', $groupsIdsSubmitRegs);
-            $groupsIdsViewRegs = $grouppermHandler->getGroupIds('wgevents_view_cat_regs', $this->getVar('cfd_id'), $GLOBALS['xoopsModule']->getVar('mid'));
+            $groupsIdsViewRegs = $grouppermHandler->getGroupIds('wgevents_view_cat_regs', $this->getVar('id'), $GLOBALS['xoopsModule']->getVar('mid'));
             $groupsIdsViewRegs[] = \array_values($groupsIdsViewRegs);
             $groupsCanViewRegsCheckbox = new \XoopsFormCheckBox(\_AM_WGEVENTS_PERMISSIONS_CAT_REGS_VIEW, 'groups_view_cat_regs[]', $groupsIdsViewRegs);
         }
@@ -250,25 +250,15 @@ class Categories extends \XoopsObject
         $helper  = \XoopsModules\Wgevents\Helper::getInstance();
         $utility = new \XoopsModules\Wgevents\Utility();
         $ret = $this->getValues($keys, $format, $maxDepth);
-        $ret['id']          = $this->getVar('cfd_id');
         $categoriesHandler = $helper->getHandler('Categories');
-        $categoriesObj = $categoriesHandler->get($this->getVar('cat_pid'));
-        $ret['pid']         = $categoriesObj->getVar('cat_name');
-        $ret['name']        = $this->getVar('cat_name');
-        $ret['desc']        = $this->getVar('cfd_desc', 'e');
+        $categoriesObj = $categoriesHandler->get($this->getVar('pid'));
         $editorMaxchar = $helper->getConfig('admin_maxchar');
-        $ret['desc_short']  = $utility::truncateHtml($ret['desc'], $editorMaxchar);
-        $ret['logo']        = $this->getVar('cat_logo');
-        $ret['color']       = $this->getVar('cat_color');
-        $ret['bordercolor'] = $this->getVar('cat_bordercolor');
-        $ret['bgcolor']     = $this->getVar('cat_bgcolor');
-        $ret['othercss']    = $this->getVar('cat_othercss');
-        $status             = $this->getVar('cat_status');
-        $ret['status']      = $status;
-        $ret['status_text'] = Utility::getStatusText($status);
-        $ret['weight']      = $this->getVar('cat_weight');
-        $ret['datecreated'] = \formatTimestamp($this->getVar('cat_datecreated'), 's');
-        $ret['submitter']   = \XoopsUser::getUnameFromId($this->getVar('cat_submitter'));
+        $ret['pid_text']         = $categoriesObj->getVar('name');
+        $ret['desc_text']        = $this->getVar('desc', 'e');
+        $ret['desc_short']       = $utility::truncateHtml($ret['desc_text'], $editorMaxchar);
+        $ret['status_text']      = Utility::getStatusText($this->getVar('status'));
+        $ret['datecreated_text'] = \formatTimestamp($this->getVar('datecreated'), 's');
+        $ret['submitter_text']   = \XoopsUser::getUnameFromId($this->getVar('submitter'));
         return $ret;
     }
 

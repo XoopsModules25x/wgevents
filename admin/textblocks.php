@@ -29,7 +29,7 @@ use XoopsModules\Wgevents\Common;
 require __DIR__ . '/header.php';
 // Get all request values
 $op    = Request::getCmd('op', 'list');
-$tbId  = Request::getInt('tb_id');
+$tbId  = Request::getInt('id');
 $start = Request::getInt('start');
 $limit = Request::getInt('limit', $helper->getConfig('adminpager'));
 $GLOBALS['xoopsTpl']->assign('start', $start);
@@ -83,7 +83,7 @@ switch ($op) {
         $adminObject->addItemButton(\_AM_WGEVENTS_ADD_TEXTBLOCK, 'textblocks.php?op=new');
         $GLOBALS['xoopsTpl']->assign('buttons', $adminObject->displayButton('left'));
         // Request source
-        $tbIdSource = Request::getInt('tb_id_source');
+        $tbIdSource = Request::getInt('id_source');
         // Get Form
         $textblocksObjSource = $textblocksHandler->get($tbIdSource);
         $textblocksObj = $textblocksObjSource->xoopsClone();
@@ -101,16 +101,16 @@ switch ($op) {
             $textblocksObj = $textblocksHandler->create();
         }
         // Set Vars
-        $textblocksObj->setVar('tb_name', Request::getString('tb_name'));
-        $textblocksObj->setVar('tb_text', Request::getText('tb_text'));
-        $textblocksObj->setVar('tb_weight', Request::getInt('tb_weight'));
-        $textblockDatecreatedObj = \DateTime::createFromFormat(\_SHORTDATESTRING, Request::getString('tb_datecreated'));
-        $textblocksObj->setVar('tb_datecreated', $textblockDatecreatedObj->getTimestamp());
-        $textblocksObj->setVar('tb_submitter', Request::getInt('tb_submitter'));
+        $textblocksObj->setVar('name', Request::getString('name'));
+        $textblocksObj->setVar('text', Request::getText('text'));
+        $textblocksObj->setVar('weight', Request::getInt('weight'));
+        $textblockDatecreatedObj = \DateTime::createFromFormat(\_SHORTDATESTRING, Request::getString('datecreated'));
+        $textblocksObj->setVar('datecreated', $textblockDatecreatedObj->getTimestamp());
+        $textblocksObj->setVar('submitter', Request::getInt('submitter'));
         // Insert Data
         if ($textblocksHandler->insert($textblocksObj)) {
             $newTbId = $textblocksObj->getNewInsertedIdTextblocks();
-            $permId = isset($_REQUEST['tb_id']) ? $tbId : $newTbId;
+            $permId = isset($_REQUEST['id']) ? $tbId : $newTbId;
             $grouppermHandler = \xoops_getHandler('groupperm');
             $mid = $GLOBALS['xoopsModule']->getVar('mid');
             // Permission to view_textblocks
@@ -158,7 +158,7 @@ switch ($op) {
         $templateMain = 'wgevents_admin_textblocks.tpl';
         $GLOBALS['xoopsTpl']->assign('navigation', $adminObject->displayNavigation('textblocks.php'));
         $textblocksObj = $textblocksHandler->get($tbId);
-        $tbName = $textblocksObj->getVar('tb_name');
+        $tbName = $textblocksObj->getVar('name');
         if (isset($_REQUEST['ok']) && 1 == $_REQUEST['ok']) {
             if (!$GLOBALS['xoopsSecurity']->check()) {
                 \redirect_header('textblocks.php', 3, \implode(', ', $GLOBALS['xoopsSecurity']->getErrors()));
@@ -170,9 +170,9 @@ switch ($op) {
             }
         } else {
             $customConfirm = new Common\Confirm(
-                ['ok' => 1, 'tb_id' => $tbId, 'start' => $start, 'limit' => $limit, 'op' => 'delete'],
+                ['ok' => 1, 'id' => $tbId, 'start' => $start, 'limit' => $limit, 'op' => 'delete'],
                 $_SERVER['REQUEST_URI'],
-                \sprintf(\_MA_WGEVENTS_FORM_SURE_DELETE, $textblocksObj->getVar('tb_name')));
+                \sprintf(\_MA_WGEVENTS_FORM_SURE_DELETE, $textblocksObj->getVar('name')));
             $form = $customConfirm->getFormConfirm();
             $GLOBALS['xoopsTpl']->assign('form', $form->render());
         }

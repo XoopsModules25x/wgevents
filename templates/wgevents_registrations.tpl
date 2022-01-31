@@ -36,9 +36,9 @@
                 <tfoot>
                     <tr>
                         <td class="center" colspan="<{$registration.footerCols}>">
-                            <a class='btn btn-success wge-btn' href='events.php?op=show&amp;ev_id=<{$registration.ev_id}>' title='<{$smarty.const._MA_WGEVENTS_GOTO_EVENT}>'><{$smarty.const._MA_WGEVENTS_GOTO_EVENT}></a>
+                            <a class='btn btn-success wge-btn' href='events.php?op=show&amp;id=<{$registration.id}>' title='<{$smarty.const._MA_WGEVENTS_GOTO_EVENT}>'><{$smarty.const._MA_WGEVENTS_GOTO_EVENT}></a>
                             <{if $regdetails.permEdit|default:''}>
-                                <a class='btn btn-success wge-btn' href='outputs.php?op=reg_all&amp;output_type=xlsx&amp;ev_id=<{$registration.ev_id}>&amp;redir=<{$redir}>' title='<{$smarty.const._MA_WGEVENTS_OUTPUT_EXCEL}>'><{$smarty.const._MA_WGEVENTS_OUTPUT_EXCEL}></a>
+                                <a class='btn btn-success wge-btn' href='outputs.php?op=reg_all&amp;output_type=xlsx&amp;id=<{$registration.evid}>&amp;redir=<{$redir}>' title='<{$smarty.const._MA_WGEVENTS_OUTPUT_EXCEL}>'><{$smarty.const._MA_WGEVENTS_OUTPUT_EXCEL}></a>
                             <{/if}>
                         </td>
                     </tr>

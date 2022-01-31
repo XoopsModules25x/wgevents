@@ -1,6 +1,5 @@
 <?php declare(strict_types=1);
 
-
 namespace XoopsModules\Wgevents;
 
 /*
@@ -39,7 +38,7 @@ class CategoriesHandler extends \XoopsPersistableObjectHandler
      */
     public function __construct(\XoopsDatabase $db)
     {
-        parent::__construct($db, 'wgevents_categories', Categories::class, 'cfd_id', 'cat_name');
+        parent::__construct($db, 'wgevents_categories', Categories::class, 'id', 'name');
     }
 
     /**
@@ -83,7 +82,7 @@ class CategoriesHandler extends \XoopsPersistableObjectHandler
      * @param string $order
      * @return int
      */
-    public function getCountCategories($start = 0, $limit = 0, $sort = 'cat_weight ASC, cfd_id', $order = 'ASC')
+    public function getCountCategories($start = 0, $limit = 0, $sort = 'weight ASC, id', $order = 'ASC')
     {
         $crCountCategories = new \CriteriaCompo();
         $crCountCategories = $this->getCategoriesCriteria($crCountCategories, $start, $limit, $sort, $order);
@@ -98,7 +97,7 @@ class CategoriesHandler extends \XoopsPersistableObjectHandler
      * @param string $order
      * @return array
      */
-    public function getAllCategories($start = 0, $limit = 0, $sort = 'cat_weight ASC, cfd_id', $order = 'ASC')
+    public function getAllCategories($start = 0, $limit = 0, $sort = 'weight ASC, id', $order = 'ASC')
     {
         $crAllCategories = new \CriteriaCompo();
         $crAllCategories = $this->getCategoriesCriteria($crAllCategories, $start, $limit, $sort, $order);
@@ -133,14 +132,14 @@ class CategoriesHandler extends \XoopsPersistableObjectHandler
         $nextValue = 0;
 
         $crCategories = new \CriteriaCompo();
-        $crCategories->setSort('cat_weight');
+        $crCategories->setSort('weight');
         $crCategories->setOrder('DESC');
         $crCategories->setLimit(1);
         $categoriesCount = $this->getCount($crCategories);
         if ($categoriesCount > 0) {
             $categoriesAll = $this->getAll($crCategories);
             foreach (\array_keys($categoriesAll) as $i) {
-                $nextValue = $categoriesAll[$i]->getVar('cat_weight');
+                $nextValue = $categoriesAll[$i]->getVar('weight');
             }
         }
 
@@ -162,11 +161,11 @@ class CategoriesHandler extends \XoopsPersistableObjectHandler
             foreach (\array_keys($categoriesAll) as $i) {
                 $categories[$i] = [
                     'id' => $i,
-                    'name' => $categoriesAll[$i]->getVar('cat_name'),
-                    'color' => $categoriesAll[$i]->getVar('cat_color'),
-                    'bordercolor' => $categoriesAll[$i]->getVar('cat_bordercolor'),
-                    'bgcolor' => $categoriesAll[$i]->getVar('cat_bgcolor'),
-                    'othercss' => $categoriesAll[$i]->getVar('cat_othercss')
+                    'name' => $categoriesAll[$i]->getVar('name'),
+                    'color' => $categoriesAll[$i]->getVar('color'),
+                    'bordercolor' => $categoriesAll[$i]->getVar('bordercolor'),
+                    'bgcolor' => $categoriesAll[$i]->getVar('bgcolor'),
+                    'othercss' => $categoriesAll[$i]->getVar('othercss')
                 ];
             }
         }

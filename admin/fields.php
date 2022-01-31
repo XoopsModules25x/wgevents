@@ -29,7 +29,7 @@ use XoopsModules\Wgevents\Common;
 require __DIR__ . '/header.php';
 // Get all request values
 $op    = Request::getCmd('op', 'list');
-$atId  = Request::getInt('fd_id');
+$atId  = Request::getInt('id');
 $start = Request::getInt('start');
 $limit = Request::getInt('limit', $helper->getConfig('adminpager'));
 $GLOBALS['xoopsTpl']->assign('start', $start);
@@ -46,13 +46,13 @@ switch ($op) {
         $adminObject->addItemButton(\_AM_WGEVENTS_FIELD_CREATE_DEFAULT, 'fields.php?op=default_set');
         $GLOBALS['xoopsTpl']->assign('buttons', $adminObject->displayButton('left'));
         $fieldsCount = $fieldsHandler->getCountFields();
-        $fieldsAll = $fieldsHandler->getAllFields($start, $limit);
         $GLOBALS['xoopsTpl']->assign('fields_count', $fieldsCount);
         $GLOBALS['xoopsTpl']->assign('wgevents_url', \WGEVENTS_URL);
         $GLOBALS['xoopsTpl']->assign('wgevents_upload_url', \WGEVENTS_UPLOAD_URL);
         $GLOBALS['xoopsTpl']->assign('wgevents_icons_url_16', \WGEVENTS_ICONS_URL_16);
         // Table view fields
         if ($fieldsCount > 0) {
+            $fieldsAll = $fieldsHandler->getAllFields($start, $limit);
             foreach (\array_keys($fieldsAll) as $i) {
                 $field = $fieldsAll[$i]->getValuesFields();
                 $GLOBALS['xoopsTpl']->append('fields_list', $field);
@@ -85,7 +85,7 @@ switch ($op) {
         $adminObject->addItemButton(\_AM_WGEVENTS_ADD_FIELD, 'fields.php?op=new');
         $GLOBALS['xoopsTpl']->assign('buttons', $adminObject->displayButton('left'));
         // Request source
-        $atIdSource = Request::getInt('fd_id_source');
+        $atIdSource = Request::getInt('id_source');
         // Get Form
         $fieldsObjSource = $fieldsHandler->get($atIdSource);
         $fieldsObj = $fieldsObjSource->xoopsClone();
@@ -103,12 +103,12 @@ switch ($op) {
             $fieldsObj = $fieldsHandler->create();
         }
         // Set Vars
-        $fdType = Request::getInt('fd_type');
-        $fieldsObj->setVar('fd_type', $fdType);
-        $fieldsObj->setVar('fd_caption', Request::getString('fd_caption'));
-        $fieldsObj->setVar('fd_desc', Request::getText('fd_desc'));
+        $fdType = Request::getInt('type');
+        $fieldsObj->setVar('type', $fdType);
+        $fieldsObj->setVar('caption', Request::getString('caption'));
+        $fieldsObj->setVar('desc', Request::getText('desc'));
         $atValuesText = '';
-        $fdValues = Request::getString('fd_values');
+        $fdValues = Request::getString('values');
         if ('' != $fdValues) {
             if (Constants::FIELD_COMBOBOX == $fdType || Constants::FIELD_SELECTBOX == $fdType || Constants::FIELD_RADIO == $fdType) {
                 $atValuesText = \serialize(\preg_split('/\r\n|\r|\n/', $fdValues));
@@ -117,19 +117,19 @@ switch ($op) {
                 $atValuesText = \serialize($tmpArr);
             }
         }
-        $fieldsObj->setVar('fd_values', $atValuesText);
-        $fieldsObj->setVar('fd_placeholder', Request::getString('fd_placeholder'));
-        $fieldsObj->setVar('fd_required', Request::getInt('fd_required'));
-        $fieldsObj->setVar('fd_default', Request::getInt('fd_default'));
-        $fieldsObj->setVar('fd_custom', Request::getInt('fd_custom'));
-        $fieldsObj->setVar('fd_print', Request::getInt('fd_print'));
-        $fieldsObj->setVar('fd_display_values', Request::getInt('fd_display_values'));
-        $fieldsObj->setVar('fd_display_placeholder', Request::getInt('fd_display_placeholder'));
-        $fieldsObj->setVar('fd_weight', Request::getInt('fd_weight'));
-        $fieldsObj->setVar('fd_status', Request::getInt('fd_status'));
-        $fieldDatecreatedObj = \DateTime::createFromFormat(\_SHORTDATESTRING, Request::getString('fd_datecreated'));
-        $fieldsObj->setVar('fd_datecreated', $fieldDatecreatedObj->getTimestamp());
-        $fieldsObj->setVar('fd_submitter', Request::getInt('fd_submitter'));
+        $fieldsObj->setVar('values', $atValuesText);
+        $fieldsObj->setVar('placeholder', Request::getString('placeholder'));
+        $fieldsObj->setVar('required', Request::getInt('required'));
+        $fieldsObj->setVar('default', Request::getInt('default'));
+        $fieldsObj->setVar('custom', Request::getInt('custom'));
+        $fieldsObj->setVar('print', Request::getInt('print'));
+        $fieldsObj->setVar('display_values', Request::getInt('display_values'));
+        $fieldsObj->setVar('display_placeholder', Request::getInt('display_placeholder'));
+        $fieldsObj->setVar('weight', Request::getInt('weight'));
+        $fieldsObj->setVar('status', Request::getInt('status'));
+        $fieldDatecreatedObj = \DateTime::createFromFormat(\_SHORTDATESTRING, Request::getString('datecreated'));
+        $fieldsObj->setVar('datecreated', $fieldDatecreatedObj->getTimestamp());
+        $fieldsObj->setVar('submitter', Request::getInt('submitter'));
         // Insert Data
         if ($fieldsHandler->insert($fieldsObj)) {
                 \redirect_header('fields.php?op=list&amp;start=' . $start . '&amp;limit=' . $limit, 2, \_MA_WGEVENTS_FORM_OK);
@@ -156,7 +156,7 @@ switch ($op) {
         $templateMain = 'wgevents_admin_fields.tpl';
         $GLOBALS['xoopsTpl']->assign('navigation', $adminObject->displayNavigation('fields.php'));
         $fieldsObj = $fieldsHandler->get($atId);
-        $atName = $fieldsObj->getVar('fd_caption');
+        $atName = $fieldsObj->getVar('caption');
         if (isset($_REQUEST['ok']) && 1 == $_REQUEST['ok']) {
             if (!$GLOBALS['xoopsSecurity']->check()) {
                 \redirect_header('fields.php', 3, \implode(', ', $GLOBALS['xoopsSecurity']->getErrors()));
@@ -168,9 +168,9 @@ switch ($op) {
             }
         } else {
             $customConfirm = new Common\Confirm(
-                ['ok' => 1, 'fd_id' => $atId, 'start' => $start, 'limit' => $limit, 'op' => 'delete'],
+                ['ok' => 1, 'id' => $atId, 'start' => $start, 'limit' => $limit, 'op' => 'delete'],
                 $_SERVER['REQUEST_URI'],
-                \sprintf(\_MA_WGEVENTS_FORM_SURE_DELETE, $fieldsObj->getVar('fd_caption')));
+                \sprintf(\_MA_WGEVENTS_FORM_SURE_DELETE, $fieldsObj->getVar('caption')));
             $form = $customConfirm->getFormConfirm();
             $GLOBALS['xoopsTpl']->assign('form', $form->render());
         }
@@ -192,28 +192,28 @@ switch ($op) {
             foreach ($items as $key => $item) {
                 $fieldsObj = $fieldsHandler->create();
                 // Set Vars
-                $fieldsObj->setVar('fd_id', $key + 1);
-                $fieldsObj->setVar('fd_caption', $item['fd_caption']);
-                $fieldsObj->setVar('fd_type', $item['fd_type']);
-                $fieldsObj->setVar('fd_desc', $item['fd_desc']);
-                $fdValues = (string)$item['fd_values'];
+                $fieldsObj->setVar('id', $key + 1);
+                $fieldsObj->setVar('caption', $item['caption']);
+                $fieldsObj->setVar('type', $item['type']);
+                $fieldsObj->setVar('desc', $item['desc']);
+                $fdValues = (string)$item['values'];
                 $atValuesText = '';
                 if ('' != $fdValues) {
                     $tmpArr[] = $fdValues;
                     $atValuesText = \serialize($tmpArr);
                 }
-                $fieldsObj->setVar('fd_values', $atValuesText);
-                $fieldsObj->setVar('fd_placeholder', $item['fd_placeholder']);
-                $fieldsObj->setVar('fd_required', $item['fd_required']);
-                $fieldsObj->setVar('fd_default', $item['fd_default']);
-                $fieldsObj->setVar('fd_print', $item['fd_print']);
-                $fieldsObj->setVar('fd_display_values', $item['fd_display_values']);
-                $fieldsObj->setVar('fd_display_placeholder', $item['fd_display_placeholder']);
-                $fieldsObj->setVar('fd_weight', $key + 1);
-                $fieldsObj->setVar('fd_custom', $item['fd_custom']);
-                $fieldsObj->setVar('fd_status', Constants::STATUS_ONLINE);
-                $fieldsObj->setVar('fd_datecreated', \time());
-                $fieldsObj->setVar('fd_submitter', $uid);
+                $fieldsObj->setVar('values', $atValuesText);
+                $fieldsObj->setVar('placeholder', $item['placeholder']);
+                $fieldsObj->setVar('required', $item['required']);
+                $fieldsObj->setVar('default', $item['default']);
+                $fieldsObj->setVar('print', $item['print']);
+                $fieldsObj->setVar('display_values', $item['display_values']);
+                $fieldsObj->setVar('display_placeholder', $item['display_placeholder']);
+                $fieldsObj->setVar('weight', $key + 1);
+                $fieldsObj->setVar('custom', $item['custom']);
+                $fieldsObj->setVar('status', Constants::STATUS_ONLINE);
+                $fieldsObj->setVar('datecreated', \time());
+                $fieldsObj->setVar('submitter', $uid);
                 // Insert Data
                 $fieldsHandler->insert($fieldsObj);
             }
@@ -253,226 +253,226 @@ function BuildDefaultSet () {
     $i = 0;
 
     $defaultSet[] = [
-        'fd_type' => Constants::FIELD_LABEL,
-        'fd_caption' => \_MA_WGEVENTS_FIELD_LABEL,
-        'fd_desc' => '',
-        'fd_values' => '',
-        'fd_placeholder' => '',
-        'fd_required' => 0,
-        'fd_default' => 0,
-        'fd_print' => 1,
-        'fd_display_values' => 0,
-        'fd_display_placeholder' => 0,
-        'fd_custom' => 0,
+        'type' => Constants::FIELD_LABEL,
+        'caption' => \_MA_WGEVENTS_FIELD_LABEL,
+        'desc' => '',
+        'values' => '',
+        'placeholder' => '',
+        'required' => 0,
+        'default' => 0,
+        'print' => 1,
+        'display_values' => 0,
+        'display_placeholder' => 0,
+        'custom' => 0,
     ];
     $defaultSet[] = [
-        'fd_type' => Constants::FIELD_TEXTBOX,
-        'fd_caption' => \_MA_WGEVENTS_FIELD_TEXTBOX,
-        'fd_desc' => '',
-        'fd_values' => '',
-        'fd_placeholder' => '',
-        'fd_required' => 0,
-        'fd_default' => 0,
-        'fd_print' => 1,
-        'fd_display_values' => 0,
-        'fd_display_placeholder' => 1,
-        'fd_custom' => 0,
+        'type' => Constants::FIELD_TEXTBOX,
+        'caption' => \_MA_WGEVENTS_FIELD_TEXTBOX,
+        'desc' => '',
+        'values' => '',
+        'placeholder' => '',
+        'required' => 0,
+        'default' => 0,
+        'print' => 1,
+        'display_values' => 0,
+        'display_placeholder' => 1,
+        'custom' => 0,
     ];
     $defaultSet[] = [
-        'fd_type' => Constants::FIELD_TEXTAREA,
-        'fd_caption' => \_MA_WGEVENTS_FIELD_TEXTAREA,
-        'fd_desc' => '',
-        'fd_values' => '',
-        'fd_placeholder' => '',
-        'fd_required' => 0,
-        'fd_default' => 0,
-        'fd_print' => 1,
-        'fd_display_values' => 0,
-        'fd_display_placeholder' => 1,
-        'fd_custom' => 0,
+        'type' => Constants::FIELD_TEXTAREA,
+        'caption' => \_MA_WGEVENTS_FIELD_TEXTAREA,
+        'desc' => '',
+        'values' => '',
+        'placeholder' => '',
+        'required' => 0,
+        'default' => 0,
+        'print' => 1,
+        'display_values' => 0,
+        'display_placeholder' => 1,
+        'custom' => 0,
     ];
     $defaultSet[] = [
-        'fd_type' => Constants::FIELD_SELECTBOX,
-        'fd_caption' => \_MA_WGEVENTS_FIELD_SELECTBOX,
-        'fd_desc' => '',
-        'fd_values' => '',
-        'fd_placeholder' => '',
-        'fd_required' => 0,
-        'fd_default' => 0,
-        'fd_print' => 1,
-        'fd_display_values' => 1,
-        'fd_display_placeholder' => 0,
-        'fd_custom' => 0,
+        'type' => Constants::FIELD_SELECTBOX,
+        'caption' => \_MA_WGEVENTS_FIELD_SELECTBOX,
+        'desc' => '',
+        'values' => '',
+        'placeholder' => '',
+        'required' => 0,
+        'default' => 0,
+        'print' => 1,
+        'display_values' => 1,
+        'display_placeholder' => 0,
+        'custom' => 0,
     ];
     $defaultSet[] = [
-        'fd_type' => Constants::FIELD_COMBOBOX,
-        'fd_caption' => \_MA_WGEVENTS_FIELD_COMBOBOX,
-        'fd_desc' => '',
-        'fd_values' => '',
-        'fd_placeholder' => '',
-        'fd_required' => 0,
-        'fd_default' => 0,
-        'fd_print' => 1,
-        'fd_display_values' => 1,
-        'fd_display_placeholder' => 0,
-        'fd_custom' => 0,
+        'type' => Constants::FIELD_COMBOBOX,
+        'caption' => \_MA_WGEVENTS_FIELD_COMBOBOX,
+        'desc' => '',
+        'values' => '',
+        'placeholder' => '',
+        'required' => 0,
+        'default' => 0,
+        'print' => 1,
+        'display_values' => 1,
+        'display_placeholder' => 0,
+        'custom' => 0,
     ];
     $defaultSet[] = [
-        'fd_type' => Constants::FIELD_CHECKBOX,
-        'fd_caption' => \_MA_WGEVENTS_FIELD_CHECKBOX,
-        'fd_desc' => '',
-        'fd_values' => '',
-        'fd_placeholder' => '',
-        'fd_required' => 0,
-        'fd_default' => 0,
-        'fd_print' => 1,
-        'fd_display_values' => 1,
-        'fd_display_placeholder' => 0,
-        'fd_custom' => 0,
+        'type' => Constants::FIELD_CHECKBOX,
+        'caption' => \_MA_WGEVENTS_FIELD_CHECKBOX,
+        'desc' => '',
+        'values' => '',
+        'placeholder' => '',
+        'required' => 0,
+        'default' => 0,
+        'print' => 1,
+        'display_values' => 1,
+        'display_placeholder' => 0,
+        'custom' => 0,
     ];
     $defaultSet[] = [
-        'fd_type' => Constants::FIELD_RADIO,
-        'fd_caption' => \_MA_WGEVENTS_FIELD_RADIO,
-        'fd_desc' => '',
-        'fd_values' => '',
-        'fd_placeholder' => '',
-        'fd_required' => 0,
-        'fd_default' => 0,
-        'fd_print' => 1,
-        'fd_display_values' => 1,
-        'fd_display_placeholder' => 0,
-        'fd_custom' => 0,
+        'type' => Constants::FIELD_RADIO,
+        'caption' => \_MA_WGEVENTS_FIELD_RADIO,
+        'desc' => '',
+        'values' => '',
+        'placeholder' => '',
+        'required' => 0,
+        'default' => 0,
+        'print' => 1,
+        'display_values' => 1,
+        'display_placeholder' => 0,
+        'custom' => 0,
     ];
     $defaultSet[] = [
-        'fd_type' => Constants::FIELD_RADIOYN,
-        'fd_caption' => \_MA_WGEVENTS_FIELD_RADIOYN,
-        'fd_desc' => '',
-        'fd_values' => '',
-        'fd_placeholder' => '',
-        'fd_required' => 0,
-        'fd_default' => 0,
-        'fd_print' => 1,
-        'fd_display_values' => 0,
-        'fd_display_placeholder' => 0,
-        'fd_custom' => 0,
+        'type' => Constants::FIELD_RADIOYN,
+        'caption' => \_MA_WGEVENTS_FIELD_RADIOYN,
+        'desc' => '',
+        'values' => '',
+        'placeholder' => '',
+        'required' => 0,
+        'default' => 0,
+        'print' => 1,
+        'display_values' => 0,
+        'display_placeholder' => 0,
+        'custom' => 0,
     ];
     $defaultSet[] = [
-        'fd_type' => Constants::FIELD_DATE,
-        'fd_caption' => \_MA_WGEVENTS_FIELD_DATE,
-        'fd_desc' => '',
-        'fd_values' => '',
-        'fd_placeholder' => '',
-        'fd_required' => 0,
-        'fd_default' => 0,
-        'fd_print' => 1,
-        'fd_display_values' => 0,
-        'fd_display_placeholder' => 0,
-        'fd_custom' => 0,
+        'type' => Constants::FIELD_DATE,
+        'caption' => \_MA_WGEVENTS_FIELD_DATE,
+        'desc' => '',
+        'values' => '',
+        'placeholder' => '',
+        'required' => 0,
+        'default' => 0,
+        'print' => 1,
+        'display_values' => 0,
+        'display_placeholder' => 0,
+        'custom' => 0,
     ];
     /*
     $defaultSet[] = [
-        'fd_type' => Constants::FIELD_DATETIME,
-        'fd_caption' => \_MA_WGEVENTS_FIELD_DATETIME,
-        'fd_desc' => '',
-        'fd_values' => '',
-        'fd_required' => 0,
-        'fd_default' => 0,
-        'fd_print' => 1,
-        'fd_display_values' => 0,
-        'fd_display_placeholder' => 0,
-        'fd_custom' => 0,
+        'type' => Constants::FIELD_DATETIME,
+        'caption' => \_MA_WGEVENTS_FIELD_DATETIME,
+        'desc' => '',
+        'values' => '',
+        'required' => 0,
+        'default' => 0,
+        'print' => 1,
+        'display_values' => 0,
+        'display_placeholder' => 0,
+        'custom' => 0,
     ];
     */
     $defaultSet[] = [
-        'fd_type' => Constants::FIELD_TEXTBOX,
-        'fd_caption' => \_AM_WGEVENTS_FIELD_PHONE,
-        'fd_desc' => '',
-        'fd_values' => '',
-        'fd_placeholder' => \_AM_WGEVENTS_FIELD_PHONE_VALUE,
-        'fd_required' => 0,
-        'fd_default' => 1,
-        'fd_print' => 1,
-        'fd_display_values' => 0,
-        'fd_display_placeholder' => 1,
-        'fd_custom' => 1,
+        'type' => Constants::FIELD_TEXTBOX,
+        'caption' => \_AM_WGEVENTS_FIELD_PHONE,
+        'desc' => '',
+        'values' => '',
+        'placeholder' => \_AM_WGEVENTS_FIELD_PHONE_VALUE,
+        'required' => 0,
+        'default' => 1,
+        'print' => 1,
+        'display_values' => 0,
+        'display_placeholder' => 1,
+        'custom' => 1,
     ];
     $defaultSet[] = [
-        'fd_type' => Constants::FIELD_TEXTBOX,
-        'fd_caption' => \_AM_WGEVENTS_FIELD_ADDRESS,
-        'fd_desc' => '',
-        'fd_values' => '',
-        'fd_placeholder' => \_AM_WGEVENTS_FIELD_ADDRESS_VALUE,
-        'fd_required' => 0,
-        'fd_default' => 0,
-        'fd_print' => 1,
-        'fd_display_values' => 0,
-        'fd_display_placeholder' => 1,
-        'fd_custom' => 1,
+        'type' => Constants::FIELD_TEXTBOX,
+        'caption' => \_AM_WGEVENTS_FIELD_ADDRESS,
+        'desc' => '',
+        'values' => '',
+        'placeholder' => \_AM_WGEVENTS_FIELD_ADDRESS_VALUE,
+        'required' => 0,
+        'default' => 0,
+        'print' => 1,
+        'display_values' => 0,
+        'display_placeholder' => 1,
+        'custom' => 1,
     ];
     $defaultSet[] = [
-        'fd_type' => Constants::FIELD_TEXTBOX,
-        'fd_caption' => \_AM_WGEVENTS_FIELD_POSTAL,
-        'fd_desc' => '',
-        'fd_values' => '',
-        'fd_placeholder' => \_AM_WGEVENTS_FIELD_POSTAL_VALUE,
-        'fd_required' => 0,
-        'fd_default' => 0,
-        'fd_print' => 1,
-        'fd_display_values' => 0,
-        'fd_display_placeholder' => 1,
-        'fd_custom' => 1,
+        'type' => Constants::FIELD_TEXTBOX,
+        'caption' => \_AM_WGEVENTS_FIELD_POSTAL,
+        'desc' => '',
+        'values' => '',
+        'placeholder' => \_AM_WGEVENTS_FIELD_POSTAL_VALUE,
+        'required' => 0,
+        'default' => 0,
+        'print' => 1,
+        'display_values' => 0,
+        'display_placeholder' => 1,
+        'custom' => 1,
     ];
     $defaultSet[] = [
-        'fd_type' => Constants::FIELD_TEXTBOX,
-        'fd_caption' => \_AM_WGEVENTS_FIELD_CITY,
-        'fd_desc' => '',
-        'fd_values' => '',
-        'fd_placeholder' => \_AM_WGEVENTS_FIELD_CITY_VALUE,
-        'fd_required' => 0,
-        'fd_default' => 0,
-        'fd_print' => 1,
-        'fd_display_values' => 0,
-        'fd_display_placeholder' => 1,
-        'fd_custom' => 1,
+        'type' => Constants::FIELD_TEXTBOX,
+        'caption' => \_AM_WGEVENTS_FIELD_CITY,
+        'desc' => '',
+        'values' => '',
+        'placeholder' => \_AM_WGEVENTS_FIELD_CITY_VALUE,
+        'required' => 0,
+        'default' => 0,
+        'print' => 1,
+        'display_values' => 0,
+        'display_placeholder' => 1,
+        'custom' => 1,
     ];
     $defaultSet[] = [
-        'fd_type' => Constants::FIELD_COUNTRY,
-        'fd_caption' => \_AM_WGEVENTS_FIELD_COUNTRY,
-        'fd_desc' => '',
-        'fd_values' => '',
-        'fd_placeholder' => \_AM_WGEVENTS_FIELD_COUNTRY_VALUE,
-        'fd_required' => 0,
-        'fd_default' => 0,
-        'fd_print' => 1,
-        'fd_display_values' => 0,
-        'fd_display_placeholder' => 0,
-        'fd_custom' => 1,
+        'type' => Constants::FIELD_COUNTRY,
+        'caption' => \_AM_WGEVENTS_FIELD_COUNTRY,
+        'desc' => '',
+        'values' => '',
+        'placeholder' => \_AM_WGEVENTS_FIELD_COUNTRY_VALUE,
+        'required' => 0,
+        'default' => 0,
+        'print' => 1,
+        'display_values' => 0,
+        'display_placeholder' => 0,
+        'custom' => 1,
     ];
     $defaultSet[] = [
-        'fd_type' => Constants::FIELD_DATE,
-        'fd_caption' => \_AM_WGEVENTS_FIELD_BIRTHDAY,
-        'fd_desc' => '',
-        'fd_values' => '',
-        'fd_placeholder' => \_AM_WGEVENTS_FIELD_BIRTHDAY_VALUE,
-        'fd_required' => 0,
-        'fd_default' => 0,
-        'fd_print' => 1,
-        'fd_display_values' => 0,
-        'fd_display_placeholder' => 0,
-        'fd_custom' => 1,
+        'type' => Constants::FIELD_DATE,
+        'caption' => \_AM_WGEVENTS_FIELD_BIRTHDAY,
+        'desc' => '',
+        'values' => '',
+        'placeholder' => \_AM_WGEVENTS_FIELD_BIRTHDAY_VALUE,
+        'required' => 0,
+        'default' => 0,
+        'print' => 1,
+        'display_values' => 0,
+        'display_placeholder' => 0,
+        'custom' => 1,
     ];
     $defaultSet[] = [
-        'fd_type' => Constants::FIELD_TEXTBOX,
-        'fd_caption' => \_AM_WGEVENTS_FIELD_AGE,
-        'fd_desc' => '',
-        'fd_values' => '',
-        'fd_placeholder' => \_AM_WGEVENTS_FIELD_AGE_VALUE,
-        'fd_required' => 0,
-        'fd_default' => 0,
-        'fd_print' => 1,
-        'fd_display_values' => 0,
-        'fd_display_placeholder' => 1,
-        'fd_custom' => 1,
+        'type' => Constants::FIELD_TEXTBOX,
+        'caption' => \_AM_WGEVENTS_FIELD_AGE,
+        'desc' => '',
+        'values' => '',
+        'placeholder' => \_AM_WGEVENTS_FIELD_AGE_VALUE,
+        'required' => 0,
+        'default' => 0,
+        'print' => 1,
+        'display_values' => 0,
+        'display_placeholder' => 1,
+        'custom' => 1,
     ];
 
     return $defaultSet;

@@ -39,7 +39,7 @@ $formGdpr = new Forms\FormInline('', 'form', '', 'post', true);
 $formGdpr->setExtra('enctype="multipart/form-data"');
 // suggest 6 months before now
 $regDatelimit = strtotime(date("Y-m-t", \time() - (6 * 30 * 24 * 60 * 60 + 5)));
-$formGdpr->addElement(new \XoopsFormTextDateSelect(\_AM_WGEVENTS_MAINTENANCE_ANON_DATA_DATELIMIT, 'reg_datelimit', '', $regDatelimit));
+$formGdpr->addElement(new \XoopsFormTextDateSelect(\_AM_WGEVENTS_MAINTENANCE_ANON_DATA_DATELIMIT, 'datelimit', '', $regDatelimit));
 $formGdpr->addElement(new \XoopsFormButton('', 'submit', \_MA_WGEVENTS_EXEC, 'submit'));
 $formGdpr->addElement(new \XoopsFormHidden('op', 'anon_data_exec'));
 $GLOBALS['xoopsTpl']->assign('formGdpr', $formGdpr->render());
@@ -55,8 +55,8 @@ switch ($op) {
         $err_text     = '';
 
         $sql = 'DELETE ' . $GLOBALS['xoopsDB']->prefix('wgevents_questions') . '.* ';
-        $sql .= 'FROM ' . $GLOBALS['xoopsDB']->prefix('wgevents_questions') . ' LEFT JOIN ' . $GLOBALS['xoopsDB']->prefix('wgevents_events') . ' ON ' . $GLOBALS['xoopsDB']->prefix('wgevents_questions') . '.que_evid = ' . $GLOBALS['xoopsDB']->prefix('wgevents_events') . '.ev_id ';
-        $sql .= 'WHERE (((' . $GLOBALS['xoopsDB']->prefix('wgevents_events') . '.ev_id) Is Null))';
+        $sql .= 'FROM ' . $GLOBALS['xoopsDB']->prefix('wgevents_questions') . ' LEFT JOIN ' . $GLOBALS['xoopsDB']->prefix('wgevents_events') . ' ON ' . $GLOBALS['xoopsDB']->prefix('wgevents_questions') . '.evid = ' . $GLOBALS['xoopsDB']->prefix('wgevents_events') . '.id ';
+        $sql .= 'WHERE (((' . $GLOBALS['xoopsDB']->prefix('wgevents_events') . '.id) Is Null))';
         if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
             $errors[] = $GLOBALS['xoopsDB']->error();
         }
@@ -76,8 +76,8 @@ switch ($op) {
         $err_text     = '';
 
         $sql = 'DELETE ' . $GLOBALS['xoopsDB']->prefix('wgevents_answers') . '.* ';
-        $sql .= 'FROM ' . $GLOBALS['xoopsDB']->prefix('wgevents_answers') . ' LEFT JOIN ' . $GLOBALS['xoopsDB']->prefix('wgevents_questions') . ' ON ' . $GLOBALS['xoopsDB']->prefix('wgevents_answers') . '.ans_queid = ' . $GLOBALS['xoopsDB']->prefix('wgevents_questions') . '.que_id ';
-        $sql .= 'WHERE (((' . $GLOBALS['xoopsDB']->prefix('wgevents_questions') . '.que_id) Is Null));';
+        $sql .= 'FROM ' . $GLOBALS['xoopsDB']->prefix('wgevents_answers') . ' LEFT JOIN ' . $GLOBALS['xoopsDB']->prefix('wgevents_questions') . ' ON ' . $GLOBALS['xoopsDB']->prefix('wgevents_answers') . '.ans_queid = ' . $GLOBALS['xoopsDB']->prefix('wgevents_questions') . '.id ';
+        $sql .= 'WHERE (((' . $GLOBALS['xoopsDB']->prefix('wgevents_questions') . '.id) Is Null));';
         if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
             $errors[] = $GLOBALS['xoopsDB']->error();
         }
@@ -96,7 +96,7 @@ switch ($op) {
         $templateMain = 'wgevents_admin_maintenance.tpl';
         $err_text     = '';
 
-        $dateLimitObj = \DateTime::createFromFormat(\_SHORTDATESTRING, Request::getString('reg_datelimit'));
+        $dateLimitObj = \DateTime::createFromFormat(\_SHORTDATESTRING, Request::getString('datelimit'));
         $dateLimit = date('Y-m-d', $dateLimitObj->getTimestamp());
         $sql = 'DELETE ' . $GLOBALS['xoopsDB']->prefix('wgevents_registrations_hist') . '.* ';
         $sql .= 'FROM ' . $GLOBALS['xoopsDB']->prefix('wgevents_registrations_hist') . ' WHERE (((' . $GLOBALS['xoopsDB']->prefix('wgevents_registrations_hist') . ".hist_datecreated)<='" . $dateLimit . "'))";

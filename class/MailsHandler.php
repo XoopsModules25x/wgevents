@@ -72,26 +72,26 @@ class MailsHandler
 
 
         $registrationsObj = $registrationsHandler->get($regId, true);
-        $regEvid = $registrationsObj->getVar('reg_evid');
+        $regEvid = $registrationsObj->getVar('evid');
         $eventsObj = $eventsHandler->get($regEvid);
         if (!$permissionsHandler->getPermRegistrationsEdit(
-                $registrationsObj->getVar('reg_ip'),
-                $registrationsObj->getVar('reg_submitter'),
-                $eventsObj->getVar('ev_submitter'),
-                $eventsObj->getVar('ev_status'),
+                $registrationsObj->getVar('ip'),
+                $registrationsObj->getVar('submitter'),
+                $eventsObj->getVar('submitter'),
+                $eventsObj->getVar('status'),
             )) {
                 return false;
         }
 
-        $eventUrl       = \WGEVENTS_URL . '/events.php?op=show&ev_id=' . $regEvid;
-        $eventName      = $eventsObj->getVar('ev_name');
-        $eventDate      = \formatTimestamp($eventsObj->getVar('ev_datefrom'), 'm');
-        $eventLocation  = $eventsObj->getVar('ev_location');
-        $senderMail     = $eventsObj->getVar('ev_register_sendermail');
-        $senderName     = $eventsObj->getVar('ev_register_sendername');
-        $senderSignatur = $eventsObj->getVar('ev_register_signature');
-        $firstname      = $registrationsObj->getVar('reg_firstname');
-        $lastname       = $registrationsObj->getVar('reg_lastname');
+        $eventUrl       = \WGEVENTS_URL . '/events.php?op=show&id=' . $regEvid;
+        $eventName      = $eventsObj->getVar('name');
+        $eventDate      = \formatTimestamp($eventsObj->getVar('datefrom'), 'm');
+        $eventLocation  = $eventsObj->getVar('location');
+        $senderMail     = $eventsObj->getVar('register_sendermail');
+        $senderName     = $eventsObj->getVar('register_sendername');
+        $senderSignatur = $eventsObj->getVar('register_signature');
+        $firstname      = $registrationsObj->getVar('firstname');
+        $lastname       = $registrationsObj->getVar('lastname');
         $userName       = $GLOBALS['xoopsConfig']['anonymous'];
         if (\is_object($GLOBALS['xoopsUser'])) {
             $userName  = ('' != (string)$GLOBALS['xoopsUser']->name()) ? $GLOBALS['xoopsUser']->name() : $GLOBALS['xoopsUser']->uname();
@@ -189,17 +189,17 @@ class MailsHandler
         $logsHandler = $helper->getHandler('Logs');
         $logsHandler->createLog('Start MailsHandler/executeRegDelete');
 
-        $eventsObj = $eventsHandler->get($regParams['reg_evid']);
+        $eventsObj = $eventsHandler->get($regParams['evid']);
 
-        $eventUrl       = \WGEVENTS_URL . '/events.php?op=show&ev_id=' . $regParams['reg_evid'];
-        $eventName      = $eventsObj->getVar('ev_name');
-        $eventDate      = \formatTimestamp($eventsObj->getVar('ev_datefrom'), 'm');
-        $eventLocation  = $eventsObj->getVar('ev_location');
-        $senderMail     = $eventsObj->getVar('ev_register_sendermail');
-        $senderName     = $eventsObj->getVar('ev_register_sendername');
-        $senderSignatur = $eventsObj->getVar('ev_register_signature');
-        $firstname      = $regParams['reg_firstname'];
-        $lastname       = $regParams['reg_lastname'];
+        $eventUrl       = \WGEVENTS_URL . '/events.php?op=show&id=' . $regParams['evid'];
+        $eventName      = $eventsObj->getVar('name');
+        $eventDate      = \formatTimestamp($eventsObj->getVar('datefrom'), 'm');
+        $eventLocation  = $eventsObj->getVar('location');
+        $senderMail     = $eventsObj->getVar('register_sendermail');
+        $senderName     = $eventsObj->getVar('register_sendername');
+        $senderSignatur = $eventsObj->getVar('register_signature');
+        $firstname      = $regParams['firstname'];
+        $lastname       = $regParams['lastname'];
         $userName       = $GLOBALS['xoopsConfig']['anonymous'];
         if (\is_object($GLOBALS['xoopsUser'])) {
             $userName  = ('' != (string)$GLOBALS['xoopsUser']->name()) ? $GLOBALS['xoopsUser']->name() : $GLOBALS['xoopsUser']->uname();
@@ -274,10 +274,10 @@ class MailsHandler
 
     /**
      * Set recipients
-     * @param string $notifyEmails
+     * @param string|array $notifyEmails
      * @return void
      */
-    public function setNotifyEmails(string $notifyEmails)
+    public function setNotifyEmails($notifyEmails)
     {
         $this->notifyEmails = $notifyEmails;
     }

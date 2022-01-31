@@ -2,138 +2,138 @@ wgevents_events:
     options: 'ENGINE=InnoDB'
     columns: 
         -
-            name: ev_id
+            name: id
             attributes: ' INT(8) UNSIGNED NOT NULL AUTO_INCREMENT '
         -
-            name: ev_catid
+            name: catid
             attributes: ' INT(10)         NOT NULL DEFAULT ''0'' '
         -
-            name: ev_name
+            name: name
             attributes: ' VARCHAR(255)    NOT NULL DEFAULT '''''''' '
         -
-            name: ev_logo
+            name: logo
             attributes: ' VARCHAR(255)    NOT NULL DEFAULT '''''''' '
         -
-            name: ev_desc
+            name: desc
             attributes: ' TEXT            NULL '
         -
-            name: ev_datefrom
+            name: datefrom
             attributes: ' INT(11)         NOT NULL DEFAULT ''0'' '
         -
-            name: ev_dateto
+            name: dateto
             attributes: ' INT(11)         NOT NULL DEFAULT ''0'' '
         -
-            name: ev_contact
+            name: contact
             attributes: ' TEXT            NULL '
         -
-            name: ev_email
+            name: email
             attributes: ' VARCHAR(255)    NOT NULL DEFAULT '''''''' '
         -
-            name: ev_location
+            name: location
             attributes: ' VARCHAR(255)    NOT NULL DEFAULT '''''''' '
         -
-            name: ev_locgmlat
+            name: locgmlat
             attributes: ' FLOAT(16,2)     NOT NULL DEFAULT ''0.00'' '
         -
-            name: ev_locgmlon
+            name: locgmlon
             attributes: ' FLOAT(16,2)     NOT NULL DEFAULT ''0.00'' '
         -
-            name: ev_locgmzoom
+            name: locgmzoom
             attributes: ' INT(1)          NOT NULL DEFAULT ''0'' '
         -
-            name: ev_fee
+            name: fee
             attributes: ' FLOAT(16,2)     NOT NULL DEFAULT ''0.00'' '
         -
-            name: ev_register_use
+            name: register_use
             attributes: ' INT(1)          NOT NULL DEFAULT ''0'' '
         -
-            name: ev_register_from
+            name: register_from
             attributes: ' INT(11)         NOT NULL DEFAULT ''0'' '
         -
-            name: ev_register_to
+            name: register_to
             attributes: ' INT(11)         NOT NULL DEFAULT ''0'' '
         -
-            name: ev_register_max
+            name: register_max
             attributes: ' INT(10)         NOT NULL DEFAULT ''0'' '
         -
-            name: ev_register_listwait
+            name: register_listwait
             attributes: ' INT(1)          NOT NULL DEFAULT ''0'' '
         -
-            name: ev_register_autoaccept
+            name: register_autoaccept
             attributes: ' INT(10)         NOT NULL DEFAULT ''0'' '
         -
-            name: ev_register_notify
+            name: register_notify
             attributes: ' TEXT            NULL '
         -
-            name: ev_register_sendermail
+            name: register_sendermail
             attributes: ' VARCHAR(255)    NOT NULL DEFAULT '''''''' '
         -
-            name: ev_register_sendername
+            name: register_sendername
             attributes: ' VARCHAR(255)    NOT NULL DEFAULT '''''''' '
         -
-            name: ev_register_signature
+            name: register_signature
             attributes: ' TEXT            NULL '
         -
-            name: ev_status
+            name: status
             attributes: ' INT(1)          NOT NULL DEFAULT ''0'' '
         -
-            name: ev_galid
+            name: galid
             attributes: ' INT(10)         NOT NULL DEFAULT ''0'' '
         -
-            name: ev_datecreated
+            name: datecreated
             attributes: ' INT(11)         NOT NULL DEFAULT ''0'' '
         -
-            name: ev_submitter
+            name: submitter
             attributes: ' INT(10)         NOT NULL DEFAULT ''0'' '
     keys:
         PRIMARY:
-            columns: ev_id
+            columns: id
             unique: true
 wgevents_questions:
     options: 'ENGINE=InnoDB'
     columns: 
         -
-            name: que_id
+            name: id
             attributes: ' INT(8) UNSIGNED NOT NULL AUTO_INCREMENT '
         -
-            name: que_evid
+            name: evid
             attributes: ' INT(10)         NOT NULL DEFAULT ''0'' '
         -
-            name: que_fdid
+            name: fdid
             attributes: ' INT(10)         NOT NULL DEFAULT ''0'' '
         -
-            name: que_type
+            name: type
             attributes: ' INT(10)         NOT NULL DEFAULT ''0'' '
         -
-            name: que_caption
+            name: caption
             attributes: ' VARCHAR(255)    NOT NULL DEFAULT '''''''' '
         -
-            name: que_desc
+            name: desc
             attributes: ' TEXT            NULL  '
         -
-            name: que_values
+            name: values
             attributes: ' TEXT            NULL '
         -
-            name: que_placeholder
+            name: placeholder
             attributes: ' VARCHAR(255)    NOT NULL DEFAULT '''''''' '
         -
-            name: que_required
+            name: required
             attributes: ' INT(1)          NOT NULL DEFAULT ''0'' '
         -
-            name: que_print
+            name: print
             attributes: ' INT(1)          NOT NULL DEFAULT ''0'' '
         -
-            name: que_weight
+            name: weight
             attributes: ' INT(10)         NOT NULL DEFAULT ''0'' '
         -
-            name: que_datecreated
+            name: datecreated
             attributes: ' INT(11)         NOT NULL DEFAULT ''0'' '
         -
-            name: que_submitter
+            name: submitter
             attributes: ' INT(10)         NOT NULL DEFAULT ''0'' '
     keys:
         PRIMARY:
-            columns: que_id
+            columns: id
             unique: true
 wgevents_answers:
     options: 'ENGINE=InnoDB'
@@ -323,7 +323,7 @@ wgevents_categories:
     options: 'ENGINE=InnoDB'
     columns: 
         -
-            name: cfd_id
+            name: id
             attributes: ' INT(8) UNSIGNED NOT NULL AUTO_INCREMENT '
         -
             name: cat_pid
@@ -332,7 +332,7 @@ wgevents_categories:
             name: cat_name
             attributes: ' VARCHAR(255)    NOT NULL DEFAULT '''''''' '
         -
-            name: cfd_desc
+            name: cdesc
             attributes: ' TEXT            NULL '
         -
             name: cat_logo
@@ -363,109 +363,109 @@ wgevents_categories:
             attributes: ' INT(10)         NOT NULL DEFAULT ''0'' '
     keys:
         PRIMARY:
-            columns: cfd_id
+            columns: id
             unique: true
 wgevents_fields:
     options: 'ENGINE=InnoDB'
     columns: 
         -
-            name: fd_id
+            name: id
             attributes: ' INT(8) UNSIGNED NOT NULL AUTO_INCREMENT '
         -
-            name: fd_type
+            name: type
             attributes: ' INT(10)         NOT NULL DEFAULT ''0'' '
         -
-            name: fd_caption
+            name: caption
             attributes: ' VARCHAR(255)    NOT NULL DEFAULT '''''''' '
         -
-            name: fd_desc
+            name: desc
             attributes: ' TEXT            NULL '
         -
-            name: fd_values
+            name: values
             attributes: ' TEXT            NULL '
         -
-            name: fd_placeholder
+            name: placeholder
             attributes: ' VARCHAR(255)    NOT NULL DEFAULT '''''''' '
         -
-            name: fd_required
+            name: required
             attributes: ' INT(1)          NOT NULL DEFAULT ''0'' '
         -
-            name: fd_default
+            name: default
             attributes: ' INT(1)          NOT NULL DEFAULT ''0'' '
         -
-            name: fd_print
+            name: print
             attributes: ' INT(1)          NOT NULL DEFAULT ''0'' '
         -
-            name: fd_display_values
+            name: display_values
             attributes: ' INT(1)          NOT NULL DEFAULT ''0'' '
         -
-            name: fd_display_placeholder
+            name: display_placeholder
             attributes: ' INT(1)          NOT NULL DEFAULT ''0'' '
         -
-            name: fd_status
+            name: status
             attributes: ' INT(1)          NOT NULL DEFAULT ''0'' '
         -
-            name: fd_custom
+            name: custom
             attributes: ' INT(1)          NOT NULL DEFAULT ''0'' '
         -
-            name: fd_weight
+            name: weight
             attributes: ' INT(10)         NOT NULL DEFAULT ''0'' '
         -
-            name: fd_setid
+            name: setid
             attributes: ' INT(10)         NOT NULL DEFAULT ''0'' '
         -
-            name: fd_datecreated
+            name: datecreated
             attributes: ' INT(11)         NOT NULL DEFAULT ''0'' '
         -
-            name: fd_submitter
+            name: submitter
             attributes: ' INT(10)         NOT NULL DEFAULT ''0'' '
     keys:
         PRIMARY:
-            columns: fd_id
+            columns: id
             unique: true
 wgevents_textblocks:
     options: 'ENGINE=InnoDB'
     columns: 
         -
-            name: tb_id
+            name: id
             attributes: ' INT(8) UNSIGNED NOT NULL AUTO_INCREMENT '
         -
-            name: tb_name
+            name: name
             attributes: ' VARCHAR(255)    NOT NULL DEFAULT '''''''' '
         -
-            name: tb_text
+            name: text
             attributes: ' TEXT            NULL '
         -
-            name: tb_weight
+            name: weight
             attributes: ' INT(10)         NOT NULL DEFAULT ''0'' '
         -
-            name: tb_datecreated
+            name: datecreated
             attributes: ' INT(11)         NOT NULL DEFAULT ''0'' '
         -
-            name: tb_submitter
+            name: submitter
             attributes: ' INT(10)         NOT NULL DEFAULT ''0'' '
     keys:
         PRIMARY:
-            columns: tb_id
+            columns: id
             unique: true
 wgevents_logs:
     options: 'ENGINE=InnoDB'
     columns: 
         -
-            name: log_id
+            name: id
             attributes: ' INT(8) UNSIGNED NOT NULL AUTO_INCREMENT '
         -
-            name: log_text
+            name: text
             attributes: ' VARCHAR(255) NOT NULL DEFAULT '''''''' '
         -
-            name: log_datecreated
+            name: datecreated
             attributes: ' INT(11) NOT NULL DEFAULT ''0'' '
         -
-            name: log_submitter
+            name: submitter
             attributes: ' INT(10) NOT NULL DEFAULT ''0'' '
     keys:
         PRIMARY:
-            columns: log_id
+            columns: id
             unique: true
 wgevents_accounts:
     options: 'ENGINE=InnoDB'

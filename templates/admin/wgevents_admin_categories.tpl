@@ -27,7 +27,7 @@
             <tr class='<{cycle values='odd, even'}>' id="order_<{$category.id}>">
                 <td class='center'><img src="<{$wgevents_icons_url_16}>/up_down.png"></td>
                 <td class='center'><{$category.id}></td>
-                <td class='center'><{$category.pid}></td>
+                <td class='center'><{$category.pid_text}></td>
                 <td class='center'><{$category.name}></td>
                 <td class='center'><{$category.desc_short}></td>
                 <td class='center'><img src="<{$wgevents_upload_url|default:false}>/categories/logos/<{$category.logo}>" alt="categories" style="max-width:100px" ></td>
@@ -36,12 +36,12 @@
                 <td class='center'><span style='background-color:<{$category.bgcolor}>;'>&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
                 <td class='center'><{$category.othercss}></td>
                 <td class='center'><img src="<{$modPathIcon16}>status<{$category.status}>.png" alt="<{$category.status_text}>" title="<{$category.status_text}>" ></td>
-                <td class='center'><{$category.datecreated}></td>
-                <td class='center'><{$category.submitter}></td>
+                <td class='center'><{$category.datecreated_text}></td>
+                <td class='center'><{$category.submitter_text}></td>
                 <td class="center  width5">
-                    <a href="categories.php?op=edit&amp;cfd_id=<{$category.id}>&amp;start=<{$start}>&amp;limit=<{$limit}>" title="<{$smarty.const._EDIT}>"><img src="<{xoModuleIcons16 edit.png}>" alt="<{$smarty.const._EDIT}> categories" ></a>
-                    <a href="categories.php?op=clone&amp;cfd_id_source=<{$category.id}>" title="<{$smarty.const._CLONE}>"><img src="<{xoModuleIcons16 editcopy.png}>" alt="<{$smarty.const._CLONE}> categories" ></a>
-                    <a href="categories.php?op=delete&amp;cfd_id=<{$category.id}>" title="<{$smarty.const._DELETE}>"><img src="<{xoModuleIcons16 delete.png}>" alt="<{$smarty.const._DELETE}> categories" ></a>
+                    <a href="categories.php?op=edit&amp;id=<{$category.id}>&amp;start=<{$start}>&amp;limit=<{$limit}>" title="<{$smarty.const._EDIT}>"><img src="<{xoModuleIcons16 edit.png}>" alt="<{$smarty.const._EDIT}> categories" ></a>
+                    <a href="categories.php?op=clone&amp;id_source=<{$category.id}>" title="<{$smarty.const._CLONE}>"><img src="<{xoModuleIcons16 editcopy.png}>" alt="<{$smarty.const._CLONE}> categories" ></a>
+                    <a href="categories.php?op=delete&amp;id=<{$category.id}>" title="<{$smarty.const._DELETE}>"><img src="<{xoModuleIcons16 delete.png}>" alt="<{$smarty.const._DELETE}> categories" ></a>
                 </td>
             </tr>
             <{/foreach}>

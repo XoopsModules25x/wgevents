@@ -1,6 +1,5 @@
 <?php declare(strict_types=1);
 
-
 namespace XoopsModules\Wgevents;
 
 /*
@@ -39,7 +38,7 @@ class AccountsHandler extends \XoopsPersistableObjectHandler
      */
     public function __construct(\XoopsDatabase $db)
     {
-        parent::__construct($db, 'wgevents_accounts', Accounts::class, 'acc_id', 'acc_type');
+        parent::__construct($db, 'wgevents_accounts', Accounts::class, 'id', 'type');
     }
 
     /**
@@ -83,7 +82,7 @@ class AccountsHandler extends \XoopsPersistableObjectHandler
      * @param string $order
      * @return int
      */
-    public function getCountAccounts($start = 0, $limit = 0, $sort = 'acc_id ASC, acc_type', $order = 'ASC')
+    public function getCountAccounts($start = 0, $limit = 0, $sort = 'id ASC, type', $order = 'ASC')
     {
         $crCountAccounts = new \CriteriaCompo();
         $crCountAccounts = $this->getAccountsCriteria($crCountAccounts, $start, $limit, $sort, $order);
@@ -98,7 +97,7 @@ class AccountsHandler extends \XoopsPersistableObjectHandler
      * @param string $order
      * @return array
      */
-    public function getAllAccounts($start = 0, $limit = 0, $sort = 'acc_id ASC, acc_type', $order = 'ASC')
+    public function getAllAccounts($start = 0, $limit = 0, $sort = 'id ASC, type', $order = 'ASC')
     {
         $crAllAccounts = new \CriteriaCompo();
         $crAllAccounts = $this->getAccountsCriteria($crAllAccounts, $start, $limit, $sort, $order);

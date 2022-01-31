@@ -31,7 +31,7 @@ $GLOBALS['xoopsOption']['template_main'] = 'wgevents_textblocks.tpl';
 require_once \XOOPS_ROOT_PATH . '/header.php';
 
 $op    = Request::getCmd('op', 'list');
-$tbId  = Request::getInt('tb_id');
+$tbId  = Request::getInt('id');
 $start = Request::getInt('start');
 $limit = Request::getInt('limit', $helper->getConfig('userpager'));
 $GLOBALS['xoopsTpl']->assign('start', $start);
@@ -59,7 +59,7 @@ switch ($op) {
         $xoBreadcrumbs[] = ['title' => \_MA_WGEVENTS_TEXTBLOCKS_LIST];
         $crTextblocks = new \CriteriaCompo();
         if ($tbId > 0) {
-            $crTextblocks->add(new \Criteria('tb_id', $tbId));
+            $crTextblocks->add(new \Criteria('id', $tbId));
         }
         $textblocksCount = $textblocksHandler->getCount($crTextblocks);
         $GLOBALS['xoopsTpl']->assign('textblocksCount', $textblocksCount);
@@ -74,7 +74,7 @@ switch ($op) {
             // Get All Textblocks
             foreach (\array_keys($textblocksAll) as $i) {
                 $textblocks[$i] = $textblocksAll[$i]->getValuesTextblocks();
-                $tbName = $textblocksAll[$i]->getVar('tb_name');
+                $tbName = $textblocksAll[$i]->getVar('name');
                 $keywords[$i] = $tbName;
             }
             $GLOBALS['xoopsTpl']->assign('textblocks', $textblocks);
@@ -108,12 +108,12 @@ switch ($op) {
         } else {
             $textblocksObj = $textblocksHandler->create();
         }
-        $textblocksObj->setVar('tb_name', Request::getString('tb_name'));
-        $textblocksObj->setVar('tb_text', Request::getText('tb_text'));
-        $textblocksObj->setVar('tb_weight', Request::getInt('tb_weight'));
-        $textblockDatecreatedObj = \DateTime::createFromFormat(\_SHORTDATESTRING, Request::getString('tb_datecreated'));
-        $textblocksObj->setVar('tb_datecreated', $textblockDatecreatedObj->getTimestamp());
-        $textblocksObj->setVar('tb_submitter', Request::getInt('tb_submitter'));
+        $textblocksObj->setVar('name', Request::getString('name'));
+        $textblocksObj->setVar('text', Request::getText('text'));
+        $textblocksObj->setVar('weight', Request::getInt('weight'));
+        $textblockDatecreatedObj = \DateTime::createFromFormat(\_SHORTDATESTRING, Request::getString('datecreated'));
+        $textblocksObj->setVar('datecreated', $textblockDatecreatedObj->getTimestamp());
+        $textblocksObj->setVar('submitter', Request::getInt('submitter'));
         // Insert Data
         if ($textblocksHandler->insert($textblocksObj)) {
             $grouppermHandler = \xoops_getHandler('groupperm');
@@ -185,7 +185,7 @@ switch ($op) {
             \redirect_header('textblocks.php?op=list', 3, \_NOPERM);
         }
         // Request source
-        $tbIdSource = Request::getInt('tb_id_source');
+        $tbIdSource = Request::getInt('id_source');
         // Check params
         if (0 == $tbIdSource) {
             \redirect_header('textblocks.php?op=list', 3, \_MA_WGEVENTS_INVALID_PARAM);
@@ -208,7 +208,7 @@ switch ($op) {
             \redirect_header('textblocks.php?op=list', 3, \_MA_WGEVENTS_INVALID_PARAM);
         }
         $textblocksObj = $textblocksHandler->get($tbId);
-        $tbName = $textblocksObj->getVar('tb_name');
+        $tbName = $textblocksObj->getVar('name');
         if (isset($_REQUEST['ok']) && 1 == $_REQUEST['ok']) {
             if (!$GLOBALS['xoopsSecurity']->check()) {
                 \redirect_header('textblocks.php', 3, \implode(', ', $GLOBALS['xoopsSecurity']->getErrors()));
@@ -220,9 +220,9 @@ switch ($op) {
             }
         } else {
             $customConfirm = new Common\Confirm(
-                ['ok' => 1, 'tb_id' => $tbId, 'start' => $start, 'limit' => $limit, 'op' => 'delete'],
+                ['ok' => 1, 'id' => $tbId, 'start' => $start, 'limit' => $limit, 'op' => 'delete'],
                 $_SERVER['REQUEST_URI'],
-                \sprintf(\_MA_WGEVENTS_CONFIRMDELETE_TEXTBLOCK, $textblocksObj->getVar('tb_name')), \_MA_WGEVENTS_CONFIRMDELETE_TITLE, \_MA_WGEVENTS_CONFIRMDELETE_LABEL);
+                \sprintf(\_MA_WGEVENTS_CONFIRMDELETE_TEXTBLOCK, $textblocksObj->getVar('name')), \_MA_WGEVENTS_CONFIRMDELETE_TITLE, \_MA_WGEVENTS_CONFIRMDELETE_LABEL);
             $form = $customConfirm->getFormConfirm();
             $GLOBALS['xoopsTpl']->assign('form', $form->render());
         }

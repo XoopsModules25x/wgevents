@@ -12,35 +12,35 @@
 #
 
 CREATE TABLE `wgevents_events` (
-  `ev_id`                   INT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `ev_catid`                INT(10)         NOT NULL DEFAULT '0',
-  `ev_name`                 VARCHAR(255)    NOT NULL DEFAULT '',
-  `ev_logo`                 VARCHAR(255)    NOT NULL DEFAULT '',
-  `ev_desc`                 TEXT            NULL,
-  `ev_datefrom`             INT(11)         NOT NULL DEFAULT '0',
-  `ev_dateto`               INT(11)         NOT NULL DEFAULT '0',
-  `ev_contact`              TEXT            NULL,
-  `ev_email`                VARCHAR(255)    NOT NULL DEFAULT '',
-  `ev_location`             VARCHAR(255)    NOT NULL DEFAULT '',
-  `ev_locgmlat`             FLOAT(16,2)     NOT NULL DEFAULT '0.00',
-  `ev_locgmlon`             FLOAT(16,2)     NOT NULL DEFAULT '0.00',
-  `ev_locgmzoom`            INT(1)          NOT NULL DEFAULT '0',
-  `ev_fee`                  FLOAT(16,2)     NOT NULL DEFAULT '0.00',
-  `ev_register_use`         INT(1)          NOT NULL DEFAULT '0',
-  `ev_register_from`        INT(11)         NOT NULL DEFAULT '0',
-  `ev_register_to`          INT(11)         NOT NULL DEFAULT '0',
-  `ev_register_max`         INT(10)         NOT NULL DEFAULT '0',
-  `ev_register_listwait`    INT(1)          NOT NULL DEFAULT '0',
-  `ev_register_autoaccept`  INT(10)         NOT NULL DEFAULT '0',
-  `ev_register_notify`      TEXT            NULL,
-  `ev_register_sendermail`  VARCHAR(255)    NOT NULL DEFAULT '',
-  `ev_register_sendername`  VARCHAR(255)    NOT NULL DEFAULT '',
-  `ev_register_signature`   TEXT            NULL,
-  `ev_status`               INT(1)          NOT NULL DEFAULT '0',
-  `ev_galid`                INT(10)         NOT NULL DEFAULT '0',
-  `ev_datecreated`          INT(11)         NOT NULL DEFAULT '0',
-  `ev_submitter`            INT(10)         NOT NULL DEFAULT '0',
-  PRIMARY KEY (`ev_id`)
+  `id`                   INT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `catid`                INT(10)         NOT NULL DEFAULT '0',
+  `name`                 VARCHAR(255)    NOT NULL DEFAULT '',
+  `logo`                 VARCHAR(255)    NOT NULL DEFAULT '',
+  `desc`                 TEXT            NULL,
+  `datefrom`             INT(11)         NOT NULL DEFAULT '0',
+  `dateto`               INT(11)         NOT NULL DEFAULT '0',
+  `contact`              TEXT            NULL,
+  `email`                VARCHAR(255)    NOT NULL DEFAULT '',
+  `location`             VARCHAR(255)    NOT NULL DEFAULT '',
+  `locgmlat`             FLOAT(16,2)     NOT NULL DEFAULT '0.00',
+  `locgmlon`             FLOAT(16,2)     NOT NULL DEFAULT '0.00',
+  `locgmzoom`            INT(1)          NOT NULL DEFAULT '0',
+  `fee`                  FLOAT(16,2)     NOT NULL DEFAULT '0.00',
+  `register_use`         INT(1)          NOT NULL DEFAULT '0',
+  `register_from`        INT(11)         NOT NULL DEFAULT '0',
+  `register_to`          INT(11)         NOT NULL DEFAULT '0',
+  `register_max`         INT(10)         NOT NULL DEFAULT '0',
+  `register_listwait`    INT(1)          NOT NULL DEFAULT '0',
+  `register_autoaccept`  INT(10)         NOT NULL DEFAULT '0',
+  `register_notify`      TEXT            NULL,
+  `register_sendermail`  VARCHAR(255)    NOT NULL DEFAULT '',
+  `register_sendername`  VARCHAR(255)    NOT NULL DEFAULT '',
+  `register_signature`   TEXT            NULL,
+  `status`               INT(1)          NOT NULL DEFAULT '0',
+  `galid`                INT(10)         NOT NULL DEFAULT '0',
+  `datecreated`          INT(11)         NOT NULL DEFAULT '0',
+  `submitter`            INT(10)         NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB;
 
 #
@@ -48,20 +48,20 @@ CREATE TABLE `wgevents_events` (
 #
 
 CREATE TABLE `wgevents_questions` (
-  `que_id`              INT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `que_evid`            INT(10)         NOT NULL DEFAULT '0',
-  `que_fdid`            INT(10)         NOT NULL DEFAULT '0',
-  `que_type`            INT(10)         NOT NULL DEFAULT '0',
-  `que_caption`         VARCHAR(255)    NOT NULL DEFAULT '',
-  `que_desc`            TEXT            NULL ,
-  `que_values`          TEXT            NULL,
-  `que_placeholder`     VARCHAR(255)    NOT NULL DEFAULT '',
-  `que_required`        INT(1)          NOT NULL DEFAULT '0',
-  `que_print`           INT(1)          NOT NULL DEFAULT '0',
-  `que_weight`          INT(10)         NOT NULL DEFAULT '0',
-  `que_datecreated`     INT(11)         NOT NULL DEFAULT '0',
-  `que_submitter`       INT(10)         NOT NULL DEFAULT '0',
-  PRIMARY KEY (`que_id`)
+  `id`              INT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `evid`            INT(10)         NOT NULL DEFAULT '0',
+  `fdid`            INT(10)         NOT NULL DEFAULT '0',
+  `type`            INT(10)         NOT NULL DEFAULT '0',
+  `caption`         VARCHAR(255)    NOT NULL DEFAULT '',
+  `desc`            TEXT            NULL ,
+  `values`          TEXT            NULL,
+  `placeholder`     VARCHAR(255)    NOT NULL DEFAULT '',
+  `required`        INT(1)          NOT NULL DEFAULT '0',
+  `print`           INT(1)          NOT NULL DEFAULT '0',
+  `weight`          INT(10)         NOT NULL DEFAULT '0',
+  `datecreated`     INT(11)         NOT NULL DEFAULT '0',
+  `submitter`       INT(10)         NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB;
 
 #
@@ -69,14 +69,14 @@ CREATE TABLE `wgevents_questions` (
 #
 
 CREATE TABLE `wgevents_answers` (
-  `ans_id`              INT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `ans_evid`            INT(10)         NOT NULL DEFAULT '0',
-  `ans_regid`           INT(10)         NOT NULL DEFAULT '0',
-  `ans_queid`           INT(10)         NOT NULL DEFAULT '0',
-  `ans_text`            TEXT            NULL,
-  `ans_datecreated`     INT(11)         NOT NULL DEFAULT '0',
-  `ans_submitter`       INT(10)         NOT NULL DEFAULT '0',
-  PRIMARY KEY (`ans_id`)
+  `id`              INT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `evid`            INT(10)         NOT NULL DEFAULT '0',
+  `regid`           INT(10)         NOT NULL DEFAULT '0',
+  `queid`           INT(10)         NOT NULL DEFAULT '0',
+  `text`            TEXT            NULL,
+  `datecreated`     INT(11)         NOT NULL DEFAULT '0',
+  `submitter`       INT(10)         NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB;
 
 #
@@ -88,13 +88,13 @@ CREATE TABLE `wgevents_answers_hist` (
   `hist_info`           VARCHAR(255)    NOT NULL DEFAULT '',
   `hist_datecreated`    INT(11)         NOT NULL DEFAULT '0',
   `hist_submitter`      INT(10)         NOT NULL DEFAULT '0',
-  `ans_id`              INT(8)          NOT NULL DEFAULT '0',
-  `ans_evid`            INT(10)         NOT NULL DEFAULT '0',
-  `ans_regid`           INT(10)         NOT NULL DEFAULT '0',
-  `ans_queid`           INT(10)         NOT NULL DEFAULT '0',
-  `ans_text`            TEXT            NULL,
-  `ans_datecreated`     INT(11)         NOT NULL DEFAULT '0',
-  `ans_submitter`       INT(10)         NOT NULL DEFAULT '0',
+  `id`              INT(8)          NOT NULL DEFAULT '0',
+  `evid`            INT(10)         NOT NULL DEFAULT '0',
+  `regid`           INT(10)         NOT NULL DEFAULT '0',
+  `queid`           INT(10)         NOT NULL DEFAULT '0',
+  `text`            TEXT            NULL,
+  `datecreated`     INT(11)         NOT NULL DEFAULT '0',
+  `submitter`       INT(10)         NOT NULL DEFAULT '0',
   PRIMARY KEY (`hist_id`)
 ) ENGINE=InnoDB;
 
@@ -103,22 +103,22 @@ CREATE TABLE `wgevents_answers_hist` (
 #
 
 CREATE TABLE `wgevents_registrations` (
-  `reg_id`              INT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `reg_evid`            INT(10)         NOT NULL DEFAULT '0',
-  `reg_salutation`      INT(10)         NOT NULL DEFAULT '0',
-  `reg_firstname`       VARCHAR(255)    NOT NULL DEFAULT '',
-  `reg_lastname`        VARCHAR(255)    NOT NULL DEFAULT '',
-  `reg_email`           VARCHAR(255)    NOT NULL DEFAULT '',
-  `reg_email_send`      INT(1)          NOT NULL DEFAULT '0',
-  `reg_gdpr`            INT(1)          NOT NULL DEFAULT '0',
-  `reg_ip`              VARCHAR(45)     NOT NULL DEFAULT '',
-  `reg_verifkey`        VARCHAR(255)    NOT NULL DEFAULT '',
-  `reg_status`          INT(1)          NOT NULL DEFAULT '0',
-  `reg_financial`       INT(1)          NOT NULL DEFAULT '0',
-  `reg_listwait`        INT(1)          NOT NULL DEFAULT '0',
-  `reg_datecreated`     INT(11)         NOT NULL DEFAULT '0',
-  `reg_submitter`       INT(10)         NOT NULL DEFAULT '0',
-  PRIMARY KEY (`reg_id`)
+  `id`              INT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `evid`            INT(10)         NOT NULL DEFAULT '0',
+  `salutation`      INT(10)         NOT NULL DEFAULT '0',
+  `firstname`       VARCHAR(255)    NOT NULL DEFAULT '',
+  `lastname`        VARCHAR(255)    NOT NULL DEFAULT '',
+  `email`           VARCHAR(255)    NOT NULL DEFAULT '',
+  `email_send`      INT(1)          NOT NULL DEFAULT '0',
+  `gdpr`            INT(1)          NOT NULL DEFAULT '0',
+  `ip`              VARCHAR(45)     NOT NULL DEFAULT '',
+  `verifkey`        VARCHAR(255)    NOT NULL DEFAULT '',
+  `status`          INT(1)          NOT NULL DEFAULT '0',
+  `financial`       INT(1)          NOT NULL DEFAULT '0',
+  `listwait`        INT(1)          NOT NULL DEFAULT '0',
+  `datecreated`     INT(11)         NOT NULL DEFAULT '0',
+  `submitter`       INT(10)         NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB;
 
 
@@ -131,21 +131,21 @@ CREATE TABLE `wgevents_registrations_hist` (
   `hist_info`           VARCHAR(255)    NOT NULL DEFAULT '',
   `hist_datecreated`    INT(11)         NOT NULL DEFAULT '0',
   `hist_submitter`      INT(10)         NOT NULL DEFAULT '0',
-  `reg_id`              INT(8)          NOT NULL DEFAULT '0',
-  `reg_evid`            INT(10)         NOT NULL DEFAULT '0',
-  `reg_salutation`      INT(10)         NOT NULL DEFAULT '0',
-  `reg_firstname`       VARCHAR(255)    NOT NULL DEFAULT '',
-  `reg_lastname`        VARCHAR(255)    NOT NULL DEFAULT '',
-  `reg_email`           VARCHAR(255)    NOT NULL DEFAULT '',
-  `reg_email_send`      INT(1)          NOT NULL DEFAULT '0',
-  `reg_gdpr`            INT(1)          NOT NULL DEFAULT '0',
-  `reg_ip`              VARCHAR(45)     NOT NULL DEFAULT '',
-  `reg_verifkey`        VARCHAR(255)    NOT NULL DEFAULT '',
-  `reg_status`          INT(1)          NOT NULL DEFAULT '0',
-  `reg_financial`       INT(1)          NOT NULL DEFAULT '0',
-  `reg_listwait`        INT(1)          NOT NULL DEFAULT '0',
-  `reg_datecreated`     INT(11)         NOT NULL DEFAULT '0',
-  `reg_submitter`       INT(10)         NOT NULL DEFAULT '0',
+  `id`              INT(8)          NOT NULL DEFAULT '0',
+  `evid`            INT(10)         NOT NULL DEFAULT '0',
+  `salutation`      INT(10)         NOT NULL DEFAULT '0',
+  `firstname`       VARCHAR(255)    NOT NULL DEFAULT '',
+  `lastname`        VARCHAR(255)    NOT NULL DEFAULT '',
+  `email`           VARCHAR(255)    NOT NULL DEFAULT '',
+  `email_send`      INT(1)          NOT NULL DEFAULT '0',
+  `gdpr`            INT(1)          NOT NULL DEFAULT '0',
+  `ip`              VARCHAR(45)     NOT NULL DEFAULT '',
+  `verifkey`        VARCHAR(255)    NOT NULL DEFAULT '',
+  `status`          INT(1)          NOT NULL DEFAULT '0',
+  `financial`       INT(1)          NOT NULL DEFAULT '0',
+  `listwait`        INT(1)          NOT NULL DEFAULT '0',
+  `datecreated`     INT(11)         NOT NULL DEFAULT '0',
+  `submitter`       INT(10)         NOT NULL DEFAULT '0',
   PRIMARY KEY (`hist_id`)
 ) ENGINE=InnoDB;
 
@@ -154,20 +154,20 @@ CREATE TABLE `wgevents_registrations_hist` (
 #
 
 CREATE TABLE `wgevents_categories` (
-  `cfd_id`              INT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `cat_pid`             INT(10)         NOT NULL DEFAULT '0',
-  `cat_name`            VARCHAR(255)    NOT NULL DEFAULT '',
-  `cfd_desc`            TEXT            NULL,
-  `cat_logo`            VARCHAR(255)    NOT NULL DEFAULT '',
-  `cat_color`           VARCHAR(7)      NOT NULL DEFAULT '',
-  `cat_bordercolor`     VARCHAR(7)      NOT NULL DEFAULT '',
-  `cat_bgcolor`         VARCHAR(7)      NOT NULL DEFAULT '',
-  `cat_othercss`        VARCHAR(255)    NOT NULL DEFAULT '',
-  `cat_status`          INT(1)          NOT NULL DEFAULT '0',
-  `cat_weight`          INT(10)         NOT NULL DEFAULT '0',
-  `cat_datecreated`     INT(11)         NOT NULL DEFAULT '0',
-  `cat_submitter`       INT(10)         NOT NULL DEFAULT '0',
-  PRIMARY KEY (`cfd_id`)
+  `id`              INT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `pid`             INT(10)         NOT NULL DEFAULT '0',
+  `name`            VARCHAR(255)    NOT NULL DEFAULT '',
+  `desc`            TEXT            NULL,
+  `logo`            VARCHAR(255)    NOT NULL DEFAULT '',
+  `color`           VARCHAR(7)      NOT NULL DEFAULT '',
+  `bordercolor`     VARCHAR(7)      NOT NULL DEFAULT '',
+  `bgcolor`         VARCHAR(7)      NOT NULL DEFAULT '',
+  `othercss`        VARCHAR(255)    NOT NULL DEFAULT '',
+  `status`          INT(1)          NOT NULL DEFAULT '0',
+  `weight`          INT(10)         NOT NULL DEFAULT '0',
+  `datecreated`     INT(11)         NOT NULL DEFAULT '0',
+  `submitter`       INT(10)         NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB;
 
 #
@@ -175,24 +175,24 @@ CREATE TABLE `wgevents_categories` (
 #
 
 CREATE TABLE `wgevents_fields` (
-  `fd_id`                   INT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `fd_type`                 INT(10)         NOT NULL DEFAULT '0',
-  `fd_caption`              VARCHAR(255)    NOT NULL DEFAULT '',
-  `fd_desc`                 TEXT            NULL,
-  `fd_values`               TEXT            NULL,
-  `fd_placeholder`          VARCHAR(255)    NOT NULL DEFAULT '',
-  `fd_required`             INT(1)          NOT NULL DEFAULT '0',
-  `fd_default`              INT(1)          NOT NULL DEFAULT '0',
-  `fd_print`                INT(1)          NOT NULL DEFAULT '0',
-  `fd_display_values`       INT(1)          NOT NULL DEFAULT '0',
-  `fd_display_placeholder`  INT(1)          NOT NULL DEFAULT '0',
-  `fd_status`               INT(1)          NOT NULL DEFAULT '0',
-  `fd_custom`               INT(1)          NOT NULL DEFAULT '0',
-  `fd_weight`               INT(10)         NOT NULL DEFAULT '0',
-  `fd_setid`                INT(10)         NOT NULL DEFAULT '0',
-  `fd_datecreated`          INT(11)         NOT NULL DEFAULT '0',
-  `fd_submitter`            INT(10)         NOT NULL DEFAULT '0',
-  PRIMARY KEY (`fd_id`)
+  `id`                   INT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `type`                 INT(10)         NOT NULL DEFAULT '0',
+  `caption`              VARCHAR(255)    NOT NULL DEFAULT '',
+  `desc`                 TEXT            NULL,
+  `values`               TEXT            NULL,
+  `placeholder`          VARCHAR(255)    NOT NULL DEFAULT '',
+  `required`             INT(1)          NOT NULL DEFAULT '0',
+  `default`              INT(1)          NOT NULL DEFAULT '0',
+  `print`                INT(1)          NOT NULL DEFAULT '0',
+  `display_values`       INT(1)          NOT NULL DEFAULT '0',
+  `display_placeholder`  INT(1)          NOT NULL DEFAULT '0',
+  `status`               INT(1)          NOT NULL DEFAULT '0',
+  `custom`               INT(1)          NOT NULL DEFAULT '0',
+  `weight`               INT(10)         NOT NULL DEFAULT '0',
+  `setid`                INT(10)         NOT NULL DEFAULT '0',
+  `datecreated`          INT(11)         NOT NULL DEFAULT '0',
+  `submitter`            INT(10)         NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB;
 
 #
@@ -200,13 +200,13 @@ CREATE TABLE `wgevents_fields` (
 #
 
 CREATE TABLE `wgevents_textblocks` (
-  `tb_id`               INT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `tb_name`             VARCHAR(255)    NOT NULL DEFAULT '',
-  `tb_text`             TEXT            NULL,
-  `tb_weight`           INT(10)         NOT NULL DEFAULT '0',
-  `tb_datecreated`      INT(11)         NOT NULL DEFAULT '0',
-  `tb_submitter`        INT(10)         NOT NULL DEFAULT '0',
-  PRIMARY KEY (`tb_id`)
+  `id`               INT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `name`             VARCHAR(255)    NOT NULL DEFAULT '',
+  `text`             TEXT            NULL,
+  `weight`           INT(10)         NOT NULL DEFAULT '0',
+  `datecreated`      INT(11)         NOT NULL DEFAULT '0',
+  `submitter`        INT(10)         NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB;
 
 #
@@ -214,11 +214,11 @@ CREATE TABLE `wgevents_textblocks` (
 #
 
 CREATE TABLE `wgevents_logs` (
-  `log_id` INT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `log_text` VARCHAR(255) NOT NULL DEFAULT '',
-  `log_datecreated` INT(11) NOT NULL DEFAULT '0',
-  `log_submitter` INT(10) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`log_id`)
+  `id` INT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `text` VARCHAR(255) NOT NULL DEFAULT '',
+  `datecreated` INT(11) NOT NULL DEFAULT '0',
+  `submitter` INT(10) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB;
 
 #
@@ -226,23 +226,23 @@ CREATE TABLE `wgevents_logs` (
 #
 
 CREATE TABLE `wgevents_accounts` (
-     `acc_id` INT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
-     `acc_type` INT(10) NOT NULL DEFAULT '0',
-     `acc_name` VARCHAR(100) NOT NULL DEFAULT '',
-     `acc_yourname` VARCHAR(100) NOT NULL DEFAULT '',
-     `acc_yourmail` VARCHAR(100) NOT NULL DEFAULT '',
-     `acc_username` VARCHAR(100) NOT NULL DEFAULT '',
-     `acc_password` VARCHAR(100) NOT NULL DEFAULT '',
-     `acc_server_in` VARCHAR(100) NOT NULL DEFAULT '',
-     `acc_port_in` INT(10) NOT NULL DEFAULT '0',
-     `acc_securetype_in` VARCHAR(20) NOT NULL DEFAULT '',
-     `acc_server_out` VARCHAR(100) NOT NULL DEFAULT '',
-     `acc_port_out` INT(10) NOT NULL DEFAULT '0',
-     `acc_securetype_out` VARCHAR(20) NOT NULL DEFAULT '',
-     `acc_default` INT(1) NOT NULL DEFAULT '0',
-     `acc_inbox` VARCHAR(100) NOT NULL DEFAULT '',
-     `acc_datecreated` INT(11) NOT NULL DEFAULT '0',
-     `acc_submitter`      INT(8)       NOT NULL DEFAULT '0',
-     PRIMARY KEY (`acc_id`)
+     `id` INT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
+     `type` INT(10) NOT NULL DEFAULT '0',
+     `name` VARCHAR(100) NOT NULL DEFAULT '',
+     `yourname` VARCHAR(100) NOT NULL DEFAULT '',
+     `yourmail` VARCHAR(100) NOT NULL DEFAULT '',
+     `username` VARCHAR(100) NOT NULL DEFAULT '',
+     `password` VARCHAR(100) NOT NULL DEFAULT '',
+     `server_in` VARCHAR(100) NOT NULL DEFAULT '',
+     `port_in` INT(10) NOT NULL DEFAULT '0',
+     `securetype_in` VARCHAR(20) NOT NULL DEFAULT '',
+     `server_out` VARCHAR(100) NOT NULL DEFAULT '',
+     `port_out` INT(10) NOT NULL DEFAULT '0',
+     `securetype_out` VARCHAR(20) NOT NULL DEFAULT '',
+     `default` INT(1) NOT NULL DEFAULT '0',
+     `inbox` VARCHAR(100) NOT NULL DEFAULT '',
+     `datecreated` INT(11) NOT NULL DEFAULT '0',
+     `submitter`      INT(8)       NOT NULL DEFAULT '0',
+     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB;
 

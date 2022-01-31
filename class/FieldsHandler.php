@@ -1,6 +1,5 @@
 <?php declare(strict_types=1);
 
-
 namespace XoopsModules\Wgevents;
 
 /*
@@ -39,7 +38,7 @@ class FieldsHandler extends \XoopsPersistableObjectHandler
      */
     public function __construct(\XoopsDatabase $db)
     {
-        parent::__construct($db, 'wgevents_fields', Fields::class, 'fd_id', 'fd_caption');
+        parent::__construct($db, 'wgevents_fields', Fields::class, 'id', 'caption');
     }
 
     /**
@@ -83,7 +82,7 @@ class FieldsHandler extends \XoopsPersistableObjectHandler
      * @param string $order
      * @return int
      */
-    public function getCountFields($start = 0, $limit = 0, $sort = 'fd_id ASC, fd_caption', $order = 'ASC')
+    public function getCountFields($start = 0, $limit = 0, $sort = 'id ASC, caption', $order = 'ASC')
     {
         $crCountFields = new \CriteriaCompo();
         $crCountFields = $this->getFieldsCriteria($crCountFields, $start, $limit, $sort, $order);
@@ -98,7 +97,7 @@ class FieldsHandler extends \XoopsPersistableObjectHandler
      * @param string $order
      * @return array
      */
-    public function getAllFields($start = 0, $limit = 0, $sort = 'fd_id ASC, fd_caption', $order = 'ASC')
+    public function getAllFields($start = 0, $limit = 0, $sort = 'id ASC, caption', $order = 'ASC')
     {
         $crAllFields = new \CriteriaCompo();
         $crAllFields = $this->getFieldsCriteria($crAllFields, $start, $limit, $sort, $order);
@@ -133,14 +132,14 @@ class FieldsHandler extends \XoopsPersistableObjectHandler
         $nextValue = 0;
 
         $crFields = new \CriteriaCompo();
-        $crFields->setSort('fd_weight');
+        $crFields->setSort('weight');
         $crFields->setOrder('DESC');
         $crFields->setLimit(1);
         $fieldsCount = $this->getCount($crFields);
         if ($fieldsCount > 0) {
             $fieldsAll = $this->getAll($crFields);
             foreach (\array_keys($fieldsAll) as $i) {
-                $nextValue = $fieldsAll[$i]->getVar('fd_weight');
+                $nextValue = $fieldsAll[$i]->getVar('weight');
             }
         }
 

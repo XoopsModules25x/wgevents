@@ -22,12 +22,12 @@
                 <td class='center'><{$textblock.name}></td>
                 <td class='center'><{$textblock.text_short}></td>
                 <td class='center'><{$textblock.weight}></td>
-                <td class='center'><{$textblock.datecreated}></td>
-                <td class='center'><{$textblock.submitter}></td>
+                <td class='center'><{$textblock.datecreated_text}></td>
+                <td class='center'><{$textblock.submitter_text}></td>
                 <td class="center  width5">
-                    <a href="textblocks.php?op=edit&amp;tb_id=<{$textblock.id}>&amp;start=<{$start}>&amp;limit=<{$limit}>" title="<{$smarty.const._EDIT}>"><img src="<{xoModuleIcons16 edit.png}>" alt="<{$smarty.const._EDIT}> textblocks" ></a>
-                    <a href="textblocks.php?op=clone&amp;tb_id_source=<{$textblock.id}>" title="<{$smarty.const._CLONE}>"><img src="<{xoModuleIcons16 editcopy.png}>" alt="<{$smarty.const._CLONE}> textblocks" ></a>
-                    <a href="textblocks.php?op=delete&amp;tb_id=<{$textblock.id}>" title="<{$smarty.const._DELETE}>"><img src="<{xoModuleIcons16 delete.png}>" alt="<{$smarty.const._DELETE}> textblocks" ></a>
+                    <a href="textblocks.php?op=edit&amp;id=<{$textblock.id}>&amp;start=<{$start}>&amp;limit=<{$limit}>" title="<{$smarty.const._EDIT}>"><img src="<{xoModuleIcons16 edit.png}>" alt="<{$smarty.const._EDIT}> textblocks" ></a>
+                    <a href="textblocks.php?op=clone&amp;id_source=<{$textblock.id}>" title="<{$smarty.const._CLONE}>"><img src="<{xoModuleIcons16 editcopy.png}>" alt="<{$smarty.const._CLONE}> textblocks" ></a>
+                    <a href="textblocks.php?op=delete&amp;id=<{$textblock.id}>" title="<{$smarty.const._DELETE}>"><img src="<{xoModuleIcons16 delete.png}>" alt="<{$smarty.const._DELETE}> textblocks" ></a>
                 </td>
             </tr>
             <{/foreach}>

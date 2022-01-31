@@ -39,7 +39,7 @@ class RegistrationshistHandler extends \XoopsPersistableObjectHandler
      */
     public function __construct(\XoopsDatabase $db)
     {
-        parent::__construct($db, 'wgevents_registrations_hist', Registrationshist::class, 'hist_id', 'reg_id');
+        parent::__construct($db, 'wgevents_registrations_hist', Registrationshist::class, 'hist_id', 'id');
     }
 
     /**

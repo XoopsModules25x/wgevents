@@ -55,15 +55,15 @@ $GLOBALS['xoopsTpl']->assign('index_header', $helper->getConfig('index_header'))
 
 $crEvents = new \CriteriaCompo();
 if ('coming' == $op) {
-    $crEvents->add(new \Criteria('ev_datefrom', \time(), '>='));
-    $crEvents->setSort('ev_datefrom');
+    $crEvents->add(new \Criteria('datefrom', \time(), '>='));
+    $crEvents->setSort('datefrom');
     $crEvents->setOrder('ASC');
     $GLOBALS['xoopsTpl']->assign('showBtnPast', true);
     $GLOBALS['xoopsTpl']->assign('listDescr', \_MA_WGEVENTS_EVENTS_LISTCOMING);
     $xoBreadcrumbs[] = ['title' => \_MA_WGEVENTS_EVENTS_LISTCOMING];
 } else {
-    $crEvents->add(new \Criteria('ev_datefrom', \time(), '<'));
-    $crEvents->setSort('ev_datefrom');
+    $crEvents->add(new \Criteria('datefrom', \time(), '<'));
+    $crEvents->setSort('datefrom');
     $crEvents->setOrder('DESC');
     $GLOBALS['xoopsTpl']->assign('showBtnComing', true);
     $GLOBALS['xoopsTpl']->assign('listDescr', \_MA_WGEVENTS_EVENTS_LISTPAST);
@@ -81,11 +81,11 @@ if ($eventsCount > 0) {
     // Get All Events
     foreach (\array_keys($eventsAll) as $i) {
         $events[$i] = $eventsAll[$i]->getValuesEvents();
-        $events[$i]['locked'] = (Constants::STATUS_LOCKED == $events[$i]['ev_status']);
-        $events[$i]['canceled'] = (Constants::STATUS_CANCELED == $events[$i]['ev_status']);
+        $events[$i]['locked'] = (Constants::STATUS_LOCKED == $events[$i]['status']);
+        $events[$i]['canceled'] = (Constants::STATUS_CANCELED == $events[$i]['status']);
 
         $crRegistrations = new \CriteriaCompo();
-        $crRegistrations->add(new \Criteria('reg_evid', $i));
+        $crRegistrations->add(new \Criteria('evid', $i));
         $numberRegCurr = $registrationsHandler->getCount($crRegistrations);
         //$events[$i]['nb_registrations'] = $numberRegCurr;
         $registerMax = (int)$events[$i]['register_max'];
@@ -112,7 +112,7 @@ if ($eventsCount > 0) {
             }
             $events[$i]['regpercentage'] = (int)($proportion * 100);
         }
-        $evName = $eventsAll[$i]->getVar('ev_name');
+        $evName = $eventsAll[$i]->getVar('name');
         $keywords[$i] = $evName;
     }
     $GLOBALS['xoopsTpl']->assign('events', $events);

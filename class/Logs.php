@@ -1,6 +1,5 @@
 <?php declare(strict_types=1);
 
-
 namespace XoopsModules\Wgevents;
 
 /*
@@ -50,10 +49,10 @@ class Logs extends \XoopsObject
      */
     public function __construct()
     {
-        $this->initVar('log_id', \XOBJ_DTYPE_INT);
-        $this->initVar('log_text', \XOBJ_DTYPE_TXTBOX);
-        $this->initVar('log_datecreated', \XOBJ_DTYPE_INT);
-        $this->initVar('log_submitter', \XOBJ_DTYPE_INT);
+        $this->initVar('id', \XOBJ_DTYPE_INT);
+        $this->initVar('text', \XOBJ_DTYPE_TXTBOX);
+        $this->initVar('datecreated', \XOBJ_DTYPE_INT);
+        $this->initVar('submitter', \XOBJ_DTYPE_INT);
     }
 
     /**
@@ -97,14 +96,14 @@ class Logs extends \XoopsObject
         $form = new \XoopsThemeForm($title, 'form', $action, 'post', true);
         $form->setExtra('enctype="multipart/form-data"');
         // Form Text logText
-        $form->addElement(new \XoopsFormText(\_AM_WGEVENTS_LOG_TEXT, 'log_text', 50, 255, $this->getVar('log_text')), true);
+        $form->addElement(new \XoopsFormText(\_AM_WGEVENTS_LOG_TEXT, 'text', 50, 255, $this->getVar('text')), true);
         // Form Text Date Select logDatecreated
-        $logDatecreated = $this->isNew() ? \time() : $this->getVar('log_datecreated');
-        $form->addElement(new \XoopsFormTextDateSelect(\_MA_WGEVENTS_DATECREATED, 'log_datecreated', '', $logDatecreated));
+        $logDatecreated = $this->isNew() ? \time() : $this->getVar('datecreated');
+        $form->addElement(new \XoopsFormTextDateSelect(\_MA_WGEVENTS_DATECREATED, 'datecreated', '', $logDatecreated));
         // Form Select User logSubmitter
         $uidCurrent = \is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->uid() : 0;
-        $logSubmitter = $this->isNew() ? $uidCurrent : $this->getVar('log_submitter');
-        $form->addElement(new \XoopsFormSelectUser(\_MA_WGEVENTS_SUBMITTER, 'log_submitter', false, $logSubmitter));
+        $logSubmitter = $this->isNew() ? $uidCurrent : $this->getVar('submitter');
+        $form->addElement(new \XoopsFormSelectUser(\_MA_WGEVENTS_SUBMITTER, 'submitter', false, $logSubmitter));
         // To Save
         $form->addElement(new \XoopsFormHidden('op', 'save'));
         $form->addElement(new \XoopsFormHidden('start', $this->start));
@@ -123,10 +122,8 @@ class Logs extends \XoopsObject
     public function getValuesLogs($keys = null, $format = null, $maxDepth = null)
     {
         $ret = $this->getValues($keys, $format, $maxDepth);
-        $ret['id']          = $this->getVar('log_id');
-        $ret['text']        = $this->getVar('log_text');
-        $ret['datecreated'] = \formatTimestamp($this->getVar('log_datecreated'), 'm');
-        $ret['submitter']   = \XoopsUser::getUnameFromId($this->getVar('log_submitter'));
+        $ret['datecreated_text'] = \formatTimestamp($this->getVar('datecreated'), 'm');
+        $ret['submitter_text']   = \XoopsUser::getUnameFromId($this->getVar('submitter'));
         return $ret;
     }
 

@@ -1,6 +1,5 @@
 <?php declare(strict_types=1);
 
-
 namespace XoopsModules\Wgevents;
 
 /*
@@ -39,7 +38,7 @@ class LogsHandler extends \XoopsPersistableObjectHandler
      */
     public function __construct(\XoopsDatabase $db)
     {
-        parent::__construct($db, 'wgevents_logs', Logs::class, 'log_id', 'log_text');
+        parent::__construct($db, 'wgevents_logs', Logs::class, 'id', 'text');
     }
 
     /**
@@ -83,7 +82,7 @@ class LogsHandler extends \XoopsPersistableObjectHandler
      * @param string $order
      * @return int
      */
-    public function getCountLogs($start = 0, $limit = 0, $sort = 'log_id ASC, log_text', $order = 'ASC')
+    public function getCountLogs($start = 0, $limit = 0, $sort = 'id ASC, text', $order = 'ASC')
     {
         $crCountLogs = new \CriteriaCompo();
         $crCountLogs = $this->getLogsCriteria($crCountLogs, $start, $limit, $sort, $order);
@@ -98,7 +97,7 @@ class LogsHandler extends \XoopsPersistableObjectHandler
      * @param string $order
      * @return array
      */
-    public function getAllLogs($start = 0, $limit = 0, $sort = 'log_id ASC, log_text', $order = 'ASC')
+    public function getAllLogs($start = 0, $limit = 0, $sort = 'id ASC, text', $order = 'ASC')
     {
         $crAllLogs = new \CriteriaCompo();
         $crAllLogs = $this->getLogsCriteria($crAllLogs, $start, $limit, $sort, $order);
@@ -136,9 +135,9 @@ class LogsHandler extends \XoopsPersistableObjectHandler
             $logSubmitter = \is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->uid() : 0;
             $logsObj = $this->create();
             // Set Vars
-            $logsObj->setVar('log_text', $text);
-            $logsObj->setVar('log_datecreated', \time());
-            $logsObj->setVar('log_submitter', $logSubmitter);
+            $logsObj->setVar('text', $text);
+            $logsObj->setVar('datecreated', \time());
+            $logsObj->setVar('submitter', $logSubmitter);
             // Insert Data
             $this->insert($logsObj);
         }

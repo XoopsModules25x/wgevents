@@ -1,6 +1,5 @@
 <?php declare(strict_types=1);
 
-
 namespace XoopsModules\Wgevents;
 
 /*
@@ -39,7 +38,7 @@ class TextblocksHandler extends \XoopsPersistableObjectHandler
      */
     public function __construct(\XoopsDatabase $db)
     {
-        parent::__construct($db, 'wgevents_textblocks', Textblocks::class, 'tb_id', 'tb_name');
+        parent::__construct($db, 'wgevents_textblocks', Textblocks::class, 'id', 'name');
     }
 
     /**
@@ -83,7 +82,7 @@ class TextblocksHandler extends \XoopsPersistableObjectHandler
      * @param string $order
      * @return int
      */
-    public function getCountTextblocks($start = 0, $limit = 0, $sort = 'tb_id ASC, tb_name', $order = 'ASC')
+    public function getCountTextblocks($start = 0, $limit = 0, $sort = 'id ASC, name', $order = 'ASC')
     {
         $crCountTextblocks = new \CriteriaCompo();
         $crCountTextblocks = $this->getTextblocksCriteria($crCountTextblocks, $start, $limit, $sort, $order);
@@ -98,7 +97,7 @@ class TextblocksHandler extends \XoopsPersistableObjectHandler
      * @param string $order
      * @return array
      */
-    public function getAllTextblocks($start = 0, $limit = 0, $sort = 'tb_id ASC, tb_name', $order = 'ASC')
+    public function getAllTextblocks($start = 0, $limit = 0, $sort = 'id ASC, name', $order = 'ASC')
     {
         $crAllTextblocks = new \CriteriaCompo();
         $crAllTextblocks = $this->getTextblocksCriteria($crAllTextblocks, $start, $limit, $sort, $order);

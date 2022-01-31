@@ -35,8 +35,8 @@ $GLOBALS['xoopsOption']['template_main'] = 'wgevents_registrations.tpl';
 require_once \XOOPS_ROOT_PATH . '/header.php';
 
 $op      = Request::getCmd('op', 'list');
-$regId   = Request::getInt('reg_id');
-$regEvid = Request::getInt('reg_evid');
+$regId   = Request::getInt('id');
+$regEvid = Request::getInt('evid');
 $start   = Request::getInt('start');
 $limit   = Request::getInt('limit', $helper->getConfig('userpager'));
 $redir   = Request::getString('redir', 'list');
@@ -80,18 +80,18 @@ switch ($op) {
         $uidCurrent = \is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->uid() : 0;
         $regIp = $_SERVER['REMOTE_ADDR'];
         // get all events with my registrations
-        $sql = 'SELECT reg_evid, ev_name ';
+        $sql = 'SELECT evid, name ';
         $sql .= 'FROM ' . $GLOBALS['xoopsDB']->prefix('wgevents_registrations') . ' ';
-        $sql .= 'INNER JOIN ' . $GLOBALS['xoopsDB']->prefix('wgevents_events') . ' ON ' . $GLOBALS['xoopsDB']->prefix('wgevents_registrations') . '.reg_evid = ' . $GLOBALS['xoopsDB']->prefix('wgevents_events') . '.ev_id ';
-        $sql .= 'WHERE (((' . $GLOBALS['xoopsDB']->prefix('wgevents_registrations') . '.reg_ip)="' . $regIp . '")) ';
-        $sql .= 'OR (((' . $GLOBALS['xoopsDB']->prefix('wgevents_registrations') . '.reg_submitter)=' . $uidCurrent . ')) ';
-        $sql .= 'GROUP BY ' . $GLOBALS['xoopsDB']->prefix('wgevents_registrations') . '.reg_evid, ' . $GLOBALS['xoopsDB']->prefix('wgevents_events') . '.ev_name ';
-        $sql .= 'ORDER BY ' . $GLOBALS['xoopsDB']->prefix('wgevents_events') . '.ev_datefrom DESC;';
+        $sql .= 'INNER JOIN ' . $GLOBALS['xoopsDB']->prefix('wgevents_events') . ' ON ' . $GLOBALS['xoopsDB']->prefix('wgevents_registrations') . '.evid = ' . $GLOBALS['xoopsDB']->prefix('wgevents_events') . '.id ';
+        $sql .= 'WHERE (((' . $GLOBALS['xoopsDB']->prefix('wgevents_registrations') . '.ip)="' . $regIp . '")) ';
+        $sql .= 'OR (((' . $GLOBALS['xoopsDB']->prefix('wgevents_registrations') . '.submitter)=' . $uidCurrent . ')) ';
+        $sql .= 'GROUP BY ' . $GLOBALS['xoopsDB']->prefix('wgevents_registrations') . '.evid, ' . $GLOBALS['xoopsDB']->prefix('wgevents_events') . '.name ';
+        $sql .= 'ORDER BY ' . $GLOBALS['xoopsDB']->prefix('wgevents_events') . '.datefrom DESC;';
         $result = $GLOBALS['xoopsDB']->query($sql);
         while (list($evId, $evName) = $GLOBALS['xoopsDB']->fetchRow($result)) {
             $events[$evId] = [
-                'ev_id' => $evId,
-                'ev_name' => $evName
+                'id' => $evId,
+                'name' => $evName
             ];
         }
         foreach ($events as $evId => $event) {
@@ -102,7 +102,7 @@ switch ($op) {
             $registrations[$evId]['questions'] = $questionsArr;
             $registrations[$evId]['footerCols'] = \count($questionsArr) + 9;
             //get list of existing registrations for current user/current IP
-            $registrations[$evId]['event_name'] = $event['ev_name'];
+            $registrations[$evId]['event_name'] = $event['name'];
             $registrations[$evId]['details'] = $registrationsHandler->getRegistrationDetailsByEvent($evId, $questionsArr);
         }
         if (\count($registrations) > 0) {
@@ -137,11 +137,11 @@ switch ($op) {
 
         //get list of existing registrations for current user/current IP
         $eventsObj = $eventsHandler->get($regEvid);
-        $event_name = $eventsObj->getVar('ev_name');
-        $registrations[$regEvid]['ev_id'] = $regEvid;
+        $event_name = $eventsObj->getVar('name');
+        $registrations[$regEvid]['id'] = $regEvid;
         $registrations[$regEvid]['event_name'] = $event_name;
-        $registrations[$regEvid]['event_fee'] = $eventsObj->getVar('ev_fee');
-        $registrations[$regEvid]['event_register_max'] = $eventsObj->getVar('ev_register_max');
+        $registrations[$regEvid]['event_fee'] = $eventsObj->getVar('fee');
+        $registrations[$regEvid]['event_register_max'] = $eventsObj->getVar('register_max');
         $registrations[$regEvid]['questions'] = $questionsArr;
         $registrations[$regEvid]['footerCols'] = \count($questionsArr) + 9;
         $registrations[$regEvid]['details'] = $registrationsHandler->getRegistrationDetailsByEvent($regEvid, $questionsArr, $currentUserOnly);
@@ -152,22 +152,22 @@ switch ($op) {
         if ('listeventall' == $op) {
             $GLOBALS['xoopsTpl']->assign('showHandleList', true);
         } else {
-            $permEdit = $permissionsHandler->getPermEventsEdit($eventsObj->getVar('ev_submitter'), $eventsObj->getVar('ev_status'));
+            $permEdit = $permissionsHandler->getPermEventsEdit($eventsObj->getVar('submitter'), $eventsObj->getVar('status'));
             if ($permEdit ||
-                (\time() >= $eventsObj->getVar('ev_register_from') && \time() <= $eventsObj->getVar('ev_register_to'))
+                (\time() >= $eventsObj->getVar('register_from') && \time() <= $eventsObj->getVar('register_to'))
                 ) {
                 // Form Create
                 $registrationsObj = $registrationsHandler->create();
-                $registrationsObj->setVar('reg_evid', $regEvid);
+                $registrationsObj->setVar('evid', $regEvid);
                 $registrationsObj->setRedir($redir);
                 $form = $registrationsObj->getFormRegistrations();
                 $GLOBALS['xoopsTpl']->assign('form', $form->render());
             }
-            if (\time() < $eventsObj->getVar('ev_register_from')) {
-                $GLOBALS['xoopsTpl']->assign('warning_period', sprintf(\_MA_WGEVENTS_REGISTRATION_TOEARLY, \formatTimestamp($eventsObj->getVar('ev_register_from'), 'm')));
+            if (\time() < $eventsObj->getVar('register_from')) {
+                $GLOBALS['xoopsTpl']->assign('warning_period', sprintf(\_MA_WGEVENTS_REGISTRATION_TOEARLY, \formatTimestamp($eventsObj->getVar('register_from'), 'm')));
             }
-            if (\time() > $eventsObj->getVar('ev_register_to')) {
-                $GLOBALS['xoopsTpl']->assign('warning_period', sprintf(\_MA_WGEVENTS_REGISTRATION_TOLATE, \formatTimestamp($eventsObj->getVar('ev_register_to'), 'm')));
+            if (\time() > $eventsObj->getVar('register_to')) {
+                $GLOBALS['xoopsTpl']->assign('warning_period', sprintf(\_MA_WGEVENTS_REGISTRATION_TOLATE, \formatTimestamp($eventsObj->getVar('register_to'), 'm')));
             }
         }
         break;
@@ -176,16 +176,16 @@ switch ($op) {
         if (!$GLOBALS['xoopsSecurity']->check()) {
             \redirect_header('registrations.php', 3, \implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
         }
-        $regEvid = Request::getInt('reg_evid');
+        $regEvid = Request::getInt('evid');
         $eventsObj = $eventsHandler->get($regEvid);
-        $evSubmitter = $eventsObj->getVar('ev_submitter');
-        $evStatus = $eventsObj->getVar('ev_status');
+        $evSubmitter = $eventsObj->getVar('submitter');
+        $evStatus = $eventsObj->getVar('status');
         if ($regId > 0) {
             // Check permissions
             $registrationsObj = $registrationsHandler->get($regId);
             if (!$permissionsHandler->getPermRegistrationsEdit(
-                    $registrationsObj->getVar('reg_ip'),
-                    $registrationsObj->getVar('reg_submitter'),
+                    $registrationsObj->getVar('ip'),
+                    $registrationsObj->getVar('submitter'),
                     $evSubmitter,
                     $evStatus,
                 )) {
@@ -203,47 +203,47 @@ switch ($op) {
         // create item in table registrations
         $answersValueArr = [];
         $answersTypeArr = [];
-        $answersValueArr = Request::getArray('que_id');
-        $answersTypeArr = Request::getArray('que_type');
-        $registrationsObj->setVar('reg_evid', $regEvid);
-        $registrationsObj->setVar('reg_salutation', Request::getInt('reg_salutation'));
-        $registrationsObj->setVar('reg_firstname', Request::getString('reg_firstname'));
-        $registrationsObj->setVar('reg_lastname', Request::getString('reg_lastname'));
-        $regEmail = Request::getString('reg_email');
-        $registrationsObj->setVar('reg_email', $regEmail);
-        $registrationsObj->setVar('reg_email_send', Request::getInt('reg_email_send'));
-        $registrationsObj->setVar('reg_gdpr', Request::getInt('reg_gdpr'));
-        $registrationsObj->setVar('reg_ip', Request::getString('reg_ip'));
-        $regVerifkey = ('' === Request::getString('reg_verifkey')) ? xoops_makepass() : Request::getString('reg_verifkey');
-        $registrationsObj->setVar('reg_verifkey', $regVerifkey);
-        $regStatus = Request::getInt('reg_status');
-        $registrationsObj->setVar('reg_status', $regStatus);
-        $registrationsObj->setVar('reg_financial', Request::getInt('reg_financial'));
+        $answersValueArr = Request::getArray('id');
+        $answersTypeArr = Request::getArray('type');
+        $registrationsObj->setVar('evid', $regEvid);
+        $registrationsObj->setVar('salutation', Request::getInt('salutation'));
+        $registrationsObj->setVar('firstname', Request::getString('firstname'));
+        $registrationsObj->setVar('lastname', Request::getString('lastname'));
+        $regEmail = Request::getString('email');
+        $registrationsObj->setVar('email', $regEmail);
+        $registrationsObj->setVar('email_send', Request::getInt('email_send'));
+        $registrationsObj->setVar('gdpr', Request::getInt('gdpr'));
+        $registrationsObj->setVar('ip', Request::getString('ip'));
+        $regVerifkey = ('' === Request::getString('verifkey')) ? xoops_makepass() : Request::getString('verifkey');
+        $registrationsObj->setVar('verifkey', $regVerifkey);
+        $regStatus = Request::getInt('status');
+        $registrationsObj->setVar('status', $regStatus);
+        $registrationsObj->setVar('financial', Request::getInt('financial'));
         $regListwait = 0;
         if ($regId > 0 || $permissionsHandler->getPermRegistrationsApprove($evSubmitter, $evStatus)) {
             //existing registration or user has perm to approve => take value of form
-            $registrationsObj->setVar('reg_listwait', Request::getInt('reg_listwait'));
+            $registrationsObj->setVar('listwait', Request::getInt('listwait'));
         } else {
             //check number of registrations
-            $eventRegisterMax = (int)$eventsObj->getVar('ev_register_max');
+            $eventRegisterMax = (int)$eventsObj->getVar('register_max');
             if ($eventRegisterMax > 0) {
                 $crRegCheck = new \CriteriaCompo();
-                $crRegCheck->add(new \Criteria('reg_evid', $regEvid));
+                $crRegCheck->add(new \Criteria('evid', $regEvid));
                 $numberRegCurr = $registrationsHandler->getCount($crRegCheck);
                 if ($eventRegisterMax <= $numberRegCurr) {
                     $regListwait = 1;
                 }
             }
-            $registrationsObj->setVar('reg_listwait', $regListwait);
+            $registrationsObj->setVar('listwait', $regListwait);
         }
-        if (Request::hasVar('reg_datecreated_int')) {
-            $registrationsObj->setVar('reg_datecreated', Request::getInt('reg_datecreated_int'));
+        if (Request::hasVar('datecreated_int')) {
+            $registrationsObj->setVar('datecreated', Request::getInt('datecreated_int'));
         } else {
-            $registrationDatecreatedObj = \DateTime::createFromFormat(\_SHORTDATESTRING, Request::getString('reg_datecreated'));
-            $registrationsObj->setVar('reg_datecreated', $registrationDatecreatedObj->getTimestamp());
+            $registrationDatecreatedObj = \DateTime::createFromFormat(\_SHORTDATESTRING, Request::getString('datecreated'));
+            $registrationsObj->setVar('datecreated', $registrationDatecreatedObj->getTimestamp());
         }
-        $regSubmitter = Request::getInt('reg_submitter');
-        $registrationsObj->setVar('reg_submitter', $regSubmitter);
+        $regSubmitter = Request::getInt('submitter');
+        $registrationsObj->setVar('submitter', $regSubmitter);
         // Insert Data
         if ($registrationsHandler->insert($registrationsObj)) {
             $newRegId = $regId > 0 ? $regId : $registrationsObj->getNewInsertedIdRegistrations();
@@ -269,22 +269,22 @@ switch ($op) {
                 }
                 if ('' != $answer) {
                     $answersObj = $answersHandler->create();
-                    $answersObj->setVar('ans_regid', $newRegId);
-                    $answersObj->setVar('ans_queid', $key);
-                    $answersObj->setVar('ans_evid', $regEvid);
-                    $answersObj->setVar('ans_text', $answer);
-                    $answersObj->setVar('ans_datecreated', \time());
-                    $answersObj->setVar('ans_submitter', $regSubmitter);
+                    $answersObj->setVar('regid', $newRegId);
+                    $answersObj->setVar('queid', $key);
+                    $answersObj->setVar('evid', $regEvid);
+                    $answersObj->setVar('text', $answer);
+                    $answersObj->setVar('datecreated', \time());
+                    $answersObj->setVar('submitter', $regSubmitter);
                     // Insert Data
                     $answersHandler->insert($answersObj);
                 }
             }
             // Handle notification
             /*
-            $regEvid = $registrationsObj->getVar('reg_evid');
+            $regEvid = $registrationsObj->getVar('evid');
             $tags = [];
             $tags['ITEM_NAME'] = $regEvid;
-            $tags['ITEM_URL']  = \XOOPS_URL . '/modules/wgevents/registrations.php?op=show&reg_id=' . $regId;
+            $tags['ITEM_URL']  = \XOOPS_URL . '/modules/wgevents/registrations.php?op=show&id=' . $regId;
             $notificationHandler = \xoops_getHandler('notification');
             if ($regId > 0) {
                 // Event modify notification
@@ -345,9 +345,9 @@ switch ($op) {
                 $typeConfirm = Constants::MAIL_REG_CONFIRM_IN;
             }
             if ($newRegistration || '' != $infotext) {
-                $registerNotify = (string)$eventsObj->getVar('ev_register_notify', 'e');
+                $registerNotify = (string)$eventsObj->getVar('register_notify', 'e');
                 if ('' != $registerNotify) {
-                    // send notifications to emails of ev_notify
+                    // send notifications to emails of register_notify
                     $notifyEmails   = preg_split("/\r\n|\n|\r/", $registerNotify);
                     $mailsHandler = new MailsHandler();
                     $mailsHandler->setInfo($infotext);
@@ -355,7 +355,7 @@ switch ($op) {
                     $mailsHandler->executeReg($newRegId, $typeNotify);
                     unset($mailsHandler);
                 }
-                if ('' != $regEmail && Request::getInt('reg_email_send') > 0) {
+                if ('' != $regEmail && Request::getInt('email_send') > 0) {
                     // send confirmation, if radio is checked
                     $mailsHandler = new MailsHandler();
                     $mailsHandler->setInfo($infotext);
@@ -365,7 +365,7 @@ switch ($op) {
                 }
             }
             // redirect after insert
-            \redirect_header('registrations.php?op=' . $redir . '&amp;redir=' . $redir . '&amp;reg_evid=' . $regEvid, 2, \_MA_WGEVENTS_FORM_OK);
+            \redirect_header('registrations.php?op=' . $redir . '&amp;redir=' . $redir . '&amp;evid=' . $regEvid, 2, \_MA_WGEVENTS_FORM_OK);
         }
         // Get Form Error
         $GLOBALS['xoopsTpl']->assign('error', $registrationsObj->getHtmlErrors());
@@ -381,12 +381,12 @@ switch ($op) {
         }
         // Check permissions
         $registrationsObj = $registrationsHandler->get($regId);
-        $eventsObj = $eventsHandler->get($registrationsObj->getVar('reg_evid'));
+        $eventsObj = $eventsHandler->get($registrationsObj->getVar('evid'));
         if (!$permissionsHandler->getPermRegistrationsEdit(
-                $registrationsObj->getVar('reg_ip'),
-                $registrationsObj->getVar('reg_submitter'),
-                $eventsObj->getVar('ev_submitter'),
-                $eventsObj->getVar('ev_status'),
+                $registrationsObj->getVar('ip'),
+                $registrationsObj->getVar('submitter'),
+                $eventsObj->getVar('submitter'),
+                $eventsObj->getVar('status'),
             )) {
                 \redirect_header('registrations.php?op=list', 3, \_NOPERM);
         }
@@ -408,7 +408,7 @@ switch ($op) {
             \redirect_header('registrations.php?op=list', 3, \_NOPERM);
         }
         // Request source
-        $regIdSource = Request::getInt('reg_id_source');
+        $regIdSource = Request::getInt('id_source');
         // Check params
         if (0 == $regIdSource) {
             \redirect_header('registrations.php?op=list', 3, \_MA_WGEVENTS_INVALID_PARAM);
@@ -428,21 +428,21 @@ switch ($op) {
         }
         // Check permissions
         $registrationsObj = $registrationsHandler->get($regId);
-        $eventsObj = $eventsHandler->get($registrationsObj->getVar('reg_evid'));
+        $eventsObj = $eventsHandler->get($registrationsObj->getVar('evid'));
         if (!$permissionsHandler->getPermRegistrationsEdit(
-                $registrationsObj->getVar('reg_ip'),
-                $registrationsObj->getVar('reg_submitter'),
-                $eventsObj->getVar('ev_submitter'),
-                $eventsObj->getVar('ev_status'),
+                $registrationsObj->getVar('ip'),
+                $registrationsObj->getVar('submitter'),
+                $eventsObj->getVar('submitter'),
+                $eventsObj->getVar('status'),
             )) {
                 \redirect_header('registrations.php?op=list', 3, \_NOPERM);
         }
         $registrationsObj = $registrationsHandler->get($regId);
-        $regParams['reg_evid'] = $registrationsObj->getVar('reg_evid');
-        $regParams['reg_firstname'] = $registrationsObj->getVar('reg_firstname');
-        $regParams['reg_lastname'] = $registrationsObj->getVar('reg_lastname');
-        $regName = \trim($regParams['reg_firstname'] . ' ' . $regParams['reg_lastname']);
-        $regParams['reg_email'] = $registrationsObj->getVar('reg_email');
+        $regParams['evid'] = $registrationsObj->getVar('evid');
+        $regParams['firstname'] = $registrationsObj->getVar('firstname');
+        $regParams['lastname'] = $registrationsObj->getVar('lastname');
+        $regName = \trim($regParams['firstname'] . ' ' . $regParams['lastname']);
+        $regParams['email'] = $registrationsObj->getVar('email');
         if (isset($_REQUEST['ok']) && 1 == $_REQUEST['ok']) {
             if (!$GLOBALS['xoopsSecurity']->check()) {
                 \redirect_header('registrations.php', 3, \implode(', ', $GLOBALS['xoopsSecurity']->getErrors()));
@@ -451,9 +451,9 @@ switch ($op) {
             $registrationshistHandler->createHistory($registrationsObj, 'delete');
             if ($registrationsHandler->delete($registrationsObj)) {
                 // create history
-                $answershistHandler->createHistory($regParams['reg_evid'], $regId, 'delete');
+                $answershistHandler->createHistory($regParams['evid'], $regId, 'delete');
                 //delete existing answers
-                $answersHandler->cleanupAnswers($regParams['reg_evid'], $regId);
+                $answersHandler->cleanupAnswers($regParams['evid'], $regId);
                 // Event delete notification
                 /*
                 $tags = [];
@@ -463,19 +463,19 @@ switch ($op) {
                 $notificationHandler->triggerEvent('registrations', $regId, 'registration_delete', $tags);
                 */
                 // send notifications/confirmation emails
-                $eventsObj = $eventsHandler->get($regParams['reg_evid']);
+                $eventsObj = $eventsHandler->get($regParams['evid']);
                 $typeNotify  = Constants::MAIL_REG_NOTIFY_OUT;
                 $typeConfirm = Constants::MAIL_REG_CONFIRM_OUT;
-                $registerNotify = (string)$eventsObj->getVar('ev_register_notify', 'e');
+                $registerNotify = (string)$eventsObj->getVar('register_notify', 'e');
                 if ('' != $registerNotify) {
-                    // send notifications to emails of ev_notify
+                    // send notifications to emails of register_notify
                     $notifyEmails   = preg_split("/\r\n|\n|\r/", $registerNotify);
                     $mailsHandler = new MailsHandler();
                     $mailsHandler->setNotifyEmails($notifyEmails);
                     $mailsHandler->executeRegDelete($regParams, $typeNotify);
                     unset($mailsHandler);
                 }
-                $regEmail = $regParams['reg_email'];
+                $regEmail = $regParams['email'];
                 if ('' !=  $regEmail) {
                     // send confirmation, if radio is checked
                     $mailsHandler = new MailsHandler();
@@ -484,13 +484,13 @@ switch ($op) {
                     unset($mailsHandler);
                 }
 
-                \redirect_header('registrations.php?op=' . $redir . '&amp;redir=' . $redir . '&amp;reg_id=' . $regId . '&amp;reg_evid=' . $regEvid, 3, \_MA_WGEVENTS_FORM_DELETE_OK);
+                \redirect_header('registrations.php?op=' . $redir . '&amp;redir=' . $redir . '&amp;id=' . $regId . '&amp;evid=' . $regEvid, 3, \_MA_WGEVENTS_FORM_DELETE_OK);
             } else {
                 $GLOBALS['xoopsTpl']->assign('error', $registrationsObj->getHtmlErrors());
             }
         } else {
             $customConfirm = new Common\Confirm(
-                ['ok' => 1, 'reg_id' => $regId, 'reg_evid' => $regEvid, 'op' => 'delete', 'redir' => $redir],
+                ['ok' => 1, 'id' => $regId, 'evid' => $regEvid, 'op' => 'delete', 'redir' => $redir],
                 $_SERVER['REQUEST_URI'],
                 \sprintf(\_MA_WGEVENTS_CONFIRMDELETE_REGISTRATION, $regName),
                 \_MA_WGEVENTS_CONFIRMDELETE_TITLE,
@@ -505,7 +505,7 @@ switch ($op) {
             \redirect_header('registrations.php?op=list', 3, \_MA_WGEVENTS_INVALID_PARAM);
         }
         $eventsObj = $eventsHandler->get($evId);
-        if (!$permissionsHandler->getPermRegistrationsApprove($eventsObj->getVar('ev_submitter'), $eventsObj->getVar('ev_status'))) {
+        if (!$permissionsHandler->getPermRegistrationsApprove($eventsObj->getVar('submitter'), $eventsObj->getVar('status'))) {
             \redirect_header('registrations.php?op=list', 3, \_NOPERM);
         }
         if ($regId > 0) {
@@ -515,7 +515,7 @@ switch ($op) {
         } else {
             \redirect_header('registrations.php?op=list', 3, \_MA_WGEVENTS_INVALID_PARAM);
         }
-        $registrationsObj->setVar('reg_financial', Request::getInt('changeto'));
+        $registrationsObj->setVar('financial', Request::getInt('changeto'));
         // Insert Data
         if ($registrationsHandler->insert($registrationsObj)) {
             // create history
@@ -523,10 +523,10 @@ switch ($op) {
             $newRegId = $regId > 0 ? $regId : $registrationsObj->getNewInsertedIdRegistrations();
             // Handle notification
             /*
-            $regEvid = $registrationsObj->getVar('reg_evid');
+            $regEvid = $registrationsObj->getVar('evid');
             $tags = [];
             $tags['ITEM_NAME'] = $regEvid;
-            $tags['ITEM_URL']  = \XOOPS_URL . '/modules/wgevents/registrations.php?op=show&reg_id=' . $regId;
+            $tags['ITEM_URL']  = \XOOPS_URL . '/modules/wgevents/registrations.php?op=show&id=' . $regId;
             $notificationHandler = \xoops_getHandler('notification');
             if ($regId > 0) {
                 // Event modify notification
@@ -538,15 +538,15 @@ switch ($op) {
             }
             */
             // send notifications/confirmation emails
-            $regEvid = $registrationsObj->getVar('reg_evid');
+            $regEvid = $registrationsObj->getVar('evid');
             $eventsObj = $eventsHandler->get($regEvid);
             // find changes in table registrations
             $infotext = $registrationsHandler->getRegistrationsCompare($registrationsObjOld, $registrationsObj);
             $typeNotify  = Constants::MAIL_REG_NOTIFY_MODIFY;
             $typeConfirm = Constants::MAIL_REG_CONFIRM_MODIFY;
-            $registerNotify = (string)$eventsObj->getVar('ev_register_notify', 'e');
+            $registerNotify = (string)$eventsObj->getVar('register_notify', 'e');
             if ('' != $registerNotify) {
-                // send notifications to emails of ev_notify
+                // send notifications to emails of register_notify
                 $notifyEmails   = preg_split("/\r\n|\n|\r/", $registerNotify);
                 $mailsHandler = new MailsHandler();
                 $mailsHandler->setInfo($infotext);
@@ -554,7 +554,7 @@ switch ($op) {
                 $mailsHandler->executeReg($newRegId, $typeNotify);
                 unset($mailsHandler);
             }
-            $regEmail = $registrationsObj->getVar('reg_email');
+            $regEmail = $registrationsObj->getVar('email');
             if ('' != $regEmail) {
                 // send confirmation, if radio is checked
                 $mailsHandler = new MailsHandler();
@@ -564,7 +564,7 @@ switch ($op) {
                 unset($mailsHandler);
             }
             // redirect after insert
-            \redirect_header('registrations.php?op=' . $redir . '&amp;redir=' . $redir . '&amp;reg_evid=' . $regEvid, 2, \_MA_WGEVENTS_FORM_OK);
+            \redirect_header('registrations.php?op=' . $redir . '&amp;redir=' . $redir . '&amp;evid=' . $regEvid, 2, \_MA_WGEVENTS_FORM_OK);
         }
         // Get Form Error
         $GLOBALS['xoopsTpl']->assign('error', $registrationsObj->getHtmlErrors());
@@ -575,7 +575,7 @@ switch ($op) {
         if (0 == $evId) {
             \redirect_header('registrations.php?op=list', 3, \_MA_WGEVENTS_INVALID_PARAM);
         }
-        if (!$permissionsHandler->getPermRegistrationsApprove($eventsObj->getVar('ev_submitter'), $eventsObj->getVar('ev_status'))) {
+        if (!$permissionsHandler->getPermRegistrationsApprove($eventsObj->getVar('submitter'), $eventsObj->getVar('status'))) {
             \redirect_header('registrations.php?op=list', 3, \_NOPERM);
         }
         if ($regId > 0) {
@@ -586,16 +586,16 @@ switch ($op) {
         } else {
             \redirect_header('registrations.php?op=list', 3, \_MA_WGEVENTS_INVALID_PARAM);
         }
-        $registrationsObj->setVar('reg_listwait', 0);
+        $registrationsObj->setVar('listwait', 0);
         // Insert Data
         if ($registrationsHandler->insert($registrationsObj)) {
             $newRegId = $regId > 0 ? $regId : $registrationsObj->getNewInsertedIdRegistrations();
             // Handle notification
             /*
-            $regEvid = $registrationsObj->getVar('reg_evid');
+            $regEvid = $registrationsObj->getVar('evid');
             $tags = [];
             $tags['ITEM_NAME'] = $regEvid;
-            $tags['ITEM_URL']  = \XOOPS_URL . '/modules/wgevents/registrations.php?op=show&reg_id=' . $regId;
+            $tags['ITEM_URL']  = \XOOPS_URL . '/modules/wgevents/registrations.php?op=show&id=' . $regId;
             $notificationHandler = \xoops_getHandler('notification');
             if ($regId > 0) {
                 // Event modify notification
@@ -607,16 +607,16 @@ switch ($op) {
             }
             */
             // send notifications/confirmation emails
-            $regEvid = $registrationsObj->getVar('reg_evid');
+            $regEvid = $registrationsObj->getVar('evid');
             $eventsObj = $eventsHandler->get($regEvid);
             // find changes in table registrations
             $infotext = $registrationsHandler->getRegistrationsCompare($registrationsObjOld, $registrationsObj);
 
             $typeNotify  = Constants::MAIL_REG_NOTIFY_MODIFY;
             $typeConfirm = Constants::MAIL_REG_CONFIRM_MODIFY;
-            $registerNotify = (string)$eventsObj->getVar('ev_register_notify', 'e');
+            $registerNotify = (string)$eventsObj->getVar('register_notify', 'e');
             if ('' != $registerNotify) {
-                // send notifications to emails of ev_notify
+                // send notifications to emails of register_notify
                 $notifyEmails   = preg_split("/\r\n|\n|\r/", $registerNotify);
                 $mailsHandler = new MailsHandler();
                 $mailsHandler->setInfo($infotext);
@@ -624,7 +624,7 @@ switch ($op) {
                 $mailsHandler->executeReg($newRegId, $typeNotify);
                 unset($mailsHandler);
             }
-            $regEmail = $registrationsObj->getVar('reg_email');
+            $regEmail = $registrationsObj->getVar('email');
             if ('' != $regEmail) {
                 // send confirmation, if radio is checked
                 $mailsHandler = new MailsHandler();
@@ -634,7 +634,7 @@ switch ($op) {
                 unset($mailsHandler);
             }
             // redirect after insert
-            \redirect_header('registrations.php?op=' . $redir . '&amp;redir=' . $redir . '&amp;reg_evid=' . $regEvid, 2, \_MA_WGEVENTS_FORM_OK);
+            \redirect_header('registrations.php?op=' . $redir . '&amp;redir=' . $redir . '&amp;evid=' . $regEvid, 2, \_MA_WGEVENTS_FORM_OK);
         }
         // Get Form Error
         $GLOBALS['xoopsTpl']->assign('error', $registrationsObj->getHtmlErrors());

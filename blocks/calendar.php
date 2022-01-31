@@ -61,7 +61,7 @@ function b_wgevents_calendar_show($options)
     $filterFrom = $dayStart;
     $filterTo   = $dayEnd;
     $filterCat     = 0;
-    $filterSort    = 'ev_datefrom-ASC';
+    $filterSort    = 'datefrom-ASC';
     [$sortBy, $orderBy] = \explode('-', $filterSort);
 
     /*calendar nav bar*/
@@ -105,12 +105,12 @@ function b_wgevents_calendar_show($options)
         $calendar->setDate($filterFrom);
         $GLOBALS['xoopsTpl']->assign('eventsCount', $eventsCount);
         foreach($events as $event) {
-            $badgeStyle = 'border:1px solid ' . $categories[$event['ev_catid']]['bordercolor'] . '!important;';
-            $badgeStyle .= 'background-color:' . $categories[$event['ev_catid']]['bgcolor'] . '!important;';
+            $badgeStyle = 'border:1px solid ' . $categories[$event['catid']]['bordercolor'] . '!important;';
+            $badgeStyle .= 'background-color:' . $categories[$event['catid']]['bgcolor'] . '!important;';
             $badgeStyle .= 'border-radius:50% !important;';
-            $eventLink = '<a href="' . \WGEVENTS_URL . '/events.php?op=show&amp;ev_id=' . $event['id'] .'">';
+            $eventLink = '<a href="' . \WGEVENTS_URL . '/events.php?op=show&amp;id=' . $event['id'] .'">';
             $eventLink .= '<span class="badge" style="' . $badgeStyle . '">&nbsp;&nbsp;</span></a>';
-            $calendar->addDailyHtml($eventLink, $event['ev_datefrom'], $event['ev_dateto']);
+            $calendar->addDailyHtml($eventLink, $event['datefrom'], $event['dateto']);
         }
     }
     $GLOBALS['xoopsTpl']->assign('events_calendar', $calendar->render());
@@ -118,11 +118,11 @@ function b_wgevents_calendar_show($options)
 
     if($limit > 0) {
         $crEvents = new \CriteriaCompo();
-        $crEvents->add(new \Criteria('ev_status', Constants::STATUS_SUBMITTED, '>'));
-        $crEvents->add(new \Criteria('ev_datefrom', \time(), '>'));
+        $crEvents->add(new \Criteria('status', Constants::STATUS_SUBMITTED, '>'));
+        $crEvents->add(new \Criteria('datefrom', \time(), '>'));
         $crEvents->setStart();
         $crEvents->setLimit($limit);
-        $crEvents->setSort('ev_datefrom');
+        $crEvents->setSort('datefrom');
         $crEvents->setOrder('ASC');
 
         if ($eventsCount > 0) {
@@ -159,8 +159,8 @@ function b_wgevents_calendar_edit($options)
     \array_shift($options);
 
     $crEvents = new \CriteriaCompo();
-    $crEvents->add(new \Criteria('ev_id', 0, '!='));
-    $crEvents->setSort('ev_id');
+    $crEvents->add(new \Criteria('id', 0, '!='));
+    $crEvents->setSort('id');
     $crEvents->setOrder('ASC');
 
     /**
@@ -175,8 +175,8 @@ function b_wgevents_calendar_edit($options)
     $form .= \_MB_WGEVENTS_EVENTS_TO_DISPLAY . "<br><select name='options[]' multiple='multiple' size='5'>";
     $form .= "<option value='0' " . (!\in_array(0, $options) && !\in_array('0', $options) ? '' : "selected='selected'") . '>' . \_MB_WGEVENTS_ALL_EVENTS . '</option>';
     foreach (\array_keys($eventsAll) as $i) {
-        $ev_id = $eventsAll[$i]->getVar('ev_id');
-        $form .= "<option value='" . $ev_id . "' " . (!\in_array($ev_id, $options) ? '' : "selected='selected'") . '>' . $eventsAll[$i]->getVar('ev_name') . '</option>';
+        $id = $eventsAll[$i]->getVar('id');
+        $form .= "<option value='" . $id . "' " . (!\in_array($id, $options) ? '' : "selected='selected'") . '>' . $eventsAll[$i]->getVar('name') . '</option>';
     }
     $form .= '</select>';
     */

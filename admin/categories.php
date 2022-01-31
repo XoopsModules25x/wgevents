@@ -29,7 +29,7 @@ use XoopsModules\Wgevents\Common;
 require __DIR__ . '/header.php';
 // Get all request values
 $op    = Request::getCmd('op', 'list');
-$catId = Request::getInt('cfd_id');
+$catId = Request::getInt('id');
 $start = Request::getInt('start');
 $limit = Request::getInt('limit', $helper->getConfig('adminpager'));
 $GLOBALS['xoopsTpl']->assign('start', $start);
@@ -86,7 +86,7 @@ switch ($op) {
         $adminObject->addItemButton(\_AM_WGEVENTS_ADD_CATEGORY, 'categories.php?op=new');
         $GLOBALS['xoopsTpl']->assign('buttons', $adminObject->displayButton('left'));
         // Request source
-        $catIdSource = Request::getInt('cfd_id_source');
+        $catIdSource = Request::getInt('id_source');
         // Get Form
         $categoriesObjSource = $categoriesHandler->get($catIdSource);
         $categoriesObj = $categoriesObjSource->xoopsClone();
@@ -105,14 +105,14 @@ switch ($op) {
         }
         // Set Vars
         $uploaderErrors = '';
-        $categoriesObj->setVar('cat_pid', Request::getInt('cat_pid'));
-        $categoriesObj->setVar('cat_name', Request::getString('cat_name'));
-        $categoriesObj->setVar('cfd_desc', Request::getText('cfd_desc'));
+        $categoriesObj->setVar('pid', Request::getInt('pid'));
+        $categoriesObj->setVar('name', Request::getString('name'));
+        $categoriesObj->setVar('desc', Request::getText('desc'));
         // Set Var cat_logo
         require_once \XOOPS_ROOT_PATH . '/class/uploader.php';
-        $filename       = $_FILES['cat_logo']['name'];
-        $imgMimetype    = $_FILES['cat_logo']['type'];
-        $imgNameDef     = Request::getString('cat_name');
+        $filename       = $_FILES['logo']['name'];
+        $imgMimetype    = $_FILES['logo']['type'];
+        $imgNameDef     = Request::getString('name');
 
         $uploader = new \XoopsMediaUploader(\WGEVENTS_UPLOAD_CATLOGOS_PATH . '/',
                                                     $helper->getConfig('mimetypes_image'), 
@@ -136,7 +136,7 @@ switch ($op) {
                     $imgHandler->maxHeight     = $maxheight;
                     $result                    = $imgHandler->resizeImage();
                 }
-                $categoriesObj->setVar('cat_logo', $savedFilename);
+                $categoriesObj->setVar('logo', $savedFilename);
             } else {
                 $uploaderErrors .= '<br>' . $uploader->getErrors();
             }
@@ -144,21 +144,21 @@ switch ($op) {
             if ($filename > '') {
                 $uploaderErrors .= '<br>' . $uploader->getErrors();
             }
-            $categoriesObj->setVar('cat_logo', Request::getString('cat_logo'));
+            $categoriesObj->setVar('logo', Request::getString('logo'));
         }
-        $categoriesObj->setVar('cat_color', Request::getString('cat_color'));
-        $categoriesObj->setVar('cat_bordercolor', Request::getString('cat_bordercolor'));
-        $categoriesObj->setVar('cat_bgcolor', Request::getString('cat_bgcolor'));
-        $categoriesObj->setVar('cat_othercss', Request::getString('cat_othercss'));
-        $categoriesObj->setVar('cat_status', Request::getInt('cat_status'));
-        $categoriesObj->setVar('cat_weight', Request::getInt('cat_weight'));
-        $categoryDatecreatedObj = \DateTime::createFromFormat(\_SHORTDATESTRING, Request::getString('cat_datecreated'));
-        $categoriesObj->setVar('cat_datecreated', $categoryDatecreatedObj->getTimestamp());
-        $categoriesObj->setVar('cat_submitter', Request::getInt('cat_submitter'));
+        $categoriesObj->setVar('color', Request::getString('color'));
+        $categoriesObj->setVar('bordercolor', Request::getString('bordercolor'));
+        $categoriesObj->setVar('bgcolor', Request::getString('bgcolor'));
+        $categoriesObj->setVar('othercss', Request::getString('othercss'));
+        $categoriesObj->setVar('status', Request::getInt('status'));
+        $categoriesObj->setVar('weight', Request::getInt('weight'));
+        $categoryDatecreatedObj = \DateTime::createFromFormat(\_SHORTDATESTRING, Request::getString('datecreated'));
+        $categoriesObj->setVar('datecreated', $categoryDatecreatedObj->getTimestamp());
+        $categoriesObj->setVar('submitter', Request::getInt('submitter'));
         // Insert Data
         if ($categoriesHandler->insert($categoriesObj)) {
             $newCatId = $categoriesObj->getNewInsertedIdCategories();
-            $permId = isset($_REQUEST['cfd_id']) ? $catId : $newCatId;
+            $permId = isset($_REQUEST['id']) ? $catId : $newCatId;
             $grouppermHandler = \xoops_getHandler('groupperm');
             $mid = $GLOBALS['xoopsModule']->getVar('mid');
             // Permission to view_cat_events
@@ -204,7 +204,7 @@ switch ($op) {
                 }
             }
             if ('' !== $uploaderErrors) {
-                \redirect_header('categories.php?op=edit&cfd_id=' . $catId, 5, $uploaderErrors);
+                \redirect_header('categories.php?op=edit&id=' . $catId, 5, $uploaderErrors);
             } else {
                 \redirect_header('categories.php?op=list&amp;start=' . $start . '&amp;limit=' . $limit, 2, \_MA_WGEVENTS_FORM_OK);
             }
@@ -231,7 +231,7 @@ switch ($op) {
         $templateMain = 'wgevents_admin_categories.tpl';
         $GLOBALS['xoopsTpl']->assign('navigation', $adminObject->displayNavigation('categories.php'));
         $categoriesObj = $categoriesHandler->get($catId);
-        $catName = $categoriesObj->getVar('cat_name');
+        $catName = $categoriesObj->getVar('name');
         if (isset($_REQUEST['ok']) && 1 == $_REQUEST['ok']) {
             if (!$GLOBALS['xoopsSecurity']->check()) {
                 \redirect_header('categories.php', 3, \implode(', ', $GLOBALS['xoopsSecurity']->getErrors()));
@@ -243,9 +243,9 @@ switch ($op) {
             }
         } else {
             $customConfirm = new Common\Confirm(
-                ['ok' => 1, 'cfd_id' => $catId, 'start' => $start, 'limit' => $limit, 'op' => 'delete'],
+                ['ok' => 1, 'id' => $catId, 'start' => $start, 'limit' => $limit, 'op' => 'delete'],
                 $_SERVER['REQUEST_URI'],
-                \sprintf(\_MA_WGEVENTS_FORM_SURE_DELETE, $categoriesObj->getVar('cat_name')));
+                \sprintf(\_MA_WGEVENTS_FORM_SURE_DELETE, $categoriesObj->getVar('name')));
             $form = $customConfirm->getFormConfirm();
             $GLOBALS['xoopsTpl']->assign('form', $form->render());
         }
@@ -254,7 +254,7 @@ switch ($op) {
         $order = $_POST['order'];
         for ($i = 0, $iMax = \count($order); $i < $iMax; $i++) {
             $categoriesObj = $categoriesHandler->get($order[$i]);
-            $categoriesObj->setVar('cat_weight', $i + 1);
+            $categoriesObj->setVar('weight', $i + 1);
             $categoriesHandler->insert($categoriesObj);
         }
         break;

@@ -29,7 +29,7 @@ use XoopsModules\Wgevents\Common;
 require __DIR__ . '/header.php';
 // Get all request values
 $op    = Request::getCmd('op', 'list');
-$accId = Request::getInt('acc_id');
+$accId = Request::getInt('id');
 $save_and_check = Request::getString('save_and_check', 'none');
 $start = Request::getInt('start');
 $limit = Request::getInt('limit', $helper->getConfig('adminpager'));
@@ -54,9 +54,9 @@ switch ($op) {
             $accountObj = $helper->getHandler('Accounts')->get($accId);
         }
 
-        $mailhost = $accountObj->getVar('acc_server_in');
-        $port     = $accountObj->getVar('acc_port_in');
-        switch ($accountObj->getVar('acc_type')) {
+        $mailhost = $accountObj->getVar('server_in');
+        $port     = $accountObj->getVar('port_in');
+        switch ($accountObj->getVar('type')) {
             case Constants::ACCOUNT_TYPE_VAL_POP3:
                 $service = 'pop3';
                 break;
@@ -69,15 +69,15 @@ switch ($op) {
                 $service = '';
                 break;
         }
-        $service_option = $accountObj->getVar('acc_securetype_in');
-        $acc_password   = $accountObj->getVar('acc_password');
-        $acc_username   = $accountObj->getVar('acc_username');
-        $acc_inbox      = $accountObj->getVar('acc_inbox');
-        $acc_inbox_ok   = false;
-        $acc_hardbox    = $accountObj->getVar('acc_hardbox');
-        $acc_hardbox_ok = false;
-        $acc_softbox    = $accountObj->getVar('acc_softbox');
-        $acc_softbox_ok = false;
+        $service_option = $accountObj->getVar('securetype_in');
+        $password   = $accountObj->getVar('password');
+        $username   = $accountObj->getVar('username');
+        $inbox      = $accountObj->getVar('inbox');
+        $inbox_ok   = false;
+        $hardbox    = $accountObj->getVar('hardbox');
+        $hardbox_ok = false;
+        $softbox    = $accountObj->getVar('softbox');
+        $softbox_ok = false;
 
         $command = $mailhost . ':' . $port;
         if ('' != $service) {
@@ -89,7 +89,7 @@ switch ($op) {
 
         $checks = [];
 
-        $mbox = @imap_open('{' . $command . '}', $acc_username, $acc_password);
+        $mbox = @imap_open('{' . $command . '}', $username, $password);
         if (false === $mbox) {
             $checks['openmailbox']['check'] = \_AM_WGEVENTS_ACCOUNT_CHECK_OPEN_MAILBOX;
             $checks['openmailbox']['result'] = \_AM_WGEVENTS_ACCOUNT_CHECK_FAILED;
@@ -116,14 +116,14 @@ switch ($op) {
                 // send test mail
                 // read data of account
                 $accountObj             = $helper->getHandler('Accounts')->get($accId);
-                $account_type           = $accountObj->getVar('acc_type');
-                $account_yourname       = $accountObj->getVar('acc_yourname');
-                $account_yourmail       = $accountObj->getVar('acc_yourmail');
-                $account_username       = $accountObj->getVar('acc_username');
-                $account_password       = $accountObj->getVar('acc_password');
-                $account_server_out     = $accountObj->getVar('acc_server_out');
-                $account_port_out       = $accountObj->getVar('acc_port_out');
-                $account_securetype_out = $accountObj->getVar('acc_securetype_out');
+                $account_type           = $accountObj->getVar('type');
+                $account_yourname       = $accountObj->getVar('yourname');
+                $account_yourmail       = $accountObj->getVar('yourmail');
+                $account_username       = $accountObj->getVar('username');
+                $account_password       = $accountObj->getVar('password');
+                $account_server_out     = $accountObj->getVar('server_out');
+                $account_port_out       = $accountObj->getVar('port_out');
+                $account_securetype_out = $accountObj->getVar('securetype_out');
 
                 try {
                     if (Constants::ACCOUNT_TYPE_VAL_PHP_SENDMAIL == $account_type) {
@@ -218,8 +218,8 @@ switch ($op) {
             $accountsAll = $accountsHandler->getAllAccounts($start, $limit);
             foreach (\array_keys($accountsAll) as $i) {
                 $account = $accountsAll[$i]->getValuesAccount();
-                if (Constants::ACCOUNT_TYPE_VAL_PHP_MAIL != $account['acc_type']
-                    && Constants::ACCOUNT_TYPE_VAL_PHP_SENDMAIL != $account['acc_type']) {
+                if (Constants::ACCOUNT_TYPE_VAL_PHP_MAIL != $account['type']
+                    && Constants::ACCOUNT_TYPE_VAL_PHP_SENDMAIL != $account['type']) {
                     $account['show_check'] = true;
                 }
                 $GLOBALS['xoopsTpl']->append('accounts_list', $account);
@@ -256,29 +256,29 @@ switch ($op) {
             $accountsObj = $accountsHandler->create();
         }
         // Set Vars
-        $accountsObj->setVar('acc_type', Request::getInt('acc_type'));
-        $accountsObj->setVar('acc_name', Request::getString('acc_name'));
-        $accountsObj->setVar('acc_yourname', Request::getString('acc_yourname'));
-        $accountsObj->setVar('acc_yourmail', Request::getString('acc_yourmail'));
-        $accountsObj->setVar('acc_username', Request::getString('acc_username'));
-        $accountsObj->setVar('acc_password', Request::getString('acc_password'));
-        $accountsObj->setVar('acc_server_in', Request::getString('acc_server_in'));
-        $accountsObj->setVar('acc_port_in', Request::getInt('acc_port_in'));
-        $accountsObj->setVar('acc_securetype_in', Request::getString('acc_securetype_in'));
-        $accountsObj->setVar('acc_server_out', Request::getString('acc_server_out'));
-        $accountsObj->setVar('acc_port_out', Request::getInt('acc_port_out'));
-        $accountsObj->setVar('acc_securetype_out', Request::getString('acc_securetype_out'));
-        $accountsObj->setVar('acc_default', Request::getInt('acc_default'));
-        $accountsObj->setVar('acc_inbox', Request::getString('acc_inbox'));
-        $accountsObj->setVar('acc_datecreated', Request::getInt('acc_datecreated'));
-        $accountsObj->setVar('acc_submitter', Request::getInt('acc_submitter'));
+        $accountsObj->setVar('type', Request::getInt('type'));
+        $accountsObj->setVar('name', Request::getString('name'));
+        $accountsObj->setVar('yourname', Request::getString('yourname'));
+        $accountsObj->setVar('yourmail', Request::getString('yourmail'));
+        $accountsObj->setVar('username', Request::getString('username'));
+        $accountsObj->setVar('password', Request::getString('password'));
+        $accountsObj->setVar('server_in', Request::getString('server_in'));
+        $accountsObj->setVar('port_in', Request::getInt('port_in'));
+        $accountsObj->setVar('securetype_in', Request::getString('securetype_in'));
+        $accountsObj->setVar('server_out', Request::getString('server_out'));
+        $accountsObj->setVar('port_out', Request::getInt('port_out'));
+        $accountsObj->setVar('securetype_out', Request::getString('securetype_out'));
+        $accountsObj->setVar('default', Request::getInt('default'));
+        $accountsObj->setVar('inbox', Request::getString('inbox'));
+        $accountsObj->setVar('datecreated', Request::getInt('datecreated'));
+        $accountsObj->setVar('submitter', Request::getInt('submitter'));
         // Insert Data
         if ($accountsHandler->insert($accountsObj)) {
             $newAccId = $accId > 0 ? $accId : $accountsObj->getNewInsertedIdAccounts();
             if ('none' === $save_and_check) {
                 redirect_header('?op=list&amp;start=' . $start . '&amp;limit=' . $limit, 3, _MA_WGEVENTS_FORM_OK);
             } else {
-                redirect_header('accounts.php?op=check_account&acc_id=' . $newAccId . '&amp;start=' . $start . '&amp;limit=' . $limit, 3, _MA_WGEVENTS_FORM_OK);
+                redirect_header('accounts.php?op=check_account&id=' . $newAccId . '&amp;start=' . $start . '&amp;limit=' . $limit, 3, _MA_WGEVENTS_FORM_OK);
             }
         }
         // Get Form
@@ -303,7 +303,7 @@ switch ($op) {
         $templateMain = 'wgevents_admin_accounts.tpl';
         $GLOBALS['xoopsTpl']->assign('navigation', $adminObject->displayNavigation('accounts.php'));
         $accountsObj = $accountsHandler->get($accId);
-        $accType = $accountsObj->getVar('acc_type');
+        $accType = $accountsObj->getVar('type');
         if (isset($_REQUEST['ok']) && 1 == $_REQUEST['ok']) {
             if (!$GLOBALS['xoopsSecurity']->check()) {
                 \redirect_header('accounts.php', 3, \implode(', ', $GLOBALS['xoopsSecurity']->getErrors()));
@@ -315,9 +315,9 @@ switch ($op) {
             }
         } else {
             $customConfirm = new Common\Confirm(
-                ['ok' => 1, 'acc_id' => $accId, 'start' => $start, 'limit' => $limit, 'op' => 'delete'],
+                ['ok' => 1, 'id' => $accId, 'start' => $start, 'limit' => $limit, 'op' => 'delete'],
                 $_SERVER['REQUEST_URI'],
-                \sprintf(\_MA_WGEVENTS_FORM_SURE_DELETE, $accountsObj->getVar('acc_type')));
+                \sprintf(\_MA_WGEVENTS_FORM_SURE_DELETE, $accountsObj->getVar('type')));
             $form = $customConfirm->getFormConfirm();
             $GLOBALS['xoopsTpl']->assign('form', $form->render());
         }

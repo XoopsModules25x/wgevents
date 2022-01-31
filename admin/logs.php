@@ -29,7 +29,7 @@ use XoopsModules\Wgevents\Common;
 require __DIR__ . '/header.php';
 // Get all request values
 $op    = Request::getCmd('op', 'list');
-$logId = Request::getInt('log_id');
+$logId = Request::getInt('id');
 $start = Request::getInt('start');
 $limit = Request::getInt('limit', $helper->getConfig('adminpager'));
 $GLOBALS['xoopsTpl']->assign('start', $start);
@@ -77,10 +77,10 @@ switch ($op) {
             $logsObj = $logsHandler->create();
         }
         // Set Vars
-        $logsObj->setVar('log_text', Request::getString('log_text'));
-        $logDatecreatedObj = \DateTime::createFromFormat(\_SHORTDATESTRING, Request::getString('log_datecreated'));
-        $logsObj->setVar('log_datecreated', $logDatecreatedObj->getTimestamp());
-        $logsObj->setVar('log_submitter', Request::getInt('log_submitter'));
+        $logsObj->setVar('text', Request::getString('text'));
+        $logDatecreatedObj = \DateTime::createFromFormat(\_SHORTDATESTRING, Request::getString('datecreated'));
+        $logsObj->setVar('datecreated', $logDatecreatedObj->getTimestamp());
+        $logsObj->setVar('submitter', Request::getInt('submitter'));
         // Insert Data
         if ($logsHandler->insert($logsObj)) {
                 \redirect_header('logs.php?op=list&amp;start=' . $start . '&amp;limit=' . $limit, 2, \_AM_WGEVENTS_FORM_OK);
@@ -107,7 +107,7 @@ switch ($op) {
         $templateMain = 'wgevents_admin_logs.tpl';
         $GLOBALS['xoopsTpl']->assign('navigation', $adminObject->displayNavigation('logs.php'));
         $logsObj = $logsHandler->get($logId);
-        $logText = $logsObj->getVar('log_text');
+        $logText = $logsObj->getVar('text');
         if (isset($_REQUEST['ok']) && 1 == $_REQUEST['ok']) {
             if (!$GLOBALS['xoopsSecurity']->check()) {
                 \redirect_header('logs.php', 3, \implode(', ', $GLOBALS['xoopsSecurity']->getErrors()));
@@ -119,9 +119,9 @@ switch ($op) {
             }
         } else {
             $customConfirm = new Common\Confirm(
-                ['ok' => 1, 'log_id' => $logId, 'start' => $start, 'limit' => $limit, 'op' => 'delete'],
+                ['ok' => 1, 'id' => $logId, 'start' => $start, 'limit' => $limit, 'op' => 'delete'],
                 $_SERVER['REQUEST_URI'],
-                \sprintf(\_AM_WGEVENTS_FORM_SURE_DELETE, $logsObj->getVar('log_text')));
+                \sprintf(\_AM_WGEVENTS_FORM_SURE_DELETE, $logsObj->getVar('text')));
             $form = $customConfirm->getFormConfirm();
             $GLOBALS['xoopsTpl']->assign('form', $form->render());
         }

@@ -19,7 +19,7 @@
                 <td class='center'><{$event.name}></td>
                 <td class='center'><{$event.questions}></td>
                 <td class="center ">
-                    <a href="questions.php?op=list&amp;ev_id=<{$event.id}>&amp;start=<{$start}>&amp;limit=<{$limit}>" title="<{$smarty.const._DETAILS}>"><img src="<{xoModuleIcons16 view.png}>" alt="<{$smarty.const._DETAILS}> events" ></a>
+                    <a href="questions.php?op=list&amp;evid=<{$event.id}>&amp;start=<{$start}>&amp;limit=<{$limit}>" title="<{$smarty.const._MA_WGEVENTS_DETAILS}>"><img src="<{xoModuleIcons16 view.png}>" alt="<{$smarty.const._MA_WGEVENTS_DETAILS}> events" ></a>
                 </td>
             </tr>
             <{/foreach}>
@@ -54,21 +54,21 @@
             <{foreach item=question from=$questions_list}>
             <tr class='<{cycle values='odd, even'}>'>
                 <td class='center'><{$question.id}></td>
-                <td class='center'><{$question.evid}></td>
+                <td class='center'><{$question.eventname}></td>
                 <td class='center'><{$question.type_text}></td>
                 <td class='center'><{$question.caption}></td>
                 <td class='center'><{$question.desc_short}></td>
                 <td class='center'><{$question.value}></td>
                 <td class='center'><{$question.placeholder}></td>
-                <td class='center'><{$question.required}></td>
-                <td class='center'><{$question.print}></td>
+                <td class='center'><{$question.required_text}></td>
+                <td class='center'><{$question.print_text}></td>
                 <td class='center'><{$question.weight}></td>
-                <td class='center'><{$question.datecreated}></td>
-                <td class='center'><{$question.submitter}></td>
+                <td class='center'><{$question.datecreated_text}></td>
+                <td class='center'><{$question.submitter_text}></td>
                 <td class="center  width5">
-                    <a href="questions.php?op=edit&amp;que_id=<{$question.id}>&amp;start=<{$start}>&amp;limit=<{$limit}>" title="<{$smarty.const._EDIT}>"><img src="<{xoModuleIcons16 edit.png}>" alt="<{$smarty.const._EDIT}> questions" ></a>
-                    <a href="questions.php?op=clone&amp;que_id_source=<{$question.id}>" title="<{$smarty.const._CLONE}>"><img src="<{xoModuleIcons16 editcopy.png}>" alt="<{$smarty.const._CLONE}> questions" ></a>
-                    <a href="questions.php?op=delete&amp;que_id=<{$question.id}>" title="<{$smarty.const._DELETE}>"><img src="<{xoModuleIcons16 delete.png}>" alt="<{$smarty.const._DELETE}> questions" ></a>
+                    <a href="questions.php?op=edit&amp;id=<{$question.id}>&amp;start=<{$start}>&amp;limit=<{$limit}>" title="<{$smarty.const._EDIT}>"><img src="<{xoModuleIcons16 edit.png}>" alt="<{$smarty.const._EDIT}> questions" ></a>
+                    <a href="questions.php?op=clone&amp;id_source=<{$question.id}>" title="<{$smarty.const._CLONE}>"><img src="<{xoModuleIcons16 editcopy.png}>" alt="<{$smarty.const._CLONE}> questions" ></a>
+                    <a href="questions.php?op=delete&amp;id=<{$question.id}>" title="<{$smarty.const._DELETE}>"><img src="<{xoModuleIcons16 delete.png}>" alt="<{$smarty.const._DELETE}> questions" ></a>
                 </td>
             </tr>
             <{/foreach}>

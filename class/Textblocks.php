@@ -1,6 +1,5 @@
 <?php declare(strict_types=1);
 
-
 namespace XoopsModules\Wgevents;
 
 /*
@@ -50,12 +49,12 @@ class Textblocks extends \XoopsObject
      */
     public function __construct()
     {
-        $this->initVar('tb_id', \XOBJ_DTYPE_INT);
-        $this->initVar('tb_name', \XOBJ_DTYPE_TXTBOX);
-        $this->initVar('tb_text', \XOBJ_DTYPE_OTHER);
-        $this->initVar('tb_weight', \XOBJ_DTYPE_INT);
-        $this->initVar('tb_datecreated', \XOBJ_DTYPE_INT);
-        $this->initVar('tb_submitter', \XOBJ_DTYPE_INT);
+        $this->initVar('id', \XOBJ_DTYPE_INT);
+        $this->initVar('name', \XOBJ_DTYPE_TXTBOX);
+        $this->initVar('text', \XOBJ_DTYPE_OTHER);
+        $this->initVar('weight', \XOBJ_DTYPE_INT);
+        $this->initVar('datecreated', \XOBJ_DTYPE_INT);
+        $this->initVar('submitter', \XOBJ_DTYPE_INT);
     }
 
     /**
@@ -99,7 +98,7 @@ class Textblocks extends \XoopsObject
         $form = new \XoopsThemeForm($title, 'form', $action, 'post', true);
         $form->setExtra('enctype="multipart/form-data"');
         // Form Text tbName
-        $form->addElement(new \XoopsFormText(\_MA_WGEVENTS_TEXTBLOCK_NAME, 'tb_name', 50, 255, $this->getVar('tb_name')));
+        $form->addElement(new \XoopsFormText(\_MA_WGEVENTS_TEXTBLOCK_NAME, 'name', 50, 255, $this->getVar('name')));
         // Form Editor DhtmlTextArea tbText
         $editorConfigs = [];
         if ($isAdmin) {
@@ -107,23 +106,23 @@ class Textblocks extends \XoopsObject
         } else {
             $editor = $helper->getConfig('editor_user');
         }
-        $editorConfigs['name'] = 'tb_text';
-        $editorConfigs['value'] = $this->getVar('tb_text', 'e');
+        $editorConfigs['name'] = 'text';
+        $editorConfigs['value'] = $this->getVar('text', 'e');
         $editorConfigs['rows'] = 5;
         $editorConfigs['cols'] = 40;
         $editorConfigs['width'] = '100%';
         $editorConfigs['height'] = '400px';
         $editorConfigs['editor'] = $editor;
-        $form->addElement(new \XoopsFormEditor(\_MA_WGEVENTS_TEXTBLOCK_TEXT, 'tb_text', $editorConfigs));
+        $form->addElement(new \XoopsFormEditor(\_MA_WGEVENTS_TEXTBLOCK_TEXT, 'text', $editorConfigs));
         // Form Text tbWeight
-        $form->addElement(new \XoopsFormText(\_MA_WGEVENTS_WEIGHT, 'tb_weight', 50, 255, $this->getVar('tb_weight')));
+        $form->addElement(new \XoopsFormText(\_MA_WGEVENTS_WEIGHT, 'weight', 50, 255, $this->getVar('weight')));
         // Form Text Date Select tbDatecreated
-        $tbDatecreated = $this->isNew() ? \time() : $this->getVar('tb_datecreated');
-        $form->addElement(new \XoopsFormTextDateSelect(\_MA_WGEVENTS_DATECREATED, 'tb_datecreated', '', $tbDatecreated));
+        $tbDatecreated = $this->isNew() ? \time() : $this->getVar('datecreated');
+        $form->addElement(new \XoopsFormTextDateSelect(\_MA_WGEVENTS_DATECREATED, 'datecreated', '', $tbDatecreated));
         // Form Select User tbSubmitter
         $uidCurrent = \is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->uid() : 0;
-        $tbSubmitter = $this->isNew() ? $uidCurrent : $this->getVar('tb_submitter');
-        $form->addElement(new \XoopsFormSelectUser(\_MA_WGEVENTS_SUBMITTER, 'tb_submitter', false, $tbSubmitter));
+        $tbSubmitter = $this->isNew() ? $uidCurrent : $this->getVar('submitter');
+        $form->addElement(new \XoopsFormSelectUser(\_MA_WGEVENTS_SUBMITTER, 'submitter', false, $tbSubmitter));
         // Permissions
         $memberHandler = \xoops_getHandler('member');
         $groupList = $memberHandler->getGroupList();
@@ -134,13 +133,13 @@ class Textblocks extends \XoopsObject
             $groupsCanSubmitCheckbox = new \XoopsFormCheckBox(\_AM_WGEVENTS_PERMISSIONS_SUBMIT, 'groups_submit_textblocks[]', $fullList);
             $groupsCanViewCheckbox = new \XoopsFormCheckBox(\_AM_WGEVENTS_PERMISSIONS_VIEW, 'groups_view_textblocks[]', $fullList);
         } else {
-            $groupsIdsApprove = $grouppermHandler->getGroupIds('wgevents_approve_textblocks', $this->getVar('tb_id'), $GLOBALS['xoopsModule']->getVar('mid'));
+            $groupsIdsApprove = $grouppermHandler->getGroupIds('wgevents_approve_textblocks', $this->getVar('id'), $GLOBALS['xoopsModule']->getVar('mid'));
             $groupsIdsApprove[] = \array_values($groupsIdsApprove);
             $groupsCanApproveCheckbox = new \XoopsFormCheckBox(\_AM_WGEVENTS_PERMISSIONS_APPROVE, 'groups_approve_textblocks[]', $groupsIdsApprove);
-            $groupsIdsSubmit = $grouppermHandler->getGroupIds('wgevents_submit_textblocks', $this->getVar('tb_id'), $GLOBALS['xoopsModule']->getVar('mid'));
+            $groupsIdsSubmit = $grouppermHandler->getGroupIds('wgevents_submit_textblocks', $this->getVar('id'), $GLOBALS['xoopsModule']->getVar('mid'));
             $groupsIdsSubmit[] = \array_values($groupsIdsSubmit);
             $groupsCanSubmitCheckbox = new \XoopsFormCheckBox(\_AM_WGEVENTS_PERMISSIONS_SUBMIT, 'groups_submit_textblocks[]', $groupsIdsSubmit);
-            $groupsIdsView = $grouppermHandler->getGroupIds('wgevents_view_textblocks', $this->getVar('tb_id'), $GLOBALS['xoopsModule']->getVar('mid'));
+            $groupsIdsView = $grouppermHandler->getGroupIds('wgevents_view_textblocks', $this->getVar('id'), $GLOBALS['xoopsModule']->getVar('mid'));
             $groupsIdsView[] = \array_values($groupsIdsView);
             $groupsCanViewCheckbox = new \XoopsFormCheckBox(\_AM_WGEVENTS_PERMISSIONS_VIEW, 'groups_view_textblocks[]', $groupsIdsView);
         }
@@ -173,14 +172,11 @@ class Textblocks extends \XoopsObject
         $helper  = \XoopsModules\Wgevents\Helper::getInstance();
         $utility = new \XoopsModules\Wgevents\Utility();
         $ret = $this->getValues($keys, $format, $maxDepth);
-        $ret['id']          = $this->getVar('tb_id');
-        $ret['name']        = $this->getVar('tb_name');
-        $ret['text']        = $this->getVar('tb_text', 'e');
         $editorMaxchar = $helper->getConfig('admin_maxchar');
-        $ret['text_short']  = $utility::truncateHtml($ret['text'], $editorMaxchar);
-        $ret['weight']      = $this->getVar('tb_weight');
-        $ret['datecreated'] = \formatTimestamp($this->getVar('tb_datecreated'), 's');
-        $ret['submitter']   = \XoopsUser::getUnameFromId($this->getVar('tb_submitter'));
+        $ret['text_text']        = $this->getVar('text', 'e');
+        $ret['text_short']       = $utility::truncateHtml($ret['text'], $editorMaxchar);
+        $ret['datecreated_text'] = \formatTimestamp($this->getVar('datecreated'), 's');
+        $ret['submitter_text']   = \XoopsUser::getUnameFromId($this->getVar('submitter'));
         return $ret;
     }
 

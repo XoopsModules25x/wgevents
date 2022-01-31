@@ -40,7 +40,7 @@ if (!$permissionsHandler->getPermGlobalView()) {
 }
 
 $op      = Request::getCmd('op', 'none');
-$evId    = Request::getInt('ev_id');
+$evId    = Request::getInt('id');
 $redir   = Request::getString('redir');
 $outType = Request::getString('output_type', 'none');
 
@@ -56,20 +56,20 @@ switch ($op) {
             \redirect_header('registrations.php?op=list', 3, \_MA_WGEVENTS_INVALID_PARAM);
         }
         $eventsObj = $eventsHandler->get($evId);
-        if (!$permissionsHandler->getPermRegistrationsApprove($eventsObj->getVar('ev_submitter'), $eventsObj->getVar('ev_status'))) {
+        if (!$permissionsHandler->getPermRegistrationsApprove($eventsObj->getVar('submitter'), $eventsObj->getVar('status'))) {
             \redirect_header('index.php', 3, _NOPERM);
         }
         switch ($outType) {
             case 'csv':
             case 'xlsx':
-                $evname = \preg_replace('/[^a-zA-Z0-9]/', '', (string)$eventsObj->getVar('ev_name'));
-                $filename = \date('Ymd_H_i_s_', \time()) . \_MA_WGEVENTS_REGISTRATIONS . '_' . $evname . '.' . $outType;
+                $eventname = \preg_replace('/[^a-zA-Z0-9]/', '', (string)$eventsObj->getVar('name'));
+                $filename = \date('Ymd_H_i_s_', \time()) . \_MA_WGEVENTS_REGISTRATIONS . '_' . $eventname . '.' . $outType;
 
-                $eventFee = (float)$eventsObj->getVar('ev_fee');
-                $eventRegisterMax = (int)$eventsObj->getVar('ev_register_max');
+                $eventFee = (float)$eventsObj->getVar('fee');
+                $eventRegisterMax = (int)$eventsObj->getVar('register_max');
                 // Add data
                 $crRegistrations = new \CriteriaCompo();
-                $crRegistrations->add(new \Criteria('reg_evid', $evId));
+                $crRegistrations->add(new \Criteria('evid', $evId));
                 $registrationsCount = $registrationsHandler->getCount($crRegistrations);
                 $GLOBALS['xoopsTpl']->assign('registrationsCount', $registrationsCount);
 
@@ -130,10 +130,10 @@ switch ($op) {
                                 $data[$i][] = $registration['financial_text'];
                             }
                             if ($eventRegisterMax > 0) {
-                                $data[$i][] = $registration['listwait'];
+                                $data[$i][] = $registration['listwait_text'];
                             }
-                            $data[$i][] = $registration['datecreated'];
-                            $data[$i][] = $registration['submitter'];
+                            $data[$i][] = $registration['datecreated_text'];
+                            $data[$i][] = $registration['submitter_text'];
                         } else {
                             $data[$i] = [
                                 '"' . $registration['salutation_text'] . '"',
@@ -148,10 +148,10 @@ switch ($op) {
                                 $data[$i][] = '"' . $registration['financial_text'] . '"';
                             }
                             if ($eventRegisterMax > 0) {
-                                $data[$i][] = '"' . $registration['listwait'] . '"';
+                                $data[$i][] = '"' . $registration['listwait_text'] . '"';
                             }
-                            $data[$i][] = '"' . $registration['datecreated'] . '"';
-                            $data[$i][] = '"' . $registration['submitter'] . '"';
+                            $data[$i][] = '"' . $registration['datecreated_text'] . '"';
+                            $data[$i][] = '"' . $registration['submitter_text'] . '"';
                         }
                     }
                     unset($registrations);

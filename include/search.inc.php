@@ -49,8 +49,8 @@ function wgevents_search($queryarray, $andor, $limit, $offset, $userid)
         $crKeywords = new \CriteriaCompo();
         for ($i = 0; $i  <  $elementCount; $i++) {
             $crKeyword = new \CriteriaCompo();
-            $crKeyword->add(new \Criteria('ev_name', '%' . $queryarray[$i] . '%', 'LIKE'), 'OR');
-            $crKeyword->add(new \Criteria('ev_desc', '%' . $queryarray[$i] . '%', 'LIKE'), 'OR');
+            $crKeyword->add(new \Criteria('name', '%' . $queryarray[$i] . '%', 'LIKE'), 'OR');
+            $crKeyword->add(new \Criteria('desc', '%' . $queryarray[$i] . '%', 'LIKE'), 'OR');
             $crKeywords->add($crKeyword, $andor);
             unset($crKeyword);
         }
@@ -59,10 +59,10 @@ function wgevents_search($queryarray, $andor, $limit, $offset, $userid)
     if ($userid && \is_array($userid)) {
         $userid = array_map('\intval', $userid);
         $crUser = new \CriteriaCompo();
-        $crUser->add(new \Criteria('ev_submitter', '(' . \implode(',', $userid) . ')', 'IN'), 'OR');
+        $crUser->add(new \Criteria('submitter', '(' . \implode(',', $userid) . ')', 'IN'), 'OR');
     } elseif (is_numeric($userid) && $userid > 0) {
         $crUser = new \CriteriaCompo();
-        $crUser->add(new \Criteria('ev_submitter', $userid), 'OR');
+        $crUser->add(new \Criteria('submitter', $userid), 'OR');
     }
     $crSearch = new \CriteriaCompo();
     if (isset($crKeywords)) {
@@ -73,15 +73,15 @@ function wgevents_search($queryarray, $andor, $limit, $offset, $userid)
     }
     $crSearch->setStart($offset);
     $crSearch->setLimit($limit);
-    $crSearch->setSort('ev_datecreated');
+    $crSearch->setSort('datecreated');
     $crSearch->setOrder('DESC');
     $eventsAll = $eventsHandler->getAll($crSearch);
     foreach (\array_keys($eventsAll) as $i) {
         $ret[] = [
             'image'  => 'assets/icons/16/events.png',
-            'link'   => 'events.php?op=show&amp;ev_id=' . $eventsAll[$i]->getVar('ev_id'),
-            'title'  => $eventsAll[$i]->getVar('ev_name'),
-            'time'   => $eventsAll[$i]->getVar('ev_datecreated')
+            'link'   => 'events.php?op=show&amp;id=' . $eventsAll[$i]->getVar('id'),
+            'title'  => $eventsAll[$i]->getVar('name'),
+            'time'   => $eventsAll[$i]->getVar('datecreated')
         ];
     }
     unset($crKeywords);

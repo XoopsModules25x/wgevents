@@ -27,12 +27,12 @@
         <{foreach item=event from=$events_list}>
         <tr class='<{cycle values='odd, even'}>'>
             <td class='center'><{$event.id}></td>
-            <td class='center'><{$event.catid}></td>
+            <td class='center'><{$event.catname}></td>
             <td class='center'><{$event.name}></td>
             <td class='center'><img src="<{$wgevents_upload_url|default:false}>/images/events/<{$event.logo}>" alt="events" style="max-width:100px" ></td>
             <td class='center'><{$event.desc_short}></td>
-            <td class='center'><{$event.datefrom}></td>
-            <td class='center'><{$event.dateto}></td>
+            <td class='center'><{$event.datefrom_text}></td>
+            <td class='center'><{$event.dateto_text}></td>
             <td class='center'><{$event.contact}></td>
             <td class='center'><{$event.email}></td>
             <td class='center'><{$event.location}></td>

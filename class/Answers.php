@@ -50,13 +50,13 @@ class Answers extends \XoopsObject
      */
     public function __construct()
     {
-        $this->initVar('ans_id', \XOBJ_DTYPE_INT);
-        $this->initVar('ans_regid', \XOBJ_DTYPE_INT);
-        $this->initVar('ans_queid', \XOBJ_DTYPE_INT);
-        $this->initVar('ans_evid', \XOBJ_DTYPE_INT);
-        $this->initVar('ans_text', \XOBJ_DTYPE_TXTBOX);
-        $this->initVar('ans_datecreated', \XOBJ_DTYPE_INT);
-        $this->initVar('ans_submitter', \XOBJ_DTYPE_INT);
+        $this->initVar('id', \XOBJ_DTYPE_INT);
+        $this->initVar('regid', \XOBJ_DTYPE_INT);
+        $this->initVar('queid', \XOBJ_DTYPE_INT);
+        $this->initVar('evid', \XOBJ_DTYPE_INT);
+        $this->initVar('text', \XOBJ_DTYPE_TXTBOX);
+        $this->initVar('datecreated', \XOBJ_DTYPE_INT);
+        $this->initVar('submitter', \XOBJ_DTYPE_INT);
     }
 
     /**
@@ -101,39 +101,39 @@ class Answers extends \XoopsObject
         $form->setExtra('enctype="multipart/form-data"');
         // Form Table registrations
         $registrationsHandler = $helper->getHandler('Registrations');
-        $ansResidSelect = new \XoopsFormSelect(\_MA_WGEVENTS_ANSWER_REGID, 'ans_regid', $this->getVar('ans_regid'));
+        $ansResidSelect = new \XoopsFormSelect(\_MA_WGEVENTS_ANSWER_REGID, 'regid', $this->getVar('regid'));
         $ansResidSelect->addOptionArray($registrationsHandler->getList());
         $form->addElement($ansResidSelect);
         // Form Table questions
         $questionsHandler = $helper->getHandler('Questions');
-        $ansAddidSelect = new \XoopsFormSelect(\_MA_WGEVENTS_ANSWER_ADDID, 'ans_queid', $this->getVar('ans_queid'));
+        $ansAddidSelect = new \XoopsFormSelect(\_MA_WGEVENTS_ANSWER_ADDID, 'queid', $this->getVar('queid'));
         $crQuestions = new \CriteriaCompo();
-        $crQuestions->add(new \Criteria('que_evid', $this->getVar('ans_evid')));
+        $crQuestions->add(new \Criteria('evid', $this->getVar('evid')));
         $questionsCount = $questionsHandler->getCount($crQuestions);
         // Table view questions
         if ($questionsCount > 0) {
-            $crQuestions->setSort('que_weight ASC, que_id');
+            $crQuestions->setSort('weight ASC, id');
             $crQuestions->setOrder('DESC');
             $questionsAll = $questionsHandler->getAll($crQuestions);
             foreach (\array_keys($questionsAll) as $i) {
-                $ansAddidSelect->addOption($questionsAll[$i]->getVar('que_id'), $questionsAll[$i]->getVar('que_caption'));
+                $ansAddidSelect->addOption($questionsAll[$i]->getVar('id'), $questionsAll[$i]->getVar('caption'));
             }
         }
         $form->addElement($ansAddidSelect);
         // Form Table events
         $eventsHandler = $helper->getHandler('Events');
-        $ansEvidSelect = new \XoopsFormSelect(\_MA_WGEVENTS_ANSWER_EVID, 'ans_evid', $this->getVar('ans_evid'));
+        $ansEvidSelect = new \XoopsFormSelect(\_MA_WGEVENTS_ANSWER_EVID, 'evid', $this->getVar('evid'));
         $ansEvidSelect->addOptionArray($eventsHandler->getList());
         $form->addElement($ansEvidSelect);
         // Form Text ansText
-        $form->addElement(new \XoopsFormText(\_MA_WGEVENTS_ANSWER_TEXT, 'ans_text', 50, 255, $this->getVar('ans_text')));
+        $form->addElement(new \XoopsFormText(\_MA_WGEVENTS_ANSWER_TEXT, 'text', 50, 255, $this->getVar('text')));
         // Form Text Date Select ansDatecreated
-        $ansDatecreated = $this->isNew() ? \time() : $this->getVar('ans_datecreated');
-        $form->addElement(new \XoopsFormTextDateSelect(\_MA_WGEVENTS_DATECREATED, 'ans_datecreated', '', $ansDatecreated));
+        $ansDatecreated = $this->isNew() ? \time() : $this->getVar('datecreated');
+        $form->addElement(new \XoopsFormTextDateSelect(\_MA_WGEVENTS_DATECREATED, 'datecreated', '', $ansDatecreated));
         // Form Select User ansSubmitter
         $uidCurrent = \is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->uid() : 0;
-        $ansSubmitter = $this->isNew() ? $uidCurrent : $this->getVar('ans_submitter');
-        $form->addElement(new \XoopsFormSelectUser(\_MA_WGEVENTS_SUBMITTER, 'ans_submitter', false, $ansSubmitter));
+        $ansSubmitter = $this->isNew() ? $uidCurrent : $this->getVar('submitter');
+        $form->addElement(new \XoopsFormSelectUser(\_MA_WGEVENTS_SUBMITTER, 'submitter', false, $ansSubmitter));
         // To Save
         $form->addElement(new \XoopsFormHidden('op', 'save'));
         $form->addElement(new \XoopsFormHidden('start', $this->start));
@@ -153,25 +153,22 @@ class Answers extends \XoopsObject
     {
         $helper  = \XoopsModules\Wgevents\Helper::getInstance();
         $ret = $this->getValues($keys, $format, $maxDepth);
-        $ret['id']          = $this->getVar('ans_id');
-        $ret['regid']       = $this->getVar('ans_regid');
         $questionsHandler = $helper->getHandler('Questions');
-        $questionsObj = $questionsHandler->get($this->getVar('ans_queid'));
+        $questionsObj = $questionsHandler->get($this->getVar('queid'));
         $queCaption = '';
         if (\is_object($questionsObj)) {
-            $queCaption = $questionsObj->getVar('que_caption');
+            $queCaption = $questionsObj->getVar('caption');
         }
-        $ret['addid']       = $queCaption;
+        $ret['quecaption']       = $queCaption;
         $eventsHandler = $helper->getHandler('Events');
-        $eventsObj = $eventsHandler->get($this->getVar('ans_evid'));
+        $eventsObj = $eventsHandler->get($this->getVar('evid'));
         $evName = 'invalid event';
         if (\is_object($eventsObj)) {
-            $evName = $eventsObj->getVar('ev_name');
+            $evName = $eventsObj->getVar('name');
         }
-        $ret['evid']        = $evName;
-        $ret['text']        = $this->getVar('ans_text');
-        $ret['datecreated'] = \formatTimestamp($this->getVar('ans_datecreated'), 's');
-        $ret['submitter']   = \XoopsUser::getUnameFromId($this->getVar('ans_submitter'));
+        $ret['eventname']        = $evName;
+        $ret['datecreated_text'] = \formatTimestamp($this->getVar('datecreated'), 's');
+        $ret['submitter_text']   = \XoopsUser::getUnameFromId($this->getVar('submitter'));
         return $ret;
     }
 

@@ -1,6 +1,5 @@
 <?php declare(strict_types=1);
 
-
 namespace XoopsModules\Wgevents;
 
 /*
@@ -39,7 +38,7 @@ class AnswershistHandler extends \XoopsPersistableObjectHandler
      */
     public function __construct(\XoopsDatabase $db)
     {
-        parent::__construct($db, 'wgevents_answers_hist', Answershist::class, 'hist_id', 'ans_id');
+        parent::__construct($db, 'wgevents_answers_hist', Answershist::class, 'hist_id', 'id');
     }
 
     /**
@@ -80,8 +79,8 @@ class AnswershistHandler extends \XoopsPersistableObjectHandler
             $answersHandler = $helper->getHandler('Answers');
             $answershistHandler = $helper->getHandler('Answershist');
             $crAnswers = new \CriteriaCompo();
-            $crAnswers->add(new \Criteria('ans_evid', $regEvid));
-            $crAnswers->add(new \Criteria('ans_regid', $regId));
+            $crAnswers->add(new \Criteria('evid', $regEvid));
+            $crAnswers->add(new \Criteria('regid', $regId));
             $answersCount = $answersHandler->getCount($crAnswers);
             if ($answersCount > 0) {
                 $answersAll = $answersHandler->getAll($crAnswers);
