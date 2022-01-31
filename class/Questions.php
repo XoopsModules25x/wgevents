@@ -81,7 +81,7 @@ class Questions extends \XoopsObject
      * The new inserted $Id
      * @return inserted id
      */
-    public function getNewInsertedIdQuestions()
+    public function getNewInsertedId()
     {
         return $GLOBALS['xoopsDB']->getInsertId();
     }
@@ -91,7 +91,7 @@ class Questions extends \XoopsObject
      * @param bool $action
      * @return \XoopsThemeForm
      */
-    public function getFormQuestions($action = false)
+    public function getForm($action = false)
     {
         $helper = \XoopsModules\Wgevents\Helper::getInstance();
 
@@ -246,7 +246,8 @@ class Questions extends \XoopsObject
      *
      * @return array
      */
-    public function toArrayQuestions()
+    /*
+    public function toArray()
     {
         $ret = [];
         $vars = $this->getVars();
@@ -255,5 +256,5 @@ class Questions extends \XoopsObject
         }
         return $ret;
     }
-
+    */
 }

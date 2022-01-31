@@ -160,7 +160,7 @@ switch ($op) {
                 $registrationsObj = $registrationsHandler->create();
                 $registrationsObj->setVar('evid', $regEvid);
                 $registrationsObj->setRedir($redir);
-                $form = $registrationsObj->getFormRegistrations();
+                $form = $registrationsObj->getForm();
                 $GLOBALS['xoopsTpl']->assign('form', $form->render());
             }
             if (\time() < $eventsObj->getVar('register_from')) {
@@ -246,7 +246,7 @@ switch ($op) {
         $registrationsObj->setVar('submitter', $regSubmitter);
         // Insert Data
         if ($registrationsHandler->insert($registrationsObj)) {
-            $newRegId = $regId > 0 ? $regId : $registrationsObj->getNewInsertedIdRegistrations();
+            $newRegId = $regId > 0 ? $regId : $registrationsObj->getNewInsertedId();
             if ($regId > 0) {
                 // create copy before deleting
                 // get all questions for this event
@@ -369,7 +369,7 @@ switch ($op) {
         }
         // Get Form Error
         $GLOBALS['xoopsTpl']->assign('error', $registrationsObj->getHtmlErrors());
-        $form = $registrationsObj->getFormRegistrations();
+        $form = $registrationsObj->getForm();
         $GLOBALS['xoopsTpl']->assign('form', $form->render());
         break;
     case 'edit':
@@ -395,7 +395,7 @@ switch ($op) {
         $registrationsObj->setRedir($redir);
         $registrationsObj->setStart = $start;
         $registrationsObj->setLimit = $limit;
-        $form = $registrationsObj->getFormRegistrations();
+        $form = $registrationsObj->getForm();
         $GLOBALS['xoopsTpl']->assign('form', $form->render());
         break;
 
@@ -416,7 +416,7 @@ switch ($op) {
         // Get Form
         $registrationsObjSource = $registrationsHandler->get($regIdSource);
         $registrationsObj = $registrationsObjSource->xoopsClone();
-        $form = $registrationsObj->getFormRegistrations();
+        $form = $registrationsObj->getForm();
         $GLOBALS['xoopsTpl']->assign('form', $form->render());
         break;
     case 'delete':
@@ -520,7 +520,7 @@ switch ($op) {
         if ($registrationsHandler->insert($registrationsObj)) {
             // create history
             $registrationshistHandler->createHistory($registrationsObjOld, 'update');
-            $newRegId = $regId > 0 ? $regId : $registrationsObj->getNewInsertedIdRegistrations();
+            $newRegId = $regId > 0 ? $regId : $registrationsObj->getNewInsertedId();
             // Handle notification
             /*
             $regEvid = $registrationsObj->getVar('evid');
@@ -568,7 +568,7 @@ switch ($op) {
         }
         // Get Form Error
         $GLOBALS['xoopsTpl']->assign('error', $registrationsObj->getHtmlErrors());
-        $form = $registrationsObj->getFormRegistrations();
+        $form = $registrationsObj->getForm();
         $GLOBALS['xoopsTpl']->assign('form', $form->render());
         break;
     case 'listwait_takeover':
@@ -589,7 +589,7 @@ switch ($op) {
         $registrationsObj->setVar('listwait', 0);
         // Insert Data
         if ($registrationsHandler->insert($registrationsObj)) {
-            $newRegId = $regId > 0 ? $regId : $registrationsObj->getNewInsertedIdRegistrations();
+            $newRegId = $regId > 0 ? $regId : $registrationsObj->getNewInsertedId();
             // Handle notification
             /*
             $regEvid = $registrationsObj->getVar('evid');
@@ -638,7 +638,7 @@ switch ($op) {
         }
         // Get Form Error
         $GLOBALS['xoopsTpl']->assign('error', $registrationsObj->getHtmlErrors());
-        $form = $registrationsObj->getFormRegistrations();
+        $form = $registrationsObj->getForm();
         $GLOBALS['xoopsTpl']->assign('form', $form->render());
         break;
 }

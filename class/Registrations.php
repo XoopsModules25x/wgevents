@@ -89,7 +89,7 @@ class Registrations extends \XoopsObject
      * The new inserted $Id
      * @return inserted id
      */
-    public function getNewInsertedIdRegistrations()
+    public function getNewInsertedId()
     {
         return $GLOBALS['xoopsDB']->getInsertId();
     }
@@ -100,7 +100,7 @@ class Registrations extends \XoopsObject
      * @param bool $test
      * @return \XoopsThemeForm
      */
-    public function getFormRegistrations($action = false, $test = false)
+    public function getForm($action = false, $test = false)
     {
         $helper = \XoopsModules\Wgevents\Helper::getInstance();
 
@@ -375,7 +375,8 @@ class Registrations extends \XoopsObject
      *
      * @return array
      */
-    public function toArrayRegistrations()
+    /*
+    public function toArray()
     {
         $ret = [];
         $vars = $this->getVars();
@@ -384,4 +385,5 @@ class Registrations extends \XoopsObject
         }
         return $ret;
     }
+    */
 }

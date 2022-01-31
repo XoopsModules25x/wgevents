@@ -287,7 +287,7 @@ switch ($op) {
             if ('' == $evRegisterSendermail) {
                 // Get Form Error
                 $GLOBALS['xoopsTpl']->assign('error', \_MA_WGEVENTS_EVENT_REGISTER_SENDERMAIL_ERR);
-                $form = $eventsObj->getFormEvents();
+                $form = $eventsObj->getForm();
                 $GLOBALS['xoopsTpl']->assign('form', $form->render());
                 break;
             }
@@ -316,7 +316,7 @@ switch ($op) {
         $eventsObj->setVar('submitter', Request::getInt('submitter'));
         // Insert Data
         if ($eventsHandler->insert($eventsObj)) {
-            $newEvId = $evId > 0 ? $evId : $eventsObj->getNewInsertedIdEvents();
+            $newEvId = $evId > 0 ? $evId : $eventsObj->getNewInsertedId();
             // Handle notification
             /*
             $evName = $eventsObj->getVar('name');
@@ -407,7 +407,7 @@ switch ($op) {
         }
         // Get Form Error
         $GLOBALS['xoopsTpl']->assign('error', $eventsObj->getHtmlErrors());
-        $form = $eventsObj->getFormEvents();
+        $form = $eventsObj->getForm();
         $GLOBALS['xoopsTpl']->assign('form', $form->render());
         break;
     case 'new':
@@ -423,7 +423,7 @@ switch ($op) {
         $eventDate = Request::getInt('eventDate', \time());
         $eventsObj->setVar('datefrom', $eventDate);
         $eventsObj->setVar('dateto', $eventDate);
-        $form = $eventsObj->getFormEvents();
+        $form = $eventsObj->getForm();
         $GLOBALS['xoopsTpl']->assign('form', $form->render());
         break;
     case 'edit':
@@ -444,7 +444,7 @@ switch ($op) {
         $eventsObj = $eventsHandler->get($evId);
         $eventsObj->start = $start;
         $eventsObj->limit = $limit;
-        $form = $eventsObj->getFormEvents();
+        $form = $eventsObj->getForm();
         $GLOBALS['xoopsTpl']->assign('form', $form->render());
         break;
     case 'clone':
@@ -476,7 +476,7 @@ switch ($op) {
         // Get Form
         $eventsObjSource = $eventsHandler->get($evIdSource);
         $eventsObj = $eventsObjSource->xoopsClone();
-        $form = $eventsObj->getFormEvents();
+        $form = $eventsObj->getForm();
         $GLOBALS['xoopsTpl']->assign('form', $form->render());
         break;
     case 'delete':

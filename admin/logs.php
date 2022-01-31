@@ -87,7 +87,7 @@ switch ($op) {
         }
         // Get Form
         $GLOBALS['xoopsTpl']->assign('error', $logsObj->getHtmlErrors());
-        $form = $logsObj->getFormLogs();
+        $form = $logsObj->getForm();
         $GLOBALS['xoopsTpl']->assign('form', $form->render());
         break;
     case 'edit':
@@ -100,7 +100,7 @@ switch ($op) {
         $logsObj = $logsHandler->get($logId);
         $logsObj->start = $start;
         $logsObj->limit = $limit;
-        $form = $logsObj->getFormLogs();
+        $form = $logsObj->getForm();
         $GLOBALS['xoopsTpl']->assign('form', $form->render());
         break;
     case 'delete':

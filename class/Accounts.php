@@ -68,7 +68,7 @@ class Accounts extends \XoopsObject
      *
      * @return \XoopsThemeForm
      */
-    public function getFormAccounts($action = false)
+    public function getForm($action = false)
     {
         global $xoopsDB;
 
@@ -200,7 +200,7 @@ class Accounts extends \XoopsObject
      * The new inserted $Id
      * @return inserted id
      */
-    public function getNewInsertedIdAccounts()
+    public function getNewInsertedId()
     {
         return $GLOBALS['xoopsDB']->getInsertId();
     }

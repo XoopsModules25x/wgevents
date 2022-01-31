@@ -242,7 +242,7 @@ switch ($op) {
         $GLOBALS['xoopsTpl']->assign('buttons', $adminObject->displayButton('left'));
         // Form Create
         $accountsObj = $accountsHandler->create();
-        $form = $accountsObj->getFormAccounts();
+        $form = $accountsObj->getForm();
         $GLOBALS['xoopsTpl']->assign('form', $form->render());
         break;
     case 'save':
@@ -274,7 +274,7 @@ switch ($op) {
         $accountsObj->setVar('submitter', Request::getInt('submitter'));
         // Insert Data
         if ($accountsHandler->insert($accountsObj)) {
-            $newAccId = $accId > 0 ? $accId : $accountsObj->getNewInsertedIdAccounts();
+            $newAccId = $accId > 0 ? $accId : $accountsObj->getNewInsertedId();
             if ('none' === $save_and_check) {
                 redirect_header('?op=list&amp;start=' . $start . '&amp;limit=' . $limit, 3, _MA_WGEVENTS_FORM_OK);
             } else {
@@ -283,7 +283,7 @@ switch ($op) {
         }
         // Get Form
         $GLOBALS['xoopsTpl']->assign('error', $accountsObj->getHtmlErrors());
-        $form = $accountsObj->getFormAccounts();
+        $form = $accountsObj->getForm();
         $GLOBALS['xoopsTpl']->assign('form', $form->render());
         break;
     case 'edit':
@@ -296,7 +296,7 @@ switch ($op) {
         $accountsObj = $accountsHandler->get($accId);
         $accountsObj->start = $start;
         $accountsObj->limit = $limit;
-        $form = $accountsObj->getFormAccounts();
+        $form = $accountsObj->getForm();
         $GLOBALS['xoopsTpl']->assign('form', $form->render());
         break;
     case 'delete':

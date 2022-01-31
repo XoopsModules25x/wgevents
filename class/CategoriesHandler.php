@@ -152,7 +152,7 @@ class CategoriesHandler extends \XoopsPersistableObjectHandler
      * @param null
      * @return array
      */
-    public function getCategoriesCollection()
+    public function getCollection()
     {
         $categories = [];
         $categoriesCount = $this->getCount();

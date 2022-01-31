@@ -82,7 +82,7 @@ switch ($op) {
         $GLOBALS['xoTheme']->addScript(\WGEVENTS_URL . '/assets/js/forms.js');
         // Form Create
         $eventsObj = $eventsHandler->create();
-        $form = $eventsObj->getFormEvents();
+        $form = $eventsObj->getForm();
         $GLOBALS['xoopsTpl']->assign('form', $form->render());
         break;
     case 'clone':
@@ -96,7 +96,7 @@ switch ($op) {
         // Get Form
         $eventsObjSource = $eventsHandler->get($evIdSource);
         $eventsObj = $eventsObjSource->xoopsClone();
-        $form = $eventsObj->getFormEvents();
+        $form = $eventsObj->getForm();
         $GLOBALS['xoopsTpl']->assign('form', $form->render());
         break;
     case 'save':
@@ -218,7 +218,7 @@ switch ($op) {
         $eventsObj->setVar('submitter', Request::getInt('submitter'));
         // Insert Data
         if ($eventsHandler->insert($eventsObj)) {
-            $newEvId = $eventsObj->getNewInsertedIdEvents();
+            $newEvId = $eventsObj->getNewInsertedId();
             if ('' !== $uploaderErrors) {
                 \redirect_header('events.php?op=edit&id=' . $evId, 5, $uploaderErrors);
             } else {
@@ -231,7 +231,7 @@ switch ($op) {
         }
         // Get Form
         $GLOBALS['xoopsTpl']->assign('error', $eventsObj->getHtmlErrors());
-        $form = $eventsObj->getFormEvents();
+        $form = $eventsObj->getForm();
         $GLOBALS['xoopsTpl']->assign('form', $form->render());
         break;
     case 'edit':
@@ -245,7 +245,7 @@ switch ($op) {
         $eventsObj = $eventsHandler->get($evId);
         $eventsObj->start = $start;
         $eventsObj->limit = $limit;
-        $form = $eventsObj->getFormEvents();
+        $form = $eventsObj->getForm();
         $GLOBALS['xoopsTpl']->assign('form', $form->render());
         break;
     case 'delete':

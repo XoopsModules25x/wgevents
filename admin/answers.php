@@ -101,7 +101,7 @@ switch ($op) {
         // Form Create
         $answersObj = $answersHandler->create();
         $answersObj->setVar('evid', $evId);
-        $form = $answersObj->getFormAnswers();
+        $form = $answersObj->getForm();
         $GLOBALS['xoopsTpl']->assign('form', $form->render());
         break;
     case 'clone':
@@ -115,7 +115,7 @@ switch ($op) {
         // Get Form
         $answersObjSource = $answersHandler->get($ansIdSource);
         $answersObj = $answersObjSource->xoopsClone();
-        $form = $answersObj->getFormAnswers();
+        $form = $answersObj->getForm();
         $GLOBALS['xoopsTpl']->assign('form', $form->render());
         break;
     case 'save':
@@ -142,7 +142,7 @@ switch ($op) {
         }
         // Get Form
         $GLOBALS['xoopsTpl']->assign('error', $answersObj->getHtmlErrors());
-        $form = $answersObj->getFormAnswers();
+        $form = $answersObj->getForm();
         $GLOBALS['xoopsTpl']->assign('form', $form->render());
         break;
     case 'edit':
@@ -155,7 +155,7 @@ switch ($op) {
         $answersObj = $answersHandler->get($ansId);
         $answersObj->start = $start;
         $answersObj->limit = $limit;
-        $form = $answersObj->getFormAnswers();
+        $form = $answersObj->getForm();
         $GLOBALS['xoopsTpl']->assign('form', $form->render());
         break;
     case 'delete':

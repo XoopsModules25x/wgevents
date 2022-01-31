@@ -103,7 +103,7 @@ switch ($op) {
         // Form Create
         $registrationsObj = $registrationsHandler->create();
         $registrationsObj->setVar('evid', $evId);
-        $form = $registrationsObj->getFormRegistrations();
+        $form = $registrationsObj->getForm();
         $GLOBALS['xoopsTpl']->assign('form', $form->render());
         break;
     case 'clone':
@@ -117,7 +117,7 @@ switch ($op) {
         // Get Form
         $registrationsObjSource = $registrationsHandler->get($regIdSource);
         $registrationsObj = $registrationsObjSource->xoopsClone();
-        $form = $registrationsObj->getFormRegistrations();
+        $form = $registrationsObj->getForm();
         $GLOBALS['xoopsTpl']->assign('form', $form->render());
         break;
     case 'save':
@@ -147,7 +147,7 @@ switch ($op) {
         $registrationsObj->setVar('submitter', Request::getInt('submitter'));
         // Insert Data
         if ($registrationsHandler->insert($registrationsObj)) {
-            $newRegId = $registrationsObj->getNewInsertedIdRegistrations();
+            $newRegId = $registrationsObj->getNewInsertedId();
             $permId = isset($_REQUEST['id']) ? $regId : $newRegId;
             $grouppermHandler = \xoops_getHandler('groupperm');
             $mid = $GLOBALS['xoopsModule']->getVar('mid');
@@ -176,7 +176,7 @@ switch ($op) {
         }
         // Get Form
         $GLOBALS['xoopsTpl']->assign('error', $registrationsObj->getHtmlErrors());
-        $form = $registrationsObj->getFormRegistrations();
+        $form = $registrationsObj->getForm();
         $GLOBALS['xoopsTpl']->assign('form', $form->render());
         break;
     case 'edit':
@@ -189,7 +189,7 @@ switch ($op) {
         $registrationsObj = $registrationsHandler->get($regId);
         $registrationsObj->setStart = $start;
         $registrationsObj->setLimit = $limit;
-        $form = $registrationsObj->getFormRegistrations();
+        $form = $registrationsObj->getForm();
         $GLOBALS['xoopsTpl']->assign('form', $form->render());
         break;
     case 'delete':

@@ -144,7 +144,7 @@ switch ($op) {
         }
         // Get Form Error
         $GLOBALS['xoopsTpl']->assign('error', $textblocksObj->getHtmlErrors());
-        $form = $textblocksObj->getFormTextblocks();
+        $form = $textblocksObj->getForm();
         $GLOBALS['xoopsTpl']->assign('form', $form->render());
         break;
     case 'new':
@@ -156,7 +156,7 @@ switch ($op) {
         }
         // Form Create
         $textblocksObj = $textblocksHandler->create();
-        $form = $textblocksObj->getFormTextblocks();
+        $form = $textblocksObj->getForm();
         $GLOBALS['xoopsTpl']->assign('form', $form->render());
         break;
     case 'edit':
@@ -174,7 +174,7 @@ switch ($op) {
         $textblocksObj = $textblocksHandler->get($tbId);
         $textblocksObj->start = $start;
         $textblocksObj->limit = $limit;
-        $form = $textblocksObj->getFormTextblocks();
+        $form = $textblocksObj->getForm();
         $GLOBALS['xoopsTpl']->assign('form', $form->render());
         break;
     case 'clone':
@@ -193,7 +193,7 @@ switch ($op) {
         // Get Form
         $textblocksObjSource = $textblocksHandler->get($tbIdSource);
         $textblocksObj = $textblocksObjSource->xoopsClone();
-        $form = $textblocksObj->getFormTextblocks();
+        $form = $textblocksObj->getForm();
         $GLOBALS['xoopsTpl']->assign('form', $form->render());
         break;
     case 'delete':

@@ -93,7 +93,7 @@ class Categories extends \XoopsObject
      * @param bool $action
      * @return \XoopsThemeForm
      */
-    public function getFormCategories($action = false)
+    public function getForm($action = false)
     {
         $helper = \XoopsModules\Wgevents\Helper::getInstance();
         if (!$action) {
@@ -267,6 +267,7 @@ class Categories extends \XoopsObject
      *
      * @return array
      */
+    /*
     public function toArrayCategories()
     {
         $ret = [];
@@ -276,4 +277,5 @@ class Categories extends \XoopsObject
         }
         return $ret;
     }
+    */
 }

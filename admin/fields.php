@@ -75,7 +75,7 @@ switch ($op) {
         $GLOBALS['xoopsTpl']->assign('buttons', $adminObject->displayButton('left'));
         // Form Create
         $fieldsObj = $fieldsHandler->create();
-        $form = $fieldsObj->getFormFields();
+        $form = $fieldsObj->getForm();
         $GLOBALS['xoopsTpl']->assign('form', $form->render());
         break;
     case 'clone':
@@ -89,7 +89,7 @@ switch ($op) {
         // Get Form
         $fieldsObjSource = $fieldsHandler->get($atIdSource);
         $fieldsObj = $fieldsObjSource->xoopsClone();
-        $form = $fieldsObj->getFormFields();
+        $form = $fieldsObj->getForm();
         $GLOBALS['xoopsTpl']->assign('form', $form->render());
         break;
     case 'save':
@@ -136,7 +136,7 @@ switch ($op) {
         }
         // Get Form
         $GLOBALS['xoopsTpl']->assign('error', $fieldsObj->getHtmlErrors());
-        $form = $fieldsObj->getFormFields();
+        $form = $fieldsObj->getForm();
         $GLOBALS['xoopsTpl']->assign('form', $form->render());
         break;
     case 'edit':
@@ -149,7 +149,7 @@ switch ($op) {
         $fieldsObj = $fieldsHandler->get($atId);
         $fieldsObj->start = $start;
         $fieldsObj->limit = $limit;
-        $form = $fieldsObj->getFormFields();
+        $form = $fieldsObj->getForm();
         $GLOBALS['xoopsTpl']->assign('form', $form->render());
         break;
     case 'delete':

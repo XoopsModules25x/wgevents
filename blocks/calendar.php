@@ -96,7 +96,7 @@ function b_wgevents_calendar_show($options)
         \_MA_WGEVENTS_CAL_MIN_SATURDAY ]);
 
     // get categories collection
-    $categories = $categoriesHandler->getCategoriesCollection();
+    $categories = $categoriesHandler->getCollection();
     // get events of period
     $events = $eventsHandler->getEvents(0, 0, $filterFrom, $filterTo, $filterCat, $sortBy, $orderBy);
 

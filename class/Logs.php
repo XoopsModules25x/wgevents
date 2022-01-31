@@ -72,7 +72,7 @@ class Logs extends \XoopsObject
      * The new inserted $Id
      * @return inserted id
      */
-    public function getNewInsertedIdLogs()
+    public function getNewInsertedId()
     {
         return $GLOBALS['xoopsDB']->getInsertId();
     }
@@ -82,7 +82,7 @@ class Logs extends \XoopsObject
      * @param bool $action
      * @return \XoopsThemeForm
      */
-    public function getFormLogs($action = false)
+    public function getForm($action = false)
     {
         $helper = \XoopsModules\Wgevents\Helper::getInstance();
         if (!$action) {
@@ -132,7 +132,8 @@ class Logs extends \XoopsObject
      *
      * @return array
      */
-    public function toArrayLogs()
+    /*
+    public function toArray()
     {
         $ret = [];
         $vars = $this->getVars();
@@ -141,4 +142,5 @@ class Logs extends \XoopsObject
         }
         return $ret;
     }
+    */
 }

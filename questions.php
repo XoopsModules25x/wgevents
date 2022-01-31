@@ -182,7 +182,7 @@ switch ($op) {
         }
         // Get Form Error
         $GLOBALS['xoopsTpl']->assign('error', $questionsObj->getHtmlErrors());
-        $form = $questionsObj->getFormQuestions();
+        $form = $questionsObj->getForm();
         $GLOBALS['xoopsTpl']->assign('form', $form->render());
         break;
     case 'newset':
@@ -206,7 +206,7 @@ switch ($op) {
         // Form Create
         $questionsObj = $questionsHandler->create();
         $questionsObj->setVar('evid', $addEvid);
-        $form = $questionsObj->getFormQuestions();
+        $form = $questionsObj->getForm();
         $GLOBALS['xoopsTpl']->assign('form', $form->render());
         break;
     case 'test':
@@ -220,7 +220,7 @@ switch ($op) {
         // Form Create
         $registrationsObj = $registrationsHandler->create();
         $registrationsObj->setVar('evid', $addEvid);
-        $form = $registrationsObj->getFormRegistrations('', true);
+        $form = $registrationsObj->getForm('', true);
         $GLOBALS['xoopsTpl']->assign('form', $form->render());
         break;
     case 'edit':
@@ -240,7 +240,7 @@ switch ($op) {
         $questionsObj = $questionsHandler->get($queId);
         $questionsObj->start = $start;
         $questionsObj->limit = $limit;
-        $form = $questionsObj->getFormQuestions();
+        $form = $questionsObj->getForm();
         $GLOBALS['xoopsTpl']->assign('form', $form->render());
         break;
     case 'clone':
@@ -265,7 +265,7 @@ switch ($op) {
         $questionsObj->setVar('required', $questionsObjSource->getVar('required'));
         $questionsObj->setVar('print', $questionsObjSource->getVar('print'));
         $questionsObj->setVar('weight', $questionsObjSource->getVar('weight'));
-        $form = $questionsObj->getFormQuestions('questions.php?op=save');
+        $form = $questionsObj->getForm('questions.php?op=save');
         $GLOBALS['xoopsTpl']->assign('form', $form->render());
         unset($questionsObjSource);
         break;

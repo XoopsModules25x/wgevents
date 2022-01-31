@@ -88,7 +88,7 @@ class Fields extends \XoopsObject
      * The new inserted $Id
      * @return inserted id
      */
-    public function getNewInsertedIdFields()
+    public function getNewInsertedId()
     {
         return $GLOBALS['xoopsDB']->getInsertId();
     }
@@ -98,7 +98,7 @@ class Fields extends \XoopsObject
      * @param bool $action
      * @return \XoopsThemeForm
      */
-    public function getFormFields($action = false)
+    public function getForm($action = false)
     {
         $helper = \XoopsModules\Wgevents\Helper::getInstance();
 
@@ -215,7 +215,8 @@ class Fields extends \XoopsObject
      *
      * @return array
      */
-    public function toArrayFields()
+    /*
+    public function toArray()
     {
         $ret = [];
         $vars = $this->getVars();
@@ -224,5 +225,5 @@ class Fields extends \XoopsObject
         }
         return $ret;
     }
-
+    */
 }

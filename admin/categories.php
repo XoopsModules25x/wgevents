@@ -76,7 +76,7 @@ switch ($op) {
         $GLOBALS['xoopsTpl']->assign('buttons', $adminObject->displayButton('left'));
         // Form Create
         $categoriesObj = $categoriesHandler->create();
-        $form = $categoriesObj->getFormCategories();
+        $form = $categoriesObj->getForm();
         $GLOBALS['xoopsTpl']->assign('form', $form->render());
         break;
     case 'clone':
@@ -90,7 +90,7 @@ switch ($op) {
         // Get Form
         $categoriesObjSource = $categoriesHandler->get($catIdSource);
         $categoriesObj = $categoriesObjSource->xoopsClone();
-        $form = $categoriesObj->getFormCategories();
+        $form = $categoriesObj->getForm();
         $GLOBALS['xoopsTpl']->assign('form', $form->render());
         break;
     case 'save':
@@ -211,7 +211,7 @@ switch ($op) {
         }
         // Get Form
         $GLOBALS['xoopsTpl']->assign('error', $categoriesObj->getHtmlErrors());
-        $form = $categoriesObj->getFormCategories();
+        $form = $categoriesObj->getForm();
         $GLOBALS['xoopsTpl']->assign('form', $form->render());
         break;
     case 'edit':
@@ -224,7 +224,7 @@ switch ($op) {
         $categoriesObj = $categoriesHandler->get($catId);
         $categoriesObj->start = $start;
         $categoriesObj->limit = $limit;
-        $form = $categoriesObj->getFormCategories();
+        $form = $categoriesObj->getForm();
         $GLOBALS['xoopsTpl']->assign('form', $form->render());
         break;
     case 'delete':

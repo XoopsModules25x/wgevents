@@ -102,7 +102,7 @@ class Events extends \XoopsObject
      * The new inserted $Id
      * @return inserted id
      */
-    public function getNewInsertedIdEvents()
+    public function getNewInsertedId()
     {
         return $GLOBALS['xoopsDB']->getInsertId();
     }
@@ -112,7 +112,7 @@ class Events extends \XoopsObject
      * @param bool $action
      * @return \XoopsThemeForm
      */
-    public function getFormEvents($action = false)
+    public function getForm($action = false)
     {
         $helper = Helper::getInstance();
 
@@ -415,7 +415,8 @@ class Events extends \XoopsObject
      *
      * @return array
      */
-    public function toArrayEvents()
+    /*
+    public function toArray()
     {
         $ret = [];
         $vars = $this->getVars();
@@ -424,4 +425,5 @@ class Events extends \XoopsObject
         }
         return $ret;
     }
+    */
 }

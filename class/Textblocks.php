@@ -74,7 +74,7 @@ class Textblocks extends \XoopsObject
      * The new inserted $Id
      * @return inserted id
      */
-    public function getNewInsertedIdTextblocks()
+    public function getNewInsertedId()
     {
         return $GLOBALS['xoopsDB']->getInsertId();
     }
@@ -84,7 +84,7 @@ class Textblocks extends \XoopsObject
      * @param bool $action
      * @return \XoopsThemeForm
      */
-    public function getFormTextblocks($action = false)
+    public function getForm($action = false)
     {
         $helper = \XoopsModules\Wgevents\Helper::getInstance();
         if (!$action) {
@@ -185,7 +185,8 @@ class Textblocks extends \XoopsObject
      *
      * @return array
      */
-    public function toArrayTextblocks()
+    /*
+    public function toArray()
     {
         $ret = [];
         $vars = $this->getVars();
@@ -194,4 +195,5 @@ class Textblocks extends \XoopsObject
         }
         return $ret;
     }
+    */
 }
