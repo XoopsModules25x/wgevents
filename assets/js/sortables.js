@@ -8,11 +8,11 @@ $(document).ready( function(){
 			connectWith: "#questions-list",
 			update: function(event, ui) {
 				var list = $(this).sortable("serialize");
-				$.post("questions.php?op=order", list );
+				$.post("question.php?op=order", list );
 			},
 			receive: function(event, ui) {
 				var list = $(this).sortable("serialize");                    
-				$.post("questions.php?op=order", list );                      
+				$.post("question.php?op=order", list );                      
 			}
 		}
 	).disableSelection();
@@ -23,11 +23,11 @@ $(document).ready( function(){
 			connectWith: "#categories-list",
 			update: function(event, ui) {
 				var list = $(this).sortable("serialize");
-				$.post("categories.php?op=order", list );
+				$.post("category.php?op=order", list );
 			},
 			receive: function(event, ui) {
 				var list = $(this).sortable("serialize");
-				$.post("categories.php?op=order", list );
+				$.post("category.php?op=order", list );
 			}
 		}
 	).disableSelection();

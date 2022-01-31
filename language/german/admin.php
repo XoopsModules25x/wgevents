@@ -34,7 +34,7 @@ require_once __DIR__ . '/main.php';
 \define('_AM_WGEVENTS_THEREARE_ANSWERS', "Es gibt <span class='bold'>%s</span> Antworten in der Datenbank");
 \define('_AM_WGEVENTS_THEREARE_TEXTBLOCKS', "Es gibt <span class='bold'>%s</span> Textblöcke in der Datenbank");
 \define('_AM_WGEVENTS_THEREARE_FIELDS', "Es gibt <span class='bold'>%s</span> Arten Zusatzinfos in der Datenbank");
-\define('_AM_WGEVENTS_THEREARE_LOGS', "Es gibt <span class='bold'>%s</span> Logs in der Datenbank");
+\define('_AM_WGEVENTS_THEREARE_LOGS', "Es gibt <span class='bold'>%s</span> Log in der Datenbank");
 \define('_AM_WGEVENTS_THEREARE_ACCOUNTS', "Es sind <span class='bold'>%s</span> E-Mail-Konten vorhanden");
 // ---------------- Admin Files ----------------
 // There aren't
@@ -45,7 +45,7 @@ require_once __DIR__ . '/main.php';
 \define('_AM_WGEVENTS_THEREARENT_ANSWERS', "Es gibt keine Antworten");
 \define('_AM_WGEVENTS_THEREARENT_TEXTBLOCKS', "Es gibt keine Textblöcke");
 \define('_AM_WGEVENTS_THEREARENT_FIELDS', "Es gibt keine Arten Zusatzinfos");
-\define('_AM_WGEVENTS_THEREARENT_LOGS', "Es gibt keine Logs");
+\define('_AM_WGEVENTS_THEREARENT_LOGS', "Es gibt keine Log");
 \define('_AM_WGEVENTS_THEREARENT_ACCOUNTS', 'Es sind keine E-Mail-Konten vorhanden');
 // timezones
 \define('_AM_WGEVENTS_TIMEZONES', 'Einstellungen Zeitzonen');
@@ -121,8 +121,8 @@ require_once __DIR__ . '/main.php';
 // Log add/edit
 \define('_AM_WGEVENTS_ADD_LOG', 'Log hinzufügen');
 \define('_AM_WGEVENTS_EDIT_LOG', 'Log bearbeiten');
-\define('_AM_WGEVENTS_LIST_LOGS', 'Liste der Logs');
-\define('_AM_WGEVENTS_DELETE_LOGS', 'Alle Logs löschen');
+\define('_AM_WGEVENTS_LIST_LOGS', 'Liste der Log');
+\define('_AM_WGEVENTS_DELETE_LOGS', 'Alle Log löschen');
 // Elements of Log
 \define('_AM_WGEVENTS_LOG_ID', 'Id');
 \define('_AM_WGEVENTS_LOG_TEXT', 'Text');

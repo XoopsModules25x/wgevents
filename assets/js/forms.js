@@ -29,31 +29,31 @@ function toogleRegistrationOpts() {
 
 function fillInQuestions() {
 
-    var select = document.getElementById('que_type');
+    var select = document.getElementById('type');
     var vselected = select.options[select.selectedIndex].value;
 
-    xoopsGetElementById('que_caption').value = xoopsGetElementById('que_caption_def[' + vselected +  ']').value;
-    xoopsGetElementById('que_placeholder').value = xoopsGetElementById('que_placeholder_def[' + vselected +  ']').value;
-    if (xoopsGetElementById('que_required_def[' + vselected +  ']').value > 0) {
-        xoopsGetElementById('que_required1').checked = true;
+    xoopsGetElementById('caption').value = xoopsGetElementById('caption_def[' + vselected +  ']').value;
+    xoopsGetElementById('placeholder').value = xoopsGetElementById('placeholder_def[' + vselected +  ']').value;
+    if (xoopsGetElementById('required_def[' + vselected +  ']').value > 0) {
+        xoopsGetElementById('required1').checked = true;
     } else {
-        xoopsGetElementById('que_required2').checked = true;
+        xoopsGetElementById('required2').checked = true;
     }
-    if (xoopsGetElementById('que_print_def[' + vselected +  ']').value > 0) {
-        xoopsGetElementById('que_print1').checked = true;
+    if (xoopsGetElementById('print_def[' + vselected +  ']').value > 0) {
+        xoopsGetElementById('print1').checked = true;
     } else {
-        xoopsGetElementById('que_print2').checked = true;
+        xoopsGetElementById('print2').checked = true;
     }
 
     if (xoopsGetElementById('add_display_values[' + vselected +  ']').value > 0) {
-        xoopsGetElementById('que_values').removeAttribute("disabled");
+        xoopsGetElementById('values').removeAttribute("disabled");
     } else {
-        xoopsGetElementById('que_values').setAttribute("disabled", "disabled");
+        xoopsGetElementById('values').setAttribute("disabled", "disabled");
     }
     if (xoopsGetElementById('add_display_placeholder[' + vselected +  ']').value > 0) {
-        xoopsGetElementById('que_placeholder').removeAttribute("disabled");
+        xoopsGetElementById('placeholder').removeAttribute("disabled");
     } else {
-        xoopsGetElementById('que_placeholder').setAttribute("disabled", "disabled");
+        xoopsGetElementById('placeholder').setAttribute("disabled", "disabled");
     }
 
 }

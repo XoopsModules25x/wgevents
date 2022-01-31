@@ -26,7 +26,7 @@
 \define('_MB_WGEVENTS_TITLE_LENGTH', 'Titellänge');
 \define('_MB_WGEVENTS_CATTODISPLAY', 'Anzuzeigende Kategorien');
 \define('_MB_WGEVENTS_ALLCAT', 'Alle Kategorien');
-// Events
+// Event
 \define('_MB_WGEVENTS_EVENTS_TO_DISPLAY', 'Anzuzeigenden Veranstaltungen');
 \define('_MB_WGEVENTS_ALL_EVENTS', 'Alle Veranstaltungen');
 \define('_MB_WGEVENTS_EV_NAME', 'Name');

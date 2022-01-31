@@ -24,11 +24,11 @@
 \define('_MB_WGEVENTS_DISPLAY', 'How Many Items to Display');
 \define('_MB_WGEVENTS_DISPLAY_SPOTLIGHT', "How Many Items to Display (only valid if you select 'all')");
 \define('_MB_WGEVENTS_TITLE_LENGTH', 'Title Length');
-\define('_MB_WGEVENTS_CATTODISPLAY', 'Categories to Display');
-\define('_MB_WGEVENTS_ALLCAT', 'All Categories');
-// Events
-\define('_MB_WGEVENTS_EVENTS_TO_DISPLAY', 'Events to Display');
-\define('_MB_WGEVENTS_ALL_EVENTS', 'All Events');
+\define('_MB_WGEVENTS_CATTODISPLAY', 'Category to Display');
+\define('_MB_WGEVENTS_ALLCAT', 'All Category');
+// Event
+\define('_MB_WGEVENTS_EVENTS_TO_DISPLAY', 'Event to Display');
+\define('_MB_WGEVENTS_ALL_EVENTS', 'All Event');
 \define('_MB_WGEVENTS_EV_NAME', 'Name');
 \define('_MB_WGEVENTS_EV_LOGO', 'Logo');
 \define('_MB_WGEVENTS_EVENT_GOTO', 'Goto Event');

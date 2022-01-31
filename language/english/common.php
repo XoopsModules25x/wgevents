@@ -108,7 +108,7 @@ header.tpl');
 \define('CO_' . $moduleDirNameUpper . '_' . 'VISIBLEIN', 'Visible In');
 \define('CO_' . $moduleDirNameUpper . '_' . 'WEIGHT', 'Weight');
 
-\define('CO_' . $moduleDirNameUpper . '_' . 'PERMISSIONS', 'Permissions');
+\define('CO_' . $moduleDirNameUpper . '_' . 'PERMISSIONS', 'Permission');
 \define('CO_' . $moduleDirNameUpper . '_' . 'BLOCKS', 'Blocks Admin');
 \define('CO_' . $moduleDirNameUpper . '_' . 'BLOCKS_DESC', 'Blocks/Group Admin');
 
@@ -179,7 +179,7 @@ header.tpl');
 
 //Module Stats
 \define('CO_' . $moduleDirNameUpper . '_' . 'STATS_SUMMARY', 'Module Statistics');
-\define('CO_' . $moduleDirNameUpper . '_' . 'TOTAL_CATEGORIES', 'Categories:');
+\define('CO_' . $moduleDirNameUpper . '_' . 'TOTAL_CATEGORIES', 'Category:');
 \define('CO_' . $moduleDirNameUpper . '_' . 'TOTAL_ITEMS', 'Items');
 \define('CO_' . $moduleDirNameUpper . '_' . 'TOTAL_OFFLINE', 'Offline');
 \define('CO_' . $moduleDirNameUpper . '_' . 'TOTAL_PUBLISHED', 'Published');

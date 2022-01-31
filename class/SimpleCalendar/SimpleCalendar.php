@@ -316,7 +316,7 @@ TAG
                 $out .= \sprintf('<time datetime="%s">%d</time>', $date->format('Y-m-d'), $i);
             }
             if ($this->permSubmit) {
-                $out .= '<div class="addnew pull-right"><a href="events.php?op=new&eventDate=' . $date->getTimestamp() . '"><i class="fa fa-plus-square wg-cal-icon pull-right" title="' . \_MA_WGEVENTS_CAL_ADDITEM . '"></i></a></div>';
+                $out .= '<div class="addnew pull-right"><a href="event.php?op=new&eventDate=' . $date->getTimestamp() . '"><i class="fa fa-plus-square wg-cal-icon pull-right" title="' . \_MA_WGEVENTS_CAL_ADDITEM . '"></i></a></div>';
             }
             $out .= '</td>';
 

@@ -102,7 +102,7 @@ require_once __DIR__ . '/admin.php';
 \define('_MA_WGEVENTS_EVENT_REGISTER_SIGNATURE', 'Signatur');
 \define('_MA_WGEVENTS_EVENT_REGISTER_SIGNATURE_DESC', 'Bitte Signatur eingeben, die für Bestätigungsmails verwendet werden soll');
 \define('_MA_WGEVENTS_EVENT_GALID', 'Gallerie Id');
-// Categories
+// Category
 \define('_MA_WGEVENTS_CATEGORY_LOGO', 'Logo');
 // Registration
 \define('_MA_WGEVENTS_REGISTRATION', 'Anmeldung');

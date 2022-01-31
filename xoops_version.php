@@ -31,7 +31,7 @@ $moduleDirNameUpper = \mb_strtoupper($moduleDirName);
 // ------------------- Informations ------------------- //
 $modversion = [
     'name'                => \_MI_WGEVENTS_NAME,
-    'version'             => '1.0.0',
+    'version'             => '1.0.1',
     'description'         => \_MI_WGEVENTS_DESC,
     'author'              => 'Goffy - Wedega',
     'author_mail'         => 'webmaster@wedega.com',
@@ -64,7 +64,7 @@ $modversion = [
     'module_website_url'  => 'www.xoops.org',
     'module_website_name' => 'XOOPS Project',
     'release'             => '25.12.2021',
-    'module_status'       => 'Beta 1',
+    'module_status'       => 'Alpha 1',
     'system_menu'         => 1,
     'hasAdmin'            => 1,
     'hasMain'             => 1,
@@ -80,35 +80,35 @@ $modversion['templates'] = [
     ['file' => 'wgevents_admin_about.tpl', 'description' => '', 'type' => 'admin'],
     ['file' => 'wgevents_admin_header.tpl', 'description' => '', 'type' => 'admin'],
     ['file' => 'wgevents_admin_index.tpl', 'description' => '', 'type' => 'admin'],
-    ['file' => 'wgevents_admin_events.tpl', 'description' => '', 'type' => 'admin'],
-    ['file' => 'wgevents_admin_categories.tpl', 'description' => '', 'type' => 'admin'],
-    ['file' => 'wgevents_admin_registrations.tpl', 'description' => '', 'type' => 'admin'],
-    ['file' => 'wgevents_admin_questions.tpl', 'description' => '', 'type' => 'admin'],
-    ['file' => 'wgevents_admin_answers.tpl', 'description' => '', 'type' => 'admin'],
-    ['file' => 'wgevents_admin_textblocks.tpl', 'description' => '', 'type' => 'admin'],
+    ['file' => 'wgevents_admin_event.tpl', 'description' => '', 'type' => 'admin'],
+    ['file' => 'wgevents_admin_category.tpl', 'description' => '', 'type' => 'admin'],
+    ['file' => 'wgevents_admin_registration.tpl', 'description' => '', 'type' => 'admin'],
+    ['file' => 'wgevents_admin_question.tpl', 'description' => '', 'type' => 'admin'],
+    ['file' => 'wgevents_admin_answer.tpl', 'description' => '', 'type' => 'admin'],
+    ['file' => 'wgevents_admin_textblock.tpl', 'description' => '', 'type' => 'admin'],
     ['file' => 'wgevents_admin_fields.tpl', 'description' => '', 'type' => 'admin'],
-    ['file' => 'wgevents_admin_logs.tpl', 'description' => '', 'type' => 'admin'],
-    ['file' => 'wgevents_admin_accounts.tpl', 'description' => '', 'type' => 'admin'],
+    ['file' => 'wgevents_admin_log.tpl', 'description' => '', 'type' => 'admin'],
+    ['file' => 'wgevents_admin_account.tpl', 'description' => '', 'type' => 'admin'],
     ['file' => 'wgevents_admin_maintenance.tpl', 'description' => '', 'type' => 'admin'],
-    ['file' => 'wgevents_admin_permissions.tpl', 'description' => '', 'type' => 'admin'],
+    ['file' => 'wgevents_admin_permission.tpl', 'description' => '', 'type' => 'admin'],
     ['file' => 'wgevents_admin_clone.tpl', 'description' => '', 'type' => 'admin'],
     ['file' => 'wgevents_admin_footer.tpl', 'description' => '', 'type' => 'admin'],
     // User templates
     ['file' => 'wgevents_header.tpl', 'description' => ''],
-    ['file' => 'wgevents_questions.tpl', 'description' => ''],
-    ['file' => 'wgevents_questions_item.tpl', 'description' => ''],
+    ['file' => 'wgevents_question.tpl', 'description' => ''],
+    ['file' => 'wgevents_question_item.tpl', 'description' => ''],
     ['file' => 'wgevents_breadcrumbs.tpl', 'description' => ''],
     ['file' => 'wgevents_calendar.tpl', 'description' => ''],
-    ['file' => 'wgevents_events.tpl', 'description' => ''],
-    ['file' => 'wgevents_events_index_list.tpl', 'description' => ''],
-    ['file' => 'wgevents_events_item_details.tpl', 'description' => ''],
-    ['file' => 'wgevents_events_item_list.tpl', 'description' => ''],
+    ['file' => 'wgevents_event.tpl', 'description' => ''],
+    ['file' => 'wgevents_event_index_list.tpl', 'description' => ''],
+    ['file' => 'wgevents_event_item_details.tpl', 'description' => ''],
+    ['file' => 'wgevents_event_item_list.tpl', 'description' => ''],
     ['file' => 'wgevents_index.tpl', 'description' => ''],
-    ['file' => 'wgevents_registrations.tpl', 'description' => ''],
-    ['file' => 'wgevents_registrations_item.tpl', 'description' => ''],
-    ['file' => 'wgevents_textblocks.tpl', 'description' => ''],
-    ['file' => 'wgevents_textblocks_list.tpl', 'description' => ''],
-    ['file' => 'wgevents_textblocks_item.tpl', 'description' => ''],
+    ['file' => 'wgevents_registration.tpl', 'description' => ''],
+    ['file' => 'wgevents_registration_item.tpl', 'description' => ''],
+    ['file' => 'wgevents_textblock.tpl', 'description' => ''],
+    ['file' => 'wgevents_textblock_list.tpl', 'description' => ''],
+    ['file' => 'wgevents_textblock_item.tpl', 'description' => ''],
     ['file' => 'wgevents_search.tpl', 'description' => ''],
     ['file' => 'wgevents_footer.tpl', 'description' => ''],
 ];
@@ -116,17 +116,17 @@ $modversion['templates'] = [
 $modversion['sqlfile']['mysql'] = 'sql/mysql.sql';
 // Tables
 $modversion['tables'] = [
-    'wgevents_events',
-    'wgevents_categories',
-    'wgevents_registrations',
-    'wgevents_registrations_hist',
-    'wgevents_questions',
-    'wgevents_answers',
-    'wgevents_answers_hist',
-    'wgevents_textblocks',
-    'wgevents_fields',
-    'wgevents_logs',
-    'wgevents_accounts',
+    'wgevents_event',
+    'wgevents_category',
+    'wgevents_registration',
+    'wgevents_registration_hist',
+    'wgevents_question',
+    'wgevents_answer',
+    'wgevents_answer_hist',
+    'wgevents_textblock',
+    'wgevents_field',
+    'wgevents_log',
+    'wgevents_account',
 ];
 // ------------------- Search ------------------- //
 $modversion['hasSearch'] = 1;
@@ -136,7 +136,7 @@ $modversion['search'] = [
 ];
 
 $helper = Helper::getInstance();
-$permissionsHandler = $helper->getHandler('Permissions');
+$permissionsHandler = $helper->getHandler('Permission');
 // ------------------- Menu ------------------- //
 $currdirname  = isset($GLOBALS['xoopsModule']) && \is_object($GLOBALS['xoopsModule']) ? $GLOBALS['xoopsModule']->getVar('dirname') : 'system';
 if ($currdirname == $moduleDirName) {
@@ -147,26 +147,26 @@ if ($currdirname == $moduleDirName) {
     // Sub events
     $modversion['sub'][] = [
         'name' => \_MI_WGEVENTS_SMNAME2,
-        'url'  => 'events.php',
+        'url'  => 'event.php',
     ];
     if ($permissionsHandler->getPermEventsSubmit()) {
         // Sub Submit
         $modversion['sub'][] = [
             'name' => \_MI_WGEVENTS_SMNAME10,
-            'url' => 'events.php?op=list&amp;filter=me',
+            'url' => 'event.php?op=list&amp;filter=me',
         ];
     }
     if ($permissionsHandler->getPermEventsSubmit()) {
         // Sub Submit
         $modversion['sub'][] = [
             'name' => \_MI_WGEVENTS_SMNAME3,
-            'url' => 'events.php?op=new',
+            'url' => 'event.php?op=new',
         ];
     }
     if ($permissionsHandler->getPermRegistrationsSubmit()) {
         $modversion['sub'][] = [
             'name' => \_MI_WGEVENTS_SMNAME5,
-            'url'  => 'registrations.php?op=listmy',
+            'url'  => 'registration.php?op=listmy',
         ];
     }
     if ($helper->getConfig('cal_page')) {
@@ -183,77 +183,77 @@ if ($currdirname == $moduleDirName) {
     // Sub Submit
     $modversion['sub'][] = [
         'name' => \_MI_WGEVENTS_SMNAME6,
-        'url'  => 'questions.php?op=new',
+        'url'  => 'question.php?op=new',
     ];
     // Sub Submit
     $modversion['sub'][] = [
         'name' => \_MI_WGEVENTS_SMNAME7,
-        'url'  => 'answers.php?op=new',
+        'url'  => 'answer.php?op=new',
     ];
     // Sub textblocks
     $modversion['sub'][] = [
         'name' => \_MI_WGEVENTS_SMNAME8,
-        'url'  => 'textblocks.php',
+        'url'  => 'textblock.php',
     ];
     // Sub Submit
     $modversion['sub'][] = [
         'name' => \_MI_WGEVENTS_SMNAME9,
-        'url'  => 'textblocks.php?op=new',
+        'url'  => 'textblock.php?op=new',
     ];
     */
 }
 // ------------------- Default Blocks ------------------- //
-// Events last
+// Event last
 $modversion['blocks'][] = [
-    'file'        => 'events.php',
+    'file'        => 'event.php',
     'name'        => \_MI_WGEVENTS_EVENTS_BLOCK_LAST,
     'description' => \_MI_WGEVENTS_EVENTS_BLOCK_LAST_DESC,
-    'show_func'   => 'b_wgevents_events_show',
-    'edit_func'   => 'b_wgevents_events_edit',
+    'show_func'   => 'b_wgevents_event_show',
+    'edit_func'   => 'b_wgevents_event_edit',
     'template'    => 'wgevents_block_events.tpl',
     'options'     => 'last|5|25|0',
 ];
-// Events new
+// Event new
 $modversion['blocks'][] = [
-    'file'        => 'events.php',
+    'file'        => 'event.php',
     'name'        => \_MI_WGEVENTS_EVENTS_BLOCK_NEW,
     'description' => \_MI_WGEVENTS_EVENTS_BLOCK_NEW_DESC,
-    'show_func'   => 'b_wgevents_events_show',
-    'edit_func'   => 'b_wgevents_events_edit',
+    'show_func'   => 'b_wgevents_event_show',
+    'edit_func'   => 'b_wgevents_event_edit',
     'template'    => 'wgevents_block_events.tpl',
     'options'     => 'new|5|25|0',
 ];
 /*
 
-// Events top
+// Event top
 $modversion['blocks'][] = [
-    'file'        => 'events.php',
+    'file'        => 'event.php',
     'name'        => \_MI_WGEVENTS_EVENTS_BLOCK_TOP,
     'description' => \_MI_WGEVENTS_EVENTS_BLOCK_TOP_DESC,
-    'show_func'   => 'b_wgevents_events_show',
-    'edit_func'   => 'b_wgevents_events_edit',
+    'show_func'   => 'b_wgevents_event_show',
+    'edit_func'   => 'b_wgevents_event_edit',
     'template'    => 'wgevents_block_events.tpl',
     'options'     => 'top|5|25|0',
 ];
 */
-// Events random
+// Event random
 $modversion['blocks'][] = [
-    'file'        => 'events.php',
+    'file'        => 'event.php',
     'name'        => \_MI_WGEVENTS_EVENTS_BLOCK_RANDOM,
     'description' => \_MI_WGEVENTS_EVENTS_BLOCK_RANDOM_DESC,
-    'show_func'   => 'b_wgevents_events_show',
-    'edit_func'   => 'b_wgevents_events_edit',
+    'show_func'   => 'b_wgevents_event_show',
+    'edit_func'   => 'b_wgevents_event_edit',
     'template'    => 'wgevents_block_events.tpl',
     'options'     => 'random|5|25|0',
 ];
 // ------------------- Spotlight Blocks ------------------- //
-// Events spotlight
+// Event spotlight
 $modversion['blocks'][] = [
-    'file'        => 'events_spotlight.php',
+    'file'        => 'event_spotlight.php',
     'name'        => \_MI_WGEVENTS_EVENTS_BLOCK_SPOTLIGHT,
     'description' => \_MI_WGEVENTS_EVENTS_BLOCK_SPOTLIGHT_DESC,
-    'show_func'   => 'b_wgevents_events_spotlight_show',
-    'edit_func'   => 'b_wgevents_events_spotlight_edit',
+    'show_func'   => 'b_wgevents_event_spotlight_show',
+    'edit_func'   => 'b_wgevents_event_spotlight_edit',
     'template'    => 'wgevents_block_events_spotlight.tpl',
     'options'     => 'spotlight|5|25|0',
 ];
@@ -680,21 +680,21 @@ $modversion['notification'] = [
     'lookup_file' => 'include/notification.inc.php',
     'lookup_func' => 'wgevents_notify_iteminfo',
 ];
-// Categories of notification
+// Category of notification
 // Global Notify
 $modversion['notification']['category'][] = [
     'name'           => 'global',
     'title'          => \_MI_WGEVENTS_NOTIFY_GLOBAL,
     'description'    => '',
-    'subscribe_from' => ['index.php', 'events.php', 'registrations.php'],
+    'subscribe_from' => ['index.php', 'event.php', 'registration.php'],
 ];
 // Event Notify
 $modversion['notification']['category'][] = [
     'name'           => 'events',
     'title'          => \_MI_WGEVENTS_NOTIFY_EVENT,
     'description'    => '',
-    'subscribe_from' => 'events.php',
-    'item_name'      => 'ev_id',
+    'subscribe_from' => 'event.php',
+    'item_name'      => 'id',
     'allow_bookmark' => 1,
 ];
 // Registration Notify
@@ -702,8 +702,8 @@ $modversion['notification']['category'][] = [
     'name'           => 'registrations',
     'title'          => \_MI_WGEVENTS_NOTIFY_REGISTRATION,
     'description'    => '',
-    'subscribe_from' => 'registrations.php',
-    'item_name'      => 'reg_id',
+    'subscribe_from' => 'registration.php',
+    'item_name'      => 'id',
     'allow_bookmark' => 1,
 ];
 // Global events notification

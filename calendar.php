@@ -47,7 +47,7 @@ $op            = Request::getCmd('op', 'list');
 $filterFrom    = Request::getInt('filterFrom', 0);
 $filterTo      = Request::getInt('filterTo', 0);
 $filterCat     = Request::getInt('filterCat', 0);
-$filterSort    = 'ev_datefrom-ASC';
+$filterSort    = 'datefrom-ASC';
 if (0 == $filterFrom) {
     $filterFrom = $dayStart;
     $filterTo   = $dayEnd;
@@ -155,7 +155,7 @@ switch ($op) {
     case 'filterOwn':
         //$GLOBALS['xoopsTpl']->assign('resultTitle', \_MA_WGEVENTS_FILTER_RESULT);
         if ($uid > 0) {
-            $events = $eventsHandler->getItems($uid, 0, 0, $filterFrom, $filterTo, false, false, 0, $filterCat, $sortBy, $orderBy);
+            $events = $eventHandler->getItems($uid, 0, 0, $filterFrom, $filterTo, false, false, 0, $filterCat, $sortBy, $orderBy);
         }
         $filtered = true;
         break;
@@ -163,9 +163,9 @@ switch ($op) {
         //$GLOBALS['xoopsTpl']->assign('resultTitle', \_MA_WGEVENTS_FILTER_RESULT);
         if ($permissionsHandler->getPermItemsGroupView()) {
             if (Constants::FILTER_TYPEALL == $filterGroup) {
-                $events = $eventsHandler->getItems(0, 0, 0, $filterFrom, $filterTo, true, false, 0, $filterCat, $sortBy, $orderBy);
+                $events = $eventHandler->getItems(0, 0, 0, $filterFrom, $filterTo, true, false, 0, $filterCat, $sortBy, $orderBy);
             } else {
-                $events = $eventsHandler->getItems(0, 0, 0, $filterFrom, $filterTo, false, false, $filterGroup, $filterCat, $sortBy, $orderBy);
+                $events = $eventHandler->getItems(0, 0, 0, $filterFrom, $filterTo, false, false, $filterGroup, $filterCat, $sortBy, $orderBy);
             }
         }
         $filtered = true;
@@ -174,34 +174,34 @@ switch ($op) {
 */
 
 // get categories collection
-$categories = $categoriesHandler->getCategoriesCollection();
+$categories = $categoryHandler->getCategoriesCollection();
 // get events of period
-$events = $eventsHandler->getEvents(0, 0, $filterFrom, $filterTo, $filterCat, $sortBy, $orderBy);
+$events = $eventHandler->getEvents(0, 0, $filterFrom, $filterTo, $filterCat, $sortBy, $orderBy);
 
 $eventsCount = \count($events);
 if ($eventsCount > 0) {
     $calendar->setDate($filterFrom);
     $GLOBALS['xoopsTpl']->assign('eventsCount', $eventsCount);
     foreach($events as $event) {
-        $linkStyle = 'color:' . $categories[$event['ev_catid']]['color'] . '!important;';
-        $linkStyle .= 'border:1px solid ' . $categories[$event['ev_catid']]['bordercolor'] . '!important;';
-        $linkStyle .= 'background-color:' . $categories[$event['ev_catid']]['bgcolor'] . '!important;';
-        $linkStyle .= $categories[$event['ev_catid']]['othercss'];
+        $linkStyle = 'color:' . $categories[$event['catid']]['color'] . '!important;';
+        $linkStyle .= 'border:1px solid ' . $categories[$event['catid']]['bordercolor'] . '!important;';
+        $linkStyle .= 'background-color:' . $categories[$event['catid']]['bgcolor'] . '!important;';
+        $linkStyle .= $categories[$event['catid']]['othercss'];
 
-        $eventLink = '<a href="events.php?op=show&amp;ev_id=' . $event['id'] .'">';
+        $eventLink = '<a href="event.php?op=show&amp;id=' . $event['id'] .'">';
         /*
         if ($event['catlogo']) {
             $eventLink .= '<img class="wg-cal-catlogo" src="' . \WGEVENTS_UPLOAD_CATLOGOS_URL . '/' . $event['catlogo'] .'" alt="' . \_MA_WGEVENTS_CATEGORY_LOGO .'" title="' . \_MA_WGEVENTS_CATEGORY_LOGO .'">';
         }
         */
         $eventLink .= '<span class="wg-cal-eventtext">';
-        $evName = $event['ev_name'];
+        $evName = $event['name'];
         if (\strlen($evName) > $lengthTitle) {
             $evName = \substr($evName, 0, $lengthTitle - 3) . '...';
         }
         $eventLink .= $evName;
         $eventLink .= '</span><i class="fa fa-edit wg-cal-icon pull-right" title="' . \_MA_WGEVENTS_CAL_EDITITEM . '"></i></a>';
-        $calendar->addDailyHtml($eventLink, $event['ev_datefrom'], $event['ev_dateto'], $linkStyle);
+        $calendar->addDailyHtml($eventLink, $event['datefrom'], $event['dateto'], $linkStyle);
     }
 }
 $calendar->setPermSubmit($permissionsHandler->getPermEventsSubmit());

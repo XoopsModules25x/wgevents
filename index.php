@@ -29,7 +29,7 @@ require __DIR__ . '/header.php';
 $GLOBALS['xoopsOption']['template_main'] = 'wgevents_index.tpl';
 require_once \XOOPS_ROOT_PATH . '/header.php';
 
-// Permissions
+// Permission
 if (!$permissionsHandler->getPermEventsView()) {
     $GLOBALS['xoopsTpl']->assign('errorPerm', _NOPERM);
     require __DIR__ . '/footer.php';
@@ -53,40 +53,40 @@ $GLOBALS['xoopsTpl']->assign('wgevents_upload_eventlogos_url', \WGEVENTS_UPLOAD_
 $GLOBALS['xoopsTpl']->assign('wgevents_icons_url_32', \WGEVENTS_ICONS_URL_32);
 $GLOBALS['xoopsTpl']->assign('index_header', $helper->getConfig('index_header'));
 
-$crEvents = new \CriteriaCompo();
+$crEvent = new \CriteriaCompo();
 if ('coming' == $op) {
-    $crEvents->add(new \Criteria('ev_datefrom', \time(), '>='));
-    $crEvents->setSort('ev_datefrom');
-    $crEvents->setOrder('ASC');
+    $crEvent->add(new \Criteria('datefrom', \time(), '>='));
+    $crEvent->setSort('datefrom');
+    $crEvent->setOrder('ASC');
     $GLOBALS['xoopsTpl']->assign('showBtnPast', true);
     $GLOBALS['xoopsTpl']->assign('listDescr', \_MA_WGEVENTS_EVENTS_LISTCOMING);
     $xoBreadcrumbs[] = ['title' => \_MA_WGEVENTS_EVENTS_LISTCOMING];
 } else {
-    $crEvents->add(new \Criteria('ev_datefrom', \time(), '<'));
-    $crEvents->setSort('ev_datefrom');
-    $crEvents->setOrder('DESC');
+    $crEvent->add(new \Criteria('datefrom', \time(), '<'));
+    $crEvent->setSort('datefrom');
+    $crEvent->setOrder('DESC');
     $GLOBALS['xoopsTpl']->assign('showBtnComing', true);
     $GLOBALS['xoopsTpl']->assign('listDescr', \_MA_WGEVENTS_EVENTS_LISTPAST);
     $xoBreadcrumbs[] = ['title' => \_MA_WGEVENTS_EVENTS_LISTPAST];
 }
-$eventsCount = $eventsHandler->getCount($crEvents);
+$eventsCount = $eventHandler->getCount($crEvent);
 $GLOBALS['xoopsTpl']->assign('eventsCount', $eventsCount);
-$crEvents->setStart($start);
-$crEvents->setLimit($limit);
+$crEvent->setStart($start);
+$crEvent->setLimit($limit);
 
-$eventsAll = $eventsHandler->getAll($crEvents);
+$eventsAll = $eventHandler->getAll($crEvent);
 if ($eventsCount > 0) {
     $events = [];
     $evName = '';
-    // Get All Events
+    // Get All Event
     foreach (\array_keys($eventsAll) as $i) {
         $events[$i] = $eventsAll[$i]->getValuesEvents();
-        $events[$i]['locked'] = (Constants::STATUS_LOCKED == $events[$i]['ev_status']);
-        $events[$i]['canceled'] = (Constants::STATUS_CANCELED == $events[$i]['ev_status']);
+        $events[$i]['locked'] = (Constants::STATUS_LOCKED == $events[$i]['status']);
+        $events[$i]['canceled'] = (Constants::STATUS_CANCELED == $events[$i]['status']);
 
-        $crRegistrations = new \CriteriaCompo();
-        $crRegistrations->add(new \Criteria('reg_evid', $i));
-        $numberRegCurr = $registrationsHandler->getCount($crRegistrations);
+        $crRegistration = new \CriteriaCompo();
+        $crRegistration->add(new \Criteria('evid', $i));
+        $numberRegCurr = $registrationHandler->getCount($crRegistration);
         //$events[$i]['nb_registrations'] = $numberRegCurr;
         $registerMax = (int)$events[$i]['register_max'];
         if ($registerMax > 0) {
@@ -112,7 +112,7 @@ if ($eventsCount > 0) {
             }
             $events[$i]['regpercentage'] = (int)($proportion * 100);
         }
-        $evName = $eventsAll[$i]->getVar('ev_name');
+        $evName = $eventsAll[$i]->getVar('name');
         $keywords[$i] = $evName;
     }
     $GLOBALS['xoopsTpl']->assign('events', $events);

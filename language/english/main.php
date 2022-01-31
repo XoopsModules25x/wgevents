@@ -36,9 +36,9 @@ require_once __DIR__ . '/admin.php';
 \define('_MA_WGEVENTS_SUBMITTER', 'Submitter');
 \define('_MA_WGEVENTS_WEIGHT', 'Weight');
 \define('_MA_WGEVENTS_ACTION', 'Action');
-\define('_MA_WGEVENTS_INDEX_THEREARE', 'There are %s Events');
+\define('_MA_WGEVENTS_INDEX_THEREARE', 'There are %s Event');
 \define('_MA_WGEVENTS_INDEX_THEREARENT', 'There are no events');
-\define('_MA_WGEVENTS_INDEX_LATEST_LIST', 'Last Events');
+\define('_MA_WGEVENTS_INDEX_LATEST_LIST', 'Last Event');
 // Status
 \define('_MA_WGEVENTS_STATUS', 'Status');
 \define('_MA_WGEVENTS_STATUS_NONE', 'No status');
@@ -60,12 +60,12 @@ require_once __DIR__ . '/admin.php';
 \define('_MA_WGEVENTS_EVENT_CLONE', 'Clone Event');
 \define('_MA_WGEVENTS_EVENT_CANCEL', 'Cancel Event');
 \define('_MA_WGEVENTS_EVENT_SELECT', 'Select Event');
-\define('_MA_WGEVENTS_EVENTS', 'Events');
-\define('_MA_WGEVENTS_EVENTS_LIST', 'List of Events');
-\define('_MA_WGEVENTS_EVENTS_TITLE', 'Events title');
-\define('_MA_WGEVENTS_EVENTS_DESC', 'Events description');
-\define('_MA_WGEVENTS_EVENTS_LISTCOMING', 'Coming Events');
-\define('_MA_WGEVENTS_EVENTS_LISTPAST', 'Past Events');
+\define('_MA_WGEVENTS_EVENTS', 'Event');
+\define('_MA_WGEVENTS_EVENTS_LIST', 'List of Event');
+\define('_MA_WGEVENTS_EVENTS_TITLE', 'Event title');
+\define('_MA_WGEVENTS_EVENTS_DESC', 'Event description');
+\define('_MA_WGEVENTS_EVENTS_LISTCOMING', 'Coming Event');
+\define('_MA_WGEVENTS_EVENTS_LISTPAST', 'Past Event');
 // Caption of Event
 \define('_MA_WGEVENTS_EVENT_ID', 'Id');
 \define('_MA_WGEVENTS_EVENT_CATID', 'Category Id');
@@ -102,7 +102,7 @@ require_once __DIR__ . '/admin.php';
 \define('_MA_WGEVENTS_EVENT_REGISTER_SIGNATURE', 'Signature');
 \define('_MA_WGEVENTS_EVENT_REGISTER_SIGNATURE_DESC', 'Enter the signature, which should be used for confirmation mails');
 \define('_MA_WGEVENTS_EVENT_GALID', 'Gallery Id');
-// Categories
+// Category
 \define('_MA_WGEVENTS_CATEGORY_LOGO', 'Logo');
 // Registration
 \define('_MA_WGEVENTS_REGISTRATION', 'Registration');
@@ -112,10 +112,10 @@ require_once __DIR__ . '/admin.php';
 \define('_MA_WGEVENTS_REGISTRATION_DELETE', 'Delete Registration');
 \define('_MA_WGEVENTS_REGISTRATION_CLONE', 'Clone Registration');
 \define('_MA_WGEVENTS_REGISTRATION_GOTO', 'Goto Registration');
-\define('_MA_WGEVENTS_REGISTRATIONS', 'Registrations');
-\define('_MA_WGEVENTS_REGISTRATIONS_LIST', 'List of Registrations');
-\define('_MA_WGEVENTS_REGISTRATIONS_TITLE', 'Registrations title');
-\define('_MA_WGEVENTS_REGISTRATIONS_DESC', 'Registrations description');
+\define('_MA_WGEVENTS_REGISTRATIONS', 'Registration');
+\define('_MA_WGEVENTS_REGISTRATIONS_LIST', 'List of Registration');
+\define('_MA_WGEVENTS_REGISTRATIONS_TITLE', 'Registration title');
+\define('_MA_WGEVENTS_REGISTRATIONS_DESC', 'Registration description');
 \define('_MA_WGEVENTS_REGISTRATIONS_MYLIST', 'List of my registrations');
 \define('_MA_WGEVENTS_REGISTRATIONS_THEREARENT', 'There are no registrations available for current user respectively for current IP-Address');
 \define('_MA_WGEVENTS_REGISTRATIONS_CURR', 'Registration currently');
@@ -162,13 +162,13 @@ Participation without agreement to this conditions is not possible.
 \define('_MA_WGEVENTS_QUESTION_EDIT', 'Edit Question');
 \define('_MA_WGEVENTS_QUESTION_DELETE', 'Delete Question');
 \define('_MA_WGEVENTS_QUESTION_CLONE', 'Clone Question');
-\define('_MA_WGEVENTS_QUESTIONS', 'Questions');
-\define('_MA_WGEVENTS_QUESTIONS_LIST', 'List of Questions');
-\define('_MA_WGEVENTS_QUESTIONS_TITLE', 'Questions title');
-\define('_MA_WGEVENTS_QUESTIONS_DESC', 'Questions description');
-\define('_MA_WGEVENTS_QUESTIONS_CREATE', 'Create Questions');
+\define('_MA_WGEVENTS_QUESTIONS', 'Question');
+\define('_MA_WGEVENTS_QUESTIONS_LIST', 'List of Question');
+\define('_MA_WGEVENTS_QUESTIONS_TITLE', 'Question title');
+\define('_MA_WGEVENTS_QUESTIONS_DESC', 'Question description');
+\define('_MA_WGEVENTS_QUESTIONS_CREATE', 'Create Question');
 \define('_MA_WGEVENTS_QUESTIONS_PREVIEW', 'Show preview of registration form');
-\define('_MA_WGEVENTS_QUESTIONS_CURR', 'Number of current Questions');
+\define('_MA_WGEVENTS_QUESTIONS_CURR', 'Number of current Question');
 // Caption of Question
 \define('_MA_WGEVENTS_QUESTION_ID', 'Id');
 \define('_MA_WGEVENTS_QUESTION_EVID', 'Event');
@@ -191,10 +191,10 @@ Participation without agreement to this conditions is not possible.
 \define('_MA_WGEVENTS_ANSWER_EDIT', 'Edit Answer');
 \define('_MA_WGEVENTS_ANSWER_DELETE', 'Delete Answer');
 \define('_MA_WGEVENTS_ANSWER_CLONE', 'Clone Answer');
-\define('_MA_WGEVENTS_ANSWERS', 'Answers');
-\define('_MA_WGEVENTS_ANSWERS_LIST', 'List of Answers');
-\define('_MA_WGEVENTS_ANSWERS_TITLE', 'Answers title');
-\define('_MA_WGEVENTS_ANSWERS_DESC', 'Answers description');
+\define('_MA_WGEVENTS_ANSWERS', 'Answer');
+\define('_MA_WGEVENTS_ANSWERS_LIST', 'List of Answer');
+\define('_MA_WGEVENTS_ANSWERS_TITLE', 'Answer title');
+\define('_MA_WGEVENTS_ANSWERS_DESC', 'Answer description');
 \define('_MA_WGEVENTS_ANSWERS_CURR', 'Number of current answers');
 // Caption of Answer
 \define('_MA_WGEVENTS_ANSWER_ID', 'Id');
@@ -208,10 +208,10 @@ Participation without agreement to this conditions is not possible.
 \define('_MA_WGEVENTS_TEXTBLOCK_EDIT', 'Edit Textblock');
 \define('_MA_WGEVENTS_TEXTBLOCK_DELETE', 'Delete Textblock');
 \define('_MA_WGEVENTS_TEXTBLOCK_CLONE', 'Clone Textblock');
-\define('_MA_WGEVENTS_TEXTBLOCKS', 'Textblocks');
-\define('_MA_WGEVENTS_TEXTBLOCKS_LIST', 'List of Textblocks');
-\define('_MA_WGEVENTS_TEXTBLOCKS_TITLE', 'Textblocks title');
-\define('_MA_WGEVENTS_TEXTBLOCKS_DESC', 'Textblocks description');
+\define('_MA_WGEVENTS_TEXTBLOCKS', 'Textblock');
+\define('_MA_WGEVENTS_TEXTBLOCKS_LIST', 'List of Textblock');
+\define('_MA_WGEVENTS_TEXTBLOCKS_TITLE', 'Textblock title');
+\define('_MA_WGEVENTS_TEXTBLOCKS_DESC', 'Textblock description');
 // Caption of Textblock
 \define('_MA_WGEVENTS_TEXTBLOCK_ID', 'Id');
 \define('_MA_WGEVENTS_TEXTBLOCK_NAME', 'Name');

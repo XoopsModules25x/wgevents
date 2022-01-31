@@ -110,7 +110,7 @@ function wgevents_RewriteUrl($module, $array, $type = 'content')
 {
     $comment = '';
     $helper = \XoopsModules\Wgevents\Helper::getInstance();
-    $textblocksHandler = $helper->getHandler('textblocks');
+    $textblockHandler = $helper->getHandler('textblocks');
     $lenght_id = $helper->getConfig('lenght_id');
     $rewrite_url = $helper->getConfig('rewrite_url');
 
@@ -195,7 +195,7 @@ function wgevents_Filter($url, $type = '') {
 
     // Get regular expression from module setting. default setting is : `[^a-z0-9]`i
     $helper = \XoopsModules\Wgevents\Helper::getInstance();
-    $textblocksHandler = $helper->getHandler('textblocks');
+    $textblockHandler = $helper->getHandler('textblocks');
     $regular_expression = $helper->getConfig('regular_expression');
 
     $url = \strip_tags($url);

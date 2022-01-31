@@ -8,7 +8,7 @@
 <div class="row">
     <ul class='menu text-center'>
         <li><a href='<{$wgevents_url|default:''}>'><{$smarty.const._MA_WGEVENTS_INDEX}></a></li>
-        <li><a href='<{$wgevents_url|default:''}>/events.php'><{$smarty.const._MA_WGEVENTS_EVENTS}></a></li>
+        <li><a href='<{$wgevents_url|default:''}>/event.php'><{$smarty.const._MA_WGEVENTS_EVENTS}></a></li>
     </ul>
 </div>
 
@@ -24,7 +24,7 @@
     <!-- Start new link loop -->
     <{foreach item=event from=$events name=event}>
         <div class='top center'>
-            <{include file='db:wgevents_events_index_list.tpl' event=$event}>
+            <{include file='db:wgevents_event_index_list.tpl' event=$event}>
         </div>
     <{/foreach}>
     <!-- End new link loop -->
