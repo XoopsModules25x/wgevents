@@ -1,6 +1,5 @@
 <?php declare(strict_types=1);
 
-
 namespace XoopsModules\Wgevents;
 
 /*
@@ -28,9 +27,9 @@ use XoopsModules\Wgevents;
 use XoopsModules\Wgevents\Helper;
 
 /**
- * Class Object Handler Registrations History
+ * Class Object Handler Answer History
  */
-class RegistrationshistHandler extends \XoopsPersistableObjectHandler
+class AnswerhistHandler extends \XoopsPersistableObjectHandler
 {
     /**
      * Constructor
@@ -39,7 +38,7 @@ class RegistrationshistHandler extends \XoopsPersistableObjectHandler
      */
     public function __construct(\XoopsDatabase $db)
     {
-        parent::__construct($db, 'wgevents_registrations_hist', Registrationshist::class, 'hist_id', 'id');
+        parent::__construct($db, 'wgevents_answers_hist', Answerhist::class, 'hist_id', 'id');
     }
 
     /**
@@ -66,26 +65,37 @@ class RegistrationshistHandler extends \XoopsPersistableObjectHandler
 
     /**
      * @public function to create history of given dataset
-     * @param object $registrationsObj
+     * @param int $regEvid
+     * @param int $regId
      * @param string $info
      * @return bool
      */
-    public function createHistory(object $registrationsObj, string $info)
+    public function createHistory(int $regEvid, int $regId, $info)
     {
         $helper = \XoopsModules\Wgevents\Helper::getInstance();
         if ($helper->getConfig('use_register_hist')) {
             $submitter = \is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->uid() : 0;
 
-            $registrationshistHandler = $helper->getHandler('Registrationshist');
-            $registrationshistObj = $registrationshistHandler->create();
-            $registrationshistObj->setVar('hist_info', $info);
-            $registrationshistObj->setVar('hist_datecreated', \time());
-            $registrationshistObj->setVar('hist_submitter', $submitter);
-            $vars = $registrationsObj->getVars();
-            foreach (\array_keys($vars) as $var) {
-                $registrationshistObj->setVar($var, $registrationsObj->getVar($var));
+            $answersHandler = $helper->getHandler('Answer');
+            $answershistHandler = $helper->getHandler('Answerhist');
+            $crAnswers = new \CriteriaCompo();
+            $crAnswers->add(new \Criteria('evid', $regEvid));
+            $crAnswers->add(new \Criteria('regid', $regId));
+            $answersCount = $answersHandler->getCount($crAnswers);
+            if ($answersCount > 0) {
+                $answersAll = $answersHandler->getAll($crAnswers);
+                foreach (\array_keys($answersAll) as $i) {
+                    $answershistObj = $answershistHandler->create();
+                    $answershistObj->setVar('hist_info', $info);
+                    $answershistObj->setVar('hist_datecreated', \time());
+                    $answershistObj->setVar('hist_submitter', $submitter);
+                    $vars = $answersAll[$i]->getVars();
+                    foreach (\array_keys($vars) as $var) {
+                        $answershistObj->setVar($var, $answersAll[$i]->getVar($var));
+                    }
+                    $answershistHandler->insert($answershistObj);
+                }
             }
-            $registrationshistHandler->insert($registrationshistObj);
 
             return true;
         } else {

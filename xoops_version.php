@@ -136,7 +136,7 @@ $modversion['search'] = [
 ];
 
 $helper = Helper::getInstance();
-$permissionsHandler = $helper->getHandler('Permissions');
+$permissionsHandler = $helper->getHandler('Permission');
 // ------------------- Menu ------------------- //
 $currdirname  = isset($GLOBALS['xoopsModule']) && \is_object($GLOBALS['xoopsModule']) ? $GLOBALS['xoopsModule']->getVar('dirname') : 'system';
 if ($currdirname == $moduleDirName) {
@@ -203,7 +203,7 @@ if ($currdirname == $moduleDirName) {
     */
 }
 // ------------------- Default Blocks ------------------- //
-// Events last
+// Event last
 $modversion['blocks'][] = [
     'file'        => 'events.php',
     'name'        => \_MI_WGEVENTS_EVENTS_BLOCK_LAST,
@@ -213,7 +213,7 @@ $modversion['blocks'][] = [
     'template'    => 'wgevents_block_events.tpl',
     'options'     => 'last|5|25|0',
 ];
-// Events new
+// Event new
 $modversion['blocks'][] = [
     'file'        => 'events.php',
     'name'        => \_MI_WGEVENTS_EVENTS_BLOCK_NEW,
@@ -225,7 +225,7 @@ $modversion['blocks'][] = [
 ];
 /*
 
-// Events top
+// Event top
 $modversion['blocks'][] = [
     'file'        => 'events.php',
     'name'        => \_MI_WGEVENTS_EVENTS_BLOCK_TOP,
@@ -236,7 +236,7 @@ $modversion['blocks'][] = [
     'options'     => 'top|5|25|0',
 ];
 */
-// Events random
+// Event random
 $modversion['blocks'][] = [
     'file'        => 'events.php',
     'name'        => \_MI_WGEVENTS_EVENTS_BLOCK_RANDOM,
@@ -247,7 +247,7 @@ $modversion['blocks'][] = [
     'options'     => 'random|5|25|0',
 ];
 // ------------------- Spotlight Blocks ------------------- //
-// Events spotlight
+// Event spotlight
 $modversion['blocks'][] = [
     'file'        => 'events_spotlight.php',
     'name'        => \_MI_WGEVENTS_EVENTS_BLOCK_SPOTLIGHT,
@@ -680,7 +680,7 @@ $modversion['notification'] = [
     'lookup_file' => 'include/notification.inc.php',
     'lookup_func' => 'wgevents_notify_iteminfo',
 ];
-// Categories of notification
+// Category of notification
 // Global Notify
 $modversion['notification']['category'][] = [
     'name'           => 'global',

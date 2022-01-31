@@ -28,9 +28,9 @@ use XoopsModules\Wgevents;
 
 
 /**
- * Class Object Handler Events
+ * Class Object Handler Event
  */
-class EventsHandler extends \XoopsPersistableObjectHandler
+class EventHandler extends \XoopsPersistableObjectHandler
 {
     /**
      * Constructor
@@ -39,7 +39,7 @@ class EventsHandler extends \XoopsPersistableObjectHandler
      */
     public function __construct(\XoopsDatabase $db)
     {
-        parent::__construct($db, 'wgevents_events', Events::class, 'id', 'name');
+        parent::__construct($db, 'wgevents_events', Event::class, 'id', 'name');
     }
 
     /**
@@ -76,7 +76,7 @@ class EventsHandler extends \XoopsPersistableObjectHandler
     }
 
     /**
-     * Get Count Events in the database
+     * Get Count Event in the database
      * @param int    $start
      * @param int    $limit
      * @param string $sort
@@ -91,7 +91,7 @@ class EventsHandler extends \XoopsPersistableObjectHandler
     }
 
     /**
-     * Get All Events in the database
+     * Get All Event in the database
      * @param int    $start
      * @param int    $limit
      * @param string $sort
@@ -106,7 +106,7 @@ class EventsHandler extends \XoopsPersistableObjectHandler
     }
 
     /**
-     * Get Criteria Events
+     * Get Criteria Event
      * @param        $crEvents
      * @param int $start
      * @param int $limit
@@ -139,7 +139,7 @@ class EventsHandler extends \XoopsPersistableObjectHandler
         $form = new \XoopsThemeForm(\_MA_WGEVENTS_EVENT_SELECT, 'form', $action, 'post', true);
         $form->setExtra('enctype="multipart/form-data"');
         // Form Table categories
-        $eventsHandler = $helper->getHandler('Events');
+        $eventsHandler = $helper->getHandler('Event');
         $evidSelect = new \XoopsFormSelect(\_MA_WGEVENTS_EVENT_ID, 'evid', 0);
         $evidSelect->addOption('');
         $evidSelect->addOptionArray($eventsHandler->getList());
@@ -186,7 +186,7 @@ class EventsHandler extends \XoopsPersistableObjectHandler
                 $crEvents->setLimit($limit);
             }
             $eventsAll = $this->getAll($crEvents);
-            // Get All Events
+            // Get All Event
             $events = [];
             foreach (\array_keys($eventsAll) as $i) {
                 $events[$i] = $eventsAll[$i]->getValuesEvents();

@@ -32,9 +32,9 @@ use XoopsModules\Wgevents\{
 \defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 /**
- * Class Object Fields
+ * Class Object Field
  */
-class Fields extends \XoopsObject
+class Field extends \XoopsObject
 {
     /**
      * @var int
@@ -102,7 +102,7 @@ class Fields extends \XoopsObject
     {
         $helper = \XoopsModules\Wgevents\Helper::getInstance();
 
-        $fieldsHandler = $helper->getHandler('Fields');
+        $fieldsHandler = $helper->getHandler('Field');
 
         if (!$action) {
             $action = $_SERVER['REQUEST_URI'];

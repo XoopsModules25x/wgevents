@@ -27,14 +27,14 @@ use XoopsModules\Wgevents\ {
     Constants,
     Utility,
     Common,
-    MailsHandler
+    MailHandler
 };
 
 require __DIR__ . '/header.php';
 $GLOBALS['xoopsOption']['template_main'] = 'wgevents_events.tpl';
 require_once \XOOPS_ROOT_PATH . '/header.php';
 
-// Permissions
+// Permission
 if (!$permissionsHandler->getPermEventsView()) {
     \redirect_header('index.php', 0);
 }
@@ -128,7 +128,7 @@ switch ($op) {
             $eventsAll = $eventsHandler->getAll($crEvents);
             $events = [];
             $evName = '';
-            // Get All Events
+            // Get All Event
             foreach (\array_keys($eventsAll) as $i) {
                 $events[$i] = $eventsAll[$i]->getValuesEvents();
                 $permEdit = $permissionsHandler->getPermEventsEdit($eventsAll[$i]->getVar('submitter'), $eventsAll[$i]->getVar('status')) || $uidCurrent == $eventsAll[$i]->getVar('submitter');
@@ -366,7 +366,7 @@ switch ($op) {
                             $regEmail = (string)$registrationsAll[$regId]->getVar('email');
                             if ('' != $regEmail) {
                                 // send confirmation
-                                $mailsHandler = new MailsHandler();
+                                $mailsHandler = new MailHandler();
                                 $mailsHandler->setInfo($infotext);
                                 $mailsHandler->setNotifyEmails($regEmail);
                                 $mailsHandler->executeReg($regId, $typeConfirm);

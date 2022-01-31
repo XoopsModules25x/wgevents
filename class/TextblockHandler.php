@@ -27,9 +27,9 @@ use XoopsModules\Wgevents;
 
 
 /**
- * Class Object Handler Logs
+ * Class Object Handler Textblock
  */
-class LogsHandler extends \XoopsPersistableObjectHandler
+class TextblockHandler extends \XoopsPersistableObjectHandler
 {
     /**
      * Constructor
@@ -38,7 +38,7 @@ class LogsHandler extends \XoopsPersistableObjectHandler
      */
     public function __construct(\XoopsDatabase $db)
     {
-        parent::__construct($db, 'wgevents_logs', Logs::class, 'id', 'text');
+        parent::__construct($db, 'wgevents_textblocks', Textblock::class, 'id', 'name');
     }
 
     /**
@@ -75,71 +75,50 @@ class LogsHandler extends \XoopsPersistableObjectHandler
     }
 
     /**
-     * Get Count Logs in the database
+     * Get Count Textblock in the database
      * @param int    $start
      * @param int    $limit
      * @param string $sort
      * @param string $order
      * @return int
      */
-    public function getCountLogs($start = 0, $limit = 0, $sort = 'id ASC, text', $order = 'ASC')
+    public function getCountTextblocks($start = 0, $limit = 0, $sort = 'id ASC, name', $order = 'ASC')
     {
-        $crCountLogs = new \CriteriaCompo();
-        $crCountLogs = $this->getLogsCriteria($crCountLogs, $start, $limit, $sort, $order);
-        return $this->getCount($crCountLogs);
+        $crCountTextblocks = new \CriteriaCompo();
+        $crCountTextblocks = $this->getTextblocksCriteria($crCountTextblocks, $start, $limit, $sort, $order);
+        return $this->getCount($crCountTextblocks);
     }
 
     /**
-     * Get All Logs in the database
+     * Get All Textblock in the database
      * @param int    $start
      * @param int    $limit
      * @param string $sort
      * @param string $order
      * @return array
      */
-    public function getAllLogs($start = 0, $limit = 0, $sort = 'id ASC, text', $order = 'ASC')
+    public function getAllTextblocks($start = 0, $limit = 0, $sort = 'id ASC, name', $order = 'ASC')
     {
-        $crAllLogs = new \CriteriaCompo();
-        $crAllLogs = $this->getLogsCriteria($crAllLogs, $start, $limit, $sort, $order);
-        return $this->getAll($crAllLogs);
+        $crAllTextblocks = new \CriteriaCompo();
+        $crAllTextblocks = $this->getTextblocksCriteria($crAllTextblocks, $start, $limit, $sort, $order);
+        return $this->getAll($crAllTextblocks);
     }
 
     /**
-     * Get Criteria Logs
-     * @param        $crLogs
+     * Get Criteria Textblock
+     * @param        $crTextblocks
      * @param int $start
      * @param int $limit
      * @param string $sort
      * @param string $order
      * @return int
      */
-    private function getLogsCriteria($crLogs, int $start, int $limit, string $sort, string $order)
+    private function getTextblocksCriteria($crTextblocks, int $start, int $limit, string $sort, string $order)
     {
-        $crLogs->setStart($start);
-        $crLogs->setLimit($limit);
-        $crLogs->setSort($sort);
-        $crLogs->setOrder($order);
-        return $crLogs;
-    }
-
-    /**
-     * Create new Log
-     * @param string $text
-     * @return void
-     */
-    public function createLog(string $text)
-    {
-        $helper = \XoopsModules\Wgevents\Helper::getInstance();
-
-        if ($helper->getConfig('use_logs')) {
-            $logSubmitter = \is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->uid() : 0;
-            $logsObj = $this->create();
-            // Set Vars
-            $logsObj->setVar('text', $text);
-            $logsObj->setVar('datecreated', \time());
-            $logsObj->setVar('submitter', $logSubmitter);
-            // Insert Data
-            $this->insert($logsObj);
-        }
+        $crTextblocks->setStart($start);
+        $crTextblocks->setLimit($limit);
+        $crTextblocks->setSort($sort);
+        $crTextblocks->setOrder($order);
+        return $crTextblocks;
     }
 }

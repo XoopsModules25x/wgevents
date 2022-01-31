@@ -33,9 +33,9 @@ namespace XoopsModules\Wgevents;
 require_once dirname(__DIR__) . '/include/common.php';
 
 /**
- * Class Accounts
+ * Class Account
  */
-class Accounts extends \XoopsObject
+class Account extends \XoopsObject
 {
     public $helper = null;
     public $db;

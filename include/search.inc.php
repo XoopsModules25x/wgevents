@@ -41,7 +41,7 @@ function wgevents_search($queryarray, $andor, $limit, $offset, $userid)
     // search in table events
     // search keywords
     $elementCount = 0;
-    $eventsHandler = $helper->getHandler('Events');
+    $eventsHandler = $helper->getHandler('Event');
     if (\is_array($queryarray)) {
         $elementCount = \count($queryarray);
     }

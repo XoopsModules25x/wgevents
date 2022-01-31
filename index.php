@@ -29,7 +29,7 @@ require __DIR__ . '/header.php';
 $GLOBALS['xoopsOption']['template_main'] = 'wgevents_index.tpl';
 require_once \XOOPS_ROOT_PATH . '/header.php';
 
-// Permissions
+// Permission
 if (!$permissionsHandler->getPermEventsView()) {
     $GLOBALS['xoopsTpl']->assign('errorPerm', _NOPERM);
     require __DIR__ . '/footer.php';
@@ -78,7 +78,7 @@ $eventsAll = $eventsHandler->getAll($crEvents);
 if ($eventsCount > 0) {
     $events = [];
     $evName = '';
-    // Get All Events
+    // Get All Event
     foreach (\array_keys($eventsAll) as $i) {
         $events[$i] = $eventsAll[$i]->getValuesEvents();
         $events[$i]['locked'] = (Constants::STATUS_LOCKED == $events[$i]['status']);

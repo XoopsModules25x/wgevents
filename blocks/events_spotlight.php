@@ -39,7 +39,7 @@ function b_wgevents_events_spotlight_show($options)
     $limit       = $options[1];
     $lenghtTitle = $options[2];
     $helper      = Helper::getInstance();
-    $eventsHandler = $helper->getHandler('Events');
+    $eventsHandler = $helper->getHandler('Event');
     $crEvents = new \CriteriaCompo();
     \array_shift($options);
     \array_shift($options);
@@ -92,7 +92,7 @@ function b_wgevents_events_spotlight_show($options)
 function b_wgevents_events_spotlight_edit($options)
 {
     $helper = Helper::getInstance();
-    $eventsHandler = $helper->getHandler('Events');
+    $eventsHandler = $helper->getHandler('Event');
     $GLOBALS['xoopsTpl']->assign('wgevents_upload_url', \WGEVENTS_UPLOAD_URL);
     $form = \_MB_WGEVENTS_DISPLAY_SPOTLIGHT . ' : ';
     $form .= "<input type='hidden' name='options[0]' value='".$options[0]."' >";

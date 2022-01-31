@@ -32,7 +32,7 @@ use XoopsModules\Wgevents\{
 /**
  * Class Object Handler Mails
  */
-class MailsHandler
+class MailHandler
 {
     /**
      * @var string
@@ -63,12 +63,12 @@ class MailsHandler
     public function executeReg(int $regId, int $type)
     {
         $helper = Helper::getInstance();
-        $eventsHandler = $helper->getHandler('Events');
-        $registrationsHandler = $helper->getHandler('Registrations');
-        $permissionsHandler = $helper->getHandler('Permissions');
-        $logsHandler = $helper->getHandler('Logs');
+        $eventsHandler = $helper->getHandler('Event');
+        $registrationsHandler = $helper->getHandler('Registration');
+        $permissionsHandler = $helper->getHandler('Permission');
+        $logsHandler = $helper->getHandler('Log');
 
-        $logsHandler->createLog('Start MailsHandler/executeReg');
+        $logsHandler->createLog('Start MailHandler/executeReg');
 
 
         $registrationsObj = $registrationsHandler->get($regId, true);
@@ -165,9 +165,9 @@ class MailsHandler
 
         //send mail
         if ($xoopsMailer->send()) {
-            $logsHandler->createLog('Result MailsHandler/executeReg: success');
+            $logsHandler->createLog('Result MailHandler/executeReg: success');
         } else {
-            $logsHandler->createLog('Result MailsHandler/executeReg: failed' .$xoopsMailer->getErrors());
+            $logsHandler->createLog('Result MailHandler/executeReg: failed' .$xoopsMailer->getErrors());
         }
         $xoopsMailer->reset();
 
@@ -184,10 +184,10 @@ class MailsHandler
     public function executeRegDelete(array $regParams, int $type)
     {
         $helper = Helper::getInstance();
-        $eventsHandler = $helper->getHandler('Events');
+        $eventsHandler = $helper->getHandler('Event');
 
-        $logsHandler = $helper->getHandler('Logs');
-        $logsHandler->createLog('Start MailsHandler/executeRegDelete');
+        $logsHandler = $helper->getHandler('Log');
+        $logsHandler->createLog('Start MailHandler/executeRegDelete');
 
         $eventsObj = $eventsHandler->get($regParams['evid']);
 
@@ -253,9 +253,9 @@ class MailsHandler
 
         //send mail
         if ($xoopsMailer->send()) {
-            $logsHandler->createLog('Result MailsHandler/executeRegDelete: success');
+            $logsHandler->createLog('Result MailHandler/executeRegDelete: success');
         } else {
-            $logsHandler->createLog('Result MailsHandler/executeRegDelete: failed');
+            $logsHandler->createLog('Result MailHandler/executeRegDelete: failed');
         }
         $xoopsMailer->reset();
 

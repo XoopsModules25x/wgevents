@@ -34,9 +34,9 @@ use XoopsModules\Wgevents\ {
 \defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 /**
- * Class Object Events
+ * Class Object Event
  */
-class Events extends \XoopsObject
+class Event extends \XoopsObject
 {
     /**
      * @var int
@@ -116,8 +116,8 @@ class Events extends \XoopsObject
     {
         $helper = Helper::getInstance();
 
-        $categoriesHandler = $helper->getHandler('Categories');
-        $permissionsHandler = $helper->getHandler('Permissions');
+        $categoriesHandler = $helper->getHandler('Category');
+        $permissionsHandler = $helper->getHandler('Permission');
 
         $utility = new Utility();
 
@@ -370,7 +370,7 @@ class Events extends \XoopsObject
         $helper  = \XoopsModules\Wgevents\Helper::getInstance();
         $utility = new \XoopsModules\Wgevents\Utility();
         $ret = $this->getValues($keys, $format, $maxDepth);
-        $categoriesHandler = $helper->getHandler('Categories');
+        $categoriesHandler = $helper->getHandler('Category');
         $categoriesObj = $categoriesHandler->get($this->getVar('catid'));
         $adminMaxchar = $helper->getConfig('admin_maxchar');
         $userMaxchar = $helper->getConfig('user_maxchar');

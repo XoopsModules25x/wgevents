@@ -27,9 +27,9 @@ use XoopsModules\Wgevents;
 
 
 /**
- * Class Object Handler Questions
+ * Class Object Handler Question
  */
-class QuestionsHandler extends \XoopsPersistableObjectHandler
+class QuestionHandler extends \XoopsPersistableObjectHandler
 {
     /**
      * Constructor
@@ -38,7 +38,7 @@ class QuestionsHandler extends \XoopsPersistableObjectHandler
      */
     public function __construct(\XoopsDatabase $db)
     {
-        parent::__construct($db, 'wgevents_questions', Questions::class, 'id', 'id');
+        parent::__construct($db, 'wgevents_questions', Question::class, 'id', 'id');
     }
 
     /**
@@ -75,7 +75,7 @@ class QuestionsHandler extends \XoopsPersistableObjectHandler
     }
 
     /**
-     * Get Count Questions in the database
+     * Get Count Question in the database
      * @param int    $start
      * @param int    $limit
      * @param string $sort
@@ -90,7 +90,7 @@ class QuestionsHandler extends \XoopsPersistableObjectHandler
     }
 
     /**
-     * Get All Questions in the database
+     * Get All Question in the database
      * @param int    $start
      * @param int    $limit
      * @param string $sort
@@ -105,7 +105,7 @@ class QuestionsHandler extends \XoopsPersistableObjectHandler
     }
 
     /**
-     * Get Criteria Questions
+     * Get Criteria Question
      * @param        $crQuestions
      * @param int $start
      * @param int $limit
@@ -123,7 +123,7 @@ class QuestionsHandler extends \XoopsPersistableObjectHandler
     }
 
     /**
-     * Function create Questions Defaultset
+     * Function create Question Defaultset
      * @param  $addEvid
      * @return bool
      */
@@ -132,8 +132,8 @@ class QuestionsHandler extends \XoopsPersistableObjectHandler
         $helper = \XoopsModules\Wgevents\Helper::getInstance();
 
         $uidCurrent = \is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->uid() : 0;
-        $fieldsHandler = $helper->getHandler('Fields');
-        $questionsHandler = $helper->getHandler('Questions');
+        $fieldsHandler = $helper->getHandler('Field');
+        $questionsHandler = $helper->getHandler('Question');
 
         $crAddTypes = new \CriteriaCompo();
         $crAddTypes->add(new \Criteria('default', 1));

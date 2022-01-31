@@ -27,9 +27,9 @@ use XoopsModules\Wgevents;
 
 
 /**
- * Class Object Handler Fields
+ * Class Object Handler Log
  */
-class FieldsHandler extends \XoopsPersistableObjectHandler
+class LogHandler extends \XoopsPersistableObjectHandler
 {
     /**
      * Constructor
@@ -38,7 +38,7 @@ class FieldsHandler extends \XoopsPersistableObjectHandler
      */
     public function __construct(\XoopsDatabase $db)
     {
-        parent::__construct($db, 'wgevents_fields', Fields::class, 'id', 'caption');
+        parent::__construct($db, 'wgevents_logs', Log::class, 'id', 'text');
     }
 
     /**
@@ -75,75 +75,71 @@ class FieldsHandler extends \XoopsPersistableObjectHandler
     }
 
     /**
-     * Get Count Fields in the database
+     * Get Count Log in the database
      * @param int    $start
      * @param int    $limit
      * @param string $sort
      * @param string $order
      * @return int
      */
-    public function getCountFields($start = 0, $limit = 0, $sort = 'id ASC, caption', $order = 'ASC')
+    public function getCountLogs($start = 0, $limit = 0, $sort = 'id ASC, text', $order = 'ASC')
     {
-        $crCountFields = new \CriteriaCompo();
-        $crCountFields = $this->getFieldsCriteria($crCountFields, $start, $limit, $sort, $order);
-        return $this->getCount($crCountFields);
+        $crCountLogs = new \CriteriaCompo();
+        $crCountLogs = $this->getLogsCriteria($crCountLogs, $start, $limit, $sort, $order);
+        return $this->getCount($crCountLogs);
     }
 
     /**
-     * Get All Fields in the database
+     * Get All Log in the database
      * @param int    $start
      * @param int    $limit
      * @param string $sort
      * @param string $order
      * @return array
      */
-    public function getAllFields($start = 0, $limit = 0, $sort = 'id ASC, caption', $order = 'ASC')
+    public function getAllLogs($start = 0, $limit = 0, $sort = 'id ASC, text', $order = 'ASC')
     {
-        $crAllFields = new \CriteriaCompo();
-        $crAllFields = $this->getFieldsCriteria($crAllFields, $start, $limit, $sort, $order);
-        return $this->getAll($crAllFields);
+        $crAllLogs = new \CriteriaCompo();
+        $crAllLogs = $this->getLogsCriteria($crAllLogs, $start, $limit, $sort, $order);
+        return $this->getAll($crAllLogs);
     }
 
     /**
-     * Get Criteria Fields
-     * @param        $crFields
+     * Get Criteria Log
+     * @param        $crLogs
      * @param int $start
      * @param int $limit
      * @param string $sort
      * @param string $order
      * @return int
      */
-    private function getFieldsCriteria($crFields, int $start, int $limit, string $sort, string $order)
+    private function getLogsCriteria($crLogs, int $start, int $limit, string $sort, string $order)
     {
-        $crFields->setStart($start);
-        $crFields->setLimit($limit);
-        $crFields->setSort($sort);
-        $crFields->setOrder($order);
-        return $crFields;
+        $crLogs->setStart($start);
+        $crLogs->setLimit($limit);
+        $crLogs->setSort($sort);
+        $crLogs->setOrder($order);
+        return $crLogs;
     }
 
     /**
-     * @public function to get next value for sorting
-     * @param null
-     * @return int
+     * Create new Log
+     * @param string $text
+     * @return void
      */
-    public function getNextWeight()
+    public function createLog(string $text)
     {
-        $nextValue = 0;
+        $helper = \XoopsModules\Wgevents\Helper::getInstance();
 
-        $crFields = new \CriteriaCompo();
-        $crFields->setSort('weight');
-        $crFields->setOrder('DESC');
-        $crFields->setLimit(1);
-        $fieldsCount = $this->getCount($crFields);
-        if ($fieldsCount > 0) {
-            $fieldsAll = $this->getAll($crFields);
-            foreach (\array_keys($fieldsAll) as $i) {
-                $nextValue = $fieldsAll[$i]->getVar('weight');
-            }
+        if ($helper->getConfig('use_logs')) {
+            $logSubmitter = \is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->uid() : 0;
+            $logsObj = $this->create();
+            // Set Vars
+            $logsObj->setVar('text', $text);
+            $logsObj->setVar('datecreated', \time());
+            $logsObj->setVar('submitter', $logSubmitter);
+            // Insert Data
+            $this->insert($logsObj);
         }
-
-        return $nextValue + 1;
-
     }
 }

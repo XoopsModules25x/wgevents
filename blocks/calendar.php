@@ -46,8 +46,8 @@ function b_wgevents_calendar_show($options)
     \array_shift($options);
 
     $helper      = Helper::getInstance();
-    $eventsHandler = $helper->getHandler('Events');
-    $categoriesHandler = $helper->getHandler('Categories');
+    $eventsHandler = $helper->getHandler('Event');
+    $categoriesHandler = $helper->getHandler('Category');
 
     \xoops_loadLanguage('main', 'wgevents');
 
@@ -128,7 +128,7 @@ function b_wgevents_calendar_show($options)
         if ($eventsCount > 0) {
             $eventsAll = $eventsHandler->getAll($crEvents);
             $eventsList = [];
-            // Get All Events
+            // Get All Event
             foreach (\array_keys($eventsAll) as $i) {
                 $eventsList[$i] = $eventsAll[$i]->getValuesEvents();
             }
@@ -169,7 +169,7 @@ function b_wgevents_calendar_edit($options)
      */
     /*
     $helper = Helper::getInstance();
-    $eventsHandler = $helper->getHandler('Events');
+    $eventsHandler = $helper->getHandler('Event');
     $eventsAll = $eventsHandler->getAll($crEvents);
     unset($crEvents);
     $form .= \_MB_WGEVENTS_EVENTS_TO_DISPLAY . "<br><select name='options[]' multiple='multiple' size='5'>";

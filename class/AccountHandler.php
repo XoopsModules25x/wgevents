@@ -27,9 +27,9 @@ use XoopsModules\Wgevents;
 
 
 /**
- * Class Object Handler Textblocks
+ * Class Object Handler Account
  */
-class TextblocksHandler extends \XoopsPersistableObjectHandler
+class AccountHandler extends \XoopsPersistableObjectHandler
 {
     /**
      * Constructor
@@ -38,7 +38,7 @@ class TextblocksHandler extends \XoopsPersistableObjectHandler
      */
     public function __construct(\XoopsDatabase $db)
     {
-        parent::__construct($db, 'wgevents_textblocks', Textblocks::class, 'id', 'name');
+        parent::__construct($db, 'wgevents_accounts', Account::class, 'id', 'type');
     }
 
     /**
@@ -75,50 +75,50 @@ class TextblocksHandler extends \XoopsPersistableObjectHandler
     }
 
     /**
-     * Get Count Textblocks in the database
+     * Get Count Account in the database
      * @param int    $start
      * @param int    $limit
      * @param string $sort
      * @param string $order
      * @return int
      */
-    public function getCountTextblocks($start = 0, $limit = 0, $sort = 'id ASC, name', $order = 'ASC')
+    public function getCountAccounts($start = 0, $limit = 0, $sort = 'id ASC, type', $order = 'ASC')
     {
-        $crCountTextblocks = new \CriteriaCompo();
-        $crCountTextblocks = $this->getTextblocksCriteria($crCountTextblocks, $start, $limit, $sort, $order);
-        return $this->getCount($crCountTextblocks);
+        $crCountAccounts = new \CriteriaCompo();
+        $crCountAccounts = $this->getAccountsCriteria($crCountAccounts, $start, $limit, $sort, $order);
+        return $this->getCount($crCountAccounts);
     }
 
     /**
-     * Get All Textblocks in the database
+     * Get All Account in the database
      * @param int    $start
      * @param int    $limit
      * @param string $sort
      * @param string $order
      * @return array
      */
-    public function getAllTextblocks($start = 0, $limit = 0, $sort = 'id ASC, name', $order = 'ASC')
+    public function getAllAccounts($start = 0, $limit = 0, $sort = 'id ASC, type', $order = 'ASC')
     {
-        $crAllTextblocks = new \CriteriaCompo();
-        $crAllTextblocks = $this->getTextblocksCriteria($crAllTextblocks, $start, $limit, $sort, $order);
-        return $this->getAll($crAllTextblocks);
+        $crAllAccounts = new \CriteriaCompo();
+        $crAllAccounts = $this->getAccountsCriteria($crAllAccounts, $start, $limit, $sort, $order);
+        return $this->getAll($crAllAccounts);
     }
 
     /**
-     * Get Criteria Textblocks
-     * @param        $crTextblocks
+     * Get Criteria Account
+     * @param        $crAccounts
      * @param int $start
      * @param int $limit
      * @param string $sort
      * @param string $order
      * @return int
      */
-    private function getTextblocksCriteria($crTextblocks, int $start, int $limit, string $sort, string $order)
+    private function getAccountsCriteria($crAccounts, int $start, int $limit, string $sort, string $order)
     {
-        $crTextblocks->setStart($start);
-        $crTextblocks->setLimit($limit);
-        $crTextblocks->setSort($sort);
-        $crTextblocks->setOrder($order);
-        return $crTextblocks;
+        $crAccounts->setStart($start);
+        $crAccounts->setLimit($limit);
+        $crAccounts->setSort($sort);
+        $crAccounts->setOrder($order);
+        return $crAccounts;
     }
 }

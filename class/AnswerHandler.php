@@ -27,9 +27,9 @@ use XoopsModules\Wgevents;
 use XoopsModules\Wgevents\Helper;
 
 /**
- * Class Object Handler Answers
+ * Class Object Handler Answer
  */
-class AnswersHandler extends \XoopsPersistableObjectHandler
+class AnswerHandler extends \XoopsPersistableObjectHandler
 {
     /**
      * Constructor
@@ -38,7 +38,7 @@ class AnswersHandler extends \XoopsPersistableObjectHandler
      */
     public function __construct(\XoopsDatabase $db)
     {
-        parent::__construct($db, 'wgevents_answers', Answers::class, 'id', 'evid');
+        parent::__construct($db, 'wgevents_answers', Answer::class, 'id', 'evid');
     }
 
     /**
@@ -75,7 +75,7 @@ class AnswersHandler extends \XoopsPersistableObjectHandler
     }
 
     /**
-     * Get Count Answers in the database
+     * Get Count Answer in the database
      * @param int    $start
      * @param int    $limit
      * @param string $sort
@@ -90,7 +90,7 @@ class AnswersHandler extends \XoopsPersistableObjectHandler
     }
 
     /**
-     * Get All Answers in the database
+     * Get All Answer in the database
      * @param int    $start
      * @param int    $limit
      * @param string $sort
@@ -105,7 +105,7 @@ class AnswersHandler extends \XoopsPersistableObjectHandler
     }
 
     /**
-     * Get Criteria Answers
+     * Get Criteria Answer
      * @param        $crAnswers
      * @param int $start
      * @param int $limit
@@ -196,7 +196,7 @@ class AnswersHandler extends \XoopsPersistableObjectHandler
     public function getAnswersCompare($versionOld, $versionNew)
     {
         $helper  = Helper::getInstance();
-        $questionsHandler = $helper->getHandler('Questions');
+        $questionsHandler = $helper->getHandler('Question');
 
         $infotext = '';
         foreach(\array_keys($versionNew) as $key) {

@@ -46,7 +46,7 @@ $GLOBALS['xoopsTpl']->assign('wgevents_url', \WGEVENTS_URL);
 $keywords = [];
 // Breadcrumbs
 $xoBreadcrumbs[] = ['title' => \_MA_WGEVENTS_INDEX, 'link' => 'index.php'];
-// Permissions
+// Permission
 $permEdit = $permissionsHandler->getPermGlobalSubmit();
 $GLOBALS['xoopsTpl']->assign('permEdit', $permEdit);
 $GLOBALS['xoopsTpl']->assign('showItem', $tbId > 0);
@@ -71,7 +71,7 @@ switch ($op) {
         if ($textblocksCount > 0) {
             $textblocks = [];
             $tbName = '';
-            // Get All Textblocks
+            // Get All Textblock
             foreach (\array_keys($textblocksAll) as $i) {
                 $textblocks[$i] = $textblocksAll[$i]->getValuesTextblocks();
                 $tbName = $textblocksAll[$i]->getVar('name');

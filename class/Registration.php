@@ -29,9 +29,9 @@ use XoopsModules\Wgevents\Forms\FormelementsHandler;
 \defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 /**
- * Class Object Registrations
+ * Class Object Registration
  */
-class Registrations extends \XoopsObject
+class Registration extends \XoopsObject
 {
     /**
      * @var int
@@ -104,10 +104,10 @@ class Registrations extends \XoopsObject
     {
         $helper = \XoopsModules\Wgevents\Helper::getInstance();
 
-        $eventsHandler = $helper->getHandler('Events');
-        $questionsHandler = $helper->getHandler('Questions');
-        $answersHandler = $helper->getHandler('Answers');
-        $permissionsHandler = $helper->getHandler('Permissions');
+        $eventsHandler = $helper->getHandler('Event');
+        $questionsHandler = $helper->getHandler('Question');
+        $answersHandler = $helper->getHandler('Answer');
+        $permissionsHandler = $helper->getHandler('Permission');
 
         if (!$action) {
             $action = $_SERVER['REQUEST_URI'];
@@ -325,7 +325,7 @@ class Registrations extends \XoopsObject
     {
         $helper  = \XoopsModules\Wgevents\Helper::getInstance();
         $ret = $this->getValues($keys, $format, $maxDepth);
-        $eventsHandler = $helper->getHandler('Events');
+        $eventsHandler = $helper->getHandler('Event');
         $eventsObj = $eventsHandler->get($this->getVar('evid'));
         $ret['eventname']       = $eventsObj->getVar('name');
         $ret['salutation_text'] = Utility::getSalutationText($this->getVar('salutation'));

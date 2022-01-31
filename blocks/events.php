@@ -39,7 +39,7 @@ function b_wgevents_events_show($options)
     $limit       = $options[1];
     $lenghtTitle = $options[2];
     $helper      = Helper::getInstance();
-    $eventsHandler = $helper->getHandler('Events');
+    $eventsHandler = $helper->getHandler('Event');
     $crEvents = new \CriteriaCompo();
     \array_shift($options);
     \array_shift($options);
@@ -137,7 +137,7 @@ function b_wgevents_events_edit($options)
      */
     /*
     $helper = Helper::getInstance();
-    $eventsHandler = $helper->getHandler('Events');
+    $eventsHandler = $helper->getHandler('Event');
     $eventsAll = $eventsHandler->getAll($crEvents);
     unset($crEvents);
     $form .= \_MB_WGEVENTS_EVENTS_TO_DISPLAY . "<br><select name='options[]' multiple='multiple' size='5'>";

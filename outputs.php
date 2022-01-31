@@ -34,7 +34,7 @@ require __DIR__ . '/header.php';
 require_once \XOOPS_ROOT_PATH . '/header.php';
 $GLOBALS['xoopsTpl']->assign('template_sub', 'db:wgevents_outputs.tpl');
 
-// Permissions
+// Permission
 if (!$permissionsHandler->getPermGlobalView()) {
     \redirect_header('index.php', 0, '');
 }

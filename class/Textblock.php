@@ -28,9 +28,9 @@ use XoopsModules\Wgevents;
 \defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 /**
- * Class Object Textblocks
+ * Class Object Textblock
  */
-class Textblocks extends \XoopsObject
+class Textblock extends \XoopsObject
 {
     /**
      * @var int
@@ -123,7 +123,7 @@ class Textblocks extends \XoopsObject
         $uidCurrent = \is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->uid() : 0;
         $tbSubmitter = $this->isNew() ? $uidCurrent : $this->getVar('submitter');
         $form->addElement(new \XoopsFormSelectUser(\_MA_WGEVENTS_SUBMITTER, 'submitter', false, $tbSubmitter));
-        // Permissions
+        // Permission
         $memberHandler = \xoops_getHandler('member');
         $groupList = $memberHandler->getGroupList();
         $grouppermHandler = \xoops_getHandler('groupperm');

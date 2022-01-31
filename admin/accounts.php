@@ -51,7 +51,7 @@ switch ($op) {
         if (0 == $accId) {
             redirect_header('accounts.php', 3, _MA_WGEVENTS_INVALID_PARAM);
         } else {
-            $accountObj = $helper->getHandler('Accounts')->get($accId);
+            $accountObj = $helper->getHandler('Account')->get($accId);
         }
 
         $mailhost = $accountObj->getVar('server_in');
@@ -115,7 +115,7 @@ switch ($op) {
 
                 // send test mail
                 // read data of account
-                $accountObj             = $helper->getHandler('Accounts')->get($accId);
+                $accountObj             = $helper->getHandler('Account')->get($accId);
                 $account_type           = $accountObj->getVar('type');
                 $account_yourname       = $accountObj->getVar('yourname');
                 $account_yourmail       = $accountObj->getVar('yourmail');

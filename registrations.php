@@ -26,7 +26,7 @@ use XoopsModules\Wgevents;
 use XoopsModules\Wgevents\{
     Constants,
     Common,
-    MailsHandler,
+    MailHandler,
     Utility
 };
 
@@ -58,7 +58,7 @@ $GLOBALS['xoopsTpl']->assign('wgevents_icons_url_16', \WGEVENTS_ICONS_URL_16);
 $keywords = [];
 // Breadcrumbs
 $xoBreadcrumbs[] = ['title' => \_MA_WGEVENTS_INDEX, 'link' => 'index.php'];
-// Permissions
+// Permission
 $permView = $permissionsHandler->getPermRegistrationView();
 $GLOBALS['xoopsTpl']->assign('permView', $permView);
 
@@ -349,7 +349,7 @@ switch ($op) {
                 if ('' != $registerNotify) {
                     // send notifications to emails of register_notify
                     $notifyEmails   = preg_split("/\r\n|\n|\r/", $registerNotify);
-                    $mailsHandler = new MailsHandler();
+                    $mailsHandler = new MailHandler();
                     $mailsHandler->setInfo($infotext);
                     $mailsHandler->setNotifyEmails($notifyEmails);
                     $mailsHandler->executeReg($newRegId, $typeNotify);
@@ -357,7 +357,7 @@ switch ($op) {
                 }
                 if ('' != $regEmail && Request::getInt('email_send') > 0) {
                     // send confirmation, if radio is checked
-                    $mailsHandler = new MailsHandler();
+                    $mailsHandler = new MailHandler();
                     $mailsHandler->setInfo($infotext);
                     $mailsHandler->setNotifyEmails($regEmail);
                     $mailsHandler->executeReg($newRegId, $typeConfirm);
@@ -470,7 +470,7 @@ switch ($op) {
                 if ('' != $registerNotify) {
                     // send notifications to emails of register_notify
                     $notifyEmails   = preg_split("/\r\n|\n|\r/", $registerNotify);
-                    $mailsHandler = new MailsHandler();
+                    $mailsHandler = new MailHandler();
                     $mailsHandler->setNotifyEmails($notifyEmails);
                     $mailsHandler->executeRegDelete($regParams, $typeNotify);
                     unset($mailsHandler);
@@ -478,7 +478,7 @@ switch ($op) {
                 $regEmail = $regParams['email'];
                 if ('' !=  $regEmail) {
                     // send confirmation, if radio is checked
-                    $mailsHandler = new MailsHandler();
+                    $mailsHandler = new MailHandler();
                     $mailsHandler->setNotifyEmails($regEmail);
                     $mailsHandler->executeRegDelete($regParams, $typeConfirm);
                     unset($mailsHandler);
@@ -548,7 +548,7 @@ switch ($op) {
             if ('' != $registerNotify) {
                 // send notifications to emails of register_notify
                 $notifyEmails   = preg_split("/\r\n|\n|\r/", $registerNotify);
-                $mailsHandler = new MailsHandler();
+                $mailsHandler = new MailHandler();
                 $mailsHandler->setInfo($infotext);
                 $mailsHandler->setNotifyEmails($notifyEmails);
                 $mailsHandler->executeReg($newRegId, $typeNotify);
@@ -557,7 +557,7 @@ switch ($op) {
             $regEmail = $registrationsObj->getVar('email');
             if ('' != $regEmail) {
                 // send confirmation, if radio is checked
-                $mailsHandler = new MailsHandler();
+                $mailsHandler = new MailHandler();
                 $mailsHandler->setInfo($infotext);
                 $mailsHandler->setNotifyEmails($regEmail);
                 $mailsHandler->executeReg($newRegId, $typeConfirm);
@@ -618,7 +618,7 @@ switch ($op) {
             if ('' != $registerNotify) {
                 // send notifications to emails of register_notify
                 $notifyEmails   = preg_split("/\r\n|\n|\r/", $registerNotify);
-                $mailsHandler = new MailsHandler();
+                $mailsHandler = new MailHandler();
                 $mailsHandler->setInfo($infotext);
                 $mailsHandler->setNotifyEmails($notifyEmails);
                 $mailsHandler->executeReg($newRegId, $typeNotify);
@@ -627,7 +627,7 @@ switch ($op) {
             $regEmail = $registrationsObj->getVar('email');
             if ('' != $regEmail) {
                 // send confirmation, if radio is checked
-                $mailsHandler = new MailsHandler();
+                $mailsHandler = new MailHandler();
                 $mailsHandler->setInfo($infotext);
                 $mailsHandler->setNotifyEmails($regEmail);
                 $mailsHandler->executeReg($newRegId, $typeConfirm);

@@ -27,9 +27,9 @@ use XoopsModules\Wgevents;
 use XoopsModules\Wgevents\Helper;
 
 /**
- * Class Object Handler Registrations
+ * Class Object Handler Registration
  */
-class RegistrationsHandler extends \XoopsPersistableObjectHandler
+class RegistrationHandler extends \XoopsPersistableObjectHandler
 {
     /**
      * Constructor
@@ -38,7 +38,7 @@ class RegistrationsHandler extends \XoopsPersistableObjectHandler
      */
     public function __construct(\XoopsDatabase $db)
     {
-        parent::__construct($db, 'wgevents_registrations', Registrations::class, 'id', 'evid');
+        parent::__construct($db, 'wgevents_registrations', Registration::class, 'id', 'evid');
     }
 
     /**
@@ -75,7 +75,7 @@ class RegistrationsHandler extends \XoopsPersistableObjectHandler
     }
 
     /**
-     * Get Count Registrations in the database
+     * Get Count Registration in the database
      * @param int    $start
      * @param int    $limit
      * @param string $sort
@@ -90,7 +90,7 @@ class RegistrationsHandler extends \XoopsPersistableObjectHandler
     }
 
     /**
-     * Get All Registrations in the database
+     * Get All Registration in the database
      * @param int    $start
      * @param int    $limit
      * @param string $sort
@@ -105,7 +105,7 @@ class RegistrationsHandler extends \XoopsPersistableObjectHandler
     }
 
     /**
-     * Get Criteria Registrations
+     * Get Criteria Registration
      * @param        $crRegistrations
      * @param int $start
      * @param int $limit
@@ -131,7 +131,7 @@ class RegistrationsHandler extends \XoopsPersistableObjectHandler
     {
         if ($evId > 0) {
             $helper = Helper::getInstance();
-            $eventsHandler = $helper->getHandler('Events');
+            $eventsHandler = $helper->getHandler('Event');
 
             $crRegistrations = new \CriteriaCompo();
             $crRegistrations->add(new \Criteria('evid', $evId));
@@ -163,7 +163,7 @@ class RegistrationsHandler extends \XoopsPersistableObjectHandler
                         if ('' != $registerNotify) {
                             // send notifications to emails of register_notify
                             $notifyEmails = \pregsplit("/\r\n|\n|\r/", $registerNotify);
-                            $mailsHandler = new MailsHandler();
+                            $mailsHandler = new MailHandler();
                             $mailsHandler->setNotifyEmails($notifyEmails);
                             $mailsHandler->executeRegDelete($regParams, $typeNotify);
                             unset($mailsHandler);
@@ -171,7 +171,7 @@ class RegistrationsHandler extends \XoopsPersistableObjectHandler
                         $regEmail = $regParams['email'];
                         if ('' != $regEmail) {
                             // send confirmation, if radio is checked
-                            $mailsHandler = new MailsHandler();
+                            $mailsHandler = new MailHandler();
                             $mailsHandler->setNotifyEmails($regEmail);
                             $mailsHandler->executeRegDelete($regParams, $typeConfirm);
                             unset($mailsHandler);
@@ -196,9 +196,9 @@ class RegistrationsHandler extends \XoopsPersistableObjectHandler
     {
         if ($evId > 0) {
             $helper  = \XoopsModules\Wgevents\Helper::getInstance();
-            $eventsHandler     = $helper->getHandler('Events');
-            $answersHandler     = $helper->getHandler('Answers');
-            $permissionsHandler = $helper->getHandler('Permissions');
+            $eventsHandler     = $helper->getHandler('Event');
+            $answersHandler     = $helper->getHandler('Answer');
+            $permissionsHandler = $helper->getHandler('Permission');
 
             $eventsObj = $eventsHandler->get($evId);
             $evSubmitter = $eventsObj->getVar('submitter');
@@ -220,7 +220,7 @@ class RegistrationsHandler extends \XoopsPersistableObjectHandler
             $GLOBALS['xoopsTpl']->assign('registrationsCount', $registrationsCount);
             $registrationsAll = $this->getAll($crRegistrations);
             if ($registrationsCount > 0) {
-                // Get All Registrations
+                // Get All Registration
                 foreach (\array_keys($registrationsAll) as $regId) {
                     $registerValues = $registrationsAll[$regId]->getValuesRegistrations();
                     $registrations[$regId] = $registrationsAll[$regId]->getValuesRegistrations();

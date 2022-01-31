@@ -27,9 +27,9 @@ use XoopsModules\Wgevents;
 
 
 /**
- * Class Object Handler Categories
+ * Class Object Handler Category
  */
-class CategoriesHandler extends \XoopsPersistableObjectHandler
+class CategoryHandler extends \XoopsPersistableObjectHandler
 {
     /**
      * Constructor
@@ -38,7 +38,7 @@ class CategoriesHandler extends \XoopsPersistableObjectHandler
      */
     public function __construct(\XoopsDatabase $db)
     {
-        parent::__construct($db, 'wgevents_categories', Categories::class, 'id', 'name');
+        parent::__construct($db, 'wgevents_categories', Category::class, 'id', 'name');
     }
 
     /**
@@ -75,7 +75,7 @@ class CategoriesHandler extends \XoopsPersistableObjectHandler
     }
 
     /**
-     * Get Count Categories in the database
+     * Get Count Category in the database
      * @param int    $start
      * @param int    $limit
      * @param string $sort
@@ -90,7 +90,7 @@ class CategoriesHandler extends \XoopsPersistableObjectHandler
     }
 
     /**
-     * Get All Categories in the database
+     * Get All Category in the database
      * @param int    $start
      * @param int    $limit
      * @param string $sort
@@ -105,7 +105,7 @@ class CategoriesHandler extends \XoopsPersistableObjectHandler
     }
 
     /**
-     * Get Criteria Categories
+     * Get Criteria Category
      * @param        $crCategories
      * @param int $start
      * @param int $limit

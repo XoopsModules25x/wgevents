@@ -27,16 +27,16 @@ $moduleDirName = \basename(__DIR__);
 $xoBreadcrumbs = [];
 // Get instance of module
 $helper = \XoopsModules\Wgevents\Helper::getInstance();
-$eventsHandler = $helper->getHandler('Events');
-$categoriesHandler = $helper->getHandler('Categories');
-$registrationsHandler = $helper->getHandler('Registrations');
-$registrationshistHandler = $helper->getHandler('Registrationshist');
-$questionsHandler = $helper->getHandler('Questions');
-$answersHandler = $helper->getHandler('Answers');
-$answershistHandler = $helper->getHandler('Answershist');
-$textblocksHandler = $helper->getHandler('Textblocks');
-$fieldsHandler = $helper->getHandler('Fields');
-$permissionsHandler = $helper->getHandler('Permissions');
+$eventsHandler = $helper->getHandler('Event');
+$categoriesHandler = $helper->getHandler('Category');
+$registrationsHandler = $helper->getHandler('Registration');
+$registrationshistHandler = $helper->getHandler('Registrationhist');
+$questionsHandler = $helper->getHandler('Question');
+$answersHandler = $helper->getHandler('Answer');
+$answershistHandler = $helper->getHandler('Answerhist');
+$textblocksHandler = $helper->getHandler('Textblock');
+$fieldsHandler = $helper->getHandler('Field');
+$permissionsHandler = $helper->getHandler('Permission');
 // 
 $myts = MyTextSanitizer::getInstance();
 // Default Css Style

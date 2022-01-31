@@ -30,9 +30,9 @@ use XoopsModules\Wgevents\Utility;
 \defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 /**
- * Class Object Categories
+ * Class Object Category
  */
-class Categories extends \XoopsObject
+class Category extends \XoopsObject
 {
     /**
      * @var int
@@ -107,7 +107,7 @@ class Categories extends \XoopsObject
         $form = new \XoopsThemeForm($title, 'form', $action, 'post', true);
         $form->setExtra('enctype="multipart/form-data"');
         // Form Table categories
-        $categoriesHandler = $helper->getHandler('Categories');
+        $categoriesHandler = $helper->getHandler('Category');
         $catPidSelect = new \XoopsFormSelect(\_AM_WGEVENTS_CATEGORY_PID, 'pid', $this->getVar('pid'));
         $catPidSelect->addOption('');
         $catPidSelect->addOptionArray($categoriesHandler->getList());
@@ -179,7 +179,7 @@ class Categories extends \XoopsObject
         $catSubmitter = $this->isNew() ? $uidCurrent : $this->getVar('submitter');
         $form->addElement(new \XoopsFormSelectUser(\_MA_WGEVENTS_SUBMITTER, 'submitter', false, $catSubmitter));
         /*
-        // Permissions
+        // Permission
         $memberHandler = \xoops_getHandler('member');
         $groupList = $memberHandler->getGroupList();
         $grouppermHandler = \xoops_getHandler('groupperm');
@@ -250,7 +250,7 @@ class Categories extends \XoopsObject
         $helper  = \XoopsModules\Wgevents\Helper::getInstance();
         $utility = new \XoopsModules\Wgevents\Utility();
         $ret = $this->getValues($keys, $format, $maxDepth);
-        $categoriesHandler = $helper->getHandler('Categories');
+        $categoriesHandler = $helper->getHandler('Category');
         $categoriesObj = $categoriesHandler->get($this->getVar('pid'));
         $editorMaxchar = $helper->getConfig('admin_maxchar');
         $ret['pid_text']         = $categoriesObj->getVar('name');

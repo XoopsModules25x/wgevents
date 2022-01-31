@@ -64,14 +64,14 @@ require_once __DIR__ . '/main.php';
 \define('_AM_WGEVENTS_ADD_FIELD', 'Add New Question Type');
 \define('_AM_WGEVENTS_GOTO_FORMSELECT', 'Back to form select');
 // Lists
-\define('_AM_WGEVENTS_LIST_EVENTS', 'List of Events');
-\define('_AM_WGEVENTS_LIST_CATEGORIES', 'List of Categories');
-\define('_AM_WGEVENTS_LIST_REGISTRATIONS', 'List of Registrations');
-\define('_AM_WGEVENTS_LIST_QUESTIONS', 'List of Questions');
-\define('_AM_WGEVENTS_LIST_ANSWERS', 'List of Answers');
-\define('_AM_WGEVENTS_LIST_TEXTBLOCKS', 'List of Textblocks');
+\define('_AM_WGEVENTS_LIST_EVENTS', 'List of Event');
+\define('_AM_WGEVENTS_LIST_CATEGORIES', 'List of Category');
+\define('_AM_WGEVENTS_LIST_REGISTRATIONS', 'List of Registration');
+\define('_AM_WGEVENTS_LIST_QUESTIONS', 'List of Question');
+\define('_AM_WGEVENTS_LIST_ANSWERS', 'List of Answer');
+\define('_AM_WGEVENTS_LIST_TEXTBLOCKS', 'List of Textblock');
 \define('_AM_WGEVENTS_LIST_FIELDS', 'List of Question Type');
-\define('_AM_WGEVENTS_LIST_EVENTS_LAST', 'List of last %s Events');
+\define('_AM_WGEVENTS_LIST_EVENTS_LAST', 'List of last %s Event');
 // ---------------- Admin Classes ----------------
 // Category add/edit
 \define('_AM_WGEVENTS_CATEGORY_ADD', 'Add Category');
@@ -121,8 +121,8 @@ require_once __DIR__ . '/main.php';
 // Log add/edit
 \define('_AM_WGEVENTS_ADD_LOG', 'Add Log');
 \define('_AM_WGEVENTS_EDIT_LOG', 'Edit Log');
-\define('_AM_WGEVENTS_LIST_LOGS', 'List Logs');
-\define('_AM_WGEVENTS_DELETE_LOGS', 'Delete all Logs');
+\define('_AM_WGEVENTS_LIST_LOGS', 'List Log');
+\define('_AM_WGEVENTS_DELETE_LOGS', 'Delete all Log');
 // Elements of Log
 \define('_AM_WGEVENTS_LOG_ID', 'Id');
 \define('_AM_WGEVENTS_LOG_TEXT', 'Text');
@@ -233,59 +233,59 @@ Please define, until which date all data should be anonymized.');
 \define('_AM_WGEVENTS_CLONE_IMAGEFAIL', 'Attention, we failed creating the new module logo. Please consider modifying assets/images/logo_module.png manually!');
 \define('_AM_WGEVENTS_CLONE_FAIL', 'Sorry, we failed in creating the new clone. Maybe you need to temporally set write permissions (CHMOD 777) to modules folder and try again.');
 // General
-// ---------------- Admin Permissions ----------------
-// Permissions for forms (categories)
-\define('_AM_WGEVENTS_PERMISSIONS_APPROVE', 'Permissions to approve');
-\define('_AM_WGEVENTS_PERMISSIONS_SUBMIT', 'Permissions to submit');
-\define('_AM_WGEVENTS_PERMISSIONS_VIEW', 'Permissions to view');
-// Permissions for tab permissions
-\define('_AM_WGEVENTS_PERMISSIONS_DESC', 'Permissions you have to read as following:<br>');
-\define('_AM_WGEVENTS_PERMISSIONS_GLOBAL', 'Permissions global');
+// ---------------- Admin Permission ----------------
+// Permission for forms (categories)
+\define('_AM_WGEVENTS_PERMISSIONS_APPROVE', 'Permission to approve');
+\define('_AM_WGEVENTS_PERMISSIONS_SUBMIT', 'Permission to submit');
+\define('_AM_WGEVENTS_PERMISSIONS_VIEW', 'Permission to view');
+// Permission for tab permissions
+\define('_AM_WGEVENTS_PERMISSIONS_DESC', 'Permission you have to read as following:<br>');
+\define('_AM_WGEVENTS_PERMISSIONS_GLOBAL', 'Permission global');
 \define('_AM_WGEVENTS_PERMISSIONS_GLOBAL_DESC', '1) Global permissions should only be used for webmasters<br>');
-\define('_AM_WGEVENTS_PERMISSIONS_GLOBAL_VIEW', 'Permissions global to view');
-\define('_AM_WGEVENTS_PERMISSIONS_GLOBAL_SUBMIT', 'Permissions global to submit');
-\define('_AM_WGEVENTS_PERMISSIONS_GLOBAL_APPROVE', 'Permissions global to approve');
-\define('_AM_WGEVENTS_PERMISSIONS_EVENTS_APPROVE', 'Permissions to admin events');
-\define('_AM_WGEVENTS_PERMISSIONS_EVENTS_APPROVE_DESC', '2) Permissions to admin events includes:
+\define('_AM_WGEVENTS_PERMISSIONS_GLOBAL_VIEW', 'Permission global to view');
+\define('_AM_WGEVENTS_PERMISSIONS_GLOBAL_SUBMIT', 'Permission global to submit');
+\define('_AM_WGEVENTS_PERMISSIONS_GLOBAL_APPROVE', 'Permission global to approve');
+\define('_AM_WGEVENTS_PERMISSIONS_EVENTS_APPROVE', 'Permission to admin events');
+\define('_AM_WGEVENTS_PERMISSIONS_EVENTS_APPROVE_DESC', '2) Permission to admin events includes:
 <ul>
-<li>Permissions to approve all events</li>
-<li>Permissions to edit all events</li>
-<li>Permissions to admin questions for registrations for all events</li>
-<li>Permissions to admin registrations for all events</li>
+<li>Permission to approve all events</li>
+<li>Permission to edit all events</li>
+<li>Permission to admin questions for registrations for all events</li>
+<li>Permission to admin registrations for all events</li>
 </ul>
 ');
-\define('_AM_WGEVENTS_PERMISSIONS_EVENTS_APPROVE_AUTO', 'Permissions to create approved events');
-\define('_AM_WGEVENTS_PERMISSIONS_EVENTS_APPROVE_AUTO_DESC', '3) Permissions to create approved events: Events created by this group are automatically approved<br>');
-\define('_AM_WGEVENTS_PERMISSIONS_EVENTS_SUBMIT', 'Permissions to submit events');
-\define('_AM_WGEVENTS_PERMISSIONS_EVENTS_SUBMIT_DESC', '4) Permissions to submit events includes:
+\define('_AM_WGEVENTS_PERMISSIONS_EVENTS_APPROVE_AUTO', 'Permission to create approved events');
+\define('_AM_WGEVENTS_PERMISSIONS_EVENTS_APPROVE_AUTO_DESC', '3) Permission to create approved events: Event created by this group are automatically approved<br>');
+\define('_AM_WGEVENTS_PERMISSIONS_EVENTS_SUBMIT', 'Permission to submit events');
+\define('_AM_WGEVENTS_PERMISSIONS_EVENTS_SUBMIT_DESC', '4) Permission to submit events includes:
 <ul>
-<li>Permissions to submit events</li>
-<li>Permissions to edit own events</li>
-<li>Permissions to admin questions for registrations for own events</li>
-<li>Permissions to admin registrations for own events</li>
-<li>Permissions to create and admin own textblocks</li>
+<li>Permission to submit events</li>
+<li>Permission to edit own events</li>
+<li>Permission to admin questions for registrations for own events</li>
+<li>Permission to admin registrations for own events</li>
+<li>Permission to create and admin own textblocks</li>
 </ul>
 ');
-\define('_AM_WGEVENTS_PERMISSIONS_EVENTS_VIEW', 'Permissions to view events');
+\define('_AM_WGEVENTS_PERMISSIONS_EVENTS_VIEW', 'Permission to view events');
 
 
-//\define('_AM_WGEVENTS_PERMISSIONS_QUESTIONS_VIEW', 'Permissions to view questions');
-//\define('_AM_WGEVENTS_PERMISSIONS_QUESTIONS_SUBMIT', 'Permissions to submit questions');
-//\define('_AM_WGEVENTS_PERMISSIONS_REGISTRATIONS_VIEW', 'Permissions to view registrations');
-\define('_AM_WGEVENTS_PERMISSIONS_REGISTRATIONS_AUTOVERIF', 'Permissions to submit registrations without question verification');
-\define('_AM_WGEVENTS_PERMISSIONS_REGISTRATIONS_AUTOVERIF_DESC', '5) Permissions to submit registrations without question verification: Registrations, sent by this group, will be automatically verified. There is no question verification by mail necessary<br>');
-\define('_AM_WGEVENTS_PERMISSIONS_REGISTRATIONS_SUBMIT', 'Permissions to submit registrations');
-\define('_AM_WGEVENTS_PERMISSIONS_REGISTRATIONS_SUBMIT_DESC', '6)Permissions to submit registrations: Registrations, sent by this group, must be verified with a link, which is sent by mail<br>');
-//\define('_AM_WGEVENTS_PERMISSIONS_REGISTRATIONS_APPROVE', 'Permissions to approve registrations');
-//\define('_AM_WGEVENTS_PERMISSIONS_TEXTBLOCKS_VIEW', 'Permissions to view textblocks');
-//\define('_AM_WGEVENTS_PERMISSIONS_TEXTBLOCKS_SUBMIT', 'Permissions to submit textblocks');
+//\define('_AM_WGEVENTS_PERMISSIONS_QUESTIONS_VIEW', 'Permission to view questions');
+//\define('_AM_WGEVENTS_PERMISSIONS_QUESTIONS_SUBMIT', 'Permission to submit questions');
+//\define('_AM_WGEVENTS_PERMISSIONS_REGISTRATIONS_VIEW', 'Permission to view registrations');
+\define('_AM_WGEVENTS_PERMISSIONS_REGISTRATIONS_AUTOVERIF', 'Permission to submit registrations without question verification');
+\define('_AM_WGEVENTS_PERMISSIONS_REGISTRATIONS_AUTOVERIF_DESC', '5) Permission to submit registrations without question verification: Registration, sent by this group, will be automatically verified. There is no question verification by mail necessary<br>');
+\define('_AM_WGEVENTS_PERMISSIONS_REGISTRATIONS_SUBMIT', 'Permission to submit registrations');
+\define('_AM_WGEVENTS_PERMISSIONS_REGISTRATIONS_SUBMIT_DESC', '6)Permission to submit registrations: Registration, sent by this group, must be verified with a link, which is sent by mail<br>');
+//\define('_AM_WGEVENTS_PERMISSIONS_REGISTRATIONS_APPROVE', 'Permission to approve registrations');
+//\define('_AM_WGEVENTS_PERMISSIONS_TEXTBLOCKS_VIEW', 'Permission to view textblocks');
+//\define('_AM_WGEVENTS_PERMISSIONS_TEXTBLOCKS_SUBMIT', 'Permission to submit textblocks');
 /*
-\define('_AM_WGEVENTS_PERMISSIONS_CAT_EVENTS_VIEW', 'Permissions to view events of this category');
-\define('_AM_WGEVENTS_PERMISSIONS_CAT_EVENTS_SUBMIT', 'Permissions to submit events of this category');
-\define('_AM_WGEVENTS_PERMISSIONS_CAT_EVENTS_APPROVE', 'Permissions to approve events of this category');
-\define('_AM_WGEVENTS_PERMISSIONS_CAT_REGS_VIEW', 'Permissions to view registrations of events of this category');
-\define('_AM_WGEVENTS_PERMISSIONS_CAT_REGS_SUBMIT', 'Permissions to submit registrations for events of this category');
-\define('_AM_WGEVENTS_PERMISSIONS_CAT_REGS_APPROVE', 'Permissions to approve registrations of events of this category');
+\define('_AM_WGEVENTS_PERMISSIONS_CAT_EVENTS_VIEW', 'Permission to view events of this category');
+\define('_AM_WGEVENTS_PERMISSIONS_CAT_EVENTS_SUBMIT', 'Permission to submit events of this category');
+\define('_AM_WGEVENTS_PERMISSIONS_CAT_EVENTS_APPROVE', 'Permission to approve events of this category');
+\define('_AM_WGEVENTS_PERMISSIONS_CAT_REGS_VIEW', 'Permission to view registrations of events of this category');
+\define('_AM_WGEVENTS_PERMISSIONS_CAT_REGS_SUBMIT', 'Permission to submit registrations for events of this category');
+\define('_AM_WGEVENTS_PERMISSIONS_CAT_REGS_APPROVE', 'Permission to approve registrations of events of this category');
 */
 \define('_AM_WGEVENTS_NO_PERMISSIONS_SET', 'No permission set');
 //Change yes/no

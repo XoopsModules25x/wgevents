@@ -28,9 +28,9 @@ use XoopsModules\Wgevents;
 \defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 /**
- * Class Object Questions
+ * Class Object Question
  */
-class Questions extends \XoopsObject
+class Question extends \XoopsObject
 {
     /**
      * @var int
@@ -95,8 +95,8 @@ class Questions extends \XoopsObject
     {
         $helper = \XoopsModules\Wgevents\Helper::getInstance();
 
-        $eventsHandler = $helper->getHandler('Events');
-        $questionsHandler = $helper->getHandler('Questions');
+        $eventsHandler = $helper->getHandler('Event');
+        $questionsHandler = $helper->getHandler('Question');
 
         if (!$action) {
             $action = $_SERVER['REQUEST_URI'];
@@ -118,7 +118,7 @@ class Questions extends \XoopsObject
         $enableValues = true;
         $enablePlaceholder = true;
         $queTypeSelect = new \XoopsFormSelect(\_MA_WGEVENTS_QUESTION_TYPE, 'type', $queType);
-        $fieldsHandler = $helper->getHandler('Fields');
+        $fieldsHandler = $helper->getHandler('Field');
         $crFields = new \CriteriaCompo();
         $crFields->add(new \Criteria('status', Constants::STATUS_ONLINE));
         $crFields->setSort('weight');
@@ -221,7 +221,7 @@ class Questions extends \XoopsObject
         $fieldsAll = $formelementsHandler->getElementsCollection();
         $editorMaxchar = $helper->getConfig('admin_maxchar');
         $ret = $this->getValues($keys, $format, $maxDepth);
-        $eventsHandler = $helper->getHandler('Events');
+        $eventsHandler = $helper->getHandler('Event');
         $eventsObj = $eventsHandler->get($this->getVar('evid'));
         $ret['eventname']  = $eventsObj->getVar('name');
         $ret['type_text']  = $fieldsAll[$this->getVar('type')];

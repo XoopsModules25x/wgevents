@@ -31,7 +31,7 @@ use XoopsModules\Wgevents\{
 
 
 /**
- * Class Object Handler Questions
+ * Class Object Handler Question
  */
 class FormelementsHandler extends \XoopsPersistableObjectHandler
 {

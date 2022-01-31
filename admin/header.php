@@ -32,15 +32,15 @@ $modPathIcon32   = \WGEVENTS_URL . '/' . $GLOBALS['xoopsModule']->getInfo('modic
 
 // Get instance of module
 $helper = \XoopsModules\Wgevents\Helper::getInstance();
-$eventsHandler = $helper->getHandler('Events');
-$categoriesHandler = $helper->getHandler('Categories');
-$registrationsHandler = $helper->getHandler('Registrations');
-$questionsHandler = $helper->getHandler('Questions');
-$answersHandler = $helper->getHandler('Answers');
-$textblocksHandler = $helper->getHandler('Textblocks');
-$fieldsHandler = $helper->getHandler('Fields');
-$logsHandler = $helper->getHandler('Logs');
-$accountsHandler = $helper->getHandler('Accounts');
+$eventsHandler = $helper->getHandler('Event');
+$categoriesHandler = $helper->getHandler('Category');
+$registrationsHandler = $helper->getHandler('Registration');
+$questionsHandler = $helper->getHandler('Question');
+$answersHandler = $helper->getHandler('Answer');
+$textblocksHandler = $helper->getHandler('Textblock');
+$fieldsHandler = $helper->getHandler('Field');
+$logsHandler = $helper->getHandler('Log');
+$accountsHandler = $helper->getHandler('Account');
 $myts = MyTextSanitizer::getInstance();
 // 
 if (!isset($xoopsTpl) || !\is_object($xoopsTpl)) {

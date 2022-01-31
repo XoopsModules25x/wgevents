@@ -1,5 +1,6 @@
 <?php declare(strict_types=1);
 
+
 namespace XoopsModules\Wgevents;
 
 /*
@@ -24,14 +25,13 @@ namespace XoopsModules\Wgevents;
  */
 
 use XoopsModules\Wgevents;
-use XoopsModules\Wgevents\Forms\FormelementsHandler;
 
 \defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 /**
- * Class Object Registrationshist
+ * Class Object Answerhist
  */
-class Registrationshist extends \XoopsObject
+class Answerhist extends \XoopsObject
 {
     /**
      * Constructor
@@ -45,17 +45,10 @@ class Registrationshist extends \XoopsObject
         $this->initVar('hist_datecreated', \XOBJ_DTYPE_INT);
         $this->initVar('hist_submitter', \XOBJ_DTYPE_INT);
         $this->initVar('id', \XOBJ_DTYPE_INT);
+        $this->initVar('regid', \XOBJ_DTYPE_INT);
+        $this->initVar('queid', \XOBJ_DTYPE_INT);
         $this->initVar('evid', \XOBJ_DTYPE_INT);
-        $this->initVar('salutation', \XOBJ_DTYPE_INT);
-        $this->initVar('firstname', \XOBJ_DTYPE_TXTBOX);
-        $this->initVar('lastname', \XOBJ_DTYPE_TXTBOX);
-        $this->initVar('email', \XOBJ_DTYPE_TXTBOX);
-        $this->initVar('email_send', \XOBJ_DTYPE_INT);
-        $this->initVar('gdpr', \XOBJ_DTYPE_INT);
-        $this->initVar('ip', \XOBJ_DTYPE_TXTBOX);
-        $this->initVar('status', \XOBJ_DTYPE_INT);
-        $this->initVar('financial', \XOBJ_DTYPE_INT);
-        $this->initVar('listwait', \XOBJ_DTYPE_INT);
+        $this->initVar('text', \XOBJ_DTYPE_TXTBOX);
         $this->initVar('datecreated', \XOBJ_DTYPE_INT);
         $this->initVar('submitter', \XOBJ_DTYPE_INT);
     }
@@ -72,5 +65,4 @@ class Registrationshist extends \XoopsObject
             $instance = new self();
         }
     }
-
 }

@@ -29,9 +29,9 @@ use XoopsModules\Wgevents;
 \defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 /**
- * Class Object Answershist
+ * Class Object Permission
  */
-class Answershist extends \XoopsObject
+class Permission extends \XoopsObject
 {
     /**
      * Constructor
@@ -40,17 +40,6 @@ class Answershist extends \XoopsObject
      */
     public function __construct()
     {
-        $this->initVar('hist_id', \XOBJ_DTYPE_INT);
-        $this->initVar('hist_info', \XOBJ_DTYPE_TXTBOX);
-        $this->initVar('hist_datecreated', \XOBJ_DTYPE_INT);
-        $this->initVar('hist_submitter', \XOBJ_DTYPE_INT);
-        $this->initVar('id', \XOBJ_DTYPE_INT);
-        $this->initVar('regid', \XOBJ_DTYPE_INT);
-        $this->initVar('queid', \XOBJ_DTYPE_INT);
-        $this->initVar('evid', \XOBJ_DTYPE_INT);
-        $this->initVar('text', \XOBJ_DTYPE_TXTBOX);
-        $this->initVar('datecreated', \XOBJ_DTYPE_INT);
-        $this->initVar('submitter', \XOBJ_DTYPE_INT);
     }
 
     /**

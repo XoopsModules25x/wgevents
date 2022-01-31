@@ -27,9 +27,9 @@ use XoopsModules\Wgevents;
 
 
 /**
- * Class Object Handler Accounts
+ * Class Object Handler Field
  */
-class AccountsHandler extends \XoopsPersistableObjectHandler
+class FieldHandler extends \XoopsPersistableObjectHandler
 {
     /**
      * Constructor
@@ -38,7 +38,7 @@ class AccountsHandler extends \XoopsPersistableObjectHandler
      */
     public function __construct(\XoopsDatabase $db)
     {
-        parent::__construct($db, 'wgevents_accounts', Accounts::class, 'id', 'type');
+        parent::__construct($db, 'wgevents_fields', Field::class, 'id', 'caption');
     }
 
     /**
@@ -75,50 +75,75 @@ class AccountsHandler extends \XoopsPersistableObjectHandler
     }
 
     /**
-     * Get Count Accounts in the database
+     * Get Count Field in the database
      * @param int    $start
      * @param int    $limit
      * @param string $sort
      * @param string $order
      * @return int
      */
-    public function getCountAccounts($start = 0, $limit = 0, $sort = 'id ASC, type', $order = 'ASC')
+    public function getCountFields($start = 0, $limit = 0, $sort = 'id ASC, caption', $order = 'ASC')
     {
-        $crCountAccounts = new \CriteriaCompo();
-        $crCountAccounts = $this->getAccountsCriteria($crCountAccounts, $start, $limit, $sort, $order);
-        return $this->getCount($crCountAccounts);
+        $crCountFields = new \CriteriaCompo();
+        $crCountFields = $this->getFieldsCriteria($crCountFields, $start, $limit, $sort, $order);
+        return $this->getCount($crCountFields);
     }
 
     /**
-     * Get All Accounts in the database
+     * Get All Field in the database
      * @param int    $start
      * @param int    $limit
      * @param string $sort
      * @param string $order
      * @return array
      */
-    public function getAllAccounts($start = 0, $limit = 0, $sort = 'id ASC, type', $order = 'ASC')
+    public function getAllFields($start = 0, $limit = 0, $sort = 'id ASC, caption', $order = 'ASC')
     {
-        $crAllAccounts = new \CriteriaCompo();
-        $crAllAccounts = $this->getAccountsCriteria($crAllAccounts, $start, $limit, $sort, $order);
-        return $this->getAll($crAllAccounts);
+        $crAllFields = new \CriteriaCompo();
+        $crAllFields = $this->getFieldsCriteria($crAllFields, $start, $limit, $sort, $order);
+        return $this->getAll($crAllFields);
     }
 
     /**
-     * Get Criteria Accounts
-     * @param        $crAccounts
+     * Get Criteria Field
+     * @param        $crFields
      * @param int $start
      * @param int $limit
      * @param string $sort
      * @param string $order
      * @return int
      */
-    private function getAccountsCriteria($crAccounts, int $start, int $limit, string $sort, string $order)
+    private function getFieldsCriteria($crFields, int $start, int $limit, string $sort, string $order)
     {
-        $crAccounts->setStart($start);
-        $crAccounts->setLimit($limit);
-        $crAccounts->setSort($sort);
-        $crAccounts->setOrder($order);
-        return $crAccounts;
+        $crFields->setStart($start);
+        $crFields->setLimit($limit);
+        $crFields->setSort($sort);
+        $crFields->setOrder($order);
+        return $crFields;
+    }
+
+    /**
+     * @public function to get next value for sorting
+     * @param null
+     * @return int
+     */
+    public function getNextWeight()
+    {
+        $nextValue = 0;
+
+        $crFields = new \CriteriaCompo();
+        $crFields->setSort('weight');
+        $crFields->setOrder('DESC');
+        $crFields->setLimit(1);
+        $fieldsCount = $this->getCount($crFields);
+        if ($fieldsCount > 0) {
+            $fieldsAll = $this->getAll($crFields);
+            foreach (\array_keys($fieldsAll) as $i) {
+                $nextValue = $fieldsAll[$i]->getVar('weight');
+            }
+        }
+
+        return $nextValue + 1;
+
     }
 }

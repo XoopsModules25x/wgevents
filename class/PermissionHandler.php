@@ -29,9 +29,9 @@ use XoopsModules\Wgevents;
 \defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 /**
- * Class Object PermissionsHandler
+ * Class Object PermissionHandler
  */
-class PermissionsHandler extends \XoopsPersistableObjectHandler
+class PermissionHandler extends \XoopsPersistableObjectHandler
 {
     /**
      * Constructor
@@ -239,7 +239,7 @@ class PermissionsHandler extends \XoopsPersistableObjectHandler
 
     /**
      * @public function getPermEventsView
-     * returns right for view Events
+     * returns right for view Event
      * @param null
      * @return bool
      */
@@ -333,7 +333,7 @@ class PermissionsHandler extends \XoopsPersistableObjectHandler
 
     /**
      * @public function getPermRegistrationsView
-     * returns right for view Registrations
+     * returns right for view Registration
      *  - user must be the submitter_text of registration or same IP must be used
      * @param $regIp
      * @param $regSubmitter

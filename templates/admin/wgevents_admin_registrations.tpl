@@ -31,7 +31,7 @@
 <{/if}>
 
 <{if $registrations_list|default:''}>
-    <!-- Table Registrations -->
+    <!-- Table Registration -->
     <table class='table table-bordered'>
         <thead>
             <tr class='head'>

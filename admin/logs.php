@@ -139,7 +139,7 @@ switch ($op) {
             $customConfirm = new Common\Confirm(
                 ['ok' => 1, 'op' => 'deleteall'],
                 $_SERVER['REQUEST_URI'],
-                \sprintf(\_AM_WGEVENTS_FORM_SURE_DELETE_ALL, 'Table Logs'));
+                \sprintf(\_AM_WGEVENTS_FORM_SURE_DELETE_ALL, 'Table Log'));
             $form = $customConfirm->getFormConfirm();
             $GLOBALS['xoopsTpl']->assign('form', $form->render());
         }

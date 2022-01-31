@@ -103,7 +103,7 @@ switch ($op) {
             $evName = '';
             $evSubmitter = 0;
             $evStatus = 0;
-            // Get All Questions
+            // Get All Question
             foreach (\array_keys($questionsAll) as $i) {
                 $questions[$i] = $questionsAll[$i]->getValuesQuestions();
                 if ('' == $evName) {
