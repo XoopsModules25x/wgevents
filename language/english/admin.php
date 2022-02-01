@@ -35,7 +35,7 @@ require_once __DIR__ . '/main.php';
 \define('_AM_WGEVENTS_THEREARE_ANSWERS', "There are <span class='bold'>%s</span> answers in the database");
 \define('_AM_WGEVENTS_THEREARE_TEXTBLOCKS', "There are <span class='bold'>%s</span> textblocks in the database");
 \define('_AM_WGEVENTS_THEREARE_LOGS', "There are <span class='bold'>%s</span> logs in the database");
-\define('_AM_WGEVENTS_THEREARE_ACCOUNTS', "There are <span class='bold'>%s</span> Email accounts in the Database");
+\define('_AM_WGEVENTS_THEREARE_ACCOUNTS', "There are <span class='bold'>%s</span> email accounts in the Database");
 // ---------------- Admin Files ----------------
 // There aren't
 \define('_AM_WGEVENTS_THEREARENT_EVENTS', "There aren't events");
@@ -46,7 +46,8 @@ require_once __DIR__ . '/main.php';
 \define('_AM_WGEVENTS_THEREARENT_TEXTBLOCKS', "There aren't textblocks");
 \define('_AM_WGEVENTS_THEREARENT_FIELDS', "There aren't fields");
 \define('_AM_WGEVENTS_THEREARENT_LOGS', "There aren't logs");
-\define('_AM_WGEVENTS_THEREARENT_ACCOUNTS', 'There are no Email accounts in the Database');
+\define('_AM_WGEVENTS_THEREARENT_ACCOUNTS', 'There are no email accounts in the Database');
+\define('_AM_WGEVENTS_THEREARENT_ACCOUNTS_DESC', 'There are no primary email accounts in the Database. The default email settings of XOOPS Core will be used for sending mail notifications.');
 // timezones
 \define('_AM_WGEVENTS_TIMEZONES', 'Timezone settings');
 // There are
@@ -176,8 +177,7 @@ require_once __DIR__ . '/main.php';
 \define('_AM_WGEVENTS_ACCOUNT_SERVER_OUT', 'Server outgoing');
 \define('_AM_WGEVENTS_ACCOUNT_PORT_OUT', 'Port out');
 \define('_AM_WGEVENTS_ACCOUNT_SECURETYPE_OUT', 'Secure type out');
-\define('_AM_WGEVENTS_ACCOUNT_DEFAULT', 'Default email account');
-\define('_AM_WGEVENTS_ACCOUNT_INBOX', 'Mailbox to check for Bounced emails');
+\define('_AM_WGEVENTS_ACCOUNT_PRIMARY', 'Primary email account');
 \define('_AM_WGEVENTS_ACCOUNT_ERROR_OPEN_MAILBOX', 'Error open mailbox! Please check your settings!');
 \define('_AM_WGEVENTS_SAVE_AND_CHECK', 'Save and check settings');
 \define('_AM_WGEVENTS_ACCOUNT_CHECK_OK', 'successful  ');
@@ -193,8 +193,8 @@ require_once __DIR__ . '/main.php';
 \define('_AM_WGEVENTS_MAINTENANCE_TYP', 'Type of maintenance');
 \define('_AM_WGEVENTS_MAINTENANCE_DESC', 'Description of maintenance');
 \define('_AM_WGEVENTS_MAINTENANCE_RESULTS', 'Maintenance results');
-\define('_AM_WGEVENTS_MAINTENANCE_INVALID_ADDS', 'Check table questions');
-\define('_AM_WGEVENTS_MAINTENANCE_INVALID_ADDS_DESC', 'Check the table questions and search for questions without link to a valid event');
+\define('_AM_WGEVENTS_MAINTENANCE_INVALID_QUE', 'Check table questions');
+\define('_AM_WGEVENTS_MAINTENANCE_INVALID_QUE_DESC', 'Check the table questions and search for questions without link to a valid event');
 \define('_AM_WGEVENTS_MAINTENANCE_INVALID_ANSWERS', 'Check table answers');
 \define('_AM_WGEVENTS_MAINTENANCE_INVALID_ANSWERS_DESC', 'Check the table answers and search for answers without link to a valid question');
 \define('_AM_WGEVENTS_MAINTENANCE_CHECKTABLE_SUCCESS', 'Check table successfully finished');

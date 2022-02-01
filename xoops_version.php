@@ -573,7 +573,7 @@ $modversion['config'][] = [
 ];
 // use logs
 $modversion['config'][] = [
-    'name'        => 'use_logst',
+    'name'        => 'use_logs',
     'title'       => '\_MI_WGEVENTS_USE_LOGS',
     'description' => '\_MI_WGEVENTS_USE_LOGS_DESC',
     'formtype'    => 'yesno',

@@ -198,9 +198,9 @@ Eine Teilnahme an der Veranstaltung ohne Zustimmung zu diesen Bestimmungen ist l
 \define('_MA_WGEVENTS_ANSWERS_CURR', 'Anzahl der aktuellen Antworten');
 // Caption of Answer
 \define('_MA_WGEVENTS_ANSWER_ID', 'Id');
-\define('_MA_WGEVENTS_ANSWER_EVID', 'Veranstaltungs-Id');
-\define('_MA_WGEVENTS_ANSWER_REGID', 'Anmeldungs-Id');
-\define('_MA_WGEVENTS_ANSWER_ADDID', 'Zusatzinfo-Id');
+\define('_MA_WGEVENTS_ANSWER_EVID', 'Veranstaltung Id');
+\define('_MA_WGEVENTS_ANSWER_REGID', 'Anmeldung Id');
+\define('_MA_WGEVENTS_ANSWER_QUEID', 'Frage Id');
 \define('_MA_WGEVENTS_ANSWER_TEXT', 'Text');
 // Textblock
 \define('_MA_WGEVENTS_TEXTBLOCK', 'Textblock');

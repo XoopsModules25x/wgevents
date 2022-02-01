@@ -1,6 +1,10 @@
 <!-- Header -->
 <{include file='db:wgevents_admin_header.tpl' }>
 
+<{if $info|default:''}>
+    <div class="wge-msg-noaccount"><{$info}></div>
+<{/if}>
+
 <{if $account_check|default:false}>
     <table class='table table-bordered' >
         <thead>
@@ -44,8 +48,7 @@
                 <th class="center"><{$smarty.const._AM_WGEVENTS_ACCOUNT_SERVER_OUT}></th>
                 <th class="center"><{$smarty.const._AM_WGEVENTS_ACCOUNT_PORT_OUT}></th>
                 <th class="center"><{$smarty.const._AM_WGEVENTS_ACCOUNT_SECURETYPE_OUT}></th>
-                <th class="center"><{$smarty.const._AM_WGEVENTS_ACCOUNT_DEFAULT}></th>
-                <th class="center"><{$smarty.const._AM_WGEVENTS_ACCOUNT_INBOX}></th>
+                <th class="center"><{$smarty.const._AM_WGEVENTS_ACCOUNT_PRIMARY}></th>
                 <th class="center"><{$smarty.const._MA_WGEVENTS_DATECREATED}></th>
                 <th class="center"><{$smarty.const._MA_WGEVENTS_SUBMITTER}></th>
                 <th class="center width5"><{$smarty.const._MA_WGEVENTS_ACTION}></th>
@@ -68,8 +71,13 @@
                 <td class='center'><{$account.server_out}></td>
                 <td class='center'><{$account.port_out}></td>
                 <td class='center'><{$account.securetype_out}></td>
-                <td class='center'><{$account.default}></td>
-                <td class='center'><{$account.inbox}></td>
+                <td class='center'>
+                    <{if $account.primary|default:false}>
+                    <a href="account.php?op=change_yn&amp;id=<{$account.id}>&amp;field=primary&amp;value=0&amp;start=<{$start}>&amp;limit=<{$limit}>" title="<{$smarty.const._AM_WGEVENTS_SETOFF}>"><img src="<{$wgevents_icons_url_16}>/<{$account.primary}>.png" alt="<{$smarty.const._AM_WGEVENTS_SETOFF}> account" ></a>
+                    <{else}>
+                    <a href="account.php?op=change_yn&amp;id=<{$account.id}>&amp;field=primary&amp;value=1&amp;start=<{$start}>&amp;limit=<{$limit}>" title="<{$smarty.const._AM_WGEVENTS_SETON}>"><img src="<{$wgevents_icons_url_16}>/<{$account.primary}>.png" alt="<{$smarty.const._AM_WGEVENTS_SETON}> account" ></a>
+                    <{/if}>
+                </td>
                 <td class='center'><{$account.datecreated_text}></td>
                 <td class='center'><{$account.submitter_text}></td>
                 <td class="center  width5">

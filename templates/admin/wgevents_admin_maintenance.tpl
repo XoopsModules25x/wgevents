@@ -50,8 +50,8 @@
         <tbody>
             <{if $invalid_adds_show|default:false}>
 				<tr class="<{cycle values='odd, even'}>">
-					<td class='left'><{$smarty.const._AM_WGEVENTS_MAINTENANCE_INVALID_ADDS}></td>
-					<td class='left'><{$smarty.const._AM_WGEVENTS_MAINTENANCE_INVALID_ADDS_DESC}></td>
+					<td class='left'><{$smarty.const._AM_WGEVENTS_MAINTENANCE_INVALID_QUE}></td>
+					<td class='left'><{$smarty.const._AM_WGEVENTS_MAINTENANCE_INVALID_QUE_DESC}></td>
 					<{if $show_result|default:false}>
 					<td class='left'>
 						<{if $result_success|default:''}><span><{$result_success}></span><{/if}>

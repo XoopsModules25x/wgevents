@@ -22,3 +22,15 @@
 img {
     max-width: 200px;
 }
+
+.wge-msg-noaccount {
+    width:100%;
+    height:100px;
+    line-height: 50px;
+    background-color: #f7e1b5;
+    border:1px solid #860100;
+    color:#860100;
+    font-size:150%;
+    padding-top:30px;
+    text-align: center;
+}

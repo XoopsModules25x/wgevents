@@ -37,7 +37,7 @@
                 <th class="center"><{$smarty.const._MA_WGEVENTS_ANSWER_ID}></th>
                 <th class="center"><{$smarty.const._MA_WGEVENTS_ANSWER_EVID}></th>
                 <th class="center"><{$smarty.const._MA_WGEVENTS_ANSWER_REGID}></th>
-                <th class="center"><{$smarty.const._MA_WGEVENTS_ANSWER_ADDID}></th>
+                <th class="center"><{$smarty.const._MA_WGEVENTS_ANSWER_QUEID}></th>
                 <th class="center"><{$smarty.const._MA_WGEVENTS_ANSWER_TEXT}></th>
                 <th class="center"><{$smarty.const._MA_WGEVENTS_DATECREATED}></th>
                 <th class="center"><{$smarty.const._MA_WGEVENTS_SUBMITTER}></th>

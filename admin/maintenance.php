@@ -95,11 +95,16 @@ switch ($op) {
         $errors = [];
         $templateMain = 'wgevents_admin_maintenance.tpl';
         $err_text     = '';
-
         $dateLimitObj = \DateTime::createFromFormat(\_SHORTDATESTRING, Request::getString('datelimit'));
         $dateLimit = date('Y-m-d', $dateLimitObj->getTimestamp());
+
+        $sql = 'UPDATE `' . $GLOBALS['xoopsDB']->prefix('wgevents_registration_hist') . '` ';
+        $sql .= "SET `firstname` = '*****', `lastname` = '*****', `email` = '*@*.*' ";
+        $sql .= 'WHERE (((' . $GLOBALS['xoopsDB']->prefix('wgevents_registration') . ".datecreated)<='" . $dateLimit . "'))";
+
         $sql = 'DELETE ' . $GLOBALS['xoopsDB']->prefix('wgevents_registration_hist') . '.* ';
-        $sql .= 'FROM ' . $GLOBALS['xoopsDB']->prefix('wgevents_registration_hist') . ' WHERE (((' . $GLOBALS['xoopsDB']->prefix('wgevents_registration_hist') . ".hist_datecreated)<='" . $dateLimit . "'))";
+        $sql .= 'FROM ' . $GLOBALS['xoopsDB']->prefix('wgevents_registration_hist') . ' ';
+        $sql .= 'WHERE (((' . $GLOBALS['xoopsDB']->prefix('wgevents_registration_hist') . ".hist_datecreated)<='" . $dateLimit . "'))";
         if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
             $errors[] = $GLOBALS['xoopsDB']->error();
         }
