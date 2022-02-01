@@ -4,6 +4,7 @@
  - removed field prefix (mamba/goffy)
  - removed table name from functions (mamba/goffy)
  - usage of singular table names (mamba/goffy)
+ - updated mail notification system (goffy)
 
 ==============================================================
 1.0.0 [2022/01/04 9:28:23]

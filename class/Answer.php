@@ -106,7 +106,7 @@ class Answer extends \XoopsObject
         $form->addElement($ansResidSelect);
         // Form Table questions
         $questionHandler = $helper->getHandler('Question');
-        $ansAddidSelect = new \XoopsFormSelect(\_MA_WGEVENTS_ANSWER_ADDID, 'queid', $this->getVar('queid'));
+        $ansAddidSelect = new \XoopsFormSelect(\_MA_WGEVENTS_ANSWER_QUEID, 'queid', $this->getVar('queid'));
         $crQuestion = new \CriteriaCompo();
         $crQuestion->add(new \Criteria('evid', $this->getVar('evid')));
         $questionsCount = $questionHandler->getCount($crQuestion);

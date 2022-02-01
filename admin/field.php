@@ -46,6 +46,10 @@ switch ($op) {
         $adminObject->addItemButton(\_AM_WGEVENTS_FIELD_CREATE_DEFAULT, 'field.php?op=default_set');
         $GLOBALS['xoopsTpl']->assign('buttons', $adminObject->displayButton('left'));
         $fieldCount = $fieldHandler->getCountFields();
+        if (0 == $fieldCount) {
+            // load default set
+            \redirect_header('field.php?op=default_set', 0);
+        }
         $GLOBALS['xoopsTpl']->assign('fieldCount', $fieldCount);
         $GLOBALS['xoopsTpl']->assign('wgevents_url', \WGEVENTS_URL);
         $GLOBALS['xoopsTpl']->assign('wgevents_upload_url', \WGEVENTS_UPLOAD_URL);

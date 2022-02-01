@@ -215,7 +215,7 @@ CREATE TABLE `wgevents_textblock` (
 
 CREATE TABLE `wgevents_log` (
   `id` INT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `text` VARCHAR(255) NOT NULL DEFAULT '',
+  `text` TEXT NOT NULL,
   `datecreated` INT(11) NOT NULL DEFAULT '0',
   `submitter` INT(10) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
@@ -239,8 +239,7 @@ CREATE TABLE `wgevents_account` (
      `server_out` VARCHAR(100) NOT NULL DEFAULT '',
      `port_out` INT(10) NOT NULL DEFAULT '0',
      `securetype_out` VARCHAR(20) NOT NULL DEFAULT '',
-     `default` INT(1) NOT NULL DEFAULT '0',
-     `inbox` VARCHAR(100) NOT NULL DEFAULT '',
+     `primary` INT(1) NOT NULL DEFAULT '0',
      `datecreated` INT(11) NOT NULL DEFAULT '0',
      `submitter`      INT(8)       NOT NULL DEFAULT '0',
      PRIMARY KEY (`id`)

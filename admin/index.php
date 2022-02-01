@@ -38,6 +38,7 @@ $countCategories = $categoryHandler->getCount();
 $countFields = $fieldHandler->getCount();
 $countTextblocks = $textblockHandler->getCount();
 $countLogs = $logHandler->getCount();
+$countAccounts = $accountHandler->getCount();
 
 // InfoBox Statistics
 $adminObject->addInfoBox(\_AM_WGEVENTS_STATISTICS);
@@ -50,6 +51,7 @@ $adminObject->addInfoBoxLine(\sprintf( '<label>' . \_AM_WGEVENTS_THEREARE_CATEGO
 $adminObject->addInfoBoxLine(\sprintf( '<label>' . \_AM_WGEVENTS_THEREARE_FIELDS . '</label>', $countFields));
 $adminObject->addInfoBoxLine(\sprintf( '<label>' . \_AM_WGEVENTS_THEREARE_TEXTBLOCKS . '</label>', $countTextblocks));
 $adminObject->addInfoBoxLine(\sprintf( '<label>' . \_AM_WGEVENTS_THEREARE_LOGS . '</label>', $countLogs));
+$adminObject->addInfoBoxLine(\sprintf( '<label>' . \_AM_WGEVENTS_THEREARE_ACCOUNTS . '</label>', $countAccounts));
 
 $timezones = XoopsLists::getTimeZoneList();
 $adminObject->addInfoBox(\_AM_WGEVENTS_TIMEZONES);

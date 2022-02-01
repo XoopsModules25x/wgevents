@@ -57,8 +57,7 @@ class Account extends \XoopsObject
         $this->initVar('server_out', XOBJ_DTYPE_TXTBOX, null, false, 100);
         $this->initVar('port_out', XOBJ_DTYPE_INT, null, false, 100);
         $this->initVar('securetype_out', XOBJ_DTYPE_TXTBOX, null, false);
-        $this->initVar('inbox', XOBJ_DTYPE_TXTBOX, null, false, 100);
-        $this->initVar('default', XOBJ_DTYPE_INT, null, false); // boolean
+        $this->initVar('primary', XOBJ_DTYPE_INT, null, false); // boolean
         $this->initVar('submitter', XOBJ_DTYPE_INT, null, false);
         $this->initVar('datecreated', XOBJ_DTYPE_INT, time(), false);
     }
@@ -121,7 +120,8 @@ class Account extends \XoopsObject
         $form->addElement(new \XoopsFormText(_AM_WGEVENTS_ACCOUNT_YOURNAME, 'yourname', 50, 255, $this->getVar('yourname')), true);
         $form->addElement(new \XoopsFormText(_AM_WGEVENTS_ACCOUNT_YOURMAIL, 'yourmail', 50, 255, $this->getVar('yourmail')), true);
 
-        $form->addElement(new \XoopsFormRadioYN(_AM_WGEVENTS_ACCOUNT_DEFAULT, 'default', $this->getVar('default'), _YES, _NO), false);
+        $primary = $this->isNew() ? 0 : $this->getVar('primary');
+        $form->addElement(new \XoopsFormRadioYN(_AM_WGEVENTS_ACCOUNT_PRIMARY, 'primary', $primary, _YES, _NO), false);
 
         if (false === $dis_acc_userpass) {
             $form->addElement(new \XoopsFormText(_AM_WGEVENTS_ACCOUNT_USERNAME, 'username', 50, 255, $this->getVar('username')), true);
@@ -190,7 +190,7 @@ class Account extends \XoopsObject
             Constants::ACCOUNT_TYPE_VAL_GMAIL        => _AM_WGEVENTS_ACCOUNT_TYPE_GMAIL,
         ];
         $ret['type_text']        = $acc_types[$this->getVar('type')];
-        $ret['default_text']     = $this->getVar('default') == 1 ? _YES : _NO;
+        $ret['primary_text']     = $this->getVar('primary') == 1 ? _YES : _NO;
         $ret['datecreated_text'] = formatTimestamp($this->getVar('datecreated'), 's');
         $ret['submitter_text']   = \XoopsUser::getUnameFromId($this->getVar('submitter'));
         return $ret;

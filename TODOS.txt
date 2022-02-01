@@ -1,8 +1,6 @@
 sending mails:
-test verification email
-add default mail account
+verification email
 
-add default types add after installing
 
 print a ticket
 
@@ -11,13 +9,8 @@ create plugin for extcal
 implementation fullcalendar?
 Implementation of recurring events?
 
-maintenance????
-- questions ohne gültigen addinfo
-- delete old registration data
-
 Activate and adapt notification system
 
-maintenance/case 'anon_data_exec': * for table registration
 
 
 

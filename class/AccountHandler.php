@@ -121,4 +121,43 @@ class AccountHandler extends \XoopsPersistableObjectHandler
         $crAccount->setOrder($order);
         return $crAccount;
     }
+
+    /**
+     * Get primary Account
+     * returns
+     * - array with defaults if no primary account found (website email settings will be used)
+     * - an array with settings of the primary account
+     * @param null
+     *
+     * @return array
+     */
+    public function getPrimary() {
+
+        $crAccount = new \CriteriaCompo();
+        $crAccount->add(new \Criteria('primary', 1));
+        $primaryCount = $this->getCount($crAccount);
+        $accountConfig = [];
+        // default settings
+        $accountConfig['type']           = 0;
+        $accountConfig['yourname']       = '';
+        $accountConfig['yourmail']       = '';
+        $accountConfig['password']       = '';
+        $accountConfig['server_out']     = '';
+        $accountConfig['port_out']       = '';
+        $accountConfig['securetype_out'] = '';
+        if ($primaryCount > 0) {
+            $accountAll = $this->getAll($crAccount);
+            foreach (\array_keys($accountAll) as $i) {
+                $accountConfig['type']           = $accountAll[$i]->getVar('type');
+                $accountConfig['yourname']       = $accountAll[$i]->getVar('yourname');
+                $accountConfig['yourmail']       = $accountAll[$i]->getVar('yourmail');
+                $accountConfig['password']       = $accountAll[$i]->getVar('password');
+                $accountConfig['server_out']     = $accountAll[$i]->getVar('server_out');
+                $accountConfig['port_out']       = $accountAll[$i]->getVar('port_out');
+                $accountConfig['securetype_out'] = $accountAll[$i]->getVar('securetype_out');
+            }
+        }
+        return $accountConfig;
+
+    }
 }

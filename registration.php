@@ -163,10 +163,10 @@ switch ($op) {
                 $form = $registrationObj->getForm();
                 $GLOBALS['xoopsTpl']->assign('form', $form->render());
             }
-            if (\time() < $eventObj->getVar('register_from')) {
+            if (!$permEdit && \time() < $eventObj->getVar('register_from')) {
                 $GLOBALS['xoopsTpl']->assign('warning_period', sprintf(\_MA_WGEVENTS_REGISTRATION_TOEARLY, \formatTimestamp($eventObj->getVar('register_from'), 'm')));
             }
-            if (\time() > $eventObj->getVar('register_to')) {
+            if (!$permEdit && \time() > $eventObj->getVar('register_to')) {
                 $GLOBALS['xoopsTpl']->assign('warning_period', sprintf(\_MA_WGEVENTS_REGISTRATION_TOLATE, \formatTimestamp($eventObj->getVar('register_to'), 'm')));
             }
         }
@@ -203,7 +203,7 @@ switch ($op) {
         // create item in table registrations
         $answersValueArr = [];
         $answersTypeArr = [];
-        $answersValueArr = Request::getArray('id');
+        $answersValueArr = Request::getArray('ans_id');
         $answersTypeArr = Request::getArray('type');
         $registrationObj->setVar('evid', $regEvid);
         $registrationObj->setVar('salutation', Request::getInt('salutation'));
@@ -345,22 +345,36 @@ switch ($op) {
                 $typeConfirm = Constants::MAIL_REG_CONFIRM_IN;
             }
             if ($newRegistration || '' != $infotext) {
+                $mailParams = [];
+                $mailParams['regIp']                 = $registrationObj->getVar('ip');
+                $mailParams['regFirstname']          = $registrationObj->getVar('firstname');
+                $mailParams['regLastname']           = $registrationObj->getVar('lastname');
+                $mailParams['regSubmitter']          = $registrationObj->getVar('submitter');
+                $mailParams['evId']                  = $eventObj->getVar('id');
+                $mailParams['evSubmitter']           = $eventObj->getVar('submitter');
+                $mailParams['evStatus']              = $eventObj->getVar('status');
+                $mailParams['evName']                = $eventObj->getVar('name');
+                $mailParams['evDatefrom']            = $eventObj->getVar('datefrom');
+                $mailParams['evLocation']            = $eventObj->getVar('location');
+                $mailParams['evRegister_sendermail'] = $eventObj->getVar('register_sendermail');
+                $mailParams['evRegister_sendername'] = $eventObj->getVar('register_sendername');
+                $mailParams['evRegister_signature']  = $eventObj->getVar('register_signature');
+                $mailParams['infotext']              = $infotext;
+
                 $registerNotify = (string)$eventObj->getVar('register_notify', 'e');
                 if ('' != $registerNotify) {
                     // send notifications to emails of register_notify
                     $notifyEmails   = preg_split("/\r\n|\n|\r/", $registerNotify);
                     $mailsHandler = new MailHandler();
-                    $mailsHandler->setInfo($infotext);
-                    $mailsHandler->setNotifyEmails($notifyEmails);
-                    $mailsHandler->executeReg($newRegId, $typeNotify);
+                    $mailParams['recipients'] = $notifyEmails;
+                    $mailsHandler->executeReg($mailParams, $typeNotify);
                     unset($mailsHandler);
                 }
                 if ('' != $regEmail && Request::getInt('email_send') > 0) {
                     // send confirmation, if radio is checked
                     $mailsHandler = new MailHandler();
-                    $mailsHandler->setInfo($infotext);
-                    $mailsHandler->setNotifyEmails($regEmail);
-                    $mailsHandler->executeReg($newRegId, $typeConfirm);
+                    $mailParams['recipients'] = $regEmail;
+                    $mailsHandler->executeReg($mailParams, $typeConfirm);
                     unset($mailsHandler);
                 }
             }
@@ -429,20 +443,25 @@ switch ($op) {
         // Check permissions
         $registrationObj = $registrationHandler->get($regId);
         $eventObj = $eventHandler->get($registrationObj->getVar('evid'));
-        if (!$permissionsHandler->getPermRegistrationsEdit(
-                $registrationObj->getVar('ip'),
-                $registrationObj->getVar('submitter'),
-                $eventObj->getVar('submitter'),
-                $eventObj->getVar('status'),
-            )) {
-                \redirect_header('registration.php?op=list', 3, \_NOPERM);
-        }
-        $registrationObj = $registrationHandler->get($regId);
-        $regParams['evid'] = $registrationObj->getVar('evid');
-        $regParams['firstname'] = $registrationObj->getVar('firstname');
-        $regParams['lastname'] = $registrationObj->getVar('lastname');
-        $regName = \trim($regParams['firstname'] . ' ' . $regParams['lastname']);
-        $regParams['email'] = $registrationObj->getVar('email');
+
+        $mailParams = [];
+        $mailParams['regIp']                 = $registrationObj->getVar('ip');
+        $mailParams['regFirstname']          = $registrationObj->getVar('firstname');
+        $mailParams['regLastname']           = $registrationObj->getVar('lastname');
+        $mailParams['regEmail']              = $registrationObj->getVar('email');
+        $mailParams['regSubmitter']          = $registrationObj->getVar('submitter');
+        $mailParams['evId']                  = $eventObj->getVar('id');
+        $mailParams['evSubmitter']           = $eventObj->getVar('submitter');
+        $mailParams['evStatus']              = $eventObj->getVar('status');
+        $mailParams['evName']                = $eventObj->getVar('name');
+        $mailParams['evDatefrom']            = $eventObj->getVar('datefrom');
+        $mailParams['evLocation']            = $eventObj->getVar('location');
+        $mailParams['evRegister_sendermail'] = $eventObj->getVar('register_sendermail');
+        $mailParams['evRegister_sendername'] = $eventObj->getVar('register_sendername');
+        $mailParams['evRegister_signature']  = $eventObj->getVar('register_signature');
+        $mailParams['infotext']              = '';
+
+        $mailParams['email'] = $registrationObj->getVar('email');
         if (isset($_REQUEST['ok']) && 1 == $_REQUEST['ok']) {
             if (!$GLOBALS['xoopsSecurity']->check()) {
                 \redirect_header('registration.php', 3, \implode(', ', $GLOBALS['xoopsSecurity']->getErrors()));
@@ -451,9 +470,9 @@ switch ($op) {
             $registrationshistHandler->createHistory($registrationObj, 'delete');
             if ($registrationHandler->delete($registrationObj)) {
                 // create history
-                $answerhistHandler->createHistory($regParams['evid'], $regId, 'delete');
+                $answerhistHandler->createHistory($mailParams['evId'], $regId, 'delete');
                 //delete existing answers
-                $answerHandler->cleanupAnswers($regParams['evid'], $regId);
+                $answerHandler->cleanupAnswers($mailParams['evId'], $regId);
                 // Event delete notification
                 /*
                 $tags = [];
@@ -463,7 +482,6 @@ switch ($op) {
                 $notificationHandler->triggerEvent('registrations', $regId, 'registration_delete', $tags);
                 */
                 // send notifications/confirmation emails
-                $eventObj = $eventHandler->get($regParams['evid']);
                 $typeNotify  = Constants::MAIL_REG_NOTIFY_OUT;
                 $typeConfirm = Constants::MAIL_REG_CONFIRM_OUT;
                 $registerNotify = (string)$eventObj->getVar('register_notify', 'e');
@@ -471,16 +489,16 @@ switch ($op) {
                     // send notifications to emails of register_notify
                     $notifyEmails   = preg_split("/\r\n|\n|\r/", $registerNotify);
                     $mailsHandler = new MailHandler();
-                    $mailsHandler->setNotifyEmails($notifyEmails);
-                    $mailsHandler->executeRegDelete($regParams, $typeNotify);
+                    $mailParams['recipients'] = $notifyEmails;
+                    $mailsHandler->executeReg($mailParams, $typeNotify);
                     unset($mailsHandler);
                 }
-                $regEmail = $regParams['email'];
-                if ('' !=  $regEmail) {
-                    // send confirmation, if radio is checked
+                // send email in any case if email is available
+                if ('' != $mailParams['regEmail']) {
+                    // send confirmation
                     $mailsHandler = new MailHandler();
-                    $mailsHandler->setNotifyEmails($regEmail);
-                    $mailsHandler->executeRegDelete($regParams, $typeConfirm);
+                    $mailParams['recipients'] = $mailParams['regEmail'];
+                    $mailsHandler->executeReg($mailParams, $typeConfirm);
                     unset($mailsHandler);
                 }
 
@@ -492,7 +510,7 @@ switch ($op) {
             $customConfirm = new Common\Confirm(
                 ['ok' => 1, 'id' => $regId, 'evid' => $regEvid, 'op' => 'delete', 'redir' => $redir],
                 $_SERVER['REQUEST_URI'],
-                \sprintf(\_MA_WGEVENTS_CONFIRMDELETE_REGISTRATION, $regName),
+                \sprintf(\_MA_WGEVENTS_CONFIRMDELETE_REGISTRATION, $mailParams['regFirstname'] . ' ' . $mailParams['regLastname']),
                 \_MA_WGEVENTS_CONFIRMDELETE_TITLE,
                 \_MA_WGEVENTS_CONFIRMDELETE_LABEL
             );

@@ -54,9 +54,11 @@ switch ($op) {
             $accountObj = $helper->getHandler('Account')->get($accId);
         }
 
-        $mailhost = $accountObj->getVar('server_in');
-        $port     = $accountObj->getVar('port_in');
-        switch ($accountObj->getVar('type')) {
+        $account_server_in = $accountObj->getVar('server_in');
+        $account_port_in   = $accountObj->getVar('port_in');
+        $account_type      = $accountObj->getVar('type');
+        $logDetails = 'account_type:' . $account_type;
+        switch ($account_type) {
             case Constants::ACCOUNT_TYPE_VAL_POP3:
                 $service = 'pop3';
                 break;
@@ -69,33 +71,27 @@ switch ($op) {
                 $service = '';
                 break;
         }
-        $service_option = $accountObj->getVar('securetype_in');
-        $password   = $accountObj->getVar('password');
-        $username   = $accountObj->getVar('username');
-        $inbox      = $accountObj->getVar('inbox');
-        $inbox_ok   = false;
-        $hardbox    = $accountObj->getVar('hardbox');
-        $hardbox_ok = false;
-        $softbox    = $accountObj->getVar('softbox');
-        $softbox_ok = false;
+        $account_securetype_in = $accountObj->getVar('securetype_in');
+        $account_password      = $accountObj->getVar('password');
+        $account_username      = $accountObj->getVar('username');
 
-        $command = $mailhost . ':' . $port;
+        $command = $account_server_in . ':' . $account_port_in;
         if ('' != $service) {
             $command .= '/' . $service;
         }
-        if ('' != $service_option) {
-            $command .= '/' . $service_option;
+        if ('' != $account_securetype_in) {
+            $command .= '/' . $account_securetype_in;
         }
+        $logDetails .= '<br>command:' . $command;
 
         $checks = [];
 
-        $mbox = @imap_open('{' . $command . '}', $username, $password);
+        $mbox = @imap_open('{' . $command . '}', $account_username, $account_password);
         if (false === $mbox) {
             $checks['openmailbox']['check'] = \_AM_WGEVENTS_ACCOUNT_CHECK_OPEN_MAILBOX;
             $checks['openmailbox']['result'] = \_AM_WGEVENTS_ACCOUNT_CHECK_FAILED;
             $checks['openmailbox']['result_img'] = $imgFailed;
             $checks['openmailbox']['info'] = imap_last_error();
-
         } else {
             $checks['openmailbox']['check'] = \_AM_WGEVENTS_ACCOUNT_CHECK_OPEN_MAILBOX;
             $checks['openmailbox']['result'] = \_AM_WGEVENTS_ACCOUNT_CHECK_OK;
@@ -113,26 +109,25 @@ switch ($op) {
                 $checks['listfolder']['result_img'] = $imgOK;
                 $checks['listfolder']['info'] = \implode('<br>', $folders);
 
+                imap_close($mbox);
+
                 // send test mail
                 // read data of account
-                $accountObj             = $helper->getHandler('Account')->get($accId);
-                $account_type           = $accountObj->getVar('type');
                 $account_yourname       = $accountObj->getVar('yourname');
                 $account_yourmail       = $accountObj->getVar('yourmail');
-                $account_username       = $accountObj->getVar('username');
-                $account_password       = $accountObj->getVar('password');
                 $account_server_out     = $accountObj->getVar('server_out');
                 $account_port_out       = $accountObj->getVar('port_out');
                 $account_securetype_out = $accountObj->getVar('securetype_out');
 
                 try {
-                    if (Constants::ACCOUNT_TYPE_VAL_PHP_SENDMAIL == $account_type) {
+                    if ($account_type == Constants::ACCOUNT_TYPE_VAL_PHP_SENDMAIL) {
                         $pop = new POP3();
                         $pop->authorise($account_server_out, $account_port_out, 30, $account_username, $account_password, 1);
                     }
                     $xoopsMailer = xoops_getMailer();
+                    $logDetails .= '<br>xoopsMailer is_object:' . \is_object($xoopsMailer);
 
-                    $xoopsMailer->useMail();
+                    //$xoopsMailer->useMail();
 
                     $xoopsMailer->CharSet = _CHARSET; //use xoops default character set
 
@@ -141,7 +136,9 @@ switch ($op) {
                     //}
 
                     $xoopsMailer->Username = $account_username; // SMTP account username
+                    $logDetails .= '<br>account_username:' . $account_username;
                     $xoopsMailer->Password = $account_password; // SMTP account password
+                    $logDetails .= '<br>account_password:' . $account_password;
 
                     if (Constants::ACCOUNT_TYPE_VAL_POP3 == $account_type) {
                         //xoopsMailer->isSMTP();
@@ -152,49 +149,59 @@ switch ($op) {
                     if (Constants::ACCOUNT_TYPE_VAL_SMTP == $account_type
                         || Constants::ACCOUNT_TYPE_VAL_GMAIL == $account_type) {
                         $xoopsMailer->Port = $account_port_out; // set the SMTP port
+                        $logDetails .= '<br>account_port_out:' . $account_port_out;
                         $xoopsMailer->Host = $account_server_out; //sometimes necessary to repeat
+                        $logDetails .= '<br>account_server_out:' . $account_server_out;
                     }
 
                     if ('' != $account_securetype_out) {
                         $xoopsMailer->SMTPAuth   = true;
                         $xoopsMailer->SMTPSecure = $account_securetype_out; // sets the prefix to the server
+                        $logDetails .= '<br>account_securetype_out:' . $account_securetype_out;
                     }
                     $xoopsMailer->setFromEmail($account_yourmail);
                     $xoopsMailer->setFromName($account_yourname);
+                    $logDetails .= '<br>from:' . $account_yourmail . ' ' . $account_yourname;
                     $xoopsMailer->Subject = 'Test account subject';
-                    $xoopsMailer->setBody('Test account body');
+                    $xoopsMailer->setBody('Test account body: ' . \XOOPS_URL);
                     $usermail = $GLOBALS['xoopsUser']->email();
                     $xoopsMailer->setToEmails($usermail);
+                    $logDetails .= '<br>setToEmails:' . $usermail;
+                    $logHandler->createLog($logDetails);
 
                     //execute sending
                     if ($xoopsMailer->send()) {
-                        $logHandler->createLog('Result Test send mail to ' . $usermail .': success');
+                        $export = var_export($xoopsMailer, TRUE);
+                        $export = \preg_replace("/\n/", '<br>', $export);
+                        $logHandler->createLog('Result Test send mail to ' . $usermail .': success' . '<br>' . $export);
                         $result = \_AM_WGEVENTS_ACCOUNT_CHECK_OK;
                         $resultImg = $imgOK;
                     } else {
-                        $logHandler->createLog('Result Test send mail to ' . $usermail .': failed - ' . $xoopsMailer->getErrors());
-                        $result = \_AM_WGEVENTS_ACCOUNT_CHECK_FAILED;
+                        $export = var_export($xoopsMailer, TRUE);
+                        $export = \preg_replace("/\n/", '<br>', $export);
+                        $logHandler->createLog('Result Test send mail to ' . $usermail .': failed - ' . $xoopsMailer->getErrors() . '<br>' . $export);
+                        $result = \_AM_WGEVENTS_ACCOUNT_CHECK_FAILED . '<br>' . $xoopsMailer->getErrors();
                         $resultImg = $imgFailed;
                     }
                     unset($mail);
                 }
                 catch (phpmailerException $e) {
                     // IN PROGRESS
-                    $logHandler->createLog(\_AM_WGEVENTS_ACCOUNT_CHECK_FAILED. 'Result Test account: failed -' . $e->errorMessage());
-                    $result = \_AM_WGEVENTS_ACCOUNT_CHECK_FAILED;
+                    $logHandler->createLog(\_AM_WGEVENTS_ACCOUNT_CHECK_FAILED. 'Result Test account: phpmailerException -' . $e->errorMessage());
+                    $result = \_AM_WGEVENTS_ACCOUNT_CHECK_FAILED . '<br>' . imap_last_error() . $e->errorMessage();
                     $resultImg = $imgFailed;
                 }
                 catch (\Exception $e) {
                     // IN PROGRESS
-                    $logHandler->createLog(\_AM_WGEVENTS_ACCOUNT_CHECK_FAILED. 'Result Test account: failed -' . $e->getMessage());
-                    $result = \_AM_WGEVENTS_ACCOUNT_CHECK_FAILED;
+                    $logHandler->createLog(\_AM_WGEVENTS_ACCOUNT_CHECK_FAILED. 'Result Test account: Exception -' . $e->getMessage());
+                    $result = \_AM_WGEVENTS_ACCOUNT_CHECK_FAILED . '<br>' . imap_last_error() . $e->getMessage();
                     $resultImg = $imgFailed;
                 }
 
                 $checks['sendtest']['check'] = _AM_WGEVENTS_ACCOUNT_CHECK_SENDTEST;
                 $checks['sendtest']['result'] = $result;
                 $checks['sendtest']['result_img'] = $resultImg;
-                $checks['sendtest']['info'] = imap_last_error();
+                $checks['sendtest']['info'] = $result;
             }
             imap_close($mbox);
         }
@@ -202,6 +209,12 @@ switch ($op) {
         break;
     case 'list':
     default:
+        $crAccount = new \CriteriaCompo();
+        $crAccount->add(new \Criteria('primary', 1));
+        $primaryCount = $accountHandler->getCount($crAccount);
+        if (0 == $primaryCount) {
+            $GLOBALS['xoopsTpl']->assign('info', \_AM_WGEVENTS_THEREARENT_ACCOUNTS_DESC);
+        }
         // Define Stylesheet
         $GLOBALS['xoTheme']->addStylesheet($style, null);
         $templateMain = 'wgevents_admin_account.tpl';
@@ -231,8 +244,6 @@ switch ($op) {
                 $pagenav = new \XoopsPageNav($accountCount, $limit, $start, 'start', 'op=list&limit=' . $limit);
                 $GLOBALS['xoopsTpl']->assign('pagenav', $pagenav->renderNav());
             }
-        } else {
-            $GLOBALS['xoopsTpl']->assign('error', \_AM_WGEVENTS_THEREARENT_ACCOUNTS);
         }
         break;
     case 'new':
@@ -268,8 +279,7 @@ switch ($op) {
         $accountObj->setVar('server_out', Request::getString('server_out'));
         $accountObj->setVar('port_out', Request::getInt('port_out'));
         $accountObj->setVar('securetype_out', Request::getString('securetype_out'));
-        $accountObj->setVar('default', Request::getInt('default'));
-        $accountObj->setVar('inbox', Request::getString('inbox'));
+        $accountObj->setVar('primary', Request::getInt('primary'));
         $accountObj->setVar('datecreated', Request::getInt('datecreated'));
         $accountObj->setVar('submitter', Request::getInt('submitter'));
         // Insert Data
@@ -317,9 +327,25 @@ switch ($op) {
             $customConfirm = new Common\Confirm(
                 ['ok' => 1, 'id' => $accId, 'start' => $start, 'limit' => $limit, 'op' => 'delete'],
                 $_SERVER['REQUEST_URI'],
-                \sprintf(\_MA_WGEVENTS_FORM_SURE_DELETE, $accountObj->getVar('type')));
+                \sprintf(\_MA_WGEVENTS_FORM_SURE_DELETE, $accountObj->getVar('name')));
             $form = $customConfirm->getFormConfirm();
             $GLOBALS['xoopsTpl']->assign('form', $form->render());
+        }
+        break;
+    case 'change_yn':
+        if ($accId > 0) {
+            if (Request::getInt('value') > 0) {
+                // reset all to false
+                $crAccount = new \CriteriaCompo();
+                $crAccount->add(new \Criteria('primary', 1));
+                $accountHandler->updateAll('primary', 0, $crAccount,true);
+            }
+            $accountObj = $accountHandler->get($accId);
+            $accountObj->setVar(Request::getString('field'), Request::getInt('value'));
+            // Insert Data
+            if ($accountHandler->insert($accountObj, true)) {
+                \redirect_header('account.php?op=list&amp;start=' . $start . '&amp;limit=' . $limit, 2, \_MA_WGEVENTS_FORM_OK);
+            }
         }
         break;
 }

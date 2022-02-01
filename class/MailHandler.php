@@ -34,15 +34,6 @@ use XoopsModules\Wgevents\{
  */
 class MailHandler
 {
-    /**
-     * @var string
-     */
-    private $info = '';
-
-    /**
-     * @var array|string
-     */
-    private $notifyEmails = '';
 
     /**
      * Constructor
@@ -56,60 +47,54 @@ class MailHandler
     /**
      * Function to send mails for new/update registrations
      *
-     * @param int $regId
+     * @param array $mailParams
      * @param int $type
      * @return bool
      */
-    public function executeReg(int $regId, int $type)
+    public function executeReg(array $mailParams, int $type)
     {
         $helper = Helper::getInstance();
-        $eventHandler = $helper->getHandler('Event');
-        $registrationHandler = $helper->getHandler('Registration');
         $permissionsHandler = $helper->getHandler('Permission');
+        $accountHandler = $helper->getHandler('Account');
         $logHandler = $helper->getHandler('Log');
 
-        $logHandler->createLog('Start MailHandler/executeReg');
-
-
-        $registrationObj = $registrationHandler->get($regId, true);
-        $regEvid = $registrationObj->getVar('evid');
-        $eventObj = $eventHandler->get($regEvid);
         if (!$permissionsHandler->getPermRegistrationsEdit(
-                $registrationObj->getVar('ip'),
-                $registrationObj->getVar('submitter'),
-                $eventObj->getVar('submitter'),
-                $eventObj->getVar('status'),
+            $mailParams['regIp'],
+            $mailParams['regSubmitter'],
+            $mailParams['evSubmitter'],
+            $mailParams['evStatus'],
             )) {
                 return false;
         }
 
-        $eventUrl       = \WGEVENTS_URL . '/event.php?op=show&id=' . $regEvid;
-        $eventName      = $eventObj->getVar('name');
-        $eventDate      = \formatTimestamp($eventObj->getVar('datefrom'), 'm');
-        $eventLocation  = $eventObj->getVar('location');
-        $senderMail     = $eventObj->getVar('register_sendermail');
-        $senderName     = $eventObj->getVar('register_sendername');
-        $senderSignatur = $eventObj->getVar('register_signature');
-        $firstname      = $registrationObj->getVar('firstname');
-        $lastname       = $registrationObj->getVar('lastname');
+        $eventUrl       = \WGEVENTS_URL . '/event.php?op=show&id=' . $mailParams['evId'];
+        $eventName      = $mailParams['evName'];
+        $eventDate      = \formatTimestamp($mailParams['evDatefrom'], 'm');
+        $eventLocation  = '' == (string)$mailParams['evLocation'] ? ' ' : $mailParams['evLocation'];
+        $senderMail     = '' == (string)$mailParams['evRegister_sendermail'] ? ' ' : $mailParams['evRegister_sendermail'];
+        $senderName     = '' == (string)$mailParams['evRegister_sendername'] ? ' ' : $mailParams['evRegister_sendername'];
+        $senderSignatur = '' == (string)$mailParams['evRegister_signature'] ? ' ' : $mailParams['evRegister_signature'];
+        $firstname      = '' == (string)$mailParams['regFirstname'] ? ' ' : $mailParams['regFirstname'];
+        $lastname       = '' == (string)$mailParams['regLastname'] ? ' ' : $mailParams['regLastname'];
+        $infotext       = '' == (string)$mailParams['infotext'] ? ' ' : $mailParams['infotext'];
+        $recipients     = $mailParams['recipients'];
         $userName       = $GLOBALS['xoopsConfig']['anonymous'];
         if (\is_object($GLOBALS['xoopsUser'])) {
             $userName  = ('' != (string)$GLOBALS['xoopsUser']->name()) ? $GLOBALS['xoopsUser']->name() : $GLOBALS['xoopsUser']->uname();
-        }
-        $infotext = (string)$this->info;
-        if ('' == $infotext) {
-            //must have minimum one blank space in order to replace it in the template
-            $infotext = ' ';
         }
 
         switch ($type) {
             case 0:
             default:
-                /***** handled with executeRegDelete *****
-                 * case Constants::MAIL_REG_CONFIRM_OUT:
-                 * case Constants::MAIL_REG_NOTIFY_OUT:
-                 */
                 return false;
+            case Constants::MAIL_REG_CONFIRM_OUT:
+                $template = 'mail_reg_confirm_out.tpl';
+                $subject = \_MA_WGEVENTS_MAIL_REG_OUT_SUBJECT;
+                break;
+            case Constants::MAIL_REG_NOTIFY_OUT:
+                $template = 'mail_reg_notify_out.tpl';
+                $subject = \_MA_WGEVENTS_MAIL_REG_OUT_SUBJECT;
+                break;
             case Constants::MAIL_REG_CONFIRM_IN:
                 $template = 'mail_reg_confirm_in.tpl';
                 $subject = \_MA_WGEVENTS_MAIL_REG_IN_SUBJECT;
@@ -132,154 +117,97 @@ class MailHandler
                 break;
         }
 
-        $xoopsMailer = xoops_getMailer();
-        $xoopsMailer->useMail();
-        //set template path
-        if (\file_exists(\WGEVENTS_PATH . '/language/' . $GLOBALS['xoopsConfig']['language'] . '/')) {
-            $xoopsMailer->setTemplateDir(\WGEVENTS_PATH . '/language/' . $GLOBALS['xoopsConfig']['language'] . '/mail_template/');
-        } else {
-            $xoopsMailer->setTemplateDir(\WGEVENTS_PATH . '/language/english/mail_template/');
-        }
-        //set template name
-        $xoopsMailer->setTemplate($template);
-        //set sender
-        $xoopsMailer->setFromEmail($senderMail);
-        //set sender name
-        $xoopsMailer->setFromName($senderName);
-        //set subject
-        $xoopsMailer->setSubject($subject);
-        //assign vars
-        $xoopsMailer->assign('UNAME', $userName);
-        $xoopsMailer->assign('NAME', \trim($firstname . ' ' . $lastname));
-        $xoopsMailer->assign('EVENTNAME', $eventName);
-        $xoopsMailer->assign('EVENTDATEFROM', $eventDate);
-        $xoopsMailer->assign('EVENTLOCATION', $eventLocation);
-        $xoopsMailer->assign('INFOTEXT', $infotext);
-        $xoopsMailer->assign('EVENTURL', $eventUrl);
-        if ('' == $senderSignatur) {
-            $senderSignatur = ' ';
-        }
-        $xoopsMailer->assign('SIGNATURE', $senderSignatur);
-        //set recipient
-        $xoopsMailer->setToEmails($this->notifyEmails);
+        // get settings of primary account
+        $primary = $accountHandler->getPrimary();
+        $account_type           = (int)$primary['type'];
+        //$account_yourname       = (string)$primary['yourname'];
+        $account_username       = (string)$primary['yourmail'];
+        $account_password       = (string)$primary['password'];
+        $account_server_out     = (string)$primary['server_out'];
+        $account_port_out       = (int)$primary['port_out'];
+        $account_securetype_out = (string)$primary['securetype_out'];
 
-        //send mail
-        if ($xoopsMailer->send()) {
-            $logHandler->createLog('Result MailHandler/executeReg: success');
-        } else {
-            $logHandler->createLog('Result MailHandler/executeReg: failed' .$xoopsMailer->getErrors());
+        try {
+            if ($account_type == Constants::ACCOUNT_TYPE_VAL_PHP_SENDMAIL) {
+                $pop = new POP3();
+                $pop->authorise($account_server_out, $account_port_out, 30, $account_username, $account_password, 1);
+            }
+            $xoopsMailer = xoops_getMailer();
+
+            $xoopsMailer->useMail();
+
+            //set template path
+            if (\file_exists(\WGEVENTS_PATH . '/language/' . $GLOBALS['xoopsConfig']['language'] . '/')) {
+                $xoopsMailer->setTemplateDir(\WGEVENTS_PATH . '/language/' . $GLOBALS['xoopsConfig']['language'] . '/mail_template/');
+            } else {
+                $xoopsMailer->setTemplateDir(\WGEVENTS_PATH . '/language/english/mail_template/');
+            }
+            //set template name
+            $xoopsMailer->setTemplate($template);
+
+            $xoopsMailer->CharSet = _CHARSET; //use xoops default character set
+
+            if ('' != $account_username) {
+                $xoopsMailer->Username = $account_username; // SMTP account username
+            }
+            if ('' != $account_password) {
+                $xoopsMailer->Password = $account_password; // SMTP account password
+            }
+
+            if (Constants::ACCOUNT_TYPE_VAL_POP3 == $account_type) {
+                //xoopsMailer->isSMTP();
+                //$xoopsMailer->SMTPDebug = 2;
+                $xoopsMailer->Host = $account_server_out;
+            }
+
+            if (Constants::ACCOUNT_TYPE_VAL_SMTP == $account_type
+                || Constants::ACCOUNT_TYPE_VAL_GMAIL == $account_type) {
+                $xoopsMailer->Port = $account_port_out; // set the SMTP port
+                $xoopsMailer->Host = $account_server_out; //sometimes necessary to repeat
+            }
+
+            if ('' != $account_securetype_out) {
+                $xoopsMailer->SMTPAuth   = true;
+                $xoopsMailer->SMTPSecure = $account_securetype_out; // sets the prefix to the server
+            }
+
+            //set sender
+            $xoopsMailer->setFromEmail($senderMail);
+            //set sender name
+            $xoopsMailer->setFromName($senderName);
+            //set subject
+            $xoopsMailer->setSubject($subject);
+            //assign vars
+            $xoopsMailer->assign('UNAME', $userName);
+            $xoopsMailer->assign('NAME', \trim($firstname . ' ' . $lastname));
+            $xoopsMailer->assign('EVENTNAME', $eventName);
+            $xoopsMailer->assign('EVENTDATEFROM', $eventDate);
+            $xoopsMailer->assign('EVENTLOCATION', $eventLocation);
+            $xoopsMailer->assign('INFOTEXT', $infotext);
+            $xoopsMailer->assign('EVENTURL', $eventUrl);
+            if ('' == $senderSignatur) {
+                $senderSignatur = ' ';
+            }
+            $xoopsMailer->assign('SIGNATURE', $senderSignatur);
+            //set recipient
+            $xoopsMailer->setToEmails($recipients);
+            //execute sending
+            if ($xoopsMailer->send()) {
+                $logHandler->createLog('Result MailHandler/executeReg: success (Mailer: ' . $account_type . ')');
+            } else {
+                $logHandler->createLog('Result MailHandler/executeReg (Mailer: ' . $account_type . '): failed' .$xoopsMailer->getErrors());
+            }
+            $xoopsMailer->reset();
+            unset($mail);
         }
-        $xoopsMailer->reset();
+        catch (phpmailerException $e) {
+            $logHandler->createLog('MailHandler/executeReg failed: phpmailerException -' . $e->errorMessage());
+        }
+        catch (\Exception $e) {
+            $logHandler->createLog('MailHandler/executeReg failed: Exception -' . $e->getMessage());
+        }
 
         return true;
-    }
-
-    /**
-     * Function to send mails after deleting registration
-     *
-     * @param array $regParams
-     * @param int $type
-     * @return bool
-     */
-    public function executeRegDelete(array $regParams, int $type)
-    {
-        $helper = Helper::getInstance();
-        $eventHandler = $helper->getHandler('Event');
-
-        $logHandler = $helper->getHandler('Log');
-        $logHandler->createLog('Start MailHandler/executeRegDelete');
-
-        $eventObj = $eventHandler->get($regParams['evid']);
-
-        $eventUrl       = \WGEVENTS_URL . '/event.php?op=show&id=' . $regParams['evid'];
-        $eventName      = $eventObj->getVar('name');
-        $eventDate      = \formatTimestamp($eventObj->getVar('datefrom'), 'm');
-        $eventLocation  = $eventObj->getVar('location');
-        $senderMail     = $eventObj->getVar('register_sendermail');
-        $senderName     = $eventObj->getVar('register_sendername');
-        $senderSignatur = $eventObj->getVar('register_signature');
-        $firstname      = $regParams['firstname'];
-        $lastname       = $regParams['lastname'];
-        $userName       = $GLOBALS['xoopsConfig']['anonymous'];
-        if (\is_object($GLOBALS['xoopsUser'])) {
-            $userName  = ('' != (string)$GLOBALS['xoopsUser']->name()) ? $GLOBALS['xoopsUser']->name() : $GLOBALS['xoopsUser']->uname();
-        }
-        switch ($type) {
-            case Constants::MAIL_REG_CONFIRM_OUT:
-                $template = 'mail_reg_confirm_out.tpl';
-                $subject = \_MA_WGEVENTS_MAIL_REG_OUT_SUBJECT;
-                break;
-            case Constants::MAIL_REG_NOTIFY_OUT:
-                $template = 'mail_reg_notify_out.tpl';
-                $subject = \_MA_WGEVENTS_MAIL_REG_OUT_SUBJECT;
-                break;
-        }
-
-        $xoopsMailer = xoops_getMailer();
-        $xoopsMailer->useMail();
-        //set template path
-        //echo 'template:' . $template . '<br>';
-        if (\file_exists(\WGEVENTS_PATH . '/language/' . $GLOBALS['xoopsConfig']['language'] . '/')) {
-            $xoopsMailer->setTemplateDir(\WGEVENTS_PATH . '/language/' . $GLOBALS['xoopsConfig']['language'] . '/mail_template/');
-            //echo \WGEVENTS_PATH . '/language/' . $GLOBALS['xoopsConfig']['language'] . '/mail_template/';
-        } else {
-            $xoopsMailer->setTemplateDir(\WGEVENTS_PATH . '/language/english/mail_template/');
-            //echo \WGEVENTS_PATH . '/language/english/mail_template/';
-        }
-        //set template name
-        $xoopsMailer->setTemplate($template);
-        //set sender
-        $xoopsMailer->setFromEmail($senderMail);
-        //set sender name
-        $xoopsMailer->setFromName($senderName);
-        //set subject
-        $xoopsMailer->setSubject($subject);
-        //assign vars
-        $xoopsMailer->assign('UNAME', $userName);
-        $xoopsMailer->assign('NAME', \trim($firstname . ' ' . $lastname));
-        $xoopsMailer->assign('EVENTNAME', $eventName);
-        $xoopsMailer->assign('EVENTDATEFROM', $eventDate);
-        $xoopsMailer->assign('EVENTLOCATION', $eventLocation);
-        if ($this->info) {
-            $xoopsMailer->assign('INFOTEXT', $this->info);
-        }
-        $xoopsMailer->assign('EVENTURL', $eventUrl);
-        if ('' == $senderSignatur) {
-            $senderSignatur = ' ';
-        }
-        $xoopsMailer->assign('SIGNATURE', $senderSignatur);
-        //set recipient
-        $xoopsMailer->setToEmails($this->notifyEmails);
-
-        //send mail
-        if ($xoopsMailer->send()) {
-            $logHandler->createLog('Result MailHandler/executeRegDelete: success');
-        } else {
-            $logHandler->createLog('Result MailHandler/executeRegDelete: failed');
-        }
-        $xoopsMailer->reset();
-
-        return true;
-    }
-
-    /**
-     * Set info text
-     * @param string $text
-     * @return void
-     */
-    public function setInfo(string $text)
-    {
-        $this->info = $text;
-    }
-
-    /**
-     * Set recipients
-     * @param string|array $notifyEmails
-     * @return void
-     */
-    public function setNotifyEmails($notifyEmails)
-    {
-        $this->notifyEmails = $notifyEmails;
     }
 
 }

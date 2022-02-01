@@ -456,7 +456,7 @@ wgevents_log:
             attributes: ' INT(8) UNSIGNED NOT NULL AUTO_INCREMENT '
         -
             name: text
-            attributes: ' VARCHAR(255) NOT NULL DEFAULT '''''''' '
+            attributes: ' TEXT NOT NULL '
         -
             name: datecreated
             attributes: ' INT(11) NOT NULL DEFAULT ''0'' '
@@ -510,11 +510,8 @@ wgevents_account:
             name: securetype_out
             attributes: ' VARCHAR(20) NOT NULL DEFAULT '''''''' '
         -
-            name: default
+            name: primary
             attributes: ' INT(1) NOT NULL DEFAULT ''0'' '
-        -
-            name: inbox
-            attributes: ' VARCHAR(100) NOT NULL DEFAULT '''''''' '
         -
             name: datecreated
             attributes: ' INT(11) NOT NULL DEFAULT ''0'' '

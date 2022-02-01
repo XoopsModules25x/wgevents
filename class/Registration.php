@@ -169,7 +169,7 @@ class Registration extends \XoopsObject
             $questionsAll = $questionHandler->getAll($crQuestion);
             foreach (\array_keys($questionsAll) as $queId) {
                 $formelementsHandler = new FormelementsHandler();
-                $formelementsHandler->name = 'id[' . $queId . ']';
+                $formelementsHandler->name = 'ans_id[' . $queId . ']';
                 $queType = (int)$questionsAll[$queId]->getVar('type');
                 $addValue = (string)$questionsAll[$queId]->getVar('values');
                 $formelementsHandler->type = $queType;
@@ -292,6 +292,7 @@ class Registration extends \XoopsObject
             }
         }
         // To Save
+        $form->addElement(new \XoopsFormHidden('id', $this->getVar('id')));
         $form->addElement(new \XoopsFormHidden('op', 'save'));
         $form->addElement(new \XoopsFormHidden('start', $this->start));
         $form->addElement(new \XoopsFormHidden('limit', $this->limit));
