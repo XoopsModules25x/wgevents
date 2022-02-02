@@ -40,9 +40,6 @@ $limit   = Request::getInt('limit', $helper->getConfig('userpager'));
 $GLOBALS['xoopsTpl']->assign('start', $start);
 $GLOBALS['xoopsTpl']->assign('limit', $limit);
 
-echo "op:" . $op . ' submit' . Request::hasVar('submit');
-//die;
-
 // Define Stylesheet
 $GLOBALS['xoTheme']->addStylesheet($style, null);
 // Paths

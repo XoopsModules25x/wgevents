@@ -27,26 +27,26 @@ $moduleDirName = \basename(__DIR__);
 $xoBreadcrumbs = [];
 // Get instance of module
 $helper = \XoopsModules\Wgevents\Helper::getInstance();
-$eventHandler = $helper->getHandler('Event');
-$categoryHandler = $helper->getHandler('Category');
-$registrationHandler = $helper->getHandler('Registration');
-$registrationshistHandler = $helper->getHandler('Registrationhist');
-$questionHandler = $helper->getHandler('Question');
-$answerHandler = $helper->getHandler('Answer');
-$answerhistHandler = $helper->getHandler('Answerhist');
-$textblockHandler = $helper->getHandler('Textblock');
-$fieldHandler = $helper->getHandler('Field');
-$permissionsHandler = $helper->getHandler('Permission');
+$eventHandler            = $helper->getHandler('Event');
+$categoryHandler         = $helper->getHandler('Category');
+$registrationHandler     = $helper->getHandler('Registration');
+$registrationhistHandler = $helper->getHandler('Registrationhist');
+$questionHandler         = $helper->getHandler('Question');
+$answerHandler           = $helper->getHandler('Answer');
+$answerhistHandler       = $helper->getHandler('Answerhist');
+$textblockHandler        = $helper->getHandler('Textblock');
+$fieldHandler            = $helper->getHandler('Field');
+$permissionsHandler      = $helper->getHandler('Permission');
 // 
 $myts = MyTextSanitizer::getInstance();
 // Default Css Style
 $style = \WGEVENTS_URL . '/assets/css/style.css';
 // Smarty Default
-$sysPathIcon16 = $GLOBALS['xoopsModule']->getInfo('sysicons16');
-$sysPathIcon32 = $GLOBALS['xoopsModule']->getInfo('sysicons32');
+$sysPathIcon16   = $GLOBALS['xoopsModule']->getInfo('sysicons16');
+$sysPathIcon32   = $GLOBALS['xoopsModule']->getInfo('sysicons32');
 $pathModuleAdmin = $GLOBALS['xoopsModule']->getInfo('dirmoduleadmin');
-$modPathIcon16 = $GLOBALS['xoopsModule']->getInfo('modicons16');
-$modPathIcon32 = $GLOBALS['xoopsModule']->getInfo('modicons16');
+$modPathIcon16   = $GLOBALS['xoopsModule']->getInfo('modicons16');
+$modPathIcon32   = $GLOBALS['xoopsModule']->getInfo('modicons16');
 // Load Languages
 \xoops_loadLanguage('main');
 \xoops_loadLanguage('modinfo');

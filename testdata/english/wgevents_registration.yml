@@ -8,8 +8,8 @@
     email_send: '1'
     gdpr: '1'
     ip: '::1'
-    verifkey: bopaveck
-    status: '2'
+    verifkey: bopaveckc514c2fb9f15de
+    status: '4'
     financial: '0'
     listwait: '0'
     datecreated: '1641977320'
@@ -24,8 +24,8 @@
     email_send: '0'
     gdpr: '1'
     ip: '::1'
-    verifkey: ''''
-    status: '2'
+    verifkey: adF658IVlbn1CF0GkvC0
+    status: '4'
     financial: '1'
     listwait: '0'
     datecreated: '1641977341'
@@ -40,7 +40,7 @@
     email_send: '0'
     gdpr: '1'
     ip: '::1'
-    verifkey: ''''
+    verifkey: 8f46a59935d386b0d175
     status: '2'
     financial: '1'
     listwait: '0'
@@ -56,7 +56,7 @@
     email_send: '1'
     gdpr: '1'
     ip: '::1'
-    verifkey: ''''
+    verifkey: 7df5b055bace63a5c6e3
     status: '2'
     financial: '1'
     listwait: '0'
@@ -65,15 +65,15 @@
 -
     id: '9'
     evid: '4'
-    salutation: '0'
+    salutation: '1'
     firstname: Max
     lastname: Mustermann
     email: max.mustermann@gmail.com
     email_send: '1'
-    gdpr: '0'
+    gdpr: '1'
     ip: '::1'
-    verifkey: ''''
-    status: '2'
+    verifkey: b50bb79edfcfGa689df81
+    status: '3'
     financial: '1'
     listwait: '0'
     datecreated: '1642322957'
@@ -88,10 +88,10 @@
     email_send: '0'
     gdpr: '1'
     ip: '::1'
-    verifkey: ''''
-    status: '2'
+    verifkey: 8137e9d5ca089cc430bfc
+    status: '3'
     financial: '0'
-    listwait: '0'
+    listwait: '1'
     datecreated: '1642322975'
     submitter: '1'
 -
@@ -104,25 +104,57 @@
     email_send: '1'
     gdpr: '1'
     ip: '::1'
-    verifkey: ''''
-    status: '2'
+    verifkey: 1616fe8d28f5ade10283c
+    status: '3'
     financial: '0'
     listwait: '1'
-    datecreated: '1642322990'
+    datecreated: '1642318175'
     submitter: '1'
 -
-    id: '14'
+    id: '18'
     evid: '1'
-    salutation: '0'
-    firstname: 'Vorname 1'
-    lastname: 'Familienname 1'
-    email: office@wedega.com
+    salutation: '2'
+    firstname: Sophia
+    lastname: Bauer
+    email: webmaster@wedega.com
     email_send: '1'
     gdpr: '1'
     ip: '::1'
-    verifkey: ''''
-    status: '5'
+    verifkey: wh14erli6940e60a0cbee
+    status: '2'
     financial: '0'
     listwait: '0'
-    datecreated: '1642495929'
+    datecreated: '1643815112'
+    submitter: '1'
+-
+    id: '19'
+    evid: '1'
+    salutation: '2'
+    firstname: Elena
+    lastname: Huber
+    email: webmaster@wedega.com
+    email_send: '0'
+    gdpr: '1'
+    ip: '::1'
+    verifkey: woltheerersimpreirakc8b
+    status: '2'
+    financial: '0'
+    listwait: '0'
+    datecreated: '1643819483'
+    submitter: '1'
+-
+    id: '20'
+    evid: '1'
+    salutation: '1'
+    firstname: Josef
+    lastname: Moser
+    email: webmaster@wedega.com
+    email_send: '1'
+    gdpr: '1'
+    ip: '::1'
+    verifkey: felersonprevetcomanypa
+    status: '4'
+    financial: '0'
+    listwait: '0'
+    datecreated: '1643819945'
     submitter: '1'

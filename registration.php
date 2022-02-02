@@ -176,10 +176,12 @@ switch ($op) {
         if (!$GLOBALS['xoopsSecurity']->check()) {
             \redirect_header('registration.php', 3, \implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
         }
-        $regEvid = Request::getInt('evid');
-        $eventObj = $eventHandler->get($regEvid);
-        $evSubmitter = $eventObj->getVar('submitter');
-        $evStatus = $eventObj->getVar('status');
+        $regEvid            = Request::getInt('evid');
+        $eventObj           = $eventHandler->get($regEvid);
+        $evSubmitter        = $eventObj->getVar('submitter');
+        $evStatus           = $eventObj->getVar('status');
+        $registerForceVerif = (bool)$eventObj->getVar('register_forceverif');
+
         if ($regId > 0) {
             // Check permissions
             $registrationObj = $registrationHandler->get($regId);
@@ -214,7 +216,7 @@ switch ($op) {
         $registrationObj->setVar('email_send', Request::getInt('email_send'));
         $registrationObj->setVar('gdpr', Request::getInt('gdpr'));
         $registrationObj->setVar('ip', Request::getString('ip'));
-        $regVerifkey = ('' === Request::getString('verifkey')) ? xoops_makepass() : Request::getString('verifkey');
+        $regVerifkey = ('' === Request::getString('verifkey')) ? xoops_makepass() . xoops_makepass(): Request::getString('verifkey');
         $registrationObj->setVar('verifkey', $regVerifkey);
         $regStatus = Request::getInt('status');
         $registrationObj->setVar('status', $regStatus);
@@ -303,7 +305,7 @@ switch ($op) {
                 $infotext = $registrationHandler->getRegistrationsCompare($registrationObjOld, $registrationObj);
                 if ('' != $infotext) {
                     // create history
-                    $registrationshistHandler->createHistory($registrationObjOld, 'update');
+                    $registrationhistHandler->createHistory($registrationObjOld, 'update');
                 }
                 // find changes in table answers
                 if (\is_array($answersOld)) {
@@ -325,16 +327,18 @@ switch ($op) {
                     // registration was put on a waiting list
                     $infotext .= \_MA_WGEVENTS_MAIL_REG_IN_LISTWAIT . PHP_EOL;
                 }
+
                 if (Constants::STATUS_SUBMITTED == $regStatus) {
                     // user has no perm for autoverify
                     $verif = [
+                        $newRegId,
                         WGEVENTS_URL,
                         $regEvid,
                         $regEmail,
                         $regVerifkey
                     ];
                     $verifCode = base64_encode(implode('||', $verif));
-                    $verifLink = WGEVENTS_URL . '/verification.php?actkey=' . $verifCode;
+                    $verifLink = WGEVENTS_URL . '/verification.php?verifkey=' . $verifCode;
                     $infotext .= \sprintf(\_MA_WGEVENTS_MAIL_REG_IN_VERIF, $verifLink) . PHP_EOL;
                 }
                 if (1 == $regListwait || Constants::STATUS_SUBMITTED == $regStatus) {
@@ -345,27 +349,13 @@ switch ($op) {
                 $typeConfirm = Constants::MAIL_REG_CONFIRM_IN;
             }
             if ($newRegistration || '' != $infotext) {
-                $mailParams = [];
-                $mailParams['regIp']                 = $registrationObj->getVar('ip');
-                $mailParams['regFirstname']          = $registrationObj->getVar('firstname');
-                $mailParams['regLastname']           = $registrationObj->getVar('lastname');
-                $mailParams['regSubmitter']          = $registrationObj->getVar('submitter');
-                $mailParams['evId']                  = $eventObj->getVar('id');
-                $mailParams['evSubmitter']           = $eventObj->getVar('submitter');
-                $mailParams['evStatus']              = $eventObj->getVar('status');
-                $mailParams['evName']                = $eventObj->getVar('name');
-                $mailParams['evDatefrom']            = $eventObj->getVar('datefrom');
-                $mailParams['evLocation']            = $eventObj->getVar('location');
-                $mailParams['evRegister_sendermail'] = $eventObj->getVar('register_sendermail');
-                $mailParams['evRegister_sendername'] = $eventObj->getVar('register_sendername');
-                $mailParams['evRegister_signature']  = $eventObj->getVar('register_signature');
-                $mailParams['infotext']              = $infotext;
-
                 $registerNotify = (string)$eventObj->getVar('register_notify', 'e');
                 if ('' != $registerNotify) {
                     // send notifications to emails of register_notify
                     $notifyEmails   = preg_split("/\r\n|\n|\r/", $registerNotify);
                     $mailsHandler = new MailHandler();
+                    $mailParams = $mailsHandler->getMailParam($regEvid, $regId);
+                    $mailParams['infotext'] = $infotext;
                     $mailParams['recipients'] = $notifyEmails;
                     $mailsHandler->executeReg($mailParams, $typeNotify);
                     unset($mailsHandler);
@@ -373,6 +363,8 @@ switch ($op) {
                 if ('' != $regEmail && Request::getInt('email_send') > 0) {
                     // send confirmation, if radio is checked
                     $mailsHandler = new MailHandler();
+                    $mailParams = $mailsHandler->getMailParam($regEvid, $regId);
+                    $mailParams['infotext'] = $infotext;
                     $mailParams['recipients'] = $regEmail;
                     $mailsHandler->executeReg($mailParams, $typeConfirm);
                     unset($mailsHandler);
@@ -444,22 +436,9 @@ switch ($op) {
         $registrationObj = $registrationHandler->get($regId);
         $eventObj = $eventHandler->get($registrationObj->getVar('evid'));
 
-        $mailParams = [];
-        $mailParams['regIp']                 = $registrationObj->getVar('ip');
-        $mailParams['regFirstname']          = $registrationObj->getVar('firstname');
-        $mailParams['regLastname']           = $registrationObj->getVar('lastname');
-        $mailParams['regEmail']              = $registrationObj->getVar('email');
-        $mailParams['regSubmitter']          = $registrationObj->getVar('submitter');
-        $mailParams['evId']                  = $eventObj->getVar('id');
-        $mailParams['evSubmitter']           = $eventObj->getVar('submitter');
-        $mailParams['evStatus']              = $eventObj->getVar('status');
-        $mailParams['evName']                = $eventObj->getVar('name');
-        $mailParams['evDatefrom']            = $eventObj->getVar('datefrom');
-        $mailParams['evLocation']            = $eventObj->getVar('location');
-        $mailParams['evRegister_sendermail'] = $eventObj->getVar('register_sendermail');
-        $mailParams['evRegister_sendername'] = $eventObj->getVar('register_sendername');
-        $mailParams['evRegister_signature']  = $eventObj->getVar('register_signature');
-        $mailParams['infotext']              = '';
+        $mailsHandler = new MailHandler();
+        $mailParams = $mailsHandler->getMailParam($regEvid, $regId);
+        unset($mailsHandler);
 
         $mailParams['email'] = $registrationObj->getVar('email');
         if (isset($_REQUEST['ok']) && 1 == $_REQUEST['ok']) {
@@ -467,7 +446,7 @@ switch ($op) {
                 \redirect_header('registration.php', 3, \implode(', ', $GLOBALS['xoopsSecurity']->getErrors()));
             }
             // create history
-            $registrationshistHandler->createHistory($registrationObj, 'delete');
+            $registrationhistHandler->createHistory($registrationObj, 'delete');
             if ($registrationHandler->delete($registrationObj)) {
                 // create history
                 $answerhistHandler->createHistory($mailParams['evId'], $regId, 'delete');
@@ -487,7 +466,7 @@ switch ($op) {
                 $registerNotify = (string)$eventObj->getVar('register_notify', 'e');
                 if ('' != $registerNotify) {
                     // send notifications to emails of register_notify
-                    $notifyEmails   = preg_split("/\r\n|\n|\r/", $registerNotify);
+                    $notifyEmails   = \preg_split("/\r\n|\n|\r/", $registerNotify);
                     $mailsHandler = new MailHandler();
                     $mailParams['recipients'] = $notifyEmails;
                     $mailsHandler->executeReg($mailParams, $typeNotify);
@@ -519,10 +498,10 @@ switch ($op) {
         }
         break;
     case 'change_financial':
-        if (0 == $evId) {
+        if (0 == $regEvid) {
             \redirect_header('registration.php?op=list', 3, \_MA_WGEVENTS_INVALID_PARAM);
         }
-        $eventObj = $eventHandler->get($evId);
+        $eventObj = $eventHandler->get($regEvid);
         if (!$permissionsHandler->getPermRegistrationsApprove($eventObj->getVar('submitter'), $eventObj->getVar('status'))) {
             \redirect_header('registration.php?op=list', 3, \_NOPERM);
         }
@@ -537,8 +516,7 @@ switch ($op) {
         // Insert Data
         if ($registrationHandler->insert($registrationObj)) {
             // create history
-            $registrationshistHandler->createHistory($registrationObjOld, 'update');
-            $newRegId = $regId > 0 ? $regId : $registrationObj->getNewInsertedId();
+            $registrationhistHandler->createHistory($registrationObjOld, 'update');
             // Handle notification
             /*
             $regEvid = $registrationObj->getVar('evid');
@@ -567,18 +545,20 @@ switch ($op) {
                 // send notifications to emails of register_notify
                 $notifyEmails   = preg_split("/\r\n|\n|\r/", $registerNotify);
                 $mailsHandler = new MailHandler();
-                $mailsHandler->setInfo($infotext);
-                $mailsHandler->setNotifyEmails($notifyEmails);
-                $mailsHandler->executeReg($newRegId, $typeNotify);
+                $mailParams = $mailsHandler->getMailParam($regEvid, $regId);
+                $mailParams['infotext'] = $infotext;
+                $mailParams['recipients'] = $notifyEmails;
+                $mailsHandler->executeReg($mailParams, $typeNotify);
                 unset($mailsHandler);
             }
             $regEmail = $registrationObj->getVar('email');
             if ('' != $regEmail) {
                 // send confirmation, if radio is checked
                 $mailsHandler = new MailHandler();
-                $mailsHandler->setInfo($infotext);
-                $mailsHandler->setNotifyEmails($regEmail);
-                $mailsHandler->executeReg($newRegId, $typeConfirm);
+                $mailParams = $mailsHandler->getMailParam($regEvid, $regId);
+                $mailParams['infotext'] = $infotext;
+                $mailParams['recipients'] = $mailParams['regEmail'];
+                $mailsHandler->executeReg($mailParams, $typeConfirm);
                 unset($mailsHandler);
             }
             // redirect after insert
@@ -590,24 +570,25 @@ switch ($op) {
         $GLOBALS['xoopsTpl']->assign('form', $form->render());
         break;
     case 'listwait_takeover':
-        if (0 == $evId) {
+        if (0 == $regEvid) {
             \redirect_header('registration.php?op=list', 3, \_MA_WGEVENTS_INVALID_PARAM);
         }
+        $eventObj = $eventHandler->get($regEvid);
         if (!$permissionsHandler->getPermRegistrationsApprove($eventObj->getVar('submitter'), $eventObj->getVar('status'))) {
             \redirect_header('registration.php?op=list', 3, \_NOPERM);
         }
         if ($regId > 0) {
             // Check permissions
             $registrationObj = $registrationHandler->get($regId);
+            $registrationObjOld = $registrationHandler->get($regId);
             // create history
-            $registrationshistHandler->createHistory($registrationObj, 'update');
+            $registrationhistHandler->createHistory($registrationObj, 'update');
         } else {
             \redirect_header('registration.php?op=list', 3, \_MA_WGEVENTS_INVALID_PARAM);
         }
         $registrationObj->setVar('listwait', 0);
         // Insert Data
         if ($registrationHandler->insert($registrationObj)) {
-            $newRegId = $regId > 0 ? $regId : $registrationObj->getNewInsertedId();
             // Handle notification
             /*
             $regEvid = $registrationObj->getVar('evid');
@@ -637,18 +618,20 @@ switch ($op) {
                 // send notifications to emails of register_notify
                 $notifyEmails   = preg_split("/\r\n|\n|\r/", $registerNotify);
                 $mailsHandler = new MailHandler();
-                $mailsHandler->setInfo($infotext);
-                $mailsHandler->setNotifyEmails($notifyEmails);
-                $mailsHandler->executeReg($newRegId, $typeNotify);
+                $mailParams = $mailsHandler->getMailParam($regEvid, $regId);
+                $mailParams['infotext'] = $infotext;
+                $mailParams['recipients'] = $notifyEmails;
+                $mailsHandler->executeReg($mailParams, $typeNotify);
                 unset($mailsHandler);
             }
             $regEmail = $registrationObj->getVar('email');
             if ('' != $regEmail) {
                 // send confirmation, if radio is checked
                 $mailsHandler = new MailHandler();
-                $mailsHandler->setInfo($infotext);
-                $mailsHandler->setNotifyEmails($regEmail);
-                $mailsHandler->executeReg($newRegId, $typeConfirm);
+                $mailParams = $mailsHandler->getMailParam($regEvid, $regId);
+                $mailParams['infotext'] = $infotext;
+                $mailParams['recipients'] = $mailParams['regEmail'];
+                $mailsHandler->executeReg($mailParams, $typeConfirm);
                 unset($mailsHandler);
             }
             // redirect after insert

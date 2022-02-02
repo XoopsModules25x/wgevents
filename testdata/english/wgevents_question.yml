@@ -116,11 +116,11 @@
     fdid: '4'
     type: '6'
     caption: Essenswunsch
-    desc: ''
+    desc: 'Was möchtest Du zu Mittag essen?'
     values: 'a:3:{i:0;s:9:"Schnitzel";i:1;s:9:"Spaghetti";i:2;s:11:"Vegetarisch";}'
     placeholder: ''
     required: '0'
     print: '1'
     weight: '4'
-    datecreated: '1643100659'
+    datecreated: '1643092566'
     submitter: '1'

@@ -56,7 +56,10 @@ class MailHandler
         $helper = Helper::getInstance();
         $permissionsHandler = $helper->getHandler('Permission');
         $accountHandler = $helper->getHandler('Account');
-        $logHandler = $helper->getHandler('Log');
+        $useLogs = (bool)$helper->getConfig('use_logs');
+        if ($useLogs) {
+            $logHandler = $helper->getHandler('Log');
+        }
 
         if (!$permissionsHandler->getPermRegistrationsEdit(
             $mailParams['regIp'],
@@ -118,20 +121,49 @@ class MailHandler
         }
 
         // get settings of primary account
-        $primary = $accountHandler->getPrimary();
-        $account_type           = (int)$primary['type'];
-        //$account_yourname       = (string)$primary['yourname'];
-        $account_username       = (string)$primary['yourmail'];
-        $account_password       = (string)$primary['password'];
-        $account_server_out     = (string)$primary['server_out'];
-        $account_port_out       = (int)$primary['port_out'];
-        $account_securetype_out = (string)$primary['securetype_out'];
+        $primaryAcc = $accountHandler->getPrimary();
+        $account_type           = (int)$primaryAcc['type'];
+        //$account_yourname       = (string)$primaryAcc['yourname'];
+        $account_username       = (string)$primaryAcc['yourmail'];
+        $account_password       = (string)$primaryAcc['password'];
+        $account_server_out     = (string)$primaryAcc['server_out'];
+        $account_port_out       = (int)$primaryAcc['port_out'];
+        $account_securetype_out = (string)$primaryAcc['securetype_out'];
+
+        // create info for log
+        if ($useLogs) {
+            switch ($account_type) {
+                case '':
+                default:
+                    $accountTypeDesc = 'XOOPS system';
+                    break;
+                case Constants::ACCOUNT_TYPE_VAL_GMAIL:
+                    $accountTypeDesc = 'gmail';
+                    break;
+                case Constants::ACCOUNT_TYPE_VAL_PHP_MAIL:
+                    $accountTypeDesc = 'php mail';
+                    break;
+                case Constants::ACCOUNT_TYPE_VAL_PHP_SENDMAIL:
+                    $accountTypeDesc = 'sendmail';
+                    break;
+                case Constants::ACCOUNT_TYPE_VAL_POP3:
+                    $accountTypeDesc = 'pop3';
+                    break;
+                case Constants::ACCOUNT_TYPE_VAL_SMTP:
+                    $accountTypeDesc = 'smtp';
+                    break;
+            }
+            $logInfo = '<br>Mailer: ' . $accountTypeDesc;
+            $logInfo .= '<br>Template: ' . $template;
+        }
 
         try {
+            /*
             if ($account_type == Constants::ACCOUNT_TYPE_VAL_PHP_SENDMAIL) {
                 $pop = new POP3();
                 $pop->authorise($account_server_out, $account_port_out, 30, $account_username, $account_password, 1);
             }
+            */
             $xoopsMailer = xoops_getMailer();
 
             $xoopsMailer->useMail();
@@ -193,21 +225,64 @@ class MailHandler
             $xoopsMailer->setToEmails($recipients);
             //execute sending
             if ($xoopsMailer->send()) {
-                $logHandler->createLog('Result MailHandler/executeReg: success (Mailer: ' . $account_type . ')');
+                if ($useLogs) {
+                    $logHandler->createLog('Result MailHandler/executeReg: success' . $logInfo);
+                }
             } else {
-                $logHandler->createLog('Result MailHandler/executeReg (Mailer: ' . $account_type . '): failed' .$xoopsMailer->getErrors());
+                if ($useLogs) {
+                    $logHandler->createLog('Result MailHandler/executeReg: failed' .$xoopsMailer->getErrors() . $logInfo);
+                }
             }
             $xoopsMailer->reset();
             unset($mail);
         }
         catch (phpmailerException $e) {
-            $logHandler->createLog('MailHandler/executeReg failed: phpmailerException -' . $e->errorMessage());
+            if ($useLogs) {
+                $logHandler->createLog('MailHandler/executeReg failed: phpmailerException - ' . $e->errorMessage());
+            }
         }
         catch (\Exception $e) {
-            $logHandler->createLog('MailHandler/executeReg failed: Exception -' . $e->getMessage());
+            if ($useLogs) {
+                $logHandler->createLog('MailHandler/executeReg failed: Exception - ' . $e->getMessage());
+            }
         }
 
         return true;
+    }
+
+    /**
+     * Function to create mail parameterss
+     *
+     * @param int $evId
+     * @param int $regId
+     * @return array
+     */
+    public function getMailParam($evId, $regId) {
+        $helper = Helper::getInstance();
+        $registrationHandler = $helper->getHandler('Registration');
+        $eventHandler = $helper->getHandler('Event');
+
+        $registrationObj = $registrationHandler->get($regId);
+        $eventObj = $eventHandler->get($evId);
+
+        $mailParams = [];
+        $mailParams['regIp']                 = $registrationObj->getVar('ip');
+        $mailParams['regFirstname']          = $registrationObj->getVar('firstname');
+        $mailParams['regLastname']           = $registrationObj->getVar('lastname');
+        $mailParams['regEmail']              = $registrationObj->getVar('email');
+        $mailParams['regSubmitter']          = $registrationObj->getVar('submitter');
+        $mailParams['evId']                  = $eventObj->getVar('id');
+        $mailParams['evSubmitter']           = $eventObj->getVar('submitter');
+        $mailParams['evStatus']              = $eventObj->getVar('status');
+        $mailParams['evName']                = $eventObj->getVar('name');
+        $mailParams['evDatefrom']            = $eventObj->getVar('datefrom');
+        $mailParams['evLocation']            = $eventObj->getVar('location');
+        $mailParams['evRegister_sendermail'] = $eventObj->getVar('register_sendermail');
+        $mailParams['evRegister_sendername'] = $eventObj->getVar('register_sendername');
+        $mailParams['evRegister_signature']  = $eventObj->getVar('register_signature');
+        $mailParams['infotext']              = '';
+
+        return $mailParams;
     }
 
 }

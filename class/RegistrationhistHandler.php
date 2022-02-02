@@ -66,18 +66,18 @@ class RegistrationhistHandler extends \XoopsPersistableObjectHandler
 
     /**
      * @public function to create history of given dataset
-     * @param object $registrationObj
+     * @param \XoopsObject $registrationObj
      * @param string $info
      * @return bool
      */
-    public function createHistory(object $registrationObj, string $info)
+    public function createHistory(\XoopsObject $registrationObj, string $info)
     {
         $helper = \XoopsModules\Wgevents\Helper::getInstance();
         if ($helper->getConfig('use_register_hist')) {
             $submitter = \is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->uid() : 0;
 
-            $registrationshistHandler = $helper->getHandler('Registrationhist');
-            $registrationshistObj = $registrationshistHandler->create();
+            $registrationhistHandler = $helper->getHandler('Registrationhist');
+            $registrationshistObj = $registrationhistHandler->create();
             $registrationshistObj->setVar('hist_info', $info);
             $registrationshistObj->setVar('hist_datecreated', \time());
             $registrationshistObj->setVar('hist_submitter', $submitter);
@@ -85,7 +85,7 @@ class RegistrationhistHandler extends \XoopsPersistableObjectHandler
             foreach (\array_keys($vars) as $var) {
                 $registrationshistObj->setVar($var, $registrationObj->getVar($var));
             }
-            $registrationshistHandler->insert($registrationshistObj);
+            $registrationhistHandler->insert($registrationshistObj);
 
             return true;
         } else {

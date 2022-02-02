@@ -79,6 +79,7 @@ class Event extends \XoopsObject
         $this->initVar('register_sendermail', \XOBJ_DTYPE_TXTBOX);
         $this->initVar('register_sendername', \XOBJ_DTYPE_TXTBOX);
         $this->initVar('register_signature', \XOBJ_DTYPE_TXTAREA);
+        $this->initVar('register_forceverif', \XOBJ_DTYPE_INT);
         $this->initVar('status', \XOBJ_DTYPE_INT);
         $this->initVar('galid', \XOBJ_DTYPE_INT);
         $this->initVar('datecreated', \XOBJ_DTYPE_INT);
@@ -270,6 +271,10 @@ class Event extends \XoopsObject
             $evRegisterSignature = $this->isNew() ? '' : $this->getVar('register_signature', 'e');
             $captionRegisterSignature = \_MA_WGEVENTS_EVENT_REGISTER_SIGNATURE . \sprintf($imgInfo, \_MA_WGEVENTS_EVENT_REGISTER_SIGNATURE_DESC);
             $evRegisterOptsTray->addElement(new \XoopsFormTextArea($captionRegisterSignature, 'register_signature', $evRegisterSignature, 4, 30));
+            // Form Radio Yes/No evRegisterListwait
+            $evRegisterForceverif = $this->isNew() ? 1 : $this->getVar('register_forceverif');
+            $captionRegisterForceverif = \_MA_WGEVENTS_EVENT_REGISTER_FORCEVERIF . \sprintf($imgInfo, \_MA_WGEVENTS_EVENT_REGISTER_FORCEVERIF_DESC);
+            $evRegisterOptsTray->addElement(new \XoopsFormRadioYN($captionRegisterForceverif, 'register_forceverif', $evRegisterForceverif));
 
             $evReservUseTray->addElement($evRegisterOptsTray);
             $form->addElement($evReservUseTray);
@@ -404,9 +409,10 @@ class Event extends \XoopsObject
             $notifyEmails   = preg_split("/\r\n|\n|\r/", $evRegisterNotify);
             $ret['register_notify_user']  = \implode('<br>', $notifyEmails);
         }
-        $ret['status_text']      = Utility::getStatusText($this->getVar('status'));
-        $ret['datecreated_text'] = \formatTimestamp($this->getVar('datecreated'), 's');
-        $ret['submitter_text']   = \XoopsUser::getUnameFromId($this->getVar('submitter'));
+        $ret['register_forceverif_text'] = (int)$this->getVar('register_forceverif') > 0 ? \_YES : \_NO;
+        $ret['status_text']              = Utility::getStatusText($this->getVar('status'));
+        $ret['datecreated_text']         = \formatTimestamp($this->getVar('datecreated'), 's');
+        $ret['submitter_text']           = \XoopsUser::getUnameFromId($this->getVar('submitter'));
         return $ret;
     }
 

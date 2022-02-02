@@ -110,6 +110,7 @@ $modversion['templates'] = [
     ['file' => 'wgevents_textblock_list.tpl', 'description' => ''],
     ['file' => 'wgevents_textblock_item.tpl', 'description' => ''],
     ['file' => 'wgevents_search.tpl', 'description' => ''],
+    ['file' => 'wgevents_verification.tpl', 'description' => ''],
     ['file' => 'wgevents_footer.tpl', 'description' => ''],
 ];
 // ------------------- Mysql ------------------- //

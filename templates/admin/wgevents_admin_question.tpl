@@ -58,7 +58,7 @@
                 <td class='center'><{$question.type_text}></td>
                 <td class='center'><{$question.caption}></td>
                 <td class='center'><{$question.desc_short}></td>
-                <td class='center'><{$question.value}></td>
+                <td class='center'><{$question.value_list}></td>
                 <td class='center'><{$question.placeholder}></td>
                 <td class='center'><{$question.required_text}></td>
                 <td class='center'><{$question.print_text}></td>
