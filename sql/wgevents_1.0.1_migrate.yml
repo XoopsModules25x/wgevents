@@ -60,7 +60,7 @@ wgevents_event:
             attributes: ' INT(1)          NOT NULL DEFAULT ''0'' '
         -
             name: register_autoaccept
-            attributes: ' INT(10)         NOT NULL DEFAULT ''0'' '
+            attributes: ' INT(1)          NOT NULL DEFAULT ''0'' '
         -
             name: register_notify
             attributes: ' TEXT            NULL '
@@ -73,6 +73,9 @@ wgevents_event:
         -
             name: register_signature
             attributes: ' TEXT            NULL '
+        -
+            name: register_forceverif
+            attributes: ' INT(1)          NOT NULL DEFAULT ''0'' '
         -
             name: status
             attributes: ' INT(1)          NOT NULL DEFAULT ''0'' '

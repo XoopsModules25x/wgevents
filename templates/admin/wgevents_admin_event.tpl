@@ -29,6 +29,7 @@
                     <th class="center"><{$smarty.const._MA_WGEVENTS_EVENT_REGISTER_LISTWAIT}></th>
                     <th class="center"><{$smarty.const._MA_WGEVENTS_EVENT_REGISTER_AUTOACCEPT}></th>
                     <th class="center"><{$smarty.const._MA_WGEVENTS_EVENT_REGISTER_NOTIFY}></th>
+                    <th class="center"><{$smarty.const._MA_WGEVENTS_EVENT_REGISTER_FORCEVERIF}></th>
                 <{/if}>
                 <th class="center"><{$smarty.const._MA_WGEVENTS_STATUS}></th>
                 <{if $use_wggallery|default:''}>
@@ -67,6 +68,7 @@
                     <td class='center'><{$event.register_listwait_text}></td>
                     <td class='center'><{$event.register_autoaccept_text}></td>
                     <td class='center'><{$event.register_notify_text}></td>
+                    <td class='center'><{$event.register_forceverif_text}></td>
                 <{/if}>
                 <td class='center'><img src="<{$modPathIcon16}>status<{$event.status}>.png" alt="<{$event.status_text}>" title="<{$event.status_text}>" ></td>
                 <{if $use_wggallery|default:''}>

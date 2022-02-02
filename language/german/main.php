@@ -101,6 +101,9 @@ require_once __DIR__ . '/admin.php';
 \define('_MA_WGEVENTS_EVENT_REGISTER_SENDERNAME_DESC', 'Anzuzeigender Name des Absenders für Bestätigungsmails');
 \define('_MA_WGEVENTS_EVENT_REGISTER_SIGNATURE', 'Signatur');
 \define('_MA_WGEVENTS_EVENT_REGISTER_SIGNATURE_DESC', 'Bitte Signatur eingeben, die für Bestätigungsmails verwendet werden soll');
+\define('_MA_WGEVENTS_EVENT_REGISTER_FORCEVERIF', 'Mailbestätigung verlangen');
+\define('_MA_WGEVENTS_EVENT_REGISTER_FORCEVERIF_DESC', 'Wenn Du diese Option auswählst, dann muss bei der Anmeldung eine E-Mail-Adresse eingegeben werden und der Anmelder erhält eine Mail mit Bestätigungscode, der zurückgesendet werden muss.');
+\define('_MA_WGEVENTS_EVENT_REGISTER_FORCEVERIF_INFO', 'Der Veranstalter verlangt eine Mailbestätigung, daher ist die Angabe einer E-Mail-Adresse zwingend erforderlich. Du erhälst nach jeder Anmeldung eine E-Mail mit einem Link, mit dem Du Deine Anmeldung bestätigen musst.');
 \define('_MA_WGEVENTS_EVENT_GALID', 'Gallerie Id');
 // Category
 \define('_MA_WGEVENTS_CATEGORY_LOGO', 'Logo');
@@ -303,6 +306,9 @@ Eine Teilnahme an der Veranstaltung ohne Zustimmung zu diesen Bestimmungen ist l
 \define('_MA_WGEVENTS_MAIL_REG_IN_VERIF', 'Zur Bestätigung Deiner Anmeldung klicke bitte auf folgenden Link: %s');
 \define('_MA_WGEVENTS_MAIL_REG_IN_FINAL', 'Über die Bestätigung Deiner Anmeldung wirst Du durch den Veranstalter noch separat informiert.');
 \define('_MA_WGEVENTS_MAIL_REG_IN_LISTWAIT', 'Deine Anmeldung wurde zur Warteliste hinzugefügt.');
+\define('_MA_WGEVENTS_MAIL_REG_VERIF_ERROR', "Bei der Bestätigung der Anmeldung für die Veranstaltung '%s' ist leider ein Fehler aufgetreten. Bitte wende Dich an den Veranstalter.");
+\define('_MA_WGEVENTS_MAIL_REG_VERIF_SUCCESS', "Die Anmeldung zur Veranstaltung '%s' wurde erfolgreich bestätigt");
+\define('_MA_WGEVENTS_MAIL_REG_VERIF_INFO', 'Bestätigung der Anmeldung');
 // ---------------- Print ----------------
 \define('_MA_WGEVENTS_PRINT', 'Drucken');
 // Admin link

@@ -49,6 +49,8 @@
                 <div class="col-xs-12 col-sm-7"><{$event.register_autoaccept_text}></div>
                 <div class="col-xs-12 col-sm-5"><{$smarty.const._MA_WGEVENTS_EVENT_REGISTER_NOTIFY}>: </div>
                 <div class="col-xs-12 col-sm-7"><{$event.register_notify_user}></div>
+                <div class="col-xs-12 col-sm-5"><{$smarty.const._MA_WGEVENTS_EVENT_REGISTER_FORCEVERIF}>: </div>
+                <div class="col-xs-12 col-sm-7"><{$event.register_forceverif_text}></div>
             <{/if}>
         </div>
 

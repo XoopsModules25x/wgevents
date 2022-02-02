@@ -127,6 +127,7 @@ class Registration extends \XoopsObject
         $permRegistrationsApprove = $permissionsHandler->getPermRegistrationsApprove($eventObj->getVar('submitter'), $eventObj->getVar('status'));
         $eventFee = (float)$eventObj->getVar('fee');
         $eventRegisterMax = (int)$eventObj->getVar('register_max');
+        $eventRegisterForceverif = (bool)$eventObj->getVar('register_forceverif');
 
         // Get Theme Form
         \xoops_load('XoopsFormLoader');
@@ -153,7 +154,10 @@ class Registration extends \XoopsObject
         $regEmailTray = new Forms\FormElementTray(\_MA_WGEVENTS_REGISTRATION_EMAIL, '<br>');
         $regEmail = new Forms\FormText('', 'email', 50, 255, $this->getVar('email'));
         $regEmail->setPlaceholder(\_MA_WGEVENTS_REGISTRATION_EMAIL_PLACEHOLDER);
-        $regEmailTray->addElement($regEmail);
+        if ($eventRegisterForceverif) {
+            $regEmail->setDescription(_MA_WGEVENTS_EVENT_REGISTER_FORCEVERIF_INFO);
+        }
+        $regEmailTray->addElement($regEmail, $eventRegisterForceverif);
         // Form select regEmailSend
         $regEmailSend = $this->isNew() ? 0 : $this->getVar('email_send');
         $regEmailRadio = new \XoopsFormRadioYN(\_MA_WGEVENTS_REGISTRATION_EMAIL_CONFIRM, 'email_send', $regEmailSend);

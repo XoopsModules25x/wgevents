@@ -25,8 +25,9 @@
     register_signature: ''
     status: '5'
     galid: '0'
-    datecreated: '1641284507'
+    datecreated: '1641335355'
     submitter: '1'
+    register_forceverif: '1'
 -
     id: '3'
     catid: '1'
@@ -56,6 +57,7 @@
     galid: '0'
     datecreated: '1641310990'
     submitter: '1'
+    register_forceverif: '0'
 -
     id: '4'
     catid: '1'
@@ -85,3 +87,4 @@
     galid: '0'
     datecreated: '1642028545'
     submitter: '1'
+    register_forceverif: '0'

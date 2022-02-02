@@ -283,6 +283,7 @@ switch ($op) {
             $eventObj->setVar('register_listwait', Request::getInt('register_listwait'));
             $eventObj->setVar('register_autoaccept', Request::getInt('register_autoaccept'));
             $eventObj->setVar('register_notify', Request::getString('register_notify'));
+            $eventObj->setVar('register_forceverif', Request::getInt('register_forceverif'));
             $evRegisterSendermail = Request::getString('register_sendermail');
             if ('' == $evRegisterSendermail) {
                 // Get Form Error
@@ -304,6 +305,7 @@ switch ($op) {
             $eventObj->setVar('register_sendermail', '');
             $eventObj->setVar('register_sendername', '');
             $eventObj->setVar('register_signature', '');
+            $eventObj->setVar('register_forceverif', 0);
         }
         $eventObj->setVar('status', Request::getInt('status'));
         $eventObj->setVar('galid', Request::getInt('galid'));

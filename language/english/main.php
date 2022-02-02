@@ -101,6 +101,9 @@ require_once __DIR__ . '/admin.php';
 \define('_MA_WGEVENTS_EVENT_REGISTER_SENDERNAME_DESC', 'Shown name of sender for confirmation mails');
 \define('_MA_WGEVENTS_EVENT_REGISTER_SIGNATURE', 'Signature');
 \define('_MA_WGEVENTS_EVENT_REGISTER_SIGNATURE_DESC', 'Enter the signature, which should be used for confirmation mails');
+\define('_MA_WGEVENTS_EVENT_REGISTER_FORCEVERIF', 'Request mail verification');
+\define('_MA_WGEVENTS_EVENT_REGISTER_FORCEVERIF_DESC', 'If you choose this option the registrar must enter an email address and he get an email with verification code, which he has to send back.');
+\define('_MA_WGEVENTS_EVENT_REGISTER_FORCEVERIF_INFO', 'The organizer request mail verification, therefore the input of an email address is mandatory. You will get an email with verification link which you have to confirm.');
 \define('_MA_WGEVENTS_EVENT_GALID', 'Gallery Id');
 // Categories
 \define('_MA_WGEVENTS_CATEGORY_LOGO', 'Logo');
@@ -303,6 +306,9 @@ Participation without agreement to this conditions is not possible.
 \define('_MA_WGEVENTS_MAIL_REG_IN_VERIF', 'For verification of your registration please click on following link: %s');
 \define('_MA_WGEVENTS_MAIL_REG_IN_FINAL', 'About final confirmation you will be informed separately by the organizer.');
 \define('_MA_WGEVENTS_MAIL_REG_IN_LISTWAIT', 'Your registration was put on a waiting list.');
+\define('_MA_WGEVENTS_MAIL_REG_VERIF_ERROR', "Sorry, but an error occured in the verification process for event '%s'. Please contact the organizer of the event.");
+\define('_MA_WGEVENTS_MAIL_REG_VERIF_SUCCESS', "The registration for the event '%s' was verified successfully");
+\define('_MA_WGEVENTS_MAIL_REG_VERIF_INFO', 'Verification of registration');
 // ---------------- Print ----------------
 \define('_MA_WGEVENTS_PRINT', 'Print');
 // Admin link

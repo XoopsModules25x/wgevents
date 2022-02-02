@@ -23,12 +23,12 @@
     <td>
         <{if $regdetails.permRegistrationApprove|default:''}>
             <{if $regdetails.financial|default:0 > 0}>
-                <a class='btn btn-primary right wge-btn-2' href='registration.php?op=change_financial&amp;changeto=0&amp;redir=<{$redir}>&amp;id=<{$regdetails.id}>' title='<{$smarty.const._MA_WGEVENTS_REGISTRATION_FINANCIAL_CHANGE_0}>'><img src="<{$wgevents_icons_url_16}>/wallet.png" alt='<{$smarty.const._MA_WGEVENTS_REGISTRATION_FINANCIAL_CHANGE_0}> title='<{$smarty.const._MA_WGEVENTS_REGISTRATION_FINANCIAL_CHANGE_0}>></a>
+                <a class='btn btn-primary right wge-btn-2' href='registration.php?op=change_financial&amp;changeto=0&amp;redir=<{$redir}>&amp;id=<{$regdetails.id}>&amp;evid=<{$regdetails.evid}>' title='<{$smarty.const._MA_WGEVENTS_REGISTRATION_FINANCIAL_CHANGE_0}>'><img src="<{$wgevents_icons_url_16}>/wallet.png" alt='<{$smarty.const._MA_WGEVENTS_REGISTRATION_FINANCIAL_CHANGE_0}> title='<{$smarty.const._MA_WGEVENTS_REGISTRATION_FINANCIAL_CHANGE_0}>></a>
             <{else}>
-                <a class='btn btn-primary right wge-btn-2' href='registration.php?op=change_financial&amp;changeto=1&amp;redir=<{$redir}>&amp;id=<{$regdetails.id}>' title='<{$smarty.const._MA_WGEVENTS_REGISTRATION_FINANCIAL_CHANGE_1}>'><img src="<{$wgevents_icons_url_16}>/wallet.png" alt='<{$smarty.const._MA_WGEVENTS_REGISTRATION_FINANCIAL_CHANGE_1}> title='<{$smarty.const._MA_WGEVENTS_REGISTRATION_FINANCIAL_CHANGE_1}>></a>
+                <a class='btn btn-primary right wge-btn-2' href='registration.php?op=change_financial&amp;changeto=1&amp;redir=<{$redir}>&amp;id=<{$regdetails.id}>&amp;evid=<{$regdetails.evid}>' title='<{$smarty.const._MA_WGEVENTS_REGISTRATION_FINANCIAL_CHANGE_1}>'><img src="<{$wgevents_icons_url_16}>/wallet.png" alt='<{$smarty.const._MA_WGEVENTS_REGISTRATION_FINANCIAL_CHANGE_1}> title='<{$smarty.const._MA_WGEVENTS_REGISTRATION_FINANCIAL_CHANGE_1}>></a>
             <{/if}>
             <{if $regdetails.listwait|default:0 > 0}>
-                <a class='btn btn-primary right wge-btn-2' href='registration.php?op=listwait_takeover&amp;redir=<{$redir}>&amp;id=<{$regdetails.id}>' title='<{$smarty.const._MA_WGEVENTS_REGISTRATION_LISTWAIT_TAKEOVER}>'><i class="fa fa-user-plus fa-fw"></i></a>
+                <a class='btn btn-primary right wge-btn-2' href='registration.php?op=listwait_takeover&amp;redir=<{$redir}>&amp;id=<{$regdetails.id}>&amp;evid=<{$regdetails.evid}>' title='<{$smarty.const._MA_WGEVENTS_REGISTRATION_LISTWAIT_TAKEOVER}>'><i class="fa fa-user-plus fa-fw"></i></a>
             <{/if}>
         <{/if}>
         <{if $regdetails.permRegistrationEdit|default:''}>
