@@ -116,7 +116,7 @@ function saveSampleData()
     Utility::createFolder($exportFolder);
 
     // save module tables
-    $tablesNoData = ['wgevents_accounts'];
+    $tablesNoData = ['wgevents_account'];
     foreach ($tables as $table) {
         if (in_array($table, $tablesNoData)) {
             \file_put_contents($exportFolder . '/' . $table . '.yml', '{}');
