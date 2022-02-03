@@ -57,3 +57,74 @@ function fillInQuestions() {
     }
 
 }
+
+function preselectAccFields() {
+
+    var select = document.getElementById('type');
+    var vselected = select.options[select.selectedIndex].value;
+    var color = "#d4d5d6";
+
+    switch(vselected) {
+        case 5: // gmail
+        case '5':
+        case 4: // smtp
+        case '4':
+        case 3: // pop
+        case '3':
+            xoopsGetElementById('username').removeAttribute("disabled");
+            xoopsGetElementById('username').style.backgroundColor = "";
+            xoopsGetElementById('password').removeAttribute("disabled");
+            xoopsGetElementById('password').style.backgroundColor = "";
+            xoopsGetElementById('server_in').removeAttribute("disabled");
+            xoopsGetElementById('server_in').style.backgroundColor = "";
+            xoopsGetElementById('port_in').removeAttribute("disabled");
+            xoopsGetElementById('port_in').style.backgroundColor = "";
+            xoopsGetElementById('securetype_in').removeAttribute("disabled");
+            xoopsGetElementById('securetype_in').style.backgroundColor = "";
+            xoopsGetElementById('server_out').removeAttribute("disabled");
+            xoopsGetElementById('server_out').style.backgroundColor = "";
+            xoopsGetElementById('port_out').removeAttribute("disabled");
+            xoopsGetElementById('port_out').style.backgroundColor = "";
+            xoopsGetElementById('securetype_out').removeAttribute("disabled");
+            xoopsGetElementById('securetype_out').style.backgroundColor = "";
+            break;
+        case 2: // sendmail
+        case '2':
+            xoopsGetElementById('username').removeAttribute("disabled");
+            xoopsGetElementById('username').style.backgroundColor = "";
+            xoopsGetElementById('password').removeAttribute("disabled");
+            xoopsGetElementById('password').style.backgroundColor = "";
+            xoopsGetElementById('server_in').setAttribute("disabled", "disabled");
+            xoopsGetElementById('server_in').style.backgroundColor = color;
+            xoopsGetElementById('port_in').setAttribute("disabled", "disabled");
+            xoopsGetElementById('port_in').style.backgroundColor = color;
+            xoopsGetElementById('securetype_in').setAttribute("disabled", "disabled");
+            xoopsGetElementById('securetype_in').style.backgroundColor = color
+            xoopsGetElementById('server_out').removeAttribute("disabled");
+            xoopsGetElementById('server_out').style.backgroundColor = "";
+            xoopsGetElementById('port_out').removeAttribute("disabled");
+            xoopsGetElementById('port_out').style.backgroundColor = "";
+            xoopsGetElementById('securetype_out').removeAttribute("disabled");
+            xoopsGetElementById('securetype_out').style.backgroundColor = "";
+            break;
+        default:
+            xoopsGetElementById('username').setAttribute("disabled", "disabled");
+            xoopsGetElementById('username').style.backgroundColor = color;
+            xoopsGetElementById('password').setAttribute("disabled", "disabled");
+            xoopsGetElementById('password').style.backgroundColor = color;
+            xoopsGetElementById('server_in').setAttribute("disabled", "disabled");
+            xoopsGetElementById('server_in').style.backgroundColor = color;
+            xoopsGetElementById('port_in').setAttribute("disabled", "disabled");
+            xoopsGetElementById('port_in').style.backgroundColor = color;
+            xoopsGetElementById('securetype_in').setAttribute("disabled", "disabled");
+            xoopsGetElementById('securetype_in').style.backgroundColor = color;
+            xoopsGetElementById('server_out').setAttribute("disabled", "disabled");
+            xoopsGetElementById('server_out').style.backgroundColor = color;
+            xoopsGetElementById('port_out').setAttribute("disabled", "disabled");
+            xoopsGetElementById('port_out').style.backgroundColor = color;
+            xoopsGetElementById('securetype_out').setAttribute("disabled", "disabled");
+            xoopsGetElementById('securetype_out').style.backgroundColor = color;
+
+            break;
+    }
+}

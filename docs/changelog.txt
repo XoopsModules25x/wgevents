@@ -6,6 +6,7 @@
  - usage of singular table names (mamba/goffy)
  - updated mail notification system (goffy)
  - added verification for registrations (goffy)
+ - added js in account form (goffy)
 
 ==============================================================
 1.0.0 [2022/01/04 9:28:23]
