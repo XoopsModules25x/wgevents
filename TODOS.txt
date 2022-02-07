@@ -8,10 +8,7 @@ Implementation of recurring events?
 
 Activate and adapt notification system
 
-save: $regEvid + $regId
-delete: $regId ($regEvid)
-change_financial: $evId + $regId
-listwait_takeover
+
 
 
 

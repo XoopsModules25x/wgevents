@@ -433,11 +433,17 @@ wgevents_textblock:
             name: id
             attributes: ' INT(8) UNSIGNED NOT NULL AUTO_INCREMENT '
         -
+            name: catid
+            attributes: ' INT(10)         NOT NULL DEFAULT ''0'' '
+        -
             name: name
             attributes: ' VARCHAR(255)    NOT NULL DEFAULT '''''''' '
         -
             name: text
             attributes: ' TEXT            NULL '
+        -
+            name: class
+            attributes: ' INT(10)         NOT NULL DEFAULT ''0'' '
         -
             name: weight
             attributes: ' INT(10)         NOT NULL DEFAULT ''0'' '

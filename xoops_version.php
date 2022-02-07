@@ -164,6 +164,13 @@ if ($currdirname == $moduleDirName) {
             'url' => 'event.php?op=new',
         ];
     }
+    if ($permissionsHandler->getPermEventsSubmit()) {
+        // Sub Submit
+        $modversion['sub'][] = [
+            'name' => \_MI_WGEVENTS_SMNAME8,
+            'url' => 'textblock.php?op=list',
+        ];
+    }
     if ($permissionsHandler->getPermRegistrationsSubmit()) {
         $modversion['sub'][] = [
             'name' => \_MI_WGEVENTS_SMNAME5,
@@ -565,9 +572,9 @@ $modversion['config'][] = [
 ];
 // use registration history
 $modversion['config'][] = [
-    'name'        => 'use_register_hist',
-    'title'       => '\_MI_WGEVENTS_USE_REGISTER_HIST',
-    'description' => '\_MI_WGEVENTS_USE_REGISTER_HIST_DESC',
+    'name'        => 'use_history',
+    'title'       => '\_MI_WGEVENTS_USE_HISTORY',
+    'description' => '\_MI_WGEVENTS_USE_HISTORY_DESC',
     'formtype'    => 'yesno',
     'valuetype'   => 'int',
     'default'     => 0,

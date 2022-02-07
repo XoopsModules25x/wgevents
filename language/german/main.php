@@ -215,10 +215,15 @@ Eine Teilnahme an der Veranstaltung ohne Zustimmung zu diesen Bestimmungen ist l
 \define('_MA_WGEVENTS_TEXTBLOCKS_LIST', 'Liste der Textblöcke');
 \define('_MA_WGEVENTS_TEXTBLOCKS_TITLE', 'Textblöcke Titel');
 \define('_MA_WGEVENTS_TEXTBLOCKS_DESC', 'Textblöcke Beschreibung');
+\define('_MA_WGEVENTS_TEXTBLOCKS_THEREARENT', 'Derzeit sind keine Textblöcke verfügbar');
 // Caption of Textblock
 \define('_MA_WGEVENTS_TEXTBLOCK_ID', 'Id');
+\define('_MA_WGEVENTS_TEXTBLOCK_CATID', 'Kategorie');
 \define('_MA_WGEVENTS_TEXTBLOCK_NAME', 'Name');
 \define('_MA_WGEVENTS_TEXTBLOCK_TEXT', 'Text');
+\define('_MA_WGEVENTS_TEXTBLOCK_CLASS', 'Klasse');
+\define('_MA_WGEVENTS_TEXTBLOCK_CLASS_PRIVATE', 'Privat');
+\define('_MA_WGEVENTS_TEXTBLOCK_CLASS_PUBLIC', 'Öffentlich');
 // Elements of Addtype
 \define('_MA_WGEVENTS_FIELD_NONE', 'None');
 \define('_MA_WGEVENTS_FIELD_LABEL', 'Infofeld');
@@ -234,6 +239,7 @@ Eine Teilnahme an der Veranstaltung ohne Zustimmung zu diesen Bestimmungen ist l
 \define('_MA_WGEVENTS_FIELD_NAME', 'Textfeld Name');
 \define('_MA_WGEVENTS_FIELD_EMAIL', 'Textfeld E-Mail');
 \define('_MA_WGEVENTS_FIELD_COUNTRY', 'Dropdownliste Land');
+\define('_MA_WGEVENTS_FIELD_TEXTBLOCK', 'Textblock');
 // Submit
 \define('_MA_WGEVENTS_SAVE', 'Speichern');
 \define('_MA_WGEVENTS_EXEC', 'Ausführen');

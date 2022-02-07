@@ -21,16 +21,19 @@
  * @author       Goffy - Wedega - Email:webmaster@wedega.com - Website:https://xoops.wedega.com
  */
 
+use XoopsModules\Wgevents\Helper;
+
 $dirname       = \basename(\dirname(__DIR__));
 $moduleHandler = \xoops_getHandler('module');
 $xoopsModule   = \XoopsModule::getByDirname($dirname);
 $moduleInfo    = $moduleHandler->get($xoopsModule->getVar('mid'));
 $sysPathIcon32 = $moduleInfo->getInfo('sysicons32');
+$helper = Helper::getInstance();
 
 $adminmenu[] = [
     'title' => \_MI_WGEVENTS_ADMENU1,
     'link' => 'admin/index.php',
-    'icon' => 'assets/icons/32//dashboard.png',
+    'icon' => 'assets/icons/32/dashboard.png',
 ];
 $adminmenu[] = [
     'title' => \_MI_WGEVENTS_ADMENU2,
@@ -58,6 +61,11 @@ $adminmenu[] = [
     'icon' => 'assets/icons/32/categories.png',
 ];
 $adminmenu[] = [
+    'title' => \_MI_WGEVENTS_ADMENU6,
+    'link' => 'admin/textblock.php',
+    'icon' => 'assets/icons/32/textblocks.png',
+];
+$adminmenu[] = [
     'title' => \_MI_WGEVENTS_ADMENU8,
     'link' => 'admin/field.php',
     'icon' => 'assets/icons/32/fields.png',
@@ -72,18 +80,18 @@ $adminmenu[] = [
     'link' => 'admin/log.php',
     'icon' => 'assets/icons/32/logs.png',
 ];
-/*
-$adminmenu[] = [
-    'title' => \_MI_WGEVENTS_ADMENU11,
-    'link' => 'admin/registrationshist.php',
-    'icon' => 'assets/icons/32/registrationshist.png',
-];
-$adminmenu[] = [
-    'title' => \_MI_WGEVENTS_ADMENU12,
-    'link' => 'admin/answershist.php',
-    'icon' => 'assets/icons/32/answershist.png',
-];
-*/
+if ((bool)$helper->getConfig('use_history')) {
+    $adminmenu[] = [
+        'title' => \_MI_WGEVENTS_ADMENU11,
+        'link' => 'admin/registrationshist.php',
+        'icon' => 'assets/icons/32/registrationshist.png',
+    ];
+    $adminmenu[] = [
+        'title' => \_MI_WGEVENTS_ADMENU12,
+        'link' => 'admin/answershist.php',
+        'icon' => 'assets/icons/32/answershist.png',
+    ];
+}
 $adminmenu[] = [
     'title' => \_MI_WGEVENTS_ADMENU14,
     'link' => 'admin/account.php',

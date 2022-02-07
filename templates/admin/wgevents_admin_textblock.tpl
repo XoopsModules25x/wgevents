@@ -6,8 +6,10 @@
         <thead>
             <tr class='head'>
                 <th class="center"><{$smarty.const._MA_WGEVENTS_TEXTBLOCK_ID}></th>
+                <th class="center"><{$smarty.const._MA_WGEVENTS_TEXTBLOCK_CATID}></th>
                 <th class="center"><{$smarty.const._MA_WGEVENTS_TEXTBLOCK_NAME}></th>
                 <th class="center"><{$smarty.const._MA_WGEVENTS_TEXTBLOCK_TEXT}></th>
+                <th class="center"><{$smarty.const._MA_WGEVENTS_TEXTBLOCK_CLASS}></th>
                 <th class="center"><{$smarty.const._MA_WGEVENTS_WEIGHT}></th>
                 <th class="center"><{$smarty.const._MA_WGEVENTS_DATECREATED}></th>
                 <th class="center"><{$smarty.const._MA_WGEVENTS_SUBMITTER}></th>
@@ -19,8 +21,10 @@
             <{foreach item=textblock from=$textblocks_list}>
             <tr class='<{cycle values='odd, even'}>'>
                 <td class='center'><{$textblock.id}></td>
+                <td class='center'><{$textblock.catname}></td>
                 <td class='center'><{$textblock.name}></td>
                 <td class='center'><{$textblock.text_short}></td>
+                <td class='center'><{$textblock.class_text}></td>
                 <td class='center'><{$textblock.weight}></td>
                 <td class='center'><{$textblock.datecreated_text}></td>
                 <td class='center'><{$textblock.submitter_text}></td>

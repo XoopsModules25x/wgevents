@@ -2,7 +2,7 @@
 
 <{if $regdefaults|default:0 > 0}>
 <h3><{$smarty.const._MA_WGEVENTS_QUESTIONS_LIST}>: <{$eventName|default:''}></h3>
-<div class='table-responsivexxx'>
+<div class='table-responsive'>
     <table class='table table-<{$table_type|default:false}>'>
         <thead>
             <tr class='head'>
@@ -42,6 +42,7 @@
                 <td colspan="9" class="center">
                     <a class='btn btn-success wge-btn' href='event.php?op=show&amp;id=<{$addEvid}>' title='<{$smarty.const._MA_WGEVENTS_GOTO_EVENT}>'><{$smarty.const._MA_WGEVENTS_GOTO_EVENT}></a>
                     <a class='btn btn-primary wge-btn' href='question.php?op=new&amp;evid=<{$addEvid}>' title='<{$smarty.const._MA_WGEVENTS_QUESTION_ADD}>'><{$smarty.const._MA_WGEVENTS_QUESTION_ADD}></a>
+                    <a class='btn btn-primary wge-btn' href='question.php?op=add_textblock&amp;evid=<{$addEvid}>' title='<{$smarty.const._MA_WGEVENTS_TEXTBLOCK_ADD}>'><{$smarty.const._MA_WGEVENTS_TEXTBLOCK_ADD}></a>
                     <a class='btn btn-success wge-btn' href='question.php?op=test&amp;evid=<{$addEvid}>' title='<{$smarty.const._MA_WGEVENTS_QUESTIONS_PREVIEW}>'><{$smarty.const._MA_WGEVENTS_QUESTIONS_PREVIEW}></a>
                 </td>
             </tr>
@@ -49,6 +50,11 @@
     </table>
 </div>
 <{/if}>
+
+<{if $textblocksCount|default:0 > 0}>
+    <{$formTextblockSelect|default:''}>
+<{/if}>
+
 <{if $form|default:''}>
     <{$form|default:false}>
 <{/if}>

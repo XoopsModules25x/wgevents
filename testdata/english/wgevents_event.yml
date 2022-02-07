@@ -25,15 +25,15 @@
     register_signature: ''
     status: '5'
     galid: '0'
-    datecreated: '1641335355'
+    datecreated: '1641284507'
     submitter: '1'
-    register_forceverif: '1'
+    register_forceverif: '0'
 -
     id: '3'
     catid: '1'
     name: 'Musik und Tanz'
     logo: musiktanz.png
-    desc: 'Mit viel Spaß und Rhythmus bringt euch Musikgarten-Lehrerin die Welt der Musik näher. Wie? Mit elementaren Trommelspielen und Phantasiegeschichten, Tanz und Bewegung! Mach mit! Trommeln ist auch gut zur Verbesserung motorischer Fähigkeiten'
+    desc: 'Mit viel Spaß und Rhythmus bringt euch Musikgarten-Lehrerin Monika Hügel die Welt der Musik näher. Wie? Mit elementaren Trommelspielen und Phantasiegeschichten, Tanz und Bewegung! Mach mit! Trommeln ist auch gut zur Verbesserung motorischer Fähigkeiten'
     datefrom: '1646645400'
     dateto: '1646654400'
     contact: 'Maria Musterfrau +43 7727 123456789'
@@ -87,4 +87,64 @@
     galid: '0'
     datecreated: '1642028545'
     submitter: '1'
+    register_forceverif: '0'
+-
+    id: '5'
+    catid: '1'
+    name: Indianer
+    logo: Indianer.61f3f553dccb6.jpg
+    desc: 'Wald - Wiese - Natur  Es gibt Märchen der Nordamerikanischen Indianer zu hören und es wird gebastelt. Außerdem geht es in den Wald - was wir da machen: Lasst euch überraschen! Zum Schluss kochen wir für uns und die, die uns abhplen, "Indianersuppe".'
+    datefrom: '1654768800'
+    dateto: '1654779000'
+    contact: 'Bianka Schnaitl +4366473917075'
+    email: treff.bia@gmail.com
+    location: 'Jurte In Ehersdorf (5121 Tarsdorf)'
+    locgmlat: '0.00'
+    locgmlon: '0.00'
+    locgmzoom: '0'
+    fee: '12.00'
+    register_use: '1'
+    register_from: '1643377800'
+    register_to: '1643377800'
+    register_max: '12'
+    register_listwait: '1'
+    register_autoaccept: '0'
+    register_notify: treff.bia@gmail.com
+    register_sendermail: treff.bia@gmail.com
+    register_sendername: Bianka12
+    register_signature: ''
+    status: '5'
+    galid: '0'
+    datecreated: '1643377315'
+    submitter: '5'
+    register_forceverif: '0'
+-
+    id: '6'
+    catid: '1'
+    name: Mosaiktag
+    logo: Mosaiktag.61f3f743afe41.jpg
+    desc: 'Wir werten alten Krimskrams mit der Mosaik - Technik auf.'
+    datefrom: '1643551200'
+    dateto: '1643556600'
+    contact: 'Bianka Schnaitl +4366473917075'
+    email: treff.bia@gmail.com
+    location: 'Maria Wagner, Kreil 16'
+    locgmlat: '0.00'
+    locgmlon: '0.00'
+    locgmzoom: '0'
+    fee: '13.00'
+    register_use: '1'
+    register_from: '1643380800'
+    register_to: '1643464800'
+    register_max: '7'
+    register_listwait: '1'
+    register_autoaccept: '0'
+    register_notify: treff.bia@gmail.com
+    register_sendermail: treff.bia@gmail.com
+    register_sendername: Bianka12
+    register_signature: ''
+    status: '5'
+    galid: '0'
+    datecreated: '1643378243'
+    submitter: '5'
     register_forceverif: '0'

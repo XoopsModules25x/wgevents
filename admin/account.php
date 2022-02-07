@@ -91,25 +91,23 @@ switch ($op) {
             $checks['openmailbox']['check'] = \_AM_WGEVENTS_ACCOUNT_CHECK_OPEN_MAILBOX;
             $checks['openmailbox']['result'] = \_AM_WGEVENTS_ACCOUNT_CHECK_FAILED;
             $checks['openmailbox']['result_img'] = $imgFailed;
-            $checks['openmailbox']['info'] = imap_last_error();
+            $checks['openmailbox']['info'] = \imap_last_error();
         } else {
             $checks['openmailbox']['check'] = \_AM_WGEVENTS_ACCOUNT_CHECK_OPEN_MAILBOX;
             $checks['openmailbox']['result'] = \_AM_WGEVENTS_ACCOUNT_CHECK_OK;
             $checks['openmailbox']['result_img'] = $imgOK;
 
-            $folders = imap_list($mbox, '{' . $command . '}', '*');
+            $folders = \imap_list($mbox, '{' . $command . '}', '*');
             if (false === $folders) {
                 $checks['listfolder']['check'] = \_AM_WGEVENTS_ACCOUNT_CHECK_LIST_FOLDERS;
                 $checks['listfolder']['result'] = \_AM_WGEVENTS_ACCOUNT_CHECK_FAILED;
                 $checks['listfolder']['result_img'] = $imgFailed;
-                $checks['listfolder']['info'] = imap_last_error();
+                $checks['listfolder']['info'] = \imap_last_error();
             } else {
                 $checks['listfolder']['check'] = \_AM_WGEVENTS_ACCOUNT_CHECK_LIST_FOLDERS;
                 $checks['listfolder']['result'] = \_AM_WGEVENTS_ACCOUNT_CHECK_OK;
                 $checks['listfolder']['result_img'] = $imgOK;
                 $checks['listfolder']['info'] = \implode('<br>', $folders);
-
-                imap_close($mbox);
 
                 // send test mail
                 // read data of account
@@ -162,7 +160,7 @@ switch ($op) {
                     $xoopsMailer->setFromEmail($account_yourmail);
                     $xoopsMailer->setFromName($account_yourname);
                     $logDetails .= '<br>from:' . $account_yourmail . ' ' . $account_yourname;
-                    $xoopsMailer->Subject = 'Test account subject';
+                    $xoopsMailer->setSubject = 'Test account subject';
                     $xoopsMailer->setBody('Test account body: ' . \XOOPS_URL);
                     $usermail = $GLOBALS['xoopsUser']->email();
                     $xoopsMailer->setToEmails($usermail);
@@ -203,7 +201,7 @@ switch ($op) {
                 $checks['sendtest']['result_img'] = $resultImg;
                 $checks['sendtest']['info'] = $result;
             }
-            imap_close($mbox);
+            @imap_close($mbox);
         }
         $GLOBALS['xoopsTpl']->assign('checks', $checks);
         break;
@@ -248,6 +246,7 @@ switch ($op) {
         break;
     case 'new':
         $templateMain = 'wgevents_admin_account.tpl';
+        $GLOBALS['xoTheme']->addScript(\WGEVENTS_URL . '/assets/js/forms.js');
         $GLOBALS['xoopsTpl']->assign('navigation', $adminObject->displayNavigation('account.php'));
         $adminObject->addItemButton(\_AM_WGEVENTS_LIST_ACCOUNTS, 'account.php', 'list');
         $GLOBALS['xoopsTpl']->assign('buttons', $adminObject->displayButton('left'));
@@ -298,6 +297,7 @@ switch ($op) {
         break;
     case 'edit':
         $templateMain = 'wgevents_admin_account.tpl';
+        $GLOBALS['xoTheme']->addScript(\WGEVENTS_URL . '/assets/js/forms.js');
         $GLOBALS['xoopsTpl']->assign('navigation', $adminObject->displayNavigation('account.php'));
         $adminObject->addItemButton(\_AM_WGEVENTS_ADD_ACCOUNT, 'account.php?op=new');
         $adminObject->addItemButton(\_AM_WGEVENTS_LIST_ACCOUNTS, 'account.php', 'list');

@@ -93,7 +93,6 @@ switch ($op) {
                 }
             }
 
-
             $form = $eventHandler->getFormEventSelect();
             $GLOBALS['xoopsTpl']->assign('form', $form->render());
         }

@@ -73,7 +73,7 @@ class RegistrationhistHandler extends \XoopsPersistableObjectHandler
     public function createHistory(\XoopsObject $registrationObj, string $info)
     {
         $helper = \XoopsModules\Wgevents\Helper::getInstance();
-        if ($helper->getConfig('use_register_hist')) {
+        if ($helper->getConfig('use_history')) {
             $submitter = \is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->uid() : 0;
 
             $registrationhistHandler = $helper->getHandler('Registrationhist');

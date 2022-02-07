@@ -34,7 +34,7 @@ require_once \XOOPS_ROOT_PATH . '/header.php';
 
 $op      = Request::getCmd('op', 'list');
 $queId   = Request::getInt('id');
-$addEvid = Request::getInt('evid');
+$queEvid = Request::getInt('evid');
 $start   = Request::getInt('start');
 $limit   = Request::getInt('limit', $helper->getConfig('userpager'));
 $GLOBALS['xoopsTpl']->assign('start', $start);
@@ -50,7 +50,7 @@ $keywords = [];
 // Breadcrumbs
 $xoBreadcrumbs[] = ['title' => \_MA_WGEVENTS_INDEX, 'link' => 'index.php'];
 
-$GLOBALS['xoopsTpl']->assign('addEvid', $addEvid);
+$GLOBALS['xoopsTpl']->assign('addEvid', $queEvid);
 
 switch ($op) {
     case 'show':
@@ -90,7 +90,7 @@ switch ($op) {
 
         // get question fields
         $crQuestion = new \CriteriaCompo();
-        $crQuestion->add(new \Criteria('evid', $addEvid));
+        $crQuestion->add(new \Criteria('evid', $queEvid));
         $questionsCount = $questionHandler->getCount($crQuestion);
         $GLOBALS['xoopsTpl']->assign('questionsCount', $questionsCount);
         $crQuestion->setSort('weight ASC, id');
@@ -136,7 +136,7 @@ switch ($op) {
         if (!$GLOBALS['xoopsSecurity']->check()) {
             \redirect_header('question.php', 3, \implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
         }
-        $eventObj = $eventHandler->get($addEvid);
+        $eventObj = $eventHandler->get($queEvid);
         // Check permissions
         if (!$permissionsHandler->getPermQuestionsAdmin($eventObj->getVAr('submitter'), $eventObj->getVar('status'))) {
             \redirect_header('index.php?op=list', 3, \_NOPERM);
@@ -146,7 +146,7 @@ switch ($op) {
         } else {
             $questionObj = $questionHandler->create();
         }
-        $questionObj->setVar('evid', $addEvid);
+        $questionObj->setVar('evid', $queEvid);
         $queType = Request::getInt('type');
         $questionObj->setVar('fdid', $queType);
         $fieldObj = $fieldHandler->get($queType);
@@ -178,7 +178,58 @@ switch ($op) {
         // Insert Data
         if ($questionHandler->insert($questionObj)) {
             // redirect after insert
-            \redirect_header('question.php?op=list&amp;evid=' . $addEvid . '&amp;start=' . $start . '&amp;limit=' . $limit, 2, \_MA_WGEVENTS_FORM_OK);
+            \redirect_header('question.php?op=list&amp;evid=' . $queEvid . '&amp;start=' . $start . '&amp;limit=' . $limit, 2, \_MA_WGEVENTS_FORM_OK);
+        }
+        // Get Form Error
+        $GLOBALS['xoopsTpl']->assign('error', $questionObj->getHtmlErrors());
+        $form = $questionObj->getForm();
+        $GLOBALS['xoopsTpl']->assign('form', $form->render());
+        break;
+    case 'save_textblock':
+        // Security Check
+        if (!$GLOBALS['xoopsSecurity']->check()) {
+            \redirect_header('question.php', 3, \implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
+        }
+        $eventObj = $eventHandler->get($queEvid);
+        // Check permissions
+        if (!$permissionsHandler->getPermQuestionsAdmin($eventObj->getVAr('submitter'), $eventObj->getVar('status'))) {
+            \redirect_header('index.php?op=list', 3, \_NOPERM);
+        }
+        $weight = $questionHandler->getNextWeight($queEvid);
+        $uidCurrent = \is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->uid() : 0;
+
+        $cbTextblocks = Request::getArray('cbTextblock');
+        foreach (\array_keys($cbTextblocks) as $i) {
+            echo ' i:' . $i;
+        }
+
+        break;
+        $textblockObj = $textblockHandler->get($queType);
+
+        $questionObj = $questionHandler->create();
+        $questionObj->setVar('evid', $queEvid);
+        $queType = Request::getInt('type');
+        $questionObj->setVar('fdid', $queType);
+        $fieldObj = $fieldHandler->get($queType);
+        $questionObj->setVar('type', $fieldObj->getVar('type'));
+        $questionObj->setVar('caption', Request::getString('caption'));
+        $questionObj->setVar('desc', Request::getText('desc'));
+        $questionObj->setVar('values', '');
+        $questionObj->setVar('placeholder', '');
+        $questionObj->setVar('required', 0);
+        $questionObj->setVar('print', $print);
+        $questionObj->setVar('weight', $weight);
+        if (Request::hasVar('datecreated_int')) {
+            $questionObj->setVar('datecreated', Request::getInt('datecreated_int'));
+        } else {
+            $questionDatecreatedObj = \DateTime::createFromFormat(\_SHORTDATESTRING, Request::getString('datecreated'));
+            $questionObj->setVar('datecreated', $questionDatecreatedObj->getTimestamp());
+        }
+        $questionObj->setVar('submitter', Request::getInt('submitter'));
+        // Insert Data
+        if ($questionHandler->insert($questionObj)) {
+            // redirect after insert
+            \redirect_header('question.php?op=list&amp;evid=' . $queEvid . '&amp;start=' . $start . '&amp;limit=' . $limit, 2, \_MA_WGEVENTS_FORM_OK);
         }
         // Get Form Error
         $GLOBALS['xoopsTpl']->assign('error', $questionObj->getHtmlErrors());
@@ -186,16 +237,46 @@ switch ($op) {
         $GLOBALS['xoopsTpl']->assign('form', $form->render());
         break;
     case 'newset':
-        $eventObj = $eventHandler->get($addEvid);
+        $eventObj = $eventHandler->get($queEvid);
         // Check permissions
         if (!$permissionsHandler->getPermQuestionsAdmin($eventObj->getVAr('submitter'), $eventObj->getVar('status'))) {
             \redirect_header('index.php?op=list', 3, \_NOPERM);
         }
-        $questionHandler->createQuestionsDefaultset($addEvid);
-        \redirect_header('question.php?op=list&amp;evid=' . $addEvid . '&amp;start=' . $start . '&amp;limit=' . $limit, 0, \_MA_WGEVENTS_FORM_OK);
+        $questionHandler->createQuestionsDefaultset($queEvid);
+        \redirect_header('question.php?op=list&amp;evid=' . $queEvid . '&amp;start=' . $start . '&amp;limit=' . $limit, 0, \_MA_WGEVENTS_FORM_OK);
+        break;
+    case 'add_textblock':
+        $eventObj = $eventHandler->get($queEvid);
+        // Check permissions
+        if (!$permissionsHandler->getPermQuestionsAdmin($eventObj->getVAr('submitter'), $eventObj->getVar('status'))) {
+            \redirect_header('index.php?op=list', 3, \_NOPERM);
+        }
+        $xoBreadcrumbs[] = ['title' => \_MA_WGEVENTS_TEXTBLOCK_ADD];
+
+        $uidCurrent = \is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->uid() : 0;
+        $crTextblock = new \CriteriaCompo();
+        $crTextblock->add(new \Criteria('class', Constants::TEXTBLOCK_CLASS_PUBLIC), 'OR');
+        $crTextblock->add(new \Criteria('submitter', $uidCurrent));
+        $textblocksCount = $textblockHandler->getCount($crTextblock);
+        $GLOBALS['xoopsTpl']->assign('textblocksCount', $textblocksCount);
+        if ($textblocksCount > 0) {
+            $crTextblock->setStart($start);
+            $crTextblock->setLimit($limit);
+            $textblocksAll = $textblockHandler->getAll($crTextblock);
+            $formTextblockSelect = $textblockHandler->getFormSelect($textblocksAll);
+
+            $GLOBALS['xoopsTpl']->assign('formTextblockSelect', $formTextblockSelect->render());
+            unset($textblocks);
+            // Display Navigation
+            if ($textblocksCount > $limit) {
+                require_once \XOOPS_ROOT_PATH . '/class/pagenav.php';
+                $pagenav = new \XoopsPageNav($textblocksCount, $limit, $start, 'start', 'op=list&limit=' . $limit);
+                $GLOBALS['xoopsTpl']->assign('pagenav', $pagenav->renderNav());
+            }
+        }
         break;
     case 'new':
-        $eventObj = $eventHandler->get($addEvid);
+        $eventObj = $eventHandler->get($queEvid);
         // Check permissions
         if (!$permissionsHandler->getPermQuestionsAdmin($eventObj->getVAr('submitter'), $eventObj->getVar('status'))) {
             \redirect_header('index.php?op=list', 3, \_NOPERM);
@@ -205,12 +286,12 @@ switch ($op) {
         $xoBreadcrumbs[] = ['title' => \_MA_WGEVENTS_QUESTION_ADD];
         // Form Create
         $questionObj = $questionHandler->create();
-        $questionObj->setVar('evid', $addEvid);
+        $questionObj->setVar('evid', $queEvid);
         $form = $questionObj->getForm();
         $GLOBALS['xoopsTpl']->assign('form', $form->render());
         break;
     case 'test':
-        $eventObj = $eventHandler->get($addEvid);
+        $eventObj = $eventHandler->get($queEvid);
         // Check permissions
         if (!$permissionsHandler->getPermQuestionsAdmin($eventObj->getVAr('submitter'), $eventObj->getVar('status'))) {
             \redirect_header('index.php?op=list', 3, \_NOPERM);
@@ -219,12 +300,12 @@ switch ($op) {
         $xoBreadcrumbs[] = ['title' => \_MA_WGEVENTS_QUESTION_ADD];
         // Form Create
         $registrationObj = $registrationHandler->create();
-        $registrationObj->setVar('evid', $addEvid);
+        $registrationObj->setVar('evid', $queEvid);
         $form = $registrationObj->getForm('', true);
         $GLOBALS['xoopsTpl']->assign('form', $form->render());
         break;
     case 'edit':
-        $eventObj = $eventHandler->get($addEvid);
+        $eventObj = $eventHandler->get($queEvid);
         // Check permissions
         if (!$permissionsHandler->getPermQuestionsAdmin($eventObj->getVAr('submitter'), $eventObj->getVar('status'))) {
             \redirect_header('index.php?op=list', 3, \_NOPERM);
@@ -277,19 +358,19 @@ switch ($op) {
             \redirect_header('question.php?op=list', 3, \_MA_WGEVENTS_INVALID_PARAM);
         }
         $questionObj = $questionHandler->get($queId);
-        $addEvid = $questionObj->getVar('evid');
+        $queEvid = $questionObj->getVar('evid');
         if (isset($_REQUEST['ok']) && 1 == $_REQUEST['ok']) {
             if (!$GLOBALS['xoopsSecurity']->check()) {
                 \redirect_header('question.php', 3, \implode(', ', $GLOBALS['xoopsSecurity']->getErrors()));
             }
             if ($questionHandler->delete($questionObj)) {
-                \redirect_header('question.php?list&amp;evid=' . $addEvid, 3, \_MA_WGEVENTS_FORM_DELETE_OK);
+                \redirect_header('question.php?list&amp;evid=' . $queEvid, 3, \_MA_WGEVENTS_FORM_DELETE_OK);
             } else {
                 $GLOBALS['xoopsTpl']->assign('error', $questionObj->getHtmlErrors());
             }
         } else {
             $customConfirm = new Common\Confirm(
-                ['ok' => 1, 'id' => $queId, 'evid' => $addEvid, 'op' => 'delete'],
+                ['ok' => 1, 'id' => $queId, 'evid' => $queEvid, 'op' => 'delete'],
                 $_SERVER['REQUEST_URI'],
                 \sprintf(\_MA_WGEVENTS_CONFIRMDELETE_QUESTION, $questionObj->getVar('caption')), \_MA_WGEVENTS_CONFIRMDELETE_TITLE, \_MA_WGEVENTS_CONFIRMDELETE_LABEL);
             $form = $customConfirm->getFormConfirm();

@@ -47,7 +47,7 @@ $keywords = [];
 // Breadcrumbs
 $xoBreadcrumbs[] = ['title' => \_MA_WGEVENTS_INDEX, 'link' => 'index.php'];
 // Permission
-$permEdit = $permissionsHandler->getPermGlobalSubmit();
+$permEdit = $permissionsHandler->getPermEventsSubmit();
 $GLOBALS['xoopsTpl']->assign('permEdit', $permEdit);
 $GLOBALS['xoopsTpl']->assign('showItem', $tbId > 0);
 
@@ -92,6 +92,8 @@ switch ($op) {
             if ('show' == $op && '' != $tbName) {
                 $GLOBALS['xoopsTpl']->assign('xoops_pagetitle', \strip_tags($tbName . ' - ' . $GLOBALS['xoopsModule']->getVar('name')));
             }
+        } else {
+            $GLOBALS['xoopsTpl']->assign('error', \_MA_WGEVENTS_TEXTBLOCKS_THEREARENT);
         }
         break;
     case 'save':

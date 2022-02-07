@@ -215,10 +215,15 @@ Participation without agreement to this conditions is not possible.
 \define('_MA_WGEVENTS_TEXTBLOCKS_LIST', 'List of Textblocks');
 \define('_MA_WGEVENTS_TEXTBLOCKS_TITLE', 'Textblocks title');
 \define('_MA_WGEVENTS_TEXTBLOCKS_DESC', 'Textblocks description');
+\define('_MA_WGEVENTS_TEXTBLOCKS_THEREARENT', 'There are no textblocks available at the moment');
 // Caption of Textblock
 \define('_MA_WGEVENTS_TEXTBLOCK_ID', 'Id');
+\define('_MA_WGEVENTS_TEXTBLOCK_CATID', 'Category');
 \define('_MA_WGEVENTS_TEXTBLOCK_NAME', 'Name');
 \define('_MA_WGEVENTS_TEXTBLOCK_TEXT', 'Text');
+\define('_MA_WGEVENTS_TEXTBLOCK_CLASS', 'Class');
+\define('_MA_WGEVENTS_TEXTBLOCK_CLASS_PRIVATE', 'Private');
+\define('_MA_WGEVENTS_TEXTBLOCK_CLASS_PUBLIC', 'Public');
 // Elements of Addtype
 \define('_MA_WGEVENTS_FIELD_NONE', 'None');
 \define('_MA_WGEVENTS_FIELD_LABEL', 'Label');
@@ -234,6 +239,7 @@ Participation without agreement to this conditions is not possible.
 \define('_MA_WGEVENTS_FIELD_NAME', 'Textbox Name');
 \define('_MA_WGEVENTS_FIELD_EMAIL', 'Textbox Email');
 \define('_MA_WGEVENTS_FIELD_COUNTRY', 'Dropdown Country');
+\define('_MA_WGEVENTS_FIELD_TEXTBLOCK', 'Textblock');
 // Submit
 \define('_MA_WGEVENTS_SAVE', 'Save');
 \define('_MA_WGEVENTS_EXEC', 'Execute');

@@ -24,6 +24,7 @@ namespace XoopsModules\Wgevents;
  */
 
 use XoopsModules\Wgevents;
+use XoopsModules\Wgevents\Helper;
 
 \defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
@@ -50,8 +51,10 @@ class Textblock extends \XoopsObject
     public function __construct()
     {
         $this->initVar('id', \XOBJ_DTYPE_INT);
+        $this->initVar('catid', \XOBJ_DTYPE_INT);
         $this->initVar('name', \XOBJ_DTYPE_TXTBOX);
         $this->initVar('text', \XOBJ_DTYPE_OTHER);
+        $this->initVar('class', \XOBJ_DTYPE_INT);
         $this->initVar('weight', \XOBJ_DTYPE_INT);
         $this->initVar('datecreated', \XOBJ_DTYPE_INT);
         $this->initVar('submitter', \XOBJ_DTYPE_INT);
@@ -86,7 +89,9 @@ class Textblock extends \XoopsObject
      */
     public function getForm($action = false)
     {
-        $helper = \XoopsModules\Wgevents\Helper::getInstance();
+        $helper = Helper::getInstance();
+        $categoryHandler = $helper->getHandler('Category');
+
         if (!$action) {
             $action = $_SERVER['REQUEST_URI'];
         }
@@ -97,6 +102,10 @@ class Textblock extends \XoopsObject
         \xoops_load('XoopsFormLoader');
         $form = new \XoopsThemeForm($title, 'form', $action, 'post', true);
         $form->setExtra('enctype="multipart/form-data"');
+        // Form Table categories
+        $evCatidSelect = new \XoopsFormSelect(\_MA_WGEVENTS_EVENT_CATID, 'catid', $this->getVar('catid'));
+        $evCatidSelect->addOptionArray($categoryHandler->getList());
+        $form->addElement($evCatidSelect);
         // Form Text tbName
         $form->addElement(new \XoopsFormText(\_MA_WGEVENTS_TEXTBLOCK_NAME, 'name', 50, 255, $this->getVar('name')));
         // Form Editor DhtmlTextArea tbText
@@ -114,6 +123,12 @@ class Textblock extends \XoopsObject
         $editorConfigs['height'] = '400px';
         $editorConfigs['editor'] = $editor;
         $form->addElement(new \XoopsFormEditor(\_MA_WGEVENTS_TEXTBLOCK_TEXT, 'text', $editorConfigs));
+        // Form select tbClass
+        $tbClass = $this->isNew() ? Constants::TEXTBLOCK_CLASS_PRIVATE : $this->getVar('class');
+        $tbclassSelect = new \XoopsFormSelect(\_MA_WGEVENTS_TEXTBLOCK_CLASS, 'class', $tbClass);
+        $tbclassSelect->addOption(Constants::TEXTBLOCK_CLASS_PRIVATE, \_MA_WGEVENTS_TEXTBLOCK_CLASS_PRIVATE);
+        $tbclassSelect->addOption(Constants::TEXTBLOCK_CLASS_PUBLIC, \_MA_WGEVENTS_TEXTBLOCK_CLASS_PUBLIC);
+        $form->addElement($tbclassSelect);
         // Form Text tbWeight
         $form->addElement(new \XoopsFormText(\_MA_WGEVENTS_WEIGHT, 'weight', 50, 255, $this->getVar('weight')));
         // Form Text Date Select tbDatecreated
@@ -123,35 +138,7 @@ class Textblock extends \XoopsObject
         $uidCurrent = \is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->uid() : 0;
         $tbSubmitter = $this->isNew() ? $uidCurrent : $this->getVar('submitter');
         $form->addElement(new \XoopsFormSelectUser(\_MA_WGEVENTS_SUBMITTER, 'submitter', false, $tbSubmitter));
-        // Permission
-        $memberHandler = \xoops_getHandler('member');
-        $groupList = $memberHandler->getGroupList();
-        $grouppermHandler = \xoops_getHandler('groupperm');
-        $fullList[] = \array_keys($groupList);
-        if ($this->isNew()) {
-            $groupsCanApproveCheckbox = new \XoopsFormCheckBox(\_AM_WGEVENTS_PERMISSIONS_APPROVE, 'groups_approve_textblocks[]', $fullList);
-            $groupsCanSubmitCheckbox = new \XoopsFormCheckBox(\_AM_WGEVENTS_PERMISSIONS_SUBMIT, 'groups_submit_textblocks[]', $fullList);
-            $groupsCanViewCheckbox = new \XoopsFormCheckBox(\_AM_WGEVENTS_PERMISSIONS_VIEW, 'groups_view_textblocks[]', $fullList);
-        } else {
-            $groupsIdsApprove = $grouppermHandler->getGroupIds('wgevents_approve_textblocks', $this->getVar('id'), $GLOBALS['xoopsModule']->getVar('mid'));
-            $groupsIdsApprove[] = \array_values($groupsIdsApprove);
-            $groupsCanApproveCheckbox = new \XoopsFormCheckBox(\_AM_WGEVENTS_PERMISSIONS_APPROVE, 'groups_approve_textblocks[]', $groupsIdsApprove);
-            $groupsIdsSubmit = $grouppermHandler->getGroupIds('wgevents_submit_textblocks', $this->getVar('id'), $GLOBALS['xoopsModule']->getVar('mid'));
-            $groupsIdsSubmit[] = \array_values($groupsIdsSubmit);
-            $groupsCanSubmitCheckbox = new \XoopsFormCheckBox(\_AM_WGEVENTS_PERMISSIONS_SUBMIT, 'groups_submit_textblocks[]', $groupsIdsSubmit);
-            $groupsIdsView = $grouppermHandler->getGroupIds('wgevents_view_textblocks', $this->getVar('id'), $GLOBALS['xoopsModule']->getVar('mid'));
-            $groupsIdsView[] = \array_values($groupsIdsView);
-            $groupsCanViewCheckbox = new \XoopsFormCheckBox(\_AM_WGEVENTS_PERMISSIONS_VIEW, 'groups_view_textblocks[]', $groupsIdsView);
-        }
-        // To Approve
-        $groupsCanApproveCheckbox->addOptionArray($groupList);
-        $form->addElement($groupsCanApproveCheckbox);
-        // To Submit
-        $groupsCanSubmitCheckbox->addOptionArray($groupList);
-        $form->addElement($groupsCanSubmitCheckbox);
-        // To View
-        $groupsCanViewCheckbox->addOptionArray($groupList);
-        $form->addElement($groupsCanViewCheckbox);
+
         // To Save
         $form->addElement(new \XoopsFormHidden('op', 'save'));
         $form->addElement(new \XoopsFormHidden('start', $this->start));
@@ -173,8 +160,17 @@ class Textblock extends \XoopsObject
         $utility = new \XoopsModules\Wgevents\Utility();
         $ret = $this->getValues($keys, $format, $maxDepth);
         $editorMaxchar = $helper->getConfig('admin_maxchar');
+        $categoryHandler = $helper->getHandler('Category');
+        $categoryObj = $categoryHandler->get($this->getVar('catid'));
+        $catName = '';
+        if (\is_object($categoryObj)) {
+            $catName = $categoryObj->getVar('name');
+        }
+        $ret['catname']          = $catName;
         $ret['text_text']        = $this->getVar('text', 'e');
         $ret['text_short']       = $utility::truncateHtml($ret['text'], $editorMaxchar);
+        $ret['cat_text']         = $this->getVar('catid');
+        $ret['class_text']       = Constants::TEXTBLOCK_CLASS_PUBLIC == $this->getVar('class') ? \_MA_WGEVENTS_TEXTBLOCK_CLASS_PUBLIC : \_MA_WGEVENTS_TEXTBLOCK_CLASS_PRIVATE;
         $ret['datecreated_text'] = \formatTimestamp($this->getVar('datecreated'), 's');
         $ret['submitter_text']   = \XoopsUser::getUnameFromId($this->getVar('submitter'));
         return $ret;

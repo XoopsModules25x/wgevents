@@ -1,4 +1,5 @@
-<div class='pull-left'><{$copyright}></div>
+
+<div class='pull-left copyright'><{$copyright}></div>
 
 <{if $pagenav|default:''}>
     <div class='pull-right'><{$pagenav}></div>

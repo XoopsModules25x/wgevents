@@ -104,5 +104,8 @@ interface Constants
     public const ACCOUNT_TYPE_VAL_SMTP       = 4;
     public const ACCOUNT_TYPE_VAL_GMAIL      = 5;
 
+    // Constants for financial
+    public const TEXTBLOCK_CLASS_PRIVATE = 0;
+    public const TEXTBLOCK_CLASS_PUBLIC  = 1;
 
 }

@@ -121,4 +121,45 @@ class TextblockHandler extends \XoopsPersistableObjectHandler
         $crTextblock->setOrder($order);
         return $crTextblock;
     }
+
+    /**
+     * @public function getForm
+     * param array $textblockAll
+     * @param bool $action
+     * @return \XoopsThemeForm
+     */
+    public function getFormSelect($textblockAll, $action = false)
+    {
+        $helper = Helper::getInstance();
+        //$categoryHandler = $helper->getHandler('Category');
+        $questionHandler = $helper->getHandler('Question');
+
+        if (!$action) {
+            $action = $_SERVER['REQUEST_URI'];
+        }
+
+        // Get Theme Form
+        \xoops_load('XoopsFormLoader');
+        $form = new \XoopsThemeForm(\_MA_WGEVENTS_TEXTBLOCK_ADD, 'form', $action, 'post', true);
+        $form->setExtra('enctype="multipart/form-data"');
+
+        // Get All Textblock
+        $selectTextblockTray = new \XoopsFormElementTray(\_MA_WGEVENTS_TEXTBLOCKS_LIST, '<br>');
+        foreach (\array_keys($textblockAll) as $i) {
+            $caption = $textblockAll[$i]->getVar('name');
+            $text = $textblockAll[$i]->getVar('text');
+            $value = '<p>' . $caption . '</p>' . $text;
+            // Form Check Box
+            $checkTextblock[$i] = new \XoopsFormCheckBox('', 'cbTextblock[' . $i . ']', 0);
+            $checkTextblock[$i]->addOption(1, $caption);
+            $selectTextblockTray->addElement($checkTextblock[$i]);
+            $selectTextblockTray->addElement(new \XoopsFormLabel('', $text));
+        }
+        $form->addElement($selectTextblockTray);
+
+        // To Save
+        $form->addElement(new \XoopsFormHidden('op', 'save_textblock'));
+        $form->addElement(new \XoopsFormButtonTray('', \_SUBMIT, 'submit', '', false));
+        return $form;
+    }
 }
