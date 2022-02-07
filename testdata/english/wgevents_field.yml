@@ -1,7 +1,7 @@
 -
     id: '1'
     type: '1'
-    caption: Label
+    caption: Infofeld
     desc: ''
     values: ''
     placeholder: ''
@@ -14,12 +14,12 @@
     custom: '0'
     weight: '1'
     setid: '0'
-    datecreated: '1643301681'
+    datecreated: '1644160036'
     submitter: '1'
 -
     id: '2'
     type: '2'
-    caption: Textbox
+    caption: Textfeld
     desc: ''
     values: ''
     placeholder: ''
@@ -32,12 +32,12 @@
     custom: '0'
     weight: '2'
     setid: '0'
-    datecreated: '1643301681'
+    datecreated: '1644160036'
     submitter: '1'
 -
     id: '3'
     type: '3'
-    caption: 'Multiline Textarea field'
+    caption: 'Mehrzeiliges Textfeld'
     desc: ''
     values: ''
     placeholder: ''
@@ -50,12 +50,12 @@
     custom: '0'
     weight: '3'
     setid: '0'
-    datecreated: '1643301681'
+    datecreated: '1644160036'
     submitter: '1'
 -
     id: '4'
     type: '6'
-    caption: Dropdown
+    caption: Dropdownliste
     desc: ''
     values: ''
     placeholder: ''
@@ -68,12 +68,12 @@
     custom: '0'
     weight: '4'
     setid: '0'
-    datecreated: '1643301681'
+    datecreated: '1644160036'
     submitter: '1'
 -
     id: '5'
     type: '7'
-    caption: Combobox
+    caption: Kombinationsfeld
     desc: ''
     values: ''
     placeholder: ''
@@ -86,12 +86,12 @@
     custom: '0'
     weight: '5'
     setid: '0'
-    datecreated: '1643301681'
+    datecreated: '1644160036'
     submitter: '1'
 -
     id: '6'
     type: '8'
-    caption: Checkbox
+    caption: Kontrollkästchen
     desc: ''
     values: ''
     placeholder: ''
@@ -104,12 +104,12 @@
     custom: '0'
     weight: '6'
     setid: '0'
-    datecreated: '1643301681'
+    datecreated: '1644160036'
     submitter: '1'
 -
     id: '7'
     type: '4'
-    caption: Radio
+    caption: Optionsfeld
     desc: ''
     values: ''
     placeholder: ''
@@ -122,12 +122,12 @@
     custom: '0'
     weight: '7'
     setid: '0'
-    datecreated: '1643301681'
+    datecreated: '1644160036'
     submitter: '1'
 -
     id: '8'
     type: '5'
-    caption: 'Radio yes/no'
+    caption: 'Optionsfeld Ja/Nein'
     desc: ''
     values: ''
     placeholder: ''
@@ -140,12 +140,12 @@
     custom: '0'
     weight: '8'
     setid: '0'
-    datecreated: '1643301681'
+    datecreated: '1644160036'
     submitter: '1'
 -
     id: '9'
     type: '9'
-    caption: 'Date field'
+    caption: Datumsfeld
     desc: ''
     values: ''
     placeholder: ''
@@ -158,15 +158,15 @@
     custom: '0'
     weight: '9'
     setid: '0'
-    datecreated: '1643301682'
+    datecreated: '1644160036'
     submitter: '1'
 -
     id: '10'
     type: '2'
-    caption: Phone
+    caption: Telefonnummer
     desc: ''
     values: ''
-    placeholder: 'Please Enter phone number'
+    placeholder: 'Bitte Telefonnummer eingeben'
     required: '0'
     default: '1'
     print: '1'
@@ -176,15 +176,15 @@
     custom: '1'
     weight: '10'
     setid: '0'
-    datecreated: '1643301682'
+    datecreated: '1644160036'
     submitter: '1'
 -
     id: '11'
     type: '2'
-    caption: Address
+    caption: Adresse
     desc: ''
     values: ''
-    placeholder: 'Please Enter Address'
+    placeholder: 'Bitte Adresse eingeben'
     required: '0'
     default: '0'
     print: '1'
@@ -194,15 +194,15 @@
     custom: '1'
     weight: '11'
     setid: '0'
-    datecreated: '1643301682'
+    datecreated: '1644160036'
     submitter: '1'
 -
     id: '12'
     type: '2'
-    caption: 'Postal code'
+    caption: Postleitzahl
     desc: ''
     values: ''
-    placeholder: 'Please Enter Postal code'
+    placeholder: 'Bitte Postleitzahl eingeben'
     required: '0'
     default: '0'
     print: '1'
@@ -212,15 +212,15 @@
     custom: '1'
     weight: '12'
     setid: '0'
-    datecreated: '1643301682'
+    datecreated: '1644160036'
     submitter: '1'
 -
     id: '13'
     type: '2'
-    caption: City
+    caption: Ort
     desc: ''
     values: ''
-    placeholder: 'Please Enter City'
+    placeholder: 'Bitte Ort eingeben'
     required: '0'
     default: '0'
     print: '1'
@@ -230,15 +230,15 @@
     custom: '1'
     weight: '13'
     setid: '0'
-    datecreated: '1643301682'
+    datecreated: '1644160036'
     submitter: '1'
 -
     id: '14'
     type: '13'
-    caption: Country
+    caption: Land
     desc: ''
     values: ''
-    placeholder: 'Please Enter Country'
+    placeholder: 'Bitte Land eingeben'
     required: '0'
     default: '0'
     print: '1'
@@ -248,15 +248,15 @@
     custom: '1'
     weight: '14'
     setid: '0'
-    datecreated: '1643301682'
+    datecreated: '1644160036'
     submitter: '1'
 -
     id: '15'
     type: '9'
-    caption: Birthday
+    caption: Geburtstag
     desc: ''
     values: ''
-    placeholder: 'Please Enter Birthday'
+    placeholder: 'Bitte Geburtstag eingeben'
     required: '0'
     default: '0'
     print: '1'
@@ -266,15 +266,15 @@
     custom: '1'
     weight: '15'
     setid: '0'
-    datecreated: '1643301682'
+    datecreated: '1644160036'
     submitter: '1'
 -
     id: '16'
     type: '2'
-    caption: Age
+    caption: Alter
     desc: ''
     values: ''
-    placeholder: 'Please Enter Your Age'
+    placeholder: 'Bitte Alter eingeben'
     required: '0'
     default: '0'
     print: '1'
@@ -284,5 +284,5 @@
     custom: '1'
     weight: '16'
     setid: '0'
-    datecreated: '1643301682'
+    datecreated: '1644160036'
     submitter: '1'

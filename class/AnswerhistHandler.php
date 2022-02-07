@@ -73,7 +73,7 @@ class AnswerhistHandler extends \XoopsPersistableObjectHandler
     public function createHistory(int $regEvid, int $regId, $info)
     {
         $helper = \XoopsModules\Wgevents\Helper::getInstance();
-        if ($helper->getConfig('use_register_hist')) {
+        if ($helper->getConfig('use_history')) {
             $submitter = \is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->uid() : 0;
 
             $answerHandler = $helper->getHandler('Answer');

@@ -164,7 +164,7 @@ class SimpleCalendar {
      * @param string $style Style for this event
      * @throws \Exception
      */
-    public function addDailyHtml(string $html, \DateTimeInterface|int|string $startDate, $endDate = null, $style = '') {
+    public function addDailyHtml(string $html, $startDate, $endDate = null, $style = '') {
         static $htmlCount = 0;
 
         $start = $this->parseDate($startDate);
@@ -207,7 +207,7 @@ class SimpleCalendar {
      *
      * @param int|string $offset Day the week starts on. ex: "Monday" or 0-6 where 0 is Sunday
      */
-    public function setStartOfWeek(int|string $offset) {
+    public function setStartOfWeek($offset) {
         if( \is_int($offset) ) {
             $this->offset = $offset % 7;
         } elseif( $this->weekDayNames !== null && ($weekOffset = \array_search($offset, $this->weekDayNames, true)) !== false ) {

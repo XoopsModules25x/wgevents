@@ -202,8 +202,10 @@ CREATE TABLE `wgevents_field` (
 
 CREATE TABLE `wgevents_textblock` (
   `id`               INT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `catid`            INT(10)         NOT NULL DEFAULT '0',
   `name`             VARCHAR(255)    NOT NULL DEFAULT '',
   `text`             TEXT            NULL,
+  `class`            INT(10)         NOT NULL DEFAULT '0',
   `weight`           INT(10)         NOT NULL DEFAULT '0',
   `datecreated`      INT(11)         NOT NULL DEFAULT '0',
   `submitter`        INT(10)         NOT NULL DEFAULT '0',

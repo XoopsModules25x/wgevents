@@ -1,4 +1,4 @@
-<div class="center">
+<div class="center" style="margin-top:50px;">
     <a href="https://xoops.org/" title="Visit XOOPS" target="_blank"><img src="<{xoModuleIcons32 xoopsmicrobutton.gif}>" alt="XOOPS" ></a>
 </div>
 <div class="center smallsmall italic pad5">

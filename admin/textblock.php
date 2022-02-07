@@ -104,37 +104,14 @@ switch ($op) {
         $textblockObj->setVar('name', Request::getString('name'));
         $textblockObj->setVar('text', Request::getText('text'));
         $textblockObj->setVar('weight', Request::getInt('weight'));
+        $textblockObj->setVar('catid', Request::getInt('catid'));
+        $textblockObj->setVar('class', Request::getInt('class'));
         $textblockDatecreatedObj = \DateTime::createFromFormat(\_SHORTDATESTRING, Request::getString('datecreated'));
         $textblockObj->setVar('datecreated', $textblockDatecreatedObj->getTimestamp());
         $textblockObj->setVar('submitter', Request::getInt('submitter'));
         // Insert Data
         if ($textblockHandler->insert($textblockObj)) {
-            $newTbId = $textblockObj->getNewInsertedIdTextblocks();
-            $permId = isset($_REQUEST['id']) ? $tbId : $newTbId;
-            $grouppermHandler = \xoops_getHandler('groupperm');
-            $mid = $GLOBALS['xoopsModule']->getVar('mid');
-            // Permission to view_textblocks
-            $grouppermHandler->deleteByModule($mid, 'wgevents_view_textblocks', $permId);
-            if (isset($_POST['groups_view_textblocks'])) {
-                foreach ($_POST['groups_view_textblocks'] as $onegroupId) {
-                    $grouppermHandler->addRight('wgevents_view_textblocks', $permId, $onegroupId, $mid);
-                }
-            }
-            // Permission to submit_textblocks
-            $grouppermHandler->deleteByModule($mid, 'wgevents_submit_textblocks', $permId);
-            if (isset($_POST['groups_submit_textblocks'])) {
-                foreach ($_POST['groups_submit_textblocks'] as $onegroupId) {
-                    $grouppermHandler->addRight('wgevents_submit_textblocks', $permId, $onegroupId, $mid);
-                }
-            }
-            // Permission to approve_textblocks
-            $grouppermHandler->deleteByModule($mid, 'wgevents_approve_textblocks', $permId);
-            if (isset($_POST['groups_approve_textblocks'])) {
-                foreach ($_POST['groups_approve_textblocks'] as $onegroupId) {
-                    $grouppermHandler->addRight('wgevents_approve_textblocks', $permId, $onegroupId, $mid);
-                }
-            }
-                \redirect_header('textblock.php?op=list&amp;start=' . $start . '&amp;limit=' . $limit, 2, \_MA_WGEVENTS_FORM_OK);
+            \redirect_header('textblock.php?op=list&amp;start=' . $start . '&amp;limit=' . $limit, 2, \_MA_WGEVENTS_FORM_OK);
         }
         // Get Form
         $GLOBALS['xoopsTpl']->assign('error', $textblockObj->getHtmlErrors());

@@ -4,7 +4,6 @@
 <div class='panel-body'>
     <span class='col-sm-9 justify'><{$textblock.name}></span>
     <span class='col-sm-9 justify'><{$textblock.text}></span>
-    <span class='col-sm-9 justify'><{$textblock.weight}></span>
 </div>
 <div class='panel-foot'>
     <div class='col-sm-12 right'>
