@@ -80,17 +80,20 @@ $adminmenu[] = [
     'link' => 'admin/log.php',
     'icon' => 'assets/icons/32/logs.png',
 ];
-if ((bool)$helper->getConfig('use_history')) {
-    $adminmenu[] = [
-        'title' => \_MI_WGEVENTS_ADMENU11,
-        'link' => 'admin/registrationshist.php',
-        'icon' => 'assets/icons/32/registrationshist.png',
-    ];
-    $adminmenu[] = [
-        'title' => \_MI_WGEVENTS_ADMENU12,
-        'link' => 'admin/answershist.php',
-        'icon' => 'assets/icons/32/answershist.png',
-    ];
+
+if (is_object($helper->getModule()) && null !== $helper->getConfig()) {
+    if ((bool)$helper->getConfig('use_history')) {
+        $adminmenu[] = [
+            'title' => \_MI_WGEVENTS_ADMENU11,
+            'link'  => 'admin/registrationshist.php',
+            'icon'  => 'assets/icons/32/registrationshist.png',
+        ];
+        $adminmenu[] = [
+            'title' => \_MI_WGEVENTS_ADMENU12,
+            'link'  => 'admin/answershist.php',
+            'icon'  => 'assets/icons/32/answershist.png',
+        ];
+    }
 }
 $adminmenu[] = [
     'title' => \_MI_WGEVENTS_ADMENU14,
