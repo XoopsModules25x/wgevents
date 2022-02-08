@@ -14,7 +14,6 @@
             <th class="center tablesorter-nosort"><{$smarty.const._MA_WGEVENTS_ACTION}></th>
         </tr>
         </thead>
-
         <tbody>
         <{foreach item=event from=$events_list}>
             <tr class='<{cycle values='odd, even'}>'>
@@ -28,7 +27,6 @@
             </tr>
             <{/foreach}>
         </tbody>
-
     </table>
     <div class="clear">&nbsp;</div>
     <br><br>
