@@ -21,7 +21,9 @@
                 <td class='center'><{$event.name}></td>
                 <td class='center'><{$event.registrations}></td>
                 <td class="center ">
-                    <a href="registration.php?op=list&amp;evid=<{$event.id}>&amp;start=<{$start}>&amp;limit=<{$limit}>" title="<{$smarty.const._MA_WGEVENTS_DETAILS}>"><img src="<{xoModuleIcons16 view.png}>" alt="<{$smarty.const._MA_WGEVENTS_DETAILS}> events" ></a>
+                    <{if $event.registrations|default:0 > 0}>
+                        <a href="registration.php?op=list&amp;evid=<{$event.id}>&amp;start=<{$start}>&amp;limit=<{$limit}>" title="<{$smarty.const._MA_WGEVENTS_DETAILS}>"><img src="<{xoModuleIcons16 view.png}>" alt="<{$smarty.const._MA_WGEVENTS_DETAILS}> events" ></a>
+                    <{/if}>
                 </td>
             </tr>
             <{/foreach}>
