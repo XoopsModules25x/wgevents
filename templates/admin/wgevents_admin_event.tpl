@@ -39,7 +39,7 @@
                 <{/if}>
                 <th class="center"><{$smarty.const._MA_WGEVENTS_DATECREATED}></th>
                 <th class="center"><{$smarty.const._MA_WGEVENTS_SUBMITTER}></th>
-                <th class="center width5"><{$smarty.const._MA_WGEVENTS_ACTION}></th>
+                <th class="center width5 tablesorter-nosort"><{$smarty.const._MA_WGEVENTS_ACTION}></th>
             </tr>
         </thead>
         <{if $eventCount|default:''}>
@@ -90,7 +90,6 @@
     </table>
     <div class="clear">&nbsp;</div>
     <{include file='db:admin_pagerbottom.tpl' }>
-
 <{/if}>
 <{if $form|default:''}>
     <{$form|default:false}>
