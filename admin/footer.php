@@ -26,4 +26,13 @@ if (isset($templateMain)) {
     $GLOBALS['xoopsTpl']->display("db:{$templateMain}");
 }
 
+$xoTheme->addScript('browse.php?Frameworks/jquery/jquery.js');
+//$xoTheme->addScript('browse.php?Frameworks/jquery/plugins/jquery.tablesorter.js');
+$xoTheme->addScript($helper->url('assets/js/tablesorter/js/jquery.tablesorter.js'));
+$xoTheme->addScript($helper->url('assets/js/tablesorter/js/jquery.tablesorter.widgets.js'));
+$xoTheme->addScript($helper->url('assets/js/tablesorter/js/extras/jquery.tablesorter.pager.min.js'));
+$xoTheme->addScript($helper->url('assets/js/tablesorter/js/widgets/widget-pager.min.js'));
+
+$xoTheme->addScript($helper->url('assets/js/tablesorter/functions.js'));
+
 xoops_cp_footer();

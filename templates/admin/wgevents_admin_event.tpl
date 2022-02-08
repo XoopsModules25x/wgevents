@@ -2,7 +2,16 @@
 <{include file='db:wgevents_admin_header.tpl' }>
 
 <{if $events_list|default:''}>
-    <table class='table table-bordered'>
+<{*    <table class='table table-bordered'>*}>
+
+<{*    <table id="sortTable" class="tablesorter-blue" cellspacing="1" cellpadding="0"  width="100%">*}>
+
+
+        <{include file='db:admin_pagertop.tpl' }>
+
+    <table id="sortTable" class="tablesorter-blue" cellspacing="1" cellpadding="0"  width="100%">
+
+
         <thead>
             <tr class='head'>
                 <th class="center"><{$smarty.const._MA_WGEVENTS_EVENT_ID}></th>
@@ -86,11 +95,22 @@
         </tbody>
         <{/if}>
     </table>
+
+
+
+
     <div class="clear">&nbsp;</div>
-    <{if $pagenav|default:''}>
-        <div class="xo-pagenav floatright"><{$pagenav|default:false}></div>
-        <div class="clear spacer"></div>
-    <{/if}>
+
+    <{include file='db:admin_pagerbottom.tpl' }>
+
+
+    <{*    <{if $pagenav|default:''}>*}>
+<{*        <div class="xo-pagenav floatright"><{$pagenav|default:false}></div>*}>
+<{*        <div class="clear spacer"></div>*}>
+<{*    <{/if}>*}>
+
+
+
 <{/if}>
 <{if $form|default:''}>
     <{$form|default:false}>

@@ -4,7 +4,14 @@
 <!-- Table overview events -->
 <{if $eventCount|default:0 > 0}>
     <h3><{$eventsHeader}></h3>
-    <table class='table table-bordered' style="max-width:500px">
+<{*    <table class='table table-bordered' style="max-width:500px">*}>
+
+
+    <{include file='db:admin_pagertop.tpl' }>
+
+    <table id="sortTable" class="tablesorter-blue" cellspacing="1" cellpadding="0"  width="100%">
+
+
         <thead>
         <tr class='head'>
             <th class="center"><{$smarty.const._MA_WGEVENTS_EVENT_NAME}></th>

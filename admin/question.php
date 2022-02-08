@@ -36,6 +36,13 @@ $limit = Request::getInt('limit', $helper->getConfig('adminpager'));
 $GLOBALS['xoopsTpl']->assign('start', $start);
 $GLOBALS['xoopsTpl']->assign('limit', $limit);
 
+
+$moduleDirName = \basename(\dirname(__DIR__));
+
+
+$GLOBALS['xoopsTpl']->assign('mod_url', XOOPS_URL . '/modules/' . $moduleDirName);
+$xoTheme->addStylesheet($helper->url('assets/js/tablesorter/css/theme.blue.css'));
+
 switch ($op) {
     case 'list':
     default:

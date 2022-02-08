@@ -94,6 +94,11 @@ $modversion['templates'] = [
     ['file' => 'wgevents_admin_clone.tpl', 'description' => '', 'type' => 'admin'],
     ['file' => 'wgevents_admin_footer.tpl', 'description' => '', 'type' => 'admin'],
 
+
+    ['file' => 'admin_pagertop.tpl', 'description' => '', 'type' => 'admin'],
+    ['file' => 'admin_pagerbottom.tpl', 'description' => '', 'type' => 'admin'],
+
+
     // User templates
     ['file' => 'wgevents_header.tpl', 'description' => ''],
     ['file' => 'wgevents_question.tpl', 'description' => ''],
