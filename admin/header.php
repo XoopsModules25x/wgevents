@@ -70,3 +70,5 @@ $GLOBALS['xoopsTpl']->assign('modPathIcon32', $modPathIcon32);
 
 $adminObject = \Xmf\Module\Admin::getInstance();
 $style = \WGEVENTS_URL . '/assets/css/admin/style.css';
+
+$xoTheme->addStylesheet($helper->url('assets/js/tablesorter/css/jquery.tablesorter.pager.min.css'));

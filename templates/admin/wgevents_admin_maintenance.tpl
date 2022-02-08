@@ -11,7 +11,13 @@
 </style>
 
 <{if $system_check|default:''}>
-	<table class='table table-bordered'>
+<{*	<table class='table table-bordered'>*}>
+
+    <{include file='db:admin_pagertop.tpl' }>
+
+    <table id="sortTable" class="tablesorter-blue" cellspacing="1" cellpadding="0"  width="100%">
+
+
 		<thead>
 			<tr class='head'>
 				<th class='center' style='width:50%'><{$smarty.const._AM_WGEVENTS_MAINTENANCE_CHECK_SYSTEM}></th>
