@@ -58,8 +58,18 @@ switch ($op) {
     default:
         $GLOBALS['xoTheme']->addScript(\WGEVENTS_URL . '/assets/js/jquery-ui.min.js');
         $GLOBALS['xoTheme']->addScript(\WGEVENTS_URL . '/assets/js/sortables.js');
+
         // Breadcrumbs
         $xoBreadcrumbs[] = ['title' => \_MA_WGEVENTS_QUESTIONS_LIST];
+
+        // check whether there are textblocks available
+        $uidCurrent = \is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->uid() : 0;
+        $crTextblock = new \CriteriaCompo();
+        $crTextblock->add(new \Criteria('class', Constants::TEXTBLOCK_CLASS_PUBLIC), 'OR');
+        $crTextblock->add(new \Criteria('submitter', $uidCurrent));
+        $textblocksCount = $textblockHandler->getCount($crTextblock);
+        $GLOBALS['xoopsTpl']->assign('textblocksCount', $textblocksCount);
+
         // get default fields
         $regdefaults = [];
         $regdefaults[] = [
@@ -199,42 +209,36 @@ switch ($op) {
         $uidCurrent = \is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->uid() : 0;
 
         $cbTextblocks = Request::getArray('cbTextblock');
+        $errors = '';
         foreach (\array_keys($cbTextblocks) as $i) {
-            echo ' i:' . $i;
-        }
+            $textblockObj = $textblockHandler->get($i);
 
-        break;
-        $textblockObj = $textblockHandler->get($queType);
-
-        $questionObj = $questionHandler->create();
-        $questionObj->setVar('evid', $queEvid);
-        $queType = Request::getInt('type');
-        $questionObj->setVar('fdid', $queType);
-        $fieldObj = $fieldHandler->get($queType);
-        $questionObj->setVar('type', $fieldObj->getVar('type'));
-        $questionObj->setVar('caption', Request::getString('caption'));
-        $questionObj->setVar('desc', Request::getText('desc'));
-        $questionObj->setVar('values', '');
-        $questionObj->setVar('placeholder', '');
-        $questionObj->setVar('required', 0);
-        $questionObj->setVar('print', $print);
-        $questionObj->setVar('weight', $weight);
-        if (Request::hasVar('datecreated_int')) {
-            $questionObj->setVar('datecreated', Request::getInt('datecreated_int'));
-        } else {
-            $questionDatecreatedObj = \DateTime::createFromFormat(\_SHORTDATESTRING, Request::getString('datecreated'));
-            $questionObj->setVar('datecreated', $questionDatecreatedObj->getTimestamp());
+            $questionObj = $questionHandler->create();
+            $questionObj->setVar('evid', $queEvid);
+            $questionObj->setVar('fdid', Constants::FIELD_LABEL);
+            $fieldObj = $fieldHandler->get(Constants::FIELD_LABEL);
+            $questionObj->setVar('type', $fieldObj->getVar('type'));
+            $questionObj->setVar('caption', $textblockObj->getVar('name'));
+            $questionObj->setVar('desc', $textblockObj->getVar('text'));
+            $questionObj->setVar('values', '');
+            $questionObj->setVar('placeholder', '');
+            $questionObj->setVar('required', 0);
+            $questionObj->setVar('print', 0);
+            $questionObj->setVar('weight', $weight);
+            $questionObj->setVar('datecreated', \time());
+            $questionObj->setVar('submitter', $uidCurrent);
+            // Insert Data
+            if (!$questionHandler->insert($questionObj)) {
+                $errors .= $questionHandler.getHtmlErrors();
+            }
+            $weight++;
         }
-        $questionObj->setVar('submitter', Request::getInt('submitter'));
-        // Insert Data
-        if ($questionHandler->insert($questionObj)) {
+        if ('' == $errors) {
             // redirect after insert
             \redirect_header('question.php?op=list&amp;evid=' . $queEvid . '&amp;start=' . $start . '&amp;limit=' . $limit, 2, \_MA_WGEVENTS_FORM_OK);
+        } else {
+            $GLOBALS['xoopsTpl']->assign('error', $errors);
         }
-        // Get Form Error
-        $GLOBALS['xoopsTpl']->assign('error', $questionObj->getHtmlErrors());
-        $form = $questionObj->getForm();
-        $GLOBALS['xoopsTpl']->assign('form', $form->render());
         break;
     case 'newset':
         $eventObj = $eventHandler->get($queEvid);

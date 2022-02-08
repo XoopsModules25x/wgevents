@@ -132,10 +132,12 @@ class Question extends \XoopsObject
                 $form->addElement(new \XoopsFormHidden('placeholder_def[' . $i . ']', $fieldsAll[$i]->getVar('placeholder')));
                 $form->addElement(new \XoopsFormHidden('required_def[' . $i . ']', $fieldsAll[$i]->getVar('required')));
                 $form->addElement(new \XoopsFormHidden('print_def[' . $i . ']', $fieldsAll[$i]->getVar('print')));
-                $form->addElement(new \XoopsFormHidden('add_display_values[' . $i . ']', $fieldsAll[$i]->getVar('display_values')));
-                $form->addElement(new \XoopsFormHidden('add_display_placeholder[' . $i . ']', $fieldsAll[$i]->getVar('display_placeholder')));
+                $form->addElement(new \XoopsFormHidden('display_desc[' . $i . ']', $fieldsAll[$i]->getVar('display_desc')));
+                $form->addElement(new \XoopsFormHidden('display_values[' . $i . ']', $fieldsAll[$i]->getVar('display_values')));
+                $form->addElement(new \XoopsFormHidden('display_placeholder[' . $i . ']', $fieldsAll[$i]->getVar('display_placeholder')));
                 if ((int)$fieldsAll[$i]->getVar('type') == $queType) {
-                    $enableValues = (bool)$fieldsAll[$i]->getVar('display_values');
+                    $enableDesc        = (bool)$fieldsAll[$i]->getVar('display_desc');
+                    $enableValues      = (bool)$fieldsAll[$i]->getVar('display_values');
                     $enablePlaceholder = (bool)$fieldsAll[$i]->getVar('display_placeholder');
                 }
             }
@@ -149,6 +151,9 @@ class Question extends \XoopsObject
         // Form Editor TextArea queDesc
         $queDescField = new \XoopsFormTextArea(\_MA_WGEVENTS_QUESTION_DESC, 'desc', $this->getVar('desc', 'e'), 3, 47);
         $queDescField->setDescription(\_MA_WGEVENTS_QUESTION_DESC_DESC);
+        if (!$enableDesc) {
+            $queDescField->setExtra('disabled="disabled"');
+        }
         $form->addElement($queDescField);
         // Form Editor TextArea queValues
         $queValues = (string)$this->getVar('values');

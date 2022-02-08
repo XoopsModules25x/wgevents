@@ -4,13 +4,9 @@
 <!-- Table overview events -->
 <{if $eventCount|default:0 > 0}>
     <h3><{$eventsHeader}></h3>
-<{*    <table class='table table-bordered' style="max-width:500px">*}>
-
     <{include file='db:admin_pagertop.tpl' }>
 
     <table id="sortTable" class="tablesorter-blue" cellspacing="1" cellpadding="0"  width="100%">
-
-
         <thead>
         <tr class='head'>
             <th class="center"><{$smarty.const._MA_WGEVENTS_EVENT_NAME}></th>
@@ -37,7 +33,9 @@
 <{/if}>
 
 <{if $answers_list|default:''}>
-    <table class='table table-bordered'>
+    <{include file='db:admin_pagertop.tpl' }>
+
+    <table id="sortTable" class="tablesorter-blue" cellspacing="1" cellpadding="0"  width="100%">
         <thead>
             <tr class='head'>
                 <th class="center"><{$smarty.const._MA_WGEVENTS_ANSWER_ID}></th>
@@ -72,10 +70,7 @@
         <{/if}>
     </table>
     <div class="clear">&nbsp;</div>
-    <{if $pagenav|default:''}>
-        <div class="xo-pagenav floatright"><{$pagenav|default:false}></div>
-        <div class="clear spacer"></div>
-    <{/if}>
+    <{include file='db:admin_pagerbottom.tpl' }>
 <{/if}>
 <{if $form|default:''}>
     <{$form|default:false}>

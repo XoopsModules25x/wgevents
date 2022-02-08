@@ -37,17 +37,15 @@ $GLOBALS['xoopsTpl']->assign('limit', $limit);
 
 $moduleDirName = \basename(\dirname(__DIR__));
 
-
 $GLOBALS['xoopsTpl']->assign('mod_url', XOOPS_URL . '/modules/' . $moduleDirName);
 $xoTheme->addStylesheet($helper->url('assets/js/tablesorter/css/theme.blue.css'));
-
 
 switch ($op) {
     case 'list':
     default:
         // Define Stylesheet
         $GLOBALS['xoTheme']->addStylesheet($style, null);
-        $templateMain = 'wgevents_admin_fields.tpl';
+        $templateMain = 'wgevents_admin_field.tpl';
         $GLOBALS['xoopsTpl']->assign('navigation', $adminObject->displayNavigation('field.php'));
         $adminObject->addItemButton(\_AM_WGEVENTS_ADD_FIELD, 'field.php?op=new');
         $adminObject->addItemButton(\_AM_WGEVENTS_FIELD_CREATE_DEFAULT, 'field.php?op=default_set');
@@ -134,6 +132,7 @@ switch ($op) {
         $fieldObj->setVar('default', Request::getInt('default'));
         $fieldObj->setVar('custom', Request::getInt('custom'));
         $fieldObj->setVar('print', Request::getInt('print'));
+        $fieldObj->setVar('display_desc', Request::getInt('display_desc'));
         $fieldObj->setVar('display_values', Request::getInt('display_values'));
         $fieldObj->setVar('display_placeholder', Request::getInt('display_placeholder'));
         $fieldObj->setVar('weight', Request::getInt('weight'));
@@ -191,7 +190,7 @@ switch ($op) {
         $GLOBALS['xoopsTpl']->assign('navigation', $adminObject->displayNavigation('field.php'));
         if (isset($_REQUEST['ok']) && 1 == $_REQUEST['ok']) {
             if (!$GLOBALS['xoopsSecurity']->check()) {
-                \redirect_header('field.php', 3, \implode(', ', $GLOBALS['xoopsSecurity']->getErrors()));
+                //\redirect_header('field.php', 3, \implode(', ', $GLOBALS['xoopsSecurity']->getErrors()));
             }
             if ($fieldHandler->getCount() > 0) {
                 if (!$fieldHandler->deleteAll()) {
@@ -218,6 +217,7 @@ switch ($op) {
                 $fieldObj->setVar('required', $item['required']);
                 $fieldObj->setVar('default', $item['default']);
                 $fieldObj->setVar('print', $item['print']);
+                $fieldObj->setVar('display_desc', $item['display_desc']);
                 $fieldObj->setVar('display_values', $item['display_values']);
                 $fieldObj->setVar('display_placeholder', $item['display_placeholder']);
                 $fieldObj->setVar('weight', $key + 1);
@@ -272,6 +272,7 @@ function BuildDefaultSet () {
         'required' => 0,
         'default' => 0,
         'print' => 1,
+        'display_desc' => 1,
         'display_values' => 0,
         'display_placeholder' => 0,
         'custom' => 0,
@@ -285,6 +286,7 @@ function BuildDefaultSet () {
         'required' => 0,
         'default' => 0,
         'print' => 1,
+        'display_desc' => 1,
         'display_values' => 0,
         'display_placeholder' => 1,
         'custom' => 0,
@@ -298,6 +300,7 @@ function BuildDefaultSet () {
         'required' => 0,
         'default' => 0,
         'print' => 1,
+        'display_desc' => 1,
         'display_values' => 0,
         'display_placeholder' => 1,
         'custom' => 0,
@@ -311,6 +314,7 @@ function BuildDefaultSet () {
         'required' => 0,
         'default' => 0,
         'print' => 1,
+        'display_desc' => 1,
         'display_values' => 1,
         'display_placeholder' => 0,
         'custom' => 0,
@@ -324,6 +328,7 @@ function BuildDefaultSet () {
         'required' => 0,
         'default' => 0,
         'print' => 1,
+        'display_desc' => 1,
         'display_values' => 1,
         'display_placeholder' => 0,
         'custom' => 0,
@@ -337,6 +342,7 @@ function BuildDefaultSet () {
         'required' => 0,
         'default' => 0,
         'print' => 1,
+        'display_desc' => 1,
         'display_values' => 1,
         'display_placeholder' => 0,
         'custom' => 0,
@@ -350,6 +356,7 @@ function BuildDefaultSet () {
         'required' => 0,
         'default' => 0,
         'print' => 1,
+        'display_desc' => 1,
         'display_values' => 1,
         'display_placeholder' => 0,
         'custom' => 0,
@@ -363,6 +370,7 @@ function BuildDefaultSet () {
         'required' => 0,
         'default' => 0,
         'print' => 1,
+        'display_desc' => 1,
         'display_values' => 0,
         'display_placeholder' => 0,
         'custom' => 0,
@@ -376,6 +384,7 @@ function BuildDefaultSet () {
         'required' => 0,
         'default' => 0,
         'print' => 1,
+        'display_desc' => 1,
         'display_values' => 0,
         'display_placeholder' => 0,
         'custom' => 0,
@@ -403,6 +412,7 @@ function BuildDefaultSet () {
         'required' => 0,
         'default' => 1,
         'print' => 1,
+        'display_desc' => 1,
         'display_values' => 0,
         'display_placeholder' => 1,
         'custom' => 1,
@@ -416,6 +426,7 @@ function BuildDefaultSet () {
         'required' => 0,
         'default' => 0,
         'print' => 1,
+        'display_desc' => 1,
         'display_values' => 0,
         'display_placeholder' => 1,
         'custom' => 1,
@@ -429,6 +440,7 @@ function BuildDefaultSet () {
         'required' => 0,
         'default' => 0,
         'print' => 1,
+        'display_desc' => 1,
         'display_values' => 0,
         'display_placeholder' => 1,
         'custom' => 1,
@@ -442,6 +454,7 @@ function BuildDefaultSet () {
         'required' => 0,
         'default' => 0,
         'print' => 1,
+        'display_desc' => 1,
         'display_values' => 0,
         'display_placeholder' => 1,
         'custom' => 1,
@@ -455,6 +468,7 @@ function BuildDefaultSet () {
         'required' => 0,
         'default' => 0,
         'print' => 1,
+        'display_desc' => 1,
         'display_values' => 0,
         'display_placeholder' => 0,
         'custom' => 1,
@@ -468,6 +482,7 @@ function BuildDefaultSet () {
         'required' => 0,
         'default' => 0,
         'print' => 1,
+        'display_desc' => 1,
         'display_values' => 0,
         'display_placeholder' => 0,
         'custom' => 1,
@@ -481,6 +496,7 @@ function BuildDefaultSet () {
         'required' => 0,
         'default' => 0,
         'print' => 1,
+        'display_desc' => 1,
         'display_values' => 0,
         'display_placeholder' => 1,
         'custom' => 1,

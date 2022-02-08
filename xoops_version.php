@@ -21,7 +21,7 @@
  * @author       Goffy - Wedega - Email:webmaster@wedega.com - Website:https://xoops.wedega.com
  */
 
-use XoopsModules\Wgevents\Helper;
+use  XoopsModules\Wgevents\Helper;
 
 require_once \dirname(__DIR__) . '/wgevents/preloads/autoloader.php';
 
@@ -77,63 +77,60 @@ $modversion = [
 // ------------------- Templates ------------------- //
 $modversion['templates'] = [
     // Admin templates
+
     ['file' => 'wgevents_admin_about.tpl', 'description' => '', 'type' => 'admin'],
+    ['file' => 'wgevents_admin_account.tpl', 'description' => '', 'type' => 'admin'],
+    ['file' => 'wgevents_admin_answer.tpl', 'description' => '', 'type' => 'admin'],
+    ['file' => 'wgevents_admin_category.tpl', 'description' => '', 'type' => 'admin'],
+    ['file' => 'wgevents_admin_clone.tpl', 'description' => '', 'type' => 'admin'],
+    ['file' => 'wgevents_admin_event.tpl', 'description' => '', 'type' => 'admin'],
+    ['file' => 'wgevents_admin_field.tpl', 'description' => '', 'type' => 'admin'],
+    ['file' => 'wgevents_admin_footer.tpl', 'description' => '', 'type' => 'admin'],
     ['file' => 'wgevents_admin_header.tpl', 'description' => '', 'type' => 'admin'],
     ['file' => 'wgevents_admin_index.tpl', 'description' => '', 'type' => 'admin'],
-    ['file' => 'wgevents_admin_event.tpl', 'description' => '', 'type' => 'admin'],
-    ['file' => 'wgevents_admin_category.tpl', 'description' => '', 'type' => 'admin'],
-    ['file' => 'wgevents_admin_registration.tpl', 'description' => '', 'type' => 'admin'],
-    ['file' => 'wgevents_admin_question.tpl', 'description' => '', 'type' => 'admin'],
-    ['file' => 'wgevents_admin_answer.tpl', 'description' => '', 'type' => 'admin'],
-    ['file' => 'wgevents_admin_textblock.tpl', 'description' => '', 'type' => 'admin'],
-    ['file' => 'wgevents_admin_fields.tpl', 'description' => '', 'type' => 'admin'],
     ['file' => 'wgevents_admin_log.tpl', 'description' => '', 'type' => 'admin'],
-    ['file' => 'wgevents_admin_account.tpl', 'description' => '', 'type' => 'admin'],
     ['file' => 'wgevents_admin_maintenance.tpl', 'description' => '', 'type' => 'admin'],
     ['file' => 'wgevents_admin_permission.tpl', 'description' => '', 'type' => 'admin'],
-    ['file' => 'wgevents_admin_clone.tpl', 'description' => '', 'type' => 'admin'],
-    ['file' => 'wgevents_admin_footer.tpl', 'description' => '', 'type' => 'admin'],
-
-
+    ['file' => 'wgevents_admin_question.tpl', 'description' => '', 'type' => 'admin'],
+    ['file' => 'wgevents_admin_registration.tpl', 'description' => '', 'type' => 'admin'],
+    ['file' => 'wgevents_admin_textblock.tpl', 'description' => '', 'type' => 'admin'],
     ['file' => 'admin_pagertop.tpl', 'description' => '', 'type' => 'admin'],
     ['file' => 'admin_pagerbottom.tpl', 'description' => '', 'type' => 'admin'],
-
-
     // User templates
-    ['file' => 'wgevents_header.tpl', 'description' => ''],
-    ['file' => 'wgevents_question.tpl', 'description' => ''],
-    ['file' => 'wgevents_question_item.tpl', 'description' => ''],
     ['file' => 'wgevents_breadcrumbs.tpl', 'description' => ''],
     ['file' => 'wgevents_calendar.tpl', 'description' => ''],
     ['file' => 'wgevents_event.tpl', 'description' => ''],
     ['file' => 'wgevents_event_index_list.tpl', 'description' => ''],
     ['file' => 'wgevents_event_item_details.tpl', 'description' => ''],
     ['file' => 'wgevents_event_item_list.tpl', 'description' => ''],
+    ['file' => 'wgevents_footer.tpl', 'description' => ''],
+    ['file' => 'wgevents_header.tpl', 'description' => ''],
     ['file' => 'wgevents_index.tpl', 'description' => ''],
+    ['file' => 'wgevents_question.tpl', 'description' => ''],
+    ['file' => 'wgevents_question_item.tpl', 'description' => ''],
     ['file' => 'wgevents_registration.tpl', 'description' => ''],
     ['file' => 'wgevents_registration_item.tpl', 'description' => ''],
+    ['file' => 'wgevents_search.tpl', 'description' => ''],
     ['file' => 'wgevents_textblock.tpl', 'description' => ''],
     ['file' => 'wgevents_textblock_list.tpl', 'description' => ''],
     ['file' => 'wgevents_textblock_item.tpl', 'description' => ''],
-    ['file' => 'wgevents_search.tpl', 'description' => ''],
     ['file' => 'wgevents_verification.tpl', 'description' => ''],
-    ['file' => 'wgevents_footer.tpl', 'description' => ''],
 ];
 // ------------------- Mysql ------------------- //
 $modversion['sqlfile']['mysql'] = 'sql/mysql.sql';
 // Tables
 $modversion['tables'] = [
-    'wgevents_event',
-    'wgevents_category',
-    'wgevents_registration',
-    'wgevents_registration_hist',
-    'wgevents_question',
+    'wgevents_account',
     'wgevents_answer',
     'wgevents_answer_hist',
-    'wgevents_textblock',
+    'wgevents_category',
+    'wgevents_event',
     'wgevents_field',
     'wgevents_log',
-    'wgevents_account',
+    'wgevents_question',
+    'wgevents_registration',
+    'wgevents_registration_hist',
+    'wgevents_textblock',
 ];
 // ------------------- Search ------------------- //
 $modversion['hasSearch'] = 1;
@@ -340,9 +337,10 @@ $modversion['config'][] = [
     'name'        => 'adminpager',
     'title'       => '\_MI_WGEVENTS_ADMIN_PAGER',
     'description' => '\_MI_WGEVENTS_ADMIN_PAGER_DESC',
-    'formtype'    => 'textbox',
-    'valuetype'   => 'int',
-    'default'     => 20,
+    'formtype'    => 'select',
+    'valuetype'   => 'text',
+    'default'     => '10',
+    'options'     => ['10' => 10, '20' => 20, '30' => 30, '40' => 40, 'all' => \_MI_WGEVENTS_TABLESORTER_SHOW_ALL],
 ];
 // User pager
 $modversion['config'][] = [

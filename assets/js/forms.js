@@ -44,13 +44,17 @@ function fillInQuestions() {
     } else {
         xoopsGetElementById('print2').checked = true;
     }
-
-    if (xoopsGetElementById('add_display_values[' + vselected +  ']').value > 0) {
+    if (xoopsGetElementById('display_desc[' + vselected +  ']').value > 0) {
+        xoopsGetElementById('desc').removeAttribute("disabled");
+    } else {
+        xoopsGetElementById('desc').setAttribute("disabled", "disabled");
+    }
+    if (xoopsGetElementById('display_values[' + vselected +  ']').value > 0) {
         xoopsGetElementById('values').removeAttribute("disabled");
     } else {
         xoopsGetElementById('values').setAttribute("disabled", "disabled");
     }
-    if (xoopsGetElementById('add_display_placeholder[' + vselected +  ']').value > 0) {
+    if (xoopsGetElementById('display_placeholder[' + vselected +  ']').value > 0) {
         xoopsGetElementById('placeholder').removeAttribute("disabled");
     } else {
         xoopsGetElementById('placeholder').setAttribute("disabled", "disabled");

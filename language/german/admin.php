@@ -100,6 +100,7 @@ require_once __DIR__ . '/main.php';
 \define('_AM_WGEVENTS_FIELD_PLACEHOLDER', 'Platzhalter');
 \define('_AM_WGEVENTS_FIELD_REQUIRED', 'Erforderlich');
 \define('_AM_WGEVENTS_FIELD_DEFAULT', 'Standard');
+\define('_AM_WGEVENTS_FIELD_DISPLAY_DESC', "Feld 'Beschreibung' anzeigen");
 \define('_AM_WGEVENTS_FIELD_DISPLAY_VALUES', "Feld 'Wert' anzeigen");
 \define('_AM_WGEVENTS_FIELD_DISPLAY_PLACEHOLDER', "Feld 'Platzhalter' anzeigen");
 // Elements of default Addtype
@@ -288,6 +289,10 @@ Bitte definiere das Datum, bis zu dem alle Daten anonymisiert werden sollen.');
 //Change yes/no
 \define('_AM_WGEVENTS_SETON', 'AUS, auf AN ändern');
 \define('_AM_WGEVENTS_SETOFF', 'AN, auf AUS ändern');
+//tablesorter
+\define('_AM_WGEVENTS_TABLESORTER_SHOW_ALL', 'Alle anzeigen');
+\define('_AM_WGEVENTS_TABLESORTER_OF', 'von');
+\define('_AM_WGEVENTS_TABLESORTER_TOTALROWS', 'Reihen gesamt');
 // ---------------- Admin Others ----------------
 \define('_AM_WGEVENTS_ABOUT_MAKE_DONATION', 'Senden');
 \define('_AM_WGEVENTS_SUPPORT_FORUM', 'Support Forum');

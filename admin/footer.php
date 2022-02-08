@@ -33,6 +33,6 @@ $xoTheme->addScript($helper->url('assets/js/tablesorter/js/jquery.tablesorter.wi
 $xoTheme->addScript($helper->url('assets/js/tablesorter/js/extras/jquery.tablesorter.pager.min.js'));
 $xoTheme->addScript($helper->url('assets/js/tablesorter/js/widgets/widget-pager.min.js'));
 
-$xoTheme->addScript($helper->url('assets/js/tablesorter/functions.js'));
+//$xoTheme->addScript($helper->url('assets/js/tablesorter/functions.js'));
 
 xoops_cp_footer();

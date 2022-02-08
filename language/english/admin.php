@@ -100,6 +100,7 @@ require_once __DIR__ . '/main.php';
 \define('_AM_WGEVENTS_FIELD_PLACEHOLDER', 'Placeholder');
 \define('_AM_WGEVENTS_FIELD_REQUIRED', 'Required');
 \define('_AM_WGEVENTS_FIELD_DEFAULT', 'Default');
+\define('_AM_WGEVENTS_FIELD_DISPLAY_DESC', "Display field 'Description'");
 \define('_AM_WGEVENTS_FIELD_DISPLAY_VALUES', "Display field 'Value'");
 \define('_AM_WGEVENTS_FIELD_DISPLAY_PLACEHOLDER', "Display field 'Placeholder'");
 // Elements of default Addtype
@@ -291,6 +292,10 @@ Please define, until which date all data should be anonymized.');
 //Change yes/no
 \define('_AM_WGEVENTS_SETON', 'OFF, change to ON');
 \define('_AM_WGEVENTS_SETOFF', 'ON, change to OFF');
+//tablesorter
+\define('_AM_WGEVENTS_TABLESORTER_SHOW_ALL', 'Show all');
+\define('_AM_WGEVENTS_TABLESORTER_OF', 'of');
+\define('_AM_WGEVENTS_TABLESORTER_TOTALROWS', 'total rows');
 // ---------------- Admin Others ----------------
 \define('_AM_WGEVENTS_ABOUT_MAKE_DONATION', 'Submit');
 \define('_AM_WGEVENTS_SUPPORT_FORUM', 'Support Forum');

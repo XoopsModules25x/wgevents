@@ -186,4 +186,6 @@ require_once __DIR__ . '/common.php';
 \define('_MI_WGEVENTS_NOTIFY_REGISTRATION_APPROVE', 'Freigabe Anmeldung');
 \define('_MI_WGEVENTS_NOTIFY_REGISTRATION_APPROVE_CAPTION', 'Benachrichtige mich über auf Freigabe wartende Anmeldung');
 \define('_MI_WGEVENTS_NOTIFY_REGISTRATION_APPROVE_SUBJECT', 'Benachrichtigung Anmeldung wartet auf Freigabe');
+// tablesorter
+\define('_MI_WGEVENTS_TABLESORTER_SHOW_ALL', 'Alle anzeigen');
 // ---------------- End ----------------

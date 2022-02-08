@@ -62,6 +62,7 @@ class Field extends \XoopsObject
         $this->initVar('required', \XOBJ_DTYPE_INT);
         $this->initVar('default', \XOBJ_DTYPE_INT);
         $this->initVar('print', \XOBJ_DTYPE_INT);
+        $this->initVar('display_desc', \XOBJ_DTYPE_INT);
         $this->initVar('display_values', \XOBJ_DTYPE_INT);
         $this->initVar('display_placeholder', \XOBJ_DTYPE_INT);
         $this->initVar('weight', \XOBJ_DTYPE_INT);
@@ -143,6 +144,9 @@ class Field extends \XoopsObject
         // Form Radio Yes/No fdPrint
         $fdPrint = $this->isNew() ? 0 : $this->getVar('print');
         $form->addElement(new \XoopsFormRadioYN(\_MA_WGEVENTS_PRINT, 'print', $fdPrint));
+        // Form Radio Yes/No fdDisplayDesc
+        $fdDisplayDesc = $this->isNew() ? 1 : $this->getVar('display_desc');
+        $form->addElement(new \XoopsFormRadioYN(\_AM_WGEVENTS_FIELD_DISPLAY_DESC, 'display_desc', $fdDisplayDesc));
         // Form Radio Yes/No fdDisplayValues
         $fdDisplayValues = $this->isNew() ? 1 : $this->getVar('display_values');
         $form->addElement(new \XoopsFormRadioYN(\_AM_WGEVENTS_FIELD_DISPLAY_VALUES, 'display_values', $fdDisplayValues));
@@ -202,6 +206,7 @@ class Field extends \XoopsObject
         $ret['required_text']            = (int)$this->getVar('required') > 0 ? _YES : _NO;
         $ret['default_text']             = (int)$this->getVar('default') > 0 ? _YES : _NO;
         $ret['print_text']               = (int)$this->getVar('print') > 0 ? _YES : _NO;
+        $ret['display_desc_text']        = (int)$this->getVar('display_desc') > 0 ? _YES : _NO;
         $ret['display_values_text']      = (int)$this->getVar('display_values') > 0 ? _YES : _NO;
         $ret['display_placeholder_text'] = (int)$this->getVar('display_placeholder') > 0 ? _YES : _NO;
         $ret['status_text']              = Utility::getStatusText($this->getVar('status'));

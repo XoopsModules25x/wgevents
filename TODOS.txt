@@ -1,12 +1,40 @@
 
 print a ticket
 
+
+
 create plugin for extcal
 
 implementation fullcalendar?
 Implementation of recurring events?
 
 Activate and adapt notification system
+
+adaptions for table sorter:
+1) xoops_version: the preference setting for adminpager must fit with the options of admin_pagertop.tpl <select class="pagesize">
+2) we must copy the code of tablesorter/functions.js into admin_pagertop.tpl, in order top have the possibility to change pager options
+    and remove call of tablesorter/functions.js from footer.php
+3) implement module preference 'adminpager'
+    change size: 10, into size: <{$tablesorter_pagesize}>,
+    and
+    $GLOBALS['xoopsTpl']->assign('tablesorter_pagesize', $helper->getConfig('adminpager'));
+4) adapt admin_pagertop.tpl
+    <span class="pagedisplay" data-pager-output-filtered="{startRow:input} &ndash;{endRow} / {filteredRows} of> {totalRows} rows"></span>
+    into
+    <span class="pagedisplay" data-pager-output="{startRow:input} &ndash; {endRow} / {totalRows} <{$tablesorter_total}>" data-pager-output-filtered="{startRow:input} &ndash;{endRow} / {filteredRows} <{$tablesorter_of}> {totalRows} <{$tablesorter_total}>"></span>
+    otherwise it is not multilingual
+5) create necessary lang defines and add them with smarty
+    $GLOBALS['xoopsTpl']->assign('tablesorter_allrows', \_AM_WGEVENTS_TABLESORTER_SHOW_ALL);
+    $GLOBALS['xoopsTpl']->assign('tablesorter_of', \_AM_WGEVENTS_TABLESORTER_OF);
+    $GLOBALS['xoopsTpl']->assign('tablesorter_total', \_AM_WGEVENTS_TABLESORTER_TOTALROWS);
+5) date format: tablesorter need a special date format in order to sort dates properly, and _SHORTDATESTRING doesn't fit to this format
+    therefore I made a hack:
+    if ('d.m.Y' == _SHORTDATESTRING) {
+        $dateformat = 'ddmmyyyy';
+    } else {
+        $dateformat = 'mmddyyyy';
+    }
+    $GLOBALS['xoopsTpl']->assign('tablesorter_dateformat', $dateformat);
 
 
 
