@@ -210,6 +210,10 @@ class Registration extends \XoopsObject
                     $addValueArr = \unserialize($addValue);
                     $formelementsHandler->optionsText = $addValueArr[0];
                 }
+                if (Constants::FIELD_LABEL == $queType) {
+                    $desc = \preg_replace('/\r\n|\r|\n/', '<br>', $questionsAll[$queId]->getVar('desc', 'e'));
+                    $formelementsHandler->value = $desc;
+                }
                 $formelementsHandler->placeholder = $questionsAll[$queId]->getVar('placeholder');
                 $formelementsHandler->desc = $questionsAll[$queId]->getVar('desc');
                 $required = $questionsAll[$queId]->getVar('required');

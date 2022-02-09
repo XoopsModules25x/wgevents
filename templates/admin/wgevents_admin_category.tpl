@@ -24,7 +24,7 @@
                 <th class="center"><{$smarty.const._MA_WGEVENTS_STATUS}></th>
                 <th class="center"><{$smarty.const._MA_WGEVENTS_DATECREATED}></th>
                 <th class="center"><{$smarty.const._MA_WGEVENTS_SUBMITTER}></th>
-                <th class="center width5"><{$smarty.const._MA_WGEVENTS_ACTION}></th>
+                <th class="center width5 tablesorter-nosort"><{$smarty.const._MA_WGEVENTS_ACTION}></th>
             </tr>
         </thead>
         <{if $categorieCount|default:''}>
@@ -44,7 +44,7 @@
                 <td class='center'><img src="<{$modPathIcon16}>status<{$category.status}>.png" alt="<{$category.status_text}>" title="<{$category.status_text}>" ></td>
                 <td class='center'><{$category.datecreated_text}></td>
                 <td class='center'><{$category.submitter_text}></td>
-                <td class="center  width5">
+                <td class="center width5 tablesorter-nosort">
                     <a href="category.php?op=edit&amp;id=<{$category.id}>&amp;start=<{$start}>&amp;limit=<{$limit}>" title="<{$smarty.const._EDIT}>"><img src="<{xoModuleIcons16 edit.png}>" alt="<{$smarty.const._EDIT}> categories" ></a>
                     <a href="category.php?op=clone&amp;id_source=<{$category.id}>" title="<{$smarty.const._CLONE}>"><img src="<{xoModuleIcons16 editcopy.png}>" alt="<{$smarty.const._CLONE}> categories" ></a>
                     <a href="category.php?op=delete&amp;id=<{$category.id}>" title="<{$smarty.const._DELETE}>"><img src="<{xoModuleIcons16 delete.png}>" alt="<{$smarty.const._DELETE}> categories" ></a>
@@ -55,10 +55,7 @@
         <{/if}>
     </table>
     <div class="clear">&nbsp;</div>
-    <{if $pagenav|default:''}>
-        <div class="xo-pagenav floatright"><{$pagenav|default:false}></div>
-        <div class="clear spacer"></div>
-    <{/if}>
+    <{include file='db:admin_pagerbottom.tpl' }>
 <{/if}>
 <{if $form|default:''}>
     <{$form|default:false}>

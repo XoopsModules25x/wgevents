@@ -68,6 +68,18 @@ $GLOBALS['xoopsTpl']->assign('sysPathIcon32', $sysPathIcon32);
 $GLOBALS['xoopsTpl']->assign('modPathIcon16', $modPathIcon16);
 $GLOBALS['xoopsTpl']->assign('modPathIcon32', $modPathIcon32);
 
+// tablesorter
+$GLOBALS['xoopsTpl']->assign('tablesorter_allrows', \_AM_WGEVENTS_TABLESORTER_SHOW_ALL);
+$GLOBALS['xoopsTpl']->assign('tablesorter_of', \_AM_WGEVENTS_TABLESORTER_OF);
+$GLOBALS['xoopsTpl']->assign('tablesorter_total', \_AM_WGEVENTS_TABLESORTER_TOTALROWS);
+$GLOBALS['xoopsTpl']->assign('tablesorter_pagesize', $helper->getConfig('adminpager'));
+if ('d.m.Y' == _SHORTDATESTRING) {
+    $dateformat = 'ddmmyyyy';
+} else {
+    $dateformat = 'mmddyyyy';
+}
+$GLOBALS['xoopsTpl']->assign('tablesorter_dateformat', $dateformat);
+
 $adminObject = \Xmf\Module\Admin::getInstance();
 $style = \WGEVENTS_URL . '/assets/css/admin/style.css';
 

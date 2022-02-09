@@ -99,9 +99,6 @@ switch ($op) {
                     unset($event);
                 }
             }
-
-            $form = $eventHandler->getFormEventSelect();
-            $GLOBALS['xoopsTpl']->assign('form', $form->render());
         }
         break;
     case 'new':

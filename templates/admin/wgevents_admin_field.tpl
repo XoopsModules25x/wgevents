@@ -2,13 +2,9 @@
 <{include file='db:wgevents_admin_header.tpl' }>
 
 <{if $fields_list|default:''}>
-<{*    <table class='table table-bordered'>*}>
-
     <{include file='db:admin_pagertop.tpl' }>
 
     <table id="sortTable" class="tablesorter-blue" cellspacing="1" cellpadding="0"  width="100%">
-
-
         <thead>
             <tr class='head'>
                 <th class="center"><{$smarty.const._AM_WGEVENTS_FIELD_ID}></th>
@@ -19,13 +15,14 @@
                 <th class="center"><{$smarty.const._AM_WGEVENTS_FIELD_REQUIRED}></th>
                 <th class="center"><{$smarty.const._AM_WGEVENTS_FIELD_DEFAULT}></th>
                 <th class="center"><{$smarty.const._MA_WGEVENTS_PRINT}></th>
+                <th class="center"><{$smarty.const._AM_WGEVENTS_FIELD_DISPLAY_DESC}></th>
                 <th class="center"><{$smarty.const._AM_WGEVENTS_FIELD_DISPLAY_VALUES}></th>
                 <th class="center"><{$smarty.const._AM_WGEVENTS_FIELD_DISPLAY_PLACEHOLDER}></th>
                 <th class="center"><{$smarty.const._MA_WGEVENTS_WEIGHT}></th>
                 <th class="center"><{$smarty.const._MA_WGEVENTS_STATUS}></th>
                 <th class="center"><{$smarty.const._MA_WGEVENTS_DATECREATED}></th>
                 <th class="center"><{$smarty.const._MA_WGEVENTS_SUBMITTER}></th>
-                <th class="center width5"><{$smarty.const._MA_WGEVENTS_ACTION}></th>
+                <th class="center width5 tablesorter-nosort"><{$smarty.const._MA_WGEVENTS_ACTION}></th>
             </tr>
         </thead>
         <{if $fieldCount|default:''}>
@@ -59,6 +56,13 @@
                     <{/if}>
                 </td>
                 <td class='center'>
+                    <{if $field.display_desc|default:false}>
+                    <a href="field.php?op=change_yn&amp;id=<{$field.id}>&amp;field=display_desc&amp;value=0&amp;start=<{$start}>&amp;limit=<{$limit}>" title="<{$smarty.const._AM_WGEVENTS_SETOFF}>"><img src="<{$wgevents_icons_url_16}>/<{$field.display_desc}>.png" alt="<{$smarty.const._AM_WGEVENTS_SETOFF}> fields" ></a>
+                    <{else}>
+                    <a href="field.php?op=change_yn&amp;id=<{$field.id}>&amp;field=display_desc&amp;value=1&amp;start=<{$start}>&amp;limit=<{$limit}>" title="<{$smarty.const._AM_WGEVENTS_SETON}>"><img src="<{$wgevents_icons_url_16}>/<{$field.display_desc}>.png" alt="<{$smarty.const._AM_WGEVENTS_SETON}> fields" ></a>
+                    <{/if}>
+                </td>
+                <td class='center'>
                     <{if $field.display_values|default:false}>
                     <a href="field.php?op=change_yn&amp;id=<{$field.id}>&amp;field=display_values&amp;value=0&amp;start=<{$start}>&amp;limit=<{$limit}>" title="<{$smarty.const._AM_WGEVENTS_SETOFF}>"><img src="<{$wgevents_icons_url_16}>/<{$field.display_values}>.png" alt="<{$smarty.const._AM_WGEVENTS_SETOFF}> fields" ></a>
                     <{else}>
@@ -89,10 +93,7 @@
         <{/if}>
     </table>
     <div class="clear">&nbsp;</div>
-    <{if $pagenav|default:''}>
-        <div class="xo-pagenav floatright"><{$pagenav|default:false}></div>
-        <div class="clear spacer"></div>
-    <{/if}>
+    <{include file='db:admin_pagerbottom.tpl' }>
 <{/if}>
 <{if $form|default:''}>
     <{$form|default:false}>

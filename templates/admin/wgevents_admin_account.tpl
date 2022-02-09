@@ -51,7 +51,7 @@
                 <th class="center"><{$smarty.const._AM_WGEVENTS_ACCOUNT_PRIMARY}></th>
                 <th class="center"><{$smarty.const._MA_WGEVENTS_DATECREATED}></th>
                 <th class="center"><{$smarty.const._MA_WGEVENTS_SUBMITTER}></th>
-                <th class="center width5"><{$smarty.const._MA_WGEVENTS_ACTION}></th>
+                <th class="center width5 tablesorter-nosort"><{$smarty.const._MA_WGEVENTS_ACTION}></th>
             </tr>
         </thead>
         <{if $accountCount|default:''}>
@@ -94,10 +94,7 @@
         <{/if}>
     </table>
     <div class="clear">&nbsp;</div>
-    <{if $pagenav|default:''}>
-        <div class="xo-pagenav floatright"><{$pagenav|default:false}></div>
-        <div class="clear spacer"></div>
-    <{/if}>
+    <{include file='db:admin_pagerbottom.tpl' }>
 <{/if}>
 <{if $form|default:''}>
     <{$form|default:false}>

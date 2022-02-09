@@ -185,6 +185,7 @@ CREATE TABLE `wgevents_field` (
   `required`             INT(1)          NOT NULL DEFAULT '0',
   `default`              INT(1)          NOT NULL DEFAULT '0',
   `print`                INT(1)          NOT NULL DEFAULT '0',
+  `display_desc`         INT(1)          NOT NULL DEFAULT '0',
   `display_values`       INT(1)          NOT NULL DEFAULT '0',
   `display_placeholder`  INT(1)          NOT NULL DEFAULT '0',
   `status`               INT(1)          NOT NULL DEFAULT '0',

@@ -1,15 +1,12 @@
 
 print a ticket
 
+
+
 create plugin for extcal
 
 implementation fullcalendar?
 Implementation of recurring events?
-
-Activate and adapt notification system
-
-
-
 
 
 

@@ -399,6 +399,9 @@ wgevents_field:
             name: print
             attributes: ' INT(1)          NOT NULL DEFAULT ''0'' '
         -
+            name: display_desc
+            attributes: ' INT(1)          NOT NULL DEFAULT ''0'' '
+        -
             name: display_values
             attributes: ' INT(1)          NOT NULL DEFAULT ''0'' '
         -

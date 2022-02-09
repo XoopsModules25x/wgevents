@@ -4,42 +4,38 @@
 <!-- Table overview events -->
 <{if $eventCount|default:0 > 0}>
     <h3><{$eventsHeader}></h3>
-<{*    <table class='table table-bordered' style="max-width:500px">*}>
-
-
     <{include file='db:admin_pagertop.tpl' }>
 
     <table id="sortTable" class="tablesorter-blue" cellspacing="1" cellpadding="0"  width="100%">
-
-
         <thead>
         <tr class='head'>
             <th class="center"><{$smarty.const._MA_WGEVENTS_EVENT_NAME}></th>
             <th class="center"><{$smarty.const._MA_WGEVENTS_REGISTRATIONS_CURR}></th>
-            <th class="center"><{$smarty.const._MA_WGEVENTS_ACTION}></th>
+            <th class="center tablesorter-nosort"><{$smarty.const._MA_WGEVENTS_ACTION}></th>
         </tr>
         </thead>
-
         <tbody>
         <{foreach item=event from=$events_list}>
             <tr class='<{cycle values='odd, even'}>'>
                 <td class='center'><{$event.name}></td>
                 <td class='center'><{$event.registrations}></td>
                 <td class="center ">
-                    <a href="registration.php?op=list&amp;evid=<{$event.id}>&amp;start=<{$start}>&amp;limit=<{$limit}>" title="<{$smarty.const._MA_WGEVENTS_DETAILS}>"><img src="<{xoModuleIcons16 view.png}>" alt="<{$smarty.const._MA_WGEVENTS_DETAILS}> events" ></a>
+                    <{if $event.registrations|default:0 > 0}>
+                        <a href="registration.php?op=list&amp;evid=<{$event.id}>&amp;start=<{$start}>&amp;limit=<{$limit}>" title="<{$smarty.const._MA_WGEVENTS_DETAILS}>"><img src="<{xoModuleIcons16 view.png}>" alt="<{$smarty.const._MA_WGEVENTS_DETAILS}> events" ></a>
+                    <{/if}>
                 </td>
             </tr>
             <{/foreach}>
         </tbody>
-
     </table>
     <div class="clear">&nbsp;</div>
     <br><br>
 <{/if}>
 
 <{if $registrations_list|default:''}>
-    <!-- Table Registration -->
-    <table class='table table-bordered'>
+    <{include file='db:admin_pagertop.tpl' }>
+
+    <table id="sortTable" class="tablesorter-blue" cellspacing="1" cellpadding="0"  width="100%">
         <thead>
             <tr class='head'>
                 <th class="center"><{$smarty.const._MA_WGEVENTS_REGISTRATION_ID}></th>
@@ -54,7 +50,7 @@
                 <th class="center"><{$smarty.const._MA_WGEVENTS_REGISTRATION_LISTWAIT}></th>
                 <th class="center"><{$smarty.const._MA_WGEVENTS_DATECREATED}></th>
                 <th class="center"><{$smarty.const._MA_WGEVENTS_SUBMITTER}></th>
-                <th class="center width5"><{$smarty.const._MA_WGEVENTS_ACTION}></th>
+                <th class="center width5 tablesorter-nosort"><{$smarty.const._MA_WGEVENTS_ACTION}></th>
             </tr>
         </thead>
         <{if $registrationCount|default:''}>
@@ -84,10 +80,7 @@
         <{/if}>
     </table>
     <div class="clear">&nbsp;</div>
-    <{if $pagenav|default:''}>
-        <div class="xo-pagenav floatright"><{$pagenav|default:false}></div>
-        <div class="clear spacer"></div>
-    <{/if}>
+    <{include file='db:admin_pagerbottom.tpl' }>
 <{/if}>
 <{if $form|default:''}>
     <{$form|default:false}>

@@ -187,4 +187,6 @@ require_once __DIR__ . '/common.php';
 \define('_MI_WGEVENTS_NOTIFY_REGISTRATION_APPROVE', 'Registration approve');
 \define('_MI_WGEVENTS_NOTIFY_REGISTRATION_APPROVE_CAPTION', 'Notify me about registrations waiting for approvement');
 \define('_MI_WGEVENTS_NOTIFY_REGISTRATION_APPROVE_SUBJECT', 'Notification registration waiting for approvement');
+//tablesorter
+\define('_MI_WGEVENTS_TABLESORTER_SHOW_ALL', 'Show all');
 // ---------------- End ----------------

@@ -42,7 +42,9 @@
                 <td colspan="9" class="center">
                     <a class='btn btn-success wge-btn' href='event.php?op=show&amp;id=<{$addEvid}>' title='<{$smarty.const._MA_WGEVENTS_GOTO_EVENT}>'><{$smarty.const._MA_WGEVENTS_GOTO_EVENT}></a>
                     <a class='btn btn-primary wge-btn' href='question.php?op=new&amp;evid=<{$addEvid}>' title='<{$smarty.const._MA_WGEVENTS_QUESTION_ADD}>'><{$smarty.const._MA_WGEVENTS_QUESTION_ADD}></a>
-                    <a class='btn btn-primary wge-btn' href='question.php?op=add_textblock&amp;evid=<{$addEvid}>' title='<{$smarty.const._MA_WGEVENTS_TEXTBLOCK_ADD}>'><{$smarty.const._MA_WGEVENTS_TEXTBLOCK_ADD}></a>
+                    <{if $textblocksCount|default:0 > 0}>
+                        <a class='btn btn-primary wge-btn' href='question.php?op=add_textblock&amp;evid=<{$addEvid}>' title='<{$smarty.const._MA_WGEVENTS_TEXTBLOCK_ADD}>'><{$smarty.const._MA_WGEVENTS_TEXTBLOCK_ADD}></a>
+                    <{/if}>
                     <a class='btn btn-success wge-btn' href='question.php?op=test&amp;evid=<{$addEvid}>' title='<{$smarty.const._MA_WGEVENTS_QUESTIONS_PREVIEW}>'><{$smarty.const._MA_WGEVENTS_QUESTIONS_PREVIEW}></a>
                 </td>
             </tr>
