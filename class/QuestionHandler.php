@@ -82,7 +82,7 @@ class QuestionHandler extends \XoopsPersistableObjectHandler
      * @param string $order
      * @return int
      */
-    public function getCountQuestions($start = 0, $limit = 0, $sort = 'id ASC, evid', $order = 'ASC')
+    public function getCountQuestions($start = 0, $limit = 0, $sort = 'weight ASC, id', $order = 'ASC')
     {
         $crCountQuestions = new \CriteriaCompo();
         $crCountQuestions = $this->getQuestionsCriteria($crCountQuestions, $start, $limit, $sort, $order);
@@ -97,7 +97,7 @@ class QuestionHandler extends \XoopsPersistableObjectHandler
      * @param string $order
      * @return array
      */
-    public function getAllQuestions($start = 0, $limit = 0, $sort = 'id ASC, evid', $order = 'ASC')
+    public function getAllQuestions($start = 0, $limit = 0, $sort = 'weight ASC, id', $order = 'ASC')
     {
         $crAllQuestions = new \CriteriaCompo();
         $crAllQuestions = $this->getQuestionsCriteria($crAllQuestions, $start, $limit, $sort, $order);

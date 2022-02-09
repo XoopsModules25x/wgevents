@@ -11,7 +11,7 @@
         <tr class='head'>
             <th class="center"><{$smarty.const._MA_WGEVENTS_EVENT_NAME}></th>
             <th class="center"><{$smarty.const._MA_WGEVENTS_REGISTRATIONS_CURR}></th>
-            <th class="center tablesorter-nosort"><{$smarty.const._MA_WGEVENTS_ACTION}></th>
+            <th class="center sorter-false filter-false"><{$smarty.const._MA_WGEVENTS_ACTION}></th>
         </tr>
         </thead>
         <tbody>
@@ -50,7 +50,7 @@
                 <th class="center"><{$smarty.const._MA_WGEVENTS_REGISTRATION_LISTWAIT}></th>
                 <th class="center"><{$smarty.const._MA_WGEVENTS_DATECREATED}></th>
                 <th class="center"><{$smarty.const._MA_WGEVENTS_SUBMITTER}></th>
-                <th class="center width5 tablesorter-nosort"><{$smarty.const._MA_WGEVENTS_ACTION}></th>
+                <th class="center width5 sorter-false filter-false"><{$smarty.const._MA_WGEVENTS_ACTION}></th>
             </tr>
         </thead>
         <{if $registrationCount|default:''}>
@@ -69,7 +69,7 @@
                 <td class='center'><{$registration.listwait_text}></td>
                 <td class='center'><{$registration.datecreated_text}></td>
                 <td class='center'><{$registration.submitter_text}></td>
-                <td class="center  width5">
+                <td class="center width5 sorter-false filter-false">
                     <a href="registration.php?op=edit&amp;id=<{$registration.id}>&amp;start=<{$start}>&amp;limit=<{$limit}>" title="<{$smarty.const._EDIT}>"><img src="<{xoModuleIcons16 edit.png}>" alt="<{$smarty.const._EDIT}> registrations" ></a>
                     <a href="registration.php?op=clone&amp;id_source=<{$registration.id}>" title="<{$smarty.const._CLONE}>"><img src="<{xoModuleIcons16 editcopy.png}>" alt="<{$smarty.const._CLONE}> registrations" ></a>
                     <a href="registration.php?op=delete&amp;id=<{$registration.id}>" title="<{$smarty.const._DELETE}>"><img src="<{xoModuleIcons16 delete.png}>" alt="<{$smarty.const._DELETE}> registrations" ></a>

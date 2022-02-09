@@ -43,6 +43,8 @@ $xoTheme->addStylesheet($helper->url('assets/js/tablesorter/css/theme.blue.css')
 switch ($op) {
     case 'list':
     default:
+        $GLOBALS['xoTheme']->addScript(\WGEVENTS_URL . '/assets/js/jquery-ui.min.js');
+        $GLOBALS['xoTheme']->addScript(\WGEVENTS_URL . '/assets/js/sortables.js');
         // Define Stylesheet
         $GLOBALS['xoTheme']->addStylesheet($style, null);
         $templateMain = 'wgevents_admin_field.tpl';
@@ -252,7 +254,7 @@ switch ($op) {
         $order = $_POST['order'];
         for ($i = 0, $iMax = \count($order); $i < $iMax; $i++) {
             $fieldObj = $fieldHandler->get($order[$i]);
-            $fieldObj->setVar('dir_weight', $i + 1);
+            $fieldObj->setVar('weight', $i + 1);
             $fieldHandler->insert($fieldObj);
         }
         break;
