@@ -114,13 +114,6 @@
                 widthFixed: true,
                 widgets: ['zebra', 'filter'],
                 dateFormat: '<{$tablesorter_dateformat}>', // set the default date format
-                headers: {
-                    // disable sorting column with class no_sorting
-                    '.tablesorter-nosort' : {
-                        // disable it by setting the property sorter to false
-                        sorter: false
-                    }
-                }
             })
 
             // bind to pager events

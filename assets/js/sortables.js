@@ -31,4 +31,34 @@ $(document).ready( function(){
 			}
 		}
 	).disableSelection();
+	/* Call the container items to reorder fields */
+	$("#fields-list").sortable({
+			opacity: 0.6,
+			cursor: "move",
+			connectWith: "#fields-list",
+			update: function(event, ui) {
+				var list = $(this).sortable("serialize");
+				$.post("field.php?op=order", list );
+			},
+			receive: function(event, ui) {
+				var list = $(this).sortable("serialize");
+				$.post("field.php?op=order", list );
+			}
+		}
+	).disableSelection();
+	/* Call the container items to reorder textblocks */
+	$("#textblocks-list").sortable({
+			opacity: 0.6,
+			cursor: "move",
+			connectWith: "#textblocks-list",
+			update: function(event, ui) {
+				var list = $(this).sortable("serialize");
+				$.post("textblock.php?op=order", list );
+			},
+			receive: function(event, ui) {
+				var list = $(this).sortable("serialize");
+				$.post("textblock.php?op=order", list );
+			}
+		}
+	).disableSelection();
 });

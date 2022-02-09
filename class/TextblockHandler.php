@@ -82,7 +82,7 @@ class TextblockHandler extends \XoopsPersistableObjectHandler
      * @param string $order
      * @return int
      */
-    public function getCountTextblocks($start = 0, $limit = 0, $sort = 'id ASC, name', $order = 'ASC')
+    public function getCountTextblocks($start = 0, $limit = 0, $sort = 'weight ASC, id', $order = 'ASC')
     {
         $crCountTextblocks = new \CriteriaCompo();
         $crCountTextblocks = $this->getTextblocksCriteria($crCountTextblocks, $start, $limit, $sort, $order);
@@ -97,7 +97,7 @@ class TextblockHandler extends \XoopsPersistableObjectHandler
      * @param string $order
      * @return array
      */
-    public function getAllTextblocks($start = 0, $limit = 0, $sort = 'id ASC, name', $order = 'ASC')
+    public function getAllTextblocks($start = 0, $limit = 0, $sort = 'weight ASC, id', $order = 'ASC')
     {
         $crAllTextblocks = new \CriteriaCompo();
         $crAllTextblocks = $this->getTextblocksCriteria($crAllTextblocks, $start, $limit, $sort, $order);

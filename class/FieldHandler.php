@@ -82,7 +82,7 @@ class FieldHandler extends \XoopsPersistableObjectHandler
      * @param string $order
      * @return int
      */
-    public function getCountFields($start = 0, $limit = 0, $sort = 'id ASC, caption', $order = 'ASC')
+    public function getCountFields($start = 0, $limit = 0, $sort = 'weight ASC, id', $order = 'ASC')
     {
         $crCountFields = new \CriteriaCompo();
         $crCountFields = $this->getFieldsCriteria($crCountFields, $start, $limit, $sort, $order);
@@ -97,7 +97,7 @@ class FieldHandler extends \XoopsPersistableObjectHandler
      * @param string $order
      * @return array
      */
-    public function getAllFields($start = 0, $limit = 0, $sort = 'id ASC, caption', $order = 'ASC')
+    public function getAllFields($start = 0, $limit = 0, $sort = 'weight ASC, id', $order = 'ASC')
     {
         $crAllFields = new \CriteriaCompo();
         $crAllFields = $this->getFieldsCriteria($crAllFields, $start, $limit, $sort, $order);

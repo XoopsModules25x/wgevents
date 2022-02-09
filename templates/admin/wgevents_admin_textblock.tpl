@@ -7,6 +7,7 @@
     <table id="sortTable" class="tablesorter-blue" cellspacing="1" cellpadding="0"  width="100%">
         <thead>
             <tr class='head'>
+                <th class="center sorter-false filter-false">&nbsp;</th>
                 <th class="center"><{$smarty.const._MA_WGEVENTS_TEXTBLOCK_ID}></th>
                 <th class="center"><{$smarty.const._MA_WGEVENTS_TEXTBLOCK_CATID}></th>
                 <th class="center"><{$smarty.const._MA_WGEVENTS_TEXTBLOCK_NAME}></th>
@@ -15,13 +16,14 @@
                 <th class="center"><{$smarty.const._MA_WGEVENTS_WEIGHT}></th>
                 <th class="center"><{$smarty.const._MA_WGEVENTS_DATECREATED}></th>
                 <th class="center"><{$smarty.const._MA_WGEVENTS_SUBMITTER}></th>
-                <th class="center width5 tablesorter-nosort"><{$smarty.const._MA_WGEVENTS_ACTION}></th>
+                <th class="center width5 sorter-false filter-false"><{$smarty.const._MA_WGEVENTS_ACTION}></th>
             </tr>
         </thead>
         <{if $textblockCount|default:''}>
-        <tbody>
+        <tbody id="textblocks-list">
             <{foreach item=textblock from=$textblocks_list}>
-            <tr class='<{cycle values='odd, even'}>'>
+            <tr class='<{cycle values='odd, even'}>' id="order_<{$textblock.id}>">
+                <td class='center'><img src="<{$wgevents_icons_url_16}>/up_down.png"></td>
                 <td class='center'><{$textblock.id}></td>
                 <td class='center'><{$textblock.catname}></td>
                 <td class='center'><{$textblock.name}></td>
@@ -30,7 +32,7 @@
                 <td class='center'><{$textblock.weight}></td>
                 <td class='center'><{$textblock.datecreated_text}></td>
                 <td class='center'><{$textblock.submitter_text}></td>
-                <td class="center  width5">
+                <td class="center width5 sorter-false filter-false">
                     <a href="textblock.php?op=edit&amp;id=<{$textblock.id}>&amp;start=<{$start}>&amp;limit=<{$limit}>" title="<{$smarty.const._EDIT}>"><img src="<{xoModuleIcons16 edit.png}>" alt="<{$smarty.const._EDIT}> textblocks" ></a>
                     <a href="textblock.php?op=clone&amp;id_source=<{$textblock.id}>" title="<{$smarty.const._CLONE}>"><img src="<{xoModuleIcons16 editcopy.png}>" alt="<{$smarty.const._CLONE}> textblocks" ></a>
                     <a href="textblock.php?op=delete&amp;id=<{$textblock.id}>" title="<{$smarty.const._DELETE}>"><img src="<{xoModuleIcons16 delete.png}>" alt="<{$smarty.const._DELETE}> textblocks" ></a>

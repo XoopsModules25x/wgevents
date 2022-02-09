@@ -34,3 +34,7 @@ img {
     padding-top:30px;
     text-align: center;
 }
+
+.tablesorter-filter-row td input.disabled {
+    display:none;
+}

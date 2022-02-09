@@ -7,11 +7,9 @@
     <{include file='db:admin_pagertop.tpl' }>
 
     <table id="sortTable" class="tablesorter-blue" cellspacing="1" cellpadding="0"  width="100%">
-
-
         <thead>
             <tr class='head'>
-                <th class="center">&nbsp;</th>
+                <th class="center sorter-false filter-false">&nbsp;</th>
                 <th class="center"><{$smarty.const._AM_WGEVENTS_CATEGORY_ID}></th>
                 <th class="center"><{$smarty.const._AM_WGEVENTS_CATEGORY_PID}></th>
                 <th class="center"><{$smarty.const._AM_WGEVENTS_CATEGORY_NAME}></th>
@@ -24,7 +22,7 @@
                 <th class="center"><{$smarty.const._MA_WGEVENTS_STATUS}></th>
                 <th class="center"><{$smarty.const._MA_WGEVENTS_DATECREATED}></th>
                 <th class="center"><{$smarty.const._MA_WGEVENTS_SUBMITTER}></th>
-                <th class="center width5 tablesorter-nosort"><{$smarty.const._MA_WGEVENTS_ACTION}></th>
+                <th class="center width5 sorter-false filter-false"><{$smarty.const._MA_WGEVENTS_ACTION}></th>
             </tr>
         </thead>
         <{if $categorieCount|default:''}>
@@ -44,7 +42,7 @@
                 <td class='center'><img src="<{$modPathIcon16}>status<{$category.status}>.png" alt="<{$category.status_text}>" title="<{$category.status_text}>" ></td>
                 <td class='center'><{$category.datecreated_text}></td>
                 <td class='center'><{$category.submitter_text}></td>
-                <td class="center width5 tablesorter-nosort">
+                <td class="center width5 sorter-false filter-false">
                     <a href="category.php?op=edit&amp;id=<{$category.id}>&amp;start=<{$start}>&amp;limit=<{$limit}>" title="<{$smarty.const._EDIT}>"><img src="<{xoModuleIcons16 edit.png}>" alt="<{$smarty.const._EDIT}> categories" ></a>
                     <a href="category.php?op=clone&amp;id_source=<{$category.id}>" title="<{$smarty.const._CLONE}>"><img src="<{xoModuleIcons16 editcopy.png}>" alt="<{$smarty.const._CLONE}> categories" ></a>
                     <a href="category.php?op=delete&amp;id=<{$category.id}>" title="<{$smarty.const._DELETE}>"><img src="<{xoModuleIcons16 delete.png}>" alt="<{$smarty.const._DELETE}> categories" ></a>

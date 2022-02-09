@@ -7,6 +7,7 @@
     <table id="sortTable" class="tablesorter-blue" cellspacing="1" cellpadding="0"  width="100%">
         <thead>
             <tr class='head'>
+                <th class="center sorter-false filter-false">&nbsp;</th>
                 <th class="center"><{$smarty.const._AM_WGEVENTS_FIELD_ID}></th>
                 <th class="center"><{$smarty.const._AM_WGEVENTS_FIELD_TYPE}></th>
                 <th class="center"><{$smarty.const._AM_WGEVENTS_FIELD_CAPTION}></th>
@@ -22,13 +23,14 @@
                 <th class="center"><{$smarty.const._MA_WGEVENTS_STATUS}></th>
                 <th class="center"><{$smarty.const._MA_WGEVENTS_DATECREATED}></th>
                 <th class="center"><{$smarty.const._MA_WGEVENTS_SUBMITTER}></th>
-                <th class="center width5 tablesorter-nosort"><{$smarty.const._MA_WGEVENTS_ACTION}></th>
+                <th class="center width5 sorter-false filter-false"><{$smarty.const._MA_WGEVENTS_ACTION}></th>
             </tr>
         </thead>
         <{if $fieldCount|default:''}>
-        <tbody>
+        <tbody id="fields-list">
             <{foreach item=field from=$fields_list}>
-            <tr class='<{cycle values='odd, even'}>'>
+            <tr class='<{cycle values='odd, even'}>' id="order_<{$field.id}>">
+                <td class='center'><img src="<{$wgevents_icons_url_16}>/up_down.png"></td>
                 <td class='center'><{$field.id}></td>
                 <td class='center'><{$field.type_text}></td>
                 <td class='center'><{$field.caption}></td>

@@ -11,7 +11,7 @@
         <tr class='head'>
             <th class="center"><{$smarty.const._MA_WGEVENTS_EVENT_NAME}></th>
             <th class="center"><{$smarty.const._MA_WGEVENTS_ANSWERS_CURR}></th>
-            <th class="center tablesorter-nosort"><{$smarty.const._MA_WGEVENTS_ACTION}></th>
+            <th class="center sorter-false filter-false"><{$smarty.const._MA_WGEVENTS_ACTION}></th>
         </tr>
         </thead>
         <tbody>
@@ -45,7 +45,7 @@
                 <th class="center"><{$smarty.const._MA_WGEVENTS_ANSWER_TEXT}></th>
                 <th class="center"><{$smarty.const._MA_WGEVENTS_DATECREATED}></th>
                 <th class="center"><{$smarty.const._MA_WGEVENTS_SUBMITTER}></th>
-                <th class="center width5 tablesorter-nosort"><{$smarty.const._MA_WGEVENTS_ACTION}></th>
+                <th class="center width5 sorter-false filter-false"><{$smarty.const._MA_WGEVENTS_ACTION}></th>
             </tr>
         </thead>
         <{if $answerCount|default:''}>

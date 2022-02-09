@@ -44,6 +44,8 @@ $xoTheme->addStylesheet($helper->url('assets/js/tablesorter/css/theme.blue.css')
 switch ($op) {
     case 'list':
     default:
+        $GLOBALS['xoTheme']->addScript(\WGEVENTS_URL . '/assets/js/jquery-ui.min.js');
+        $GLOBALS['xoTheme']->addScript(\WGEVENTS_URL . '/assets/js/sortables.js');
         // Define Stylesheet
         $GLOBALS['xoTheme']->addStylesheet($style, null);
         $templateMain = 'wgevents_admin_textblock.tpl';
@@ -55,6 +57,7 @@ switch ($op) {
         $GLOBALS['xoopsTpl']->assign('textblockCount', $textblockCount);
         $GLOBALS['xoopsTpl']->assign('wgevents_url', \WGEVENTS_URL);
         $GLOBALS['xoopsTpl']->assign('wgevents_upload_url', \WGEVENTS_UPLOAD_URL);
+        $GLOBALS['xoopsTpl']->assign('wgevents_icons_url_16', \WGEVENTS_ICONS_URL_16);
         // Table view textblocks
         if ($textblockCount > 0) {
             foreach (\array_keys($textblockAll) as $i) {
@@ -158,6 +161,14 @@ switch ($op) {
                 \sprintf(\_MA_WGEVENTS_FORM_SURE_DELETE, $textblockObj->getVar('name')));
             $form = $customConfirm->getFormConfirm();
             $GLOBALS['xoopsTpl']->assign('form', $form->render());
+        }
+        break;
+    case 'order':
+        $order = $_POST['order'];
+        for ($i = 0, $iMax = \count($order); $i < $iMax; $i++) {
+            $textblockObj = $textblockHandler->get($order[$i]);
+            $textblockObj->setVar('weight', $i + 1);
+            $textblockHandler->insert($textblockObj);
         }
         break;
 }
