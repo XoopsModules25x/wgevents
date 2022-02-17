@@ -79,6 +79,12 @@ function b_wgevents_event_show($options)
             // For the block: events random
             $crEvent->setSort('RAND()');
             break;
+        case 'coming':
+            // For the block: next events
+            $crEvent->add(new \Criteria('datefrom', \time(), '>='));
+            $crEvent->setSort('datefrom');
+            $crEvent->setOrder('ASC');
+            break;
     }
 
     $crEvent->setLimit($limit);
@@ -100,11 +106,13 @@ function b_wgevents_event_show($options)
             $block[$i]['id'] = $eventsAll[$i]->getVar('id');
             $block[$i]['name'] = \htmlspecialchars($eventsAll[$i]->getVar('name'), ENT_QUOTES | ENT_HTML5);
             $block[$i]['logo'] = $eventsAll[$i]->getVar('logo');
+            $block[$i]['datefrom_text'] = \formatTimestamp($eventsAll[$i]->getVar('datefrom'), 'm');
             $block[$i]['submitter'] = $eventsAll[$i]->getVar('submitter');
         }
     }
 
     $GLOBALS['xoopsTpl']->assign('wgevents_upload_eventlogos_url', \WGEVENTS_UPLOAD_EVENTLOGOS_URL . '/');
+    $GLOBALS['xoopsTpl']->assign('wgevents_url', \WGEVENTS_URL . '/');
 
     return $block;
 

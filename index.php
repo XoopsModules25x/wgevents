@@ -52,6 +52,7 @@ $GLOBALS['xoopsTpl']->assign('wgevents_url', \WGEVENTS_URL);
 $GLOBALS['xoopsTpl']->assign('wgevents_upload_eventlogos_url', \WGEVENTS_UPLOAD_EVENTLOGOS_URL . '/');
 $GLOBALS['xoopsTpl']->assign('wgevents_icons_url_32', \WGEVENTS_ICONS_URL_32);
 $GLOBALS['xoopsTpl']->assign('index_header', $helper->getConfig('index_header'));
+$GLOBALS['xoopsTpl']->assign('index_displaytype', $helper->getConfig('index_displaytype'));
 
 $crEvent = new \CriteriaCompo();
 if ('coming' == $op) {

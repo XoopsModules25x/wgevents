@@ -24,7 +24,11 @@
     <!-- Start new link loop -->
     <{foreach item=event from=$events name=event}>
         <div class='top center'>
-            <{include file='db:wgevents_event_index_list.tpl' event=$event}>
+            <{if $index_displaytype|default:'' == 'card'}>
+                <{include file='db:wgevents_event_index_card.tpl' event=$event}>
+            <{else}>
+                <{include file='db:wgevents_event_index_list.tpl' event=$event}>
+            <{/if}>
         </div>
     <{/foreach}>
     <!-- End new link loop -->
@@ -33,12 +37,12 @@
 <{/if}>
 <{if $showBtnComing|default:false}>
     <div class="row wge-spacer1">
-        <span class='col-sm-12 center'><a class='btn btn-primary' href='index.php?op=coming' title='<{$smarty.const._MA_WGEVENTS_EVENTS_LISTCOMING}>'><{$smarty.const._MA_WGEVENTS_EVENTS_LISTCOMING}></a></span>
+        <span class='col-sm-12 center'><a class='btn btn-success' href='index.php?op=coming' title='<{$smarty.const._MA_WGEVENTS_EVENTS_LISTCOMING}>'><{$smarty.const._MA_WGEVENTS_EVENTS_LISTCOMING}></a></span>
     </div>
 <{/if}>
 <{if $showBtnPast|default:false}>
     <div class="row wge-spacer1">
-        <span class='col-sm-12 center'><a class='btn btn-primary' href='index.php?op=past' title='<{$smarty.const._MA_WGEVENTS_EVENTS_LISTPAST}>'><{$smarty.const._MA_WGEVENTS_EVENTS_LISTPAST}></a></span>
+        <span class='col-sm-12 center'><a class='btn btn-success' href='index.php?op=past' title='<{$smarty.const._MA_WGEVENTS_EVENTS_LISTPAST}>'><{$smarty.const._MA_WGEVENTS_EVENTS_LISTPAST}></a></span>
     </div>
 <{/if}>
 <{if $errorPerm|default:false}>

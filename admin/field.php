@@ -80,7 +80,7 @@ switch ($op) {
         }
         break;
     case 'new':
-        $templateMain = 'wgevents_admin_fields.tpl';
+        $templateMain = 'wgevents_admin_field.tpl';
         $GLOBALS['xoopsTpl']->assign('navigation', $adminObject->displayNavigation('field.php'));
         $adminObject->addItemButton(\_AM_WGEVENTS_LIST_FIELDS, 'field.php', 'list');
         $GLOBALS['xoopsTpl']->assign('buttons', $adminObject->displayButton('left'));
@@ -90,7 +90,7 @@ switch ($op) {
         $GLOBALS['xoopsTpl']->assign('form', $form->render());
         break;
     case 'clone':
-        $templateMain = 'wgevents_admin_fields.tpl';
+        $templateMain = 'wgevents_admin_field.tpl';
         $GLOBALS['xoopsTpl']->assign('navigation', $adminObject->displayNavigation('field.php'));
         $adminObject->addItemButton(\_AM_WGEVENTS_LIST_FIELDS, 'field.php', 'list');
         $adminObject->addItemButton(\_AM_WGEVENTS_ADD_FIELD, 'field.php?op=new');
@@ -152,7 +152,7 @@ switch ($op) {
         $GLOBALS['xoopsTpl']->assign('form', $form->render());
         break;
     case 'edit':
-        $templateMain = 'wgevents_admin_fields.tpl';
+        $templateMain = 'wgevents_admin_field.tpl';
         $GLOBALS['xoopsTpl']->assign('navigation', $adminObject->displayNavigation('field.php'));
         $adminObject->addItemButton(\_AM_WGEVENTS_ADD_FIELD, 'field.php?op=new');
         $adminObject->addItemButton(\_AM_WGEVENTS_LIST_FIELDS, 'field.php', 'list');
@@ -165,7 +165,7 @@ switch ($op) {
         $GLOBALS['xoopsTpl']->assign('form', $form->render());
         break;
     case 'delete':
-        $templateMain = 'wgevents_admin_fields.tpl';
+        $templateMain = 'wgevents_admin_field.tpl';
         $GLOBALS['xoopsTpl']->assign('navigation', $adminObject->displayNavigation('field.php'));
         $fieldObj = $fieldHandler->get($atId);
         $atName = $fieldObj->getVar('caption');
@@ -188,7 +188,7 @@ switch ($op) {
         }
         break;
     case 'default_set':
-        $templateMain = 'wgevents_admin_fields.tpl';
+        $templateMain = 'wgevents_admin_field.tpl';
         $GLOBALS['xoopsTpl']->assign('navigation', $adminObject->displayNavigation('field.php'));
         if (isset($_REQUEST['ok']) && 1 == $_REQUEST['ok']) {
             if (!$GLOBALS['xoopsSecurity']->check()) {

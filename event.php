@@ -87,14 +87,14 @@ switch ($op) {
                 $eventsCountArchieve = $eventHandler->getCount($crEventArchieve);
                 unset($crEventArchieve);
                 $GLOBALS['xoopsTpl']->assign('showBtnPast', $eventsCountArchieve > 0);
-                $GLOBALS['xoopsTpl']->assign('listDescr', \_MA_WGEVENTS_EVENTS_LISTCOMING);
+                $listDescr = \_MA_WGEVENTS_EVENTS_LISTCOMING;
                 break;
             case 'past':
                 $GLOBALS['xoopsTpl']->assign('showBtnComing', true);
-                $GLOBALS['xoopsTpl']->assign('listDescr', \_MA_WGEVENTS_EVENTS_LISTPAST);
+                $listDescr = \_MA_WGEVENTS_EVENTS_LISTPAST;
                 break;
         }
-
+        $GLOBALS['xoopsTpl']->assign('listDescr', $listDescr);
         $crEvent = new \CriteriaCompo();
         if ($evId > 0) {
             $crEvent->add(new \Criteria('id', $evId));
@@ -105,7 +105,7 @@ switch ($op) {
                 $crEvent->add(new \Criteria('submitter', $uidCurrent));
             }
             $GLOBALS['xoopsTpl']->assign('showList', true);
-            $xoBreadcrumbs[] = ['title' => \_MA_WGEVENTS_EVENTS_LIST];
+            $xoBreadcrumbs[] = ['title' => $listDescr];
         }
         $eventsCount = $eventHandler->getCount($crEvent);
         $GLOBALS['xoopsTpl']->assign('eventsCount', $eventsCount);
@@ -141,23 +141,29 @@ switch ($op) {
                 $numberRegCurr = $registrationHandler->getCount($crRegistration);
                 $events[$i]['nb_registrations'] = $numberRegCurr;
                 $registerMax = (int)$events[$i]['register_max'];
+                $events[$i]['regmax'] = $registerMax;
                 if ($registerMax > 0) {
+                    $events[$i]['regmax'] = $registerMax;
                     $proportion = $numberRegCurr / $registerMax;
                     if ($proportion >= 1) {
                         $events[$i]['regcurrent'] = \_MA_WGEVENTS_REGISTRATIONS_FULL;
-                        if ($events[$i]['register_listwait'] > 0) {
-                            $events[$i]['regListwait'] = \_MA_WGEVENTS_REGISTRATIONS_FULL_LISTWAIT;
-                        }
                     } else {
-                        $events[$i]['regcurrent'] = \sprintf(\_MA_WGEVENTS_REGISTRATIONS_NBFROM, $numberRegCurr, $registerMax);
+                        $events[$i]['regcurrent'] = \sprintf(\_MA_WGEVENTS_REGISTRATIONS_NBFROM_INDEX, $numberRegCurr, $registerMax);
                     }
-                    if ($proportion < 0.8) {
+                    $events[$i]['regcurrent_text'] = $events[$i]['regcurrent'];
+                    $events[$i]['regcurrent_tip'] = true;
+                    if ($proportion < 0.5) {
+                        $events[$i]['regcurrentstate'] = 'success';
+                        $events[$i]['regcurrent'] = '';
+                    } elseif ($proportion < 0.75) {
                         $events[$i]['regcurrentstate'] = 'success';
                     } elseif ($proportion < 1) {
                         $events[$i]['regcurrentstate'] = 'warning';
                     } else {
                         $events[$i]['regcurrentstate'] = 'danger';
+                        $events[$i]['regcurrent_tip'] = false;
                     }
+                    $events[$i]['regpercentage'] = (int)($proportion * 100);
                 } else {
                     if ('show' == $op) {
                         $events[$i]['regcurrent'] = $numberRegCurr;
@@ -369,9 +375,10 @@ switch ($op) {
                             if ('' != $regEmail) {
                                 // send confirmation
                                 $mailsHandler = new MailHandler();
-                                $mailsHandler->setInfo($infotext);
-                                $mailsHandler->setNotifyEmails($regEmail);
-                                $mailsHandler->executeReg($regId, $typeConfirm);
+                                $mailParams = $mailsHandler->getMailParam($evId, $regId);
+                                $mailParams['infotext'] = $infotext;
+                                $mailParams['recipients'] = $regEmail;
+                                $mailsHandler->executeReg($mailParams, $typeConfirm);
                                 unset($mailsHandler);
                             }
                         }

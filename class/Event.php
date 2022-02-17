@@ -389,6 +389,12 @@ class Event extends \XoopsObject
         $ret['desc_short_user']    = $utility::truncateHtml($ret['desc_text'], $userMaxchar);
         $ret['datefrom_text']      = \formatTimestamp($this->getVar('datefrom'), 'm');
         $ret['dateto_text']        = \formatTimestamp($this->getVar('dateto'), 'm');
+        $evContact                = $this->getVar('contact', 'e');
+        $ret['contact_text']      = $evContact;
+        if ($evContact) {
+            $contactLines   = preg_split("/\r\n|\n|\r/", $evContact);
+            $ret['contact_text_user']  = \implode('<br>', $contactLines);
+        }
         $ret['fee_text']           = Utility::FloatToString($this->getVar('fee'));
         $ret['register_use_text']  = (int)$this->getVar('register_use') > 0 ? \_YES : \_NO;
         $ret['register_from_text'] = '';
