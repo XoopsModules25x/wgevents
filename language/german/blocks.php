@@ -31,7 +31,9 @@
 \define('_MB_WGEVENTS_ALL_EVENTS', 'Alle Veranstaltungen');
 \define('_MB_WGEVENTS_EV_NAME', 'Name');
 \define('_MB_WGEVENTS_EV_LOGO', 'Logo');
+\define('_MB_WGEVENTS_EV_DATEFROM', 'Datum');
 \define('_MB_WGEVENTS_EVENT_GOTO', 'Zur Veranstaltung');
+\define('_MB_WGEVENTS_EVENT_SHOWMORE', 'Weitere Veranstaltungen anzeigen');
 // Calendar
 \define('_MB_WGEVENTS_CAL_DISPLAY_DESC', 'Du kannst unter dem Minikalender eine Liste der kommenden Veranstaltungen anzeigen. 0 bedeutet: keine Liste');
 \define('_MB_WGEVENTS_CAL_DISPLAY', 'Anzahl der anzuzeigenden Einträge in der Liste');

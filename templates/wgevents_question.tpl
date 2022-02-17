@@ -33,7 +33,7 @@
             <{/foreach}>
         </tbody>
         <tbody id="questions-list">
-            <{foreach item=question from=$questions name=question}>
+            <{foreach item=question from=$questions|default:null name=question}>
                 <{include file='db:wgevents_question_item.tpl' }>
             <{/foreach}>
         </tbody>

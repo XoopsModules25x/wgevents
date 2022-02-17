@@ -14,7 +14,7 @@
         <div class="col-xs-12 col-sm-9"><{$event.dateto_text}></div>
         <{if $event.contact|default:false}>
             <div class="col-xs-12 col-sm-3"><{$smarty.const._MA_WGEVENTS_EVENT_CONTACT}>: </div>
-            <div class="col-xs-12 col-sm-9"><{$event.contact}></div>
+            <div class="col-xs-12 col-sm-9"><{$event.contact_text_user}></div>
         <{/if}>
         <{if $event.email|default:false}>
             <div class="col-xs-12 col-sm-3"><{$smarty.const._MA_WGEVENTS_EVENT_EMAIL}>: </div>

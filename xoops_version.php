@@ -100,6 +100,7 @@ $modversion['templates'] = [
     ['file' => 'wgevents_breadcrumbs.tpl', 'description' => ''],
     ['file' => 'wgevents_calendar.tpl', 'description' => ''],
     ['file' => 'wgevents_event.tpl', 'description' => ''],
+    ['file' => 'wgevents_event_index_card.tpl', 'description' => ''],
     ['file' => 'wgevents_event_index_list.tpl', 'description' => ''],
     ['file' => 'wgevents_event_item_details.tpl', 'description' => ''],
     ['file' => 'wgevents_event_item_list.tpl', 'description' => ''],
@@ -277,6 +278,16 @@ $modversion['blocks'][] = [
     'edit_func'   => 'b_wgevents_calendar_edit',
     'template'    => 'wgevents_block_calendar.tpl',
     'options'     => 'simplecalendar|5',
+];
+// Coming Events
+$modversion['blocks'][] = [
+    'file'        => 'event.php',
+    'name'        => \_MI_WGEVENTS_EVENTS_BLOCK_COMING,
+    'description' => \_MI_WGEVENTS_EVENTS_BLOCK_COMING_DESC,
+    'show_func'   => 'b_wgevents_event_show',
+    'edit_func'   => 'b_wgevents_event_edit',
+    'template'    => 'wgevents_block_events.tpl',
+    'options'     => 'coming|5|25|0',
 ];
 // ------------------- Config ------------------- //
 // ------------------- Group header: Display ------------------- //
@@ -628,6 +639,16 @@ $modversion['config'][] = [
     'formtype'    => 'textarea',
     'valuetype'   => 'text',
     'default'     => \_MI_WGEVENTS_DESC,
+];
+// index display type
+$modversion['config'][] = [
+    'name'        => 'index_displaytype',
+    'title'       => '\_MI_WGEVENTS_INDEX_DISPLAYTYPE',
+    'description' => '\_MI_WGEVENTS_INDEX_DISPLAYTYPE_DESC',
+    'formtype'    => 'select',
+    'valuetype'   => 'text',
+    'default'     => 'default',
+    'options'     => [\_MI_WGEVENTS_INDEX_DISPLAYTYPE_LIST => 'default', \_MI_WGEVENTS_INDEX_DISPLAYTYPE_CARDS => 'card'],
 ];
 // ------------------- Group header: Misc ------------------- //
 $modversion['config'][] = [

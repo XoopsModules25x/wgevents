@@ -1,12 +1,22 @@
+form contact organizer for each event
 
 print a ticket
 
+send mail to all participants
+
+define personal templates for each user
+
+default fields for each cat
+
+switch buttons
 
 
 create plugin for extcal
 
 implementation fullcalendar?
 Implementation of recurring events?
+
+tablesorter - default value of adminpager is not applied properly
 
 
 
