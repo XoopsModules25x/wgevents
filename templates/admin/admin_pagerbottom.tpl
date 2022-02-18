@@ -12,7 +12,7 @@
             <option value="20">20</option>
             <option value="30">30</option>
             <option value="40">40</option>
-            <option value="all">All Rows</option>
+            <option value="all"><{$tablesorter_allrows}></option>
         </select>
     </form>
 </div>

@@ -5,7 +5,6 @@
 <{/if}>
 
 <{if $eventsCount|default:0 > 0}>
-    <div class='wge-spacer2 center'><h3 class="center"><{$listDescr|default:''}></h3></div>
     <div class='table-responsive'>
         <table class='table table-<{$table_type|default:false}>'>
             <tbody>
@@ -29,12 +28,12 @@
 <{/if}>
 
 <{if $showBtnComing|default:false}>
-    <div class="row wge-spacer1">
+    <div class="row wge-row1">
         <span class='col-sm-12 center'><a class='btn btn-success' href='event.php?op=list&amp;filter=<{$filter}>' title='<{$smarty.const._MA_WGEVENTS_EVENTS_LISTCOMING}>'><{$smarty.const._MA_WGEVENTS_EVENTS_LISTCOMING}></a></span>
     </div>
     <{/if}>
 <{if $showBtnPast|default:false}>
-    <div class="row wge-spacer1">
+    <div class="row wge-row1">
         <span class='col-sm-12 center'><a class='btn btn-success' href='event.php?op=past&amp;filter=<{$filter}>' title='<{$smarty.const._MA_WGEVENTS_EVENTS_LISTPAST}>'><{$smarty.const._MA_WGEVENTS_EVENTS_LISTPAST}></a></span>
     </div>
 <{/if}>

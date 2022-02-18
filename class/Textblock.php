@@ -91,6 +91,7 @@ class Textblock extends \XoopsObject
     {
         $helper = Helper::getInstance();
         $categoryHandler = $helper->getHandler('Category');
+        $textblockHandler = $helper->getHandler('Textblock');
 
         if (!$action) {
             $action = $_SERVER['REQUEST_URI'];
@@ -130,7 +131,8 @@ class Textblock extends \XoopsObject
         $tbclassSelect->addOption(Constants::TEXTBLOCK_CLASS_PUBLIC, \_MA_WGEVENTS_TEXTBLOCK_CLASS_PUBLIC);
         $form->addElement($tbclassSelect);
         // Form Text tbWeight
-        $form->addElement(new \XoopsFormText(\_MA_WGEVENTS_WEIGHT, 'weight', 50, 255, $this->getVar('weight')));
+        $tbWeight = $this->isNew() ? $textblockHandler->getNextWeight() : $this->getVar('weight');
+        $form->addElement(new \XoopsFormText(\_MA_WGEVENTS_WEIGHT, 'weight', 50, 255, $tbWeight));
         // Form Text Date Select tbDatecreated
         $tbDatecreated = $this->isNew() ? \time() : $this->getVar('datecreated');
         $form->addElement(new \XoopsFormTextDateSelect(\_MA_WGEVENTS_DATECREATED, 'datecreated', '', $tbDatecreated));
