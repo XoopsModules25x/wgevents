@@ -1,13 +1,13 @@
 <i id='evId_<{$event.id}>'></i>
 <div class='panel-heading wge-heading'><{$event.name}></div>
 <div class='panel-body'>
-    <div class="row wge-spacer1">
+    <div class="row wge-row1">
         <div class="col-xs-12 col-sm-5">
             <img class="img-responsive img-fluid" src='<{$wgevents_upload_eventlogos_url|default:false}><{$event.submitter}>/<{$event.logo}>' alt='<{$event.name}>' >
         </div>
         <div class="col-xs-12 col-sm-6 wge-panel-details1"><{$event.desc_text}></div>
     </div>
-    <div class="row wge-spacer1">
+    <div class="row wge-row1">
         <div class="col-xs-12 col-sm-3"><{$smarty.const._MA_WGEVENTS_EVENT_DATEFROM}>: </div>
         <div class="col-xs-12 col-sm-9"><{$event.datefrom_text}></div>
         <div class="col-xs-12 col-sm-3"><{$smarty.const._MA_WGEVENTS_EVENT_DATETO}>: </div>
@@ -18,7 +18,10 @@
         <{/if}>
         <{if $event.email|default:false}>
             <div class="col-xs-12 col-sm-3"><{$smarty.const._MA_WGEVENTS_EVENT_EMAIL}>: </div>
-            <div class="col-xs-12 col-sm-9"><{$event.email}></div>
+            <div class="col-xs-12 col-sm-9">
+                <{$event.email}>
+                <a class="btn btn-primary" href="mailto:<{$event.email}>?subject=<{$smarty.const._MA_WGEVENTS_EVENT_EMAIL_SENDREQUEST}><{$event.name}>"><{$smarty.const._MA_WGEVENTS_EVENT_EMAIL_SENDTO}></a>
+            </div>
         <{/if}>
         <{if $event.location|default:false}>
             <div class="col-xs-12 col-sm-3"><{$smarty.const._MA_WGEVENTS_EVENT_LOCATION}>: </div>
@@ -34,7 +37,7 @@
         <{/if}>
     </div>
     <{if $event.register_use|default:''}>
-        <div class="row wge-spacer1">
+        <div class="row wge-row1">
             <div class="col-12"><{$smarty.const._MA_WGEVENTS_REGISTRATION_DETAILS}></div>
             <div class="col-xs-12 col-sm-5"><{$smarty.const._MA_WGEVENTS_EVENT_REGISTER_FROM}>: </div>
             <div class="col-xs-12 col-sm-7"><{$event.register_from_text}></div>
@@ -54,7 +57,7 @@
             <{/if}>
         </div>
 
-            <div class="row wge-spacer1">
+            <div class="row wge-row1">
                 <div class="col-xs-12 col-sm-3"><{$smarty.const._MA_WGEVENTS_REGISTRATIONS_CURR}>: </div>
                 <div class="col-xs-12 col-sm-4">
                     <{if $event.regcurrentstate|default:''}><span class="badge badge-<{$event.regcurrentstate}> wge-badge"><{/if}>

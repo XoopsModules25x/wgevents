@@ -77,6 +77,8 @@ require_once __DIR__ . '/admin.php';
 \define('_MA_WGEVENTS_EVENT_DATETO', 'Date to');
 \define('_MA_WGEVENTS_EVENT_CONTACT', 'Contact');
 \define('_MA_WGEVENTS_EVENT_EMAIL', 'Email');
+\define('_MA_WGEVENTS_EVENT_EMAIL_SENDTO', 'Send mail to organizer of event');
+\define('_MA_WGEVENTS_EVENT_EMAIL_SENDREQUEST', 'Request for event: ');
 \define('_MA_WGEVENTS_EVENT_LOCATION', 'Location');
 \define('_MA_WGEVENTS_EVENT_LOCGMLAT', 'Location Gmlat');
 \define('_MA_WGEVENTS_EVENT_LOCGMLON', 'Location Gmlon');

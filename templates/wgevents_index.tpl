@@ -1,16 +1,11 @@
 <{include file='db:wgevents_header.tpl' }>
 
 <!-- Start index list -->
-
-<h3 class='center'><{$smarty.const._MA_WGEVENTS_TITLE}></h3>
-<p><{$index_header|default:''}></p>
-
-<div class="row">
-    <ul class='menu text-center'>
-        <li><a href='<{$wgevents_url|default:''}>'><{$smarty.const._MA_WGEVENTS_INDEX}></a></li>
-        <li><a href='<{$wgevents_url|default:''}>/event.php'><{$smarty.const._MA_WGEVENTS_EVENTS}></a></li>
-    </ul>
-</div>
+<{if $index_header|default:''}>
+    <div class="row">
+        <{$index_header}>
+    </div>
+<{/if}>
 
 <{if $adv|default:''}>
     <div class="row">
@@ -36,17 +31,17 @@
     <{$smarty.const._MA_WGEVENTS_INDEX_THEREARENT}>
 <{/if}>
 <{if $showBtnComing|default:false}>
-    <div class="row wge-spacer1">
+    <div class="row wge-row1">
         <span class='col-sm-12 center'><a class='btn btn-success' href='index.php?op=coming' title='<{$smarty.const._MA_WGEVENTS_EVENTS_LISTCOMING}>'><{$smarty.const._MA_WGEVENTS_EVENTS_LISTCOMING}></a></span>
     </div>
 <{/if}>
 <{if $showBtnPast|default:false}>
-    <div class="row wge-spacer1">
+    <div class="row wge-row1">
         <span class='col-sm-12 center'><a class='btn btn-success' href='index.php?op=past' title='<{$smarty.const._MA_WGEVENTS_EVENTS_LISTPAST}>'><{$smarty.const._MA_WGEVENTS_EVENTS_LISTPAST}></a></span>
     </div>
 <{/if}>
 <{if $errorPerm|default:false}>
-    <div class="row wge-spacer1">
+    <div class="row wge-row1">
         <span class='col-sm-12 center'><{$errorPerm}></span>
     </div>
 <{/if}>

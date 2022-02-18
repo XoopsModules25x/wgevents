@@ -162,4 +162,29 @@ class TextblockHandler extends \XoopsPersistableObjectHandler
         $form->addElement(new \XoopsFormButtonTray('', \_SUBMIT, 'submit', '', false));
         return $form;
     }
+
+    /**
+     * @public function to get next value for sorting
+     * @param null
+     * @return int
+     */
+    public function getNextWeight()
+    {
+        $nextValue = 0;
+
+        $crField = new \CriteriaCompo();
+        $crField->setSort('weight');
+        $crField->setOrder('DESC');
+        $crField->setLimit(1);
+        $fieldsCount = $this->getCount($crField);
+        if ($fieldsCount > 0) {
+            $fieldsAll = $this->getAll($crField);
+            foreach (\array_keys($fieldsAll) as $i) {
+                $nextValue = $fieldsAll[$i]->getVar('weight');
+            }
+        }
+
+        return $nextValue + 1;
+
+    }
 }
