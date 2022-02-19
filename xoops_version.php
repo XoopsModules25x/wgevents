@@ -99,8 +99,9 @@ $modversion['templates'] = [
     // User templates
     ['file' => 'wgevents_breadcrumbs.tpl', 'description' => ''],
     ['file' => 'wgevents_calendar.tpl', 'description' => ''],
+    ['file' => 'wgevents_category_index_list.tpl', 'description' => ''],
     ['file' => 'wgevents_event.tpl', 'description' => ''],
-    ['file' => 'wgevents_event_index_card.tpl', 'description' => ''],
+    ['file' => 'wgevents_event_index_bcard.tpl', 'description' => ''],
     ['file' => 'wgevents_event_index_list.tpl', 'description' => ''],
     ['file' => 'wgevents_event_item_details.tpl', 'description' => ''],
     ['file' => 'wgevents_event_item_list.tpl', 'description' => ''],
@@ -642,13 +643,23 @@ $modversion['config'][] = [
 ];
 // index display type
 $modversion['config'][] = [
-    'name'        => 'index_displaytype',
-    'title'       => '\_MI_WGEVENTS_INDEX_DISPLAYTYPE',
-    'description' => '\_MI_WGEVENTS_INDEX_DISPLAYTYPE_DESC',
+    'name'        => 'index_displaycats',
+    'title'       => '\_MI_WGEVENTS_INDEX_DISPLAYCATS',
+    'description' => '\_MI_WGEVENTS_INDEX_DISPLAYCATS_DESC',
     'formtype'    => 'select',
     'valuetype'   => 'text',
-    'default'     => 'default',
-    'options'     => [\_MI_WGEVENTS_INDEX_DISPLAYTYPE_LIST => 'default', \_MI_WGEVENTS_INDEX_DISPLAYTYPE_CARDS => 'card'],
+    'default'     => 'list',
+    'options'     => [\_MI_WGEVENTS_INDEX_DISPLAY_NONE => 'none', \_MI_WGEVENTS_INDEX_DISPLAY_LIST => 'list'],
+];
+// index display type
+$modversion['config'][] = [
+    'name'        => 'index_displayevents',
+    'title'       => '\_MI_WGEVENTS_INDEX_DISPLAYEVENTS',
+    'description' => '\_MI_WGEVENTS_INDEX_DISPLAYEVENTS_DESC',
+    'formtype'    => 'select',
+    'valuetype'   => 'text',
+    'default'     => 'list',
+    'options'     => [\_MI_WGEVENTS_INDEX_DISPLAY_NONE => 'none', \_MI_WGEVENTS_INDEX_DISPLAY_LIST => 'list', \_MI_WGEVENTS_INDEX_DISPLAY_BCARDS => 'bcard'],
 ];
 // ------------------- Group header: Misc ------------------- //
 $modversion['config'][] = [

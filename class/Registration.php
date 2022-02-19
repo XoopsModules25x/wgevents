@@ -131,7 +131,7 @@ class Registration extends \XoopsObject
 
         // Get Theme Form
         \xoops_load('XoopsFormLoader');
-        $form = new \XoopsThemeForm($title, 'form', $action, 'post', true);
+        $form = new \XoopsThemeForm($title, 'formRegistration', $action, 'post', true);
         $form->setExtra('enctype="multipart/form-data"');
         // Form Table events
         $form->addElement(new \XoopsFormLabel(\_MA_WGEVENTS_REGISTRATION_EVID, $eventObj->getVAr('name')));

@@ -106,7 +106,7 @@ class Question extends \XoopsObject
         $title = $this->isNew() ? \sprintf(\_MA_WGEVENTS_QUESTION_ADD) : \sprintf(\_MA_WGEVENTS_QUESTION_EDIT);
         // Get Theme Form
         \xoops_load('XoopsFormLoader');
-        $form = new \XoopsThemeForm($title, 'form', $action, 'post', true);
+        $form = new \XoopsThemeForm($title, 'formQuestion', $action, 'post', true);
         $form->setExtra('enctype="multipart/form-data"');
         // Form Table events
         $evId = $this->getVar('evid');

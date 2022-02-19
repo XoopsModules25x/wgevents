@@ -37,7 +37,8 @@ require_once __DIR__ . '/admin.php';
 \define('_MA_WGEVENTS_WEIGHT', 'Weight');
 \define('_MA_WGEVENTS_ACTION', 'Action');
 \define('_MA_WGEVENTS_INDEX_THEREARE', 'There are %s Events');
-\define('_MA_WGEVENTS_INDEX_THEREARENT', 'There are no events');
+\define('_MA_WGEVENTS_INDEX_THEREARENT_EVENTS', 'There are no events');
+\define('_MA_WGEVENTS_INDEX_THEREARENT_CATS', 'There are no categories');
 \define('_MA_WGEVENTS_INDEX_LATEST_LIST', 'Last Events');
 // Status
 \define('_MA_WGEVENTS_STATUS', 'Status');

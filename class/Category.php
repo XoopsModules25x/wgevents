@@ -140,7 +140,7 @@ class Category extends \XoopsObject
         foreach ($imageArray as $image1) {
             $imageSelect->addOption(($image1), $image1);
         }
-        $imageSelect->setExtra("onchange='showImgSelected(\"imglabel_cat_logo\", \"cat_logo\", \"" . $imageDirectory . '", "", "' . \XOOPS_URL . "\")'");
+        $imageSelect->setExtra("onchange='showImgSelected(\"imglabel_cat_logo\", \"logo\", \"" . $imageDirectory . '", "", "' . \XOOPS_URL . "\")'");
         $imageTray->addElement($imageSelect, false);
         $imageTray->addElement(new \XoopsFormLabel('', "<br><img src='" . \XOOPS_URL . '/' . $imageDirectory . '/' . $catLogo . "' id='imglabel_cat_logo' alt='' style='max-width:100px' >"));
         // Form Image catLogo: Upload new image

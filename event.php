@@ -79,6 +79,7 @@ switch ($op) {
         switch($op) {
             case 'show':
             default:
+                $listDescr = '';
                 break;
             case 'list':
                 // get events from the past

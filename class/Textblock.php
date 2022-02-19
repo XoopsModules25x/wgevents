@@ -101,7 +101,7 @@ class Textblock extends \XoopsObject
         $title = $this->isNew() ? \sprintf(\_MA_WGEVENTS_TEXTBLOCK_ADD) : \sprintf(\_MA_WGEVENTS_TEXTBLOCK_EDIT);
         // Get Theme Form
         \xoops_load('XoopsFormLoader');
-        $form = new \XoopsThemeForm($title, 'form', $action, 'post', true);
+        $form = new \XoopsThemeForm($title, 'formTextblock', $action, 'post', true);
         $form->setExtra('enctype="multipart/form-data"');
         // Form Table categories
         $evCatidSelect = new \XoopsFormSelect(\_MA_WGEVENTS_EVENT_CATID, 'catid', $this->getVar('catid'));
