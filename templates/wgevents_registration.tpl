@@ -36,9 +36,10 @@
                 <tfoot>
                     <tr>
                         <td class="center" colspan="<{$registration.footerCols}>">
-                            <a class='btn btn-success wge-btn' href='event.php?op=show&amp;id=<{$registration.id}>' title='<{$smarty.const._MA_WGEVENTS_GOTO_EVENT}>'><{$smarty.const._MA_WGEVENTS_GOTO_EVENT}></a>
-                            <{if $regdetails.permEdit|default:''}>
-                                <a class='btn btn-success wge-btn' href='output.php?op=reg_all&amp;output_type=xlsx&amp;id=<{$registration.evid}>&amp;redir=<{$redir}>' title='<{$smarty.const._MA_WGEVENTS_OUTPUT_EXCEL}>'><{$smarty.const._MA_WGEVENTS_OUTPUT_EXCEL}></a>
+                            <a class='btn btn-success wge-btn' href='event.php?op=show&amp;id=<{$registration.event_id}>' title='<{$smarty.const._MA_WGEVENTS_GOTO_EVENT}>'><{$smarty.const._MA_WGEVENTS_GOTO_EVENT}></a>
+                            <{if $registration.permEditEvent|default:''}>
+                                <a class='btn btn-primary wge-btn' href='output.php?op=reg_all&amp;output_type=xlsx&amp;id=<{$registration.event_id}>&amp;redir=<{$redir}>' title='<{$smarty.const._MA_WGEVENTS_OUTPUT_EXCEL}>'><{$smarty.const._MA_WGEVENTS_OUTPUT_EXCEL}></a>
+                                <a class='btn btn-primary wge-btn' href='registration.php?op=contactall&amp;evid=<{$registration.event_id}>' title='<{$smarty.const._MA_WGEVENTS_CONTACT_ALL}>'><{$smarty.const._MA_WGEVENTS_CONTACT_ALL}></a>
                             <{/if}>
                         </td>
                     </tr>
@@ -46,14 +47,10 @@
             </table>
         </div>
     <{/foreach}>
-<{else}>
-    <div class="alert alert-warning">
-        <{$smarty.const._MA_WGEVENTS_REGISTRATIONS_THEREARENT}>
-    </div>
 <{/if}>
 
-<{if $warning_period|default:''}>
-    <div class="alert alert-warning"><{$warning_period}></div>
+<{if $warning|default:''}>
+    <div class="alert alert-warning"><{$warning}></div>
 <{/if}>
 
 <{if $form|default:''}>

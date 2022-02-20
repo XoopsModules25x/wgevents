@@ -1,8 +1,6 @@
 
 print a ticket
 
-send mail to all participants
-
 define personal templates for each user
 
 default fields for each cat

@@ -70,6 +70,8 @@ class MailHandler
                 return false;
         }
 
+        $errors = 0;
+
         $eventUrl       = \WGEVENTS_URL . '/event.php?op=show&id=' . $mailParams['evId'];
         $eventName      = $mailParams['evName'];
         $eventDate      = \formatTimestamp($mailParams['evDatefrom'], 'm');
@@ -232,26 +234,23 @@ class MailHandler
                 if ($useLogs) {
                     $logHandler->createLog('Result MailHandler/executeReg: failed' .$xoopsMailer->getErrors() . $logInfo);
                 }
+                $errors++;
             }
             $xoopsMailer->reset();
             unset($mail);
-        }
-        catch (phpmailerException $e) {
-            if ($useLogs) {
-                $logHandler->createLog('MailHandler/executeReg failed: phpmailerException - ' . $e->errorMessage());
-            }
         }
         catch (\Exception $e) {
             if ($useLogs) {
                 $logHandler->createLog('MailHandler/executeReg failed: Exception - ' . $e->getMessage());
             }
+            $errors++;
         }
 
-        return true;
+        return (0 == $errors);
     }
 
     /**
-     * Function to create mail parameterss
+     * Function to create mail parameters
      *
      * @param int $evId
      * @param int $regId
@@ -285,4 +284,146 @@ class MailHandler
         return $mailParams;
     }
 
+    /**
+     * Function to send mails to all participants
+     *
+     * @param array $mailParams
+     * @return bool
+     */
+    public function executeContactAll(array $mailParams)
+    {
+        $helper = Helper::getInstance();
+        $accountHandler = $helper->getHandler('Account');
+        $useLogs = (bool)$helper->getConfig('use_logs');
+        if ($useLogs) {
+            $logHandler = $helper->getHandler('Log');
+        }
+
+        $errors = 0;
+
+        $template       = $mailParams['template'];
+        $eventUrl       = \WGEVENTS_URL . '/event.php?op=show&id=' . $mailParams['evId'];
+        $eventName      = $mailParams['evName'];
+        $eventDate      = \formatTimestamp($mailParams['evDatefrom'], 'm');
+        $eventLocation  = '' == (string)$mailParams['evLocation'] ? ' ' : $mailParams['evLocation'];
+        $mailFrom       = $mailParams['mailFrom'];
+        $mailSubject    = '' == (string)$mailParams['mailSubject'] ? ' ' : $mailParams['mailSubject'];
+        $mailBody       = '' == (string)$mailParams['mailBody'] ? ' ' : $mailParams['mailBody'];
+        $recipients     = $mailParams['recipients'];
+
+         // get settings of primary account
+        $primaryAcc = $accountHandler->getPrimary();
+        $account_type           = (int)$primaryAcc['type'];
+        //$account_yourname       = (string)$primaryAcc['yourname'];
+        $account_username       = (string)$primaryAcc['yourmail'];
+        $account_password       = (string)$primaryAcc['password'];
+        $account_server_out     = (string)$primaryAcc['server_out'];
+        $account_port_out       = (int)$primaryAcc['port_out'];
+        $account_securetype_out = (string)$primaryAcc['securetype_out'];
+
+        // create info for log
+        if ($useLogs) {
+            switch ($account_type) {
+                case '':
+                default:
+                    $accountTypeDesc = 'XOOPS system';
+                    break;
+                case Constants::ACCOUNT_TYPE_VAL_GMAIL:
+                    $accountTypeDesc = 'gmail';
+                    break;
+                case Constants::ACCOUNT_TYPE_VAL_PHP_MAIL:
+                    $accountTypeDesc = 'php mail';
+                    break;
+                case Constants::ACCOUNT_TYPE_VAL_PHP_SENDMAIL:
+                    $accountTypeDesc = 'sendmail';
+                    break;
+                case Constants::ACCOUNT_TYPE_VAL_POP3:
+                    $accountTypeDesc = 'pop3';
+                    break;
+                case Constants::ACCOUNT_TYPE_VAL_SMTP:
+                    $accountTypeDesc = 'smtp';
+                    break;
+            }
+            $logInfo = '<br>Mailer: ' . $accountTypeDesc;
+            $logInfo .= '<br>Template: ' . $template;
+        }
+
+        try {
+            /*
+            if ($account_type == Constants::ACCOUNT_TYPE_VAL_PHP_SENDMAIL) {
+                $pop = new POP3();
+                $pop->authorise($account_server_out, $account_port_out, 30, $account_username, $account_password, 1);
+            }
+            */
+            $xoopsMailer = xoops_getMailer();
+
+            $xoopsMailer->useMail();
+
+            //set template path
+            if (\file_exists(\WGEVENTS_PATH . '/language/' . $GLOBALS['xoopsConfig']['language'] . '/')) {
+                $xoopsMailer->setTemplateDir(\WGEVENTS_PATH . '/language/' . $GLOBALS['xoopsConfig']['language'] . '/mail_template/');
+            } else {
+                $xoopsMailer->setTemplateDir(\WGEVENTS_PATH . '/language/english/mail_template/');
+            }
+            //set template name
+            $xoopsMailer->setTemplate($template);
+
+            $xoopsMailer->CharSet = _CHARSET; //use xoops default character set
+
+            if ('' != $account_username) {
+                $xoopsMailer->Username = $account_username; // SMTP account username
+            }
+            if ('' != $account_password) {
+                $xoopsMailer->Password = $account_password; // SMTP account password
+            }
+            if (Constants::ACCOUNT_TYPE_VAL_POP3 == $account_type) {
+                //xoopsMailer->isSMTP();
+                //$xoopsMailer->SMTPDebug = 2;
+                $xoopsMailer->Host = $account_server_out;
+            }
+            if (Constants::ACCOUNT_TYPE_VAL_SMTP == $account_type
+                || Constants::ACCOUNT_TYPE_VAL_GMAIL == $account_type) {
+                $xoopsMailer->Port = $account_port_out; // set the SMTP port
+                $xoopsMailer->Host = $account_server_out; //sometimes necessary to repeat
+            }
+            if ('' != $account_securetype_out) {
+                $xoopsMailer->SMTPAuth   = true;
+                $xoopsMailer->SMTPSecure = $account_securetype_out; // sets the prefix to the server
+            }
+
+            //set sender
+            $xoopsMailer->setFromEmail($mailFrom);
+            //set subject
+            $xoopsMailer->setSubject($mailSubject);
+            //assign vars
+            $xoopsMailer->assign('EVENTNAME', $eventName);
+            $xoopsMailer->assign('EVENTDATEFROM', $eventDate);
+            $xoopsMailer->assign('EVENTLOCATION', $eventLocation);
+            $xoopsMailer->assign('EVENTURL', $eventUrl);
+            $xoopsMailer->assign('BODY', $mailBody);
+            //set recipient
+            $xoopsMailer->setToEmails($recipients);
+            //execute sending
+            if ($xoopsMailer->send()) {
+                if ($useLogs) {
+                    $logHandler->createLog('Result MailHandler/executeContactAll: success' . $logInfo);
+                }
+            } else {
+                if ($useLogs) {
+                    $logHandler->createLog('Result MailHandler/executeContactAll: failed' .$xoopsMailer->getErrors() . $logInfo);
+                }
+                $errors++;
+            }
+            $xoopsMailer->reset();
+            unset($mail);
+        }
+        catch (\Exception $e) {
+            if ($useLogs) {
+                $logHandler->createLog('MailHandler/executeContactAll failed: Exception - ' . $e->getMessage());
+            }
+            $errors++;
+        }
+
+        return (0 == $errors);
+    }
 }

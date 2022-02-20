@@ -79,6 +79,7 @@ switch ($op) {
         switch($op) {
             case 'show':
             default:
+                $listDescr = '';
                 break;
             case 'list':
                 // get events from the past
@@ -109,18 +110,18 @@ switch ($op) {
         }
         $eventsCount = $eventHandler->getCount($crEvent);
         $GLOBALS['xoopsTpl']->assign('eventsCount', $eventsCount);
-        if ('past' == $op) {
-            // list events before now
-            $crEvent->add(new \Criteria('datefrom', \time(), '<'));
-            $crEvent->setSort('datefrom');
-            $crEvent->setOrder('DESC');
-        } else {
-            $crEvent->add(new \Criteria('datefrom', \time(), '>='));
-            $crEvent->setSort('datefrom');
-            $crEvent->setOrder('ASC');
-        }
 
         if (0 === $evId) {
+            if ('past' == $op) {
+                // list events before now
+                $crEvent->add(new \Criteria('datefrom', \time(), '<'));
+                $crEvent->setSort('datefrom');
+                $crEvent->setOrder('DESC');
+            } else {
+                $crEvent->add(new \Criteria('datefrom', \time(), '>='));
+                $crEvent->setSort('datefrom');
+                $crEvent->setOrder('ASC');
+            }
             $crEvent->setStart($start);
             $crEvent->setLimit($limit);
         }
@@ -148,14 +149,15 @@ switch ($op) {
                     if ($proportion >= 1) {
                         $events[$i]['regcurrent'] = \_MA_WGEVENTS_REGISTRATIONS_FULL;
                     } else {
-                        $events[$i]['regcurrent'] = \sprintf(\_MA_WGEVENTS_REGISTRATIONS_NBFROM_INDEX, $numberRegCurr, $registerMax);
+                        if (0 == $numberRegCurr) {
+                            $events[$i]['regcurrent'] = \_MA_WGEVENTS_REGISTRATIONS_NBCURR_0;
+                        } else {
+                            $events[$i]['regcurrent'] = \sprintf(\_MA_WGEVENTS_REGISTRATIONS_NBCURR_INDEX, $numberRegCurr, $registerMax);
+                        }
                     }
                     $events[$i]['regcurrent_text'] = $events[$i]['regcurrent'];
                     $events[$i]['regcurrent_tip'] = true;
-                    if ($proportion < 0.5) {
-                        $events[$i]['regcurrentstate'] = 'success';
-                        $events[$i]['regcurrent'] = '';
-                    } elseif ($proportion < 0.75) {
+                    if ($proportion < 0.75) {
                         $events[$i]['regcurrentstate'] = 'success';
                     } elseif ($proportion < 1) {
                         $events[$i]['regcurrentstate'] = 'warning';

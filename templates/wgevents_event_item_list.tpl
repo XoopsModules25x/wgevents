@@ -6,21 +6,15 @@
                 <img class="img-responsive img-fluid" src='<{$wgevents_upload_eventlogos_url|default:false}><{$event.submitter}>/<{$event.logo}>' alt='<{$event.name}>' >
             </div>
             <div class="col-xs-12 col-sm-6 wge-panel-details1"><{$event.desc_text}></div>
-            <div class="col-xs-12 col-sm-4 wge-panel-details2">
-                <div class="row">
-                    <div class="col-5"><{$smarty.const._MA_WGEVENTS_EVENT_DATEFROM}>: </div>
-                    <div class="col-7 right"><{$event.datefrom_text}></div>
-                </div>
-                <div class="row">
-                    <div class="col-5"><{$smarty.const._MA_WGEVENTS_EVENT_DATETO}>: </div>
-                    <div class="col-7 right"><{$event.dateto_text}></div>
-                </div>
+            <div class="col-xs-12 col-sm-4 wge-panel-details2 right">
+                <p><{$smarty.const._MA_WGEVENTS_EVENT_DATEFROM}>: <{$event.datefrom_text}><br>
+                <{$smarty.const._MA_WGEVENTS_EVENT_DATETO}>: <{$event.dateto_text}></p>
             </div>
         </div>
     </div>
     <div class='panel-foot row'>
         <div class='col-sm-5'>
-            <{if $event.regmax|default:false}>
+            <{if $event.regmax|default:false && $event.nb_registrations|default:0 > 0}>
                 <div class="progress wge-progress" <{if $event.regcurrent_tip|default:false}>title="<{$event.regcurrent_text}>"<{/if}>>
                     <div <{if $event.regcurrent_tip|default:false}>title="<{$event.regcurrent_text}>"<{/if}> class="progress-bar progress-bar-<{$event.regcurrentstate|default:''}> " role="progressbar" aria-valuenow="<{$event.regpercentage|default:100}>"
                         aria-valuemin="0" aria-valuemax="100" style="width:<{$event.regpercentage}>%">

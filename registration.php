@@ -62,11 +62,12 @@ $xoBreadcrumbs[] = ['title' => \_MA_WGEVENTS_INDEX, 'link' => 'index.php'];
 $permView = $permissionsHandler->getPermRegistrationView();
 $GLOBALS['xoopsTpl']->assign('permView', $permView);
 
+$uidCurrent = \is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->uid() : 0;
+
 switch ($op) {
     case 'show':
     case 'list':
     default:
-
         break;
     case 'listmy':
         // Check permissions
@@ -77,7 +78,6 @@ switch ($op) {
         $xoBreadcrumbs[] = ['title' => \_MA_WGEVENTS_REGISTRATIONS_MYLIST];
         $events = [];
         $registrations = [];
-        $uidCurrent = \is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->uid() : 0;
         $regIp = $_SERVER['REMOTE_ADDR'];
         // get all events with my registrations
         $sql = 'SELECT evid, name ';
@@ -103,11 +103,15 @@ switch ($op) {
             $registrations[$evId]['footerCols'] = \count($questionsArr) + 9;
             //get list of existing registrations for current user/current IP
             $registrations[$evId]['event_name'] = $event['name'];
+            $permEdit = $permissionsHandler->getPermEventsEdit($event['submitter'], $event['status']) || $uidCurrent == $event['submitter'];
+            $registrations[$evId]['permEditEvent'] = $permEdit;
             $registrations[$evId]['details'] = $registrationHandler->getRegistrationDetailsByEvent($evId, $questionsArr);
         }
         if (\count($registrations) > 0) {
             $GLOBALS['xoopsTpl']->assign('registrations', $registrations);
             unset($registrations);
+        } else {
+            $GLOBALS['xoopsTpl']->assign('warning', \_MA_WGEVENTS_REGISTRATIONS_THEREARENT);
         }
         break;
     case 'listmyevent':
@@ -138,8 +142,10 @@ switch ($op) {
         //get list of existing registrations for current user/current IP
         $eventObj = $eventHandler->get($regEvid);
         $event_name = $eventObj->getVar('name');
-        $registrations[$regEvid]['id'] = $regEvid;
+        $registrations[$regEvid]['event_id'] = $regEvid;
         $registrations[$regEvid]['event_name'] = $event_name;
+        $permEdit = $permissionsHandler->getPermEventsEdit($eventObj->getVar('submitter'), $eventObj->getVar('status')) || $uidCurrent == $eventObj->getVar('submitter');
+        $registrations[$regEvid]['permEditEvent'] = $permEdit;
         $registrations[$regEvid]['event_fee'] = $eventObj->getVar('fee');
         $registrations[$regEvid]['event_register_max'] = $eventObj->getVar('register_max');
         $registrations[$regEvid]['questions'] = $questionsArr;
@@ -164,10 +170,10 @@ switch ($op) {
                 $GLOBALS['xoopsTpl']->assign('form', $form->render());
             }
             if (!$permEdit && \time() < $eventObj->getVar('register_from')) {
-                $GLOBALS['xoopsTpl']->assign('warning_period', sprintf(\_MA_WGEVENTS_REGISTRATION_TOEARLY, \formatTimestamp($eventObj->getVar('register_from'), 'm')));
+                $GLOBALS['xoopsTpl']->assign('warning', sprintf(\_MA_WGEVENTS_REGISTRATION_TOEARLY, \formatTimestamp($eventObj->getVar('register_from'), 'm')));
             }
             if (!$permEdit && \time() > $eventObj->getVar('register_to')) {
-                $GLOBALS['xoopsTpl']->assign('warning_period', sprintf(\_MA_WGEVENTS_REGISTRATION_TOLATE, \formatTimestamp($eventObj->getVar('register_to'), 'm')));
+                $GLOBALS['xoopsTpl']->assign('warning', sprintf(\_MA_WGEVENTS_REGISTRATION_TOLATE, \formatTimestamp($eventObj->getVar('register_to'), 'm')));
             }
         }
         break;
@@ -176,7 +182,10 @@ switch ($op) {
         if (!$GLOBALS['xoopsSecurity']->check()) {
             \redirect_header('registration.php', 3, \implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
         }
-        $regEvid            = Request::getInt('evid');
+        // Check params
+        if (0 == $regEvid) {
+            \redirect_header('index.php?op=list', 3, \_MA_WGEVENTS_INVALID_PARAM);
+        }
         $eventObj           = $eventHandler->get($regEvid);
         $evSubmitter        = $eventObj->getVar('submitter');
         $evStatus           = $eventObj->getVar('status');
@@ -298,13 +307,17 @@ switch ($op) {
             }
             */
             // send notifications/confirmation emails
-            $infotext = '';
+            $infotext        = '';
+            $previousMail    = '';
             $newRegistration = false;
             if ($regId > 0) {
                 // find changes in table registrations
                 $infotext = $registrationHandler->getRegistrationsCompare($registrationObjOld, $registrationObj);
                 if ('' != $infotext) {
                     // create history
+                    if ($registrationObjOld->getVar('mail') != $registrationObj->getVar('mail')) {
+                        $previousMail = $registrationObjOld->getVar('mail');
+                    }
                     $registrationhistHandler->createHistory($registrationObjOld, 'update');
                 }
                 // find changes in table answers
@@ -362,10 +375,17 @@ switch ($op) {
                 }
                 if ('' != $regEmail && Request::getInt('email_send') > 0) {
                     // send confirmation, if radio is checked
+                    $recipients = [];
+                    $recipients[] = $regEmail;
+                    if ('' != $previousMail) {
+                        // add old email address if it changed in order to inform old mail address
+                        $recipients[] = $previousMail;
+                    }
+
                     $mailsHandler = new MailHandler();
                     $mailParams = $mailsHandler->getMailParam($regEvid, $regId);
                     $mailParams['infotext'] = $infotext;
-                    $mailParams['recipients'] = $regEmail;
+                    $mailParams['recipients'] = $recipients;
                     $mailsHandler->executeReg($mailParams, $typeConfirm);
                     unset($mailsHandler);
                 }
@@ -641,6 +661,69 @@ switch ($op) {
         $GLOBALS['xoopsTpl']->assign('error', $registrationObj->getHtmlErrors());
         $form = $registrationObj->getForm();
         $GLOBALS['xoopsTpl']->assign('form', $form->render());
+        break;
+    case 'contactall':
+        // Breadcrumbs
+        $xoBreadcrumbs[] = ['title' => \_MA_WGEVENTS_CONTACT_ALL];
+        // Check params
+        if (0 == $regEvid) {
+            \redirect_header('registration.php?op=list', 3, \_MA_WGEVENTS_INVALID_PARAM);
+        }
+        // Get Form
+        $eventObj = $eventHandler->get($regEvid);
+        $form = $eventObj->getFormContactAll();
+        $GLOBALS['xoopsTpl']->assign('form', $form->render());
+        break;
+    case 'exec_contactall':
+        // Security Check
+        if (!$GLOBALS['xoopsSecurity']->check()) {
+            \redirect_header('registration.php', 3, \implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
+        }
+        // Check params
+        if (0 == $regEvid) {
+            \redirect_header('index.php?op=list', 3, \_MA_WGEVENTS_INVALID_PARAM);
+        }
+
+        $eventObj = $eventHandler->get($regEvid);
+        // Check permissions
+        if (!$permissionsHandler->getPermEventsEdit($eventObj->getVar('submitter'), $eventObj->getVar('status'))) {
+            \redirect_header('index.php?op=list', 3, \_NOPERM);
+        }
+        $crRegistration = new \CriteriaCompo();
+        $crRegistration->add(new \Criteria('evid', $regEvid));
+        $numberRegCurr = $registrationHandler->getCount($crRegistration);
+        $mailToArr = [];
+        if ($numberRegCurr > 0) {
+            $registrationsAll = $registrationHandler->getAll($crRegistration);
+            foreach (\array_keys($registrationsAll) as $i) {
+                $mailToArr[$registrationsAll[$i]->getVar('email')] = $registrationsAll[$i]->getVar('email');
+            }
+        }
+        $mailFrom = Request::getString('mail_from');
+        if (1 == Request::getInt('mail_copy')) {
+            $mailToArr[$mailFrom] = $mailFrom;
+        }
+        $mailParams = [];
+        $mailParams['template']    ='mail_event_notify_all.tpl';
+        $mailParams['evId']        = $regEvid;
+        $mailParams['evName']      = $eventObj->getVar('name');
+        $mailParams['evDatefrom']  = $eventObj->getVar('datefrom');
+        $mailParams['evLocation']  = $eventObj->getVar('location');
+        $mailParams['mailFrom']    = $mailFrom;
+        $mailParams['mailBody']    = Request::getString('mail_body');
+        $mailParams['mailSubject'] = Request::getString('mail_subject');
+        $mailParams['recipients']  = $mailToArr;
+
+        $mailsHandler = new MailHandler();
+        $result = $mailsHandler->executeContactAll($mailParams);
+        unset($mailsHandler);
+        if ($result) {
+            // redirect after insert
+            \redirect_header('registration.php?op=listeventall&amp;evid=' . $regEvid, 2, \_MA_WGEVENTS_FORM_OK);
+        } else {
+            \redirect_header('index.php?op=list', 3, \_MA_WGEVENTS_INVALID_PARAM);
+        }
+
         break;
 }
 
