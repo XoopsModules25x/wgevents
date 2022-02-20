@@ -72,6 +72,18 @@ if ('none' != $indexDisplayCats) {
         foreach (\array_keys($categoriesAll) as $i) {
             $categories[$i] = $categoriesAll[$i]->getValuesCategories();
             $keywords[$i] = $categories[$i]['name'];
+            $crEvent = new \CriteriaCompo();
+            $crEvent->add(new \Criteria('catid',$i));
+            $eventsCount = $eventHandler->getCount($crEvent);
+            $nbEvents = \_MA_WGEVENTS_CATEGORY_NOEVENTS;
+            if ($eventsCount > 0) {
+                if ($eventsCount > 1) {
+                    $nbEvents = \sprintf(\_MA_WGEVENTS_CATEGORY_EVENTS, $eventsCount);
+                } else {
+                    $nbEvents = \_MA_WGEVENTS_CATEGORY_EVENT;
+                }
+            }
+            $categories[$i]['nbevents'] = $nbEvents;
         }
         $GLOBALS['xoopsTpl']->assign('categories', $categories);
     }
@@ -115,7 +127,7 @@ if ('none' != $indexDisplayEvents) {
             $crRegistration = new \CriteriaCompo();
             $crRegistration->add(new \Criteria('evid', $i));
             $numberRegCurr = $registrationHandler->getCount($crRegistration);
-            //$events[$i]['nb_registrations'] = $numberRegCurr;
+            $events[$i]['nb_registrations'] = $numberRegCurr;
             $registerMax = (int)$events[$i]['register_max'];
             if ($registerMax > 0) {
                 $events[$i]['regmax'] = $registerMax;
@@ -123,14 +135,11 @@ if ('none' != $indexDisplayEvents) {
                 if ($proportion >= 1) {
                     $events[$i]['regcurrent'] = \_MA_WGEVENTS_REGISTRATIONS_FULL;
                 } else {
-                    $events[$i]['regcurrent'] = \sprintf(\_MA_WGEVENTS_REGISTRATIONS_NBFROM_INDEX, $numberRegCurr, $registerMax);
+                    $events[$i]['regcurrent'] = \sprintf(\_MA_WGEVENTS_REGISTRATIONS_NBCURR_INDEX, $numberRegCurr, $registerMax);
                 }
                 $events[$i]['regcurrent_text'] = $events[$i]['regcurrent'];
                 $events[$i]['regcurrent_tip'] = true;
-                if ($proportion < 0.5) {
-                    $events[$i]['regcurrentstate'] = 'success';
-                    $events[$i]['regcurrent'] = '';
-                } elseif ($proportion < 0.75) {
+                if ($proportion < 0.75) {
                     $events[$i]['regcurrentstate'] = 'success';
                 } elseif ($proportion < 1) {
                     $events[$i]['regcurrentstate'] = 'warning';

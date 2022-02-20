@@ -167,8 +167,8 @@ switch ($op) {
                     $xoopsMailer->setFromEmail($account_yourmail);
                     $xoopsMailer->setFromName($account_yourname);
                     $logDetails .= '<br>from:' . $account_yourmail . ' ' . $account_yourname;
-                    $xoopsMailer->setSubject = 'Test account subject';
-                    $xoopsMailer->setBody('Test account body: ' . \XOOPS_URL);
+                    $xoopsMailer->setSubject('Test account');
+                    $xoopsMailer->setBody('This is a mail for testing account on: ' . \XOOPS_URL);
                     $usermail = $GLOBALS['xoopsUser']->email();
                     $xoopsMailer->setToEmails($usermail);
                     $logDetails .= '<br>setToEmails:' . $usermail;

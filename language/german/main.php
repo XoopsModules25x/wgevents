@@ -110,6 +110,9 @@ require_once __DIR__ . '/admin.php';
 \define('_MA_WGEVENTS_EVENT_GALID', 'Gallerie Id');
 // Category
 \define('_MA_WGEVENTS_CATEGORY_LOGO', 'Logo');
+\define('_MA_WGEVENTS_CATEGORY_NOEVENTS', 'Keine Veranstaltungen verfügbar');
+\define('_MA_WGEVENTS_CATEGORY_EVENT', '1 Veranstaltung');
+\define('_MA_WGEVENTS_CATEGORY_EVENTS', '%s Veranstaltungen');
 // Registration
 \define('_MA_WGEVENTS_REGISTRATION', 'Anmeldung');
 \define('_MA_WGEVENTS_REGISTRATION_DETAILS', 'Details Anmeldung');
@@ -125,8 +128,9 @@ require_once __DIR__ . '/admin.php';
 \define('_MA_WGEVENTS_REGISTRATIONS_MYLIST', 'Liste meiner Anmeldungen');
 \define('_MA_WGEVENTS_REGISTRATIONS_THEREARENT', 'Es sind keine Anmeldungen für den aktuellen Benutzer bzw. zu der aktuellen IP-Adresse vorhanden');
 \define('_MA_WGEVENTS_REGISTRATIONS_CURR', 'Anmeldungen derzeit');
-\define('_MA_WGEVENTS_REGISTRATIONS_NBFROM', '%s von %s verfügbaren Plätzen bereits belegt');
-\define('_MA_WGEVENTS_REGISTRATIONS_NBFROM_INDEX', '%s von %s belegt');
+\define('_MA_WGEVENTS_REGISTRATIONS_NBCURR_0', 'Derzeit liegen keine Anmeldungen vor');
+\define('_MA_WGEVENTS_REGISTRATIONS_NBCURR', '%s von %s verfügbaren Plätzen bereits belegt');
+\define('_MA_WGEVENTS_REGISTRATIONS_NBCURR_INDEX', '%s von %s belegt');
 \define('_MA_WGEVENTS_REGISTRATIONS_FULL', 'ausgebucht');
 \define('_MA_WGEVENTS_REGISTRATIONS_FULL_LISTWAIT', 'Anmeldung für Warteliste möglich');
 \define('_MA_WGEVENTS_REGISTRATION_TOEARLY', 'Entschuldigung, aber die Anmeldung ist erst ab %s möglich');
@@ -268,6 +272,16 @@ Eine Teilnahme an der Veranstaltung ohne Zustimmung zu diesen Bestimmungen ist l
 \define('_MA_WGEVENTS_CONFIRMCANCEL_TITLE', 'Veranstaltung stornieren');
 \define('_MA_WGEVENTS_CONFIRMCANCEL_LABEL', 'Willst du wirklich stornieren:');
 \define('_MA_WGEVENTS_CONFIRMCANCEL_EVENT', "Achtung: Auch alle Anmeldungen werden automatisch storniert! Willst Du <b><span style='color : Red;'>%s</span></b> endgültig stornieren?");
+// From Contact
+\define('_MA_WGEVENTS_CONTACT_ALL', 'Alle Teilnehmer kontaktieren');
+\define('_MA_WGEVENTS_CONTACT_MAILFROM', 'Absender');
+\define('_MA_WGEVENTS_CONTACT_MAILTO', 'Empfänger');
+\define('_MA_WGEVENTS_CONTACT_MAILCOPY', 'Kopie an mich senden');
+\define('_MA_WGEVENTS_CONTACT_MAILSUBJECT', 'Betreff');
+\define('_MA_WGEVENTS_CONTACT_ALL_MAILSUBJECT_TEXT', 'Information zu: %s');
+\define('_MA_WGEVENTS_CONTACT_MAILBODY', 'Nachricht');
+\define('_MA_WGEVENTS_CONTACT_ALL_SUCCESS', 'Mail an alle Teilnehmer erfolgreich versendet');
+\define('_MA_WGEVENTS_CONTACT_ALL_ERROR', 'Beim Versenden der Mail an alle Teilnehmer ist leider ein Fehler aufgetreten');
 // calendar
 \define('_MA_WGEVENTS_CAL_ITEMS', 'Kalender Einträge');
 \define('_MA_WGEVENTS_CAL_EDITITEM', 'Eintrag bearbeiten');

@@ -110,6 +110,9 @@ require_once __DIR__ . '/admin.php';
 \define('_MA_WGEVENTS_EVENT_GALID', 'Gallery Id');
 // Categories
 \define('_MA_WGEVENTS_CATEGORY_LOGO', 'Logo');
+\define('_MA_WGEVENTS_CATEGORY_NOEVENTS', 'No events available');
+\define('_MA_WGEVENTS_CATEGORY_EVENT', '1 event');
+\define('_MA_WGEVENTS_CATEGORY_EVENTS', '%s events');
 // Registration
 \define('_MA_WGEVENTS_REGISTRATION', 'Registration');
 \define('_MA_WGEVENTS_REGISTRATION_DETAILS', 'Registration details');
@@ -125,8 +128,9 @@ require_once __DIR__ . '/admin.php';
 \define('_MA_WGEVENTS_REGISTRATIONS_MYLIST', 'List of my registrations');
 \define('_MA_WGEVENTS_REGISTRATIONS_THEREARENT', 'There are no registrations available for current user respectively for current IP-Address');
 \define('_MA_WGEVENTS_REGISTRATIONS_CURR', 'Registration currently');
-\define('_MA_WGEVENTS_REGISTRATIONS_NBFROM', '%s of %s available places already booked');
-\define('_MA_WGEVENTS_REGISTRATIONS_NBFROM_INDEX', '%s of %s booked');
+\define('_MA_WGEVENTS_REGISTRATIONS_NBCURR_0', 'Currently there are no registrations');
+\define('_MA_WGEVENTS_REGISTRATIONS_NBCURR', '%s of %s available places already booked');
+\define('_MA_WGEVENTS_REGISTRATIONS_NBCURR_INDEX', '%s of %s booked');
 \define('_MA_WGEVENTS_REGISTRATIONS_FULL', 'fully booked');
 \define('_MA_WGEVENTS_REGISTRATIONS_FULL_LISTWAIT', 'Registration on waiting list possible');
 \define('_MA_WGEVENTS_REGISTRATION_TOEARLY', 'Excuse me, but registration is possilbe from %s');
@@ -268,6 +272,16 @@ Participation without agreement to this conditions is not possible.
 \define('_MA_WGEVENTS_CONFIRMCANCEL_TITLE', 'Cancel event');
 \define('_MA_WGEVENTS_CONFIRMCANCEL_LABEL', 'Du you really want to cancel:');
 \define('_MA_WGEVENTS_CONFIRMCANCEL_EVENT', "Attention: also all registrations will be canceled automatically! Do youi really want to cancel <b><span style='color : Red;'>%s</span></b> finally?");
+// From Contact
+\define('_MA_WGEVENTS_CONTACT_ALL', 'Contact all participants');
+\define('_MA_WGEVENTS_CONTACT_MAILFROM', 'Sender');
+\define('_MA_WGEVENTS_CONTACT_MAILTO', 'Recipients');
+\define('_MA_WGEVENTS_CONTACT_MAILCOPY', 'Send copy to me');
+\define('_MA_WGEVENTS_CONTACT_MAILSUBJECT', 'Subject');
+\define('_MA_WGEVENTS_CONTACT_ALL_MAILSUBJECT_TEXT', 'Information for: %s');
+\define('_MA_WGEVENTS_CONTACT_MAILBODY', 'Notification text');
+\define('_MA_WGEVENTS_CONTACT_ALL_SUCCESS', 'Sending mail to all participants successful');
+\define('_MA_WGEVENTS_CONTACT_ALL_ERROR', 'Unfortunately an error occured during sending mail to all participants');
 // calendar
 \define('_MA_WGEVENTS_CAL_ITEMS', 'Items Calendar');
 \define('_MA_WGEVENTS_CAL_EDITITEM', 'Edit Item');

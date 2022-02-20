@@ -364,6 +364,71 @@ class Event extends \XoopsObject
     }
 
     /**
+     * @public function getFormContactAll
+     * @param bool $action
+     * @return \XoopsThemeForm
+     */
+    public function getFormContactAll($action = false)
+    {
+        $helper = \XoopsModules\Wgevents\Helper::getInstance();
+        $registrationHandler = $helper->getHandler('Registration');
+        if (!$action) {
+            $action = $_SERVER['REQUEST_URI'];
+        }
+        // Get Theme Form
+        \xoops_load('XoopsFormLoader');
+        $form = new \XoopsThemeForm(\_MA_WGEVENTS_CONTACT_ALL, 'formContactAll', $action, 'post', true);
+        $form->setExtra('enctype="multipart/form-data"');
+        // Form Text mailFrom
+        $emailTray = new Forms\FormElementTray(\_MA_WGEVENTS_CONTACT_MAILFROM, '<br>');
+        $email = new Forms\FormText('', 'mail_from', 50, 255, $this->getVar('email'));
+        $email->setPlaceholder(\_MA_WGEVENTS_REGISTRATION_EMAIL_PLACEHOLDER);
+        $emailTray->addElement($email, true);
+        // Form select mailCopy
+        $emailRadio = new \XoopsFormRadioYN(\_MA_WGEVENTS_CONTACT_MAILCOPY, 'mail_copy', 1);
+        $emailTray->addElement($emailRadio);
+        $form->addElement($emailTray);
+        // Form Editor TextArea mailTo
+        $crRegistration = new \CriteriaCompo();
+        $crRegistration->add(new \Criteria('evid', $this->getVar('id')));
+        $numberRegCurr = $registrationHandler->getCount($crRegistration);
+        $mailToArr = [];
+        $mailTo = '';
+        if ($numberRegCurr > 0) {
+            $registrationsAll = $registrationHandler->getAll($crRegistration);
+            foreach (\array_keys($registrationsAll) as $i) {
+                $mailToArr[$registrationsAll[$i]->getVar('email')] = $registrationsAll[$i]->getVar('email');
+            }
+        }
+        foreach ($mailToArr as $mail) {
+            $mailTo .= $mail . PHP_EOL;
+        }
+        $mailToTextarea = new \XoopsFormTextArea(\_MA_WGEVENTS_CONTACT_MAILTO, 'mail_to', $mailTo, 5, 47);
+        $mailToTextarea->setExtra(" disabled='disabled'");
+        $form->addElement($mailToTextarea);
+        // From Text Subject
+        $subject = \sprintf(\_MA_WGEVENTS_CONTACT_ALL_MAILSUBJECT_TEXT, $this->getVar('name'));
+        $form->addElement(new \XoopsFormText(\_MA_WGEVENTS_CONTACT_MAILSUBJECT, 'mail_subject', 50, 255, $subject), true);
+        // Form Editor DhtmlTextArea mailBody
+        $mailBody = '';
+        $editorConfigs = [];
+        $editor = $helper->getConfig('editor_user');
+        $editorConfigs['name'] = 'mail_body';
+        $editorConfigs['value'] = '';
+        $editorConfigs['rows'] = 10;
+        $editorConfigs['cols'] = 40;
+        $editorConfigs['width'] = '100%';
+        $editorConfigs['height'] = '400px';
+        $editorConfigs['editor'] = $editor;
+        $form->addElement(new \XoopsFormEditor(\_MA_WGEVENTS_CONTACT_MAILBODY, 'mail_body', $editorConfigs));
+        // To Save
+        $form->addElement(new \XoopsFormHidden('evid', $this->getVar('id')));
+        $form->addElement(new \XoopsFormHidden('op', 'exec_contactall'));
+        $form->addElement(new \XoopsFormButtonTray('', \_SUBMIT, 'submit', '', false));
+        return $form;
+    }
+
+    /**
      * Get Values
      * @param null $keys
      * @param null $format

@@ -39,7 +39,17 @@ use XoopsModules\Wgevents\Common\ {
 function xoops_module_update_wgevents($module, $prev_version = null)
 {
     $moduleDirName = $module->dirname();
-    
+
+    //check preload folder and remove replace index.php by index.html if exist
+    if (\file_exists(\XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/preloads/index.php')) {
+        //delete olf file
+        \unlink(\XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/preloads/index.php');
+        //create html file
+        $myfile = \fopen(\XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/preloads/index.html', "w");
+        \fwrite($myfile, '<script>history.go(-1);</script>');
+        \fclose($myfile);
+    }
+
     //wgevents_check_db($module);
     
     // update DB corresponding to sql/mysql.sql

@@ -6,6 +6,7 @@
                 <img class="img-responsive img-fluid" src='<{$wgevents_upload_catlogos_url|default:false}>/<{$category.logo}>' alt='<{$category.name}>' >
             </div>
             <div class="col-xs-12 col-sm-6 wge-panel-details1"><{$category.desc_text}></div>
+            <div class="col-xs-12 col-sm-4 wge-panel-details1"><span class="badge badge-success wge-badge wge-badge-index"><{$category.nbevents|default:''}></span></div>
         </div>
     </div>
     <div class='panel-foot row right'></div>

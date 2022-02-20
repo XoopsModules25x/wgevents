@@ -61,7 +61,7 @@
             </div>
             <div class="row">
                 <div class="col-xs-12 col-sm-3 col-lg-2"><{$smarty.const._MA_WGEVENTS_EVENT_REGISTER_TO}>: </div>
-                <div class="col-xs-12 col-sm-9 col-lg-10"><{$event.register_to}></div>
+                <div class="col-xs-12 col-sm-9 col-lg-10"><{$event.register_to_text}></div>
             </div>
             <div class="row">
                 <div class="col-xs-12 col-sm-3 col-lg-2"><{$smarty.const._MA_WGEVENTS_EVENT_REGISTER_MAX}>: </div>
@@ -99,6 +99,7 @@
             <div class="col-xs-12 col-sm-5 col-lg-6 right">
                 <{if $event.permEdit|default:false && $event.nb_registrations|default:0 > 0}>
                     <a class='btn btn-success wge-btn' href='registration.php?op=listeventall&amp;redir=listeventall&amp;evid=<{$event.id}>' title='<{$smarty.const._MA_WGEVENTS_REGISTRATIONS_LIST}>'><{$smarty.const._MA_WGEVENTS_REGISTRATIONS_LIST}></a>
+                    <a class='btn btn-primary wge-btn' href='output.php?op=reg_all&amp;output_type=xlsx&amp;id=<{$event.id}>&amp;redir=<{$redir}>' title='<{$smarty.const._MA_WGEVENTS_OUTPUT_EXCEL}>'><{$smarty.const._MA_WGEVENTS_OUTPUT_EXCEL}></a>
                 <{/if}>
             </div>
         </div>
@@ -108,7 +109,7 @@
                 <div class="col-xs-12 col-sm-4 col-lg-4"><{$event.nb_questions}></div>
                 <div class="col-xs-12 col-sm-5 col-lg-6 right">
                     <{if $event.nb_questions|default:0 > 0 || $event.id|default:0 > 0 }>
-                        <a class='btn btn-success wge-btn' href='question.php?op=list&amp;evid=<{$event.id}>' title='<{$smarty.const._MA_WGEVENTS_GOTO_QUESTIONS}>'><{$smarty.const._MA_WGEVENTS_GOTO_QUESTIONS}></a>
+                        <a class='btn btn-primary wge-btn' href='question.php?op=list&amp;evid=<{$event.id}>' title='<{$smarty.const._MA_WGEVENTS_GOTO_QUESTIONS}>'><{$smarty.const._MA_WGEVENTS_GOTO_QUESTIONS}></a>
                     <{else}>
                         <a class='btn btn-success wge-btn' href='question.php?op=newset&amp;evid=<{$event.id}>' title='<{$smarty.const._MA_WGEVENTS_GOTO_QUESTIONS}>'><{$smarty.const._MA_WGEVENTS_GOTO_QUESTIONS}></a>
                     <{/if}>
