@@ -237,7 +237,7 @@ class MailHandler
                 $errors++;
             }
             $xoopsMailer->reset();
-            unset($mail);
+            unset($xoopsMailer);
         }
         catch (\Exception $e) {
             if ($useLogs) {
@@ -415,7 +415,7 @@ class MailHandler
                 $errors++;
             }
             $xoopsMailer->reset();
-            unset($mail);
+            unset($xoopsMailer);
         }
         catch (\Exception $e) {
             if ($useLogs) {
