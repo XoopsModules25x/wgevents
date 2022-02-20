@@ -174,7 +174,7 @@ switch ($op) {
 */
 
 // get categories collection
-$categories = $categoryHandler->getCategoriesCollection();
+$categories = $categoryHandler->getCollection();
 // get events of period
 $events = $eventHandler->getEvents(0, 0, $filterFrom, $filterTo, $filterCat, $sortBy, $orderBy);
 

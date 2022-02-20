@@ -315,8 +315,8 @@ switch ($op) {
                 $infotext = $registrationHandler->getRegistrationsCompare($registrationObjOld, $registrationObj);
                 if ('' != $infotext) {
                     // create history
-                    if ($registrationObjOld->getVar('mail') != $registrationObj->getVar('mail')) {
-                        $previousMail = $registrationObjOld->getVar('mail');
+                    if ($registrationObjOld->getVar('email') != $registrationObj->getVar('email')) {
+                        $previousMail = $registrationObjOld->getVar('email');
                     }
                     $registrationhistHandler->createHistory($registrationObjOld, 'update');
                 }
@@ -373,15 +373,15 @@ switch ($op) {
                     $mailsHandler->executeReg($mailParams, $typeNotify);
                     unset($mailsHandler);
                 }
-                if ('' != $regEmail && Request::getInt('email_send') > 0) {
+                if (('' != $regEmail && Request::getInt('email_send') > 0) || ('' != $previousMail)) {
                     // send confirmation, if radio is checked
+                    // or inform old email in any case if email changed
                     $recipients = [];
                     $recipients[] = $regEmail;
                     if ('' != $previousMail) {
                         // add old email address if it changed in order to inform old mail address
                         $recipients[] = $previousMail;
                     }
-
                     $mailsHandler = new MailHandler();
                     $mailParams = $mailsHandler->getMailParam($regEvid, $regId);
                     $mailParams['infotext'] = $infotext;

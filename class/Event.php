@@ -410,7 +410,6 @@ class Event extends \XoopsObject
         $subject = \sprintf(\_MA_WGEVENTS_CONTACT_ALL_MAILSUBJECT_TEXT, $this->getVar('name'));
         $form->addElement(new \XoopsFormText(\_MA_WGEVENTS_CONTACT_MAILSUBJECT, 'mail_subject', 50, 255, $subject), true);
         // Form Editor DhtmlTextArea mailBody
-        $mailBody = '';
         $editorConfigs = [];
         $editor = $helper->getConfig('editor_user');
         $editorConfigs['name'] = 'mail_body';
