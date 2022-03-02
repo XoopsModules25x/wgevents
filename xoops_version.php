@@ -106,6 +106,9 @@ $modversion['templates'] = [
     ['file' => 'wgevents_event_item_details.tpl', 'description' => ''],
     ['file' => 'wgevents_event_item_list.tpl', 'description' => ''],
     ['file' => 'wgevents_footer.tpl', 'description' => ''],
+    ['file' => 'wgevents_gmaps_getcoords_modal.tpl', 'description' => ''],
+    ['file' => 'wgevents_gmaps_show_modal.tpl', 'description' => ''],
+    ['file' => 'wgevents_googlemaps.tpl', 'description' => ''],
     ['file' => 'wgevents_header.tpl', 'description' => ''],
     ['file' => 'wgevents_index.tpl', 'description' => ''],
     ['file' => 'wgevents_question.tpl', 'description' => ''],
@@ -604,15 +607,6 @@ $modversion['config'][] = [
     'valuetype'   => 'int',
     'default'     => 1,
 ];
-// use google maps
-$modversion['config'][] = [
-    'name'        => 'use_gm',
-    'title'       => '\_MI_WGEVENTS_USE_GM',
-    'description' => '\_MI_WGEVENTS_USE_GM_DESC',
-    'formtype'    => 'yesno',
-    'valuetype'   => 'int',
-    'default'     => 0,
-];
 // use wgEvents module
 $modversion['config'][] = [
     'name'        => 'use_wggallery',
@@ -621,6 +615,56 @@ $modversion['config'][] = [
     'formtype'    => 'yesno',
     'valuetype'   => 'int',
     'default'     => 0,
+];
+// GOOGLE MAP
+// use google maps
+$modversion['config'][] = [
+    'name'        => 'use_gmaps',
+    'title'       => '\_MI_WGEVENTS_USE_GMAPS',
+    'description' => '\_MI_WGEVENTS_USE_GMAPS_DESC',
+    'formtype'    => 'yesno',
+    'valuetype'   => 'int',
+    'default'     => 0,
+];
+$modversion['config'][] = [
+    'name'        => 'break_maps',
+    'title'       => '\_MI_WGEVENTS_GROUP_GMAPS',
+    'description' => '',
+    'formtype'    => 'line_break',
+    'valuetype'   => 'textbox',
+    'default'     => 'even',
+];
+$modversion['config'][] = [
+    'name'        => 'gmaps_api',
+    'title'       => '\_MI_WGEVENTS_GMAPS_API',
+    'description' => '\_MI_WGEVENTS_GMAPS_API_DESC',
+    'formtype'    => 'textbox',
+    'valuetype'   => 'text',
+    'default'     => '',
+];
+$modversion['config'][] = [
+    'name'        => 'gmaps_enablecal',
+    'title'       => '\_MI_WGEVENTS_GMAPS_ENABLECAL',
+    'description' => '',
+    'formtype'    => 'yesno',
+    'valuetype'   => 'int',
+    'default'     => '0',
+];
+$modversion['config'][] = [
+    'name'        => 'gmaps_enableevent',
+    'title'       => '\_MI_WGEVENTS_GMAPS_ENABLEEVENT',
+    'description' => '',
+    'formtype'    => 'yesno',
+    'valuetype'   => 'int',
+    'default'     => '0',
+];
+$modversion['config'][] = [
+    'name'        => 'gmaps_height',
+    'title'       => '\_MI_WGEVENTS_GMAPS_HEIGHT',
+    'description' => '',
+    'formtype'    => 'textbox',
+    'valuetype'   => 'int',
+    'default'     => '350',
 ];
 // ------------------- Group header: Index page ------------------- //
 $modversion['config'][] = [

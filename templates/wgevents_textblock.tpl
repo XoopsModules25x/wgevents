@@ -5,7 +5,13 @@
     <table class='table table-<{$table_type|default:false}>'>
         <thead>
             <tr class='head'>
-                <th><{$smarty.const._MA_WGEVENTS_TEXTBLOCKS_LIST}></th>
+                <th>
+                    <{if $showItem|default:false}>
+                    <{$smarty.const._MA_WGEVENTS_DETAILS}>
+                    <{else}>
+                    <{$smarty.const._MA_WGEVENTS_TEXTBLOCKS_LIST}>
+                    <{/if}>
+                </th>
             </tr>
         </thead>
         <tbody>
@@ -19,7 +25,16 @@
                 </tr>
             <{/foreach}>
         </tbody>
-        <tfoot><tr><td>&nbsp;</td></tr></tfoot>
+        <tfoot>
+            <tr>
+                <td class="center">
+                    <{if $showItem|default:false}>
+                        <a class='btn btn-success right wge-btn' href='textblock.php?op=list&amp;start=<{$start}>&amp;limit=<{$limit}>#tbId_<{$textblock.id}>' title='<{$smarty.const._MA_WGEVENTS_TEXTBLOCKS_LIST}>'><{$smarty.const._MA_WGEVENTS_TEXTBLOCKS_LIST}></a>
+                    <{/if}>
+                    <a class='btn btn-primary center wge-btn' href='textblock.php?op=new' title='<{$smarty.const._MA_WGEVENTS_TEXTBLOCK_ADD}>'><{$smarty.const._MA_WGEVENTS_TEXTBLOCK_ADD}></a>
+                </td>
+            </tr>
+        </tfoot>
     </table>
 </div>
 <{/if}>

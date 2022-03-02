@@ -47,8 +47,8 @@ $keywords = [];
 // Breadcrumbs
 $xoBreadcrumbs[] = ['title' => \_MA_WGEVENTS_INDEX, 'link' => 'index.php'];
 // Permission
-$permEdit = $permissionsHandler->getPermEventsSubmit();
-$GLOBALS['xoopsTpl']->assign('permEdit', $permEdit);
+$permSubmit = $permissionsHandler->getPermTextblocksSubmit();
+$GLOBALS['xoopsTpl']->assign('permSubmit', $permSubmit);
 $GLOBALS['xoopsTpl']->assign('showItem', $tbId > 0);
 
 switch ($op) {
@@ -76,6 +76,8 @@ switch ($op) {
                 $textblocks[$i] = $textblocksAll[$i]->getValuesTextblocks();
                 $tbName = $textblocksAll[$i]->getVar('name');
                 $keywords[$i] = $tbName;
+                $permEdit = $permissionsHandler->getPermTextblocksEdit($textblocksAll[$i]->getVar('submitter'));
+                $textblocks[$i]['permEdit'] = $permEdit;
             }
             $GLOBALS['xoopsTpl']->assign('textblocks', $textblocks);
             unset($textblocks);
@@ -101,13 +103,18 @@ switch ($op) {
         if (!$GLOBALS['xoopsSecurity']->check()) {
             \redirect_header('textblock.php', 3, \implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
         }
-        // Check permissions
-        if (!$permissionsHandler->getPermGlobalSubmit()) {
-            \redirect_header('textblock.php?op=list', 3, \_NOPERM);
-        }
+
         if ($tbId > 0) {
             $textblockObj = $textblockHandler->get($tbId);
+            // Check permissions
+            if (!$permissionsHandler->getPermTextblocksEdit($textblockObj->getVar('submitter'))) {
+                \redirect_header('textblock.php?op=list', 3, \_NOPERM);
+            }
         } else {
+            // Check permissions
+            if (!$permissionsHandler->getPermTextblocksSubmit()) {
+                \redirect_header('textblock.php?op=list', 3, \_NOPERM);
+            }
             $textblockObj = $textblockHandler->create();
         }
         $textblockObj->setVar('name', Request::getString('name'));
@@ -153,7 +160,7 @@ switch ($op) {
         // Breadcrumbs
         $xoBreadcrumbs[] = ['title' => \_MA_WGEVENTS_TEXTBLOCK_ADD];
         // Check permissions
-        if (!$permissionsHandler->getPermGlobalSubmit()) {
+        if (!$permissionsHandler->getPermTextblocksSubmit()) {
             \redirect_header('textblock.php?op=list', 3, \_NOPERM);
         }
         // Form Create
@@ -164,16 +171,16 @@ switch ($op) {
     case 'edit':
         // Breadcrumbs
         $xoBreadcrumbs[] = ['title' => \_MA_WGEVENTS_TEXTBLOCK_EDIT];
-        // Check permissions
-        if (!$permissionsHandler->getPermGlobalSubmit()) {
-            \redirect_header('textblock.php?op=list', 3, \_NOPERM);
-        }
         // Check params
         if (0 == $tbId) {
             \redirect_header('textblock.php?op=list', 3, \_MA_WGEVENTS_INVALID_PARAM);
         }
         // Get Form
         $textblockObj = $textblockHandler->get($tbId);
+        // Check permissions
+        if (!$permissionsHandler->getPermTextblocksEdit($textblockObj->getVar('submitter'))) {
+            \redirect_header('textblock.php?op=list', 3, \_NOPERM);
+        }
         $textblockObj->start = $start;
         $textblockObj->limit = $limit;
         $form = $textblockObj->getForm();

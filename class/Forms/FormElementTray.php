@@ -58,7 +58,7 @@ class FormElementTray extends \XoopsFormElementTray
                 $ret .= '<div class="form-inline">';
             }
             if ($ele->getCaption() != '') {
-                $ret .= '<label for="' . $ele->getName() . '" class="' . $this->getClass() . ' col-form-label wge-label-left">'
+                $ret .= '<label id="lbl_' . $ele->getName() . '" for="' . $ele->getName() . '" class="' . $this->getClass() . ' col-form-label wge-label-left">'
                     . $ele->getCaption()
                     . ($ele->isRequired() ? '<span class="caption-required">*</span>' : '')
                     . '</label>&nbsp;';

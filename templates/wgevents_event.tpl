@@ -42,4 +42,8 @@
     <{$form|default:false}>
 <{/if}>
 
+<{if $gmapsModal|default:false}>
+    <{include file='db:wgevents_gmaps_getcoords_modal.tpl' }>
+<{/if}>
+
 <{include file='db:wgevents_footer.tpl' }>

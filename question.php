@@ -65,8 +65,8 @@ switch ($op) {
         // check whether there are textblocks available
         $uidCurrent = \is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->uid() : 0;
         $crTextblock = new \CriteriaCompo();
-        $crTextblock->add(new \Criteria('class', Constants::TEXTBLOCK_CLASS_PUBLIC), 'OR');
-        $crTextblock->add(new \Criteria('submitter', $uidCurrent));
+        $crTextblock->add(new \Criteria('class', Constants::TEXTBLOCK_CLASS_PUBLIC));
+        $crTextblock->add(new \Criteria('submitter', $uidCurrent), 'OR');
         $textblocksCount = $textblockHandler->getCount($crTextblock);
         $GLOBALS['xoopsTpl']->assign('textblocksCount', $textblocksCount);
 
@@ -259,8 +259,8 @@ switch ($op) {
 
         $uidCurrent = \is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->uid() : 0;
         $crTextblock = new \CriteriaCompo();
-        $crTextblock->add(new \Criteria('class', Constants::TEXTBLOCK_CLASS_PUBLIC), 'OR');
-        $crTextblock->add(new \Criteria('submitter', $uidCurrent));
+        $crTextblock->add(new \Criteria('class', Constants::TEXTBLOCK_CLASS_PUBLIC));
+        $crTextblock->add(new \Criteria('submitter', $uidCurrent), 'OR');
         $textblocksCount = $textblockHandler->getCount($crTextblock);
         $GLOBALS['xoopsTpl']->assign('textblocksCount', $textblocksCount);
         if ($textblocksCount > 0) {

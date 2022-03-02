@@ -81,9 +81,10 @@ require_once __DIR__ . '/admin.php';
 \define('_MA_WGEVENTS_EVENT_EMAIL_SENDTO', 'E-Mail an der Veranstalter senden');
 \define('_MA_WGEVENTS_EVENT_EMAIL_SENDREQUEST', 'Anfrage zur Veranstaltung: ');
 \define('_MA_WGEVENTS_EVENT_LOCATION', 'Ort');
-\define('_MA_WGEVENTS_EVENT_LOCGMLAT', 'Ort Gm Latitude');
-\define('_MA_WGEVENTS_EVENT_LOCGMLON', 'Ort Gm Longitude');
-\define('_MA_WGEVENTS_EVENT_LOCGMZOOM', 'Ort Gm Zoom');
+\define('_MA_WGEVENTS_EVENT_LOCGMLAT', 'Ort Latitude');
+\define('_MA_WGEVENTS_EVENT_LOCGMLON', 'Ort Longitude');
+\define('_MA_WGEVENTS_EVENT_LOCGMZOOM', 'Zoom-Faktor');
+
 \define('_MA_WGEVENTS_EVENT_FEE', 'Gebühr');
 \define('_MA_WGEVENTS_EVENT_REGISTER_USE', 'Anmeldesystem verwenden');
 \define('_MA_WGEVENTS_EVENT_REGISTER_FROM', 'Anmeldung vom');
@@ -108,6 +109,9 @@ require_once __DIR__ . '/admin.php';
 \define('_MA_WGEVENTS_EVENT_REGISTER_FORCEVERIF_DESC', 'Wenn Du diese Option auswählst, dann muss bei der Anmeldung eine E-Mail-Adresse eingegeben werden und der Anmelder erhält eine Mail mit Bestätigungscode, der zurückgesendet werden muss.');
 \define('_MA_WGEVENTS_EVENT_REGISTER_FORCEVERIF_INFO', 'Der Veranstalter verlangt eine Mailbestätigung, daher ist die Angabe einer E-Mail-Adresse zwingend erforderlich. Du erhälst nach jeder Anmeldung eine E-Mail mit einem Link, mit dem Du Deine Anmeldung bestätigen musst.');
 \define('_MA_WGEVENTS_EVENT_GALID', 'Gallerie Id');
+\define('_MA_WGEVENTS_EVENT_GM_SHOW', 'Ort auf Karte anzeigen');
+\define('_MA_WGEVENTS_EVENT_GM_GETCOORDS', 'Koordinaten ermitteln');
+\define('_MA_WGEVENTS_EVENT_GM_APPLYCOORDS', 'Koordinaten übernehmen');
 // Category
 \define('_MA_WGEVENTS_CATEGORY_LOGO', 'Logo');
 \define('_MA_WGEVENTS_CATEGORY_NOEVENTS', 'Keine Veranstaltungen verfügbar');

@@ -26,15 +26,43 @@
             <div class="row">
                 <div class="col-xs-12 col-sm-3 col-lg-2"><{$smarty.const._MA_WGEVENTS_EVENT_EMAIL}>: </div>
                 <div class="col-xs-12 col-sm-9 col-lg-10">
-                    <{$event.email}>
-                    <a class="btn btn-primary" href="mailto:<{$event.email}>?subject=<{$smarty.const._MA_WGEVENTS_EVENT_EMAIL_SENDREQUEST}><{$event.name}>"><{$smarty.const._MA_WGEVENTS_EVENT_EMAIL_SENDTO}></a>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-5 col-lg-4">
+                            <{$event.email}>
+                        </div>
+                        <div class="col-xs-12 col-sm-7 col-lg-8">
+                            <a class="btn btn-primary" href="mailto:<{$event.email}>?subject=<{$smarty.const._MA_WGEVENTS_EVENT_EMAIL_SENDREQUEST}><{$event.name}>"><{$smarty.const._MA_WGEVENTS_EVENT_EMAIL_SENDTO}></a>
+                        </div>
+                    </div>
                 </div>
             </div>
         <{/if}>
-        <{if $event.location|default:false}>
+        <{if $event.location_text_user|default:false}>
             <div class="row">
                 <div class="col-xs-12 col-sm-3 col-lg-2"><{$smarty.const._MA_WGEVENTS_EVENT_LOCATION}>: </div>
-                <div class="col-xs-12 col-sm-9 col-lg-10"><{$event.location}></div>
+                <div class="col-xs-12 col-sm-9 col-lg-10">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-5 col-lg-4">
+                            <{$event.location_text_user}>
+                            <{if $gmapsModal|default:false && $event.permEdit|default:false}>
+                                <br><{$smarty.const._MA_WGEVENTS_EVENT_LOCGMLAT}>: <{$event.locgmlat}>
+                                <br><{$smarty.const._MA_WGEVENTS_EVENT_LOCGMLON}>: <{$event.locgmlon}>
+                                <br><{$smarty.const._MA_WGEVENTS_EVENT_LOCGMZOOM}>: <{$event.locgmzoom}>
+                            <{/if}>
+                            <{if $gmapsShow|default:false}>
+                                <input type="hidden" id="location" name="location" value="<{$event.location_text_user}>">
+                                <input type="hidden" id="locgmlat" name="locgmlat" value="<{$event.locgmlat}>">
+                                <input type="hidden" id="locgmlon" name="locgmlon" value="<{$event.locgmlon}>">
+                                <input type="hidden" id="locgmzoom" name="locgmzoom" value="<{$event.locgmzoom}>">
+                            <{/if}>
+                        </div>
+                        <div class="col-xs-12 col-sm-7 col-lg-8">
+                            <{if $gmapsShow|default:false && $event.locgmlat|default:0 > 0}>
+                                <button id='btnGetCoords' type='button' class='btn btn-primary' data-toggle='modal' data-target='#modalGMap'><{$smarty.const._MA_WGEVENTS_EVENT_GM_SHOW}></button>
+                            <{/if}>
+                        </div>
+                    </div>
+                </div>
             </div>
         <{/if}>
         <{if $event.fee|default:false}>
@@ -99,7 +127,7 @@
             <div class="col-xs-12 col-sm-5 col-lg-6 right">
                 <{if $event.permEdit|default:false && $event.nb_registrations|default:0 > 0}>
                     <a class='btn btn-success wge-btn' href='registration.php?op=listeventall&amp;redir=listeventall&amp;evid=<{$event.id}>' title='<{$smarty.const._MA_WGEVENTS_REGISTRATIONS_LIST}>'><{$smarty.const._MA_WGEVENTS_REGISTRATIONS_LIST}></a>
-                    <a class='btn btn-primary wge-btn' href='output.php?op=reg_all&amp;output_type=xlsx&amp;id=<{$event.id}>&amp;redir=<{$redir}>' title='<{$smarty.const._MA_WGEVENTS_OUTPUT_EXCEL}>'><{$smarty.const._MA_WGEVENTS_OUTPUT_EXCEL}></a>
+                    <a class='btn btn-primary wge-btn' href='output.php?op=reg_all&amp;output_type=xlsx&amp;id=<{$event.id}>&amp;redir=<{$redir|default:''}>' title='<{$smarty.const._MA_WGEVENTS_OUTPUT_EXCEL}>'><{$smarty.const._MA_WGEVENTS_OUTPUT_EXCEL}></a>
                 <{/if}>
             </div>
         </div>
@@ -126,7 +154,7 @@
             <a class='btn btn-success right wge-btn' href='event.php?op=show&amp;id=<{$event.id}>&amp;start=<{$start}>&amp;limit=<{$limit}>' title='<{$smarty.const._MA_WGEVENTS_DETAILS}>'><{$smarty.const._MA_WGEVENTS_DETAILS}></a>
         <{/if}>
         <{if $event.register_use|default:'' &&  $permRegister|default:false}>
-            <a class='btn btn-primary right wge-btn <{if !$event.regenabled|default:false}>disabled<{/if}>' href='registration.php?op=listmyevent&amp;redir=listmyevent&amp;evid=<{$event.id}>' title='<{$smarty.const._MA_WGEVENTS_GOTO_REGISTRATION}>'><{$smarty.const._MA_WGEVENTS_GOTO_REGISTRATION}></a>
+            <a class='btn btn-<{if !$event.regenabled|default:false}>outline-<{/if}>primary right wge-btn <{if !$event.regenabled|default:false}>disabled<{/if}>' href='registration.php?op=listmyevent&amp;redir=listmyevent&amp;evid=<{$event.id}>' title='<{$smarty.const._MA_WGEVENTS_GOTO_REGISTRATION}>'><{$smarty.const._MA_WGEVENTS_GOTO_REGISTRATION}></a>
         <{/if}>
         <{if $event.permEdit|default:false || $permApprove|default:false}>
             <br><a class='btn btn-primary right wge-btn' href='event.php?op=edit&amp;id=<{$event.id}>&amp;start=<{$start}>&amp;limit=<{$limit}>' title='<{$smarty.const._EDIT}>'><{$smarty.const._EDIT}></a>
@@ -136,3 +164,7 @@
         <{/if}>
     </div>
 </div>
+
+<{if $gmapsShow|default:false && $event.locgmlat|default:0 > 0}>
+    <{include file='db:wgevents_gmaps_show_modal.tpl' }>
+<{/if}>

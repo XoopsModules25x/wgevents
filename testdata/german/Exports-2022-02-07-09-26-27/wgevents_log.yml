@@ -1,0 +1,50 @@
+-
+    id: '47'
+    text: 'Result Test send mail to office@wedega.com: failed'
+    datecreated: '1643108397'
+    submitter: '1'
+-
+    id: '48'
+    text: 'Result Test send mail to office@wedega.com: failed - <h4>Fehler</h4>SMTP connect() failed. https://github.com/PHPMailer/PHPMailer/wiki/Troubleshooting<br>'
+    datecreated: '1643108449'
+    submitter: '1'
+-
+    id: '49'
+    text: 'Result Test send mail to office@wedega.com: failed - <h4>Fehler</h4>SMTP connect() failed. https://github.com/PHPMailer/PHPMailer/wiki/Troubleshooting<br>'
+    datecreated: '1643122336'
+    submitter: '1'
+-
+    id: '50'
+    text: 'Result Test send mail to office@wedega.com: failed - <h4>Fehler</h4>SMTP connect() failed. https://github.com/PHPMailer/PHPMailer/wiki/Troubleshooting<br>'
+    datecreated: '1643122452'
+    submitter: '1'
+-
+    id: '51'
+    text: 'Result Test send mail to office@wedega.com: failed - <h4>Fehler</h4>SMTP connect() failed. https://github.com/PHPMailer/PHPMailer/wiki/Troubleshooting<br>'
+    datecreated: '1643180692'
+    submitter: '1'
+-
+    id: '52'
+    text: 'Result Test send mail to office@wedega.com: failed - <h4>Fehler</h4>SMTP connect() failed. https://github.com/PHPMailer/PHPMailer/wiki/Troubleshooting<br>'
+    datecreated: '1643181949'
+    submitter: '1'
+-
+    id: '53'
+    text: 'Result Test send mail to office@wedega.com: failed - <h4>Fehler</h4>SMTP connect() failed. https://github.com/PHPMailer/PHPMailer/wiki/Troubleshooting<br>'
+    datecreated: '1643182024'
+    submitter: '1'
+-
+    id: '54'
+    text: 'Result Test send mail to office@wedega.com: failed - <h4>Fehler</h4>SMTP connect() failed. https://github.com/PHPMailer/PHPMailer/wiki/Troubleshooting<br>'
+    datecreated: '1643182103'
+    submitter: '1'
+-
+    id: '55'
+    text: 'Result Test send mail to office@wedega.com: failed - <h4>Fehler</h4>SMTP connect() failed. https://github.com/PHPMailer/PHPMailer/wiki/Troubleshooting<br>'
+    datecreated: '1643182238'
+    submitter: '1'
+-
+    id: '56'
+    text: 'Result Test send mail to office@wedega.com: failed - <h4>Fehler</h4>SMTP connect() failed. https://github.com/PHPMailer/PHPMailer/wiki/Troubleshooting<br>'
+    datecreated: '1643190598'
+    submitter: '1'

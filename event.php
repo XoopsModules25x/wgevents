@@ -64,6 +64,7 @@ $keywords = [];
 $xoBreadcrumbs[] = ['title' => \_MA_WGEVENTS_INDEX, 'link' => 'index.php'];
 
 $GLOBALS['xoopsTpl']->assign('showItem', $evId > 0);
+$useGMaps = $helper->getConfig('use_gmaps');
 
 $uidCurrent = \is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->uid() : 0;
 
@@ -80,6 +81,10 @@ switch ($op) {
             case 'show':
             default:
                 $listDescr = '';
+                if ($useGMaps) {
+                    $GLOBALS['xoopsTpl']->assign('gmapsShow', true);
+                    $GLOBALS['xoopsTpl']->assign('api_key', $helper->getConfig('gmaps_api'));
+                }
                 break;
             case 'list':
                 // get events from the past
@@ -429,6 +434,11 @@ switch ($op) {
             \redirect_header('event.php?op=list', 3, \_NOPERM);
         }
         $GLOBALS['xoTheme']->addScript(\WGEVENTS_URL . '/assets/js/forms.js');
+        if ($useGMaps) {
+            $GLOBALS['xoopsTpl']->assign('gmapsModalSave', $permissionsHandler->getPermEventsSubmit());
+            $GLOBALS['xoopsTpl']->assign('gmapsModal', true);
+            $GLOBALS['xoopsTpl']->assign('api_key', $helper->getConfig('gmaps_api'));
+        }
         // Form Create
         $eventObj = $eventHandler->create();
         $eventDate = Request::getInt('eventDate', \time());
@@ -446,11 +456,16 @@ switch ($op) {
         }
         $eventObj = $eventHandler->get($evId);
         // Check permissions
-        if (!$permissionsHandler->getPermEventsEdit($eventObj->getVar('submitter'), $eventObj->getVar('status'))) {
+        $permEdit = !$permissionsHandler->getPermEventsEdit($eventObj->getVar('submitter'), $eventObj->getVar('status'));
+        if ($permEdit) {
             \redirect_header('index.php?op=list', 3, \_NOPERM);
         }
         $GLOBALS['xoTheme']->addScript(\WGEVENTS_URL . '/assets/js/forms.js');
-
+        if ($useGMaps) {
+            $GLOBALS['xoopsTpl']->assign('gmapsModalSave', $permEdit);
+            $GLOBALS['xoopsTpl']->assign('gmapsModal', true);
+            $GLOBALS['xoopsTpl']->assign('api_key', $helper->getConfig('gmaps_api'));
+        }
         // Get Form
         $eventObj = $eventHandler->get($evId);
         $eventObj->start = $start;
