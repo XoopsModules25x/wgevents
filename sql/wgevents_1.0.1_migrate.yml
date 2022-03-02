@@ -30,13 +30,13 @@ wgevents_event:
             attributes: ' VARCHAR(255)    NOT NULL DEFAULT '''''''' '
         -
             name: location
-            attributes: ' VARCHAR(255)    NOT NULL DEFAULT '''''''' '
+            attributes: ' TEXT            NULL '
         -
             name: locgmlat
-            attributes: ' FLOAT(16,2)     NOT NULL DEFAULT ''0.00'' '
+            attributes: ' FLOAT(16,8)     NOT NULL DEFAULT ''0.00'' '
         -
             name: locgmlon
-            attributes: ' FLOAT(16,2)     NOT NULL DEFAULT ''0.00'' '
+            attributes: ' FLOAT(16,8)     NOT NULL DEFAULT ''0.00'' '
         -
             name: locgmzoom
             attributes: ' INT(1)          NOT NULL DEFAULT ''0'' '

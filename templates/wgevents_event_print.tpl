@@ -35,7 +35,7 @@
             <td class='center'><{$event.dateto_text}></td>
             <td class='center'><{$event.contact}></td>
             <td class='center'><{$event.email}></td>
-            <td class='center'><{$event.location}></td>
+            <td class='center'><{$event.location_text_user}></td>
             <td class='center'><{$event.locgmlat}></td>
             <td class='center'><{$event.locgmlon}></td>
             <td class='center'><{$event.locgmzoom}></td>

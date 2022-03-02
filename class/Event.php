@@ -64,7 +64,7 @@ class Event extends \XoopsObject
         $this->initVar('dateto', \XOBJ_DTYPE_INT);
         $this->initVar('contact', \XOBJ_DTYPE_TXTAREA);
         $this->initVar('email', \XOBJ_DTYPE_TXTBOX);
-        $this->initVar('location', \XOBJ_DTYPE_TXTBOX);
+        $this->initVar('location', \XOBJ_DTYPE_TXTAREA);
         $this->initVar('locgmlat', \XOBJ_DTYPE_FLOAT);
         $this->initVar('locgmlon', \XOBJ_DTYPE_FLOAT);
         $this->initVar('locgmzoom', \XOBJ_DTYPE_INT);
@@ -204,22 +204,32 @@ class Event extends \XoopsObject
         $form->addElement(new \XoopsFormTextArea(\_MA_WGEVENTS_EVENT_CONTACT, 'contact', $this->getVar('contact', 'e'), 4, 30));
         // Form Text evEmail
         $form->addElement(new \XoopsFormText(\_MA_WGEVENTS_EVENT_EMAIL, 'email', 50, 255, $this->getVar('email')));
-        // Form Text evLocation
-        $evLocationTray = new \XoopsFormElementTray(\_MA_WGEVENTS_EVENT_LOCATION, '<br>');
-        $evLocationTray->addElement(new \XoopsFormText('', 'location', 50, 255, $this->getVar('location')));
-        if ($helper->getConfig('use_gm')) {
-            $evLocationGmTray = new \XoopsFormElementTray('', '&nbsp;');
+        // Location
+        // Form Editor TextArea evLocation
+        $evLocation = $this->isNew() ? '' : $this->getVar('location', 'e');
+        $form->addElement(new \XoopsFormTextArea(\_MA_WGEVENTS_EVENT_LOCATION, 'location', $evLocation, 4, 50));
+
+        if ($helper->getConfig('use_gmaps')) {
+            $gmapsTray = new Forms\FormElementTray('', '<br>');
             // Form Text evLocgmlat
-            $evLocgmlat = $this->isNew() ? '0' : $this->getVar('locgmlat');
-            $evLocationGmTray->addElement(new \XoopsFormText(\_MA_WGEVENTS_EVENT_LOCGMLAT, 'locgmlat', 15, 150, $evLocgmlat));
+            $evLocgmlat = $this->isNew() ? '0.00' : $this->getVar('locgmlat');
+            $gmapsTray->addElement(new \XoopsFormText(\_MA_WGEVENTS_EVENT_LOCGMLAT, 'locgmlat', 20, 50, $evLocgmlat));
             // Form Text evLocgmlon
-            $evLocgmlon = $this->isNew() ? '0' : $this->getVar('locgmlon');
-            $evLocationGmTray->addElement(new \XoopsFormText(\_MA_WGEVENTS_EVENT_LOCGMLON, 'locgmlon', 15, 150, $evLocgmlon));
+            $evLocgmlon = $this->isNew() ? '0.00' : $this->getVar('locgmlon');
+            $gmapsTray->addElement(new \XoopsFormText(\_MA_WGEVENTS_EVENT_LOCGMLON, 'locgmlon', 20, 50, $evLocgmlon));
             // Form Text evLocgmzoom
-            $evLocationGmTray->addElement(new \XoopsFormText(\_MA_WGEVENTS_EVENT_LOCGMZOOM, 'locgmzoom', 5, 255, $this->getVar('locgmzoom')));
-            $evLocationTray->addElement($evLocationGmTray);
+            $evLocgmzoom = $this->isNew() ? '10' : $this->getVar('locgmzoom');
+            $gmapsTray->addElement(new \XoopsFormText(\_MA_WGEVENTS_EVENT_LOCGMZOOM, 'locgmzoom', 5, 50, $evLocgmzoom));
+            // Form label
+            $locLabel = '<div class="row"><div class="col-sm-6">';
+            $locLabel .= $gmapsTray->render();
+            $locLabel .= '</div>';
+            $locLabel .= '<div class="col-sm-6">';
+            $locLabel .= "<button id='btnGetCoords' type='button' class='btn btn-primary' data-toggle='modal' data-target='#modalCoordsPicker'>" . \_MA_WGEVENTS_EVENT_GM_GETCOORDS . '</button>';
+            $locLabel .= '</div></div>';
+            $form->addElement(new \XoopsFormLabel('', $locLabel));
         }
-        $form->addElement($evLocationTray);
+
         // Form Text evFee
         $default0 = '0' . $helper->getConfig('sep_comma') . '00';
         $evFee = $this->isNew() ? $default0 : Utility::FloatToString($this->getVar('fee'));
@@ -447,14 +457,20 @@ class Event extends \XoopsObject
         if (\is_object($categoryObj)) {
             $catName = $categoryObj->getVar('name');
         }
-        $ret['catname']            = $catName;
-        $ret['desc_text']          = $this->getVar('desc', 'e');
-        $ret['desc_short_admin']   = $utility::truncateHtml($ret['desc_text'], $adminMaxchar);
-        $ret['desc_short_user']    = $utility::truncateHtml($ret['desc_text'], $userMaxchar);
-        $ret['datefrom_text']      = \formatTimestamp($this->getVar('datefrom'), 'm');
-        $ret['dateto_text']        = \formatTimestamp($this->getVar('dateto'), 'm');
-        $evContact                = $this->getVar('contact', 'e');
-        $ret['contact_text']      = $evContact;
+        $ret['catname']          = $catName;
+        $ret['desc_text']        = $this->getVar('desc', 'e');
+        $ret['desc_short_admin'] = $utility::truncateHtml($ret['desc_text'], $adminMaxchar);
+        $ret['desc_short_user']  = $utility::truncateHtml($ret['desc_text'], $userMaxchar);
+        $ret['datefrom_text']    = \formatTimestamp($this->getVar('datefrom'), 'm');
+        $ret['dateto_text']      = \formatTimestamp($this->getVar('dateto'), 'm');
+        $evLocation              = $this->getVar('location', 'e');
+        $ret['location_text']    = $evLocation;
+        if ($evLocation) {
+            $loc   = preg_split("/\r\n|\n|\r/", $evLocation);
+            $ret['location_text_user']  = \implode('<br>', $loc);
+        }
+        $evContact               = $this->getVar('contact', 'e');
+        $ret['contact_text']     = $evContact;
         if ($evContact) {
             $contactLines   = preg_split("/\r\n|\n|\r/", $evContact);
             $ret['contact_text_user']  = \implode('<br>', $contactLines);

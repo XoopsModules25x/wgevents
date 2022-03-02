@@ -43,7 +43,7 @@ class FormText extends \XoopsFormText
     private $placeholder;
 
     /**
-     * create HTML to output the ext field
+     * create HTML to output the text field
      *
      * @return string
      */

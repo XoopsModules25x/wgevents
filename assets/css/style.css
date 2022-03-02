@@ -45,3 +45,10 @@ ul.menu > li + li:before {
 .copyright {
     margin-top:50px;
 }
+
+/*special width for event form*/
+#lbl_locgmlat,
+#lbl_locgmlon,
+#lbl_locgmzoom {
+    min-width:120px;
+}

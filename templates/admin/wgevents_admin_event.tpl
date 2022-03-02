@@ -17,7 +17,7 @@
                 <th class="center"><{$smarty.const._MA_WGEVENTS_EVENT_CONTACT}></th>
                 <th class="center"><{$smarty.const._MA_WGEVENTS_EVENT_EMAIL}></th>
                 <th class="center"><{$smarty.const._MA_WGEVENTS_EVENT_LOCATION}></th>
-                <{if $use_gm|default:''}>
+                <{if $use_gmaps|default:''}>
                     <th class="center"><{$smarty.const._MA_WGEVENTS_EVENT_LOCGMLAT}></th>
                     <th class="center"><{$smarty.const._MA_WGEVENTS_EVENT_LOCGMLON}></th>
                     <th class="center"><{$smarty.const._MA_WGEVENTS_EVENT_LOCGMZOOM}></th>
@@ -55,8 +55,8 @@
                 <td class='center'><{$event.dateto_text}></td>
                 <td class='center'><{$event.contact}></td>
                 <td class='center'><{$event.email}></td>
-                <td class='center'><{$event.location}></td>
-                <{if $use_gm|default:''}>
+                <td class='center'><{$event.location_text_user}></td>
+                <{if $use_gmaps|default:''}>
                     <td class='center'><{$event.locgmlat}></td>
                     <td class='center'><{$event.locgmlon}></td>
                     <td class='center'><{$event.locgmzoom}></td>

@@ -353,8 +353,6 @@ class PermissionHandler extends \XoopsPersistableObjectHandler
         return false;
     }
 
-
-
     /**
      * @public function getPermTextblocksSubmit
      * returns right for submit textblocks
@@ -364,6 +362,35 @@ class PermissionHandler extends \XoopsPersistableObjectHandler
     public function getPermTextblocksSubmit()
     {
         return $this->getPermEventsSubmit();
+    }
+
+    /**
+     * @public function getPermTextblocksAdmin
+     * returns right for edit/delete textblocks
+     *  - User must have perm to submit and must be owner
+     * @param $tbSubmitter
+     * @return bool
+     */
+    public function getPermTextblocksEdit($tbSubmitter)
+    {
+        global $xoopsUser, $xoopsModule;
+
+        if ($this->getPermGlobalApprove()) {
+            return true;
+        }
+
+        $currentuid = 0;
+        if (isset($xoopsUser) && \is_object($xoopsUser)) {
+            if ($xoopsUser->isAdmin($xoopsModule->mid())) {
+                return true;
+            }
+            $currentuid = $xoopsUser->uid();
+        }
+        if ($this->getPermTextblocksSubmit() && $currentuid == $tbSubmitter) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
