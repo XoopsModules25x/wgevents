@@ -109,7 +109,7 @@ class Question extends \XoopsObject
         $form = new \XoopsThemeForm($title, 'formQuestion', $action, 'post', true);
         $form->setExtra('enctype="multipart/form-data"');
         // Form Table events
-        $evId = $this->getVar('evid');
+        $evId = ($this->getVar('evid')) ?? 0;
         $addEvidSelect = new \XoopsFormSelect(\_MA_WGEVENTS_QUESTION_EVID, 'evid', $evId);
         $addEvidSelect->addOptionArray($eventHandler->getList());
         $form->addElement($addEvidSelect);
