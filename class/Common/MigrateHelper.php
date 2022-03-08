@@ -54,7 +54,7 @@ class MigrateHelper
      */
     public function createSchemaFromSqlfile(): bool
     {
-        if (!\file_exists($this->fileSql)) {
+        if (!\is_file($this->fileSql)) {
             \xoops_error('Error: Sql file not found!');
             return false;
         }
@@ -164,7 +164,7 @@ class MigrateHelper
 
         // create new file and write schema array into this file
         $myfile = \fopen($this->fileYaml, "w");
-        if (false == $myfile || \is_null($myfile)) {
+        if (false == $myfile || null === $myfile) {
             \xoops_error('Error: Unable to open sql file!');
             return false;
         }
