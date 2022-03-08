@@ -5,7 +5,7 @@
             <div class="col-xs-12 col-sm-2">
                 <img class="img-responsive img-fluid" src='<{$wgevents_upload_eventlogos_url|default:false}><{$event.submitter}>/<{$event.logo}>' alt='<{$event.name}>' >
             </div>
-            <div class="col-xs-12 col-sm-6 wge-panel-details1"><{$event.desc_short_user}></div>
+            <div class="col-xs-12 col-sm-6 wge-panel-details1 expander"><{$event.desc_text}></div>
             <div class="col-xs-12 col-sm-4 wge-panel-details2 right">
                 <p><{$smarty.const._MA_WGEVENTS_EVENT_DATEFROM}>: <{$event.datefrom_text}><br>
                     <{$smarty.const._MA_WGEVENTS_EVENT_DATETO}>: <{$event.dateto_text}></p>
