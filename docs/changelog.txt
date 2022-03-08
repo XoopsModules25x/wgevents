@@ -11,6 +11,7 @@
  - added tablesorter (mamba)
  - added notify all participants (goffy)
  - added google maps (goffy)
+ - added js for expand/collapse description (goffy)
 
 ==============================================================
 1.0.0 [2022/01/04 9:28:23]

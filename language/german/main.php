@@ -40,6 +40,8 @@ require_once __DIR__ . '/admin.php';
 \define('_MA_WGEVENTS_INDEX_THEREARENT_EVENTS', 'Es gibt keine Veranstaltungen');
 \define('_MA_WGEVENTS_INDEX_THEREARENT_CATS', 'Es gibt keine Kategorien');
 \define('_MA_WGEVENTS_INDEX_LATEST_LIST', 'Letzte Veranstaltungen');
+\define('_MA_WGEVENTS_READMORE', 'Mehr lesen');
+\define('_MA_WGEVENTS_READLESS', 'Weniger lesen');
 // Status
 \define('_MA_WGEVENTS_STATUS', 'Status');
 \define('_MA_WGEVENTS_STATUS_NONE', 'Kein Status');

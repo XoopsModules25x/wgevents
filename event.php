@@ -77,6 +77,9 @@ switch ($op) {
         $GLOBALS['xoopsTpl']->assign('wgevents_icons_url_24', \WGEVENTS_ICONS_URL_24 . '/');
         $GLOBALS['xoopsTpl']->assign('filter', $filter);
 
+        $GLOBALS['xoTheme']->addScript(\WGEVENTS_URL . '/assets/js/expander/jquery.expander.min.js');
+        $GLOBALS['xoopsTpl']->assign('user_maxchar', $helper->getConfig('user_maxchar'));
+
         switch($op) {
             case 'show':
             default:

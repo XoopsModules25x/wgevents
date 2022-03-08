@@ -1,10 +1,8 @@
 Read Me First
 =============
 
-Originally created by the TDM Team.
+Originally created by Goffy (German Xoops) with XOOPS Modulebuilder.
 
-Modified by Timgno (http://www.txmodxoops.org)
+Contributors: Mamba (https://xoops.org)
 
-Contributors: Mamba (https://xoops.org), Goffy (German Xoops)
-
-Included ideas for Logo Generator from Trabis (Publisher module) and Suin (Koins module)
+JS expander: Copyright 2022, Karl Swedberg

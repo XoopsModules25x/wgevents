@@ -53,6 +53,9 @@ $GLOBALS['xoopsTpl']->assign('wgevents_url', \WGEVENTS_URL);
 $GLOBALS['xoopsTpl']->assign('wgevents_icons_url_32', \WGEVENTS_ICONS_URL_32);
 $GLOBALS['xoopsTpl']->assign('index_header', $helper->getConfig('index_header'));
 
+$GLOBALS['xoTheme']->addScript(\WGEVENTS_URL . '/assets/js/expander/jquery.expander.min.js');
+$GLOBALS['xoopsTpl']->assign('user_maxchar', $helper->getConfig('user_maxchar'));
+
 $indexDisplayCats = (string)$helper->getConfig('index_displaycats');
 $GLOBALS['xoopsTpl']->assign('index_displaycats', $indexDisplayCats);
 if ('none' != $indexDisplayCats) {
