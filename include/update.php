@@ -41,7 +41,7 @@ function xoops_module_update_wgevents($module, $prev_version = null)
     $moduleDirName = $module->dirname();
 
     //check preload folder and remove replace index.php by index.html if exist
-    if (\file_exists(\XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/preloads/index.php')) {
+    if (\is_file(\XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/preloads/index.php')) {
         //delete olf file
         \unlink(\XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/preloads/index.php');
         //create html file

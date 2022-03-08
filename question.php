@@ -148,7 +148,7 @@ switch ($op) {
         }
         $eventObj = $eventHandler->get($queEvid);
         // Check permissions
-        if (!$permissionsHandler->getPermQuestionsAdmin($eventObj->getVAr('submitter'), $eventObj->getVar('status'))) {
+        if (!$permissionsHandler->getPermQuestionsAdmin($eventObj->getVar('submitter'), $eventObj->getVar('status'))) {
             \redirect_header('index.php?op=list', 3, \_NOPERM);
         }
         if ($queId > 0) {
@@ -202,7 +202,7 @@ switch ($op) {
         }
         $eventObj = $eventHandler->get($queEvid);
         // Check permissions
-        if (!$permissionsHandler->getPermQuestionsAdmin($eventObj->getVAr('submitter'), $eventObj->getVar('status'))) {
+        if (!$permissionsHandler->getPermQuestionsAdmin($eventObj->getVar('submitter'), $eventObj->getVar('status'))) {
             \redirect_header('index.php?op=list', 3, \_NOPERM);
         }
         $weight = $questionHandler->getNextWeight($queEvid);
@@ -243,7 +243,7 @@ switch ($op) {
     case 'newset':
         $eventObj = $eventHandler->get($queEvid);
         // Check permissions
-        if (!$permissionsHandler->getPermQuestionsAdmin($eventObj->getVAr('submitter'), $eventObj->getVar('status'))) {
+        if (!$permissionsHandler->getPermQuestionsAdmin($eventObj->getVar('submitter'), $eventObj->getVar('status'))) {
             \redirect_header('index.php?op=list', 3, \_NOPERM);
         }
         $questionHandler->createQuestionsDefaultset($queEvid);
@@ -252,7 +252,7 @@ switch ($op) {
     case 'add_textblock':
         $eventObj = $eventHandler->get($queEvid);
         // Check permissions
-        if (!$permissionsHandler->getPermQuestionsAdmin($eventObj->getVAr('submitter'), $eventObj->getVar('status'))) {
+        if (!$permissionsHandler->getPermQuestionsAdmin($eventObj->getVar('submitter'), $eventObj->getVar('status'))) {
             \redirect_header('index.php?op=list', 3, \_NOPERM);
         }
         $xoBreadcrumbs[] = ['title' => \_MA_WGEVENTS_TEXTBLOCK_ADD];
@@ -282,7 +282,7 @@ switch ($op) {
     case 'new':
         $eventObj = $eventHandler->get($queEvid);
         // Check permissions
-        if (!$permissionsHandler->getPermQuestionsAdmin($eventObj->getVAr('submitter'), $eventObj->getVar('status'))) {
+        if (!$permissionsHandler->getPermQuestionsAdmin($eventObj->getVar('submitter'), $eventObj->getVar('status'))) {
             \redirect_header('index.php?op=list', 3, \_NOPERM);
         }
         $GLOBALS['xoTheme']->addScript(\WGEVENTS_URL . '/assets/js/forms.js');
@@ -297,7 +297,7 @@ switch ($op) {
     case 'test':
         $eventObj = $eventHandler->get($queEvid);
         // Check permissions
-        if (!$permissionsHandler->getPermQuestionsAdmin($eventObj->getVAr('submitter'), $eventObj->getVar('status'))) {
+        if (!$permissionsHandler->getPermQuestionsAdmin($eventObj->getVar('submitter'), $eventObj->getVar('status'))) {
             \redirect_header('index.php?op=list', 3, \_NOPERM);
         }
         // Breadcrumbs
@@ -311,7 +311,7 @@ switch ($op) {
     case 'edit':
         $eventObj = $eventHandler->get($queEvid);
         // Check permissions
-        if (!$permissionsHandler->getPermQuestionsAdmin($eventObj->getVAr('submitter'), $eventObj->getVar('status'))) {
+        if (!$permissionsHandler->getPermQuestionsAdmin($eventObj->getVar('submitter'), $eventObj->getVar('status'))) {
             \redirect_header('index.php?op=list', 3, \_NOPERM);
         }
         $GLOBALS['xoTheme']->addScript(\WGEVENTS_URL . '/assets/js/forms.js');

@@ -215,7 +215,7 @@ function getUnusedImages(&$unused, $directory)
 function wgg_foldersize($path)
 {
     $total_size = 0;
-    $files      = \scandir($path);
+    $files      = \scandir($path, SCANDIR_SORT_NONE);
 
     foreach ($files as $t) {
         if (\is_dir(\rtrim($path, '/') . '/' . $t)) {
