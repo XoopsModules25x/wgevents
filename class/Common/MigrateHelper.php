@@ -54,7 +54,7 @@ class MigrateHelper
      */
     public function createSchemaFromSqlfile(): bool
     {
-        if (!\file_exists($this->fileSql)) {
+        if (!\is_file($this->fileSql)) {
             \xoops_error('Error: Sql file not found!');
             return false;
         }
