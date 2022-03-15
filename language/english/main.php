@@ -98,7 +98,7 @@ require_once __DIR__ . '/admin.php';
 \define('_MA_WGEVENTS_EVENT_REGISTER_AUTOACCEPT', 'Autoaccept');
 \define('_MA_WGEVENTS_EVENT_REGISTER_AUTOACCEPT_DESC', 'If you are using this feature then all registrations will be approve automatically. If No you have to confirm separately each registration.');
 \define('_MA_WGEVENTS_EVENT_REGISTER_NOTIFY', 'Notify');
-\define('_MA_WGEVENTS_EVENT_REGISTER_NOTIFY_DESC', 'Please enter emails, which should be informed about new registrations or updates.<br>Use for each email a new line.');
+\define('_MA_WGEVENTS_EVENT_REGISTER_NOTIFY_DESC', 'Please enter emails, which should be informed about new registrations or updates.&#013;&#010;Use for each email a new line.');
 \define('_MA_WGEVENTS_EVENT_REGISTER_SENDERMAIL', 'Sender mail address');
 \define('_MA_WGEVENTS_EVENT_REGISTER_SENDERMAIL_DESC', 'Mail address of sender for confirmation mails');
 \define('_MA_WGEVENTS_EVENT_REGISTER_SENDERMAIL_ERR', 'In case of registration use the mail address of sender for confirmation mails must be filled in!');

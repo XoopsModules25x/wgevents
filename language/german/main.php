@@ -99,7 +99,7 @@ require_once __DIR__ . '/admin.php';
 \define('_MA_WGEVENTS_EVENT_REGISTER_AUTOACCEPT', 'Automatische Annahme');
 \define('_MA_WGEVENTS_EVENT_REGISTER_AUTOACCEPT_DESC', 'Wenn Du diese Funkion verwendest, dann werden alle Anmeldungen automatisch als bestätigt angenommen. Bei Nein muss jede Anmeldung separat bestätigt werden.');
 \define('_MA_WGEVENTS_EVENT_REGISTER_NOTIFY', 'Benachrichtigung');
-\define('_MA_WGEVENTS_EVENT_REGISTER_NOTIFY_DESC', 'Bitte die E-Mail-Adresse(n) eingeben, welche über neue Anmeldungen und Änderungen informiert werden sollen.<br>Bitte für jede E-Mail-Adrresse eine neue Zeile verwenden.');
+\define('_MA_WGEVENTS_EVENT_REGISTER_NOTIFY_DESC', 'Bitte die E-Mail-Adresse(n) eingeben, welche über neue Anmeldungen und Änderungen informiert werden sollen.&#013;&#010;Bitte für jede E-Mail-Adrresse eine neue Zeile verwenden.');
 \define('_MA_WGEVENTS_EVENT_REGISTER_SENDERMAIL', 'Mail-Adresse Absender');
 \define('_MA_WGEVENTS_EVENT_REGISTER_SENDERMAIL_DESC', 'Mail-Adresse Absender für Bestätigungsmails');
 \define('_MA_WGEVENTS_EVENT_REGISTER_SENDERMAIL_ERR', 'Im Falle der Verwendung der Registrierung muss die Mail-Adresse Absender für Bestätigungsmails befüllt sein!');
