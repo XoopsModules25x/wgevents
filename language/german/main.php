@@ -253,6 +253,7 @@ Eine Teilnahme an der Veranstaltung ohne Zustimmung zu diesen Bestimmungen ist l
 \define('_MA_WGEVENTS_FIELD_EMAIL', 'Textfeld E-Mail');
 \define('_MA_WGEVENTS_FIELD_COUNTRY', 'Dropdownliste Land');
 \define('_MA_WGEVENTS_FIELD_TEXTBLOCK', 'Textblock');
+\define('_MA_WGEVENTS_FIELD_TEXTEDITOR', 'Text Editor');
 // Submit
 \define('_MA_WGEVENTS_SAVE', 'Speichern');
 \define('_MA_WGEVENTS_EXEC', 'Ausführen');

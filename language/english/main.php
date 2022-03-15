@@ -252,6 +252,7 @@ Participation without agreement to this conditions is not possible.
 \define('_MA_WGEVENTS_FIELD_EMAIL', 'Textbox Email');
 \define('_MA_WGEVENTS_FIELD_COUNTRY', 'Dropdown Country');
 \define('_MA_WGEVENTS_FIELD_TEXTBLOCK', 'Textblock');
+\define('_MA_WGEVENTS_FIELD_TEXTEDITOR', 'Texteditor');
 // Submit
 \define('_MA_WGEVENTS_SAVE', 'Save');
 \define('_MA_WGEVENTS_EXEC', 'Execute');

@@ -228,23 +228,23 @@ class Registration extends \XoopsObject
         $form->addElement($regGdpr, true);
         // Form Text Date Select regFinancial
         $regFinancial = $this->isNew() ? Constants::FINANCIAL_UNPAID : $this->getVar('financial');
-        if ($eventFee > 0 && $permRegistrationsApprove) {
+        if ($eventFee > 0 && $permRegistrationsApprove && !$test) {
             $regFinancialRadio = new \XoopsFormRadio(\_MA_WGEVENTS_REGISTRATION_FINANCIAL, 'financial', $regFinancial);
             $regFinancialRadio->addOption(Constants::FINANCIAL_UNPAID, \_MA_WGEVENTS_REGISTRATION_FINANCIAL_UNPAID);
             $regFinancialRadio->addOption(Constants::FINANCIAL_PAID, \_MA_WGEVENTS_REGISTRATION_FINANCIAL_PAID);
             $form->addElement($regFinancialRadio, true);
         } else {
-            if (!$this->isNew() && $eventFee > 0) {
+            if (!$this->isNew() && $eventFee > 0  && $test) {
                 $form->addElement(new \XoopsFormLabel(\_MA_WGEVENTS_REGISTRATION_FINANCIAL, Utility::getFinancialText($regFinancial)));
             }
             $form->addElement(new \XoopsFormHidden('financial', $regFinancial));
         }
         // Form Radio Yes/No regListwait
         $regListwait = $this->isNew() ? 0 : (int)$this->getVar('listwait');
-        if ($eventRegisterMax > 0 && $permRegistrationsApprove) {
+        if ($eventRegisterMax > 0 && $permRegistrationsApprove && !$test) {
             $form->addElement(new \XoopsFormRadioYN(\_MA_WGEVENTS_REGISTRATION_LISTWAIT, 'listwait', $regListwait));
         } else {
-            if ($eventRegisterMax > 0 && $regListwait > 0) {
+            if ($eventRegisterMax > 0 && $regListwait > 0 && $test) {
                 $form->addElement(new \XoopsFormLabel(\_MA_WGEVENTS_REGISTRATION_LISTWAIT, \_YES));
             }
             $form->addElement(new \XoopsFormHidden('listwait', $regListwait));
@@ -269,7 +269,7 @@ class Registration extends \XoopsObject
         $regDatecreated = $this->isNew() ? \time() : $this->getVar('datecreated');
         // Form Select User resSubmitter
         $regSubmitter = \is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->uid() : 0;
-        if ($permRegistrationsApprove) {
+        if ($permRegistrationsApprove && !$test) {
             $regStatusSelect = new \XoopsFormSelect(\_MA_WGEVENTS_STATUS, 'status', $regStatus);
             $regStatusSelect->addOption(Constants::STATUS_NONE, \_MA_WGEVENTS_STATUS_NONE);
             $regStatusSelect->addOption(Constants::STATUS_OFFLINE, \_MA_WGEVENTS_STATUS_OFFLINE);
@@ -278,7 +278,7 @@ class Registration extends \XoopsObject
             $regStatusSelect->addOption(Constants::STATUS_APPROVED, \_MA_WGEVENTS_STATUS_APPROVED);
             $form->addElement($regStatusSelect, true);
         } else {
-            if (!$this->isNew()) {
+            if (!$this->isNew() && !$test) {
                 $form->addElement(new \XoopsFormLabel(\_MA_WGEVENTS_STATUS, Utility::getStatusText($regStatus)));
             }
             $form->addElement(new \XoopsFormHidden('status', $regStatus));
@@ -294,7 +294,7 @@ class Registration extends \XoopsObject
             $form->addElement(new \XoopsFormHidden('verifkey', $resVerifkey));
             $form->addElement(new \XoopsFormHidden('datecreated_int', \time()));
             $form->addElement(new \XoopsFormHidden('submitter', $regSubmitter));
-            if (!$this->isNew()) {
+            if (!$this->isNew() && !$test) {
                 $form->addElement(new \XoopsFormLabel(\_MA_WGEVENTS_DATECREATED, \formatTimestamp($regDatecreated, 's')));
                 $form->addElement(new \XoopsFormLabel(\_MA_WGEVENTS_SUBMITTER, \XoopsUser::getUnameFromId($regSubmitter)));
             }
