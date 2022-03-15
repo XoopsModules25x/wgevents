@@ -256,7 +256,7 @@ Eine Teilnahme an der Veranstaltung ohne Zustimmung zu diesen Bestimmungen ist l
 // Submit
 \define('_MA_WGEVENTS_SAVE', 'Speichern');
 \define('_MA_WGEVENTS_EXEC', 'Ausführen');
-\define('_MA_WGEVENTS_CONTINUE_QUESTIONY', 'Speichern und mit Zusatzinformationen fortsetzen');
+\define('_MA_WGEVENTS_CONTINUE_QUESTIONY', 'Speichern und mit Anmeldeformular fortsetzen');
 \define('_MA_WGEVENTS_GOTO_REGISTRATION', 'Zur Anmeldung');
 \define('_MA_WGEVENTS_GOTO_QUESTIONS', 'Anmeldeformular bearbeiten');
 \define('_MA_WGEVENTS_GOTO_EVENT', 'Zur Veranstaltung');
@@ -274,7 +274,7 @@ Eine Teilnahme an der Veranstaltung ohne Zustimmung zu diesen Bestimmungen ist l
 \define('_MA_WGEVENTS_CONFIRMDELETE_REGISTRATION', "Anmeldung für: <b><span style='color : Red;'>%s</span></b>");
 \define('_MA_WGEVENTS_CONFIRMDELETE_TEXTBLOCK', "Textblock: <b><span style='color : Red;'>%s</span></b>");
 \define('_MA_WGEVENTS_CONFIRMDELETE_EVENT', "Veranstaltung: <b><span style='color : Red;'>%s</span></b>");
-\define('_MA_WGEVENTS_CONFIRMDELETE_QUESTION', "Zusatzinfo: <b><span style='color : Red;'>%s</span></b>");
+\define('_MA_WGEVENTS_CONFIRMDELETE_QUESTION', "Zusatz-Anmeldefelder: <b><span style='color : Red;'>%s</span></b>");
 \define('_MA_WGEVENTS_CONFIRMCANCEL_TITLE', 'Veranstaltung stornieren');
 \define('_MA_WGEVENTS_CONFIRMCANCEL_LABEL', 'Willst du wirklich stornieren:');
 \define('_MA_WGEVENTS_CONFIRMCANCEL_EVENT', "Achtung: Auch alle Anmeldungen werden automatisch storniert! Willst Du <b><span style='color : Red;'>%s</span></b> endgültig stornieren?");
