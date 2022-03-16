@@ -366,14 +366,16 @@ switch ($op) {
                 if ('' != $registerNotify) {
                     // send notifications to emails of register_notify
                     $notifyEmails = $eventHandler->getRecipientsNotify($registerNotify);
-                    $mailsHandler = new MailHandler();
-                    $mailParams   = $mailsHandler->getMailParam($regEvid, $newRegId);
-                    $mailParams['infotext'] = $infotext;
-                    $mailParams['recipients'] = $notifyEmails;
-                    $mailsHandler->setParams($mailParams);
-                    $mailsHandler->setType($typeNotify);
-                    $mailsHandler->executeReg();
-                    unset($mailsHandler);
+                    if (\count($notifyEmails) > 0) {
+                        $mailsHandler = new MailHandler();
+                        $mailParams   = $mailsHandler->getMailParam($regEvid, $newRegId);
+                        $mailParams['infotext'] = $infotext;
+                        $mailParams['recipients'] = $notifyEmails;
+                        $mailsHandler->setParams($mailParams);
+                        $mailsHandler->setType($typeNotify);
+                        $mailsHandler->executeReg();
+                        unset($mailsHandler);
+                    }
                 }
                 if (('' != $regEmail && Request::getInt('email_send') > 0) || ('' != $previousMail)) {
                     // send confirmation, if radio is checked
@@ -491,12 +493,14 @@ switch ($op) {
                 if ('' != $registerNotify) {
                     // send notifications to emails of register_notify
                     $notifyEmails = $eventHandler->getRecipientsNotify($registerNotify);
-                    $mailsHandler = new MailHandler();
-                    $mailParams['recipients'] = $notifyEmails;
-                    $mailsHandler->setParams($mailParams);
-                    $mailsHandler->setType($typeNotify);
-                    $mailsHandler->executeReg();
-                    unset($mailsHandler);
+                    if (\count($notifyEmails) > 0) {
+                        $mailsHandler = new MailHandler();
+                        $mailParams['recipients'] = $notifyEmails;
+                        $mailsHandler->setParams($mailParams);
+                        $mailsHandler->setType($typeNotify);
+                        $mailsHandler->executeReg();
+                        unset($mailsHandler);
+                    }
                 }
                 // send email in any case if email is available
                 if ('' != $mailParams['regEmail']) {
@@ -572,14 +576,16 @@ switch ($op) {
             if ('' != $registerNotify) {
                 // send notifications to emails of register_notify
                 $notifyEmails = $eventHandler->getRecipientsNotify($registerNotify);
-                $mailsHandler = new MailHandler();
-                $mailParams   = $mailsHandler->getMailParam($regEvid, $regId);
-                $mailParams['infotext'] = $infotext;
-                $mailParams['recipients'] = $notifyEmails;
-                $mailsHandler->setParams($mailParams);
-                $mailsHandler->setType($typeNotify);
-                $mailsHandler->executeReg();
-                unset($mailsHandler);
+                if (\count($notifyEmails) > 0) {
+                    $mailsHandler = new MailHandler();
+                    $mailParams   = $mailsHandler->getMailParam($regEvid, $regId);
+                    $mailParams['infotext'] = $infotext;
+                    $mailParams['recipients'] = $notifyEmails;
+                    $mailsHandler->setParams($mailParams);
+                    $mailsHandler->setType($typeNotify);
+                    $mailsHandler->executeReg();
+                    unset($mailsHandler);
+                }
             }
             $regEmail = $registrationObj->getVar('email');
             if ('' != $regEmail) {
@@ -649,14 +655,16 @@ switch ($op) {
             if ('' != $registerNotify) {
                 // send notifications to emails of register_notify
                 $notifyEmails = $eventHandler->getRecipientsNotify($registerNotify);
-                $mailsHandler = new MailHandler();
-                $mailParams   = $mailsHandler->getMailParam($regEvid, $regId);
-                $mailParams['infotext'] = $infotext;
-                $mailParams['recipients'] = $notifyEmails;
-                $mailsHandler->setParams($mailParams);
-                $mailsHandler->setType($typeNotify);
-                $mailsHandler->executeReg();
-                unset($mailsHandler);
+                if (\count($notifyEmails) > 0) {
+                    $mailsHandler = new MailHandler();
+                    $mailParams   = $mailsHandler->getMailParam($regEvid, $regId);
+                    $mailParams['infotext'] = $infotext;
+                    $mailParams['recipients'] = $notifyEmails;
+                    $mailsHandler->setParams($mailParams);
+                    $mailsHandler->setType($typeNotify);
+                    $mailsHandler->executeReg();
+                    unset($mailsHandler);
+                }
             }
             $regEmail = $registrationObj->getVar('email');
             if ('' != $regEmail) {
@@ -727,14 +735,16 @@ switch ($op) {
             if ('' != $registerNotify) {
                 // send notifications to emails of register_notify
                 $notifyEmails = $eventHandler->getRecipientsNotify($registerNotify);
-                $mailsHandler = new MailHandler();
-                $mailParams   = $mailsHandler->getMailParam($regEvid, $regId);
-                $mailParams['infotext'] = $infotext;
-                $mailParams['recipients'] = $notifyEmails;
-                $mailsHandler->setParams($mailParams);
-                $mailsHandler->setType($typeNotify);
-                $mailsHandler->executeReg();
-                unset($mailsHandler);
+                if (\count($notifyEmails) > 0) {
+                    $mailsHandler = new MailHandler();
+                    $mailParams   = $mailsHandler->getMailParam($regEvid, $regId);
+                    $mailParams['infotext'] = $infotext;
+                    $mailParams['recipients'] = $notifyEmails;
+                    $mailsHandler->setParams($mailParams);
+                    $mailsHandler->setType($typeNotify);
+                    $mailsHandler->executeReg();
+                    unset($mailsHandler);
+                }
             }
             $regEmail = $registrationObj->getVar('email');
             if ('' != $regEmail) {

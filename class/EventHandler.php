@@ -260,7 +260,14 @@ class EventHandler extends \XoopsPersistableObjectHandler
         $notifyEmails   = preg_split("/\r\n|\n|\r/", $registerNotify);
         // no notification to myself
         if (\is_object($GLOBALS['xoopsUser'])) {
-            unset($notifyEmails[$GLOBALS['xoopsUser']->email()]);
+            $email = $GLOBALS['xoopsUser']->email();
+            if ('' != $email) {
+                foreach ($notifyEmails as $key => $value) {
+                    if ($value == $email) {
+                        unset($notifyEmails[$key]);
+                    }
+                }
+            }
        }
 
         return $notifyEmails;
