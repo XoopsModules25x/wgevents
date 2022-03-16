@@ -30,7 +30,6 @@ require_once __DIR__ . '/admin.php';
 \define('_MA_WGEVENTS_INDEX_DESC', 'Welcome to the homepage of your new module wgEvents!<br>This description is only visible on the homepage of this module.');
 \define('_MA_WGEVENTS_NO_PDF_LIBRARY', 'Libraries TCPDF not there yet, upload them in root/Frameworks');
 \define('_MA_WGEVENTS_NO', 'Nein');
-\define('_MA_WGEVENTS_DETAILS', 'Details anzeigen');
 \define('_MA_WGEVENTS_BROKEN', 'Als defekt melden');
 \define('_MA_WGEVENTS_DATECREATED', 'Erstelldatum');
 \define('_MA_WGEVENTS_SUBMITTER', 'Einsender');
@@ -40,8 +39,12 @@ require_once __DIR__ . '/admin.php';
 \define('_MA_WGEVENTS_INDEX_THEREARENT_EVENTS', 'Es gibt keine Veranstaltungen');
 \define('_MA_WGEVENTS_INDEX_THEREARENT_CATS', 'Es gibt keine Kategorien');
 \define('_MA_WGEVENTS_INDEX_LATEST_LIST', 'Letzte Veranstaltungen');
+// ---------------- Buttons ----------------
+\define('_MA_WGEVENTS_DETAILS', 'Details anzeigen');
+\define('_MA_WGEVENTS_PRINT', 'Drucken');
 \define('_MA_WGEVENTS_READMORE', 'Mehr lesen');
 \define('_MA_WGEVENTS_READLESS', 'Weniger lesen');
+\define('_MA_WGEVENTS_SEND_ALL', 'An alle senden');
 // Status
 \define('_MA_WGEVENTS_STATUS', 'Status');
 \define('_MA_WGEVENTS_STATUS_NONE', 'Kein Status');
@@ -114,6 +117,8 @@ require_once __DIR__ . '/admin.php';
 \define('_MA_WGEVENTS_EVENT_GM_SHOW', 'Ort auf Karte anzeigen');
 \define('_MA_WGEVENTS_EVENT_GM_GETCOORDS', 'Koordinaten ermitteln');
 \define('_MA_WGEVENTS_EVENT_GM_APPLYCOORDS', 'Koordinaten übernehmen');
+\define('_MA_WGEVENTS_EVENT_INFORM_MODIF', 'Teilnehmer informieren');
+\define('_MA_WGEVENTS_EVENT_INFORM_MODIF_DESC', 'Sollen die Teilnehmer per Mail über Änderungen der Veranstaltung informiert werden?');
 // Category
 \define('_MA_WGEVENTS_CATEGORY_LOGO', 'Logo');
 \define('_MA_WGEVENTS_CATEGORY_NOEVENTS', 'Keine Veranstaltungen verfügbar');
@@ -172,6 +177,7 @@ Eine Teilnahme an der Veranstaltung ohne Zustimmung zu diesen Bestimmungen ist l
 \define('_MA_WGEVENTS_REGISTRATION_LISTWAIT_Y', 'Auf Warteliste');
 \define('_MA_WGEVENTS_REGISTRATION_LISTWAIT_N', 'Auf endgültiger Teilnehmerliste');
 \define('_MA_WGEVENTS_REGISTRATION_VERIFKEY', 'Verifizierungsschlüssel');
+\define('_MA_WGEVENTS_REGISTRATION_CONFIRM', 'Teilnahme bestätigen');
 // Question
 \define('_MA_WGEVENTS_QUESTION', 'Fragen');
 \define('_MA_WGEVENTS_QUESTION_ADD', 'Frage hinzufügen');
@@ -330,6 +336,10 @@ Eine Teilnahme an der Veranstaltung ohne Zustimmung zu diesen Bestimmungen ist l
 \define('_MA_WGEVENTS_MAIL_REG_OUT_SUBJECT', 'Benachrichtigung über Abmeldung');
 \define('_MA_WGEVENTS_MAIL_REG_MODIFY_SUBJECT', 'Benachrichtigung über Änderung Anmeldung');
 \define('_MA_WGEVENTS_MAIL_REG_MODIFICATION', 'Änderung %s: "%s" auf "%s"');
+\define('_MA_WGEVENTS_MAIL_REG_MODIFICATION_VAL', 'geänderter Wert');
+\define('_MA_WGEVENTS_MAIL_REG_MODIFICATION_FROM', 'von');
+\define('_MA_WGEVENTS_MAIL_REG_MODIFICATION_TO', 'zu');
+\define('_MA_WGEVENTS_MAIL_REG_MODIFICATION_DELETED', 'Wert gelöscht');
 \define('_MA_WGEVENTS_MAIL_REG_MODIFICATION_DEL', 'Änderung: "%s" gelöscht');
 \define('_MA_WGEVENTS_MAIL_REG_ALL_SUBJECT', 'Benachrichtigung zu Veranstaltung');
 \define('_MA_WGEVENTS_MAIL_EVENT_NOTIFY_MODIFY_SUBJECT', 'Benachrichtigung über Änderung einer Veranstaltung');
@@ -339,8 +349,6 @@ Eine Teilnahme an der Veranstaltung ohne Zustimmung zu diesen Bestimmungen ist l
 \define('_MA_WGEVENTS_MAIL_REG_VERIF_ERROR', "Bei der Bestätigung der Anmeldung für die Veranstaltung '%s' ist leider ein Fehler aufgetreten. Bitte wende Dich an den Veranstalter.");
 \define('_MA_WGEVENTS_MAIL_REG_VERIF_SUCCESS', "Die Anmeldung zur Veranstaltung '%s' wurde erfolgreich bestätigt");
 \define('_MA_WGEVENTS_MAIL_REG_VERIF_INFO', 'Bestätigung der Anmeldung');
-// ---------------- Print ----------------
-\define('_MA_WGEVENTS_PRINT', 'Drucken');
 // Admin link
 \define('_MA_WGEVENTS_ADMIN', 'Administration');
 // ---------------- End ----------------

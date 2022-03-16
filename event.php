@@ -380,16 +380,22 @@ switch ($op) {
                             $notificationHandler->triggerEvent('global', 0, 'global_delete', $tags);
                             $notificationHandler->triggerEvent('registrations', $regId, 'registration_delete', $tags);
                             */
-                            // send notifications emails, only to participants
-                            $regEmail = (string)$registrationsAll[$regId]->getVar('email');
-                            if ('' != $regEmail) {
-                                // send confirmation
-                                $mailsHandler = new MailHandler();
-                                $mailParams = $mailsHandler->getMailParam($evId, $regId);
-                                $mailParams['infotext'] = $infotext;
-                                $mailParams['recipients'] = $regEmail;
-                                $mailsHandler->executeReg($mailParams, $typeConfirm);
-                                unset($mailsHandler);
+                            $informModif = Request::getBool('informModif');
+                            if ($informModif) {
+                                // send notifications emails, only to participants
+                                $regEmail = (string)$registrationsAll[$regId]->getVar('email');
+                                if ('' != $regEmail) {
+                                    // send confirmation
+                                    $mailsHandler = new MailHandler();
+                                    $mailParams = $mailsHandler->getMailParam($evId, $regId);
+                                    $mailParams['infotext'] = $infotext;
+                                    $mailParams['recipients'] = $regEmail;
+                                    $mailsHandler->setParams($mailParams);
+                                    $mailsHandler->setType($typeConfirm);
+                                    $mailsHandler->setHtml(true);
+                                    $mailsHandler->executeReg();
+                                    unset($mailsHandler);
+                                }
                             }
                         }
                     }

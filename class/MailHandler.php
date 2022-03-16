@@ -34,7 +34,21 @@ use XoopsModules\Wgevents\{
  */
 class MailHandler
 {
+    /**
+     * @var array
+     */
+    public $mailParams = [];
 
+    /**
+     * @var int
+     */
+    public $type = 0;
+
+    /**
+     * @var bool
+     */
+    public $isHtml = false;
+    
     /**
      * Constructor
      *
@@ -44,14 +58,27 @@ class MailHandler
     {
     }
 
+    public function setParams($value)
+    {
+        $this->mailParams = $value;
+    }
+
+    public function setType($value)
+    {
+        $this->type = $value;
+    }
+
+    public function setHtml($value)
+    {
+        $this->isHtml = $value;
+    }
+
     /**
      * Function to send mails for new/update registrations
-     *
-     * @param array $mailParams
-     * @param int $type
+     * 
      * @return bool
      */
-    public function executeReg(array $mailParams, int $type)
+    public function executeReg()
     {
         $helper = Helper::getInstance();
         $permissionsHandler = $helper->getHandler('Permission');
@@ -62,33 +89,33 @@ class MailHandler
         }
 
         if (!$permissionsHandler->getPermRegistrationsEdit(
-            $mailParams['regIp'],
-            $mailParams['regSubmitter'],
-            $mailParams['evSubmitter'],
-            $mailParams['evStatus'],
+            $this->mailParams['regIp'],
+            $this->mailParams['regSubmitter'],
+            $this->mailParams['evSubmitter'],
+            $this->mailParams['evStatus'],
             )) {
                 return false;
         }
 
         $errors = 0;
 
-        $eventUrl       = \WGEVENTS_URL . '/event.php?op=show&id=' . $mailParams['evId'];
-        $eventName      = $mailParams['evName'];
-        $eventDate      = \formatTimestamp($mailParams['evDatefrom'], 'm');
-        $eventLocation  = '' == (string)$mailParams['evLocation'] ? ' ' : $mailParams['evLocation'];
-        $senderMail     = '' == (string)$mailParams['evRegister_sendermail'] ? ' ' : $mailParams['evRegister_sendermail'];
-        $senderName     = '' == (string)$mailParams['evRegister_sendername'] ? ' ' : $mailParams['evRegister_sendername'];
-        $senderSignatur = '' == (string)$mailParams['evRegister_signature'] ? ' ' : $mailParams['evRegister_signature'];
-        $firstname      = '' == (string)$mailParams['regFirstname'] ? ' ' : $mailParams['regFirstname'];
-        $lastname       = '' == (string)$mailParams['regLastname'] ? ' ' : $mailParams['regLastname'];
-        $infotext       = '' == (string)$mailParams['infotext'] ? ' ' : $mailParams['infotext'];
-        $recipients     = $mailParams['recipients'];
+        $eventUrl       = \WGEVENTS_URL . '/event.php?op=show&id=' . $this->mailParams['evId'];
+        $eventName      = $this->mailParams['evName'];
+        $eventDate      = \formatTimestamp($this->mailParams['evDatefrom'], 'm');
+        $eventLocation  = '' == (string)$this->mailParams['evLocation'] ? ' ' : $this->mailParams['evLocation'];
+        $senderMail     = '' == (string)$this->mailParams['evRegister_sendermail'] ? ' ' : $this->mailParams['evRegister_sendermail'];
+        $senderName     = '' == (string)$this->mailParams['evRegister_sendername'] ? ' ' : $this->mailParams['evRegister_sendername'];
+        $senderSignatur = '' == (string)$this->mailParams['evRegister_signature'] ? ' ' : $this->mailParams['evRegister_signature'];
+        $firstname      = '' == (string)$this->mailParams['regFirstname'] ? ' ' : $this->mailParams['regFirstname'];
+        $lastname       = '' == (string)$this->mailParams['regLastname'] ? ' ' : $this->mailParams['regLastname'];
+        $infotext       = '' == (string)$this->mailParams['infotext'] ? ' ' : $this->mailParams['infotext'];
+        $recipients     = $this->mailParams['recipients'];
         $userName       = $GLOBALS['xoopsConfig']['anonymous'];
         if (\is_object($GLOBALS['xoopsUser'])) {
             $userName  = ('' != (string)$GLOBALS['xoopsUser']->name()) ? $GLOBALS['xoopsUser']->name() : $GLOBALS['xoopsUser']->uname();
         }
 
-        switch ($type) {
+        switch ($this->type) {
             case 0:
             default:
                 return false;
@@ -169,6 +196,8 @@ class MailHandler
             $xoopsMailer = xoops_getMailer();
 
             $xoopsMailer->useMail();
+
+            $xoopsMailer->setHTML($this->isHtml);
 
             //set template path
             if (\file_exists(\WGEVENTS_PATH . '/language/' . $GLOBALS['xoopsConfig']['language'] . '/')) {
@@ -287,10 +316,9 @@ class MailHandler
     /**
      * Function to send mails to all participants
      *
-     * @param array $mailParams
      * @return bool
      */
-    public function executeContactAll(array $mailParams)
+    public function executeContactAll()
     {
         $helper = Helper::getInstance();
         $accountHandler = $helper->getHandler('Account');
@@ -301,15 +329,15 @@ class MailHandler
 
         $errors = 0;
 
-        $template       = $mailParams['template'];
-        $eventUrl       = \WGEVENTS_URL . '/event.php?op=show&id=' . $mailParams['evId'];
-        $eventName      = $mailParams['evName'];
-        $eventDate      = \formatTimestamp($mailParams['evDatefrom'], 'm');
-        $eventLocation  = '' == (string)$mailParams['evLocation'] ? ' ' : $mailParams['evLocation'];
-        $mailFrom       = $mailParams['mailFrom'];
-        $mailSubject    = '' == (string)$mailParams['mailSubject'] ? ' ' : $mailParams['mailSubject'];
-        $mailBody       = '' == (string)$mailParams['mailBody'] ? ' ' : $mailParams['mailBody'];
-        $recipients     = $mailParams['recipients'];
+        $template       = $this->mailParams['template'];
+        $eventUrl       = \WGEVENTS_URL . '/event.php?op=show&id=' . $this->mailParams['evId'];
+        $eventName      = $this->mailParams['evName'];
+        $eventDate      = \formatTimestamp($this->mailParams['evDatefrom'], 'm');
+        $eventLocation  = '' == (string)$this->mailParams['evLocation'] ? ' ' : $this->mailParams['evLocation'];
+        $mailFrom       = $this->mailParams['mailFrom'];
+        $mailSubject    = '' == (string)$this->mailParams['mailSubject'] ? ' ' : $this->mailParams['mailSubject'];
+        $mailBody       = '' == (string)$this->mailParams['mailBody'] ? ' ' : $this->mailParams['mailBody'];
+        $recipients     = $this->mailParams['recipients'];
 
          // get settings of primary account
         $primaryAcc = $accountHandler->getPrimary();
@@ -358,6 +386,8 @@ class MailHandler
             $xoopsMailer = xoops_getMailer();
 
             $xoopsMailer->useMail();
+
+            $xoopsMailer->setHTML($this->isHtml);
 
             //set template path
             if (\file_exists(\WGEVENTS_PATH . '/language/' . $GLOBALS['xoopsConfig']['language'] . '/')) {
@@ -425,5 +455,20 @@ class MailHandler
         }
 
         return (0 == $errors);
+    }
+
+    /**
+    * Function to create a table of modifications
+     *
+     * @param array $changedValues
+     * @return string
+     */
+    public function array2table ($changedValues) {
+        // create object
+        $xoopsTpl = new \XoopsTpl;
+        // assign array
+        $xoopsTpl->assign('changedValues', $changedValues);
+        // display it
+        return $xoopsTpl->fetch('db:wgevents_mail_table.tpl');
     }
 }

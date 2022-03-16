@@ -159,7 +159,7 @@ class Registration extends \XoopsObject
         }
         $regEmailTray->addElement($regEmail, $eventRegisterForceverif);
         // Form select regEmailSend
-        $regEmailSend = $this->isNew() ? 0 : $this->getVar('email_send');
+        $regEmailSend = $this->isNew() ? 1 : $this->getVar('email_send');
         $regEmailRadio = new \XoopsFormRadioYN(\_MA_WGEVENTS_REGISTRATION_EMAIL_CONFIRM, 'email_send', $regEmailSend);
         $regEmailTray->addElement($regEmailRadio);
         $form->addElement($regEmailTray);
@@ -223,7 +223,8 @@ class Registration extends \XoopsObject
             unset($questions);
         }
         // Form checkbox regGdpr
-        $regGdpr = new \XoopsFormCheckBox(\_MA_WGEVENTS_REGISTRATION_GDPR, 'gdpr', '');
+        $valueGdpr = $permRegistrationsApprove ? 1 : '';
+        $regGdpr = new \XoopsFormCheckBox(\_MA_WGEVENTS_REGISTRATION_GDPR, 'gdpr', $valueGdpr);
         $regGdpr->addOption(1, \_MA_WGEVENTS_REGISTRATION_GDPR_VALUE);
         $form->addElement($regGdpr, true);
         // Form Text Date Select regFinancial

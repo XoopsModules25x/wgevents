@@ -365,12 +365,14 @@ switch ($op) {
                 $registerNotify = (string)$eventObj->getVar('register_notify', 'e');
                 if ('' != $registerNotify) {
                     // send notifications to emails of register_notify
-                    $notifyEmails   = preg_split("/\r\n|\n|\r/", $registerNotify);
+                    $notifyEmails = $eventHandler->getRecipientsNotify($registerNotify);
                     $mailsHandler = new MailHandler();
-                    $mailParams = $mailsHandler->getMailParam($regEvid, $regId);
+                    $mailParams   = $mailsHandler->getMailParam($regEvid, $newRegId);
                     $mailParams['infotext'] = $infotext;
                     $mailParams['recipients'] = $notifyEmails;
-                    $mailsHandler->executeReg($mailParams, $typeNotify);
+                    $mailsHandler->setParams($mailParams);
+                    $mailsHandler->setType($typeNotify);
+                    $mailsHandler->executeReg();
                     unset($mailsHandler);
                 }
                 if (('' != $regEmail && Request::getInt('email_send') > 0) || ('' != $previousMail)) {
@@ -383,10 +385,12 @@ switch ($op) {
                         $recipients[] = $previousMail;
                     }
                     $mailsHandler = new MailHandler();
-                    $mailParams = $mailsHandler->getMailParam($regEvid, $regId);
+                    $mailParams = $mailsHandler->getMailParam($regEvid, $newRegId);
                     $mailParams['infotext'] = $infotext;
                     $mailParams['recipients'] = $recipients;
-                    $mailsHandler->executeReg($mailParams, $typeConfirm);
+                    $mailsHandler->setParams($mailParams);
+                    $mailsHandler->setType($typeConfirm);
+                    $mailsHandler->executeReg();
                     unset($mailsHandler);
                 }
             }
@@ -486,10 +490,12 @@ switch ($op) {
                 $registerNotify = (string)$eventObj->getVar('register_notify', 'e');
                 if ('' != $registerNotify) {
                     // send notifications to emails of register_notify
-                    $notifyEmails   = \preg_split("/\r\n|\n|\r/", $registerNotify);
+                    $notifyEmails = $eventHandler->getRecipientsNotify($registerNotify);
                     $mailsHandler = new MailHandler();
                     $mailParams['recipients'] = $notifyEmails;
-                    $mailsHandler->executeReg($mailParams, $typeNotify);
+                    $mailsHandler->setParams($mailParams);
+                    $mailsHandler->setType($typeNotify);
+                    $mailsHandler->executeReg();
                     unset($mailsHandler);
                 }
                 // send email in any case if email is available
@@ -497,7 +503,9 @@ switch ($op) {
                     // send confirmation
                     $mailsHandler = new MailHandler();
                     $mailParams['recipients'] = $mailParams['regEmail'];
-                    $mailsHandler->executeReg($mailParams, $typeConfirm);
+                    $mailsHandler->setParams($mailParams);
+                    $mailsHandler->setType($typeConfirm);
+                    $mailsHandler->executeReg();
                     unset($mailsHandler);
                 }
 
@@ -563,12 +571,14 @@ switch ($op) {
             $registerNotify = (string)$eventObj->getVar('register_notify', 'e');
             if ('' != $registerNotify) {
                 // send notifications to emails of register_notify
-                $notifyEmails   = preg_split("/\r\n|\n|\r/", $registerNotify);
+                $notifyEmails = $eventHandler->getRecipientsNotify($registerNotify);
                 $mailsHandler = new MailHandler();
-                $mailParams = $mailsHandler->getMailParam($regEvid, $regId);
+                $mailParams   = $mailsHandler->getMailParam($regEvid, $regId);
                 $mailParams['infotext'] = $infotext;
                 $mailParams['recipients'] = $notifyEmails;
-                $mailsHandler->executeReg($mailParams, $typeNotify);
+                $mailsHandler->setParams($mailParams);
+                $mailsHandler->setType($typeNotify);
+                $mailsHandler->executeReg();
                 unset($mailsHandler);
             }
             $regEmail = $registrationObj->getVar('email');
@@ -578,7 +588,9 @@ switch ($op) {
                 $mailParams = $mailsHandler->getMailParam($regEvid, $regId);
                 $mailParams['infotext'] = $infotext;
                 $mailParams['recipients'] = $mailParams['regEmail'];
-                $mailsHandler->executeReg($mailParams, $typeConfirm);
+                $mailsHandler->setParams($mailParams);
+                $mailsHandler->setType($typeConfirm);
+                $mailsHandler->executeReg();
                 unset($mailsHandler);
             }
             // redirect after insert
@@ -636,12 +648,14 @@ switch ($op) {
             $registerNotify = (string)$eventObj->getVar('register_notify', 'e');
             if ('' != $registerNotify) {
                 // send notifications to emails of register_notify
-                $notifyEmails   = preg_split("/\r\n|\n|\r/", $registerNotify);
+                $notifyEmails = $eventHandler->getRecipientsNotify($registerNotify);
                 $mailsHandler = new MailHandler();
-                $mailParams = $mailsHandler->getMailParam($regEvid, $regId);
+                $mailParams   = $mailsHandler->getMailParam($regEvid, $regId);
                 $mailParams['infotext'] = $infotext;
                 $mailParams['recipients'] = $notifyEmails;
-                $mailsHandler->executeReg($mailParams, $typeNotify);
+                $mailsHandler->setParams($mailParams);
+                $mailsHandler->setType($typeNotify);
+                $mailsHandler->executeReg();
                 unset($mailsHandler);
             }
             $regEmail = $registrationObj->getVar('email');
@@ -651,7 +665,87 @@ switch ($op) {
                 $mailParams = $mailsHandler->getMailParam($regEvid, $regId);
                 $mailParams['infotext'] = $infotext;
                 $mailParams['recipients'] = $mailParams['regEmail'];
-                $mailsHandler->executeReg($mailParams, $typeConfirm);
+                $mailsHandler->setParams($mailParams);
+                $mailsHandler->setType($typeConfirm);
+                $mailsHandler->executeReg();
+                unset($mailsHandler);
+            }
+            // redirect after insert
+            \redirect_header('registration.php?op=' . $redir . '&amp;redir=' . $redir . '&amp;evid=' . $regEvid, 2, \_MA_WGEVENTS_FORM_OK);
+        }
+        // Get Form Error
+        $GLOBALS['xoopsTpl']->assign('error', $registrationObj->getHtmlErrors());
+        $form = $registrationObj->getForm();
+        $GLOBALS['xoopsTpl']->assign('form', $form->render());
+        break;
+    case 'approve_status':
+        if (0 == $regEvid) {
+            \redirect_header('registration.php?op=list', 3, \_MA_WGEVENTS_INVALID_PARAM);
+        }
+        $eventObj = $eventHandler->get($regEvid);
+        if (!$permissionsHandler->getPermRegistrationsApprove($eventObj->getVar('submitter'), $eventObj->getVar('status'))) {
+            \redirect_header('registration.php?op=list', 3, \_NOPERM);
+        }
+        if ($regId > 0) {
+            // Check permissions
+            $registrationObj = $registrationHandler->get($regId);
+            $registrationObjOld = $registrationHandler->get($regId);
+            // create history
+            $registrationhistHandler->createHistory($registrationObj, 'update');
+        } else {
+            \redirect_header('registration.php?op=list', 3, \_MA_WGEVENTS_INVALID_PARAM);
+        }
+        $registrationObj->setVar('listwait', 0);
+        $registrationObj->setVar('status', Constants::STATUS_APPROVED);
+        // Insert Data
+        if ($registrationHandler->insert($registrationObj)) {
+            // Handle notification
+            /*
+            $regEvid = $registrationObj->getVar('evid');
+            $tags = [];
+            $tags['ITEM_NAME'] = $regEvid;
+            $tags['ITEM_URL']  = \XOOPS_URL . '/modules/wgevents/registration.php?op=show&id=' . $regId;
+            $notificationHandler = \xoops_getHandler('notification');
+            if ($regId > 0) {
+                // Event modify notification
+                $notificationHandler->triggerEvent('global', 0, 'global_modify', $tags);
+                $notificationHandler->triggerEvent('registrations', $newRegId, 'registration_modify', $tags);
+            } else {
+                // Event new notification
+                $notificationHandler->triggerEvent('global', 0, 'global_new', $tags);
+            }
+            */
+            // send notifications/confirmation emails
+            $regEvid = $registrationObj->getVar('evid');
+            $eventObj = $eventHandler->get($regEvid);
+            // find changes in table registrations
+            $infotext = $registrationHandler->getRegistrationsCompare($registrationObjOld, $registrationObj);
+
+            $typeNotify  = Constants::MAIL_REG_NOTIFY_MODIFY;
+            $typeConfirm = Constants::MAIL_REG_CONFIRM_MODIFY;
+            $registerNotify = (string)$eventObj->getVar('register_notify', 'e');
+            if ('' != $registerNotify) {
+                // send notifications to emails of register_notify
+                $notifyEmails = $eventHandler->getRecipientsNotify($registerNotify);
+                $mailsHandler = new MailHandler();
+                $mailParams   = $mailsHandler->getMailParam($regEvid, $regId);
+                $mailParams['infotext'] = $infotext;
+                $mailParams['recipients'] = $notifyEmails;
+                $mailsHandler->setParams($mailParams);
+                $mailsHandler->setType($typeNotify);
+                $mailsHandler->executeReg();
+                unset($mailsHandler);
+            }
+            $regEmail = $registrationObj->getVar('email');
+            if ('' != $regEmail) {
+                // send confirmation, if radio is checked
+                $mailsHandler = new MailHandler();
+                $mailParams = $mailsHandler->getMailParam($regEvid, $regId);
+                $mailParams['infotext'] = $infotext;
+                $mailParams['recipients'] = $mailParams['regEmail'];
+                $mailsHandler->setParams($mailParams);
+                $mailsHandler->setType($typeConfirm);
+                $mailsHandler->executeReg();
                 unset($mailsHandler);
             }
             // redirect after insert
@@ -715,7 +809,9 @@ switch ($op) {
         $mailParams['recipients']  = $mailToArr;
 
         $mailsHandler = new MailHandler();
-        $result = $mailsHandler->executeContactAll($mailParams);
+        $mailsHandler->setParams($mailParams);
+        $mailsHandler->setHtml(true);
+        $result = $mailsHandler->executeContactAll();
         unset($mailsHandler);
         if ($result) {
             // redirect after insert

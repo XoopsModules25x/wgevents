@@ -25,7 +25,7 @@
                             <th><{$smarty.const._MA_WGEVENTS_SUBMITTER}></th>
                         <{/if}>
                         <th><{$smarty.const._MA_WGEVENTS_DATECREATED}></th>
-                        <th style="min-width:250px;">&nbsp;</th>
+                        <th style="min-width:300px;">&nbsp;</th>
                     </tr>
                 </thead>
                 <tbody>
