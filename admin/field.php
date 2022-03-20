@@ -63,7 +63,7 @@ switch ($op) {
         $GLOBALS['xoopsTpl']->assign('wgevents_icons_url_16', \WGEVENTS_ICONS_URL_16);
         // Table view fields
         if ($fieldCount > 0) {
-            $fieldAll = $fieldHandler->getAllFields($start, $limit);
+            $fieldAll = $fieldHandler->getAllFields();
             foreach (\array_keys($fieldAll) as $i) {
                 $field = $fieldAll[$i]->getValuesFields();
                 $GLOBALS['xoopsTpl']->append('fields_list', $field);
@@ -307,6 +307,22 @@ function BuildDefaultSet () {
         'display_placeholder' => 1,
         'custom' => 0,
     ];
+    /*
+    $defaultSet[] = [
+        'type' => Constants::FIELD_TEXTEDITOR,
+        'caption' => \_MA_WGEVENTS_FIELD_TEXTEDITOR,
+        'desc' => '',
+        'values' => '',
+        'placeholder' => '',
+        'required' => 0,
+        'default' => 0,
+        'print' => 1,
+        'display_desc' => 1,
+        'display_values' => 0,
+        'display_placeholder' => 1,
+        'custom' => 0,
+    ];
+    */
     $defaultSet[] = [
         'type' => Constants::FIELD_SELECTBOX,
         'caption' => \_MA_WGEVENTS_FIELD_SELECTBOX,

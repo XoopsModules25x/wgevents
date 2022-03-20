@@ -12,6 +12,8 @@
  - added notify all participants (goffy)
  - added google maps (goffy)
  - added js for expand/collapse description (goffy)
+ - added html support for notifications (goffy)
+ - send no notifications to myself (goffy)
 
 ==============================================================
 1.0.0 [2022/01/04 9:28:23]

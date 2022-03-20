@@ -139,7 +139,6 @@ class RegistrationHandler extends \XoopsPersistableObjectHandler
             if ($registrationsCount > 0) {
                 // declare types
                 $typeNotify = Constants::MAIL_REG_NOTIFY_OUT;
-                $typeConfirm = Constants::MAIL_REG_CONFIRM_OUT;
                 // get mail addresses from register_notify
                 $eventObj = $eventHandler->get($evId);
                 $registerNotify = (string)$eventObj->getVar('register_notify', 'e');
@@ -165,7 +164,9 @@ class RegistrationHandler extends \XoopsPersistableObjectHandler
                             $notifyEmails = \pregsplit("/\r\n|\n|\r/", $registerNotify);
                             $mailsHandler = new MailHandler();
                             $mailsHandler->setNotifyEmails($notifyEmails);
-                            $mailsHandler->executeRegDelete($regParams, $typeNotify);
+                            $mailsHandler->setParams($regParams);
+                            $mailsHandler->setType($typeNotify);
+                            $mailsHandler->executeRegDelete();
                             unset($mailsHandler);
                         }
                         $regEmail = $regParams['email'];
@@ -173,7 +174,9 @@ class RegistrationHandler extends \XoopsPersistableObjectHandler
                             // send confirmation, if radio is checked
                             $mailsHandler = new MailHandler();
                             $mailsHandler->setNotifyEmails($regEmail);
-                            $mailsHandler->executeRegDelete($regParams, $typeConfirm);
+                            $mailsHandler->setParams($regParams);
+                            $mailsHandler->setType($typeNotify);
+                            $mailsHandler->executeRegDelete();
                             unset($mailsHandler);
                         }
                     } else {
@@ -237,7 +240,10 @@ class RegistrationHandler extends \XoopsPersistableObjectHandler
                                                                             $evSubmitter,
                                                                             $evStatus,
                                                                         );
-                    $registrations[$regId]['permRegistrationApprove'] = $permissionsHandler->getPermRegistrationsApprove($evSubmitter, $evStatus);
+                    $permRegistrationApprove = $permissionsHandler->getPermRegistrationsApprove($evSubmitter, $evStatus);
+                    $registrations[$regId]['permRegistrationApprove'] = $permRegistrationApprove;
+                    $registrations[$regId]['permRegistrationConfirm'] = ($permRegistrationApprove && (int)$registerValues['status'] < Constants::STATUS_APPROVED);
+
                     // get all answers for this event
                     $answers = $answerHandler->getAnswersDetailsByRegistration($regId, $questionsArr);
                     $registrations[$regId]['answers'] = $answers;

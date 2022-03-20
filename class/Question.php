@@ -149,7 +149,21 @@ class Question extends \XoopsObject
         $queCaptionField->setDescription(\_MA_WGEVENTS_QUESTION_CAPTION_DESC);
         $form->addElement($queCaptionField, true);
         // Form Editor TextArea queDesc
-        $queDescField = new \XoopsFormTextArea(\_MA_WGEVENTS_QUESTION_DESC, 'desc', $this->getVar('desc', 'e'), 3, 47);
+        $editorConfigs = [];
+        if ($isAdmin) {
+            $editor = $helper->getConfig('editor_admin');
+        } else {
+            $editor = $helper->getConfig('editor_user');
+        }
+        $editorConfigs['name'] = 'desc';
+        $editorConfigs['value'] = $this->getVar('desc', 'e');
+        $editorConfigs['rows'] = 5;
+        $editorConfigs['cols'] = 40;
+        $editorConfigs['width'] = '100%';
+        $editorConfigs['height'] = '400px';
+        $editorConfigs['editor'] = $editor;
+        $queDescField = new \XoopsFormEditor(\_MA_WGEVENTS_QUESTION_DESC, 'desc', $editorConfigs);
+        //$queDescField = new \XoopsFormTextArea(\_MA_WGEVENTS_QUESTION_DESC, 'desc', $this->getVar('desc', 'e'), 3, 47);
         $queDescField->setDescription(\_MA_WGEVENTS_QUESTION_DESC_DESC);
         if (!$enableDesc) {
             $queDescField->setExtra('disabled="disabled"');

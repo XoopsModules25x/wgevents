@@ -336,12 +336,15 @@ class Event extends \XoopsObject
                     $evStatusSelect->addOption(Constants::STATUS_SUBMITTED, \_MA_WGEVENTS_STATUS_SUBMITTED);
                     $evStatusSelect->addOption(Constants::STATUS_APPROVED, \_MA_WGEVENTS_STATUS_APPROVED);
                     $form->addElement($evStatusSelect, true);
-                } else {
-                    $form->addElement(new \XoopsFormLabel(\_MA_WGEVENTS_STATUS, Utility::getStatusText($evStatus)));
+                    $form->addElement(new \XoopsFormLabel(\_MA_WGEVENTS_DATECREATED, \formatTimestamp($evDatecreated, 's')));
+                    $form->addElement(new \XoopsFormLabel(\_MA_WGEVENTS_SUBMITTER, \XoopsUser::getUnameFromId($evSubmitter)));
                 }
-                $form->addElement(new \XoopsFormLabel(\_MA_WGEVENTS_DATECREATED, \formatTimestamp($evDatecreated, 's')));
-                $form->addElement(new \XoopsFormLabel(\_MA_WGEVENTS_SUBMITTER, \XoopsUser::getUnameFromId($evSubmitter)));
             }
+        }
+        if (!$this->isNew()) {
+            $informModif = new \XoopsFormRadioYN(\_MA_WGEVENTS_EVENT_INFORM_MODIF, 'informModif', 0);
+            $informModif->setDescription(\_MA_WGEVENTS_EVENT_INFORM_MODIF_DESC);
+            $form->addElement($informModif);
         }
         // To Save
         $form->addElement(new \XoopsFormHidden('op', 'save'));
@@ -433,7 +436,7 @@ class Event extends \XoopsObject
         // To Save
         $form->addElement(new \XoopsFormHidden('evid', $this->getVar('id')));
         $form->addElement(new \XoopsFormHidden('op', 'exec_contactall'));
-        $form->addElement(new \XoopsFormButtonTray('', \_SUBMIT, 'submit', '', false));
+        $form->addElement(new \XoopsFormButtonTray('', \_MA_WGEVENTS_SEND_ALL, 'submit', '', false));
         return $form;
     }
 

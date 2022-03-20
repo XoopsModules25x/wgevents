@@ -25,6 +25,7 @@ namespace XoopsModules\Wgevents;
  */
 
 use XoopsModules\Wgevents;
+use XoopsModules\Wgevents\MailHandler;
 
 
 /**
@@ -206,7 +207,7 @@ class EventHandler extends \XoopsPersistableObjectHandler
      */
     public function getEventsCompare($versionOld, $versionNew)
     {
-        $infotext = '';
+        $changedValues = [];
         // find changes in important fields of table events
         $fields = [];
         $fields[] = ['name' => 'name', 'caption' => \_MA_WGEVENTS_EVENT_NAME, 'type' => 'text'];
@@ -220,14 +221,55 @@ class EventHandler extends \XoopsPersistableObjectHandler
             $valueOld = $versionOld->getVar($field['name']);
             $valueNew = $versionNew->getVar($field['name']);
             if ($valueOld != $valueNew) {
-                if ('datetime' == $field['type']) {
-                    $infotext .= \sprintf(\_MA_WGEVENTS_MAIL_REG_MODIFICATION, $field['caption'], \formatTimestamp($valueOld, 'm'), \formatTimestamp($valueNew, 'm')) . PHP_EOL;
-                } else {
-                    $infotext .= \sprintf(\_MA_WGEVENTS_MAIL_REG_MODIFICATION, $field['caption'], $valueOld, $valueNew) . PHP_EOL;
+                if ('' == $valueNew) {
+                    $valueNew = _MA_WGEVENTS_MAIL_REG_MODIFICATION_DELETED;
+                }
+                switch ($field['type']) {
+                    case 'datetime':
+                        $changedValues[] = [
+                            'caption' => $field['caption'],
+                            'valueOld' => \formatTimestamp($valueOld, 'm'),
+                            'valueNew' => \formatTimestamp($valueNew, 'm')
+                        ];
+                        break;
+                    case'default':
+                    default:
+                       $changedValues[] = [
+                            'caption' => $field['caption'],
+                            'valueOld' => $valueOld,
+                            'valueNew' => $valueNew
+                        ];
+                        break;
                 }
             }
         }
+        if (\count($changedValues) > 0) {
+            $mailHandler = new MailHandler();
+            return $mailHandler->array2table ($changedValues);
+        }
 
-        return $infotext;
+        return '';
+    }
+    /**
+     * get email recipients for noticiations
+     * @param  $registerNotify
+     * @return string
+     */
+    public function getRecipientsNotify($registerNotify)
+    {
+        $notifyEmails   = preg_split("/\r\n|\n|\r/", $registerNotify);
+        // no notification to myself
+        if (\is_object($GLOBALS['xoopsUser'])) {
+            $email = $GLOBALS['xoopsUser']->email();
+            if ('' != $email) {
+                foreach ($notifyEmails as $key => $value) {
+                    if ($value == $email) {
+                        unset($notifyEmails[$key]);
+                    }
+                }
+            }
+       }
+
+        return $notifyEmails;
     }
 }

@@ -30,7 +30,6 @@ require_once __DIR__ . '/admin.php';
 \define('_MA_WGEVENTS_INDEX_DESC', 'Welcome to the homepage of your new module wgEvents!<br>This description is only visible on the homepage of this module.');
 \define('_MA_WGEVENTS_NO_PDF_LIBRARY', 'Libraries TCPDF not there yet, upload them in root/Frameworks');
 \define('_MA_WGEVENTS_NO', 'No');
-\define('_MA_WGEVENTS_DETAILS', 'Show details');
 \define('_MA_WGEVENTS_BROKEN', 'Notify broken');
 \define('_MA_WGEVENTS_DATECREATED', 'Datecreated');
 \define('_MA_WGEVENTS_SUBMITTER', 'Submitter');
@@ -40,8 +39,12 @@ require_once __DIR__ . '/admin.php';
 \define('_MA_WGEVENTS_INDEX_THEREARENT_EVENTS', 'There are no events');
 \define('_MA_WGEVENTS_INDEX_THEREARENT_CATS', 'There are no categories');
 \define('_MA_WGEVENTS_INDEX_LATEST_LIST', 'Last Events');
+// ---------------- Buttons ----------------
+\define('_MA_WGEVENTS_DETAILS', 'Show details');
+\define('_MA_WGEVENTS_PRINT', 'Print');
 \define('_MA_WGEVENTS_READMORE', 'Read more');
 \define('_MA_WGEVENTS_READLESS', 'Read less');
+\define('_MA_WGEVENTS_SEND_ALL', 'Send to all');
 // Status
 \define('_MA_WGEVENTS_STATUS', 'Status');
 \define('_MA_WGEVENTS_STATUS_NONE', 'No status');
@@ -98,7 +101,7 @@ require_once __DIR__ . '/admin.php';
 \define('_MA_WGEVENTS_EVENT_REGISTER_AUTOACCEPT', 'Autoaccept');
 \define('_MA_WGEVENTS_EVENT_REGISTER_AUTOACCEPT_DESC', 'If you are using this feature then all registrations will be approve automatically. If No you have to confirm separately each registration.');
 \define('_MA_WGEVENTS_EVENT_REGISTER_NOTIFY', 'Notify');
-\define('_MA_WGEVENTS_EVENT_REGISTER_NOTIFY_DESC', 'Please enter emails, which should be informed about new registrations or updates.<br>Use for each email a new line.');
+\define('_MA_WGEVENTS_EVENT_REGISTER_NOTIFY_DESC', 'Please enter emails, which should be informed about new registrations or updates.&#013;&#010;Use for each email a new line.');
 \define('_MA_WGEVENTS_EVENT_REGISTER_SENDERMAIL', 'Sender mail address');
 \define('_MA_WGEVENTS_EVENT_REGISTER_SENDERMAIL_DESC', 'Mail address of sender for confirmation mails');
 \define('_MA_WGEVENTS_EVENT_REGISTER_SENDERMAIL_ERR', 'In case of registration use the mail address of sender for confirmation mails must be filled in!');
@@ -113,6 +116,8 @@ require_once __DIR__ . '/admin.php';
 \define('_MA_WGEVENTS_EVENT_GM_SHOW', 'Show location on map');
 \define('_MA_WGEVENTS_EVENT_GM_GETCOORDS', 'Get location coordinates');
 \define('_MA_WGEVENTS_EVENT_GM_APPLYCOORDS', 'Apply coordinates');
+\define('_MA_WGEVENTS_EVENT_INFORM_MODIF', 'Inform participants');
+\define('_MA_WGEVENTS_EVENT_INFORM_MODIF_DESC', 'Should participants be informed about the changes by mail?');
 // Categories
 \define('_MA_WGEVENTS_CATEGORY_LOGO', 'Logo');
 \define('_MA_WGEVENTS_CATEGORY_NOEVENTS', 'No events available');
@@ -171,6 +176,7 @@ Participation without agreement to this conditions is not possible.
 \define('_MA_WGEVENTS_REGISTRATION_LISTWAIT_Y', 'On waiting list');
 \define('_MA_WGEVENTS_REGISTRATION_LISTWAIT_N', 'On final list of participants');
 \define('_MA_WGEVENTS_REGISTRATION_VERIFKEY', 'Verification key');
+\define('_MA_WGEVENTS_REGISTRATION_CONFIRM', 'Confirm participation');
 // Question
 \define('_MA_WGEVENTS_QUESTION', 'Question');
 \define('_MA_WGEVENTS_QUESTION_ADD', 'Add Question');
@@ -252,6 +258,7 @@ Participation without agreement to this conditions is not possible.
 \define('_MA_WGEVENTS_FIELD_EMAIL', 'Textbox Email');
 \define('_MA_WGEVENTS_FIELD_COUNTRY', 'Dropdown Country');
 \define('_MA_WGEVENTS_FIELD_TEXTBLOCK', 'Textblock');
+\define('_MA_WGEVENTS_FIELD_TEXTEDITOR', 'Texteditor');
 // Submit
 \define('_MA_WGEVENTS_SAVE', 'Save');
 \define('_MA_WGEVENTS_EXEC', 'Execute');
@@ -328,6 +335,10 @@ Participation without agreement to this conditions is not possible.
 \define('_MA_WGEVENTS_MAIL_REG_OUT_SUBJECT', 'Notification about deregistration');
 \define('_MA_WGEVENTS_MAIL_REG_MODIFY_SUBJECT', 'Notification about registration modification');
 \define('_MA_WGEVENTS_MAIL_REG_MODIFICATION', 'Modification %s: "%s" to "%s"');
+\define('_MA_WGEVENTS_MAIL_REG_MODIFICATION_VAL', 'Modified value');
+\define('_MA_WGEVENTS_MAIL_REG_MODIFICATION_FROM', 'from');
+\define('_MA_WGEVENTS_MAIL_REG_MODIFICATION_TO', 'to');
+\define('_MA_WGEVENTS_MAIL_REG_MODIFICATION_DELETED', 'Value deleted');
 \define('_MA_WGEVENTS_MAIL_REG_MODIFICATION_DEL', 'Modification: "%s" deleted');
 \define('_MA_WGEVENTS_MAIL_REG_ALL_SUBJECT', 'Notification about event');
 \define('_MA_WGEVENTS_MAIL_EVENT_NOTIFY_MODIFY_SUBJECT', 'Notification about modification of an event');
@@ -337,8 +348,6 @@ Participation without agreement to this conditions is not possible.
 \define('_MA_WGEVENTS_MAIL_REG_VERIF_ERROR', "Sorry, but an error occured in the verification process for event '%s'. Please contact the organizer of the event.");
 \define('_MA_WGEVENTS_MAIL_REG_VERIF_SUCCESS', "The registration for the event '%s' was verified successfully");
 \define('_MA_WGEVENTS_MAIL_REG_VERIF_INFO', 'Verification of registration');
-// ---------------- Print ----------------
-\define('_MA_WGEVENTS_PRINT', 'Print');
 // Admin link
 \define('_MA_WGEVENTS_ADMIN', 'Admin');
 // ---------------- End ----------------

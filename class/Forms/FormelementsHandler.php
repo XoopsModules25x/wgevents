@@ -26,7 +26,8 @@ namespace XoopsModules\Wgevents\Forms;
 
 use XoopsModules\Wgevents;
 use XoopsModules\Wgevents\{
-    Constants
+    Constants,
+    Helper
 };
 
 
@@ -121,6 +122,20 @@ class FormelementsHandler extends \XoopsPersistableObjectHandler
                 $field = new \XoopsFormTextArea($this->caption, $this->name, $this->value, $this->rows, $this->cols);
                 $field->setDescription($this->desc);
                 break;
+            case Constants::FIELD_TEXTEDITOR:
+                $editorConfigs = [];
+                $helper  = Helper::getInstance();
+                $editor = $helper->getConfig('editor_user');
+                $editorConfigs['name'] = $this->name;
+                $editorConfigs['value'] = $this->value;
+                $editorConfigs['rows'] = $this->rows;
+                $editorConfigs['cols'] = $this->cols;
+                $editorConfigs['width'] = '100%';
+                $editorConfigs['height'] = '400px';
+                $editorConfigs['editor'] = $editor;
+                $field = new \XoopsFormEditor($this->caption, $this->name, $editorConfigs);
+                $field->setDescription($this->desc);
+                break;
             case Constants::FIELD_RADIO:
                 $field = new \XoopsFormRadio($this->caption, $this->name, $this->value);
                 $field->addOptionArray($this->optionsArr);
@@ -180,19 +195,20 @@ class FormelementsHandler extends \XoopsPersistableObjectHandler
     public function getElementsCollection()
     {
         $ret = [];
-        $ret[Constants::FIELD_LABEL]     = \_MA_WGEVENTS_FIELD_LABEL;
-        $ret[Constants::FIELD_TEXTBOX]   = \_MA_WGEVENTS_FIELD_TEXTBOX;
-        $ret[Constants::FIELD_TEXTAREA]  = \_MA_WGEVENTS_FIELD_TEXTAREA;
-        $ret[Constants::FIELD_RADIO]     = \_MA_WGEVENTS_FIELD_RADIO;
-        $ret[Constants::FIELD_RADIOYN]   = \_MA_WGEVENTS_FIELD_RADIOYN;
-        $ret[Constants::FIELD_SELECTBOX] = \_MA_WGEVENTS_FIELD_SELECTBOX;
-        $ret[Constants::FIELD_COMBOBOX]  = \_MA_WGEVENTS_FIELD_COMBOBOX;
-        $ret[Constants::FIELD_CHECKBOX]  = \_MA_WGEVENTS_FIELD_CHECKBOX;
-        $ret[Constants::FIELD_DATE]      = \_MA_WGEVENTS_FIELD_DATE;
+        $ret[Constants::FIELD_LABEL]      = \_MA_WGEVENTS_FIELD_LABEL;
+        $ret[Constants::FIELD_TEXTBOX]    = \_MA_WGEVENTS_FIELD_TEXTBOX;
+        $ret[Constants::FIELD_TEXTAREA]   = \_MA_WGEVENTS_FIELD_TEXTAREA;
+        $ret[Constants::FIELD_TEXTEDITOR] = \_MA_WGEVENTS_FIELD_TEXTEDITOR;
+        $ret[Constants::FIELD_RADIO]      = \_MA_WGEVENTS_FIELD_RADIO;
+        $ret[Constants::FIELD_RADIOYN]    = \_MA_WGEVENTS_FIELD_RADIOYN;
+        $ret[Constants::FIELD_SELECTBOX]  = \_MA_WGEVENTS_FIELD_SELECTBOX;
+        $ret[Constants::FIELD_COMBOBOX]   = \_MA_WGEVENTS_FIELD_COMBOBOX;
+        $ret[Constants::FIELD_CHECKBOX]   = \_MA_WGEVENTS_FIELD_CHECKBOX;
+        $ret[Constants::FIELD_DATE]       = \_MA_WGEVENTS_FIELD_DATE;
         //$ret[Constants::FIELD_DATETIME]  = \_MA_WGEVENTS_FIELD_DATETIME;
-        $ret[Constants::FIELD_NAME]      = \_MA_WGEVENTS_FIELD_NAME;
-        $ret[Constants::FIELD_EMAIL]     = \_MA_WGEVENTS_FIELD_EMAIL;
-        $ret[Constants::FIELD_COUNTRY]   = \_MA_WGEVENTS_FIELD_COUNTRY;
+        $ret[Constants::FIELD_NAME]       = \_MA_WGEVENTS_FIELD_NAME;
+        $ret[Constants::FIELD_EMAIL]      = \_MA_WGEVENTS_FIELD_EMAIL;
+        $ret[Constants::FIELD_COUNTRY]    = \_MA_WGEVENTS_FIELD_COUNTRY;
 
         return $ret;
     }
