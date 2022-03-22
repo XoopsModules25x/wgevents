@@ -14,6 +14,7 @@
  - added js for expand/collapse description (goffy)
  - added html support for notifications (goffy)
  - send no notifications to myself (goffy)
+ - added identifier for events (goffy)
 
 ==============================================================
 1.0.0 [2022/01/04 9:28:23]

@@ -9,6 +9,7 @@
             <tr class='head'>
                 <th class="center"><{$smarty.const._MA_WGEVENTS_EVENT_ID}></th>
                 <th class="center"><{$smarty.const._MA_WGEVENTS_EVENT_CATID}></th>
+                <th class="center"><{$smarty.const._MA_WGEVENTS_EVENT_IDENTIFIER}></th>
                 <th class="center"><{$smarty.const._MA_WGEVENTS_EVENT_NAME}></th>
                 <th class="center"><{$smarty.const._MA_WGEVENTS_EVENT_LOGO}></th>
                 <th class="center"><{$smarty.const._MA_WGEVENTS_EVENT_DESC}></th>
@@ -48,6 +49,7 @@
             <tr class='<{cycle values='odd, even'}>'>
                 <td class='center'><{$event.id}></td>
                 <td class='center'><{$event.catname}></td>
+                <td class='center'><{$event.identifier}></td>
                 <td class='center'><{$event.name}></td>
                 <td class='center'><img src="<{$wgevents_upload_eventlogos_url_uid|default:false}>/<{$event.logo}>" alt="events" style="max-width:100px" ></td>
                 <td class='center'><{$event.desc_short_admin}></td>

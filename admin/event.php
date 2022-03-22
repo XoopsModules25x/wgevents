@@ -219,6 +219,7 @@ switch ($op) {
         }
         $eventObj->setVar('status', Request::getInt('status'));
         $eventObj->setVar('galid', Request::getInt('galid'));
+        $eventObj->setVar('identifier', Request::getString('identifier'));
         $eventDatecreatedObj = \DateTime::createFromFormat(\_SHORTDATESTRING, Request::getString('datecreated'));
         $eventObj->setVar('datecreated', $eventDatecreatedObj->getTimestamp());
         $eventObj->setVar('submitter', Request::getInt('submitter'));

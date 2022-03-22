@@ -74,6 +74,7 @@ require_once __DIR__ . '/admin.php';
 \define('_MA_WGEVENTS_EVENTS_LISTPAST', 'Past Events');
 // Caption of Event
 \define('_MA_WGEVENTS_EVENT_ID', 'Id');
+\define('_MA_WGEVENTS_EVENT_IDENTIFIER', 'Unique Event Identifier');
 \define('_MA_WGEVENTS_EVENT_CATID', 'Category Id');
 \define('_MA_WGEVENTS_EVENT_NAME', 'Name');
 \define('_MA_WGEVENTS_EVENT_LOGO', 'Logo');

@@ -74,6 +74,7 @@ require_once __DIR__ . '/admin.php';
 \define('_MA_WGEVENTS_EVENTS_LISTCOMING', 'Kommende Veranstaltungen');
 // Caption of Event
 \define('_MA_WGEVENTS_EVENT_ID', 'Id');
+\define('_MA_WGEVENTS_EVENT_IDENTIFIER', 'Eindeutige Kennung der Veranstaltung');
 \define('_MA_WGEVENTS_EVENT_CATID', 'Kategorie Id');
 \define('_MA_WGEVENTS_EVENT_NAME', 'Name');
 \define('_MA_WGEVENTS_EVENT_LOGO', 'Logo');

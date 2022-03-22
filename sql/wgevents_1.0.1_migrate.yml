@@ -5,6 +5,9 @@ wgevents_event:
             name: id
             attributes: ' INT(8) UNSIGNED NOT NULL AUTO_INCREMENT '
         -
+            name: identifier
+            attributes: ' VARCHAR(255)    NOT NULL DEFAULT '''''''' '
+        -
             name: catid
             attributes: ' INT(10)         NOT NULL DEFAULT ''0'' '
         -
@@ -358,6 +361,9 @@ wgevents_category:
         -
             name: weight
             attributes: ' INT(10)         NOT NULL DEFAULT ''0'' '
+        -
+            name: identifier
+            attributes: ' VARCHAR(255)    NOT NULL DEFAULT '''''''' '
         -
             name: datecreated
             attributes: ' INT(11)         NOT NULL DEFAULT ''0'' '

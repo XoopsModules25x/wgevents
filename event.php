@@ -223,7 +223,8 @@ switch ($op) {
         $continueAddtionals = Request::hasVar('continue_questions');
 
         $uploaderErrors = '';
-        $eventObj->setVar('catid', Request::getInt('catid'));
+        $catId = Request::getInt('catid');
+        $eventObj->setVar('catid', $catId);
         $eventObj->setVar('name', Request::getString('name'));
         // Set Var logo
         require_once \XOOPS_ROOT_PATH . '/class/uploader.php';
@@ -325,6 +326,7 @@ switch ($op) {
         }
         $eventObj->setVar('status', Request::getInt('status'));
         $eventObj->setVar('galid', Request::getInt('galid'));
+
         if (Request::hasVar('datecreated_int')) {
             $eventObj->setVar('datecreated', Request::getInt('datecreated_int'));
         } else {
@@ -335,6 +337,19 @@ switch ($op) {
         // Insert Data
         if ($eventHandler->insert($eventObj)) {
             $newEvId = $evId > 0 ? $evId : $eventObj->getNewInsertedId();
+            // create unique identifier if new event
+            if (0 == $evId) {
+                $categoryObj = $categoryHandler->get($catId);
+                $identifier = $categoryObj->getVar('identifier');
+                $crEvent = new \CriteriaCompo();
+                $crEvent->add(new \Criteria('identifier', $identifier . '%', 'LIKE'));
+                $eventsCount = $eventHandler->getCount($crEvent) + 1;
+                $eventIdentifierObj = $eventHandler->get($newEvId);
+                $eventIdentifierObj->setVar('identifier', $identifier . '_' . ($eventsCount));
+                $eventHandler->insert($eventIdentifierObj);
+                unset($eventIdentifierObj);
+            }
+
             // Handle notification
             /*
             $evName = $eventObj->getVar('name');

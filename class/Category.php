@@ -62,6 +62,7 @@ class Category extends \XoopsObject
         $this->initVar('othercss', \XOBJ_DTYPE_TXTBOX);
         $this->initVar('status', \XOBJ_DTYPE_INT);
         $this->initVar('weight', \XOBJ_DTYPE_INT);
+        $this->initVar('identifier', \XOBJ_DTYPE_TXTBOX);
         $this->initVar('datecreated', \XOBJ_DTYPE_INT);
         $this->initVar('submitter', \XOBJ_DTYPE_INT);
     }
@@ -159,6 +160,8 @@ class Category extends \XoopsObject
         // Form Text catOtherstyles
         $catOtherstyles = $this->isNew() ? 'margin:1px 0;padding:8px 5px 20px 5px;border-radius:5px;' : $this->getVar('othercss');
         $form->addElement(new \XoopsFormText(\_AM_WGEVENTS_CATEGORY_OTHERCSS, 'othercss', 100, 255, $catOtherstyles));
+        // Form Text identifier
+        $form->addElement(new \XoopsFormText(\_AM_WGEVENTS_CATEGORY_IDENTIFIER, 'identifier', 100, 255, ''), true);
         // Form Radio catStatus
         $catStatus = $this->isNew() ? Constants::STATUS_OFFLINE : $this->getVar('status');
         $catStatusSelect = new \XoopsFormRadio(\_MA_WGEVENTS_STATUS, 'status', $catStatus);
