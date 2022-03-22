@@ -15,6 +15,7 @@
  - added html support for notifications (goffy)
  - send no notifications to myself (goffy)
  - added identifier for events (goffy)
+ - multiple selections for checkbox and combobox (goffy)
 
 ==============================================================
 1.0.0 [2022/01/04 9:28:23]

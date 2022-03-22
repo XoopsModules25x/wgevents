@@ -152,7 +152,7 @@ class FormelementsHandler extends \XoopsPersistableObjectHandler
                 $field->setDescription($this->desc);
                 break;
             case Constants::FIELD_COMBOBOX:
-                $field = new \XoopsFormSelect($this->caption, $this->name, $this->value, 5);
+                $field = new \XoopsFormSelect($this->caption, $this->name, $this->value, 5, true);
                 //$field->addOption('');
                 $field->addOptionArray($this->optionsArr);
                 $field->setDescription($this->desc);

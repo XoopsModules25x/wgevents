@@ -119,6 +119,10 @@ class Question extends \XoopsObject
         $enablePlaceholder = true;
         $queTypeSelect = new \XoopsFormSelect(\_MA_WGEVENTS_QUESTION_TYPE, 'type', $queType);
         $fieldHandler = $helper->getHandler('Field');
+        $fieldObj = $fieldHandler->get($queType);
+        $fieldType = $fieldObj->getVar('type');
+
+
         $crField = new \CriteriaCompo();
         $crField->add(new \Criteria('status', Constants::STATUS_ONLINE));
         $crField->setSort('weight');
@@ -135,7 +139,7 @@ class Question extends \XoopsObject
                 $form->addElement(new \XoopsFormHidden('display_desc[' . $i . ']', $fieldsAll[$i]->getVar('display_desc')));
                 $form->addElement(new \XoopsFormHidden('display_values[' . $i . ']', $fieldsAll[$i]->getVar('display_values')));
                 $form->addElement(new \XoopsFormHidden('display_placeholder[' . $i . ']', $fieldsAll[$i]->getVar('display_placeholder')));
-                if ((int)$fieldsAll[$i]->getVar('type') == $queType) {
+                if ((int)$fieldsAll[$i]->getVar('type') == $fieldType) {
                     $enableDesc        = (bool)$fieldsAll[$i]->getVar('display_desc');
                     $enableValues      = (bool)$fieldsAll[$i]->getVar('display_values');
                     $enablePlaceholder = (bool)$fieldsAll[$i]->getVar('display_placeholder');
