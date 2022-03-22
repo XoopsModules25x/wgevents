@@ -13,6 +13,7 @@
 
 CREATE TABLE `wgevents_event` (
   `id`                   INT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `identifier`           VARCHAR(255)    NOT NULL DEFAULT '',
   `catid`                INT(10)         NOT NULL DEFAULT '0',
   `name`                 VARCHAR(255)    NOT NULL DEFAULT '',
   `logo`                 VARCHAR(255)    NOT NULL DEFAULT '',
@@ -166,6 +167,7 @@ CREATE TABLE `wgevents_category` (
   `othercss`        VARCHAR(255)    NOT NULL DEFAULT '',
   `status`          INT(1)          NOT NULL DEFAULT '0',
   `weight`          INT(10)         NOT NULL DEFAULT '0',
+  `identifier`      VARCHAR(255)    NOT NULL DEFAULT '',
   `datecreated`     INT(11)         NOT NULL DEFAULT '0',
   `submitter`       INT(10)         NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)

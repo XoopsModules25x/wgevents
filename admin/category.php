@@ -156,6 +156,7 @@ switch ($op) {
         $categoryObj->setVar('bordercolor', Request::getString('bordercolor'));
         $categoryObj->setVar('bgcolor', Request::getString('bgcolor'));
         $categoryObj->setVar('othercss', Request::getString('othercss'));
+        $categoryObj->setVar('identifier', Request::getString('identifier'));
         $categoryObj->setVar('status', Request::getInt('status'));
         $categoryObj->setVar('weight', Request::getInt('weight'));
         $categoryDatecreatedObj = \DateTime::createFromFormat(\_SHORTDATESTRING, Request::getString('datecreated'));

@@ -79,6 +79,7 @@ require_once __DIR__ . '/main.php';
 \define('_AM_WGEVENTS_CATEGORY_EDIT', 'Edit Category');
 // Elements of Category
 \define('_AM_WGEVENTS_CATEGORY_ID', 'Id');
+\define('_AM_WGEVENTS_CATEGORY_IDENTIFIER', 'Prefix Unique Identifier');
 \define('_AM_WGEVENTS_CATEGORY_PID', 'Parent Category');
 \define('_AM_WGEVENTS_CATEGORY_NAME', 'Name');
 \define('_AM_WGEVENTS_CATEGORY_DESC', 'Description');

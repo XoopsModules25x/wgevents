@@ -1,5 +1,5 @@
 <div class='wge-panel'>
-    <div class='panel-heading center wge-eventheader'><h4><span><{$event.name}></span></h4></div>
+    <div class='panel-heading center wge-eventheader'><h4><span><{$event.name}></span><span class="wge-identifier"><{$event.identifier}></span></h4></div>
     <div class='panel-body'>
         <div class="row">
             <div class="col-xs-12 col-sm-2">

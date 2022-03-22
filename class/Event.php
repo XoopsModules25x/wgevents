@@ -82,6 +82,7 @@ class Event extends \XoopsObject
         $this->initVar('register_forceverif', \XOBJ_DTYPE_INT);
         $this->initVar('status', \XOBJ_DTYPE_INT);
         $this->initVar('galid', \XOBJ_DTYPE_INT);
+        $this->initVar('identifier', \XOBJ_DTYPE_TXTBOX);
         $this->initVar('datecreated', \XOBJ_DTYPE_INT);
         $this->initVar('submitter', \XOBJ_DTYPE_INT);
     }
@@ -144,6 +145,14 @@ class Event extends \XoopsObject
         \xoops_load('XoopsFormLoader');
         $form = new \XoopsThemeForm($title, 'formEvent', $action, 'post', true);
         $form->setExtra('enctype="multipart/form-data"');
+        // Form Text identifier
+        if (!$this->isNew()) {
+            if ($isAdmin) {
+                $form->addElement(new \XoopsFormText(\_MA_WGEVENTS_EVENT_IDENTIFIER, 'identifier', 50, 255, $this->getVar('identifier')));
+            } else {
+                $form->addElement(new \XoopsFormLabel(\_MA_WGEVENTS_EVENT_IDENTIFIER, $this->getVar('identifier')));
+            }
+        }
         // Form Table categories
         $evCatidSelect = new \XoopsFormSelect(\_MA_WGEVENTS_EVENT_CATID, 'catid', $this->getVar('catid'));
         $evCatidSelect->addOptionArray($categoryHandler->getList());

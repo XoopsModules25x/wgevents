@@ -12,6 +12,7 @@
                 <th class="center sorter-false filter-false">&nbsp;</th>
                 <th class="center"><{$smarty.const._AM_WGEVENTS_CATEGORY_ID}></th>
                 <th class="center"><{$smarty.const._AM_WGEVENTS_CATEGORY_PID}></th>
+                <th class="center"><{$smarty.const._AM_WGEVENTS_CATEGORY_IDENTIFIER}></th>
                 <th class="center"><{$smarty.const._AM_WGEVENTS_CATEGORY_NAME}></th>
                 <th class="center"><{$smarty.const._AM_WGEVENTS_CATEGORY_DESC}></th>
                 <th class="center"><{$smarty.const._AM_WGEVENTS_CATEGORY_LOGO}></th>
@@ -32,6 +33,7 @@
                 <td class='center'><img src="<{$wgevents_icons_url_16}>/up_down.png"></td>
                 <td class='center'><{$category.id}></td>
                 <td class='center'><{$category.pid_text}></td>
+                <td class='center'><{$category.identifier}></td>
                 <td class='center'><{$category.name}></td>
                 <td class='center'><{$category.desc_short}></td>
                 <td class='center'><img src="<{$wgevents_upload_url|default:false}>/categories/logos/<{$category.logo}>" alt="categories" style="max-width:100px" ></td>
