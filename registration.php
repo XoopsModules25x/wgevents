@@ -272,7 +272,9 @@ switch ($op) {
                 $answer = '';
                 switch ($answersTypeArr[$key]) {
                     case Constants::FIELD_CHECKBOX:
-                        $answer = 1;
+                    case Constants::FIELD_COMBOBOX:
+                    case Constants::FIELD_SELECTBOX:
+                        $answer = serialize($value);
                         break;
                     default:
                         $answer = $value;

@@ -188,11 +188,20 @@ class Registration extends \XoopsObject
                     if ($answersCount > 0) {
                         $answersAll = $answerHandler->getAll($crAnswer);
                         foreach (\array_keys($answersAll) as $ansId) {
-                            if (Constants::FIELD_DATE == $queType) {
-                                $answerDateObj = \DateTime::createFromFormat(\_SHORTDATESTRING, $answersAll[$ansId]->getVar('text'));
-                                $value = $answerDateObj->getTimestamp();
-                            } else {
-                                $value = $answersAll[$ansId]->getVar('text');
+                            switch ($queType) {
+                                case Constants::FIELD_DATE:
+                                    $answerDateObj = \DateTime::createFromFormat(\_SHORTDATESTRING, $answersAll[$ansId]->getVar('text'));
+                                    $value = $answerDateObj->getTimestamp();
+                                    break;
+                                case Constants::FIELD_COMBOBOX:
+                                case Constants::FIELD_CHECKBOX:
+                                    $ansText = $answersAll[$ansId]->getVar('text', 'n');
+                                    $value = \unserialize($ansText);
+                                    break;
+                                case 0:
+                                default:
+                                    $value = $answersAll[$ansId]->getVar('text');
+                                    break;
                             }
                         }
                     }
@@ -202,14 +211,18 @@ class Registration extends \XoopsObject
                 }
                 if (Constants::FIELD_RADIO == $queType ||
                     Constants::FIELD_SELECTBOX == $queType ||
+                    Constants::FIELD_CHECKBOX == $queType ||
                     Constants::FIELD_COMBOBOX == $queType) {
                         //$formelementsHandler->options = preg_split('/\r\n|\r|\n/', $questionsAll[$queId]->getVar('values'));
                         $formelementsHandler->optionsArr = \unserialize($addValue);
                 }
+                /*
                 if (Constants::FIELD_CHECKBOX == $queType) {
-                    $addValueArr = \unserialize($addValue);
-                    $formelementsHandler->optionsText = $addValueArr[0];
+                    //$addValueArr = \unserialize($addValue);
+                    //$formelementsHandler->optionsText = $addValueArr[0];
+                    $formelementsHandler->optionsArr = \unserialize($addValue);
                 }
+                */
                 if (Constants::FIELD_LABEL == $queType) {
                     $desc = \preg_replace('/\r\n|\r|\n/', '<br>', $questionsAll[$queId]->getVar('desc', 'e'));
                     $formelementsHandler->value = $desc;

@@ -160,13 +160,14 @@ switch ($op) {
         $queType = Request::getInt('type');
         $questionObj->setVar('fdid', $queType);
         $fieldObj = $fieldHandler->get($queType);
-        $questionObj->setVar('type', $fieldObj->getVar('type'));
+        $fieldType = $fieldObj->getVar('type');
+        $questionObj->setVar('type', $fieldType);
         $questionObj->setVar('caption', Request::getString('caption'));
         $questionObj->setVar('desc', Request::getText('desc'));
         $queValuesText = '';
         $queValues = Request::getString('values');
         if ('' != $queValues) {
-            if (Constants::FIELD_COMBOBOX == $queType || Constants::FIELD_SELECTBOX == $queType || Constants::FIELD_RADIO == $queType) {
+            if (Constants::FIELD_COMBOBOX == $fieldType || Constants::FIELD_SELECTBOX == $fieldType || Constants::FIELD_RADIO == $fieldType) {
                 $queValuesText = \serialize(\preg_split('/\r\n|\r|\n/', $queValues));
             } else {
                 $tmpArr = [$queValues];

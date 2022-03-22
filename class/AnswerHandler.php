@@ -162,18 +162,25 @@ class AnswerHandler extends \XoopsPersistableObjectHandler
             if ($answersCount > 0) {
                 $answersAll = $this->getAll($crAnswer);
                 foreach (\array_keys($answersAll) as $i) {
-                    $ansText = $answersAll[$i]->getVar('text');
-                    if (Constants::FIELD_RADIOYN == $addItem['type'] ||
-                        Constants::FIELD_CHECKBOX == $addItem['type']) {
+                    $ansText = $answersAll[$i]->getVar('text', 'n');
+                    if (Constants::FIELD_RADIOYN == $addItem['type']) {
                         if ((bool)$ansText) {
                             $ansText = \_YES;
                         } else {
                             $ansText = \_NO;
                         }
                     }
-                    if (Constants::FIELD_RADIO == $addItem['type'] ||
+                    if (Constants::FIELD_CHECKBOX == $addItem['type'] ||
                         Constants::FIELD_COMBOBOX == $addItem['type'] ||
                         Constants::FIELD_SELECTBOX == $addItem['type']) {
+                        $queValues = \unserialize($addItem['values']);
+                        $ansItems = \unserialize($ansText);
+                        $ansText = '';
+                        foreach ($ansItems as $ansItem) {
+                            $ansText .= $queValues[(int)$ansItem] . ' <br>';
+                        }
+                    }
+                    if (Constants::FIELD_RADIO == $addItem['type']) {
                         $queValues = \unserialize($addItem['values']);
                         $ansText = $queValues[$ansText];
                     }
