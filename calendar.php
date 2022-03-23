@@ -44,9 +44,9 @@ $dayEnd   = \mktime(23, 59, 59, $month, $lastday, $year);
 
 //request
 $op            = Request::getCmd('op', 'list');
-$filterFrom    = Request::getInt('filterFrom', 0);
-$filterTo      = Request::getInt('filterTo', 0);
-$filterCat     = Request::getInt('filterCat', 0);
+$filterFrom    = Request::getInt('filterFrom');
+$filterTo      = Request::getInt('filterTo');
+$filterCat     = Request::getInt('filterCat');
 $filterSort    = 'datefrom-ASC';
 if (0 == $filterFrom) {
     $filterFrom = $dayStart;

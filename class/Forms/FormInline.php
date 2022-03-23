@@ -45,12 +45,10 @@ class FormInline extends \XoopsSimpleForm
         foreach ($this->getElements() as $ele) {
             if (!$ele->isHidden()) {
                 $ret .= '<strong>' . $ele->getCaption() . '</strong>&nbsp;' . $ele->render() . "&nbsp;\n";
+            } else if ('linebreak' == $ele->getName()) {
+                $ret .= "<br>\n";
             } else {
-                if ('linebreak' == $ele->getName()) {
-                    $ret .= "<br>\n";
-                } else {
-                    $ret .= $ele->render() . "\n";
-                }
+                $ret .= $ele->render() . "\n";
             }
         }
         $ret .= "</form>\n";

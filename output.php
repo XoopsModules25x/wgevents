@@ -36,7 +36,7 @@ $GLOBALS['xoopsTpl']->assign('template_sub', 'db:wgevents_output.tpl');
 
 // Permission
 if (!$permissionsHandler->getPermGlobalView()) {
-    \redirect_header('index.php', 0, '');
+    \redirect_header('index.php', 0);
 }
 
 $op      = Request::getCmd('op', 'none');
@@ -63,7 +63,7 @@ switch ($op) {
             case 'csv':
             case 'xlsx':
                 $eventname = \preg_replace('/[^a-zA-Z0-9]/', '', (string)$eventObj->getVar('name'));
-                $filename = \date('Ymd_H_i_s_', \time()) . \_MA_WGEVENTS_REGISTRATIONS . '_' . $eventname . '.' . $outType;
+                $filename = \date('Ymd_H_i_s_') . \_MA_WGEVENTS_REGISTRATIONS . '_' . $eventname . '.' . $outType;
 
                 $eventFee = (float)$eventObj->getVar('fee');
                 $eventRegisterMax = (int)$eventObj->getVar('register_max');
@@ -201,7 +201,5 @@ function cleanOutputXlsx ($text) {
     //replace line breaks by blank space
     $cleanText = \str_replace(['<br>', '</p>'], ' ', $text);
     //replace html code by clean char
-    $cleanText = \html_entity_decode($cleanText);
-
-    return $cleanText;
+    return \html_entity_decode($cleanText);
 }

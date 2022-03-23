@@ -230,11 +230,7 @@ class PermissionHandler extends \XoopsPersistableObjectHandler
             }
             $currentuid = $xoopsUser->uid();
         }
-        if ($this->getPermEventsSubmit() && $currentuid == $evSubmitter) {
-            return true;
-        }
-
-        return false;
+        return $this->getPermEventsSubmit() && $currentuid == $evSubmitter;
     }
 
     /**
@@ -269,7 +265,8 @@ class PermissionHandler extends \XoopsPersistableObjectHandler
      * @public function getPermRegistrationsApprove
      * returns right for approve registrations
      *  - User must have perm edit the event (owner or approver)
-     * @param null
+     * @param $evSubmitter
+     * @param $evStatus
      * @return bool
      */
     public function getPermRegistrationsApprove($evSubmitter, $evStatus)
@@ -346,11 +343,7 @@ class PermissionHandler extends \XoopsPersistableObjectHandler
             return true;
         }
         $ipCurrent = $_SERVER['REMOTE_ADDR'];
-        if ($regIp == $ipCurrent) {
-            return true;
-        }
-
-        return false;
+        return $regIp == $ipCurrent;
     }
 
     /**
@@ -386,11 +379,7 @@ class PermissionHandler extends \XoopsPersistableObjectHandler
             }
             $currentuid = $xoopsUser->uid();
         }
-        if ($this->getPermTextblocksSubmit() && $currentuid == $tbSubmitter) {
-            return true;
-        }
-
-        return false;
+        return $this->getPermTextblocksSubmit() && $currentuid == $tbSubmitter;
     }
 
     /**
@@ -415,11 +404,7 @@ class PermissionHandler extends \XoopsPersistableObjectHandler
             }
             $currentuid = $xoopsUser->uid();
         }
-        if ($this->getPermTextblocksSubmit() && $currentuid == $tbSubmitter) {
-            return true;
-        }
-
-        return false;
+        return $this->getPermTextblocksSubmit() && $currentuid == $tbSubmitter;
     }
 
 

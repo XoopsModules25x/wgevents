@@ -156,12 +156,10 @@ switch ($op) {
                     $proportion = $numberRegCurr / $registerMax;
                     if ($proportion >= 1) {
                         $events[$i]['regcurrent'] = \_MA_WGEVENTS_REGISTRATIONS_FULL;
+                    } else if (0 == $numberRegCurr) {
+                        $events[$i]['regcurrent'] = \_MA_WGEVENTS_REGISTRATIONS_NBCURR_0;
                     } else {
-                        if (0 == $numberRegCurr) {
-                            $events[$i]['regcurrent'] = \_MA_WGEVENTS_REGISTRATIONS_NBCURR_0;
-                        } else {
-                            $events[$i]['regcurrent'] = \sprintf(\_MA_WGEVENTS_REGISTRATIONS_NBCURR_INDEX, $numberRegCurr, $registerMax);
-                        }
+                        $events[$i]['regcurrent'] = \sprintf(\_MA_WGEVENTS_REGISTRATIONS_NBCURR_INDEX, $numberRegCurr, $registerMax);
                     }
                     $events[$i]['regcurrent_text'] = $events[$i]['regcurrent'];
                     $events[$i]['regcurrent_tip'] = true;
@@ -174,10 +172,8 @@ switch ($op) {
                         $events[$i]['regcurrent_tip'] = false;
                     }
                     $events[$i]['regpercentage'] = (int)($proportion * 100);
-                } else {
-                    if ('show' == $op) {
-                        $events[$i]['regcurrent'] = $numberRegCurr;
-                    }
+                } else if ('show' == $op) {
+                    $events[$i]['regcurrent'] = $numberRegCurr;
                 }
                 $events[$i]['regenabled'] = $permEdit || (\time() >= $events[$i]['register_from'] && \time() <= $events[$i]['register_to']);
                 $events[$i]['locked'] = (Constants::STATUS_LOCKED == $events[$i]['status']);
@@ -419,30 +415,28 @@ switch ($op) {
             // redirect after insert
             if ('' !== $uploaderErrors) {
                 \redirect_header('event.php?op=edit&id=' . $newEvId, 5, $uploaderErrors);
-            } else {
-                if ($evRegisterUse) {
-                    // check whether there are already question infos
-                    $crQuestion = new \CriteriaCompo();
-                    $crQuestion->add(new \Criteria('evid', $newEvId));
-                    if ($evId > 0) {
-                        \redirect_header('event.php?op=show&amp;id=' . $evId . '&amp;start=' . $start . '&amp;limit=' . $limit, 2, \_MA_WGEVENTS_FORM_OK);
-                    } else {
-                        if ($questionHandler->getCount($crQuestion) > 0) {
-                            // set of questions already existing
-                            \redirect_header('question.php?op=list&amp;evid=' . $newEvId, 2, \_MA_WGEVENTS_FORM_OK);
-                        } else {
-                            // redirect to question.php in order to add default set of questions
-                            \redirect_header('question.php?op=newset&amp;evid=' . $newEvId, 0, \_MA_WGEVENTS_FORM_OK);
-                        }
-                    }
+            } else if ($evRegisterUse) {
+                // check whether there are already question infos
+                $crQuestion = new \CriteriaCompo();
+                $crQuestion->add(new \Criteria('evid', $newEvId));
+                if ($evId > 0) {
+                    \redirect_header('event.php?op=show&amp;id=' . $evId . '&amp;start=' . $start . '&amp;limit=' . $limit, 2, \_MA_WGEVENTS_FORM_OK);
                 } else {
-                    if ($evId > 0) {
-                        $registrationHandler->cleanupRegistrations($evId);
-                        $questionHandler->cleanupQuestions($evId);
-                        $answerHandler->cleanupAnswers($evId);
+                    if ($questionHandler->getCount($crQuestion) > 0) {
+                        // set of questions already existing
+                        \redirect_header('question.php?op=list&amp;evid=' . $newEvId, 2, \_MA_WGEVENTS_FORM_OK);
+                    } else {
+                        // redirect to question.php in order to add default set of questions
+                        \redirect_header('question.php?op=newset&amp;evid=' . $newEvId, 0, \_MA_WGEVENTS_FORM_OK);
                     }
-                    \redirect_header('event.php?op=list&amp;start=' . $start . '&amp;limit=' . $limit, 2, \_MA_WGEVENTS_FORM_OK);
                 }
+            } else {
+                if ($evId > 0) {
+                    $registrationHandler->cleanupRegistrations($evId);
+                    $questionHandler->cleanupQuestions($evId);
+                    $answerHandler->cleanupAnswers($evId);
+                }
+                \redirect_header('event.php?op=list&amp;start=' . $start . '&amp;limit=' . $limit, 2, \_MA_WGEVENTS_FORM_OK);
             }
         }
         // Get Form Error

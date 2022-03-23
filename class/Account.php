@@ -37,7 +37,7 @@ require_once dirname(__DIR__) . '/include/common.php';
  */
 class Account extends \XoopsObject
 {
-    public $helper = null;
+    public $helper;
     public $db;
 
     //Constructor
@@ -75,7 +75,7 @@ class Account extends \XoopsObject
             $action = $_SERVER['REQUEST_URI'];
         }
 
-        $title = $this->isNew() ? sprintf(_AM_WGEVENTS_ACCOUNT_ADD) : sprintf(_AM_WGEVENTS_ACCOUNT_EDIT);
+        $title = $this->isNew() ? _AM_WGEVENTS_ACCOUNT_ADD : _AM_WGEVENTS_ACCOUNT_EDIT;
 
         require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
         $form = new \XoopsThemeForm($title, 'accounts_form', $action, 'post', true);

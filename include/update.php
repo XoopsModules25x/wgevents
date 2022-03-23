@@ -45,7 +45,7 @@ function xoops_module_update_wgevents($module, $prev_version = null)
         //delete olf file
         \unlink(\XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/preloads/index.php');
         //create html file
-        $myfile = \fopen(\XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/preloads/index.html', "w");
+        $myfile = \fopen(\XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/preloads/index.html', 'wb');
         \fwrite($myfile, '<script>history.go(-1);</script>');
         \fclose($myfile);
     }
@@ -100,7 +100,6 @@ function xoops_module_update_wgevents($module, $prev_version = null)
  */
 function wgevents_check_db($module)
 {
-    $ret = true;
     //insert here code for database check
 
     /*
@@ -138,5 +137,5 @@ function wgevents_check_db($module)
         }
     }
     */
-    return $ret;
+    return true;
 }

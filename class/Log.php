@@ -90,7 +90,7 @@ class Log extends \XoopsObject
         }
         $isAdmin = \is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->isAdmin($GLOBALS['xoopsModule']->mid()) : false;
         // Title
-        $title = $this->isNew() ? \sprintf(\_AM_WGEVENTS_ADD_LOG) : \sprintf(\_AM_WGEVENTS_EDIT_LOG);
+        $title = $this->isNew() ? \_AM_WGEVENTS_ADD_LOG : \_AM_WGEVENTS_EDIT_LOG;
         // Get Theme Form
         \xoops_load('XoopsFormLoader');
         $form = new \XoopsThemeForm($title, 'form', $action, 'post', true);
