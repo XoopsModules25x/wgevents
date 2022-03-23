@@ -100,9 +100,9 @@ class Category extends \XoopsObject
         if (!$action) {
             $action = $_SERVER['REQUEST_URI'];
         }
-        $isAdmin = \is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->isAdmin($GLOBALS['xoopsModule']->mid()) : false;
+        $isAdmin = \is_object($GLOBALS['xoopsUser']) && $GLOBALS['xoopsUser']->isAdmin($GLOBALS['xoopsModule']->mid());
         // Title
-        $title = $this->isNew() ? \sprintf(\_AM_WGEVENTS_CATEGORY_ADD) : \sprintf(\_AM_WGEVENTS_CATEGORY_EDIT);
+        $title = $this->isNew() ? \_AM_WGEVENTS_CATEGORY_ADD : \_AM_WGEVENTS_CATEGORY_EDIT;
         // Get Theme Form
         \xoops_load('XoopsFormLoader');
         $form = new \XoopsThemeForm($title, 'form', $action, 'post', true);

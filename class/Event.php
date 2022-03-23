@@ -140,7 +140,7 @@ class Event extends \XoopsObject
         $imgInfo = '<img class="wge-img-info" src="' . \WGEVENTS_ICONS_URL_24 . '/info.png" alt="img-info" title="%s">';
 
         // Title
-        $title = $this->isNew() ? \sprintf(\_MA_WGEVENTS_EVENT_ADD) : \sprintf(\_MA_WGEVENTS_EVENT_EDIT);
+        $title = $this->isNew() ? \_MA_WGEVENTS_EVENT_ADD : \_MA_WGEVENTS_EVENT_EDIT;
         // Get Theme Form
         \xoops_load('XoopsFormLoader');
         $form = new \XoopsThemeForm($title, 'formEvent', $action, 'post', true);
@@ -337,17 +337,15 @@ class Event extends \XoopsObject
             $form->addElement(new \XoopsFormHidden('status', $evStatus));
             $form->addElement(new \XoopsFormHidden('datecreated_int', $evDatecreated));
             $form->addElement(new \XoopsFormHidden('submitter', $evSubmitter));
-            if (!$this->isNew()) {
-                if ($permEventsApprove) {
-                    $evStatusSelect = new \XoopsFormSelect(\_MA_WGEVENTS_STATUS, 'status', $evStatus);
-                    $evStatusSelect->addOption(Constants::STATUS_NONE, \_MA_WGEVENTS_STATUS_NONE);
-                    $evStatusSelect->addOption(Constants::STATUS_OFFLINE, \_MA_WGEVENTS_STATUS_OFFLINE);
-                    $evStatusSelect->addOption(Constants::STATUS_SUBMITTED, \_MA_WGEVENTS_STATUS_SUBMITTED);
-                    $evStatusSelect->addOption(Constants::STATUS_APPROVED, \_MA_WGEVENTS_STATUS_APPROVED);
-                    $form->addElement($evStatusSelect, true);
-                    $form->addElement(new \XoopsFormLabel(\_MA_WGEVENTS_DATECREATED, \formatTimestamp($evDatecreated, 's')));
-                    $form->addElement(new \XoopsFormLabel(\_MA_WGEVENTS_SUBMITTER, \XoopsUser::getUnameFromId($evSubmitter)));
-                }
+            if (!$this->isNew() && $permEventsApprove) {
+                $evStatusSelect = new \XoopsFormSelect(\_MA_WGEVENTS_STATUS, 'status', $evStatus);
+                $evStatusSelect->addOption(Constants::STATUS_NONE, \_MA_WGEVENTS_STATUS_NONE);
+                $evStatusSelect->addOption(Constants::STATUS_OFFLINE, \_MA_WGEVENTS_STATUS_OFFLINE);
+                $evStatusSelect->addOption(Constants::STATUS_SUBMITTED, \_MA_WGEVENTS_STATUS_SUBMITTED);
+                $evStatusSelect->addOption(Constants::STATUS_APPROVED, \_MA_WGEVENTS_STATUS_APPROVED);
+                $form->addElement($evStatusSelect, true);
+                $form->addElement(new \XoopsFormLabel(\_MA_WGEVENTS_DATECREATED, \formatTimestamp($evDatecreated, 's')));
+                $form->addElement(new \XoopsFormLabel(\_MA_WGEVENTS_SUBMITTER, \XoopsUser::getUnameFromId($evSubmitter)));
             }
         }
         if (!$this->isNew()) {

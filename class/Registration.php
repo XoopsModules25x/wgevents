@@ -112,11 +112,11 @@ class Registration extends \XoopsObject
         if (!$action) {
             $action = $_SERVER['REQUEST_URI'];
         }
-        $isAdmin = \is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->isAdmin($GLOBALS['xoopsModule']->mid()) : false;
+        $isAdmin = \is_object($GLOBALS['xoopsUser']) && $GLOBALS['xoopsUser']->isAdmin($GLOBALS['xoopsModule']->mid());
         $answersExist = true;
         // Title
         if ($this->isNew()) {
-            $title = $test ? \sprintf(\_MA_WGEVENTS_QUESTIONS_PREVIEW) : \sprintf(\_MA_WGEVENTS_REGISTRATION_ADD);
+            $title = $test ? \_MA_WGEVENTS_QUESTIONS_PREVIEW : \_MA_WGEVENTS_REGISTRATION_ADD;
             $answersExist = false;
         } else {
             $title =\_MA_WGEVENTS_REGISTRATION_EDIT;
@@ -350,12 +350,9 @@ class Registration extends \XoopsObject
         $ret = $this->getValues($keys, $format, $maxDepth);
         $eventHandler = $helper->getHandler('Event');
         $eventObj = $eventHandler->get($this->getVar('evid'));
-        $ret['eventname']       = $eventObj->getVar('name');
-        $ret['salutation_text'] = Utility::getSalutationText($this->getVar('salutation'));
-        $ret['status_text']     = Utility::getStatusText($this->getVar('status'));
-        if ((int)$this->getVar('listwait') > 0) {
-            $ret['listwait_text'] = '(' . \_MA_WGEVENTS_REGISTRATION_LISTWAIT  . ')';
-        }
+        $ret['eventname']        = $eventObj->getVar('name');
+        $ret['salutation_text']  = Utility::getSalutationText($this->getVar('salutation'));
+        $ret['status_text']      = Utility::getStatusText($this->getVar('status'));
         $ret['financial_text']   = Utility::getFinancialText($this->getVar('financial'));
         $ret['listwait_text']    = (int)$this->getVar('listwait') > 0 ? \_YES : \_NO;
         $ret['datecreated_text'] = \formatTimestamp($this->getVar('datecreated'), 'm');

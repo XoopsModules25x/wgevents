@@ -101,9 +101,9 @@ class Question extends \XoopsObject
         if (!$action) {
             $action = $_SERVER['REQUEST_URI'];
         }
-        $isAdmin = \is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->isAdmin($GLOBALS['xoopsModule']->mid()) : false;
+        $isAdmin = \is_object($GLOBALS['xoopsUser']) && $GLOBALS['xoopsUser']->isAdmin($GLOBALS['xoopsModule']->mid());
         // Title
-        $title = $this->isNew() ? \sprintf(\_MA_WGEVENTS_QUESTION_ADD) : \sprintf(\_MA_WGEVENTS_QUESTION_EDIT);
+        $title = $this->isNew() ? \_MA_WGEVENTS_QUESTION_ADD : \_MA_WGEVENTS_QUESTION_EDIT;
         // Get Theme Form
         \xoops_load('XoopsFormLoader');
         $form = new \XoopsThemeForm($title, 'formQuestion', $action, 'post', true);

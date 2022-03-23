@@ -56,13 +56,13 @@ class EventHandler extends \XoopsPersistableObjectHandler
     /**
      * retrieve a field
      *
-     * @param int $i field id
+     * @param int $id field id
      * @param null fields
      * @return \XoopsObject|null reference to the {@link Get} object
      */
-    public function get($i = null, $fields = null)
+    public function get($id = null, $fields = null)
     {
-        return parent::get($i, $fields);
+        return parent::get($id, $fields);
     }
 
     /**
@@ -155,15 +155,11 @@ class EventHandler extends \XoopsPersistableObjectHandler
     /**
      * @public function to get events for given params
      *
-     * @param int    $uid         : select by/exclude given uid
-     * @param int    $start
-     * @param int    $limit
-     * @param int    $from        : filter date created from (timestamp)
-     * @param int    $to          : filter date created to (timestamp)
-     * @param bool   $mygroups    : show events of all groups of current user
-     * @param bool   $excludeuid  : exclude given uid from result
-     * @param int    $groupid     : filter by given group id
-     * @param int    $catid       : filter by given cat id
+     * @param int $start
+     * @param int $limit
+     * @param int $from : filter date created from (timestamp)
+     * @param int $to : filter date created to (timestamp)
+     * @param int $catid : filter by given cat id
      * @param string $sortBy
      * @param string $orderBy
      * @return array
@@ -253,7 +249,7 @@ class EventHandler extends \XoopsPersistableObjectHandler
     /**
      * get email recipients for noticiations
      * @param  $registerNotify
-     * @return string
+     * @return array|false|string[]
      */
     public function getRecipientsNotify($registerNotify)
     {

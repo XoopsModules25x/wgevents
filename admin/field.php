@@ -192,12 +192,10 @@ switch ($op) {
         $GLOBALS['xoopsTpl']->assign('navigation', $adminObject->displayNavigation('field.php'));
         if (isset($_REQUEST['ok']) && 1 == $_REQUEST['ok']) {
             if (!$GLOBALS['xoopsSecurity']->check()) {
-                //\redirect_header('field.php', 3, \implode(', ', $GLOBALS['xoopsSecurity']->getErrors()));
+                \redirect_header('field.php', 3, \implode(', ', $GLOBALS['xoopsSecurity']->getErrors()));
             }
-            if ($fieldHandler->getCount() > 0) {
-                if (!$fieldHandler->deleteAll()) {
-                    $GLOBALS['xoopsTpl']->assign('error', $fieldHandler->getHtmlErrors());
-                }
+            if (($fieldHandler->getCount() > 0) && !$fieldHandler->deleteAll()) {
+                $GLOBALS['xoopsTpl']->assign('error', $fieldHandler->getHtmlErrors());
             }
             $items = BuildDefaultSet();
             $uid = $GLOBALS['xoopsUser']->uid();

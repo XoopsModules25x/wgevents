@@ -200,21 +200,19 @@ switch ($op) {
                 $eventObj->setVar('register_sendermail', Request::getString('register_sendermail'));
                 $eventObj->setVar('register_sendername', Request::getString('register_sendername'));
                 $eventObj->setVar('register_signature', Request::getString('register_signature'));
-            } else {
-                if ($evId > 0) {
-                    //reset previous values
-                    $eventObj->setVar('register_to', 0);
-                    $eventObj->setVar('register_max', 0);
-                    $eventObj->setVar('register_listwait', 0);
-                    $eventObj->setVar('register_autoaccept', 0);
-                    $eventObj->setVar('register_notify', '');
-                    $eventObj->setVar('register_sendermail', '');
-                    $eventObj->setVar('register_sendername', '');
-                    $eventObj->setVar('register_signature', '');
-                    $registrationHandler->cleanupRegistrations($evId);
-                    $questionHandler->cleanupQuestions($evId);
-                    $answerHandler->cleanupAnswers($evId);
-                }
+            } else if ($evId > 0) {
+                //reset previous values
+                $eventObj->setVar('register_to', 0);
+                $eventObj->setVar('register_max', 0);
+                $eventObj->setVar('register_listwait', 0);
+                $eventObj->setVar('register_autoaccept', 0);
+                $eventObj->setVar('register_notify', '');
+                $eventObj->setVar('register_sendermail', '');
+                $eventObj->setVar('register_sendername', '');
+                $eventObj->setVar('register_signature', '');
+                $registrationHandler->cleanupRegistrations($evId);
+                $questionHandler->cleanupQuestions($evId);
+                $answerHandler->cleanupAnswers($evId);
             }
         }
         $eventObj->setVar('status', Request::getInt('status'));
@@ -228,12 +226,10 @@ switch ($op) {
             $newEvId = $eventObj->getNewInsertedId();
             if ('' !== $uploaderErrors) {
                 \redirect_header('event.php?op=edit&id=' . $evId, 5, $uploaderErrors);
+            } else if ($continueAddtionals) {
+                \redirect_header('question.php?op=edit&amp;evid=' . $newEvId, 2, \_MA_WGEVENTS_FORM_OK);
             } else {
-                if ($continueAddtionals) {
-                    \redirect_header('question.php?op=edit&amp;evid=' . $newEvId, 2, \_MA_WGEVENTS_FORM_OK);
-                } else {
-                    \redirect_header('event.php?op=list&amp;start=' . $start . '&amp;limit=' . $limit, 2, \_MA_WGEVENTS_FORM_OK);
-                }
+                \redirect_header('event.php?op=list&amp;start=' . $start . '&amp;limit=' . $limit, 2, \_MA_WGEVENTS_FORM_OK);
             }
         }
         // Get Form
