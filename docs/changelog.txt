@@ -17,6 +17,7 @@
  - added identifier for events (goffy)
  - multiple selections for checkbox and combobox (goffy)
  - theme xswatch4_wge (goffy)
+ - replacing includeq and foreachq (mamba/goffy)
  
 ==============================================================
 1.0.0 [2022/01/04 9:28:23]
