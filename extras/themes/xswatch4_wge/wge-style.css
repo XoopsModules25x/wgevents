@@ -1,0 +1,383 @@
+/* CSS Document */
+/*
+    special styles for module wgevents
+*/
+:root {
+    --wgcolor1: #182b45;
+    --wgcolor2: #ffbc3b;
+}
+@media (min-width: 1920px) {
+    .container, .container-lg, .container-md, .container-sm, .container-xl {
+        max-width: 1860px;
+    }
+}
+
+.bg-primary,
+.wge-bg-1 {
+    background-color: var(--wgcolor1) !important;
+}
+.wge-bg-2 {
+    background-color: var(--wgcolor2) !important;
+}
+
+.wge-navbar {
+    padding:0 !important;
+}
+.wge-navbar-items,
+.dropdown-menu
+{
+    background-color: var(--wgcolor2) !important;
+}
+.wge-navbar-link {
+    font-size:150%;
+    color:var(--wgcolor1) !important;
+    padding:20px;
+}
+.dropdown-item
+{
+    color:var(--wgcolor1) !important;
+}
+.dropdown-item:hover
+{
+    background-color:var(--wgcolor1) !important;
+    color:var(--wgcolor2) !important;
+}
+.wge-nav-logo {
+    max-height:50px;
+}
+.navbar-dark .navbar-toggler {
+    color:var(--wgcolor2) !important;
+    border-color:var(--wgcolor2) !important;
+}
+
+.maincontainer {
+    margin-top: 100px;
+    margin-bottom: 20px;
+    /*fade animation doesn't work with modul currently
+    animation: fadeInAnimation ease 2s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+    */
+}
+@keyframes fadeInAnimation {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.breadcrumb {
+    background-color: #fff;
+    border:1px solid var(--wgcolor1);
+}
+a {
+    color:var(--wgcolor1);
+    font-weight:400;
+}
+
+.wge-icon-1 {
+    padding-right:5px;
+}
+.wge-panel {
+    padding:25px 0 50px 0;
+}
+.wge-eventheader h4 span {
+    padding:7px 20px 10px 20px;
+    color:var(--wgcolor1);
+    font-weight: 500;
+    background-color:var(--wgcolor2);
+    line-height:1.5;
+}
+.wge-eventheader {
+    text-align:left;
+    margin: 20px 0;
+    border-bottom:1px solid var(--wgcolor2);
+}
+.wge-row1 {
+    margin-top: 10px;
+    padding-top:5px;
+}
+.wge-row1 div {
+    padding-top:3px;
+    padding-bottom:3px;
+}
+.wge-row2 {
+    border-bottom:1px solid var(--wgcolor2);
+}
+.wge-row-gm div {
+    padding:0;
+}
+
+#formEvent h3,
+#formTextblock h3,
+#formRegistration h3,
+#formQuestion h3,
+#formContactAll h3,
+#formConfirm h3 {
+    padding:7px 20px;
+    color:var(--wgcolor1);
+    font-weight: 500;
+    background-color:var(--wgcolor2);
+}
+
+
+
+
+
+
+.wge-spacer2 {
+    margin: 20px 0 50px 0;
+    padding-top:5px;
+}
+
+
+
+
+/*
+.wge-heading {
+    font-size:120%;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+.wge-panel-details1 {
+
+}
+.wge-panel-details2 {
+    padding-left:20px;
+}
+*/
+
+
+
+.wge-form-registration {
+    margin-top:30px;
+}
+.wge-badge {
+    padding:10px;
+    margin:2px;
+}
+.wge-badge-index {
+    font-weight:400;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius:0;
+}
+.wge-label-left {
+    display:block !important;
+}
+.wge-img-info {
+    margin-left:5px;
+}
+.wge-p-small {
+    font-size:80%;
+}
+.wge-error-msg {
+    color: #ff0000;
+    font-size:120%;
+    border:1px solid #ff0000;
+    padding:50px;
+}
+.wge-identifier {
+    border-left:1px solid var(--wgcolor1);
+}
+
+/* new button styles*/
+.btn {
+    margin:3px 2px;
+    padding:.375rem 1.5rem;
+}
+.btn-primary {
+    border-top:3px solid var(--primary);
+    border-right:0;
+    border-left:0;
+    border-bottom:3px solid var(--primary);
+}
+.btn-primary:hover {
+    border-top:3px solid var(--primary);
+    border-right:0;
+    border-left:0;
+    border-bottom:3px solid var(--primary);
+    color: var(--primary) !important;
+    background-color: var(--white);
+}
+.btn-danger {
+    border-top:3px solid var(--danger);
+    border-right:0;
+    border-left:0;
+    border-bottom:3px solid var(--danger);
+}
+.btn-danger:hover {
+    border-top:3px solid var(--danger);
+    border-right:0;
+    border-left:0;
+    border-bottom:3px solid var(--danger);
+    color:var(--danger) !important;
+    background-color:var(--white);
+}
+.btn-success {
+    border-top:3px solid var(--wgcolor2);
+    border-right:0;
+    border-left:0;
+    border-bottom:3px solid var(--wgcolor2);
+    color:var(--wgcolor1) !important;
+    background-color:var(--wgcolor2);
+}
+.btn-success:hover {
+    border-top:3px solid var(--wgcolor2);
+    border-right:0;
+    border-left:0;
+    border-bottom:3px solid var(--wgcolor2);
+    background-color: var(--white);
+}
+.btn-success.focus,
+.btn-success:focus {
+    color:var(--wgcolor2);
+    background-color:var(--white);
+    border-color:var(--wgcolor2);
+    box-shadow:0 0 0 .2rem rgba(255,188,59,.5)
+}
+.btn-success.active,
+.btn-success:active {
+    color:var(--wgcolor2);
+    background-color:var(--white);
+    border-color:var(--wgcolor2);
+    box-shadow:0 0 0 .2rem rgba(255,188,59,.5)
+}
+.btn-warning {
+    border-top:3px solid var(--warning);
+    border-right:0;
+    border-left:0;
+    border-bottom:3px solid var(--warning);
+}
+.btn-warning:hover {
+    border-top:3px solid var(--warning);
+    border-right:0;
+    border-left:0;
+    border-bottom:3px solid var(--warning);
+    color: var(--warning) !important;
+    background-color: var(--white);
+}
+.wge-btn-1 {
+    padding:3px 10px;
+    font-size:1.2rem;
+}
+/* progress */
+.wge-progress {
+    height:37px;
+    max-width:300px;
+}
+.wge-progress-text {
+    font-size:16px;
+    margin:0 10px;
+}
+.progress {
+    margin-top:3px;
+    height:40px;
+}
+.progress-bar {
+    overflow: visible;
+}
+/*missing bootstrap css*/
+.progress-bar-success {
+    background-color: #5cb85c;
+}
+.progress-bar-warning {
+    background-color: #f0ad4e;
+}
+.progress-bar-danger {
+    background-color: #d9534f;
+}
+
+/*footer blocks*/
+.footer-blocks .container {
+    padding-top:30px;
+}
+.xoops-footer-blocks h4 {
+    color:var(--wgcolor2);
+    border-bottom:1px solid var(--wgcolor2);
+}
+.xoops-footer-blocks a {
+    color:var(--wgcolor2);
+}
+.footer h3 a {
+    color:var(--wgcolor2);
+}
+
+/*wgblocks*/
+.li-wgblocks {
+    padding:10px;
+    width:100%;
+}
+.li-wgblocks a {
+    color:var(--wgcolor2);
+}
+.li-wgblocks:hover {
+    background-color:var(--wgcolor2);
+}
+.li-wgblocks:hover a{
+    color:var(--wgcolor1);
+}
+
+/*wgsitenotice*/
+.li-wgsitenotice {
+    padding:10px;
+}
+.li-wgsitenotice a {
+    color:var(--wgcolor2);
+}
+.li-wgsitenotice:hover {
+    background-color:var(--wgcolor2);
+}
+.li-wgsitenotice:hover a{
+    color:var(--wgcolor1);
+}
+
+/*user menu*/
+.usermenu ul li.nav-item a {
+    color:var(--wgcolor2);
+}
+.usermenu ul li.nav-item:hover {
+    background-color:var(--wgcolor2);
+}
+.usermenu ul li.nav-item a:hover {
+    color:var(--wgcolor1);
+}
+
+/*contact*/
+.contact-about {
+    font-size: .825rem;
+    font-weight: 300;
+    color:var(--wgcolor1);
+    width:100%;
+    background-color:var(--wgcolor2) !important;
+    position: relative;
+    padding: 2rem;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+/*simplecCalendar*/
+table.SimpleCalendar thead tr th {
+    color:var(--wgcolor1) !important;
+    background-color:var(--wgcolor2) !important;
+}
+
+/*wglinks*/
+.wglinks-block-li {
+    padding:10px;
+}
+.wglinks-block-li a {
+    color:var(--wgcolor2);
+}
+.wglinks-block-li:hover {
+    background-color:var(--wgcolor2);
+}
+.wglinks-block-li:hover a{
+    color:var(--wgcolor1);
+}
+.wglinks-block-img {
+    margin:0 5px 0 0;
+}

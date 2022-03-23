@@ -16,7 +16,8 @@
  - send no notifications to myself (goffy)
  - added identifier for events (goffy)
  - multiple selections for checkbox and combobox (goffy)
-
+ - theme xswatch4_wge (goffy)
+ 
 ==============================================================
 1.0.0 [2022/01/04 9:28:23]
 ==============================================================
