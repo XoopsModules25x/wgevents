@@ -55,6 +55,9 @@ If you like the wgEvents module and thanks to the long process for giving the op
 - Cloning of module
 - Test data included
 
+## Extras
+
+In folder **extras/themes/** you can find the theme **xswatch4_wge** especially prepared for wgEvents
 
 ### Tutorial:
 Coming soon...
