@@ -258,7 +258,10 @@ switch ($op) {
             if ($filename > '') {
                 $uploaderErrors .= '<br>' . $uploader->getErrors();
             }
-            $eventObj->setVar('logo', Request::getString('logo'));
+            $filename = Request::getString('logo');
+            if ('' != $filename) {
+                $eventObj->setVar('logo', $filename);
+            }
         }
         $eventObj->setVar('desc', Request::getText('desc'));
         $eventDatefromArr = Request::getArray('datefrom');

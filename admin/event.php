@@ -59,7 +59,7 @@ switch ($op) {
         $GLOBALS['xoopsTpl']->assign('eventCount', $eventCount);
         $GLOBALS['xoopsTpl']->assign('wgevents_url', \WGEVENTS_URL);
         $GLOBALS['xoopsTpl']->assign('wgevents_upload_url', \WGEVENTS_UPLOAD_URL);
-        $GLOBALS['xoopsTpl']->assign('wgevents_upload_eventlogos_url_uid', \WGEVENTS_UPLOAD_EVENTLOGOS_URL . '/' . $uidCurrent . '/');
+        $GLOBALS['xoopsTpl']->assign('wgevents_upload_eventlogos_url', \WGEVENTS_UPLOAD_EVENTLOGOS_URL . '/');
         $GLOBALS['xoopsTpl']->assign('use_gmaps', $helper->getConfig('use_gmaps'));
         $GLOBALS['xoopsTpl']->assign('use_wggallery', $helper->getConfig('use_wggallery'));
         $GLOBALS['xoopsTpl']->assign('use_register', $helper->getConfig('use_register'));
@@ -154,10 +154,13 @@ switch ($op) {
                 $uploaderErrors .= '<br>' . $uploader->getErrors();
             }
         } else {
-            if ($filename > '') {
+            if ('' != $filename) {
                 $uploaderErrors .= '<br>' . $uploader->getErrors();
             }
-            $eventObj->setVar('logo', Request::getString('logo'));
+            $filename = Request::getString('logo');
+            if ('' != $filename) {
+                $eventObj->setVar('logo', $filename);
+            }
         }
         $eventObj->setVar('desc', Request::getText('desc'));
         $eventDatefromArr = Request::getArray('datefrom');
