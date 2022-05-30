@@ -80,7 +80,7 @@ switch ($op) {
         $registrations = [];
         $regIp = $_SERVER['REMOTE_ADDR'];
         // get all events with my registrations
-        $sql = 'SELECT evid, name ';
+        $sql = 'SELECT evid, name, ' . $GLOBALS['xoopsDB']->prefix('wgevents_event') . '.submitter as ev_submitter, ' . $GLOBALS['xoopsDB']->prefix('wgevents_event') . '.status as ev_status ';
         $sql .= 'FROM ' . $GLOBALS['xoopsDB']->prefix('wgevents_registration') . ' ';
         $sql .= 'INNER JOIN ' . $GLOBALS['xoopsDB']->prefix('wgevents_event') . ' ON ' . $GLOBALS['xoopsDB']->prefix('wgevents_registration') . '.evid = ' . $GLOBALS['xoopsDB']->prefix('wgevents_event') . '.id ';
         $sql .= 'WHERE (((' . $GLOBALS['xoopsDB']->prefix('wgevents_registration') . '.ip)="' . $regIp . '")) ';
@@ -88,10 +88,12 @@ switch ($op) {
         $sql .= 'GROUP BY ' . $GLOBALS['xoopsDB']->prefix('wgevents_registration') . '.evid, ' . $GLOBALS['xoopsDB']->prefix('wgevents_event') . '.name ';
         $sql .= 'ORDER BY ' . $GLOBALS['xoopsDB']->prefix('wgevents_event') . '.datefrom DESC;';
         $result = $GLOBALS['xoopsDB']->query($sql);
-        while (list($evId, $evName) = $GLOBALS['xoopsDB']->fetchRow($result)) {
+        while (list($evId, $evName, $evSubmitter, $evStatus) = $GLOBALS['xoopsDB']->fetchRow($result)) {
             $events[$evId] = [
                 'id' => $evId,
-                'name' => $evName
+                'name' => $evName,
+                'submitter' => $evSubmitter,
+                'status' => $evStatus
             ];
         }
         foreach ($events as $evId => $event) {
@@ -102,6 +104,7 @@ switch ($op) {
             $registrations[$evId]['questions'] = $questionsArr;
             $registrations[$evId]['footerCols'] = \count($questionsArr) + 9;
             //get list of existing registrations for current user/current IP
+            $registrations[$evId]['event_id'] = $event['id'];
             $registrations[$evId]['event_name'] = $event['name'];
             $permEdit = $permissionsHandler->getPermEventsEdit($event['submitter'], $event['status']) || $uidCurrent == $event['submitter'];
             $registrations[$evId]['permEditEvent'] = $permEdit;
