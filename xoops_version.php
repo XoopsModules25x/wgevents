@@ -46,7 +46,7 @@ $modversion = [
     'release_date'        => '2022/01/04',
     'manual'              => 'link to manual file',
     'manual_file'         => \XOOPS_URL . '/modules/wgevents/docs/install.txt',
-    'min_php'             => '5.5',
+    'min_php'             => '7.4',
     'min_xoops'           => '2.5.11 Beta1',
     'min_admin'           => '1.2',
     'min_db'              => ['mysql' => '5.5', 'mysqli' => '5.5'],
@@ -77,7 +77,6 @@ $modversion = [
 // ------------------- Templates ------------------- //
 $modversion['templates'] = [
     // Admin templates
-
     ['file' => 'wgevents_admin_about.tpl', 'description' => '', 'type' => 'admin'],
     ['file' => 'wgevents_admin_account.tpl', 'description' => '', 'type' => 'admin'],
     ['file' => 'wgevents_admin_answer.tpl', 'description' => '', 'type' => 'admin'],
