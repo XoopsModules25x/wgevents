@@ -20,6 +20,7 @@
  - replacing includeq and foreachq (mamba/goffy)
  - fixed bugs (cesagonchu/goffy)
  - removed renaming upload folder when uninstalling (cesagonchu/goffy)
+ - fixed bug of display result selectbox (goffy)
  
 ==============================================================
 1.0.0 [2022/01/04 9:28:23]
