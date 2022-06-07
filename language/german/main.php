@@ -90,8 +90,8 @@ require_once __DIR__ . '/admin.php';
 \define('_MA_WGEVENTS_EVENT_LOCGMLAT', 'Ort Latitude');
 \define('_MA_WGEVENTS_EVENT_LOCGMLON', 'Ort Longitude');
 \define('_MA_WGEVENTS_EVENT_LOCGMZOOM', 'Zoom-Faktor');
-
 \define('_MA_WGEVENTS_EVENT_FEE', 'Gebühr');
+\define('_MA_WGEVENTS_EVENT_PAYMENTINFO', 'Zahlungshinweis');
 \define('_MA_WGEVENTS_EVENT_REGISTER_USE', 'Anmeldesystem verwenden');
 \define('_MA_WGEVENTS_EVENT_REGISTER_FROM', 'Anmeldung vom');
 \define('_MA_WGEVENTS_EVENT_REGISTER_TO', 'Anmeldung bis');

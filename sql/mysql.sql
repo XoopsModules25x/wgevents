@@ -27,6 +27,7 @@ CREATE TABLE `wgevents_event` (
   `locgmlon`             FLOAT(16,8)     NOT NULL DEFAULT '0.00',
   `locgmzoom`            INT(1)          NOT NULL DEFAULT '0',
   `fee`                  FLOAT(16,2)     NOT NULL DEFAULT '0.00',
+  `paymentinfo`          TEXT            NULL,
   `register_use`         INT(1)          NOT NULL DEFAULT '0',
   `register_from`        INT(11)         NOT NULL DEFAULT '0',
   `register_to`          INT(11)         NOT NULL DEFAULT '0',

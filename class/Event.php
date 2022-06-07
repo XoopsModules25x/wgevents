@@ -69,6 +69,7 @@ class Event extends \XoopsObject
         $this->initVar('locgmlon', \XOBJ_DTYPE_FLOAT);
         $this->initVar('locgmzoom', \XOBJ_DTYPE_INT);
         $this->initVar('fee', \XOBJ_DTYPE_FLOAT);
+        $this->initVar('paymentinfo', \XOBJ_DTYPE_OTHER);
         $this->initVar('register_use', \XOBJ_DTYPE_INT);
         $this->initVar('register_from', \XOBJ_DTYPE_INT);
         $this->initVar('register_to', \XOBJ_DTYPE_INT);
@@ -243,6 +244,16 @@ class Event extends \XoopsObject
         $default0 = '0' . $helper->getConfig('sep_comma') . '00';
         $evFee = $this->isNew() ? $default0 : Utility::FloatToString($this->getVar('fee'));
         $form->addElement(new \XoopsFormText(\_MA_WGEVENTS_EVENT_FEE, 'fee', 20, 150, $evFee));
+        // Form TextArea evPaymentinfo
+        $editorConfigs2 = [];
+        $editorConfigs2['name'] = 'paymentinfo';
+        $editorConfigs2['value'] = $this->getVar('paymentinfo', 'e');
+        $editorConfigs2['rows'] = 5;
+        $editorConfigs2['cols'] = 40;
+        $editorConfigs2['width'] = '100%';
+        $editorConfigs2['height'] = '400px';
+        $editorConfigs2['editor'] = $editor;
+        $form->addElement(new \XoopsFormEditor(\_MA_WGEVENTS_EVENT_PAYMENTINFO, 'paymentinfo', $editorConfigs2));
         // Start block registration options
         if ($helper->getConfig('use_register')) {
             // Form Radio Yes/No evRegister_use
@@ -486,6 +497,7 @@ class Event extends \XoopsObject
             $ret['contact_text_user']  = \implode('<br>', $contactLines);
         }
         $ret['fee_text']           = Utility::FloatToString($this->getVar('fee'));
+        $ret['paymentinfo_text']   = $this->getVar('paymentinfo', 'e');
         $ret['register_use_text']  = (int)$this->getVar('register_use') > 0 ? \_YES : \_NO;
         $ret['register_from_text'] = '';
         if ($this->getVar('register_from') > 0) {
