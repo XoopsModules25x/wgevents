@@ -47,6 +47,9 @@ wgevents_event:
             name: fee
             attributes: ' FLOAT(16,2)     NOT NULL DEFAULT ''0.00'' '
         -
+            name: paymentinfo
+            attributes: ' TEXT            NULL '
+        -
             name: register_use
             attributes: ' INT(1)          NOT NULL DEFAULT ''0'' '
         -

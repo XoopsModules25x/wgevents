@@ -75,6 +75,12 @@
                 <div class="col-xs-12 col-sm-9 col-lg-10"><{$event.fee_text}></div>
             </div>
         <{/if}>
+        <{if $event.paymentinfo_text|default:false}>
+        <div class="row">
+            <div class="col-xs-12 col-sm-3 col-lg-2"><{$smarty.const._MA_WGEVENTS_EVENT_PAYMENTINFO}>: </div>
+            <div class="col-xs-12 col-sm-9 col-lg-10"><{$event.paymentinfo_text}></div>
+        </div>
+        <{/if}>
         <{if $event.permEdit|default:false && $event.status|default:false}>
             <div class="row">
                 <div class="col-xs-12 col-sm-3 col-lg-2"><{$smarty.const._MA_WGEVENTS_STATUS}>: </div>

@@ -181,6 +181,7 @@ switch ($op) {
         $eventObj->setVar('locgmzoom', Request::getInt('locgmzoom'));
         $evFee = Utility::StringToFloat(Request::getString('fee'));
         $eventObj->setVar('fee', $evFee);
+        $eventObj->setVar('paymentinfo', Request::getText('paymentinfo'));
         $eventObj->setVar('register_use', Request::getInt('register_use'));
         if ($helper->getConfig('use_register')) {
             $evRegisterUse = Request::getInt('register_use');
