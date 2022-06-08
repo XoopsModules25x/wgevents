@@ -23,6 +23,7 @@
  - fixed bug of display result selectbox (goffy)
  - added payment info for events (goffy)
  - fixed bug of preselect selectbox (goffy)
+ - removed line breaks in mails for location text (goffy)
  
 ==============================================================
 1.0.0 [2022/01/04 9:28:23]
