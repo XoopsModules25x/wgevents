@@ -22,6 +22,7 @@
  - removed renaming upload folder when uninstalling (cesagonchu/goffy)
  - fixed bug of display result selectbox (goffy)
  - added payment info for events (goffy)
+ - fixed bug of preselect selectbox (goffy)
  
 ==============================================================
 1.0.0 [2022/01/04 9:28:23]

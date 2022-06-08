@@ -198,6 +198,10 @@ class Registration extends \XoopsObject
                                     $ansText = $answersAll[$ansId]->getVar('text', 'n');
                                     $value = \unserialize($ansText);
                                     break;
+                                case Constants::FIELD_SELECTBOX:
+                                    $ansText = $answersAll[$ansId]->getVar('text', 'n');
+                                    $value = (string)\unserialize($ansText);
+                                    break;
                                 case 0:
                                 default:
                                     $value = $answersAll[$ansId]->getVar('text');
