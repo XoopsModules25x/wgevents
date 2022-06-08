@@ -304,7 +304,7 @@ class MailHandler
         $mailParams['evStatus']              = $eventObj->getVar('status');
         $mailParams['evName']                = $eventObj->getVar('name');
         $mailParams['evDatefrom']            = $eventObj->getVar('datefrom');
-        $mailParams['evLocation']            = $eventObj->getVar('location');
+        $mailParams['evLocation']            = $this->replaceLinebreaks($eventObj->getVar('location'), ', ');
         $mailParams['evRegister_sendermail'] = $eventObj->getVar('register_sendermail');
         $mailParams['evRegister_sendername'] = $eventObj->getVar('register_sendername');
         $mailParams['evRegister_signature']  = $eventObj->getVar('register_signature');
@@ -470,5 +470,19 @@ class MailHandler
         $xoopsTpl->assign('changedValues', $changedValues);
         // display it
         return $xoopsTpl->fetch('db:wgevents_mail_table.tpl');
+    }
+
+    /**
+     * Function to replace line breaks
+     *
+     * @param string $string
+     * @param string $replaceBy
+     * @return string
+     */
+    public function replaceLinebreaks($string, $replaceBy) {
+
+        // replace
+        return str_replace(["\r\n", "\r", "\n", "<br />", "<br>"], $replaceBy, $string);
+
     }
 }
