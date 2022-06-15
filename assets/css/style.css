@@ -52,3 +52,26 @@ ul.menu > li + li:before {
 #lbl_locgmzoom {
     min-width:120px;
 }
+
+/* styles for registration list */
+.wge-btn-sort {
+    width:20px;
+    font-size:12px;
+    padding:0;
+}
+.wge-reg-list-head th {
+    vertical-align: middle !important;
+}
+.wge-reg-list-title,
+.wge-reg-list-icon {
+    padding:0 !important;
+    margin:0 !important;
+}
+.wge-reg-list-icon a {
+    border:1px solid #aaaaaa;
+    border-radius:50%;
+}
+.wge-reg-list-icon a.disabled {
+    pointer-events: none;
+    opacity: .65;
+}

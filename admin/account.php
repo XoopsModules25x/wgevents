@@ -233,7 +233,7 @@ switch ($op) {
         $GLOBALS['xoopsTpl']->assign('wgevents_upload_url', \WGEVENTS_UPLOAD_URL);
         // Table view accounts
         if ($accountCount > 0) {
-            $accountAll = $accountHandler->getAllAccounts($start, $limit);
+            $accountAll = $accountHandler->getAllAccounts();
             foreach (\array_keys($accountAll) as $i) {
                 $account = $accountAll[$i]->getValuesAccount();
                 if (Constants::ACCOUNT_TYPE_VAL_PHP_MAIL != $account['type']
@@ -243,12 +243,14 @@ switch ($op) {
                 $GLOBALS['xoopsTpl']->append('accounts_list', $account);
                 unset($account);
             }
+            /*
             // Display Navigation
             if ($accountCount > $limit) {
                 require_once \XOOPS_ROOT_PATH . '/class/pagenav.php';
                 $pagenav = new \XoopsPageNav($accountCount, $limit, $start, 'start', 'op=list&limit=' . $limit);
                 $GLOBALS['xoopsTpl']->assign('pagenav', $pagenav->renderNav());
             }
+            */
         }
         break;
     case 'new':

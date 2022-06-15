@@ -193,9 +193,11 @@ class RegistrationHandler extends \XoopsPersistableObjectHandler
      * @param int $evId // id of event
      * @param array $questionsArr // array with all questions for this event
      * @param bool $currentUserOnly // true: filter result for current user - false: return all for given event
+     * @param string $sortBy // sort registrations by
+     * @param string $orderBy // order for sorting
      * @return bool|array
      */
-    public function getRegistrationDetailsByEvent(int $evId, array $questionsArr, $currentUserOnly = true)
+    public function getRegistrationDetailsByEvent(int $evId, array $questionsArr, $currentUserOnly = true, $sortBy = 'datecreated', $orderBy = 'ASC')
     {
         if ($evId > 0) {
             $helper  = \XoopsModules\Wgevents\Helper::getInstance();
@@ -219,6 +221,8 @@ class RegistrationHandler extends \XoopsPersistableObjectHandler
                     $crRegistration->add(new \Criteria('ip', $regIp));
                 }
             }
+            $crRegistration->setSort($sortBy);
+            $crRegistration->setOrder($orderBy);
             $registrationsCount = $this->getCount($crRegistration);
             $GLOBALS['xoopsTpl']->assign('registrationsCount', $registrationsCount);
             $registrationsAll = $this->getAll($crRegistration);

@@ -55,7 +55,7 @@ switch ($op) {
         $adminObject->addItemButton(\_AM_WGEVENTS_ADD_EVENT, 'event.php?op=new');
         $GLOBALS['xoopsTpl']->assign('buttons', $adminObject->displayButton('left'));
         $eventCount = $eventHandler->getCountEvents();
-        $eventAll = $eventHandler->getAllEvents($start, $limit);
+        $eventAll = $eventHandler->getAllEvents();
         $GLOBALS['xoopsTpl']->assign('eventCount', $eventCount);
         $GLOBALS['xoopsTpl']->assign('wgevents_url', \WGEVENTS_URL);
         $GLOBALS['xoopsTpl']->assign('wgevents_upload_url', \WGEVENTS_UPLOAD_URL);
@@ -70,12 +70,13 @@ switch ($op) {
                 $GLOBALS['xoopsTpl']->append('events_list', $event);
                 unset($event);
             }
+            /*
             // Display Navigation
             if ($eventCount > $limit) {
                 require_once \XOOPS_ROOT_PATH . '/class/pagenav.php';
                 $pagenav = new \XoopsPageNav($eventCount, $limit, $start, 'start', 'op=list&limit=' . $limit);
                 $GLOBALS['xoopsTpl']->assign('pagenav', $pagenav->renderNav());
-            }
+            }*/
         } else {
             $GLOBALS['xoopsTpl']->assign('error', \_AM_WGEVENTS_THEREARENT_EVENTS);
         }

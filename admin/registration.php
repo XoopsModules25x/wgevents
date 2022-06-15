@@ -63,20 +63,21 @@ switch ($op) {
             if ($registrationCount > 0) {
                 $crRegistration->setSort('id');
                 $crRegistration->setOrder('DESC');
-                $crRegistration->setStart($start);
-                $crRegistration->setLimit($limit);
+                //$crRegistration->setStart($start);
+                //$crRegistration->setLimit($limit);
                 $registrationAll = $registrationHandler->getAll($crRegistration);
                 foreach (\array_keys($registrationAll) as $i) {
                     $registration = $registrationAll[$i]->getValuesRegistrations();
                     $GLOBALS['xoopsTpl']->append('registrations_list', $registration);
                     unset($registration);
                 }
+                /*
                 // Display Navigation
                 if ($registrationCount > $limit) {
                     require_once \XOOPS_ROOT_PATH . '/class/pagenav.php';
                     $pagenav = new \XoopsPageNav($registrationCount, $limit, $start, 'start', 'op=list&limit=' . $limit);
                     $GLOBALS['xoopsTpl']->assign('pagenav', $pagenav->renderNav());
-                }
+                }*/
             } else {
                 $GLOBALS['xoopsTpl']->assign('error', \_AM_WGEVENTS_THEREARENT_REGISTRATIONS);
             }

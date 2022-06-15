@@ -73,12 +73,13 @@ switch ($op) {
                     $GLOBALS['xoopsTpl']->append('questions_list', $question);
                     unset($question);
                 }
+                /*
                 // Display Navigation
                 if ($questionCount > $limit) {
                     require_once \XOOPS_ROOT_PATH . '/class/pagenav.php';
                     $pagenav = new \XoopsPageNav($questionCount, $limit, $start, 'start', 'op=list&limit=' . $limit);
                     $GLOBALS['xoopsTpl']->assign('pagenav', $pagenav->renderNav());
-                }
+                }*/
             } else {
                 $GLOBALS['xoopsTpl']->assign('error', \_AM_WGEVENTS_THEREARENT_QUESTIONS);
             }
