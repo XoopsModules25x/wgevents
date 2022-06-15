@@ -8,7 +8,7 @@
         <div class='table-responsive'>
             <table class='table table-<{$table_type|default:false}>'>
                 <thead>
-                    <tr class='head'>
+                    <tr class='head wge-reg-list-head'>
                         <th>&nbsp;</th>
                         <th><{$smarty.const._MA_WGEVENTS_REGISTRATION_SALUTATION}></th>
                         <th><{$smarty.const._MA_WGEVENTS_REGISTRATION_FIRSTNAME}></th>

@@ -53,7 +53,7 @@ switch ($op) {
         $adminObject->addItemButton(\_AM_WGEVENTS_ADD_CATEGORY, 'category.php?op=new');
         $GLOBALS['xoopsTpl']->assign('buttons', $adminObject->displayButton('left'));
         $categoryCount = $categoryHandler->getCountCategories();
-        $categoryAll = $categoryHandler->getAllCategories($start, $limit);
+        $categoryAll = $categoryHandler->getAllCategories();
         $GLOBALS['xoopsTpl']->assign('categorieCount', $categoryCount);
         $GLOBALS['xoopsTpl']->assign('wgevents_url', \WGEVENTS_URL);
         $GLOBALS['xoopsTpl']->assign('wgevents_upload_url', \WGEVENTS_UPLOAD_URL);

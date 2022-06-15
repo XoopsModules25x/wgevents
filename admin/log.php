@@ -51,7 +51,7 @@ switch ($op) {
         $adminObject->addItemButton(\_AM_WGEVENTS_DELETE_LOGS, 'log.php?op=deleteall', 'delete');
         $GLOBALS['xoopsTpl']->assign('buttons', $adminObject->displayButton('left'));
         $logCount = $logHandler->getCountLogs();
-        $logAll = $logHandler->getAllLogs($start, $limit);
+        $logAll = $logHandler->getAllLogs();
         $GLOBALS['xoopsTpl']->assign('logCount', $logCount);
         $GLOBALS['xoopsTpl']->assign('wgevents_url', \WGEVENTS_URL);
         $GLOBALS['xoopsTpl']->assign('wgevents_upload_url', \WGEVENTS_UPLOAD_URL);
@@ -62,12 +62,14 @@ switch ($op) {
                 $GLOBALS['xoopsTpl']->append('logs_list', $log);
                 unset($log);
             }
+            /*
             // Display Navigation
             if ($logCount > $limit) {
                 require_once \XOOPS_ROOT_PATH . '/class/pagenav.php';
                 $pagenav = new \XoopsPageNav($logCount, $limit, $start, 'start', 'op=list&limit=' . $limit);
                 $GLOBALS['xoopsTpl']->assign('pagenav', $pagenav->renderNav());
             }
+            */
         } else {
             $GLOBALS['xoopsTpl']->assign('error', \_AM_WGEVENTS_THEREARENT_LOGS);
         }
