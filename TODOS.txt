@@ -1,4 +1,9 @@
 
+Sortierung der Anmeldeliste nach Datum/Uhrzeit der Anmeldung
+
+
+
+
 Senden der Mail über Task und Limit pro Stunde
 
 

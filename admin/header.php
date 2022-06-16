@@ -68,6 +68,9 @@ $GLOBALS['xoopsTpl']->assign('sysPathIcon32', $sysPathIcon32);
 $GLOBALS['xoopsTpl']->assign('modPathIcon16', $modPathIcon16);
 $GLOBALS['xoopsTpl']->assign('modPathIcon32', $modPathIcon32);
 
+$adminObject = \Xmf\Module\Admin::getInstance();
+$style = \WGEVENTS_URL . '/assets/css/admin/style.css';
+
 // tablesorter
 $GLOBALS['xoopsTpl']->assign('tablesorter_allrows', \_AM_WGEVENTS_TABLESORTER_SHOW_ALL);
 $GLOBALS['xoopsTpl']->assign('tablesorter_of', \_AM_WGEVENTS_TABLESORTER_OF);
@@ -80,7 +83,8 @@ if ('d.m.Y' == _SHORTDATESTRING) {
 }
 $GLOBALS['xoopsTpl']->assign('tablesorter_dateformat', $dateformat);
 
-$adminObject = \Xmf\Module\Admin::getInstance();
-$style = \WGEVENTS_URL . '/assets/css/admin/style.css';
-
 $xoTheme->addStylesheet($helper->url('assets/js/tablesorter/css/jquery.tablesorter.pager.min.css'));
+$tablesorterTheme = $helper->getConfig('tablesorter_admin');
+$xoTheme->addStylesheet($helper->url('assets/js/tablesorter/css/theme.' . $tablesorterTheme . '.min.css'));
+$GLOBALS['xoopsTpl']->assign('tablesorter_theme', $tablesorterTheme);
+

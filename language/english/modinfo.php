@@ -81,6 +81,8 @@ require_once __DIR__ . '/common.php';
 \define('_MI_WGEVENTS_GROUP_DISPLAY', 'Display');
 \define('_MI_WGEVENTS_EDITOR_ADMIN', 'Editor admin');
 \define('_MI_WGEVENTS_EDITOR_ADMIN_DESC', 'Select the editor which should be used in admin area for text area fields');
+\define('_MI_WGEVENTS_TABLESORTER_ADMIN', 'TableSorter Theme Admin');
+\define('_MI_WGEVENTS_TABLESORTER_ADMIN_DESC', 'Select TableSorter Theme which should be used in admin area');
 \define('_MI_WGEVENTS_EDITOR_USER', 'Editor user');
 \define('_MI_WGEVENTS_EDITOR_USER_DESC', 'Select the editor which should be used in user area for text area fields');
 \define('_MI_WGEVENTS_ADMIN_MAXCHAR', 'Text max characters admin');

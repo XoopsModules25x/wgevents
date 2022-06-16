@@ -40,12 +40,16 @@ $regEvid = Request::getInt('evid');
 $start   = Request::getInt('start');
 $limit   = Request::getInt('limit', $helper->getConfig('userpager'));
 $redir   = Request::getString('redir', 'list');
+//$sortBy  = Request::getString('sortby', 'datecreated');
+//$orderBy = Request::getString('orderby', 'asc');
 
 $GLOBALS['xoopsTpl']->assign('start', $start);
 $GLOBALS['xoopsTpl']->assign('limit', $limit);
+//$GLOBALS['xoopsTpl']->assign('sort_order', $sortBy . '_' . $orderBy);
+$GLOBALS['xoopsTpl']->assign('evid', $regEvid);
 
 if (Request::hasVar('cancel')) {
-    $op = 'listmyevent';
+    $op = 'listeventmy';
 }
 
 // Define Stylesheet
@@ -62,7 +66,7 @@ $xoBreadcrumbs[] = ['title' => \_MA_WGEVENTS_INDEX, 'link' => 'index.php'];
 $permView = $permissionsHandler->getPermRegistrationView();
 $GLOBALS['xoopsTpl']->assign('permView', $permView);
 
-$uidCurrent = \is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->uid() : 0;
+$uidCurrent = \is_object($GLOBALS['xoopsUser']) ? (int)$GLOBALS['xoopsUser']->uid() : 0;
 
 switch ($op) {
     case 'show':
@@ -83,9 +87,13 @@ switch ($op) {
         $sql = 'SELECT evid, name, ' . $GLOBALS['xoopsDB']->prefix('wgevents_event') . '.submitter as ev_submitter, ' . $GLOBALS['xoopsDB']->prefix('wgevents_event') . '.status as ev_status ';
         $sql .= 'FROM ' . $GLOBALS['xoopsDB']->prefix('wgevents_registration') . ' ';
         $sql .= 'INNER JOIN ' . $GLOBALS['xoopsDB']->prefix('wgevents_event') . ' ON ' . $GLOBALS['xoopsDB']->prefix('wgevents_registration') . '.evid = ' . $GLOBALS['xoopsDB']->prefix('wgevents_event') . '.id ';
-        $sql .= 'WHERE (((' . $GLOBALS['xoopsDB']->prefix('wgevents_registration') . '.ip)="' . $regIp . '")) ';
-        $sql .= 'OR (((' . $GLOBALS['xoopsDB']->prefix('wgevents_registration') . '.submitter)=' . $uidCurrent . ')) ';
-        $sql .= 'GROUP BY ' . $GLOBALS['xoopsDB']->prefix('wgevents_registration') . '.evid, ' . $GLOBALS['xoopsDB']->prefix('wgevents_event') . '.name ';
+        $sql .= 'WHERE (';
+        if ($uidCurrent > 0) {
+            $sql .= '(' . $GLOBALS['xoopsDB']->prefix('wgevents_registration') . '.submitter)=' . $uidCurrent;
+        } else {
+            $sql .= '(' . $GLOBALS['xoopsDB']->prefix('wgevents_registration') . '.ip)="' . $regIp . '"';
+        }
+        $sql .= ') GROUP BY ' . $GLOBALS['xoopsDB']->prefix('wgevents_registration') . '.evid, ' . $GLOBALS['xoopsDB']->prefix('wgevents_event') . '.name ';
         $sql .= 'ORDER BY ' . $GLOBALS['xoopsDB']->prefix('wgevents_event') . '.datefrom DESC;';
         $result = $GLOBALS['xoopsDB']->query($sql);
         while (list($evId, $evName, $evSubmitter, $evStatus) = $GLOBALS['xoopsDB']->fetchRow($result)) {
@@ -117,8 +125,8 @@ switch ($op) {
             $GLOBALS['xoopsTpl']->assign('warning', \_MA_WGEVENTS_REGISTRATIONS_THEREARENT);
         }
         break;
-    case 'listmyevent':
-    case 'listeventall':
+    case 'listeventmy': // list all registrations of current user of given event
+    case 'listeventall': // list all registrations of all users of given event
         // Check params
         if (0 == $regEvid) {
             \redirect_header('index.php?op=list', 3, \_MA_WGEVENTS_INVALID_PARAM);
@@ -137,6 +145,9 @@ switch ($op) {
         }
         $GLOBALS['xoopsTpl']->assign('captionList', $captionList);
         $GLOBALS['xoopsTpl']->assign('redir', $redir);
+        $GLOBALS['xoopsTpl']->assign('op', $op);
+        $GLOBALS['xoopsTpl']->assign('evid', $regEvid);
+
         // Breadcrumbs
         $xoBreadcrumbs[] = ['title' => \_MA_WGEVENTS_REGISTRATION_ADD];
         // get all questions for this event
@@ -144,10 +155,18 @@ switch ($op) {
 
         //get list of existing registrations for current user/current IP
         $eventObj = $eventHandler->get($regEvid);
+        $evSubmitter = (int)$eventObj->getVar('submitter');
+        $permEdit = $permissionsHandler->getPermEventsEdit($evSubmitter, $eventObj->getVar('status')) || $uidCurrent == $evSubmitter;
+        if ('listeventall' == $op && $uidCurrent !== $evSubmitter) {
+            // list all registrations of all users of given event
+            // user must have perm to edit event
+            if ($uidCurrent !== $evSubmitter && !$permEdit) {
+                \redirect_header('registration.php?op=list', 3, \_NOPERM);
+            }
+        }
         $event_name = $eventObj->getVar('name');
         $registrations[$regEvid]['event_id'] = $regEvid;
         $registrations[$regEvid]['event_name'] = $event_name;
-        $permEdit = $permissionsHandler->getPermEventsEdit($eventObj->getVar('submitter'), $eventObj->getVar('status')) || $uidCurrent == $eventObj->getVar('submitter');
         $registrations[$regEvid]['permEditEvent'] = $permEdit;
         $registrations[$regEvid]['event_fee'] = $eventObj->getVar('fee');
         $registrations[$regEvid]['event_register_max'] = $eventObj->getVar('register_max');
@@ -161,7 +180,7 @@ switch ($op) {
         if ('listeventall' == $op) {
             $GLOBALS['xoopsTpl']->assign('showHandleList', true);
         } else {
-            $permEdit = $permissionsHandler->getPermEventsEdit($eventObj->getVar('submitter'), $eventObj->getVar('status'));
+            //$permEdit = $permissionsHandler->getPermEventsEdit($evSubmitter, $eventObj->getVar('status'));
             if ($permEdit ||
                 (\time() >= $eventObj->getVar('register_from') && \time() <= $eventObj->getVar('register_to'))
                 ) {
