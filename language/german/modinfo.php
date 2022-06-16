@@ -80,6 +80,8 @@ require_once __DIR__ . '/common.php';
 \define('_MI_WGEVENTS_GROUP_DISPLAY', 'Anzeige');
 \define('_MI_WGEVENTS_EDITOR_ADMIN', 'Editor Admin');
 \define('_MI_WGEVENTS_EDITOR_ADMIN_DESC', 'Bitte den zu verwendenden Editor für den Admin-Bereich wählen');
+\define('_MI_WGEVENTS_TABLESORTER_ADMIN', 'TableSorter Theme Admin');
+\define('_MI_WGEVENTS_TABLESORTER_ADMIN_DESC', 'Bitte das TableSorter Theme für den Admin-Bereich wählen');
 \define('_MI_WGEVENTS_EDITOR_USER', 'Editor User');
 \define('_MI_WGEVENTS_EDITOR_USER_DESC', 'Bitte den zu verwendenden Editor für den User-Bereich wählen');
 \define('_MI_WGEVENTS_ADMIN_MAXCHAR', 'Maximale Zeichen Text Adminbereich');

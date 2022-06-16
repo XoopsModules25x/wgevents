@@ -4,7 +4,7 @@
 <{if $logs_list|default:''}>
     <{include file='db:admin_pagertop.tpl' }>
 
-    <table id="sortTable" class="tablesorter-blue" cellspacing="1" cellpadding="0"  width="100%">
+    <table id="sortTable" class="tablesorter-<{$tablesorter_theme}>" cellspacing="1" cellpadding="0"  width="100%">
         <thead>
             <tr class='head'>
                 <th class="center"><{$smarty.const._AM_WGEVENTS_LOG_ID}></th>

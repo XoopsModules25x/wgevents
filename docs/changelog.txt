@@ -25,6 +25,8 @@
  - fixed bug of preselect selectbox (goffy)
  - removed line breaks in mails for location text (goffy)
  - removed query limits in admin area -> handled by tablesorter (goffy)
+ - updated rules for displaying data (goffy)
+ - customization of tablesorter (goffy)
  
 ==============================================================
 1.0.0 [2022/01/04 9:28:23]

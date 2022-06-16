@@ -164,7 +164,7 @@
             <a class='btn btn-success right wge-btn' href='event.php?op=show&amp;id=<{$event.id}>&amp;start=<{$start}>&amp;limit=<{$limit}>' title='<{$smarty.const._MA_WGEVENTS_DETAILS}>'><{$smarty.const._MA_WGEVENTS_DETAILS}></a>
         <{/if}>
         <{if $event.register_use|default:'' &&  $permRegister|default:false}>
-            <a class='btn btn-<{if !$event.regenabled|default:false}>outline-<{/if}>primary right wge-btn <{if !$event.regenabled|default:false}>disabled<{/if}>' href='registration.php?op=listmyevent&amp;redir=listmyevent&amp;evid=<{$event.id}>' title='<{$smarty.const._MA_WGEVENTS_GOTO_REGISTRATION}>'><{$smarty.const._MA_WGEVENTS_GOTO_REGISTRATION}></a>
+            <a class='btn btn-<{if !$event.regenabled|default:false}>outline-<{/if}>primary right wge-btn <{if !$event.regenabled|default:false}>disabled<{/if}>' href='registration.php?op=listeventmy&amp;redir=listeventmy&amp;evid=<{$event.id}>' title='<{$smarty.const._MA_WGEVENTS_GOTO_REGISTRATION}>'><{$smarty.const._MA_WGEVENTS_GOTO_REGISTRATION}></a>
         <{/if}>
         <{if $event.permEdit|default:false || $permApprove|default:false}>
             <br><a class='btn btn-primary right wge-btn' href='event.php?op=edit&amp;id=<{$event.id}>&amp;start=<{$start}>&amp;limit=<{$limit}>' title='<{$smarty.const._EDIT}>'><{$smarty.const._EDIT}></a>

@@ -317,6 +317,27 @@ $modversion['config'][] = [
     'default'     => 'dhtml',
     'options'     => \array_flip($editorHandler->getList()),
 ];
+$modversion['config'][] = [
+    'name'        => 'tablesorter_admin',
+    'title'       => '\_MI_WGEVENTS_TABLESORTER_ADMIN',
+    'description' => '\_MI_WGEVENTS_TABLESORTER_ADMIN_DESC',
+    'formtype'    => 'select',
+    'valuetype'   => 'text',
+    'default'     => 'xoopsadmin',
+    'options'     => ['blackice' => 'blackice',
+                    'blue' => 'blue',
+                    'bootstrap' => 'bootstrap',
+                    'dark' => 'dark',
+                    'default' => 'default',
+                    'dropbox' => 'dropbox',
+                    'green' => 'green',
+                    'grey' => 'grey',
+                    'ice' => 'ice',
+                    'materialize' => 'materialize',
+                    'metro-dark' => 'metro-dark',
+                    'xoopsadmin' => 'xoopsadmin',
+                    ],
+];
 // Editor User
 \xoops_load('xoopseditorhandler');
 $editorHandler = XoopsEditorHandler::getInstance();
