@@ -173,6 +173,7 @@ Eine Teilnahme an der Veranstaltung ohne Zustimmung zu diesen Bestimmungen ist l
 \define('_MA_WGEVENTS_REGISTRATION_FINANCIAL_PAID', 'Bezahlt');
 \define('_MA_WGEVENTS_REGISTRATION_FINANCIAL_CHANGE_0','Status auf unbezahlt ändern');
 \define('_MA_WGEVENTS_REGISTRATION_FINANCIAL_CHANGE_1','Status auf bezahlt ändern');
+\define('_MA_WGEVENTS_REGISTRATION_PAIDAMOUNT', 'Bezahlter Betrag');
 \define('_MA_WGEVENTS_REGISTRATION_LISTWAIT', 'Warteliste');
 \define('_MA_WGEVENTS_REGISTRATION_LISTWAIT_TAKEOVER', 'Von Warteliste übernehmen');
 \define('_MA_WGEVENTS_REGISTRATION_LISTWAIT_Y', 'Auf Warteliste');

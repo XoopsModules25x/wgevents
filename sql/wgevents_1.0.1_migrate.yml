@@ -252,6 +252,9 @@ wgevents_registration:
             name: financial
             attributes: ' INT(1)          NOT NULL DEFAULT ''0'' '
         -
+            name: paidamount
+            attributes: ' FLOAT(16,2)     NOT NULL DEFAULT ''0.00'' '
+        -
             name: listwait
             attributes: ' INT(1)          NOT NULL DEFAULT ''0'' '
         -
@@ -315,6 +318,9 @@ wgevents_registration_hist:
         -
             name: financial
             attributes: ' INT(1)          NOT NULL DEFAULT ''0'' '
+        -
+            name: paidamount
+            attributes: ' FLOAT(16,2)     NOT NULL DEFAULT ''0.00'' '
         -
             name: listwait
             attributes: ' INT(1)          NOT NULL DEFAULT ''0'' '

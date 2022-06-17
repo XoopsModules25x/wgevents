@@ -15,6 +15,7 @@
     </td>
     <{if $registration.event_fee|default:0 > 0}>
         <td><{$regdetails.financial_text}></td>
+        <td><{$regdetails.paidamount_text}></td>
     <{/if}>
     <{if $showSubmitter|default:false}>
         <td><{$regdetails.submitter_text}></td>
