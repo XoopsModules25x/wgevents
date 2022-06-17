@@ -173,6 +173,7 @@ Participation without agreement to this conditions is not possible.
 \define('_MA_WGEVENTS_REGISTRATION_FINANCIAL_PAID', 'Paid');
 \define('_MA_WGEVENTS_REGISTRATION_FINANCIAL_CHANGE_0','Change status to unpaid+');
 \define('_MA_WGEVENTS_REGISTRATION_FINANCIAL_CHANGE_1','Status auf bezahlt ändern');
+\define('_MA_WGEVENTS_REGISTRATION_PAIDAMOUNT', 'Paid amount');
 \define('_MA_WGEVENTS_REGISTRATION_LISTWAIT', 'Waiting list');
 \define('_MA_WGEVENTS_REGISTRATION_LISTWAIT_TAKEOVER', 'Take over from waiting list');
 \define('_MA_WGEVENTS_REGISTRATION_LISTWAIT_Y', 'On waiting list');

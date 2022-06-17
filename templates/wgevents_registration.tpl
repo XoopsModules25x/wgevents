@@ -20,6 +20,7 @@
                         <th><{$smarty.const._MA_WGEVENTS_STATUS}></th>
                         <{if $registration.event_fee|default:0 > 0}>
                             <th><{$smarty.const._MA_WGEVENTS_REGISTRATION_FINANCIAL}></th>
+                            <th><{$smarty.const._MA_WGEVENTS_REGISTRATION_PAIDAMOUNT}></th>
                         <{/if}>
                         <{if $showSubmitter|default:false}>
                             <th><{$smarty.const._MA_WGEVENTS_SUBMITTER}></th>

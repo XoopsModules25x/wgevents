@@ -55,6 +55,7 @@ class Registrationhist extends \XoopsObject
         $this->initVar('ip', \XOBJ_DTYPE_TXTBOX);
         $this->initVar('status', \XOBJ_DTYPE_INT);
         $this->initVar('financial', \XOBJ_DTYPE_INT);
+        $this->initVar('paidamount', \XOBJ_DTYPE_FLOAT);
         $this->initVar('listwait', \XOBJ_DTYPE_INT);
         $this->initVar('datecreated', \XOBJ_DTYPE_INT);
         $this->initVar('submitter', \XOBJ_DTYPE_INT);

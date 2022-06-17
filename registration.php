@@ -252,6 +252,8 @@ switch ($op) {
         $regStatus = Request::getInt('status');
         $registrationObj->setVar('status', $regStatus);
         $registrationObj->setVar('financial', Request::getInt('financial'));
+        $regPaidamount = Utility::StringToFloat(Request::getString('paidamount'));
+        $registrationObj->setVar('paidamount', $regPaidamount);
         $regListwait = 0;
         if ($regId > 0 || $permissionsHandler->getPermRegistrationsApprove($evSubmitter, $evStatus)) {
             //existing registration or user has perm to approve => take value of form
@@ -568,7 +570,13 @@ switch ($op) {
         } else {
             \redirect_header('registration.php?op=list', 3, \_MA_WGEVENTS_INVALID_PARAM);
         }
-        $registrationObj->setVar('financial', Request::getInt('changeto'));
+        $regFinancial = Request::getInt('changeto');
+        $registrationObj->setVar('financial', $regFinancial);
+        if (Constants::FINANCIAL_PAID == $regFinancial) {
+            $registrationObj->setVar('paidamount', $eventObj->getVar('fee'));
+        } else {
+            $registrationObj->setVar('paidamount', 0);
+        }
         // Insert Data
         if ($registrationHandler->insert($registrationObj)) {
             // create history

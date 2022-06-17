@@ -23,8 +23,11 @@
 
 use Xmf\Request;
 use XoopsModules\Wgevents;
-use XoopsModules\Wgevents\Constants;
-use XoopsModules\Wgevents\Common;
+use XoopsModules\Wgevents\ {
+    Constants,
+    Common,
+    Utility
+};
 
 require __DIR__ . '/header.php';
 // Get all request values
@@ -146,6 +149,8 @@ switch ($op) {
         $registrationObj->setVar('ip', Request::getString('ip'));
         $registrationObj->setVar('status', Request::getInt('status'));
         $registrationObj->setVar('financial', Request::getInt('financial'));
+        $regPaidamount = Utility::StringToFloat(Request::getString('paidamount'));
+        $registrationObj->setVar('paidamount', $regPaidamount);
         $registrationObj->setVar('listwait', Request::getInt('listwait'));
         $registrationDatecreatedObj = \DateTime::createFromFormat(\_SHORTDATESTRING, Request::getString('datecreated'));
         $registrationObj->setVar('datecreated', $registrationDatecreatedObj->getTimestamp());

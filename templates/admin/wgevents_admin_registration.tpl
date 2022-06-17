@@ -47,6 +47,7 @@
                 <th class="center"><{$smarty.const._MA_WGEVENTS_REGISTRATION_IP}></th>
                 <th class="center"><{$smarty.const._MA_WGEVENTS_STATUS}></th>
                 <th class="center"><{$smarty.const._MA_WGEVENTS_REGISTRATION_FINANCIAL}></th>
+                <th class="center"><{$smarty.const._MA_WGEVENTS_REGISTRATION_PAIDAMOUNT}></th>
                 <th class="center"><{$smarty.const._MA_WGEVENTS_REGISTRATION_LISTWAIT}></th>
                 <th class="center"><{$smarty.const._MA_WGEVENTS_DATECREATED}></th>
                 <th class="center"><{$smarty.const._MA_WGEVENTS_SUBMITTER}></th>
@@ -66,6 +67,7 @@
                 <td class='center'><{$registration.ip|default:''}></td>
                 <td class='center'><{$registration.status_text}></td>
                 <td class='center'><{$registration.financial_text}></td>
+                <td class='center'><{$registration.paidamount_text}></td>
                 <td class='center'><{$registration.listwait_text}></td>
                 <td class='center'><{$registration.datecreated_text}></td>
                 <td class='center'><{$registration.submitter_text}></td>
