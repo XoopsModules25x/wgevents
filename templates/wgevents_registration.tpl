@@ -115,7 +115,7 @@
                     $("#overlay").fadeOut(300);},500);
             }, //Hide spinner
             url: 'registration_ajax.php',
-            dataType: 'text',
+            dataType: 'json',
             type: "POST",
             data: {op: "change_financial", changeto: $change_to, id: $regid, evid: $evid},
             success: function (response) {
