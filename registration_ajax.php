@@ -36,6 +36,7 @@ require_once \XOOPS_ROOT_PATH . '/header.php';
 $op      = Request::getCmd('op', 'list');
 $regId   = Request::getInt('id');
 $regEvid = Request::getInt('evid');
+$regEvid=0;
 
 $uidCurrent = \is_object($GLOBALS['xoopsUser']) ? (int)$GLOBALS['xoopsUser']->uid() : 0;
 
@@ -46,19 +47,19 @@ switch ($op) {
         break;
     case 'change_financial':
         if (0 == $regEvid) {
-            http_response_code(500);
-            echo \_MA_WGEVENTS_INVALID_PARAM;
+            header('Content-Type: application/json');
+            echo json_encode(['status'=>'error','message'=>\_MA_WGEVENTS_INVALID_PARAM]);
             break;
         }
         $eventObj = $eventHandler->get($regEvid);
         if (!is_object($eventObj)) {
-            http_response_code(500);
-            echo \_MA_WGEVENTS_INVALID_PARAM;
+            header('Content-Type: application/json');
+            echo json_encode(['status'=>'error','message'=>\_MA_WGEVENTS_INVALID_PARAM]);
             break;
         }
         if (!$permissionsHandler->getPermRegistrationsApprove($eventObj->getVar('submitter'), $eventObj->getVar('status'))) {
-            http_response_code(500);
-            echo \_NOPERM;
+            header('Content-Type: application/json');
+            echo json_encode(['status'=>'error','message'=>\_NOPERM]);
             break;
         }
         if ($regId > 0) {
@@ -66,8 +67,8 @@ switch ($op) {
             $registrationObj = $registrationHandler->get($regId);
             $registrationObjOld = $registrationHandler->get($regId);
         } else {
-            http_response_code(500);
-            echo \_MA_WGEVENTS_INVALID_PARAM;
+            header('Content-Type: application/json');
+            echo json_encode(['status'=>'error','message'=>\_MA_WGEVENTS_INVALID_PARAM]);
             break;
         }
         $regFinancial = Request::getInt('changeto');
@@ -135,23 +136,20 @@ switch ($op) {
         break;
     case 'listwait_takeover':
         if (0 == $regEvid) {
-            http_response_code(500);
-            echo \_MA_WGEVENTS_INVALID_PARAM;
+            header('Content-Type: application/json');
+            echo json_encode(['status'=>'error','message'=>\_MA_WGEVENTS_INVALID_PARAM]);
             break;
         }
         $eventObj = $eventHandler->get($regEvid);
         if (!is_object($eventObj)) {
-            http_response_code(500);
-            echo \_MA_WGEVENTS_INVALID_PARAM;
+            header('Content-Type: application/json');
+            echo json_encode(['status'=>'error','message'=>\_MA_WGEVENTS_INVALID_PARAM]);
             break;
         }
         if (!$permissionsHandler->getPermRegistrationsApprove($eventObj->getVar('submitter'), $eventObj->getVar('status'))) {
-            \redirect_header('registration.php?op=list', 3, \_NOPERM);
-            if (!is_object($eventObj)) {
-                http_response_code(500);
-                echo \_NOPERM;
-                break;
-            }
+            header('Content-Type: application/json');
+            echo json_encode(['status'=>'error','message'=>\_NOPERM]);
+            break;
         }
         if ($regId > 0) {
             // create two objects of current registration
@@ -160,8 +158,8 @@ switch ($op) {
             // create history
             $registrationhistHandler->createHistory($registrationObj, 'update');
         } else {
-            http_response_code(500);
-            echo \_MA_WGEVENTS_INVALID_PARAM;
+            header('Content-Type: application/json');
+            echo json_encode(['status'=>'error','message'=>\_MA_WGEVENTS_INVALID_PARAM]);
             break;
         }
         $registrationObj->setVar('listwait', 0);
@@ -222,19 +220,19 @@ switch ($op) {
         break;
     case 'approve_status':
         if (0 == $regEvid) {
-            http_response_code(500);
-            echo \_MA_WGEVENTS_INVALID_PARAM;
+            header('Content-Type: application/json');
+            echo json_encode(['status'=>'error','message'=>\_MA_WGEVENTS_INVALID_PARAM]);
             break;
         }
         $eventObj = $eventHandler->get($regEvid);
         if (!is_object($eventObj)) {
-            http_response_code(500);
-            echo \_MA_WGEVENTS_INVALID_PARAM;
+            header('Content-Type: application/json');
+            echo json_encode(['status'=>'error','message'=>\_MA_WGEVENTS_INVALID_PARAM]);
             break;
         }
         if (!$permissionsHandler->getPermRegistrationsApprove($eventObj->getVar('submitter'), $eventObj->getVar('status'))) {
-            http_response_code(500);
-            echo \_NOPERM;
+            header('Content-Type: application/json');
+            echo json_encode(['status'=>'error','message'=>\_NOPERM]);
             break;
         }
         if ($regId > 0) {
@@ -244,8 +242,8 @@ switch ($op) {
             // create history
             $registrationhistHandler->createHistory($registrationObj, 'update');
         } else {
-            http_response_code(500);
-            echo \_MA_WGEVENTS_INVALID_PARAM;
+            header('Content-Type: application/json');
+            echo json_encode(['status'=>'error','message'=>\_MA_WGEVENTS_INVALID_PARAM]);
             break;
         }
         $registrationObj->setVar('listwait', 0);
