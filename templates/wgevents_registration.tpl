@@ -61,4 +61,141 @@
     <{$error|default:false}>
 <{/if}>
 
+<!-- spinner for ajax calls -->
+<div id="overlay">
+    <div class="cv-spinner">
+        <span class="spinner"></span>
+    </div>
+</div>
+<style>
+    #overlay{
+        position: fixed;
+        top: 0;
+        z-index: 100;
+        width: 100%;
+        height:100%;
+        display: none;
+    }
+    .cv-spinner {
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .spinner {
+        width: 40px;
+        height: 40px;
+        border: 4px #ddd solid;
+        border-top: 4px #2e93e6 solid;
+        border-radius: 50%;
+        animation: sp-anime 0.8s infinite linear;
+    }
+    @keyframes sp-anime {
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+    .is-hide{
+        display:none;
+    }
+</style>
+
 <{include file='db:wgevents_footer.tpl' }>
+
+
+<script>
+    function change_financial($regid, $evid, $change_to) {
+        //update data with ajax call of registration_ajax.php
+        $.ajax({
+            beforeSend: function() {
+                $("#overlay").fadeIn(300);
+            }, //Show spinner
+            complete: function() {
+                setTimeout(function(){
+                    $("#overlay").fadeOut(300);},500);
+            }, //Hide spinner
+            url: 'registration_ajax.php',
+            dataType: 'text',
+            type: "POST",
+            data: {op: "change_financial", changeto: $change_to, id: $regid, evid: $evid},
+            success: function (response) {
+                //update current list
+                document.getElementById("paidamount_" + $regid).innerHTML = "<{$js_feedefault|default:'?'}>";
+                if ($change_to == 1) {
+                    //change status to paid
+                    document.getElementById("financial_" + $regid).innerHTML = "<{$js_lang_paid|default:'paid'}>";
+                    document.getElementById("paidamount_" + $regid).innerHTML = "<{$js_feedefault|default:'?'}>";
+                    document.getElementById("btn_change_financial_0_" + $regid).classList.remove('hidden');
+                    document.getElementById("btn_change_financial_1_" + $regid).classList.add('hidden');
+                } else {
+                    document.getElementById("financial_" + $regid).innerHTML = "<{$js_lang_unpaid|default:'unpaid'}>";
+                    document.getElementById("paidamount_" + $regid).innerHTML = "<{$js_feezero|default:'?'}>";
+                    document.getElementById("btn_change_financial_0_" + $regid).classList.add('hidden');
+                    document.getElementById("btn_change_financial_1_" + $regid).classList.remove('hidden');
+                }
+                //alert("<{$js_lang_changed|default:'changed'}>");
+            },
+            error: function (response) {
+                alert(response);
+            }
+        });
+    }
+
+    function listwait_takeover($regid, $evid) {
+        //update data with ajax call of registration_ajax.php
+        $.ajax({
+            beforeSend: function() {
+                $("#overlay").fadeIn(300);
+            }, //Show spinner
+            complete: function() {
+                setTimeout(function(){
+                    $("#overlay").fadeOut(300);},500);
+            }, //Hide spinner
+            url: 'registration_ajax.php',
+            dataType: 'text',
+            type: "POST",
+            data: {op: "listwait_takeover", id: $regid, evid: $evid},
+            success: function (response) {
+                //update current list
+                document.getElementById("lbl_listwait_" + $regid).classList.add('hidden');
+                document.getElementById("btn_listwait_" + $regid).classList.add('hidden');
+                //alert("<{$js_lang_changed|default:'changed'}>");
+            },
+            error: function (response) {
+                alert(response);
+            }
+        });
+    }
+    function approve_status($regid, $evid) {
+        //update data with ajax call of registration_ajax.php
+        $.ajax({
+            beforeSend: function() {
+                $("#overlay").fadeIn(300);
+            }, //Show spinner
+            complete: function() {
+                setTimeout(function(){
+                    $("#overlay").fadeOut(300);},500);
+            }, //Hide spinner
+            url: 'registration_ajax.php',
+            dataType: 'text',
+            type: "POST",
+            data: {op: "approve_status", id: $regid, evid: $evid},
+            success: function (response) {
+                //update current list
+                var element =  document.getElementById('lbl_listwait_' + $regid);
+                if (typeof(element) != 'undefined' && element != null)
+                {
+                    document.getElementById("lbl_listwait_" + $regid).classList.add('hidden');
+                    document.getElementById("btn_listwait_" + $regid).classList.add('hidden');
+                }
+                document.getElementById("lbl_status_" + $regid).innerHTML = "<{$js_lang_approved|default:'approved'}>";
+                document.getElementById("btn_approve_status_" + $regid).classList.add('hidden');
+                //alert("<{$js_lang_changed|default:'changed'}>");
+            },
+            error: function (response) {
+                alert(response);
+            }
+        });
+    }
+
+</script>

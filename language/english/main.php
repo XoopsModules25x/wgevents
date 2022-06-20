@@ -171,8 +171,8 @@ Participation without agreement to this conditions is not possible.
 \define('_MA_WGEVENTS_REGISTRATION_FINANCIAL', 'Financial state');
 \define('_MA_WGEVENTS_REGISTRATION_FINANCIAL_UNPAID', 'Unpaid');
 \define('_MA_WGEVENTS_REGISTRATION_FINANCIAL_PAID', 'Paid');
-\define('_MA_WGEVENTS_REGISTRATION_FINANCIAL_CHANGE_0','Change status to unpaid+');
-\define('_MA_WGEVENTS_REGISTRATION_FINANCIAL_CHANGE_1','Status auf bezahlt ändern');
+\define('_MA_WGEVENTS_REGISTRATION_FINANCIAL_CHANGE_0','Change status to unpaid');
+\define('_MA_WGEVENTS_REGISTRATION_FINANCIAL_CHANGE_1','Change status to paid');
 \define('_MA_WGEVENTS_REGISTRATION_PAIDAMOUNT', 'Paid amount');
 \define('_MA_WGEVENTS_REGISTRATION_LISTWAIT', 'Waiting list');
 \define('_MA_WGEVENTS_REGISTRATION_LISTWAIT_TAKEOVER', 'Take over from waiting list');
@@ -180,6 +180,7 @@ Participation without agreement to this conditions is not possible.
 \define('_MA_WGEVENTS_REGISTRATION_LISTWAIT_N', 'On final list of participants');
 \define('_MA_WGEVENTS_REGISTRATION_VERIFKEY', 'Verification key');
 \define('_MA_WGEVENTS_REGISTRATION_CONFIRM', 'Confirm participation');
+\define('_MA_WGEVENTS_REGISTRATION_CHANGED','Registration data successfully changed');
 // Question
 \define('_MA_WGEVENTS_QUESTION', 'Question');
 \define('_MA_WGEVENTS_QUESTION_ADD', 'Add Question');
