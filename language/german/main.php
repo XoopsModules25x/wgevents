@@ -180,6 +180,7 @@ Eine Teilnahme an der Veranstaltung ohne Zustimmung zu diesen Bestimmungen ist l
 \define('_MA_WGEVENTS_REGISTRATION_LISTWAIT_N', 'Auf endgültiger Teilnehmerliste');
 \define('_MA_WGEVENTS_REGISTRATION_VERIFKEY', 'Verifizierungsschlüssel');
 \define('_MA_WGEVENTS_REGISTRATION_CONFIRM', 'Teilnahme bestätigen');
+\define('_MA_WGEVENTS_REGISTRATION_CHANGED','Daten Registrierung erfolgreich geändert');
 // Question
 \define('_MA_WGEVENTS_QUESTION', 'Fragen');
 \define('_MA_WGEVENTS_QUESTION_ADD', 'Frage hinzufügen');

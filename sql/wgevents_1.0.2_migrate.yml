@@ -1,0 +1,551 @@
+wgevents_event:
+    options: 'ENGINE=InnoDB'
+    columns: 
+        -
+            name: id
+            attributes: ' INT(8) UNSIGNED NOT NULL AUTO_INCREMENT '
+        -
+            name: identifier
+            attributes: ' VARCHAR(255)    NOT NULL DEFAULT '''''''' '
+        -
+            name: catid
+            attributes: ' INT(10)         NOT NULL DEFAULT ''0'' '
+        -
+            name: name
+            attributes: ' VARCHAR(255)    NOT NULL DEFAULT '''''''' '
+        -
+            name: logo
+            attributes: ' VARCHAR(255)    NOT NULL DEFAULT '''''''' '
+        -
+            name: desc
+            attributes: ' TEXT            NULL '
+        -
+            name: datefrom
+            attributes: ' INT(11)         NOT NULL DEFAULT ''0'' '
+        -
+            name: dateto
+            attributes: ' INT(11)         NOT NULL DEFAULT ''0'' '
+        -
+            name: contact
+            attributes: ' TEXT            NULL '
+        -
+            name: email
+            attributes: ' VARCHAR(255)    NOT NULL DEFAULT '''''''' '
+        -
+            name: location
+            attributes: ' TEXT            NULL '
+        -
+            name: locgmlat
+            attributes: ' FLOAT(16,8)     NOT NULL DEFAULT ''0.00'' '
+        -
+            name: locgmlon
+            attributes: ' FLOAT(16,8)     NOT NULL DEFAULT ''0.00'' '
+        -
+            name: locgmzoom
+            attributes: ' INT(1)          NOT NULL DEFAULT ''0'' '
+        -
+            name: fee
+            attributes: ' FLOAT(16,2)     NOT NULL DEFAULT ''0.00'' '
+        -
+            name: paymentinfo
+            attributes: ' TEXT            NULL '
+        -
+            name: register_use
+            attributes: ' INT(1)          NOT NULL DEFAULT ''0'' '
+        -
+            name: register_from
+            attributes: ' INT(11)         NOT NULL DEFAULT ''0'' '
+        -
+            name: register_to
+            attributes: ' INT(11)         NOT NULL DEFAULT ''0'' '
+        -
+            name: register_max
+            attributes: ' INT(10)         NOT NULL DEFAULT ''0'' '
+        -
+            name: register_listwait
+            attributes: ' INT(1)          NOT NULL DEFAULT ''0'' '
+        -
+            name: register_autoaccept
+            attributes: ' INT(1)          NOT NULL DEFAULT ''0'' '
+        -
+            name: register_notify
+            attributes: ' TEXT            NULL '
+        -
+            name: register_sendermail
+            attributes: ' VARCHAR(255)    NOT NULL DEFAULT '''''''' '
+        -
+            name: register_sendername
+            attributes: ' VARCHAR(255)    NOT NULL DEFAULT '''''''' '
+        -
+            name: register_signature
+            attributes: ' TEXT            NULL '
+        -
+            name: register_forceverif
+            attributes: ' INT(1)          NOT NULL DEFAULT ''0'' '
+        -
+            name: status
+            attributes: ' INT(1)          NOT NULL DEFAULT ''0'' '
+        -
+            name: galid
+            attributes: ' INT(10)         NOT NULL DEFAULT ''0'' '
+        -
+            name: datecreated
+            attributes: ' INT(11)         NOT NULL DEFAULT ''0'' '
+        -
+            name: submitter
+            attributes: ' INT(10)         NOT NULL DEFAULT ''0'' '
+    keys:
+        PRIMARY:
+            columns: id
+            unique: true
+wgevents_question:
+    options: 'ENGINE=InnoDB'
+    columns: 
+        -
+            name: id
+            attributes: ' INT(8) UNSIGNED NOT NULL AUTO_INCREMENT '
+        -
+            name: evid
+            attributes: ' INT(10)         NOT NULL DEFAULT ''0'' '
+        -
+            name: fdid
+            attributes: ' INT(10)         NOT NULL DEFAULT ''0'' '
+        -
+            name: type
+            attributes: ' INT(10)         NOT NULL DEFAULT ''0'' '
+        -
+            name: caption
+            attributes: ' VARCHAR(255)    NOT NULL DEFAULT '''''''' '
+        -
+            name: desc
+            attributes: ' TEXT            NULL  '
+        -
+            name: values
+            attributes: ' TEXT            NULL '
+        -
+            name: placeholder
+            attributes: ' VARCHAR(255)    NOT NULL DEFAULT '''''''' '
+        -
+            name: required
+            attributes: ' INT(1)          NOT NULL DEFAULT ''0'' '
+        -
+            name: print
+            attributes: ' INT(1)          NOT NULL DEFAULT ''0'' '
+        -
+            name: weight
+            attributes: ' INT(10)         NOT NULL DEFAULT ''0'' '
+        -
+            name: datecreated
+            attributes: ' INT(11)         NOT NULL DEFAULT ''0'' '
+        -
+            name: submitter
+            attributes: ' INT(10)         NOT NULL DEFAULT ''0'' '
+    keys:
+        PRIMARY:
+            columns: id
+            unique: true
+wgevents_answer:
+    options: 'ENGINE=InnoDB'
+    columns: 
+        -
+            name: id
+            attributes: ' INT(8) UNSIGNED NOT NULL AUTO_INCREMENT '
+        -
+            name: evid
+            attributes: ' INT(10)         NOT NULL DEFAULT ''0'' '
+        -
+            name: regid
+            attributes: ' INT(10)         NOT NULL DEFAULT ''0'' '
+        -
+            name: queid
+            attributes: ' INT(10)         NOT NULL DEFAULT ''0'' '
+        -
+            name: text
+            attributes: ' TEXT            NULL '
+        -
+            name: datecreated
+            attributes: ' INT(11)         NOT NULL DEFAULT ''0'' '
+        -
+            name: submitter
+            attributes: ' INT(10)         NOT NULL DEFAULT ''0'' '
+    keys:
+        PRIMARY:
+            columns: id
+            unique: true
+wgevents_answer_hist:
+    options: 'ENGINE=InnoDB'
+    columns: 
+        -
+            name: hist_id
+            attributes: ' INT(8) UNSIGNED NOT NULL AUTO_INCREMENT '
+        -
+            name: hist_info
+            attributes: ' VARCHAR(255)    NOT NULL DEFAULT '''''''' '
+        -
+            name: hist_datecreated
+            attributes: ' INT(11)         NOT NULL DEFAULT ''0'' '
+        -
+            name: hist_submitter
+            attributes: ' INT(10)         NOT NULL DEFAULT ''0'' '
+        -
+            name: id
+            attributes: ' INT(8)          NOT NULL DEFAULT ''0'' '
+        -
+            name: evid
+            attributes: ' INT(10)         NOT NULL DEFAULT ''0'' '
+        -
+            name: regid
+            attributes: ' INT(10)         NOT NULL DEFAULT ''0'' '
+        -
+            name: queid
+            attributes: ' INT(10)         NOT NULL DEFAULT ''0'' '
+        -
+            name: text
+            attributes: ' TEXT            NULL '
+        -
+            name: datecreated
+            attributes: ' INT(11)         NOT NULL DEFAULT ''0'' '
+        -
+            name: submitter
+            attributes: ' INT(10)         NOT NULL DEFAULT ''0'' '
+    keys:
+        PRIMARY:
+            columns: hist_id
+            unique: true
+wgevents_registration:
+    options: 'ENGINE=InnoDB'
+    columns: 
+        -
+            name: id
+            attributes: ' INT(8) UNSIGNED NOT NULL AUTO_INCREMENT '
+        -
+            name: evid
+            attributes: ' INT(10)         NOT NULL DEFAULT ''0'' '
+        -
+            name: salutation
+            attributes: ' INT(10)         NOT NULL DEFAULT ''0'' '
+        -
+            name: firstname
+            attributes: ' VARCHAR(255)    NOT NULL DEFAULT '''''''' '
+        -
+            name: lastname
+            attributes: ' VARCHAR(255)    NOT NULL DEFAULT '''''''' '
+        -
+            name: email
+            attributes: ' VARCHAR(255)    NOT NULL DEFAULT '''''''' '
+        -
+            name: email_send
+            attributes: ' INT(1)          NOT NULL DEFAULT ''0'' '
+        -
+            name: gdpr
+            attributes: ' INT(1)          NOT NULL DEFAULT ''0'' '
+        -
+            name: ip
+            attributes: ' VARCHAR(45)     NOT NULL DEFAULT '''''''' '
+        -
+            name: verifkey
+            attributes: ' VARCHAR(255)    NOT NULL DEFAULT '''''''' '
+        -
+            name: status
+            attributes: ' INT(1)          NOT NULL DEFAULT ''0'' '
+        -
+            name: financial
+            attributes: ' INT(1)          NOT NULL DEFAULT ''0'' '
+        -
+            name: paidamount
+            attributes: ' FLOAT(16,2)     NOT NULL DEFAULT ''0.00'' '
+        -
+            name: listwait
+            attributes: ' INT(1)          NOT NULL DEFAULT ''0'' '
+        -
+            name: datecreated
+            attributes: ' INT(11)         NOT NULL DEFAULT ''0'' '
+        -
+            name: submitter
+            attributes: ' INT(10)         NOT NULL DEFAULT ''0'' '
+    keys:
+        PRIMARY:
+            columns: id
+            unique: true
+wgevents_registration_hist:
+    options: 'ENGINE=InnoDB'
+    columns: 
+        -
+            name: hist_id
+            attributes: ' INT(8) UNSIGNED NOT NULL AUTO_INCREMENT '
+        -
+            name: hist_info
+            attributes: ' VARCHAR(255)    NOT NULL DEFAULT '''''''' '
+        -
+            name: hist_datecreated
+            attributes: ' INT(11)         NOT NULL DEFAULT ''0'' '
+        -
+            name: hist_submitter
+            attributes: ' INT(10)         NOT NULL DEFAULT ''0'' '
+        -
+            name: id
+            attributes: ' INT(8)          NOT NULL DEFAULT ''0'' '
+        -
+            name: evid
+            attributes: ' INT(10)         NOT NULL DEFAULT ''0'' '
+        -
+            name: salutation
+            attributes: ' INT(10)         NOT NULL DEFAULT ''0'' '
+        -
+            name: firstname
+            attributes: ' VARCHAR(255)    NOT NULL DEFAULT '''''''' '
+        -
+            name: lastname
+            attributes: ' VARCHAR(255)    NOT NULL DEFAULT '''''''' '
+        -
+            name: email
+            attributes: ' VARCHAR(255)    NOT NULL DEFAULT '''''''' '
+        -
+            name: email_send
+            attributes: ' INT(1)          NOT NULL DEFAULT ''0'' '
+        -
+            name: gdpr
+            attributes: ' INT(1)          NOT NULL DEFAULT ''0'' '
+        -
+            name: ip
+            attributes: ' VARCHAR(45)     NOT NULL DEFAULT '''''''' '
+        -
+            name: verifkey
+            attributes: ' VARCHAR(255)    NOT NULL DEFAULT '''''''' '
+        -
+            name: status
+            attributes: ' INT(1)          NOT NULL DEFAULT ''0'' '
+        -
+            name: financial
+            attributes: ' INT(1)          NOT NULL DEFAULT ''0'' '
+        -
+            name: paidamount
+            attributes: ' FLOAT(16,2)     NOT NULL DEFAULT ''0.00'' '
+        -
+            name: listwait
+            attributes: ' INT(1)          NOT NULL DEFAULT ''0'' '
+        -
+            name: datecreated
+            attributes: ' INT(11)         NOT NULL DEFAULT ''0'' '
+        -
+            name: submitter
+            attributes: ' INT(10)         NOT NULL DEFAULT ''0'' '
+    keys:
+        PRIMARY:
+            columns: hist_id
+            unique: true
+wgevents_category:
+    options: 'ENGINE=InnoDB'
+    columns: 
+        -
+            name: id
+            attributes: ' INT(8) UNSIGNED NOT NULL AUTO_INCREMENT '
+        -
+            name: pid
+            attributes: ' INT(10)         NOT NULL DEFAULT ''0'' '
+        -
+            name: name
+            attributes: ' VARCHAR(255)    NOT NULL DEFAULT '''''''' '
+        -
+            name: desc
+            attributes: ' TEXT            NULL '
+        -
+            name: logo
+            attributes: ' VARCHAR(255)    NOT NULL DEFAULT '''''''' '
+        -
+            name: color
+            attributes: ' VARCHAR(7)      NOT NULL DEFAULT '''''''' '
+        -
+            name: bordercolor
+            attributes: ' VARCHAR(7)      NOT NULL DEFAULT '''''''' '
+        -
+            name: bgcolor
+            attributes: ' VARCHAR(7)      NOT NULL DEFAULT '''''''' '
+        -
+            name: othercss
+            attributes: ' VARCHAR(255)    NOT NULL DEFAULT '''''''' '
+        -
+            name: status
+            attributes: ' INT(1)          NOT NULL DEFAULT ''0'' '
+        -
+            name: weight
+            attributes: ' INT(10)         NOT NULL DEFAULT ''0'' '
+        -
+            name: identifier
+            attributes: ' VARCHAR(255)    NOT NULL DEFAULT '''''''' '
+        -
+            name: datecreated
+            attributes: ' INT(11)         NOT NULL DEFAULT ''0'' '
+        -
+            name: submitter
+            attributes: ' INT(10)         NOT NULL DEFAULT ''0'' '
+    keys:
+        PRIMARY:
+            columns: id
+            unique: true
+wgevents_field:
+    options: 'ENGINE=InnoDB'
+    columns: 
+        -
+            name: id
+            attributes: ' INT(8) UNSIGNED NOT NULL AUTO_INCREMENT '
+        -
+            name: type
+            attributes: ' INT(10)         NOT NULL DEFAULT ''0'' '
+        -
+            name: caption
+            attributes: ' VARCHAR(255)    NOT NULL DEFAULT '''''''' '
+        -
+            name: desc
+            attributes: ' TEXT            NULL '
+        -
+            name: values
+            attributes: ' TEXT            NULL '
+        -
+            name: placeholder
+            attributes: ' VARCHAR(255)    NOT NULL DEFAULT '''''''' '
+        -
+            name: required
+            attributes: ' INT(1)          NOT NULL DEFAULT ''0'' '
+        -
+            name: default
+            attributes: ' INT(1)          NOT NULL DEFAULT ''0'' '
+        -
+            name: print
+            attributes: ' INT(1)          NOT NULL DEFAULT ''0'' '
+        -
+            name: display_desc
+            attributes: ' INT(1)          NOT NULL DEFAULT ''0'' '
+        -
+            name: display_values
+            attributes: ' INT(1)          NOT NULL DEFAULT ''0'' '
+        -
+            name: display_placeholder
+            attributes: ' INT(1)          NOT NULL DEFAULT ''0'' '
+        -
+            name: status
+            attributes: ' INT(1)          NOT NULL DEFAULT ''0'' '
+        -
+            name: custom
+            attributes: ' INT(1)          NOT NULL DEFAULT ''0'' '
+        -
+            name: weight
+            attributes: ' INT(10)         NOT NULL DEFAULT ''0'' '
+        -
+            name: setid
+            attributes: ' INT(10)         NOT NULL DEFAULT ''0'' '
+        -
+            name: datecreated
+            attributes: ' INT(11)         NOT NULL DEFAULT ''0'' '
+        -
+            name: submitter
+            attributes: ' INT(10)         NOT NULL DEFAULT ''0'' '
+    keys:
+        PRIMARY:
+            columns: id
+            unique: true
+wgevents_textblock:
+    options: 'ENGINE=InnoDB'
+    columns: 
+        -
+            name: id
+            attributes: ' INT(8) UNSIGNED NOT NULL AUTO_INCREMENT '
+        -
+            name: catid
+            attributes: ' INT(10)         NOT NULL DEFAULT ''0'' '
+        -
+            name: name
+            attributes: ' VARCHAR(255)    NOT NULL DEFAULT '''''''' '
+        -
+            name: text
+            attributes: ' TEXT            NULL '
+        -
+            name: class
+            attributes: ' INT(10)         NOT NULL DEFAULT ''0'' '
+        -
+            name: weight
+            attributes: ' INT(10)         NOT NULL DEFAULT ''0'' '
+        -
+            name: datecreated
+            attributes: ' INT(11)         NOT NULL DEFAULT ''0'' '
+        -
+            name: submitter
+            attributes: ' INT(10)         NOT NULL DEFAULT ''0'' '
+    keys:
+        PRIMARY:
+            columns: id
+            unique: true
+wgevents_log:
+    options: 'ENGINE=InnoDB'
+    columns: 
+        -
+            name: id
+            attributes: ' INT(8) UNSIGNED NOT NULL AUTO_INCREMENT '
+        -
+            name: text
+            attributes: ' TEXT NOT NULL '
+        -
+            name: datecreated
+            attributes: ' INT(11) NOT NULL DEFAULT ''0'' '
+        -
+            name: submitter
+            attributes: ' INT(10) NOT NULL DEFAULT ''0'' '
+    keys:
+        PRIMARY:
+            columns: id
+            unique: true
+wgevents_account:
+    options: 'ENGINE=InnoDB'
+    columns: 
+        -
+            name: id
+            attributes: ' INT(8) UNSIGNED NOT NULL AUTO_INCREMENT '
+        -
+            name: type
+            attributes: ' INT(10) NOT NULL DEFAULT ''0'' '
+        -
+            name: name
+            attributes: ' VARCHAR(100) NOT NULL DEFAULT '''''''' '
+        -
+            name: yourname
+            attributes: ' VARCHAR(100) NOT NULL DEFAULT '''''''' '
+        -
+            name: yourmail
+            attributes: ' VARCHAR(100) NOT NULL DEFAULT '''''''' '
+        -
+            name: username
+            attributes: ' VARCHAR(100) NOT NULL DEFAULT '''''''' '
+        -
+            name: password
+            attributes: ' VARCHAR(100) NOT NULL DEFAULT '''''''' '
+        -
+            name: server_in
+            attributes: ' VARCHAR(100) NOT NULL DEFAULT '''''''' '
+        -
+            name: port_in
+            attributes: ' INT(10) NOT NULL DEFAULT ''0'' '
+        -
+            name: securetype_in
+            attributes: ' VARCHAR(20) NOT NULL DEFAULT '''''''' '
+        -
+            name: server_out
+            attributes: ' VARCHAR(100) NOT NULL DEFAULT '''''''' '
+        -
+            name: port_out
+            attributes: ' INT(10) NOT NULL DEFAULT ''0'' '
+        -
+            name: securetype_out
+            attributes: ' VARCHAR(20) NOT NULL DEFAULT '''''''' '
+        -
+            name: primary
+            attributes: ' INT(1) NOT NULL DEFAULT ''0'' '
+        -
+            name: datecreated
+            attributes: ' INT(11) NOT NULL DEFAULT ''0'' '
+        -
+            name: submitter
+            attributes: ' INT(8)       NOT NULL DEFAULT ''0'' '
+    keys:
+        PRIMARY:
+            columns: id
+            unique: true
