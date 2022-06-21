@@ -36,9 +36,12 @@ require_once \XOOPS_ROOT_PATH . '/header.php';
 $op      = Request::getCmd('op', 'list');
 $regId   = Request::getInt('id');
 $regEvid = Request::getInt('evid');
-$regEvid=0;
 
 $uidCurrent = \is_object($GLOBALS['xoopsUser']) ? (int)$GLOBALS['xoopsUser']->uid() : 0;
+
+XoopsLoad::load('xoopslogger');
+$xoopsLogger = XoopsLogger::getInstance();
+$xoopsLogger->activated = false;
 
 switch ($op) {
     case 'show':
@@ -48,13 +51,13 @@ switch ($op) {
     case 'change_financial':
         if (0 == $regEvid) {
             header('Content-Type: application/json');
-            echo json_encode(['status'=>'error','message'=>\_MA_WGEVENTS_INVALID_PARAM]);
+            echo json_encode(['status'=>'Error','message'=>\_MA_WGEVENTS_INVALID_PARAM]);
             break;
         }
         $eventObj = $eventHandler->get($regEvid);
         if (!is_object($eventObj)) {
             header('Content-Type: application/json');
-            echo json_encode(['status'=>'error','message'=>\_MA_WGEVENTS_INVALID_PARAM]);
+            echo json_encode(['status'=>'Error','message'=>\_MA_WGEVENTS_INVALID_PARAM]);
             break;
         }
         if (!$permissionsHandler->getPermRegistrationsApprove($eventObj->getVar('submitter'), $eventObj->getVar('status'))) {

@@ -84,12 +84,12 @@ $adminmenu[] = [
 if (is_object($helper->getModule()) && null !== $helper->getConfig() && (bool)$helper->getConfig('use_history')) {
     $adminmenu[] = [
         'title' => \_MI_WGEVENTS_ADMENU11,
-        'link'  => 'admin/registrationshist.php',
+        'link'  => 'admin/registrationhist.php',
         'icon'  => 'assets/icons/32/registrationshist.png',
     ];
     $adminmenu[] = [
         'title' => \_MI_WGEVENTS_ADMENU12,
-        'link'  => 'admin/answershist.php',
+        'link'  => 'admin/answerhist.php',
         'icon'  => 'assets/icons/32/answershist.png',
     ];
 }

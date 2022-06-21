@@ -101,105 +101,7 @@ switch ($op) {
             }
         }
         break;
-    case 'new':
-        $templateMain = 'wgevents_admin_registration.tpl';
-        $GLOBALS['xoopsTpl']->assign('navigation', $adminObject->displayNavigation('registration.php'));
-        $adminObject->addItemButton(\_AM_WGEVENTS_LIST_REGISTRATIONS, 'registration.php', 'list');
-        $GLOBALS['xoopsTpl']->assign('buttons', $adminObject->displayButton('left'));
-        // Form Create
-        $registrationObj = $registrationHandler->create();
-        $registrationObj->setVar('evid', $evId);
-        $form = $registrationObj->getForm();
-        $GLOBALS['xoopsTpl']->assign('form', $form->render());
-        break;
-    case 'clone':
-        $templateMain = 'wgevents_admin_registration.tpl';
-        $GLOBALS['xoopsTpl']->assign('navigation', $adminObject->displayNavigation('registration.php'));
-        $adminObject->addItemButton(\_AM_WGEVENTS_LIST_REGISTRATIONS, 'registration.php', 'list');
-        $adminObject->addItemButton(\_AM_WGEVENTS_ADD_REGISTRATION, 'registration.php?op=new');
-        $GLOBALS['xoopsTpl']->assign('buttons', $adminObject->displayButton('left'));
-        // Request source
-        $regIdSource = Request::getInt('id_source');
-        // Get Form
-        $registrationObjSource = $registrationHandler->get($regIdSource);
-        $registrationObj = $registrationObjSource->xoopsClone();
-        $form = $registrationObj->getForm();
-        $GLOBALS['xoopsTpl']->assign('form', $form->render());
-        break;
-    case 'save':
-        // Security Check
-        if (!$GLOBALS['xoopsSecurity']->check()) {
-            \redirect_header('registration.php', 3, \implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
-        }
-        if ($regId > 0) {
-            $registrationObj = $registrationHandler->get($regId);
-        } else {
-            $registrationObj = $registrationHandler->create();
-        }
-        // Set Vars
-        $registrationObj->setVar('evid', Request::getInt('evid'));
-        $registrationObj->setVar('salutation', Request::getInt('salutation'));
-        $registrationObj->setVar('firstname', Request::getString('firstname'));
-        $registrationObj->setVar('lastname', Request::getString('lastname'));
-        $registrationObj->setVar('email', Request::getString('email'));
-        $registrationObj->setVar('email_send', Request::getInt('email_send'));
-        $registrationObj->setVar('gdpr', Request::getInt('gdpr'));
-        $registrationObj->setVar('ip', Request::getString('ip'));
-        $registrationObj->setVar('status', Request::getInt('status'));
-        $registrationObj->setVar('financial', Request::getInt('financial'));
-        $regPaidamount = Utility::StringToFloat(Request::getString('paidamount'));
-        $registrationObj->setVar('paidamount', $regPaidamount);
-        $registrationObj->setVar('listwait', Request::getInt('listwait'));
-        $registrationDatecreatedObj = \DateTime::createFromFormat(\_SHORTDATESTRING, Request::getString('datecreated'));
-        $registrationObj->setVar('datecreated', $registrationDatecreatedObj->getTimestamp());
-        $registrationObj->setVar('submitter', Request::getInt('submitter'));
-        // Insert Data
-        if ($registrationHandler->insert($registrationObj)) {
-            $newRegId = $registrationObj->getNewInsertedId();
-            $permId = isset($_REQUEST['id']) ? $regId : $newRegId;
-            $grouppermHandler = \xoops_getHandler('groupperm');
-            $mid = $GLOBALS['xoopsModule']->getVar('mid');
-            // Permission to view_registrations
-            $grouppermHandler->deleteByModule($mid, 'wgevents_view_registrations', $permId);
-            if (isset($_POST['groups_view_registrations'])) {
-                foreach ($_POST['groups_view_registrations'] as $onegroupId) {
-                    $grouppermHandler->addRight('wgevents_view_registrations', $permId, $onegroupId, $mid);
-                }
-            }
-            // Permission to submit_registrations
-            $grouppermHandler->deleteByModule($mid, 'wgevents_submit_registrations', $permId);
-            if (isset($_POST['groups_submit_registrations'])) {
-                foreach ($_POST['groups_submit_registrations'] as $onegroupId) {
-                    $grouppermHandler->addRight('wgevents_submit_registrations', $permId, $onegroupId, $mid);
-                }
-            }
-            // Permission to approve_registrations
-            $grouppermHandler->deleteByModule($mid, 'wgevents_approve_registrations', $permId);
-            if (isset($_POST['groups_approve_registrations'])) {
-                foreach ($_POST['groups_approve_registrations'] as $onegroupId) {
-                    $grouppermHandler->addRight('wgevents_approve_registrations', $permId, $onegroupId, $mid);
-                }
-            }
-                \redirect_header('registration.php?op=list&amp;start=' . $start . '&amp;limit=' . $limit, 2, \_MA_WGEVENTS_FORM_OK);
-        }
-        // Get Form
-        $GLOBALS['xoopsTpl']->assign('error', $registrationObj->getHtmlErrors());
-        $form = $registrationObj->getForm();
-        $GLOBALS['xoopsTpl']->assign('form', $form->render());
-        break;
-    case 'edit':
-        $templateMain = 'wgevents_admin_registration.tpl';
-        $GLOBALS['xoopsTpl']->assign('navigation', $adminObject->displayNavigation('registration.php'));
-        $adminObject->addItemButton(\_AM_WGEVENTS_ADD_REGISTRATION, 'registration.php?op=new');
-        $adminObject->addItemButton(\_AM_WGEVENTS_LIST_REGISTRATIONS, 'registration.php', 'list');
-        $GLOBALS['xoopsTpl']->assign('buttons', $adminObject->displayButton('left'));
-        // Get Form
-        $registrationObj = $registrationHandler->get($regId);
-        $registrationObj->setStart = $start;
-        $registrationObj->setLimit = $limit;
-        $form = $registrationObj->getForm();
-        $GLOBALS['xoopsTpl']->assign('form', $form->render());
-        break;
+    /*
     case 'delete':
         $templateMain = 'wgevents_admin_registration.tpl';
         $GLOBALS['xoopsTpl']->assign('navigation', $adminObject->displayNavigation('registration.php'));
@@ -225,5 +127,6 @@ switch ($op) {
             $GLOBALS['xoopsTpl']->assign('form', $form->render());
         }
         break;
+    */
 }
 require __DIR__ . '/footer.php';

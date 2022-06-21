@@ -6,7 +6,7 @@
 <{/if}>
 
 <{if $account_check|default:false}>
-    <table class='table table-bordered' >
+    <<table class="tablesorter-<{$tablesorter_theme}>">
         <thead>
         <tr class='head'>
             <th class='center'><{$smarty.const._AM_WGEVENTS_ACCOUNT_CHECK}></th>
@@ -32,7 +32,8 @@
 <{/if}>
 
 <{if $accounts_list|default:''}>
-    <table class='table table-bordered'>
+    <{include file='db:admin_pagertop.tpl' }>
+    <table id="sortTable" class="tablesorter-<{$tablesorter_theme}>">
         <thead>
             <tr class='head'>
                 <th class="center"><{$smarty.const._AM_WGEVENTS_ACCOUNT_ID}></th>

@@ -134,6 +134,7 @@
                     document.getElementById("btn_change_financial_1_" + $regid).classList.remove('hidden');
                 }
                 //alert("<{$js_lang_changed|default:'changed'}>");
+                //alert(response);
             },
             error: function (response) {
                 alert(response);
