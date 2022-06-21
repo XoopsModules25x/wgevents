@@ -48,39 +48,27 @@ switch ($op) {
     default:
         // Define Stylesheet
         $GLOBALS['xoTheme']->addStylesheet($style, null);
-        $templateMain = 'wgevents_admin_registration.tpl';
-        $GLOBALS['xoopsTpl']->assign('navigation', $adminObject->displayNavigation('registration.php'));
+        $templateMain = 'wgevents_admin_registrationhist.tpl';
+        $GLOBALS['xoopsTpl']->assign('navigation', $adminObject->displayNavigation('registrationhist.php'));
         if ($evId > 0) {
-            $adminObject->addItemButton(\_AM_WGEVENTS_ADD_REGISTRATION, 'registration.php?op=new&amp;evid=' . $evId);
-            $adminObject->addItemButton(\_AM_WGEVENTS_GOTO_FORMSELECT, 'registration.php', 'list');
-            $GLOBALS['xoopsTpl']->assign('buttons', $adminObject->displayButton('left'));
-            $crRegistration = new \CriteriaCompo();
-            $crRegistration->add(new \Criteria('evid', $evId));
-            $registrationCount = $registrationHandler->getCount($crRegistration);
-            $GLOBALS['xoopsTpl']->assign('registrationCount', $registrationCount);
+            $crRegistrationhist = new \CriteriaCompo();
+            $crRegistrationhist->add(new \Criteria('evid', $evId));
+            $registrationhistCount = $registrationhistHandler->getCount($crRegistrationhist);
+            $GLOBALS['xoopsTpl']->assign('registrationhistCount', $registrationhistCount);
             $GLOBALS['xoopsTpl']->assign('wgevents_url', \WGEVENTS_URL);
             $GLOBALS['xoopsTpl']->assign('wgevents_upload_url', \WGEVENTS_UPLOAD_URL);
-            // Table view registrations
-            if ($registrationCount > 0) {
-                $crRegistration->setSort('id');
-                $crRegistration->setOrder('DESC');
-                //$crRegistration->setStart($start);
-                //$crRegistration->setLimit($limit);
-                $registrationAll = $registrationHandler->getAll($crRegistration);
-                foreach (\array_keys($registrationAll) as $i) {
-                    $registration = $registrationAll[$i]->getValuesRegistrations();
-                    $GLOBALS['xoopsTpl']->append('registrations_list', $registration);
-                    unset($registration);
+            // Table view registrationhists
+            if ($registrationhistCount > 0) {
+                $crRegistrationhist->setSort('id');
+                $crRegistrationhist->setOrder('DESC');
+                $registrationhistAll = $registrationhistHandler->getAll($crRegistrationhist);
+                foreach (\array_keys($registrationhistAll) as $i) {
+                    $registrationhist = $registrationhistAll[$i]->getValuesRegistrationhists();
+                    $GLOBALS['xoopsTpl']->append('registrationhists_list', $registrationhist);
+                    unset($registrationhist);
                 }
-                /*
-                // Display Navigation
-                if ($registrationCount > $limit) {
-                    require_once \XOOPS_ROOT_PATH . '/class/pagenav.php';
-                    $pagenav = new \XoopsPageNav($registrationCount, $limit, $start, 'start', 'op=list&limit=' . $limit);
-                    $GLOBALS['xoopsTpl']->assign('pagenav', $pagenav->renderNav());
-                }*/
             } else {
-                $GLOBALS['xoopsTpl']->assign('error', \_AM_WGEVENTS_THEREARENT_REGISTRATIONS);
+                $GLOBALS['xoopsTpl']->assign('error', \_AM_WGEVENTS_THEREARENT_REGISTRATIONHISTS);
             }
         } else {
             $GLOBALS['xoopsTpl']->assign('eventsHeader', \sprintf(_AM_WGEVENTS_LIST_EVENTS_LAST, $limit));
@@ -91,10 +79,10 @@ switch ($op) {
                 $eventAll = $eventHandler->getAllEvents($start, $limit);
                 foreach (\array_keys($eventAll) as $i) {
                     $event = $eventAll[$i]->getValuesEvents();
-                    $crRegistration = new \CriteriaCompo();
-                    $crRegistration->add(new \Criteria('evid', $i));
-                    $registrationCount = $registrationHandler->getCount($crRegistration);
-                    $event['registrations'] = $registrationCount;
+                    $crRegistrationhist = new \CriteriaCompo();
+                    $crRegistrationhist->add(new \Criteria('evid', $i));
+                    $registrationhistCount = $registrationhistHandler->getCount($crRegistrationhist);
+                    $event['registrationhists'] = $registrationhistCount;
                     $GLOBALS['xoopsTpl']->append('events_list', $event);
                     unset($event);
                 }
@@ -103,26 +91,26 @@ switch ($op) {
         break;
     /*
     case 'delete':
-        $templateMain = 'wgevents_admin_registration.tpl';
-        $GLOBALS['xoopsTpl']->assign('navigation', $adminObject->displayNavigation('registration.php'));
-        $registrationObj = $registrationHandler->get($regId);
-        $regEvid = $registrationObj->getVar('evid');
+        $templateMain = 'wgevents_admin_registrationhist.tpl';
+        $GLOBALS['xoopsTpl']->assign('navigation', $adminObject->displayNavigation('registrationhist.php'));
+        $registrationhistObj = $registrationhistHandler->get($regId);
+        $regEvid = $registrationhistObj->getVar('evid');
         if (isset($_REQUEST['ok']) && 1 == $_REQUEST['ok']) {
             if (!$GLOBALS['xoopsSecurity']->check()) {
-                \redirect_header('registration.php', 3, \implode(', ', $GLOBALS['xoopsSecurity']->getErrors()));
+                \redirect_header('registrationhist.php', 3, \implode(', ', $GLOBALS['xoopsSecurity']->getErrors()));
             }
-            if ($registrationHandler->delete($registrationObj)) {
+            if ($registrationhistHandler->delete($registrationhistObj)) {
                 //delete existing answers
                 $answerHandler->cleanupAnswers($regEvid, $regId);
-                \redirect_header('registration.php', 3, \_MA_WGEVENTS_FORM_DELETE_OK);
+                \redirect_header('registrationhist.php', 3, \_MA_WGEVENTS_FORM_DELETE_OK);
             } else {
-                $GLOBALS['xoopsTpl']->assign('error', $registrationObj->getHtmlErrors());
+                $GLOBALS['xoopsTpl']->assign('error', $registrationhistObj->getHtmlErrors());
             }
         } else {
             $customConfirm = new Common\Confirm(
                 ['ok' => 1, 'id' => $regId, 'start' => $start, 'limit' => $limit, 'op' => 'delete'],
                 $_SERVER['REQUEST_URI'],
-                \sprintf(\_MA_WGEVENTS_FORM_SURE_DELETE, $registrationObj->getVar('evid')));
+                \sprintf(\_MA_WGEVENTS_FORM_SURE_DELETE, $registrationhistObj->getVar('evid')));
             $form = $customConfirm->getFormConfirm();
             $GLOBALS['xoopsTpl']->assign('form', $form->render());
         }

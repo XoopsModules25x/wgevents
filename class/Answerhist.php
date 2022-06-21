@@ -65,4 +65,36 @@ class Answerhist extends \XoopsObject
             $instance = new self();
         }
     }
+
+    /**
+     * Get Values
+     * @param null $keys
+     * @param null $format
+     * @param null $maxDepth
+     * @return array
+     */
+    public function getValuesAnswerhists($keys = null, $format = null, $maxDepth = null)
+    {
+        $helper  = \XoopsModules\Wgevents\Helper::getInstance();
+        $ret = $this->getValues($keys, $format, $maxDepth);
+        $ret['hist_datecreated_text'] = \formatTimestamp($this->getVar('hist_datecreated'), 's');
+        $ret['hist_submitter_text']   = \XoopsUser::getUnameFromId($this->getVar('hist_submitter'));
+        $questionHandler = $helper->getHandler('Question');
+        $questionObj = $questionHandler->get($this->getVar('queid'));
+        $queCaption = '';
+        if (\is_object($questionObj)) {
+            $queCaption = $questionObj->getVar('caption');
+        }
+        $ret['quecaption']       = $queCaption;
+        $eventHandler = $helper->getHandler('Event');
+        $eventObj = $eventHandler->get($this->getVar('evid'));
+        $evName = 'invalid event';
+        if (\is_object($eventObj)) {
+            $evName = $eventObj->getVar('name');
+        }
+        $ret['eventname']        = $evName;
+        $ret['datecreated_text'] = \formatTimestamp($this->getVar('datecreated'), 's');
+        $ret['submitter_text']   = \XoopsUser::getUnameFromId($this->getVar('submitter'));
+        return $ret;
+    }
 }

@@ -10,7 +10,7 @@
         <thead>
         <tr class='head'>
             <th class="center"><{$smarty.const._MA_WGEVENTS_EVENT_NAME}></th>
-            <th class="center"><{$smarty.const._MA_WGEVENTS_REGISTRATIONS_CURR}></th>
+            <th class="center"><{$smarty.const._MA_WGEVENTS_REGISTRATIONHISTS_CURR}></th>
             <th class="center sorter-false filter-false"><{$smarty.const._MA_WGEVENTS_ACTION}></th>
         </tr>
         </thead>
@@ -18,10 +18,10 @@
         <{foreach item=event from=$events_list}>
             <tr class='<{cycle values='odd, even'}>'>
                 <td class='center'><{$event.name}></td>
-                <td class='center'><{$event.registrations}></td>
+                <td class='center'><{$event.registrationhists}></td>
                 <td class="center ">
-                    <{if $event.registrations|default:0 > 0}>
-                        <a href="registration.php?op=list&amp;evid=<{$event.id}>&amp;start=<{$start}>&amp;limit=<{$limit}>" title="<{$smarty.const._MA_WGEVENTS_DETAILS}>"><img src="<{xoModuleIcons16 view.png}>" alt="<{$smarty.const._MA_WGEVENTS_DETAILS}> events" ></a>
+                    <{if $event.registrationhists|default:0 > 0}>
+                        <a href="registrationhist.php?op=list&amp;evid=<{$event.id}>&amp;start=<{$start}>&amp;limit=<{$limit}>" title="<{$smarty.const._MA_WGEVENTS_DETAILS}>"><img src="<{xoModuleIcons16 view.png}>" alt="<{$smarty.const._MA_WGEVENTS_DETAILS}> events" ></a>
                     <{/if}>
                 </td>
             </tr>
@@ -32,12 +32,16 @@
     <br><br>
 <{/if}>
 
-<{if $registrations_list|default:''}>
+<{if $registrationhists_list|default:''}>
     <{include file='db:admin_pagertop.tpl' }>
 
     <table id="sortTable" class="tablesorter-<{$tablesorter_theme}>" cellspacing="1" cellpadding="0"  width="100%">
         <thead>
             <tr class='head'>
+                <th class="center"><{$smarty.const._MA_WGEVENTS_HIST_ID}></th>
+                <th class="center"><{$smarty.const._MA_WGEVENTS_HIST_INFO}></th>
+                <th class="center"><{$smarty.const._MA_WGEVENTS_HIST_DATECREATED}></th>
+                <th class="center"><{$smarty.const._MA_WGEVENTS_HIST_SUBMITTER}></th>
                 <th class="center"><{$smarty.const._MA_WGEVENTS_REGISTRATION_ID}></th>
                 <th class="center"><{$smarty.const._MA_WGEVENTS_REGISTRATION_EVID}></th>
                 <th class="center"><{$smarty.const._MA_WGEVENTS_REGISTRATION_SALUTATION}></th>
@@ -54,10 +58,14 @@
                 <th class="center width5 sorter-false filter-false"><{$smarty.const._MA_WGEVENTS_ACTION}></th>
             </tr>
         </thead>
-        <{if $registrationCount|default:''}>
+        <{if $registrationhistCount|default:''}>
         <tbody>
-            <{foreach item=registration from=$registrations_list}>
+            <{foreach item=registration from=$registrationhists_list}>
             <tr class='<{cycle values='odd, even'}>'>
+                <td class='center'><{$registration.hist_id}></td>
+                <td class='center'><{$registration.hist_info}></td>
+                <td class='center'><{$registration.hist_datecreated_text}></td>
+                <td class='center'><{$registration.hist_submitter_text}></td>
                 <td class='center'><{$registration.id}></td>
                 <td class='center'><{$registration.eventname}></td>
                 <td class='center'><{$registration.salutation_text|default:''}></td>
@@ -72,9 +80,7 @@
                 <td class='center'><{$registration.datecreated_text}></td>
                 <td class='center'><{$registration.submitter_text}></td>
                 <td class="center width5 sorter-false filter-false">
-                    <a href="registration.php?op=edit&amp;id=<{$registration.id}>&amp;start=<{$start}>&amp;limit=<{$limit}>" title="<{$smarty.const._EDIT}>"><img src="<{xoModuleIcons16 edit.png}>" alt="<{$smarty.const._EDIT}> registrations" ></a>
-                    <a href="registration.php?op=clone&amp;id_source=<{$registration.id}>" title="<{$smarty.const._CLONE}>"><img src="<{xoModuleIcons16 editcopy.png}>" alt="<{$smarty.const._CLONE}> registrations" ></a>
-                    <a href="registration.php?op=delete&amp;id=<{$registration.id}>" title="<{$smarty.const._DELETE}>"><img src="<{xoModuleIcons16 delete.png}>" alt="<{$smarty.const._DELETE}> registrations" ></a>
+                    <a href="registrationhist.php?op=delete&amp;id=<{$registration.id}>" title="<{$smarty.const._DELETE}>"><img src="<{xoModuleIcons16 delete.png}>" alt="<{$smarty.const._DELETE}> registrationhists" ></a>
                 </td>
             </tr>
             <{/foreach}>

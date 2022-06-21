@@ -45,37 +45,27 @@ switch ($op) {
     default:
         // Define Stylesheet
         $GLOBALS['xoTheme']->addStylesheet($style, null);
-        $templateMain = 'wgevents_admin_answer.tpl';
-        $GLOBALS['xoopsTpl']->assign('navigation', $adminObject->displayNavigation('answer.php'));
+        $templateMain = 'wgevents_admin_answerhist.tpl';
+        $GLOBALS['xoopsTpl']->assign('navigation', $adminObject->displayNavigation('answerhists.php'));
         if ($evId > 0) {
-            $adminObject->addItemButton(\_AM_WGEVENTS_ADD_ANSWER, 'answer.php?op=new&amp;evId=' . $evId);
-            $adminObject->addItemButton(\_AM_WGEVENTS_GOTO_FORMSELECT, 'answer.php', 'list');
-            $GLOBALS['xoopsTpl']->assign('buttons', $adminObject->displayButton('left'));
-            $crAnswer = new \CriteriaCompo();
-            $crAnswer->add(new \Criteria('evid', $evId));
-            $answerCount = $answerHandler->getCount($crAnswer);
-            $GLOBALS['xoopsTpl']->assign('answerCount', $answerCount);
+            $crAnswerhists = new \CriteriaCompo();
+            $crAnswerhists->add(new \Criteria('evid', $evId));
+            $answerhistCount = $answerhistHandler->getCount($crAnswerhists);
+            $GLOBALS['xoopsTpl']->assign('answerhistCount', $answerhistCount);
             $GLOBALS['xoopsTpl']->assign('wgevents_url', \WGEVENTS_URL);
             $GLOBALS['xoopsTpl']->assign('wgevents_upload_url', \WGEVENTS_UPLOAD_URL);
-            // Table view answers
-            if ($answerCount > 0) {
-                $answerAll = $answerHandler->getAll($crAnswer);
-                foreach (\array_keys($answerAll) as $i) {
-                    $answer = $answerAll[$i]->getValuesAnswers();
-                    $registrationObj = $registrationHandler->get($answer['regid']);
-                    $answer['regname'] = $registrationObj->getVar('firstname') . ' ' . $registrationObj->getVar('lastname');
-                    $GLOBALS['xoopsTpl']->append('answers_list', $answer);
-                    unset($answer);
+            // Table view answerhistss
+            if ($answerhistCount > 0) {
+                $answerhistsAll = $answerhistHandler->getAll($crAnswerhists);
+                foreach (\array_keys($answerhistsAll) as $i) {
+                    $answerhists = $answerhistsAll[$i]->getValuesAnswerhists();
+                    $registrationObj = $registrationHandler->get($answerhists['regid']);
+                    $answerhists['regname'] = $registrationObj->getVar('firstname') . ' ' . $registrationObj->getVar('lastname');
+                    $GLOBALS['xoopsTpl']->append('answerhists_list', $answerhists);
+                    unset($answerhists);
                 }
-                /*
-                // Display Navigation
-                if ($answerCount > $limit) {
-                    require_once \XOOPS_ROOT_PATH . '/class/pagenav.php';
-                    $pagenav = new \XoopsPageNav($answerCount, $limit, $start, 'start', 'op=list&limit=' . $limit);
-                    $GLOBALS['xoopsTpl']->assign('pagenav', $pagenav->renderNav());
-                }*/
             } else {
-                $GLOBALS['xoopsTpl']->assign('error', \_AM_WGEVENTS_THEREARENT_ANSWERS);
+                $GLOBALS['xoopsTpl']->assign('error', \_AM_WGEVENTS_THEREARENT_ANSWERHISTS);
             }
         } else {
             $GLOBALS['xoopsTpl']->assign('eventsHeader', \sprintf(_AM_WGEVENTS_LIST_EVENTS_LAST, $limit));
@@ -86,81 +76,17 @@ switch ($op) {
                 $eventAll = $eventHandler->getAllEvents($start, $limit);
                 foreach (\array_keys($eventAll) as $i) {
                     $event = $eventAll[$i]->getValuesEvents();
-                    $crAnswer = new \CriteriaCompo();
-                    $crAnswer->add(new \Criteria('evid', $i));
-                    $answerCount = $answerHandler->getCount($crAnswer);
-                    $event['answers'] = $answerCount;
+                    $crAnswerhists = new \CriteriaCompo();
+                    $crAnswerhists->add(new \Criteria('evid', $i));
+                    $answerhistCount = $answerhistHandler->getCount($crAnswerhists);
+                    $event['answerhists'] = $answerhistCount;
                     $GLOBALS['xoopsTpl']->append('events_list', $event);
                     unset($event);
                 }
             }
         }
         break;
-    case 'new':
-        $templateMain = 'wgevents_admin_answer.tpl';
-        $GLOBALS['xoopsTpl']->assign('navigation', $adminObject->displayNavigation('answer.php'));
-        $adminObject->addItemButton(\_AM_WGEVENTS_LIST_ANSWERS, 'answer.php', 'list');
-        $GLOBALS['xoopsTpl']->assign('buttons', $adminObject->displayButton('left'));
-        // Form Create
-        $answerObj = $answerHandler->create();
-        $answerObj->setVar('evid', $evId);
-        $form = $answerObj->getForm();
-        $GLOBALS['xoopsTpl']->assign('form', $form->render());
-        break;
-    case 'clone':
-        $templateMain = 'wgevents_admin_answer.tpl';
-        $GLOBALS['xoopsTpl']->assign('navigation', $adminObject->displayNavigation('answer.php'));
-        $adminObject->addItemButton(\_AM_WGEVENTS_LIST_ANSWERS, 'answer.php', 'list');
-        $adminObject->addItemButton(\_AM_WGEVENTS_ADD_ANSWER, 'answer.php?op=new');
-        $GLOBALS['xoopsTpl']->assign('buttons', $adminObject->displayButton('left'));
-        // Request source
-        $ansIdSource = Request::getInt('id_source');
-        // Get Form
-        $answerObjSource = $answerHandler->get($ansIdSource);
-        $answerObj = $answerObjSource->xoopsClone();
-        $form = $answerObj->getForm();
-        $GLOBALS['xoopsTpl']->assign('form', $form->render());
-        break;
-    case 'save':
-        // Security Check
-        if (!$GLOBALS['xoopsSecurity']->check()) {
-            \redirect_header('answer.php', 3, \implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
-        }
-        if ($ansId > 0) {
-            $answerObj = $answerHandler->get($ansId);
-        } else {
-            $answerObj = $answerHandler->create();
-        }
-        // Set Vars
-        $answerObj->setVar('regid', Request::getInt('regid'));
-        $answerObj->setVar('queid', Request::getInt('queid'));
-        $answerObj->setVar('evid', Request::getInt('evid'));
-        $answerObj->setVar('text', Request::getString('text'));
-        $answerDatecreatedObj = \DateTime::createFromFormat(\_SHORTDATESTRING, Request::getString('datecreated'));
-        $answerObj->setVar('datecreated', $answerDatecreatedObj->getTimestamp());
-        $answerObj->setVar('submitter', Request::getInt('submitter'));
-        // Insert Data
-        if ($answerHandler->insert($answerObj)) {
-                \redirect_header('answer.php?op=list&amp;start=' . $start . '&amp;limit=' . $limit, 2, \_MA_WGEVENTS_FORM_OK);
-        }
-        // Get Form
-        $GLOBALS['xoopsTpl']->assign('error', $answerObj->getHtmlErrors());
-        $form = $answerObj->getForm();
-        $GLOBALS['xoopsTpl']->assign('form', $form->render());
-        break;
-    case 'edit':
-        $templateMain = 'wgevents_admin_answer.tpl';
-        $GLOBALS['xoopsTpl']->assign('navigation', $adminObject->displayNavigation('answer.php'));
-        $adminObject->addItemButton(\_AM_WGEVENTS_ADD_ANSWER, 'answer.php?op=new');
-        $adminObject->addItemButton(\_AM_WGEVENTS_LIST_ANSWERS, 'answer.php', 'list');
-        $GLOBALS['xoopsTpl']->assign('buttons', $adminObject->displayButton('left'));
-        // Get Form
-        $answerObj = $answerHandler->get($ansId);
-        $answerObj->start = $start;
-        $answerObj->limit = $limit;
-        $form = $answerObj->getForm();
-        $GLOBALS['xoopsTpl']->assign('form', $form->render());
-        break;
+    /*
     case 'delete':
         $templateMain = 'wgevents_admin_answer.tpl';
         $GLOBALS['xoopsTpl']->assign('navigation', $adminObject->displayNavigation('answer.php'));
@@ -184,5 +110,6 @@ switch ($op) {
             $GLOBALS['xoopsTpl']->assign('form', $form->render());
         }
         break;
+    */
 }
 require __DIR__ . '/footer.php';

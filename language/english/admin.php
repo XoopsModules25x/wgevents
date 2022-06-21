@@ -30,9 +30,11 @@ require_once __DIR__ . '/main.php';
 \define('_AM_WGEVENTS_THEREARE_EVENTS', "There are <span class='bold'>%s</span> events in the database");
 \define('_AM_WGEVENTS_THEREARE_CATEGORIES', "There are <span class='bold'>%s</span> categories in the database");
 \define('_AM_WGEVENTS_THEREARE_REGISTRATIONS', "There are <span class='bold'>%s</span> registrations in the database");
+\define('_AM_WGEVENTS_THEREARE_REGISTRATIONHISTS', "There are <span class='bold'>%s</span> historic registrations in the database");
 \define('_AM_WGEVENTS_THEREARE_QUESTIONS', "There are <span class='bold'>%s</span> questions in the database");
 \define('_AM_WGEVENTS_THEREARE_FIELDS', "There are <span class='bold'>%s</span> types of questions in the database");
 \define('_AM_WGEVENTS_THEREARE_ANSWERS', "There are <span class='bold'>%s</span> answers in the database");
+\define('_AM_WGEVENTS_THEREARE_ANSWERHISTS', "There are <span class='bold'>%s</span> historic answers in the database");
 \define('_AM_WGEVENTS_THEREARE_TEXTBLOCKS', "There are <span class='bold'>%s</span> textblocks in the database");
 \define('_AM_WGEVENTS_THEREARE_LOGS', "There are <span class='bold'>%s</span> logs in the database");
 \define('_AM_WGEVENTS_THEREARE_ACCOUNTS', "There are <span class='bold'>%s</span> email accounts in the Database");
@@ -41,8 +43,10 @@ require_once __DIR__ . '/main.php';
 \define('_AM_WGEVENTS_THEREARENT_EVENTS', "There aren't events");
 \define('_AM_WGEVENTS_THEREARENT_CATEGORIES', "There aren't categories");
 \define('_AM_WGEVENTS_THEREARENT_REGISTRATIONS', "There aren't registrations");
+\define('_AM_WGEVENTS_THEREARENT_REGISTRATIONHISTS', "There aren't historic registrations");
 \define('_AM_WGEVENTS_THEREARENT_QUESTIONS', "There aren't questions");
 \define('_AM_WGEVENTS_THEREARENT_ANSWERS', "There aren't answers");
+\define('_AM_WGEVENTS_THEREARENT_ANSWERHISTS', "There aren't historic answers");
 \define('_AM_WGEVENTS_THEREARENT_TEXTBLOCKS', "There aren't textblocks");
 \define('_AM_WGEVENTS_THEREARENT_FIELDS', "There aren't fields");
 \define('_AM_WGEVENTS_THEREARENT_LOGS', "There aren't logs");
@@ -74,6 +78,11 @@ require_once __DIR__ . '/main.php';
 \define('_AM_WGEVENTS_LIST_FIELDS', 'List of Question Type');
 \define('_AM_WGEVENTS_LIST_EVENTS_LAST', 'List of last %s Event');
 // ---------------- Admin Classes ----------------
+\define('_MA_WGEVENTS_HIST_ID', 'History Id');
+\define('_MA_WGEVENTS_HIST_INFO', 'Info');
+\define('_MA_WGEVENTS_HIST_DATECREATED', 'History date created');
+\define('_MA_WGEVENTS_HIST_SUBMITTER', 'History submitter');
+\define('_MA_WGEVENTS_REGISTRATIONHISTS_CURR', 'Historic registration currently');
 // Category add/edit
 \define('_AM_WGEVENTS_CATEGORY_ADD', 'Add Category');
 \define('_AM_WGEVENTS_CATEGORY_EDIT', 'Edit Category');
@@ -269,8 +278,6 @@ Please define, until which date all data should be anonymized.');
 </ul>
 ');
 \define('_AM_WGEVENTS_PERMISSIONS_EVENTS_VIEW', 'Permission to view events');
-
-
 //\define('_AM_WGEVENTS_PERMISSIONS_QUESTIONS_VIEW', 'Permission to view questions');
 //\define('_AM_WGEVENTS_PERMISSIONS_QUESTIONS_SUBMIT', 'Permission to submit questions');
 //\define('_AM_WGEVENTS_PERMISSIONS_REGISTRATIONS_VIEW', 'Permission to view registrations');
