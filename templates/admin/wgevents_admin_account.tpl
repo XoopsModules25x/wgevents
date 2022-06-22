@@ -32,7 +32,7 @@
 <{/if}>
 
 <{if $accounts_list|default:''}>
-    <{include file='db:admin_pagertop.tpl' }>
+    <{include file='db:tablesorter_pagertop.tpl' }>
     <table id="sortTable" class="tablesorter-<{$tablesorter_theme}>">
         <thead>
             <tr class='head'>
@@ -95,7 +95,7 @@
         <{/if}>
     </table>
     <div class="clear">&nbsp;</div>
-    <{include file='db:admin_pagerbottom.tpl' }>
+    <{include file='db:tablesorter_pagerbottom.tpl' }>
 <{/if}>
 <{if $form|default:''}>
     <{$form|default:false}>

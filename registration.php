@@ -205,6 +205,29 @@ switch ($op) {
         $GLOBALS['xoopsTpl']->assign('js_feezero', Utility::FloatToString(0));
         $GLOBALS['xoopsTpl']->assign('js_lang_changed', \_MA_WGEVENTS_REGISTRATION_CHANGED);
         $GLOBALS['xoopsTpl']->assign('js_lang_approved', \_MA_WGEVENTS_STATUS_APPROVED);
+
+        // tablesorter
+        $GLOBALS['xoopsTpl']->assign('tablesorter', true);
+        $GLOBALS['xoopsTpl']->assign('mod_url', \WGEVENTS_URL);
+        $GLOBALS['xoopsTpl']->assign('tablesorter_allrows', \_AM_WGEVENTS_TABLESORTER_SHOW_ALL);
+        $GLOBALS['xoopsTpl']->assign('tablesorter_of', \_AM_WGEVENTS_TABLESORTER_OF);
+        $GLOBALS['xoopsTpl']->assign('tablesorter_total', \_AM_WGEVENTS_TABLESORTER_TOTALROWS);
+        $GLOBALS['xoopsTpl']->assign('tablesorter_pagesize', $helper->getConfig('userpager'));
+        if ('d.m.Y' == _SHORTDATESTRING) {
+            $dateformat = 'ddmmyyyy';
+        } else {
+            $dateformat = 'mmddyyyy';
+        }
+        $GLOBALS['xoopsTpl']->assign('tablesorter_dateformat', $dateformat);
+
+        $GLOBALS['xoTheme']->addStylesheet(\WGEVENTS_URL . '/assets/js/tablesorter/css/jquery.tablesorter.pager.min.css');
+        $tablesorterTheme = $helper->getConfig('tablesorter_user');
+        $GLOBALS['xoTheme']->addStylesheet(\WGEVENTS_URL . '/assets/js/tablesorter/css/theme.' . $tablesorterTheme . '.min.css');
+        $GLOBALS['xoopsTpl']->assign('tablesorter_theme', $tablesorterTheme);
+        $GLOBALS['xoTheme']->addScript(\WGEVENTS_URL . '/assets/js/tablesorter/js/jquery.tablesorter.js');
+        $GLOBALS['xoTheme']->addScript(\WGEVENTS_URL . '/assets/js/tablesorter/js/jquery.tablesorter.widgets.js');
+        $GLOBALS['xoTheme']->addScript(\WGEVENTS_URL . '/assets/js/tablesorter/js/extras/jquery.tablesorter.pager.min.js');
+        $GLOBALS['xoTheme']->addScript(\WGEVENTS_URL . '/assets/js/tablesorter/js/widgets/widget-pager.min.js');
     break;
         break;
     case 'save':

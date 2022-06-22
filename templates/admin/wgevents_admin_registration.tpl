@@ -4,7 +4,7 @@
 <!-- Table overview events -->
 <{if $eventCount|default:0 > 0}>
     <h3><{$eventsHeader}></h3>
-    <{include file='db:admin_pagertop.tpl' }>
+    <{include file='db:tablesorter_pagertop.tpl' }>
 
     <table id="sortTable" class="tablesorter-<{$tablesorter_theme}>" cellspacing="1" cellpadding="0"  width="100%">
         <thead>
@@ -33,12 +33,12 @@
 <{/if}>
 
 <{if $registrations_list|default:''}>
-    <{include file='db:admin_pagertop.tpl' }>
+    <{include file='db:tablesorter_pagertop.tpl' }>
 
     <table id="sortTable" class="tablesorter-<{$tablesorter_theme}>" cellspacing="1" cellpadding="0"  width="100%">
         <thead>
             <tr class='head'>
-                <th class="center"><{$smarty.const._MA_WGEVENTS_REGISTRATION_ID}></th>
+                <th class="center filter-false"><{$smarty.const._MA_WGEVENTS_REGISTRATION_ID}></th>
                 <th class="center"><{$smarty.const._MA_WGEVENTS_REGISTRATION_EVID}></th>
                 <th class="center"><{$smarty.const._MA_WGEVENTS_REGISTRATION_SALUTATION}></th>
                 <th class="center"><{$smarty.const._MA_WGEVENTS_REGISTRATION_FIRSTNAME}></th>
@@ -82,7 +82,7 @@
         <{/if}>
     </table>
     <div class="clear">&nbsp;</div>
-    <{include file='db:admin_pagerbottom.tpl' }>
+    <{include file='db:tablesorter_pagerbottom.tpl' }>
 <{/if}>
 <{if $form|default:''}>
     <{$form|default:false}>

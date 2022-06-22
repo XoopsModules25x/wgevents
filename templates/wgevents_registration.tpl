@@ -1,15 +1,21 @@
 <{include file='db:wgevents_header.tpl' }>
 
 <{if $registrationsCount|default:0 > 0}>
+    <{if $tablesorter|default:false}><{include file='db:tablesorter_pagertop.tpl' }><{/if}>
+
     <{foreach item=registration from=$registrations}>
         <div class="wge-eventheader">
             <h3><{if $captionList|default:false}><{$captionList}>: <{/if}><{$registration.event_name|default:''}></h3>
         </div>
         <div class='table-responsive'>
-            <table class='table table-<{$table_type|default:false}>'>
+            <{if $tablesorter|default:false}>
+                <table id="sortTable" class="tablesorter-<{$tablesorter_theme}>">
+            <{else}>
+                <table class='table table-<{$table_type|default:false}>'>
+            <{/if}>
                 <thead>
                     <tr class='head wge-reg-list-head'>
-                        <th>&nbsp;</th>
+                        <th class="sorter-false filter-false">&nbsp;</th>
                         <th><{$smarty.const._MA_WGEVENTS_REGISTRATION_SALUTATION}></th>
                         <th><{$smarty.const._MA_WGEVENTS_REGISTRATION_FIRSTNAME}></th>
                         <th><{$smarty.const._MA_WGEVENTS_REGISTRATION_LASTNAME}></th>
@@ -26,7 +32,7 @@
                             <th><{$smarty.const._MA_WGEVENTS_SUBMITTER}></th>
                         <{/if}>
                         <th><{$smarty.const._MA_WGEVENTS_DATECREATED}></th>
-                        <th style="min-width:300px;">&nbsp;</th>
+                        <th class="sorter-false filter-false" style="min-width:300px;">&nbsp;</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -34,20 +40,19 @@
                         <{include file='db:wgevents_registration_item.tpl' }>
                     <{/foreach}>
                 </tbody>
-                <tfoot>
-                    <tr>
-                        <td class="center" colspan="<{$registration.footerCols}>">
-                            <a class='btn btn-success wge-btn' href='event.php?op=show&amp;id=<{$registration.event_id}>' title='<{$smarty.const._MA_WGEVENTS_GOTO_EVENT}>'><{$smarty.const._MA_WGEVENTS_GOTO_EVENT}></a>
-                            <{if $registration.permEditEvent|default:''}>
-                                <a class='btn btn-primary wge-btn' href='output.php?op=reg_all&amp;output_type=xlsx&amp;id=<{$registration.event_id}>&amp;redir=<{$redir}>' title='<{$smarty.const._MA_WGEVENTS_OUTPUT_EXCEL}>'><{$smarty.const._MA_WGEVENTS_OUTPUT_EXCEL}></a>
-                                <a class='btn btn-primary wge-btn' href='registration.php?op=contactall&amp;evid=<{$registration.event_id}>' title='<{$smarty.const._MA_WGEVENTS_CONTACT_ALL}>'><{$smarty.const._MA_WGEVENTS_CONTACT_ALL}></a>
-                            <{/if}>
-                        </td>
-                    </tr>
-                </tfoot>
+                <tfoot></tfoot>
             </table>
+            <div class="col-12 center">
+                <a class='btn btn-success wge-btn' href='event.php?op=show&amp;id=<{$registration.event_id}>' title='<{$smarty.const._MA_WGEVENTS_GOTO_EVENT}>'><{$smarty.const._MA_WGEVENTS_GOTO_EVENT}></a>
+                <{if $registration.permEditEvent|default:''}>
+                    <a class='btn btn-primary wge-btn' href='output.php?op=reg_all&amp;output_type=xlsx&amp;id=<{$registration.event_id}>&amp;redir=<{$redir}>' title='<{$smarty.const._MA_WGEVENTS_OUTPUT_EXCEL}>'><{$smarty.const._MA_WGEVENTS_OUTPUT_EXCEL}></a>
+                    <a class='btn btn-primary wge-btn' href='registration.php?op=contactall&amp;evid=<{$registration.event_id}>' title='<{$smarty.const._MA_WGEVENTS_CONTACT_ALL}>'><{$smarty.const._MA_WGEVENTS_CONTACT_ALL}></a>
+                <{/if}>
+            </div>
         </div>
     <{/foreach}>
+
+    <{if $tablesorter|default:false}><{include file='db:tablesorter_pagerbottom.tpl' }><{/if}>
 <{/if}>
 
 <{if $warning|default:''}>

@@ -4,6 +4,7 @@
  - added paid amount (goffy)
  - added ajax support for most used functions (goffy)
  - added history lists (registrations, answers) in admin area (goffy)
+ - implemented tablesorter in list of registrations (goffy)
 
 ==============================================================
 1.0.1 [2022/01/31]

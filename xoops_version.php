@@ -95,9 +95,9 @@ $modversion['templates'] = [
     ['file' => 'wgevents_admin_registration.tpl', 'description' => '', 'type' => 'admin'],
     ['file' => 'wgevents_admin_registrationhist.tpl', 'description' => '', 'type' => 'admin'],
     ['file' => 'wgevents_admin_textblock.tpl', 'description' => '', 'type' => 'admin'],
-    ['file' => 'admin_pagertop.tpl', 'description' => '', 'type' => 'admin'],
-    ['file' => 'admin_pagerbottom.tpl', 'description' => '', 'type' => 'admin'],
     // User templates
+    ['file' => 'tablesorter_pagertop.tpl', 'description' => ''],
+    ['file' => 'tablesorter_pagerbottom.tpl', 'description' => ''],
     ['file' => 'wgevents_breadcrumbs.tpl', 'description' => ''],
     ['file' => 'wgevents_calendar.tpl', 'description' => ''],
     ['file' => 'wgevents_category_index_list.tpl', 'description' => ''],
@@ -319,27 +319,6 @@ $modversion['config'][] = [
     'default'     => 'dhtml',
     'options'     => \array_flip($editorHandler->getList()),
 ];
-$modversion['config'][] = [
-    'name'        => 'tablesorter_admin',
-    'title'       => '\_MI_WGEVENTS_TABLESORTER_ADMIN',
-    'description' => '\_MI_WGEVENTS_TABLESORTER_ADMIN_DESC',
-    'formtype'    => 'select',
-    'valuetype'   => 'text',
-    'default'     => 'xoopsadmin',
-    'options'     => ['blackice' => 'blackice',
-                    'blue' => 'blue',
-                    'bootstrap' => 'bootstrap',
-                    'dark' => 'dark',
-                    'default' => 'default',
-                    'dropbox' => 'dropbox',
-                    'green' => 'green',
-                    'grey' => 'grey',
-                    'ice' => 'ice',
-                    'materialize' => 'materialize',
-                    'metro-dark' => 'metro-dark',
-                    'xoopsadmin' => 'xoopsadmin',
-                    ],
-];
 // Editor User
 \xoops_load('xoopseditorhandler');
 $editorHandler = XoopsEditorHandler::getInstance();
@@ -370,6 +349,28 @@ $modversion['config'][] = [
     'valuetype'   => 'int',
     'default'     => 200,
 ];
+// Tablesorter Admin
+$modversion['config'][] = [
+    'name'        => 'tablesorter_admin',
+    'title'       => '\_MI_WGEVENTS_TABLESORTER_ADMIN',
+    'description' => '\_MI_WGEVENTS_TABLESORTER_ADMIN_DESC',
+    'formtype'    => 'select',
+    'valuetype'   => 'text',
+    'default'     => 'xoopsadmin',
+    'options'     => ['blackice' => 'blackice',
+        'blue' => 'blue',
+        'bootstrap' => 'bootstrap',
+        'dark' => 'dark',
+        'default' => 'default',
+        'dropbox' => 'dropbox',
+        'green' => 'green',
+        'grey' => 'grey',
+        'ice' => 'ice',
+        'materialize' => 'materialize',
+        'metro-dark' => 'metro-dark',
+        'xoopsadmin' => 'xoopsadmin',
+    ],
+];
 // Admin pager
 $modversion['config'][] = [
     'name'        => 'adminpager',
@@ -378,16 +379,39 @@ $modversion['config'][] = [
     'formtype'    => 'select',
     'valuetype'   => 'text',
     'default'     => '10',
-    'options'     => ['10' => 10, '20' => 20, '30' => 30, '40' => 40, 'all' => \_MI_WGEVENTS_TABLESORTER_SHOW_ALL],
+    'options'     => ['10' => 10, '20' => 20, '30' => 30, '40' => 40, '50' => 50, '100' => 100, 'all' => \_MI_WGEVENTS_TABLESORTER_SHOW_ALL],
+];
+// Tablesorter User
+$modversion['config'][] = [
+    'name'        => 'tablesorter_user',
+    'title'       => '\_MI_WGEVENTS_TABLESORTER_USER',
+    'description' => '\_MI_WGEVENTS_TABLESORTER_USER_DESC',
+    'formtype'    => 'select',
+    'valuetype'   => 'text',
+    'default'     => 'default',
+    'options'     => ['blackice' => 'blackice',
+        'blue' => 'blue',
+        'bootstrap' => 'bootstrap',
+        'dark' => 'dark',
+        'default' => 'default',
+        'dropbox' => 'dropbox',
+        'green' => 'green',
+        'grey' => 'grey',
+        'ice' => 'ice',
+        'materialize' => 'materialize',
+        'metro-dark' => 'metro-dark',
+        'xoopsadmin' => 'xoopsadmin',
+    ],
 ];
 // User pager
 $modversion['config'][] = [
     'name'        => 'userpager',
     'title'       => '\_MI_WGEVENTS_USER_PAGER',
     'description' => '\_MI_WGEVENTS_USER_PAGER_DESC',
-    'formtype'    => 'textbox',
-    'valuetype'   => 'int',
-    'default'     => 10,
+    'formtype'    => 'select',
+    'valuetype'   => 'text',
+    'default'     => '10',
+    'options'     => ['10' => 10, '20' => 20, '30' => 30, '40' => 40, '50' => 50, '100' => 100, 'all' => \_MI_WGEVENTS_TABLESORTER_SHOW_ALL],
 ];
 // Show copyright
 $modversion['config'][] = [
@@ -747,6 +771,7 @@ $modversion['config'][] = [
     'valuetype'   => 'text',
     'default'     => 'wgevents, events, categories, registrations, questions, answers, textblocks, fields',
 ];
+/*
 // Paypal ID
 $modversion['config'][] = [
     'name'        => 'donations',
@@ -755,15 +780,6 @@ $modversion['config'][] = [
     'formtype'    => 'textbox',
     'valuetype'   => 'textbox',
     'default'     => 'XYZ123',
-];
-// Maintained by
-$modversion['config'][] = [
-    'name'        => 'maintainedby',
-    'title'       => '\_MI_WGEVENTS_MAINTAINEDBY',
-    'description' => '\_MI_WGEVENTS_MAINTAINEDBY_DESC',
-    'formtype'    => 'textbox',
-    'valuetype'   => 'text',
-    'default'     => 'https://xoops.org/modules/newbb',
 ];
 // Advertise
 $modversion['config'][] = [
@@ -782,6 +798,16 @@ $modversion['config'][] = [
     'formtype'    => 'yesno',
     'valuetype'   => 'int',
     'default'     => 0,
+];
+*/
+// Maintained by
+$modversion['config'][] = [
+    'name'        => 'maintainedby',
+    'title'       => '\_MI_WGEVENTS_MAINTAINEDBY',
+    'description' => '\_MI_WGEVENTS_MAINTAINEDBY_DESC',
+    'formtype'    => 'textbox',
+    'valuetype'   => 'text',
+    'default'     => 'https://xoops.org/modules/newbb',
 ];
 // ------------------- Notifications ------------------- //
 $modversion['hasNotification'] = 0;

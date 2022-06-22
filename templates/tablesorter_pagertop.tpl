@@ -12,6 +12,8 @@
             <option value="20">20</option>
             <option value="30">30</option>
             <option value="40">40</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
             <option value="all"><{$tablesorter_allrows}></option>
         </select>
     </form>
@@ -80,7 +82,7 @@
 
             // if true, the table will remain the same height no matter how many records are displayed. The space is made up by an empty
             // table row set to a height to compensate; default is false
-            fixedHeight: true,
+            fixedHeight: false,
 
             // remove rows from the table to speed up the sort of large tables.
             // setting this to false, only hides the non-visible rows; needed if you plan to add/remove rows with the pager enabled.

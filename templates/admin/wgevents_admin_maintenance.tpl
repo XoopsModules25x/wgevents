@@ -13,7 +13,7 @@
 <{if $system_check|default:''}>
 <{*	<table class='table table-bordered'>*}>
 
-    <{include file='db:admin_pagertop.tpl' }>
+    <{include file='db:tablesorter_pagertop.tpl' }>
 
     <table id="sortTable" class="tablesorter-<{$tablesorter_theme}>" cellspacing="1" cellpadding="0"  width="100%">
 
