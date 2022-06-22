@@ -60,14 +60,6 @@ switch ($op) {
                 $GLOBALS['xoopsTpl']->append('logs_list', $log);
                 unset($log);
             }
-            /*
-            // Display Navigation
-            if ($logCount > $limit) {
-                require_once \XOOPS_ROOT_PATH . '/class/pagenav.php';
-                $pagenav = new \XoopsPageNav($logCount, $limit, $start, 'start', 'op=list&limit=' . $limit);
-                $GLOBALS['xoopsTpl']->assign('pagenav', $pagenav->renderNav());
-            }
-            */
         } else {
             $GLOBALS['xoopsTpl']->assign('error', \_AM_WGEVENTS_THEREARENT_LOGS);
         }

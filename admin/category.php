@@ -63,12 +63,6 @@ switch ($op) {
                 $GLOBALS['xoopsTpl']->append('categories_list', $category);
                 unset($category);
             }
-            // Display Navigation
-            if ($categoryCount > $limit) {
-                require_once \XOOPS_ROOT_PATH . '/class/pagenav.php';
-                $pagenav = new \XoopsPageNav($categoryCount, $limit, $start, 'start', 'op=list&limit=' . $limit);
-                $GLOBALS['xoopsTpl']->assign('pagenav', $pagenav->renderNav());
-            }
         } else {
             $GLOBALS['xoopsTpl']->assign('error', \_AM_WGEVENTS_THEREARENT_CATEGORIES);
         }

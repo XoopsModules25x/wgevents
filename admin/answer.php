@@ -67,13 +67,6 @@ switch ($op) {
                     $GLOBALS['xoopsTpl']->append('answers_list', $answer);
                     unset($answer);
                 }
-                /*
-                // Display Navigation
-                if ($answerCount > $limit) {
-                    require_once \XOOPS_ROOT_PATH . '/class/pagenav.php';
-                    $pagenav = new \XoopsPageNav($answerCount, $limit, $start, 'start', 'op=list&limit=' . $limit);
-                    $GLOBALS['xoopsTpl']->assign('pagenav', $pagenav->renderNav());
-                }*/
             } else {
                 $GLOBALS['xoopsTpl']->assign('error', \_AM_WGEVENTS_THEREARENT_ANSWERS);
             }
