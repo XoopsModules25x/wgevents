@@ -78,10 +78,10 @@ require_once __DIR__ . '/main.php';
 \define('_AM_WGEVENTS_LIST_FIELDS', 'Liste der Arten Zusatzinfos');
 \define('_AM_WGEVENTS_LIST_EVENTS_LAST', 'Liste der letzten %s Veranstaltungen');
 // ---------------- Admin Classes ----------------
-\define('_MA_WGEVENTS_HIST_ID', 'History Id');
-\define('_MA_WGEVENTS_HIST_INFO', 'Info');
-\define('_MA_WGEVENTS_HIST_DATECREATED', 'Datum Historie');
-\define('_MA_WGEVENTS_HIST_SUBMITTER', 'Einsender Historie');
+\define('_AM_WGEVENTS_HIST_ID', 'History Id');
+\define('_AM_WGEVENTS_HIST_INFO', 'Info');
+\define('_AM_WGEVENTS_HIST_DATECREATED', 'Datum Historie');
+\define('_AM_WGEVENTS_HIST_SUBMITTER', 'Einsender Historie');
 \define('_AM_WGEVENTS_REGISTRATIONHISTS_CURR', 'Historische Anmeldungen derzeit');
 // Category add/edit
 \define('_AM_WGEVENTS_CATEGORY_ADD', 'Kategorie Hinzufügen');

@@ -10,7 +10,7 @@
         <thead>
         <tr class='head'>
             <th class="center"><{$smarty.const._MA_WGEVENTS_EVENT_NAME}></th>
-            <th class="center"><{$smarty.const._MA_WGEVENTS_REGISTRATIONHISTS_CURR}></th>
+            <th class="center"><{$smarty.const._AM_WGEVENTS_REGISTRATIONHISTS_CURR}></th>
             <th class="center sorter-false filter-false"><{$smarty.const._MA_WGEVENTS_ACTION}></th>
         </tr>
         </thead>
@@ -38,10 +38,10 @@
     <table id="sortTable" class="tablesorter-<{$tablesorter_theme}>" cellspacing="1" cellpadding="0"  width="100%">
         <thead>
             <tr class='head'>
-                <th class="center"><{$smarty.const._MA_WGEVENTS_HIST_ID}></th>
-                <th class="center"><{$smarty.const._MA_WGEVENTS_HIST_INFO}></th>
-                <th class="center"><{$smarty.const._MA_WGEVENTS_HIST_DATECREATED}></th>
-                <th class="center"><{$smarty.const._MA_WGEVENTS_HIST_SUBMITTER}></th>
+                <th class="center"><{$smarty.const._AM_WGEVENTS_HIST_ID}></th>
+                <th class="center"><{$smarty.const._AM_WGEVENTS_HIST_INFO}></th>
+                <th class="center"><{$smarty.const._AM_WGEVENTS_HIST_DATECREATED}></th>
+                <th class="center"><{$smarty.const._AM_WGEVENTS_HIST_SUBMITTER}></th>
                 <th class="center"><{$smarty.const._MA_WGEVENTS_REGISTRATION_ID}></th>
                 <th class="center"><{$smarty.const._MA_WGEVENTS_REGISTRATION_EVID}></th>
                 <th class="center"><{$smarty.const._MA_WGEVENTS_REGISTRATION_SALUTATION}></th>

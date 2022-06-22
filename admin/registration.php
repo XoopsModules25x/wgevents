@@ -220,7 +220,7 @@ switch ($op) {
             $customConfirm = new Common\Confirm(
                 ['ok' => 1, 'id' => $regId, 'start' => $start, 'limit' => $limit, 'op' => 'delete'],
                 $_SERVER['REQUEST_URI'],
-                \sprintf(\_MA_WGEVENTS_FORM_SURE_DELETE, $registrationObj->getVar('evid')));
+                \sprintf(\_MA_WGEVENTS_FORM_SURE_DELETE, $registrationObj->getVar('firstname'). ' ' . $registrationObj->getVar('lastname')));
             $form = $customConfirm->getFormConfirm();
             $GLOBALS['xoopsTpl']->assign('form', $form->render());
         }

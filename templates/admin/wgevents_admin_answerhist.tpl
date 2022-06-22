@@ -38,10 +38,10 @@
     <table id="sortTable" class="tablesorter-<{$tablesorter_theme}>" cellspacing="1" cellpadding="0"  width="100%">
         <thead>
             <tr class='head'>
-                <th class="center"><{$smarty.const._MA_WGEVENTS_HIST_ID}></th>
-                <th class="center"><{$smarty.const._MA_WGEVENTS_HIST_INFO}></th>
-                <th class="center"><{$smarty.const._MA_WGEVENTS_HIST_DATECREATED}></th>
-                <th class="center"><{$smarty.const._MA_WGEVENTS_HIST_SUBMITTER}></th>
+                <th class="center"><{$smarty.const._AM_WGEVENTS_HIST_ID}></th>
+                <th class="center"><{$smarty.const._AM_WGEVENTS_HIST_INFO}></th>
+                <th class="center"><{$smarty.const._AM_WGEVENTS_HIST_DATECREATED}></th>
+                <th class="center"><{$smarty.const._AM_WGEVENTS_HIST_SUBMITTER}></th>
                 <th class="center"><{$smarty.const._MA_WGEVENTS_ANSWER_ID}></th>
                 <th class="center"><{$smarty.const._MA_WGEVENTS_ANSWER_EVID}></th>
                 <th class="center"><{$smarty.const._MA_WGEVENTS_ANSWER_REGID}></th>
@@ -64,7 +64,7 @@
                 <td class='center'><{$answer.eventname}></td>
                 <td class='center'><{$answer.regname}> (<{$answer.regid}>)</td>
                 <td class='center'><{$answer.quecaption}></td>
-                <td class='center'><{$answer.text}></td>
+                <td class='center'><{$answer.text_text}></td>
                 <td class='center'><{$answer.datecreated_text}></td>
                 <td class='center'><{$answer.submitter_text}></td>
                 <td class="center  width5">

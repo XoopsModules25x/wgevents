@@ -48,6 +48,9 @@ switch ($op) {
         $templateMain = 'wgevents_admin_answerhist.tpl';
         $GLOBALS['xoopsTpl']->assign('navigation', $adminObject->displayNavigation('answerhists.php'));
         if ($evId > 0) {
+            // get all questions for this event
+            $questionsArr = $questionHandler->getQuestionsByEvent($evId);
+            //get answers
             $crAnswerhists = new \CriteriaCompo();
             $crAnswerhists->add(new \Criteria('evid', $evId));
             $answerhistCount = $answerhistHandler->getCount($crAnswerhists);
@@ -58,9 +61,13 @@ switch ($op) {
             if ($answerhistCount > 0) {
                 $answerhistsAll = $answerhistHandler->getAll($crAnswerhists);
                 foreach (\array_keys($answerhistsAll) as $i) {
-                    $answerhists = $answerhistsAll[$i]->getValuesAnswerhists();
+                    $answerhists = $answerhistsAll[$i]->getValuesAnswerhists($questionsArr);
                     $registrationObj = $registrationHandler->get($answerhists['regid']);
-                    $answerhists['regname'] = $registrationObj->getVar('firstname') . ' ' . $registrationObj->getVar('lastname');
+                    $regname = 'deleted registration';
+                    if (is_object($registrationObj)) {
+                        $regname = $registrationObj->getVar('firstname') . ' ' . $registrationObj->getVar('lastname');
+                    }
+                    $answerhists['regname'] = $regname;
                     $GLOBALS['xoopsTpl']->append('answerhists_list', $answerhists);
                     unset($answerhists);
                 }
