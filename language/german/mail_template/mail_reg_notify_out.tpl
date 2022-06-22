@@ -1,4 +1,4 @@
-﻿
+
 {UNAME} hat {NAME} von folgender Veranstaltung abgemeldet:
 
 Veranstaltung: {EVENTNAME}
