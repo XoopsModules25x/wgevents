@@ -65,4 +65,66 @@ class Answerhist extends \XoopsObject
             $instance = new self();
         }
     }
+
+    /**
+     * Get Values
+     * @param array $questionsArr
+     * @param null  $keys
+     * @param null  $format
+     * @param null  $maxDepth
+     * @return array
+     */
+    public function getValuesAnswerhists($questionsArr, $keys = null, $format = null, $maxDepth = null)
+    {
+        $helper  = \XoopsModules\Wgevents\Helper::getInstance();
+        $ret = $this->getValues($keys, $format, $maxDepth);
+        $ret['hist_datecreated_text'] = \formatTimestamp($this->getVar('hist_datecreated'), 's');
+        $ret['hist_submitter_text']   = \XoopsUser::getUnameFromId($this->getVar('hist_submitter'));
+        $questionHandler = $helper->getHandler('Question');
+        $questionObj = $questionHandler->get($this->getVar('queid'));
+        $queCaption = '';
+        if (\is_object($questionObj)) {
+            $queCaption = $questionObj->getVar('caption');
+        }
+        $ret['quecaption'] = $queCaption;
+        $queItem = $questionsArr[$this->getVar('queid')];
+        $ansText = $this->getVar('text', 'n');
+        if (Constants::FIELD_RADIOYN == $queItem['type']) {
+            if ((bool)$ansText) {
+                $ansText = \_YES;
+            } else {
+                $ansText = \_NO;
+            }
+        }
+        if (Constants::FIELD_CHECKBOX == $queItem['type'] ||
+            Constants::FIELD_COMBOBOX == $queItem['type']) {
+            $queValues = \unserialize($queItem['values']);
+            $ansItems = \unserialize($ansText);
+            $ansText = '';
+            foreach ($ansItems as $ansItem) {
+                $ansText .= $queValues[(int)$ansItem] . ' <br>';
+            }
+        }
+        if (Constants::FIELD_SELECTBOX == $queItem['type']) {
+            $queValues = \unserialize($queItem['values']);
+            $ansItem = (string)\unserialize($ansText);
+            $ansText = $queValues[(int)$ansItem];
+        }
+        if (Constants::FIELD_RADIO == $queItem['type']) {
+            $queValues = \unserialize($queItem['values']);
+            $ansText = $queValues[$ansText];
+        }
+        $ret['text_text'] = $ansText;
+        $eventHandler = $helper->getHandler('Event');
+        $eventObj = $eventHandler->get($this->getVar('evid'));
+        $evName = 'invalid event';
+        if (\is_object($eventObj)) {
+            $evName = $eventObj->getVar('name');
+        }
+        $ret['eventname']        = $evName;
+        $ret['datecreated_text'] = \formatTimestamp($this->getVar('datecreated'), 's');
+        $ret['submitter_text']   = \XoopsUser::getUnameFromId($this->getVar('submitter'));
+
+        return $ret;
+    }
 }

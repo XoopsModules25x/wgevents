@@ -153,7 +153,7 @@ class AnswerHandler extends \XoopsPersistableObjectHandler
     public function getAnswersDetailsByRegistration($regId, $questionsArr)
     {
         $answers = [];
-        foreach ($questionsArr as $queId => $addItem) {
+        foreach ($questionsArr as $queId => $queItem) {
             // get answers for this questions
             $crAnswer = new \CriteriaCompo();
             $crAnswer->add(new \Criteria('regid', $regId));
@@ -163,29 +163,29 @@ class AnswerHandler extends \XoopsPersistableObjectHandler
                 $answersAll = $this->getAll($crAnswer);
                 foreach (\array_keys($answersAll) as $i) {
                     $ansText = $answersAll[$i]->getVar('text', 'n');
-                    if (Constants::FIELD_RADIOYN == $addItem['type']) {
+                    if (Constants::FIELD_RADIOYN == $queItem['type']) {
                         if ((bool)$ansText) {
                             $ansText = \_YES;
                         } else {
                             $ansText = \_NO;
                         }
                     }
-                    if (Constants::FIELD_CHECKBOX == $addItem['type'] ||
-                        Constants::FIELD_COMBOBOX == $addItem['type']) {
-                        $queValues = \unserialize($addItem['values']);
+                    if (Constants::FIELD_CHECKBOX == $queItem['type'] ||
+                        Constants::FIELD_COMBOBOX == $queItem['type']) {
+                        $queValues = \unserialize($queItem['values']);
                         $ansItems = \unserialize($ansText);
                         $ansText = '';
                         foreach ($ansItems as $ansItem) {
                             $ansText .= $queValues[(int)$ansItem] . ' <br>';
                         }
                     }
-                    if (Constants::FIELD_SELECTBOX == $addItem['type']) {
-                        $queValues = \unserialize($addItem['values']);
+                    if (Constants::FIELD_SELECTBOX == $queItem['type']) {
+                        $queValues = \unserialize($queItem['values']);
                         $ansItem = (string)\unserialize($ansText);
                         $ansText = $queValues[(int)$ansItem];
                     }
-                    if (Constants::FIELD_RADIO == $addItem['type']) {
-                        $queValues = \unserialize($addItem['values']);
+                    if (Constants::FIELD_RADIO == $queItem['type']) {
+                        $queValues = \unserialize($queItem['values']);
                         $ansText = $queValues[$ansText];
                     }
                     $answers[$queId] = $ansText;
