@@ -204,10 +204,10 @@ require_once __DIR__ . '/main.php';
 \define('_AM_WGEVENTS_MAINTENANCE_TYP', 'Art der Wartung');
 \define('_AM_WGEVENTS_MAINTENANCE_DESC', 'Beschreibung der Wartung');
 \define('_AM_WGEVENTS_MAINTENANCE_RESULTS', 'Wartungsergebnis');
-\define('_AM_WGEVENTS_MAINTENANCE_INVALID_QUE', 'Überprüfung Tabelle Zusatzinfos');
-\define('_AM_WGEVENTS_MAINTENANCE_INVALID_QUE_DESC', 'Überprüfung der Tabelle Zusatzinfos und Suche nach Einträgen ohne Verweis auf eine gültige Veranstaltung');
+\define('_AM_WGEVENTS_MAINTENANCE_INVALID_QUE', 'Überprüfung Tabelle Fragen');
+\define('_AM_WGEVENTS_MAINTENANCE_INVALID_QUE_DESC', 'Überprüfung der Tabelle Fragen und Suche nach Einträgen ohne Verweis auf eine gültige Veranstaltung');
 \define('_AM_WGEVENTS_MAINTENANCE_INVALID_ANSWERS', 'Überprüfung Tabelle Antworten');
-\define('_AM_WGEVENTS_MAINTENANCE_INVALID_ANSWERS_DESC', 'Überprüfung der Tabelle Antworten und Suche nach Einträgen ohne Verweis auf eine gültige Zusatzinfo');
+\define('_AM_WGEVENTS_MAINTENANCE_INVALID_ANSWERS_DESC', 'Überprüfung der Tabelle Antworten und Suche nach Einträgen ohne Verweis auf eine gültige Frage');
 \define('_AM_WGEVENTS_MAINTENANCE_CHECKTABLE_SUCCESS', 'Überprüfung der Tabelle erfolgreich beendet');
 \define('_AM_WGEVENTS_MAINTENANCE_ANON_DATA', 'Anonymisieren alte Registrierungsdaten');
 \define('_AM_WGEVENTS_MAINTENANCE_ANON_DATA_DESC', 'Zur Wahrung der Vorgaben der Datenschutzbestimmungen sind Daten zu Veranstaltungen, die nicht mehr benötigt werden, auch wieder zu löschen.<br>
