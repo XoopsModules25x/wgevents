@@ -7,8 +7,6 @@ Die Daten zur Registrierung von {NAME} für diese Veranstaltung haben sich geän
 
 Weitere Infos findest Du unter {EVENTURL}
 
-{SIGNATURE}
-
 ------------------------------------------------------------------
 
 {X_SITENAME} ({X_SITEURL})

@@ -8,8 +8,6 @@ Link zur Veranstaltung: {EVENTURL}
 
 {INFOTEXT}
 
-{SIGNATURE}
-
 ------------------------------------------------------------------
 
 {X_SITENAME} ({X_SITEURL})
