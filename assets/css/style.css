@@ -75,3 +75,8 @@ ul.menu > li + li:before {
     pointer-events: none;
     opacity: .65;
 }
+
+/*tablesorter-filter-row*/
+.tablesorter-filter-row td input.disabled {
+    display: none;
+}
