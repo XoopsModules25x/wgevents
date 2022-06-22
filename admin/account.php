@@ -241,14 +241,6 @@ switch ($op) {
                 $GLOBALS['xoopsTpl']->append('accounts_list', $account);
                 unset($account);
             }
-            /*
-            // Display Navigation
-            if ($accountCount > $limit) {
-                require_once \XOOPS_ROOT_PATH . '/class/pagenav.php';
-                $pagenav = new \XoopsPageNav($accountCount, $limit, $start, 'start', 'op=list&limit=' . $limit);
-                $GLOBALS['xoopsTpl']->assign('pagenav', $pagenav->renderNav());
-            }
-            */
         }
         break;
     case 'new':

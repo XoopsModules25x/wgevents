@@ -15,7 +15,7 @@
             <{/if}>
                 <thead>
                     <tr class='head wge-reg-list-head'>
-                        <th class="sorter-false filter-false">&nbsp;</th>
+                        <th class="filter-false">&nbsp;</th>
                         <th><{$smarty.const._MA_WGEVENTS_REGISTRATION_SALUTATION}></th>
                         <th><{$smarty.const._MA_WGEVENTS_REGISTRATION_FIRSTNAME}></th>
                         <th><{$smarty.const._MA_WGEVENTS_REGISTRATION_LASTNAME}></th>

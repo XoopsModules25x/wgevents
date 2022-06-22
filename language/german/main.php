@@ -70,8 +70,8 @@ require_once __DIR__ . '/admin.php';
 \define('_MA_WGEVENTS_EVENTS_LIST', 'Liste der Veranstaltungen');
 \define('_MA_WGEVENTS_EVENTS_TITLE', 'Veranstaltungen Titel');
 \define('_MA_WGEVENTS_EVENTS_DESC', 'Veranstaltungen Beschreibung');
-\define('_MA_WGEVENTS_EVENTS_LISTPAST', 'Vergangene Veranstaltungen');
 \define('_MA_WGEVENTS_EVENTS_LISTCOMING', 'Kommende Veranstaltungen');
+\define('_MA_WGEVENTS_EVENTS_LISTPAST', 'Vergangene Veranstaltungen');
 // Caption of Event
 \define('_MA_WGEVENTS_EVENT_ID', 'Id');
 \define('_MA_WGEVENTS_EVENT_IDENTIFIER', 'Eindeutige Kennung der Veranstaltung');
@@ -120,7 +120,7 @@ require_once __DIR__ . '/admin.php';
 \define('_MA_WGEVENTS_EVENT_GM_APPLYCOORDS', 'Koordinaten übernehmen');
 \define('_MA_WGEVENTS_EVENT_INFORM_MODIF', 'Teilnehmer informieren');
 \define('_MA_WGEVENTS_EVENT_INFORM_MODIF_DESC', 'Sollen die Teilnehmer per Mail über Änderungen der Veranstaltung informiert werden?');
-// Category
+// Categories
 \define('_MA_WGEVENTS_CATEGORY_LOGO', 'Logo');
 \define('_MA_WGEVENTS_CATEGORY_NOEVENTS', 'Keine Veranstaltungen verfügbar');
 \define('_MA_WGEVENTS_CATEGORY_EVENT', '1 Veranstaltung');
@@ -144,7 +144,7 @@ require_once __DIR__ . '/admin.php';
 \define('_MA_WGEVENTS_REGISTRATIONS_NBCURR', '%s von %s verfügbaren Plätzen bereits belegt');
 \define('_MA_WGEVENTS_REGISTRATIONS_NBCURR_INDEX', '%s von %s belegt');
 \define('_MA_WGEVENTS_REGISTRATIONS_FULL', 'ausgebucht');
-\define('_MA_WGEVENTS_REGISTRATIONS_FULL_LISTWAIT', 'Anmeldung für Warteliste möglich');
+\define('_MA_WGEVENTS_REGISTRATIONS_FULL_LISTWAIT', 'Anmeldung auf Warteliste möglich');
 \define('_MA_WGEVENTS_REGISTRATION_TOEARLY', 'Entschuldigung, aber die Anmeldung ist erst ab %s möglich');
 \define('_MA_WGEVENTS_REGISTRATION_TOLATE', 'Entschuldigung, aber die Anmeldung ist seit %s nicht mehr möglich');
 // Caption of Registration

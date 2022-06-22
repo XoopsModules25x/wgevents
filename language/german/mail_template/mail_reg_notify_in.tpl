@@ -1,14 +1,12 @@
-﻿
-{UNAME} hat {NAME} zu folgender Veranstaltung angemeldet:
 
 Veranstaltung: {EVENTNAME}
+
 Ort: {EVENTLOCATION}
 Datum: {EVENTDATEFROM}
-Link zur Veranstaltung: {EVENTURL}
-
+Die Daten zur Registrierung von {NAME} für diese Veranstaltung haben sich geändert:
 {INFOTEXT}
 
-{SIGNATURE}
+Weitere Infos findest Du unter {EVENTURL}
 
 ------------------------------------------------------------------
 

@@ -1,4 +1,4 @@
-﻿Veranstaltung: {EVENTNAME}
+Veranstaltung: {EVENTNAME}
 Ort: {EVENTLOCATION}
 Datum: {EVENTDATEFROM}
 
@@ -6,8 +6,6 @@ Die Daten zur Registrierung von {NAME} für diese Veranstaltung haben sich geän
 {INFOTEXT}
 
 Weitere Infos findest Du unter {EVENTURL}
-
-{SIGNATURE}
 
 ------------------------------------------------------------------
 

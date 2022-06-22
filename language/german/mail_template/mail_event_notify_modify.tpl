@@ -1,8 +1,8 @@
-﻿Veranstaltung: {EVENTNAME}<br>
+Veranstaltung: {EVENTNAME}<br>
 Ort: {EVENTLOCATION}<br>
 Datum: {EVENTDATEFROM}<br>
 <br>
-Hallo {NAME},<br>
+Hallo {NAME}<br>
 <br>
 die Daten zu dieser Veranstaltung haben sich geändert:<br>
 {INFOTEXT}<br>

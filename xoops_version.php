@@ -392,6 +392,7 @@ $modversion['config'][] = [
     'options'     => ['blackice' => 'blackice',
         'blue' => 'blue',
         'bootstrap' => 'bootstrap',
+        'bootstrap_4' => 'bootstrap_4',
         'dark' => 'dark',
         'default' => 'default',
         'dropbox' => 'dropbox',
@@ -400,6 +401,7 @@ $modversion['config'][] = [
         'ice' => 'ice',
         'materialize' => 'materialize',
         'metro-dark' => 'metro-dark',
+        'wedega_1' => 'wedega_1',
         'xoopsadmin' => 'xoopsadmin',
     ],
 ];
@@ -411,7 +413,7 @@ $modversion['config'][] = [
     'formtype'    => 'select',
     'valuetype'   => 'text',
     'default'     => '10',
-    'options'     => ['10' => 10, '20' => 20, '30' => 30, '40' => 40, '50' => 50, '100' => 100, 'all' => \_MI_WGEVENTS_TABLESORTER_SHOW_ALL],
+    'options'     => ['10' => 10, '20' => 20, '30' => 30, '40' => 40, '50' => 50, '100' => 100],
 ];
 // Show copyright
 $modversion['config'][] = [

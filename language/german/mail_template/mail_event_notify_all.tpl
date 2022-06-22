@@ -1,4 +1,4 @@
-﻿Veranstaltung: {EVENTNAME}<br>
+Veranstaltung: {EVENTNAME}<br>
 Ort: {EVENTLOCATION}<br>
 Datum: {EVENTDATEFROM}<br>
 Link zur Veranstaltung: {EVENTURL}<br>

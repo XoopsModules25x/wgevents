@@ -32,10 +32,10 @@ require_once __DIR__ . '/main.php';
 \define('_AM_WGEVENTS_THEREARE_REGISTRATIONS', "Es gibt <span class='bold'>%s</span> Anmeldungen in der Datenbank");
 \define('_AM_WGEVENTS_THEREARE_REGISTRATIONHISTS', "Es gibt <span class='bold'>%s</span> historische Anmeldungen in der Datenbank");
 \define('_AM_WGEVENTS_THEREARE_QUESTIONS', "Es gibt <span class='bold'>%s</span> Fragen in der Datenbank");
+\define('_AM_WGEVENTS_THEREARE_FIELDS', "Es gibt <span class='bold'>%s</span> Felder in der Datenbank");
 \define('_AM_WGEVENTS_THEREARE_ANSWERS', "Es gibt <span class='bold'>%s</span> Antworten in der Datenbank");
 \define('_AM_WGEVENTS_THEREARE_ANSWERHISTS', "Es gibt <span class='bold'>%s</span> historische Antworten in der Datenbank");
 \define('_AM_WGEVENTS_THEREARE_TEXTBLOCKS', "Es gibt <span class='bold'>%s</span> Textblöcke in der Datenbank");
-\define('_AM_WGEVENTS_THEREARE_FIELDS', "Es gibt <span class='bold'>%s</span> Felder in der Datenbank");
 \define('_AM_WGEVENTS_THEREARE_LOGS', "Es gibt <span class='bold'>%s</span> Log-Einträge in der Datenbank");
 \define('_AM_WGEVENTS_THEREARE_ACCOUNTS', "Es sind <span class='bold'>%s</span> E-Mail-Konten vorhanden");
 // ---------------- Admin Files ----------------
@@ -191,11 +191,11 @@ require_once __DIR__ . '/main.php';
 \define('_AM_WGEVENTS_ACCOUNT_PRIMARY', 'Primäres E-Mail-Konto');
 \define('_AM_WGEVENTS_ACCOUNT_ERROR_OPEN_MAILBOX', 'Fehler beim Öffnen der Mailbox! Bitte Einstellungen überprüfen!');
 \define('_AM_WGEVENTS_SAVE_AND_CHECK', 'Speichern und Einstellungen überprüfen');
-\define('_AM_WGEVENTS_ACCOUNT_CHECK', 'Check');
-\define('_AM_WGEVENTS_ACCOUNT_CHECK_RESULT', 'Ergebnis Überprüfung');
 \define('_AM_WGEVENTS_ACCOUNT_CHECK_OK', 'erfolgreich  ');
 \define('_AM_WGEVENTS_ACCOUNT_CHECK_FAILED', 'fehlgeschlagen  ');
 \define('_AM_WGEVENTS_ACCOUNT_CHECK_SKIPPED', 'übersprungen ');
+\define('_AM_WGEVENTS_ACCOUNT_CHECK', 'Check');
+\define('_AM_WGEVENTS_ACCOUNT_CHECK_RESULT', 'Ergebnis Überprüfung');
 \define('_AM_WGEVENTS_ACCOUNT_CHECK_INFO', 'Zusätzliche Infos');
 \define('_AM_WGEVENTS_ACCOUNT_CHECK_OPEN_MAILBOX', 'Öffnen Mailbox ');
 \define('_AM_WGEVENTS_ACCOUNT_CHECK_LIST_FOLDERS', 'Verzeichnisliste einlesen');
@@ -204,10 +204,10 @@ require_once __DIR__ . '/main.php';
 \define('_AM_WGEVENTS_MAINTENANCE_TYP', 'Art der Wartung');
 \define('_AM_WGEVENTS_MAINTENANCE_DESC', 'Beschreibung der Wartung');
 \define('_AM_WGEVENTS_MAINTENANCE_RESULTS', 'Wartungsergebnis');
-\define('_AM_WGEVENTS_MAINTENANCE_INVALID_QUE', 'Überprüfung Tabelle Zusatzinfos');
-\define('_AM_WGEVENTS_MAINTENANCE_INVALID_QUE_DESC', 'Überprüfung der Tabelle Zusatzinfos und Suche nach Einträgen ohne Verweis auf eine gültige Veranstaltung');
+\define('_AM_WGEVENTS_MAINTENANCE_INVALID_QUE', 'Überprüfung Tabelle Fragen');
+\define('_AM_WGEVENTS_MAINTENANCE_INVALID_QUE_DESC', 'Überprüfung der Tabelle Fragen und Suche nach Einträgen ohne Verweis auf eine gültige Veranstaltung');
 \define('_AM_WGEVENTS_MAINTENANCE_INVALID_ANSWERS', 'Überprüfung Tabelle Antworten');
-\define('_AM_WGEVENTS_MAINTENANCE_INVALID_ANSWERS_DESC', 'Überprüfung der Tabelle Antworten und Suche nach Einträgen ohne Verweis auf eine gültige Zusatzinfo');
+\define('_AM_WGEVENTS_MAINTENANCE_INVALID_ANSWERS_DESC', 'Überprüfung der Tabelle Antworten und Suche nach Einträgen ohne Verweis auf eine gültige Frage');
 \define('_AM_WGEVENTS_MAINTENANCE_CHECKTABLE_SUCCESS', 'Überprüfung der Tabelle erfolgreich beendet');
 \define('_AM_WGEVENTS_MAINTENANCE_ANON_DATA', 'Anonymisieren alte Registrierungsdaten');
 \define('_AM_WGEVENTS_MAINTENANCE_ANON_DATA_DESC', 'Zur Wahrung der Vorgaben der Datenschutzbestimmungen sind Daten zu Veranstaltungen, die nicht mehr benötigt werden, auch wieder zu löschen.<br>
@@ -242,13 +242,14 @@ Bitte definiere das Datum, bis zu dem alle Daten anonymisiert werden sollen.');
 \define('_AM_WGEVENTS_CLONE_EXISTS', 'FEHLER: Modulnamen bereits benutzt, bitte versuchen Sie einen anderen!');
 \define('_AM_WGEVENTS_CLONE_CONGRAT', 'Herzliche Glückwünsche! %s wurde erfolgreich erstellt! <br /> Sie können Änderungen in Sprachdateien machen.');
 \define('_AM_WGEVENTS_CLONE_IMAGEFAIL', 'Achtung, wir haben es nicht geschafft, das neue Modul-Logo zu erstellen. Bitte beachten Sie assets / images / logo_module.png manuell zu modifizieren!');
-\define('_AM_WGEVENTS_CLONE_FAIL', "Leider konnten wir den neuen Klon nicht erstellen . Vielleicht müssen Sie die Schreibrechte von 'modules' Verzeichnis auf  (CHMOD 777) festlegen und neu versuchen.");
-// ---------------- Admin permissions ----------------
-// permissions for forms (Kategorien)
+\define('_AM_WGEVENTS_CLONE_FAIL', 'Leider konnten wir den neuen Klon nicht erstellen . Vielleicht müssen Sie die Schreibrechte von \'modules\' Verzeichnis auf  (CHMOD 777) festlegen und neu versuchen.');
+// General
+// ---------------- Admin Permission ----------------
+// Permission for forms (categories)
 \define('_AM_WGEVENTS_PERMISSIONS_APPROVE', 'Berechtigung zur Freigabe');
 \define('_AM_WGEVENTS_PERMISSIONS_SUBMIT', 'Berechtigung zum Senden');
 \define('_AM_WGEVENTS_PERMISSIONS_VIEW', 'Berechtigung zum Ansehen');
-// permissions for tab permissions
+// Permission for tab permissions
 \define('_AM_WGEVENTS_PERMISSIONS_DESC', 'Die Berechtigung sind wie folgt zu verstehen:<br>');
 \define('_AM_WGEVENTS_PERMISSIONS_GLOBAL', 'Globale Berechtigung');
 \define('_AM_WGEVENTS_PERMISSIONS_GLOBAL_DESC', '1) Globale Berechtigungen sollten nur an Webmaster vergeben werden<br>');
@@ -284,7 +285,7 @@ Bitte definiere das Datum, bis zu dem alle Daten anonymisiert werden sollen.');
 \define('_AM_WGEVENTS_PERMISSIONS_REGISTRATIONS_AUTOVERIF_DESC', '5) Berechtigung zum Senden Anmeldungen ohne zusätzliche Verifizierung: Anmeldungen, die durch diese Gruppe eingesendet werden, gelten automatisch als verifiziert. Ein zusätzliche Bestätigung per Mail ist nicht erforderlich<br>');
 \define('_AM_WGEVENTS_PERMISSIONS_REGISTRATIONS_SUBMIT', 'Berechtigung zum Senden Anmeldungen');
 \define('_AM_WGEVENTS_PERMISSIONS_REGISTRATIONS_SUBMIT_DESC', '6) Berechtigung zum Senden Anmeldungen: Anmeldungen, die durch diese Gruppe eingesendet werden, müssen zusätzliche über einen Bestätigungslink, der per Mail zugeschickt wird, bestätigt werden<br>');
-
+//\define('_AM_WGEVENTS_PERMISSIONS_REGISTRATIONS_APPROVE', 'Berechtigung zur Freigabe von Anmeldungen');
 //\define('_AM_WGEVENTS_PERMISSIONS_TEXTBLOCKS_VIEW', 'Berechtigung zum Ansehen Textblöcke');
 //\define('_AM_WGEVENTS_PERMISSIONS_TEXTBLOCKS_SUBMIT', 'Berechtigung zum Senden Textblöcke');
 /*

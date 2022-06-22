@@ -364,13 +364,14 @@ switch ($op) {
             }
             */
             // send notifications/confirmation emails
-            $infotext        = '';
+            $infotextReg     = ''; // info text for registered person
+            $infotextOrg     = ''; // infotext for organizer
             $previousMail    = '';
             $newRegistration = false;
             if ($regId > 0) {
                 // find changes in table registrations
-                $infotext = $registrationHandler->getRegistrationsCompare($registrationObjOld, $registrationObj);
-                if ('' != $infotext) {
+                $infotextReg = $registrationHandler->getRegistrationsCompare($registrationObjOld, $registrationObj);
+                if ('' != $infotextReg) {
                     // create history
                     if ($registrationObjOld->getVar('email') != $registrationObj->getVar('email')) {
                         $previousMail = $registrationObjOld->getVar('email');
@@ -386,8 +387,9 @@ switch ($op) {
                         // create history
                         $answerhistHandler->createHistory($regEvid, $regId, 'update');
                     }
-                    $infotext .= $result;
+                    $infotextReg .= $result;
                 }
+                $infotextOrg = $infotextReg;
                 // other params
                 $typeNotify  = Constants::MAIL_REG_NOTIFY_MODIFY;
                 $typeConfirm = Constants::MAIL_REG_CONFIRM_MODIFY;
@@ -395,7 +397,7 @@ switch ($op) {
                 $newRegistration = true;
                 if (1 == $regListwait) {
                     // registration was put on a waiting list
-                    $infotext .= \_MA_WGEVENTS_MAIL_REG_IN_LISTWAIT . PHP_EOL;
+                    $infotextReg .= \_MA_WGEVENTS_MAIL_REG_IN_LISTWAIT . PHP_EOL;
                 }
 
                 if (Constants::STATUS_SUBMITTED == $regStatus) {
@@ -409,16 +411,16 @@ switch ($op) {
                     ];
                     $verifCode = base64_encode(implode('||', $verif));
                     $verifLink = WGEVENTS_URL . '/verification.php?verifkey=' . $verifCode;
-                    $infotext .= \sprintf(\_MA_WGEVENTS_MAIL_REG_IN_VERIF, $verifLink) . PHP_EOL;
+                    $infotextReg .= \sprintf(\_MA_WGEVENTS_MAIL_REG_IN_VERIF, $verifLink) . PHP_EOL;
                 }
                 if (1 == $regListwait || Constants::STATUS_SUBMITTED == $regStatus) {
                     // registration was put on a waiting list
-                    $infotext .= \_MA_WGEVENTS_MAIL_REG_IN_FINAL . PHP_EOL;
+                    $infotextReg .= \_MA_WGEVENTS_MAIL_REG_IN_FINAL . PHP_EOL;
                 }
                 $typeNotify  = Constants::MAIL_REG_NOTIFY_IN;
                 $typeConfirm = Constants::MAIL_REG_CONFIRM_IN;
             }
-            if ($newRegistration || '' != $infotext) {
+            if ($newRegistration || '' != $infotextReg) {
                 $registerNotify = (string)$eventObj->getVar('register_notify', 'e');
                 if ('' != $registerNotify) {
                     // send notifications to emails of register_notify
@@ -426,7 +428,7 @@ switch ($op) {
                     if (\count($notifyEmails) > 0) {
                         $mailsHandler = new MailHandler();
                         $mailParams   = $mailsHandler->getMailParam($regEvid, $newRegId);
-                        $mailParams['infotext'] = $infotext;
+                        $mailParams['infotext'] = $infotextOrg;
                         $mailParams['recipients'] = $notifyEmails;
                         $mailsHandler->setParams($mailParams);
                         $mailsHandler->setType($typeNotify);
@@ -445,7 +447,7 @@ switch ($op) {
                     }
                     $mailsHandler = new MailHandler();
                     $mailParams = $mailsHandler->getMailParam($regEvid, $newRegId);
-                    $mailParams['infotext'] = $infotext;
+                    $mailParams['infotext'] = $infotextReg;
                     $mailParams['recipients'] = $recipients;
                     $mailsHandler->setParams($mailParams);
                     $mailsHandler->setType($typeConfirm);

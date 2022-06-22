@@ -75,6 +75,10 @@ ul.menu > li + li:before {
     pointer-events: none;
     opacity: .65;
 }
+.wge-reg-list-full {
+    text-align: left;
+    padding:5px !important;
+}
 
 /*tablesorter-filter-row*/
 .tablesorter-filter-row td input.disabled {

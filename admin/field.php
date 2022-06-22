@@ -68,13 +68,6 @@ switch ($op) {
                 $GLOBALS['xoopsTpl']->append('fields_list', $field);
                 unset($field);
             }
-            /*
-            // Display Navigation
-            if ($fieldCount > $limit) {
-                require_once \XOOPS_ROOT_PATH . '/class/pagenav.php';
-                $pagenav = new \XoopsPageNav($fieldCount, $limit, $start, 'start', 'op=list&limit=' . $limit);
-                $GLOBALS['xoopsTpl']->assign('pagenav', $pagenav->renderNav());
-            }*/
         } else {
             $GLOBALS['xoopsTpl']->assign('error', \_AM_WGEVENTS_THEREARENT_FIELDS);
         }
