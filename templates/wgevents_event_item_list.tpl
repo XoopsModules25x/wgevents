@@ -21,6 +21,7 @@
                         <span class="wge-progress-text"><{$event.regcurrent}></span>
                     </div>
                 </div>
+                <{if $event.regpercentage|default:0 >= 100 && $event.register_listwait|default:0 == 1}><p class="wge-reg-list-full"><{$smarty.const._MA_WGEVENTS_REGISTRATIONS_FULL_LISTWAIT}></p><{/if}>
             <{/if}>
         </div>
         <div class='col-sm-7 right'>

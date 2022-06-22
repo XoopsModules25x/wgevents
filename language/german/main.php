@@ -144,7 +144,7 @@ require_once __DIR__ . '/admin.php';
 \define('_MA_WGEVENTS_REGISTRATIONS_NBCURR', '%s von %s verfügbaren Plätzen bereits belegt');
 \define('_MA_WGEVENTS_REGISTRATIONS_NBCURR_INDEX', '%s von %s belegt');
 \define('_MA_WGEVENTS_REGISTRATIONS_FULL', 'ausgebucht');
-\define('_MA_WGEVENTS_REGISTRATIONS_FULL_LISTWAIT', 'Anmeldung für Warteliste möglich');
+\define('_MA_WGEVENTS_REGISTRATIONS_FULL_LISTWAIT', 'Anmeldung auf Warteliste möglich');
 \define('_MA_WGEVENTS_REGISTRATION_TOEARLY', 'Entschuldigung, aber die Anmeldung ist erst ab %s möglich');
 \define('_MA_WGEVENTS_REGISTRATION_TOLATE', 'Entschuldigung, aber die Anmeldung ist seit %s nicht mehr möglich');
 // Caption of Registration

@@ -401,6 +401,7 @@ $modversion['config'][] = [
         'ice' => 'ice',
         'materialize' => 'materialize',
         'metro-dark' => 'metro-dark',
+        'wedega_1' => 'wedega_1',
         'xoopsadmin' => 'xoopsadmin',
     ],
 ];
