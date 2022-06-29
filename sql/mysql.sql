@@ -263,7 +263,6 @@ CREATE TABLE `wgevents_task` (
     `id`          INT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
     `type`        INT(10)      NOT NULL DEFAULT '0',
     `params`      TEXT         NOT NULL ,
-    `infotext`    VARCHAR(200) NOT NULL DEFAULT '',
     `recipient`   VARCHAR(200) NOT NULL DEFAULT '',
     `datecreated` INT(11)      NOT NULL DEFAULT '0',
     `submitter`   INT(10)      NOT NULL DEFAULT '0',
