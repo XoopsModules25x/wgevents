@@ -41,6 +41,7 @@ require_once __DIR__ . '/common.php';
 \define('_MI_WGEVENTS_ADMENU12', 'Antworten Historie');
 \define('_MI_WGEVENTS_ADMENU13', 'Logs');
 \define('_MI_WGEVENTS_ADMENU14', 'E-Mail-Konten');
+\define('_MI_WGEVENTS_ADMENU15', 'Aufgaben');
 \define('_MI_WGEVENTS_ADMENU20', 'Klonen');
 \define('_MI_WGEVENTS_ADMENU21', 'Feedback');
 \define('_MI_WGEVENTS_ABOUT', 'Über');

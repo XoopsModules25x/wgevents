@@ -6,6 +6,7 @@
  - added history lists (registrations, answers) in admin area (goffy)
  - implemented tablesorter in list of registrations (goffy)
  - fixed bug in blocks (cronywell/goffy)
+ - implemented mail handling by task list (goffy)
 
 ==============================================================
 1.0.1 [2022/01/31]

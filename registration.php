@@ -78,6 +78,7 @@ switch ($op) {
         if (!$permissionsHandler->getPermRegistrationsSubmit()) {
             \redirect_header('registration.php?op=list', 3, \_NOPERM);
         }
+        $GLOBALS['xoopsTpl']->assign('redir', 'listmy');
         // Breadcrumbs
         $xoBreadcrumbs[] = ['title' => \_MA_WGEVENTS_REGISTRATIONS_MYLIST];
         $events = [];
@@ -105,8 +106,6 @@ switch ($op) {
             ];
         }
         foreach ($events as $evId => $event) {
-            // get all questions for this event
-            $GLOBALS['xoopsTpl']->assign('redir', 'listmy');
             // get all questions for this event
             $questionsArr = $questionHandler->getQuestionsByEvent($evId);
             $registrations[$evId]['questions'] = $questionsArr;
@@ -144,7 +143,7 @@ switch ($op) {
             $GLOBALS['xoopsTpl']->assign('showSubmitter', true);
         }
         $GLOBALS['xoopsTpl']->assign('captionList', $captionList);
-        $GLOBALS['xoopsTpl']->assign('redir', $redir);
+        $GLOBALS['xoopsTpl']->assign('redir', $op);
         $GLOBALS['xoopsTpl']->assign('op', $op);
         $GLOBALS['xoopsTpl']->assign('evid', $regEvid);
 
@@ -205,6 +204,7 @@ switch ($op) {
         $GLOBALS['xoopsTpl']->assign('js_feezero', Utility::FloatToString(0));
         $GLOBALS['xoopsTpl']->assign('js_lang_changed', \_MA_WGEVENTS_REGISTRATION_CHANGED);
         $GLOBALS['xoopsTpl']->assign('js_lang_approved', \_MA_WGEVENTS_STATUS_APPROVED);
+        $GLOBALS['xoopsTpl']->assign('js_lang_error_save', \_MA_WGEVENTS_ERROR_SAVE);
 
         // tablesorter
         $GLOBALS['xoopsTpl']->assign('tablesorter', true);
@@ -228,8 +228,8 @@ switch ($op) {
         $GLOBALS['xoTheme']->addScript(\WGEVENTS_URL . '/assets/js/tablesorter/js/jquery.tablesorter.widgets.js');
         $GLOBALS['xoTheme']->addScript(\WGEVENTS_URL . '/assets/js/tablesorter/js/extras/jquery.tablesorter.pager.min.js');
         $GLOBALS['xoTheme']->addScript(\WGEVENTS_URL . '/assets/js/tablesorter/js/widgets/widget-pager.min.js');
-    break;
         break;
+
     case 'save':
         // Security Check
         if (!$GLOBALS['xoopsSecurity']->check()) {
@@ -347,22 +347,7 @@ switch ($op) {
                     $answerHandler->insert($answerObj);
                 }
             }
-            // Handle notification
-            /*
-            $regEvid = $registrationObj->getVar('evid');
-            $tags = [];
-            $tags['ITEM_NAME'] = $regEvid;
-            $tags['ITEM_URL']  = \XOOPS_URL . '/modules/wgevents/registration.php?op=show&id=' . $regId;
-            $notificationHandler = \xoops_getHandler('notification');
-            if ($regId > 0) {
-                // Event modify notification
-                $notificationHandler->triggerEvent('global', 0, 'global_modify', $tags);
-                $notificationHandler->triggerEvent('registrations', $newRegId, 'registration_modify', $tags);
-            } else {
-                // Event new notification
-                $notificationHandler->triggerEvent('global', 0, 'global_new', $tags);
-            }
-            */
+            // TODO: Handle notification
             // send notifications/confirmation emails
             $infotextReg     = ''; // info text for registered person
             $infotextOrg     = ''; // infotext for organizer
@@ -421,22 +406,22 @@ switch ($op) {
                 $typeConfirm = Constants::MAIL_REG_CONFIRM_IN;
             }
             if ($newRegistration || '' != $infotextReg) {
+                $mailsHandler = new MailHandler();
+                $mailParams = $mailsHandler->getMailParam($eventObj, $newRegId);
+                unset($mailsHandler);
                 $registerNotify = (string)$eventObj->getVar('register_notify', 'e');
                 if ('' != $registerNotify) {
+                    $mailParams['infotext'] = $infotextOrg;
                     // send notifications to emails of register_notify
                     $notifyEmails = $eventHandler->getRecipientsNotify($registerNotify);
                     if (\count($notifyEmails) > 0) {
-                        $mailsHandler = new MailHandler();
-                        $mailParams   = $mailsHandler->getMailParam($regEvid, $newRegId);
-                        $mailParams['infotext'] = $infotextOrg;
-                        $mailParams['recipients'] = $notifyEmails;
-                        $mailsHandler->setParams($mailParams);
-                        $mailsHandler->setType($typeNotify);
-                        $mailsHandler->executeReg();
-                        unset($mailsHandler);
+                        foreach ($notifyEmails as $recipient) {
+                            $taskHandler->createTask($typeNotify, $recipient, json_encode($mailParams));
+                        }
                     }
                 }
                 if (('' != $regEmail && Request::getInt('email_send') > 0) || ('' != $previousMail)) {
+                    $mailParams['infotext'] = $infotextReg;
                     // send confirmation, if radio is checked
                     // or inform old email in any case if email changed
                     $recipients = [];
@@ -445,16 +430,13 @@ switch ($op) {
                         // add old email address if it changed in order to inform old mail address
                         $recipients[] = $previousMail;
                     }
-                    $mailsHandler = new MailHandler();
-                    $mailParams = $mailsHandler->getMailParam($regEvid, $newRegId);
-                    $mailParams['infotext'] = $infotextReg;
-                    $mailParams['recipients'] = $recipients;
-                    $mailsHandler->setParams($mailParams);
-                    $mailsHandler->setType($typeConfirm);
-                    $mailsHandler->executeReg();
-                    unset($mailsHandler);
+                    foreach ($recipients as $recipient) {
+                        $taskHandler->createTask($typeConfirm, $recipient, json_encode($mailParams));
+                    }
                 }
             }
+            // excetue mail sending by task handler
+            $taskHandler->processTasks();
             // redirect after insert
             \redirect_header('registration.php?op=' . $redir . '&amp;redir=' . $redir . '&amp;evid=' . $regEvid, 2, \_MA_WGEVENTS_FORM_OK);
         }
@@ -522,7 +504,7 @@ switch ($op) {
         $eventObj = $eventHandler->get($registrationObj->getVar('evid'));
 
         $mailsHandler = new MailHandler();
-        $mailParams = $mailsHandler->getMailParam($regEvid, $regId);
+        $mailParams = $mailsHandler->getMailParam($eventObj, $regId);
         unset($mailsHandler);
 
         $mailParams['email'] = $registrationObj->getVar('email');
@@ -537,41 +519,25 @@ switch ($op) {
                 $answerhistHandler->createHistory($mailParams['evId'], $regId, 'delete');
                 //delete existing answers
                 $answerHandler->cleanupAnswers($mailParams['evId'], $regId);
-                // Event delete notification
-                /*
-                $tags = [];
-                $tags['ITEM_NAME'] = $regEvid;
-                $notificationHandler = \xoops_getHandler('notification');
-                $notificationHandler->triggerEvent('global', 0, 'global_delete', $tags);
-                $notificationHandler->triggerEvent('registrations', $regId, 'registration_delete', $tags);
-                */
+                // TODO:  Event delete notification
                 // send notifications/confirmation emails
-                $typeNotify  = Constants::MAIL_REG_NOTIFY_OUT;
-                $typeConfirm = Constants::MAIL_REG_CONFIRM_OUT;
                 $registerNotify = (string)$eventObj->getVar('register_notify', 'e');
                 if ('' != $registerNotify) {
                     // send notifications to emails of register_notify
                     $notifyEmails = $eventHandler->getRecipientsNotify($registerNotify);
                     if (\count($notifyEmails) > 0) {
-                        $mailsHandler = new MailHandler();
-                        $mailParams['recipients'] = $notifyEmails;
-                        $mailsHandler->setParams($mailParams);
-                        $mailsHandler->setType($typeNotify);
-                        $mailsHandler->executeReg();
-                        unset($mailsHandler);
+                        foreach ($notifyEmails as $recipient) {
+                            $taskHandler->createTask(Constants::MAIL_REG_NOTIFY_OUT, $recipient, json_encode($mailParams));
+                        }
                     }
                 }
                 // send email in any case if email is available
                 if ('' != $mailParams['regEmail']) {
                     // send confirmation
-                    $mailsHandler = new MailHandler();
-                    $mailParams['recipients'] = $mailParams['regEmail'];
-                    $mailsHandler->setParams($mailParams);
-                    $mailsHandler->setType($typeConfirm);
-                    $mailsHandler->executeReg();
-                    unset($mailsHandler);
+                    $taskHandler->createTask(Constants::MAIL_REG_CONFIRM_OUT, $mailParams['regEmail'], json_encode($mailParams));
                 }
-
+                // execute mail sending by task handler
+                $taskHandler->processTasks();
                 \redirect_header('registration.php?op=' . $redir . '&amp;redir=' . $redir . '&amp;id=' . $regId . '&amp;evid=' . $regEvid, 3, \_MA_WGEVENTS_FORM_DELETE_OK);
             } else {
                 $GLOBALS['xoopsTpl']->assign('error', $registrationObj->getHtmlErrors());
@@ -642,26 +608,29 @@ switch ($op) {
             $mailToArr[$mailFrom] = $mailFrom;
         }
         $mailParams = [];
-        $mailParams['template']    ='mail_event_notify_all.tpl';
-        $mailParams['evId']        = $regEvid;
-        $mailParams['evName']      = $eventObj->getVar('name');
-        $mailParams['evDatefrom']  = $eventObj->getVar('datefrom');
-        $mailParams['evLocation']  = $eventObj->getVar('location');
-        $mailParams['mailFrom']    = $mailFrom;
-        $mailParams['mailBody']    = Request::getString('mail_body');
-        $mailParams['mailSubject'] = Request::getString('mail_subject');
-        $mailParams['recipients']  = $mailToArr;
+        $mailParams['evId']                  = $regEvid;
+        $mailParams['evName']                = $eventObj->getVar('name');
+        $mailParams['evDatefrom']            = $eventObj->getVar('datefrom');
+        $mailParams['evLocation']            = $eventObj->getVar('location');
+        $mailParams['evSubmitter']           = $eventObj->getVar('submitter');
+        $mailParams['evStatus']              = $eventObj->getVar('status');
+        $mailParams['evRegister_sendermail'] = $eventObj->getVar('register_sendermail');
+        $mailParams['evRegister_sendername'] = $eventObj->getVar('register_sendername');
+        $mailParams['evRegister_signature']  = $eventObj->getVar('register_signature');
+        $mailParams['mailFrom']              = $mailFrom;
+        $mailParams['mailSubject']           = Request::getString('mail_subject');
+        $mailParams['mailBody']              = Request::getText('mail_body');
 
-        $mailsHandler = new MailHandler();
-        $mailsHandler->setParams($mailParams);
-        $mailsHandler->setHtml(true);
-        $result = $mailsHandler->executeContactAll();
-        unset($mailsHandler);
+        foreach ($mailToArr as $mail) {
+            $taskHandler->createTask(Constants::MAIL_EVENT_NOTIFY_ALL, $mail, json_encode($mailParams));
+        }
+
+        $result = $taskHandler->processTasks();
         if ($result) {
             // redirect after insert
             \redirect_header('registration.php?op=listeventall&amp;evid=' . $regEvid, 2, \_MA_WGEVENTS_FORM_OK);
         } else {
-            \redirect_header('index.php?op=list', 3, \_MA_WGEVENTS_INVALID_PARAM);
+            \redirect_header('index.php?op=list', 3, 'exec_contactall:' . \_MA_WGEVENTS_INVALID_PARAM);
         }
 
         break;

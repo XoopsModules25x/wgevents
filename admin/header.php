@@ -43,6 +43,7 @@ $textblockHandler = $helper->getHandler('Textblock');
 $fieldHandler = $helper->getHandler('Field');
 $logHandler = $helper->getHandler('Log');
 $accountHandler = $helper->getHandler('Account');
+$taskHandler = $helper->getHandler('Task');
 $myts = MyTextSanitizer::getInstance();
 // 
 if (!isset($xoopsTpl) || !\is_object($xoopsTpl)) {

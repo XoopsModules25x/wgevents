@@ -51,13 +51,13 @@ switch ($op) {
     case 'change_financial':
         if (0 == $regEvid) {
             header('Content-Type: application/json');
-            echo json_encode(['status'=>'Error','message'=>\_MA_WGEVENTS_INVALID_PARAM]);
+            echo json_encode(['status'=>'error','message'=>\_MA_WGEVENTS_INVALID_PARAM]);
             break;
         }
         $eventObj = $eventHandler->get($regEvid);
         if (!is_object($eventObj)) {
             header('Content-Type: application/json');
-            echo json_encode(['status'=>'Error','message'=>\_MA_WGEVENTS_INVALID_PARAM]);
+            echo json_encode(['status'=>'error','message'=>\_MA_WGEVENTS_INVALID_PARAM]);
             break;
         }
         if (!$permissionsHandler->getPermRegistrationsApprove($eventObj->getVar('submitter'), $eventObj->getVar('status'))) {
@@ -85,56 +85,33 @@ switch ($op) {
         if ($registrationHandler->insert($registrationObj)) {
             // create history
             $registrationhistHandler->createHistory($registrationObjOld, 'update');
-            // Handle notification
-            /*
-            $regEvid = $registrationObj->getVar('evid');
-            $tags = [];
-            $tags['ITEM_NAME'] = $regEvid;
-            $tags['ITEM_URL']  = \XOOPS_URL . '/modules/wgevents/registration.php?op=show&id=' . $regId;
-            $notificationHandler = \xoops_getHandler('notification');
-            if ($regId > 0) {
-                // Event modify notification
-                $notificationHandler->triggerEvent('global', 0, 'global_modify', $tags);
-                $notificationHandler->triggerEvent('registrations', $newRegId, 'registration_modify', $tags);
-            } else {
-                // Event new notification
-                $notificationHandler->triggerEvent('global', 0, 'global_new', $tags);
-            }
-            */
-            // send notifications/confirmation emails
-            $regEvid = $registrationObj->getVar('evid');
-            $eventObj = $eventHandler->get($regEvid);
+            // TODO: Handle notification
+
+            $mailsHandler = new MailHandler();
+            $mailParams = $mailsHandler->getMailParam($eventObj, $regId);
+            unset($mailsHandler);
             // find changes in table registrations
-            $infotext = $registrationHandler->getRegistrationsCompare($registrationObjOld, $registrationObj);
-            $typeNotify  = Constants::MAIL_REG_NOTIFY_MODIFY;
-            $typeConfirm = Constants::MAIL_REG_CONFIRM_MODIFY;
+            $mailParams['infotext'] = $registrationHandler->getRegistrationsCompare($registrationObjOld, $registrationObj);
+
+            // send notifications/confirmation emails
             $registerNotify = (string)$eventObj->getVar('register_notify', 'e');
             if ('' != $registerNotify) {
                 // send notifications to emails of register_notify
                 $notifyEmails = $eventHandler->getRecipientsNotify($registerNotify);
                 if (\count($notifyEmails) > 0) {
-                    $mailsHandler = new MailHandler();
-                    $mailParams   = $mailsHandler->getMailParam($regEvid, $regId);
-                    $mailParams['infotext'] = $infotext;
-                    $mailParams['recipients'] = $notifyEmails;
-                    $mailsHandler->setParams($mailParams);
-                    $mailsHandler->setType($typeNotify);
-                    $mailsHandler->executeReg();
-                    unset($mailsHandler);
+                    foreach ($notifyEmails as $recipient) {
+                        $taskHandler->createTask(Constants::MAIL_REG_NOTIFY_MODIFY, $recipient, json_encode($mailParams));
+                    }
                 }
             }
             $regEmail = $registrationObj->getVar('email');
             if ('' != $regEmail) {
-                // send confirmation, if radio is checked
-                $mailsHandler = new MailHandler();
-                $mailParams = $mailsHandler->getMailParam($regEvid, $regId);
-                $mailParams['infotext'] = $infotext;
-                $mailParams['recipients'] = $mailParams['regEmail'];
-                $mailsHandler->setParams($mailParams);
-                $mailsHandler->setType($typeConfirm);
-                $mailsHandler->executeReg();
-                unset($mailsHandler);
+                $taskHandler->createTask(Constants::MAIL_REG_CONFIRM_MODIFY, $regEmail, json_encode($mailParams));
             }
+            // excetue mail sending by task handler
+            $taskHandler->processTasks();
+            header('Content-Type: application/json');
+            echo json_encode(['status'=>'success','message'=>'no errors']);
         }
         break;
     case 'listwait_takeover':
@@ -168,57 +145,33 @@ switch ($op) {
         $registrationObj->setVar('listwait', 0);
         // Insert Data
         if ($registrationHandler->insert($registrationObj)) {
-            // Handle notification
-            /*
-            $regEvid = $registrationObj->getVar('evid');
-            $tags = [];
-            $tags['ITEM_NAME'] = $regEvid;
-            $tags['ITEM_URL']  = \XOOPS_URL . '/modules/wgevents/registration.php?op=show&id=' . $regId;
-            $notificationHandler = \xoops_getHandler('notification');
-            if ($regId > 0) {
-                // Event modify notification
-                $notificationHandler->triggerEvent('global', 0, 'global_modify', $tags);
-                $notificationHandler->triggerEvent('registrations', $newRegId, 'registration_modify', $tags);
-            } else {
-                // Event new notification
-                $notificationHandler->triggerEvent('global', 0, 'global_new', $tags);
-            }
-            */
-            // send notifications/confirmation emails
-            $regEvid = $registrationObj->getVar('evid');
-            $eventObj = $eventHandler->get($regEvid);
-            // find changes in table registrations
-            $infotext = $registrationHandler->getRegistrationsCompare($registrationObjOld, $registrationObj);
+            // TODO: Handle notification
 
-            $typeNotify  = Constants::MAIL_REG_NOTIFY_MODIFY;
-            $typeConfirm = Constants::MAIL_REG_CONFIRM_MODIFY;
+            $mailsHandler = new MailHandler();
+            $mailParams = $mailsHandler->getMailParam($eventObj, $regId);
+            unset($mailsHandler);
+            // find changes in table registrations
+            $mailParams['infotext'] = $registrationHandler->getRegistrationsCompare($registrationObjOld, $registrationObj);
+
+            // send notifications/confirmation emails
             $registerNotify = (string)$eventObj->getVar('register_notify', 'e');
             if ('' != $registerNotify) {
                 // send notifications to emails of register_notify
                 $notifyEmails = $eventHandler->getRecipientsNotify($registerNotify);
                 if (\count($notifyEmails) > 0) {
-                    $mailsHandler = new MailHandler();
-                    $mailParams   = $mailsHandler->getMailParam($regEvid, $regId);
-                    $mailParams['infotext'] = $infotext;
-                    $mailParams['recipients'] = $notifyEmails;
-                    $mailsHandler->setParams($mailParams);
-                    $mailsHandler->setType($typeNotify);
-                    $mailsHandler->executeReg();
-                    unset($mailsHandler);
+                    foreach ($notifyEmails as $recipient) {
+                        $taskHandler->createTask(Constants::MAIL_REG_NOTIFY_MODIFY, $recipient, json_encode($mailParams));
+                    }
                 }
             }
             $regEmail = $registrationObj->getVar('email');
             if ('' != $regEmail) {
-                // send confirmation, if radio is checked
-                $mailsHandler = new MailHandler();
-                $mailParams = $mailsHandler->getMailParam($regEvid, $regId);
-                $mailParams['infotext'] = $infotext;
-                $mailParams['recipients'] = $mailParams['regEmail'];
-                $mailsHandler->setParams($mailParams);
-                $mailsHandler->setType($typeConfirm);
-                $mailsHandler->executeReg();
-                unset($mailsHandler);
+                $taskHandler->createTask(Constants::MAIL_REG_CONFIRM_MODIFY, $regEmail, json_encode($mailParams));
             }
+            // excetue mail sending by task handler
+            $taskHandler->processTasks();
+            header('Content-Type: application/json');
+            echo json_encode(['status'=>'success','message'=>'no errors']);
         }
         break;
     case 'approve_status':
@@ -253,64 +206,34 @@ switch ($op) {
         $registrationObj->setVar('status', Constants::STATUS_APPROVED);
         // Insert Data
         if ($registrationHandler->insert($registrationObj)) {
-            // Handle notification
-            /*
-            $regEvid = $registrationObj->getVar('evid');
-            $tags = [];
-            $tags['ITEM_NAME'] = $regEvid;
-            $tags['ITEM_URL']  = \XOOPS_URL . '/modules/wgevents/registration.php?op=show&id=' . $regId;
-            $notificationHandler = \xoops_getHandler('notification');
-            if ($regId > 0) {
-                // Event modify notification
-                $notificationHandler->triggerEvent('global', 0, 'global_modify', $tags);
-                $notificationHandler->triggerEvent('registrations', $newRegId, 'registration_modify', $tags);
-            } else {
-                // Event new notification
-                $notificationHandler->triggerEvent('global', 0, 'global_new', $tags);
-            }
-            */
-            // send notifications/confirmation emails
-            $regEvid = $registrationObj->getVar('evid');
-            $eventObj = $eventHandler->get($regEvid);
-            // find changes in table registrations
-            $infotext = $registrationHandler->getRegistrationsCompare($registrationObjOld, $registrationObj);
+            // TODO: Handle notification
 
-            $typeNotify  = Constants::MAIL_REG_NOTIFY_MODIFY;
-            $typeConfirm = Constants::MAIL_REG_CONFIRM_MODIFY;
+            $mailsHandler = new MailHandler();
+            $mailParams = $mailsHandler->getMailParam($eventObj, $regId);
+            unset($mailsHandler);
+            // find changes in table registrations
+            $mailParams['infotext'] = $registrationHandler->getRegistrationsCompare($registrationObjOld, $registrationObj);
+
+            // send notifications/confirmation emails
             $registerNotify = (string)$eventObj->getVar('register_notify', 'e');
             if ('' != $registerNotify) {
                 // send notifications to emails of register_notify
                 $notifyEmails = $eventHandler->getRecipientsNotify($registerNotify);
                 if (\count($notifyEmails) > 0) {
-                    $mailsHandler = new MailHandler();
-                    $mailParams   = $mailsHandler->getMailParam($regEvid, $regId);
-                    $mailParams['infotext'] = $infotext;
-                    $mailParams['recipients'] = $notifyEmails;
-                    $mailsHandler->setParams($mailParams);
-                    $mailsHandler->setType($typeNotify);
-                    $mailsHandler->executeReg();
-                    unset($mailsHandler);
+                    foreach ($notifyEmails as $recipient) {
+                        $taskHandler->createTask(Constants::MAIL_REG_NOTIFY_MODIFY, $recipient, json_encode($mailParams));
+                    }
                 }
             }
             $regEmail = $registrationObj->getVar('email');
             if ('' != $regEmail) {
-                // send confirmation, if radio is checked
-                $mailsHandler = new MailHandler();
-                $mailParams = $mailsHandler->getMailParam($regEvid, $regId);
-                $mailParams['infotext'] = $infotext;
-                $mailParams['recipients'] = $mailParams['regEmail'];
-                $mailsHandler->setParams($mailParams);
-                $mailsHandler->setType($typeConfirm);
-                $mailsHandler->executeReg();
-                unset($mailsHandler);
+                $taskHandler->createTask(Constants::MAIL_REG_CONFIRM_MODIFY, $regEmail, json_encode($mailParams));
             }
-            // redirect after insert
-            \redirect_header('registration.php?op=' . $redir . '&amp;redir=' . $redir . '&amp;evid=' . $regEvid, 2, \_MA_WGEVENTS_FORM_OK);
+            // execute mail sending by task handler
+            $taskHandler->processTasks();
+            header('Content-Type: application/json');
+            echo json_encode(['status'=>'success','message'=>'no errors']);
         }
-        // Get Form Error
-        $GLOBALS['xoopsTpl']->assign('error', $registrationObj->getHtmlErrors());
-        $form = $registrationObj->getForm();
-        $GLOBALS['xoopsTpl']->assign('form', $form->render());
         break;
 }
 
