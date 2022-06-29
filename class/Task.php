@@ -71,8 +71,7 @@ class Task extends \XoopsObject
      */
     public function getNewInsertedIdTasks()
     {
-        $newInsertedId = $GLOBALS['xoopsDB']->getInsertId();
-        return $newInsertedId;
+        return $GLOBALS['xoopsDB']->getInsertId();
     }
 
     /**

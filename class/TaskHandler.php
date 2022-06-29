@@ -131,10 +131,8 @@ class TaskHandler extends \XoopsPersistableObjectHandler
     /**
      * Create a task
      * @param $type
-     * @param $evid
-     * @param $regid
-     * @param $infotext
      * @param $recipient
+     * @param $params
      * @return bool
      */
     public function createTask($type, $recipient, $params)

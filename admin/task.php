@@ -92,14 +92,14 @@ switch ($op) {
         $taskObj->setVar('recipient', Request::getString('recipient'));
         $taskDatecreatedArr = Request::getArray('datecreated');
         $taskDatecreatedObj = \DateTime::createFromFormat(\_SHORTDATESTRING, $taskDatecreatedArr['date']);
-        $taskDatecreatedObj->setTime(0, 0, 0);
+        $taskDatecreatedObj->setTime(0, 0);
         $taskDatecreated = $taskDatecreatedObj->getTimestamp() + (int)$taskDatecreatedArr['time'];
         $taskObj->setVar('datecreated', $taskDatecreated);
         $taskObj->setVar('submitter', Request::getInt('submitter'));
         $taskObj->setVar('status', Request::getInt('status'));
         $taskDatedoneArr = Request::getArray('datedone');
         $taskDatedoneObj = \DateTime::createFromFormat(\_SHORTDATESTRING, $taskDatedoneArr['date']);
-        $taskDatedoneObj->setTime(0, 0, 0);
+        $taskDatedoneObj->setTime(0, 0);
         $taskDatedone = $taskDatedoneObj->getTimestamp() + (int)$taskDatedoneArr['time'];
         $taskObj->setVar('datedone', $taskDatedone);
         // Insert Data
@@ -161,7 +161,7 @@ switch ($op) {
             if (!$GLOBALS['xoopsSecurity']->check()) {
                 \redirect_header('task.php', 3, \implode(', ', $GLOBALS['xoopsSecurity']->getErrors()));
             }
-            if (0 === $taskHandler->getCount($crTask) || $taskHandler->deleteAll($crTask, true)) {
+            if (0 === $taskHandler->getCount($crTask) || $taskHandler->deleteAll($crTask)) {
                 \redirect_header('task.php', 3, \_MA_WGEVENTS_FORM_DELETE_OK);
             } else {
                 $GLOBALS['xoopsTpl']->assign('error', $taskHandler->getHtmlErrors());
