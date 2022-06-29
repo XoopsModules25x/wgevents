@@ -78,7 +78,7 @@ class MailHandler
      * 
      * @return bool
      */
-    public function executeReg()
+    public function execute()
     {
         $helper = Helper::getInstance();
         $permissionsHandler = $helper->getHandler('Permission');
@@ -88,14 +88,27 @@ class MailHandler
             $logHandler = $helper->getHandler('Log');
         }
 
-        if (!$permissionsHandler->getPermRegistrationsEdit(
-            $this->mailParams['regIp'],
-            $this->mailParams['regSubmitter'],
-            $this->mailParams['evSubmitter'],
-            $this->mailParams['evStatus'],
+        if (Constants::MAIL_EVENT_NOTIFY_ALL == $this->type){
+            //current user must have perm to edit event
+            if (!$permissionsHandler->getPermEventsEdit(
+                $this->mailParams['evSubmitter'],
+                $this->mailParams['evStatus'],
             )) {
                 return false;
+            }
+        } else {
+            //current user must have perm to edit registration
+            if (!$permissionsHandler->getPermRegistrationsEdit(
+                $this->mailParams['regIp'],
+                $this->mailParams['regSubmitter'],
+                $this->mailParams['evSubmitter'],
+                $this->mailParams['evStatus'],
+            )) {
+                return false;
+            }
         }
+
+        $logInfo = '<br>Task ID: ' . $this->mailParams['taskId'];
 
         $errors = 0;
 
@@ -109,6 +122,7 @@ class MailHandler
         $firstname      = '' == (string)$this->mailParams['regFirstname'] ? ' ' : $this->mailParams['regFirstname'];
         $lastname       = '' == (string)$this->mailParams['regLastname'] ? ' ' : $this->mailParams['regLastname'];
         $infotext       = '' == (string)$this->mailParams['infotext'] ? ' ' : $this->mailParams['infotext'];
+        $mailBody       = '' == (string)$this->mailParams['mailBody'] ? ' ' : $this->mailParams['mailBody'];
         $recipients     = $this->mailParams['recipients'];
         $userName       = $GLOBALS['xoopsConfig']['anonymous'];
         if (\is_object($GLOBALS['xoopsUser'])) {
@@ -147,6 +161,10 @@ class MailHandler
                 $template = 'mail_event_notify_modify.tpl';
                 $subject = \_MA_WGEVENTS_MAIL_EVENT_NOTIFY_MODIFY_SUBJECT;
                 break;
+            case Constants::MAIL_EVENT_NOTIFY_ALL:
+                $template = 'mail_event_notify_all.tpl';
+                $subject = $this->mailParams['mailSubject'];
+                break;
         }
 
         // get settings of primary account
@@ -182,7 +200,7 @@ class MailHandler
                     $accountTypeDesc = 'smtp';
                     break;
             }
-            $logInfo = '<br>Mailer: ' . $accountTypeDesc;
+            $logInfo .= '<br>Mailer: ' . $accountTypeDesc;
             $logInfo .= '<br>Template: ' . $template;
         }
 
@@ -194,11 +212,8 @@ class MailHandler
             }
             */
             $xoopsMailer = xoops_getMailer();
-
             $xoopsMailer->useMail();
-
             $xoopsMailer->setHTML($this->isHtml);
-
             //set template path
             if (\file_exists(\WGEVENTS_PATH . '/language/' . $GLOBALS['xoopsConfig']['language'] . '/')) {
                 $xoopsMailer->setTemplateDir(\WGEVENTS_PATH . '/language/' . $GLOBALS['xoopsConfig']['language'] . '/mail_template/');
@@ -207,33 +222,28 @@ class MailHandler
             }
             //set template name
             $xoopsMailer->setTemplate($template);
-
             $xoopsMailer->CharSet = _CHARSET; //use xoops default character set
-
+            //set account settings
             if ('' != $account_username) {
                 $xoopsMailer->Username = $account_username; // SMTP account username
             }
             if ('' != $account_password) {
                 $xoopsMailer->Password = $account_password; // SMTP account password
             }
-
             if (Constants::ACCOUNT_TYPE_VAL_POP3 == $account_type) {
                 //xoopsMailer->isSMTP();
                 //$xoopsMailer->SMTPDebug = 2;
                 $xoopsMailer->Host = $account_server_out;
             }
-
             if (Constants::ACCOUNT_TYPE_VAL_SMTP == $account_type
                 || Constants::ACCOUNT_TYPE_VAL_GMAIL == $account_type) {
                 $xoopsMailer->Port = $account_port_out; // set the SMTP port
                 $xoopsMailer->Host = $account_server_out; //sometimes necessary to repeat
             }
-
             if ('' != $account_securetype_out) {
                 $xoopsMailer->SMTPAuth   = true;
                 $xoopsMailer->SMTPSecure = $account_securetype_out; // sets the prefix to the server
             }
-
             //set sender
             $xoopsMailer->setFromEmail($senderMail);
             //set sender name
@@ -248,9 +258,7 @@ class MailHandler
             $xoopsMailer->assign('EVENTLOCATION', $eventLocation);
             $xoopsMailer->assign('INFOTEXT', $infotext);
             $xoopsMailer->assign('EVENTURL', $eventUrl);
-            if ('' == $senderSignatur) {
-                $senderSignatur = ' ';
-            }
+            $xoopsMailer->assign('BODY', $mailBody);
             $xoopsMailer->assign('SIGNATURE', $senderSignatur);
             //set recipient
             $xoopsMailer->setToEmails($recipients);
@@ -281,17 +289,14 @@ class MailHandler
     /**
      * Function to create mail parameters
      *
-     * @param int $evId
+     * @param     $eventObj
      * @param int $regId
      * @return array
      */
-    public function getMailParam($evId, $regId) {
+    public function getMailParam($eventObj, $regId) {
         $helper = Helper::getInstance();
         $registrationHandler = $helper->getHandler('Registration');
-        $eventHandler = $helper->getHandler('Event');
-
         $registrationObj = $registrationHandler->get($regId);
-        $eventObj = $eventHandler->get($evId);
 
         $mailParams = [];
         $mailParams['regIp']                 = $registrationObj->getVar('ip');
@@ -309,6 +314,7 @@ class MailHandler
         $mailParams['evRegister_sendername'] = $eventObj->getVar('register_sendername');
         $mailParams['evRegister_signature']  = $eventObj->getVar('register_signature');
         $mailParams['infotext']              = '';
+        $mailParams['taskId']                = 0;
 
         return $mailParams;
     }

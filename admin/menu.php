@@ -50,10 +50,34 @@ $adminmenu[] = [
     'link' => 'admin/registration.php',
     'icon' => 'assets/icons/32/registrations.png',
 ];
+if (is_object($helper->getModule()) && null !== $helper->getConfig() && (bool)$helper->getConfig('use_history')) {
+    $adminmenu[] = [
+        'title' => \_MI_WGEVENTS_ADMENU11,
+        'link'  => 'admin/registrationhist.php',
+        'icon'  => 'assets/icons/32/registrationshist.png',
+    ];
+}
 $adminmenu[] = [
     'title' => \_MI_WGEVENTS_ADMENU4,
     'link' => 'admin/answer.php',
     'icon' => 'assets/icons/32/answers.png',
+];
+if (is_object($helper->getModule()) && null !== $helper->getConfig() && (bool)$helper->getConfig('use_history')) {
+    $adminmenu[] = [
+        'title' => \_MI_WGEVENTS_ADMENU12,
+        'link'  => 'admin/answerhist.php',
+        'icon'  => 'assets/icons/32/answershist.png',
+    ];
+}
+$adminmenu[] = [
+    'title' => \_MI_WGEVENTS_ADMENU13,
+    'link' => 'admin/log.php',
+    'icon' => 'assets/icons/32/logs.png',
+];
+$adminmenu[] = [
+    'title' => \_MI_WGEVENTS_ADMENU15,
+    'link' => 'admin/task.php',
+    'icon' => 'assets/icons/32/tasks.png',
 ];
 $adminmenu[] = [
     'title' => \_MI_WGEVENTS_ADMENU7,
@@ -75,24 +99,6 @@ $adminmenu[] = [
     'link' => 'admin/permission.php',
     'icon' => 'assets/icons/32/permissions.png',
 ];
-$adminmenu[] = [
-    'title' => \_MI_WGEVENTS_ADMENU13,
-    'link' => 'admin/log.php',
-    'icon' => 'assets/icons/32/logs.png',
-];
-
-if (is_object($helper->getModule()) && null !== $helper->getConfig() && (bool)$helper->getConfig('use_history')) {
-    $adminmenu[] = [
-        'title' => \_MI_WGEVENTS_ADMENU11,
-        'link'  => 'admin/registrationhist.php',
-        'icon'  => 'assets/icons/32/registrationshist.png',
-    ];
-    $adminmenu[] = [
-        'title' => \_MI_WGEVENTS_ADMENU12,
-        'link'  => 'admin/answerhist.php',
-        'icon'  => 'assets/icons/32/answershist.png',
-    ];
-}
 $adminmenu[] = [
     'title' => \_MI_WGEVENTS_ADMENU14,
     'link' => 'admin/account.php',

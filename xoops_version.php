@@ -94,6 +94,7 @@ $modversion['templates'] = [
     ['file' => 'wgevents_admin_question.tpl', 'description' => '', 'type' => 'admin'],
     ['file' => 'wgevents_admin_registration.tpl', 'description' => '', 'type' => 'admin'],
     ['file' => 'wgevents_admin_registrationhist.tpl', 'description' => '', 'type' => 'admin'],
+    ['file' => 'wgevents_admin_task.tpl', 'description' => '', 'type' => 'admin'],
     ['file' => 'wgevents_admin_textblock.tpl', 'description' => '', 'type' => 'admin'],
     // User templates
     ['file' => 'tablesorter_pagertop.tpl', 'description' => ''],
@@ -137,6 +138,7 @@ $modversion['tables'] = [
     'wgevents_question',
     'wgevents_registration',
     'wgevents_registration_hist',
+    'wgevents_task',
     'wgevents_textblock',
 ];
 // ------------------- Search ------------------- //

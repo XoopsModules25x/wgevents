@@ -6,7 +6,7 @@
 <{/if}>
 
 <{if $account_check|default:false}>
-    <<table class="tablesorter-<{$tablesorter_theme}>">
+    <table class="tablesorter-<{$tablesorter_theme}>">
         <thead>
         <tr class='head'>
             <th class='center'><{$smarty.const._AM_WGEVENTS_ACCOUNT_CHECK}></th>
@@ -49,6 +49,7 @@
                 <th class="center"><{$smarty.const._AM_WGEVENTS_ACCOUNT_SERVER_OUT}></th>
                 <th class="center"><{$smarty.const._AM_WGEVENTS_ACCOUNT_PORT_OUT}></th>
                 <th class="center"><{$smarty.const._AM_WGEVENTS_ACCOUNT_SECURETYPE_OUT}></th>
+                <th class="center"><{$smarty.const._AM_WGEVENTS_ACCOUNT_LIMIT_HOUR}></th>
                 <th class="center"><{$smarty.const._AM_WGEVENTS_ACCOUNT_PRIMARY}></th>
                 <th class="center"><{$smarty.const._MA_WGEVENTS_DATECREATED}></th>
                 <th class="center"><{$smarty.const._MA_WGEVENTS_SUBMITTER}></th>
@@ -72,6 +73,7 @@
                 <td class='center'><{$account.server_out}></td>
                 <td class='center'><{$account.port_out}></td>
                 <td class='center'><{$account.securetype_out}></td>
+                <td class='center'><{$account.limit_hour}></td>
                 <td class='center'>
                     <{if $account.primary|default:false}>
                     <a href="account.php?op=change_yn&amp;id=<{$account.id}>&amp;field=primary&amp;value=0&amp;start=<{$start}>&amp;limit=<{$limit}>" title="<{$smarty.const._AM_WGEVENTS_SETOFF}>"><img src="<{$wgevents_icons_url_16}>/<{$account.primary}>.png" alt="<{$smarty.const._AM_WGEVENTS_SETOFF}> account" ></a>

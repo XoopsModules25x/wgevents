@@ -1,3 +1,5 @@
+Info für Veranstalter
+---------------------
 Veranstaltung: {EVENTNAME}
 Ort: {EVENTLOCATION}
 Datum: {EVENTDATEFROM}

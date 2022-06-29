@@ -41,14 +41,17 @@ interface Constants
     public const TABLE_ANSWERS_HIST       = 9;
 
     // Constants for status
-    public const STATUS_NONE      = 0;
-    public const STATUS_OFFLINE   = 1;
-    public const STATUS_SUBMITTED = 2;
-    public const STATUS_ONLINE    = 3;
-    public const STATUS_VERIFIED  = 4;
-    public const STATUS_APPROVED  = 5;
-    public const STATUS_LOCKED    = 6;
-    public const STATUS_CANCELED  = 7;
+    public const STATUS_NONE       = 0;
+    public const STATUS_OFFLINE    = 1;
+    public const STATUS_SUBMITTED  = 2;
+    public const STATUS_ONLINE     = 3;
+    public const STATUS_VERIFIED   = 4;
+    public const STATUS_APPROVED   = 5;
+    public const STATUS_LOCKED     = 6;
+    public const STATUS_CANCELED   = 7;
+    public const STATUS_PENDING    = 8;
+    public const STATUS_PROCESSING = 9;
+    public const STATUS_DONE       = 10;
 
     // Constants for permissions
     public const PERM_GLOBAL_NONE             = 0;
@@ -89,13 +92,14 @@ interface Constants
     public const FINANCIAL_PAID   = 1;
 
     // Constants for mail sending
+    // must fit with class/Task.php getMailNotificationText
     public const MAIL_REG_CONFIRM_IN      = 1;
     public const MAIL_REG_CONFIRM_OUT     = 2;
     public const MAIL_REG_CONFIRM_MODIFY  = 3;
     public const MAIL_REG_NOTIFY_IN       = 4;
     public const MAIL_REG_NOTIFY_OUT      = 5;
     public const MAIL_REG_NOTIFY_MODIFY   = 6;
-    //public const MAIL_REG_NOTIFY_ALL      = 7;
+    public const MAIL_EVENT_NOTIFY_ALL      = 7;
     public const MAIL_EVENT_NOTIFY_MODIFY = 8;
 
     // constants for accounts

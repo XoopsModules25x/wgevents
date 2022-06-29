@@ -537,6 +537,9 @@ wgevents_account:
             name: securetype_out
             attributes: ' VARCHAR(20) NOT NULL DEFAULT '''''''' '
         -
+            name: limit_hour
+            attributes: ' INT(10) NOT NULL DEFAULT ''0'' '
+        -
             name: primary
             attributes: ' INT(1) NOT NULL DEFAULT ''0'' '
         -
@@ -549,3 +552,40 @@ wgevents_account:
         PRIMARY:
             columns: id
             unique: true
+wgevents_task:
+    options: 'ENGINE=InnoDB'
+    columns: 
+        -
+            name: id
+            attributes: ' INT(8) UNSIGNED NOT NULL AUTO_INCREMENT '
+        -
+            name: type
+            attributes: ' INT(10)      NOT NULL DEFAULT ''0'' '
+        -
+            name: params
+            attributes: ' TEXT         NOT NULL  '
+        -
+            name: infotext
+            attributes: ' VARCHAR(200) NOT NULL DEFAULT '''''''' '
+        -
+            name: recipient
+            attributes: ' VARCHAR(200) NOT NULL DEFAULT '''''''' '
+        -
+            name: datecreated
+            attributes: ' INT(11)      NOT NULL DEFAULT ''0'' '
+        -
+            name: submitter
+            attributes: ' INT(10)      NOT NULL DEFAULT ''0'' '
+        -
+            name: status
+            attributes: ' INT(1)       NOT NULL DEFAULT ''0'' '
+        -
+            name: datedone
+            attributes: ' INT(11)      NULL     DEFAULT ''0'' '
+    keys:
+        PRIMARY:
+            columns: id
+            unique: true
+        idx_datecreated:
+            columns: datecreated
+            unique: false

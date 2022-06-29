@@ -37,6 +37,7 @@ $answerhistHandler       = $helper->getHandler('Answerhist');
 $textblockHandler        = $helper->getHandler('Textblock');
 $fieldHandler            = $helper->getHandler('Field');
 $permissionsHandler      = $helper->getHandler('Permission');
+$taskHandler             = $helper->getHandler('Task');
 // 
 $myts = MyTextSanitizer::getInstance();
 // Default Css Style

@@ -55,6 +55,9 @@ require_once __DIR__ . '/admin.php';
 \define('_MA_WGEVENTS_STATUS_APPROVED', 'Approved');
 \define('_MA_WGEVENTS_STATUS_LOCKED', 'Locked');
 \define('_MA_WGEVENTS_STATUS_CANCELED', 'Canceled');
+\define('_MA_WGEVENTS_STATUS_PENDING', 'Pending');
+\define('_MA_WGEVENTS_STATUS_PROCESSING', 'Processing');
+\define('_MA_WGEVENTS_STATUS_DONE', 'Done');
 // ---------------- Contents ----------------
 // Event
 \define('_MA_WGEVENTS_EVENT', 'Event');
@@ -272,6 +275,7 @@ Participation without agreement to this conditions is not possible.
 \define('_MA_WGEVENTS_GOTO_EVENT', 'Goto event');
 \define('_MA_WGEVENTS_GOTO_EVENTSLIST', 'Goto eventlist');
 \define('_MA_WGEVENTS_OUTPUT_EXCEL', 'Output to Excel');
+\define('_MA_WGEVENTS_ERROR_SAVE', 'An error occured when saving the data');
 // Form
 \define('_MA_WGEVENTS_FORM_OK', 'Successfully saved');
 \define('_MA_WGEVENTS_FORM_DELETE_OK', 'Successfully deleted');

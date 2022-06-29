@@ -126,7 +126,7 @@
             success: function (response) {
                 //update current list
                 document.getElementById("paidamount_" + $regid).innerHTML = "<{$js_feedefault|default:'?'}>";
-                if ($change_to == 1) {
+                if (parseInt($change_to) === 1) {
                     //change status to paid
                     document.getElementById("financial_" + $regid).innerHTML = "<{$js_lang_paid|default:'paid'}>";
                     document.getElementById("paidamount_" + $regid).innerHTML = "<{$js_feedefault|default:'?'}>";
@@ -139,10 +139,9 @@
                     document.getElementById("btn_change_financial_1_" + $regid).classList.remove('hidden');
                 }
                 //alert("<{$js_lang_changed|default:'changed'}>");
-                //alert(response);
             },
             error: function (response) {
-                alert(response);
+                alert("<{$js_lang_error_save|default:'error'}>: " + response.message);
             }
         });
     }
@@ -158,7 +157,7 @@
                     $("#overlay").fadeOut(300);},500);
             }, //Hide spinner
             url: 'registration_ajax.php',
-            dataType: 'text',
+            dataType: 'json',
             type: "POST",
             data: {op: "listwait_takeover", id: $regid, evid: $evid},
             success: function (response) {
@@ -168,7 +167,7 @@
                 //alert("<{$js_lang_changed|default:'changed'}>");
             },
             error: function (response) {
-                alert(response);
+                alert("<{$js_lang_error_save|default:'error'}>: " + response.message);
             }
         });
     }
@@ -176,14 +175,15 @@
         //update data with ajax call of registration_ajax.php
         $.ajax({
             beforeSend: function() {
-                $("#overlay").fadeIn(300);
+                setTimeout(function(){
+                    $("#overlay").fadeIn(300);},500);
             }, //Show spinner
             complete: function() {
                 setTimeout(function(){
                     $("#overlay").fadeOut(300);},500);
             }, //Hide spinner
             url: 'registration_ajax.php',
-            dataType: 'text',
+            dataType: 'json',
             type: "POST",
             data: {op: "approve_status", id: $regid, evid: $evid},
             success: function (response) {
@@ -199,7 +199,7 @@
                 //alert("<{$js_lang_changed|default:'changed'}>");
             },
             error: function (response) {
-                alert(response);
+                alert("<{$js_lang_error_save|default:'error'}>: " + response.message);
             }
         });
     }

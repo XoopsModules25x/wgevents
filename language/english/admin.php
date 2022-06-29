@@ -38,6 +38,7 @@ require_once __DIR__ . '/main.php';
 \define('_AM_WGEVENTS_THEREARE_TEXTBLOCKS', "There are <span class='bold'>%s</span> textblocks in the database");
 \define('_AM_WGEVENTS_THEREARE_LOGS', "There are <span class='bold'>%s</span> logs in the database");
 \define('_AM_WGEVENTS_THEREARE_ACCOUNTS', "There are <span class='bold'>%s</span> email accounts in the Database");
+\define('_AM_WGEVENTS_THEREARE_TASKS', "There are <span class='bold'>%s</span> tasks in the Database");
 // ---------------- Admin Files ----------------
 // There aren't
 \define('_AM_WGEVENTS_THEREARENT_EVENTS', "There aren't events");
@@ -52,6 +53,7 @@ require_once __DIR__ . '/main.php';
 \define('_AM_WGEVENTS_THEREARENT_LOGS', "There aren't logs");
 \define('_AM_WGEVENTS_THEREARENT_ACCOUNTS', 'There are no email accounts in the Database');
 \define('_AM_WGEVENTS_THEREARENT_ACCOUNTS_DESC', 'There are no primary email accounts in the Database. The default email settings of XOOPS Core will be used for sending mail notifications.');
+\define('_AM_WGEVENTS_THEREARENT_TASKS', 'There are no tasks in the Database');
 // timezones
 \define('_AM_WGEVENTS_TIMEZONES', 'Timezone settings');
 // There are
@@ -188,6 +190,8 @@ require_once __DIR__ . '/main.php';
 \define('_AM_WGEVENTS_ACCOUNT_SERVER_OUT', 'Server outgoing');
 \define('_AM_WGEVENTS_ACCOUNT_PORT_OUT', 'Port out');
 \define('_AM_WGEVENTS_ACCOUNT_SECURETYPE_OUT', 'Secure type out');
+\define('_AM_WGEVENTS_ACCOUNT_LIMIT_HOUR', 'Limit per hour');
+\define('_AM_WGEVENTS_ACCOUNT_LIMIT_HOUR_DESC', 'Define the limit of mails sent per hour (0 means no limit)');
 \define('_AM_WGEVENTS_ACCOUNT_PRIMARY', 'Primary email account');
 \define('_AM_WGEVENTS_ACCOUNT_ERROR_OPEN_MAILBOX', 'Error open mailbox! Please check your settings!');
 \define('_AM_WGEVENTS_SAVE_AND_CHECK', 'Save and check settings');
@@ -310,3 +314,15 @@ Please define, until which date all data should be anonymized.');
 \define('_AM_WGEVENTS_DONATION_AMOUNT', 'Donation Amount');
 \define('_AM_WGEVENTS_MAINTAINEDBY', ' is maintained by ');
 // ---------------- End ----------------
+// Task add/edit
+\define('_AM_WGEVENTS_ADD_TASK', 'Add Task');
+\define('_AM_WGEVENTS_EDIT_TASK', 'Edit Task');
+\define('_AM_WGEVENTS_LIST_TASKS', 'List Tasks');
+\define('_AM_WGEVENTS_DELETE_TASKS_DONE', 'Delete all done tasks');
+\define('_AM_WGEVENTS_DELETE_TASKS_PENDING', 'Delete all pending tasks');
+// Elements of Task
+\define('_AM_WGEVENTS_TASK_ID', 'Id');
+\define('_AM_WGEVENTS_TASK_TYPE', 'Type');
+\define('_AM_WGEVENTS_TASK_PARAMS', 'Parameters');
+\define('_AM_WGEVENTS_TASK_RECIPIENT', 'Recipients');
+\define('_AM_WGEVENTS_TASK_DATEDONE', 'Date done');

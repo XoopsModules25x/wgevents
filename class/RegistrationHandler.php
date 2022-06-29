@@ -24,7 +24,10 @@ namespace XoopsModules\Wgevents;
  */
 
 use XoopsModules\Wgevents;
-use XoopsModules\Wgevents\Helper;
+use XoopsModules\Wgevents\{
+    Helper,
+    Utility
+};
 
 /**
  * Class Object Handler Registration
@@ -272,14 +275,22 @@ class RegistrationHandler extends \XoopsPersistableObjectHandler
         $fields[] = ['name' => 'firstname', 'caption' => \_MA_WGEVENTS_REGISTRATION_FIRSTNAME, 'type' => 'text'];
         $fields[] = ['name' => 'lastname', 'caption' => \_MA_WGEVENTS_REGISTRATION_LASTNAME, 'type' => 'text'];
         $fields[] = ['name' => 'email', 'caption' => \_MA_WGEVENTS_REGISTRATION_EMAIL, 'type' => 'text'];
+        $fields[] = ['name' => 'paidamount', 'caption' => \_MA_WGEVENTS_REGISTRATION_PAIDAMOUNT, 'type' => 'float'];
         foreach ($fields as $field) {
             $valueOld = $versionOld->getVar($field['name']);
             $valueNew = $versionNew->getVar($field['name']);
             if ($valueOld != $valueNew) {
-                if ('datetime' == $field['type']) {
-                    $infotext .= \sprintf(\_MA_WGEVENTS_MAIL_REG_MODIFICATION, $field['caption'], \formatTimestamp($valueOld, 'm'), \formatTimestamp($valueNew, 'm')) . PHP_EOL;
-                } else {
-                    $infotext .= \sprintf(\_MA_WGEVENTS_MAIL_REG_MODIFICATION, $field['caption'], $valueOld, $valueNew) . PHP_EOL;
+                switch ($field['type']) {
+                    case 'text':
+                    default:
+                        $infotext .= \sprintf(\_MA_WGEVENTS_MAIL_REG_MODIFICATION, $field['caption'], $valueOld, $valueNew) . PHP_EOL;
+                        break;
+                    case 'datetime':
+                        $infotext .= \sprintf(\_MA_WGEVENTS_MAIL_REG_MODIFICATION, $field['caption'], \formatTimestamp($valueOld, 'm'), \formatTimestamp($valueNew, 'm')) . PHP_EOL;
+                        break;
+                    case 'float':
+                        $infotext .= \sprintf(\_MA_WGEVENTS_MAIL_REG_MODIFICATION, $field['caption'], Utility::FloatToString($valueOld), Utility::FloatToString($valueNew)) . PHP_EOL;
+                        break;
                 }
             }
         }

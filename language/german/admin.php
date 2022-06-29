@@ -38,6 +38,7 @@ require_once __DIR__ . '/main.php';
 \define('_AM_WGEVENTS_THEREARE_TEXTBLOCKS', "Es gibt <span class='bold'>%s</span> Textblöcke in der Datenbank");
 \define('_AM_WGEVENTS_THEREARE_LOGS', "Es gibt <span class='bold'>%s</span> Log-Einträge in der Datenbank");
 \define('_AM_WGEVENTS_THEREARE_ACCOUNTS', "Es sind <span class='bold'>%s</span> E-Mail-Konten vorhanden");
+\define('_AM_WGEVENTS_THEREARE_TASKS', "Es sind <span class='bold'>%s</span> Aufgaben vorhanden");
 // ---------------- Admin Files ----------------
 // There aren't
 \define('_AM_WGEVENTS_THEREARENT_EVENTS', "Es gibt keine Veranstaltungen");
@@ -52,6 +53,7 @@ require_once __DIR__ . '/main.php';
 \define('_AM_WGEVENTS_THEREARENT_LOGS', "Es gibt keine Log-Einträge");
 \define('_AM_WGEVENTS_THEREARENT_ACCOUNTS', 'Es ist keine E-Mail-Konten vorhanden.');
 \define('_AM_WGEVENTS_THEREARENT_ACCOUNTS_DESC', 'Es ist kein primäres E-Mail-Konten vorhanden. Die Standardeinstellungen E-Mails vom XOOPS Core werden daher verwendet.');
+\define('_AM_WGEVENTS_THEREARENT_TASKS', 'Es ist keine Aufgaben vorhanden.');
 // timezones
 \define('_AM_WGEVENTS_TIMEZONES', 'Einstellungen Zeitzonen');
 // There are
@@ -188,6 +190,8 @@ require_once __DIR__ . '/main.php';
 \define('_AM_WGEVENTS_ACCOUNT_SERVER_OUT', 'Mailserver');
 \define('_AM_WGEVENTS_ACCOUNT_PORT_OUT', 'Port');
 \define('_AM_WGEVENTS_ACCOUNT_SECURETYPE_OUT', 'Sicherheitstyp');
+\define('_AM_WGEVENTS_ACCOUNT_LIMIT_HOUR', 'Limit per hour');
+\define('_AM_WGEVENTS_ACCOUNT_LIMIT_HOUR_DESC', 'Define the limit of mails sent per hour (0 means no limit)');
 \define('_AM_WGEVENTS_ACCOUNT_PRIMARY', 'Primäres E-Mail-Konto');
 \define('_AM_WGEVENTS_ACCOUNT_ERROR_OPEN_MAILBOX', 'Fehler beim Öffnen der Mailbox! Bitte Einstellungen überprüfen!');
 \define('_AM_WGEVENTS_SAVE_AND_CHECK', 'Speichern und Einstellungen überprüfen');
@@ -310,3 +314,15 @@ Bitte definiere das Datum, bis zu dem alle Daten anonymisiert werden sollen.');
 \define('_AM_WGEVENTS_DONATION_AMOUNT', 'Spendenbetrag');
 \define('_AM_WGEVENTS_MAINTAINEDBY', ' wird unterstützt von ');
 // ---------------- End ----------------
+// Task add/edit
+\define('_AM_WGEVENTS_ADD_TASK', 'Aufgabe hinzufügen');
+\define('_AM_WGEVENTS_EDIT_TASK', 'Aufgabe bearbeiten');
+\define('_AM_WGEVENTS_LIST_TASKS', 'Liste der Aufgaben');
+\define('_AM_WGEVENTS_DELETE_TASKS_DONE', 'Erledigte Aufgaben löschen');
+\define('_AM_WGEVENTS_DELETE_TASKS_PENDING', 'Wartende Aufgaben löschen');
+// Elements of Task
+\define('_AM_WGEVENTS_TASK_ID', 'Id');
+\define('_AM_WGEVENTS_TASK_TYPE', 'Typ');
+\define('_AM_WGEVENTS_TASK_PARAMS', 'Parameter');
+\define('_AM_WGEVENTS_TASK_RECIPIENT', 'Empfänger');
+\define('_AM_WGEVENTS_TASK_DATEDONE', 'Datum erledigt');

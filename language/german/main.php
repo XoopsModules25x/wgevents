@@ -55,6 +55,9 @@ require_once __DIR__ . '/admin.php';
 \define('_MA_WGEVENTS_STATUS_APPROVED', 'Bestätigt');
 \define('_MA_WGEVENTS_STATUS_LOCKED', 'Gesperrt');
 \define('_MA_WGEVENTS_STATUS_CANCELED', 'Abgesagt');
+\define('_MA_WGEVENTS_STATUS_PENDING', 'Wartend');
+\define('_MA_WGEVENTS_STATUS_PROCESSING', 'Processing');
+\define('_MA_WGEVENTS_STATUS_DONE', 'Erledigt');
 // ---------------- Contents ----------------
 // Event
 \define('_MA_WGEVENTS_EVENT', 'Veranstaltung');
@@ -272,6 +275,7 @@ Eine Teilnahme an der Veranstaltung ohne Zustimmung zu diesen Bestimmungen ist l
 \define('_MA_WGEVENTS_GOTO_EVENT', 'Zur Veranstaltung');
 \define('_MA_WGEVENTS_GOTO_EVENTSLIST', 'Zur Veranstaltungsliste');
 \define('_MA_WGEVENTS_OUTPUT_EXCEL', 'Ausgabe in Excel');
+\define('_MA_WGEVENTS_ERROR_SAVE', 'Beim Speichern der Daten ist ein Fehler aufgetreten');
 // Form
 \define('_MA_WGEVENTS_FORM_OK', 'Erfolgreich gespeichert');
 \define('_MA_WGEVENTS_FORM_DELETE_OK', 'Erfolgreich gelöscht');

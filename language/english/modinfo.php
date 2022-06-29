@@ -41,21 +41,22 @@ require_once __DIR__ . '/common.php';
 \define('_MI_WGEVENTS_ADMENU12', 'Answer History');
 \define('_MI_WGEVENTS_ADMENU13', 'Logs');
 \define('_MI_WGEVENTS_ADMENU14', 'Email Accounts');
+\define('_MI_WGEVENTS_ADMENU15', 'Tasks');
 \define('_MI_WGEVENTS_ADMENU20', 'Clone');
 \define('_MI_WGEVENTS_ADMENU21', 'Feedback');
 \define('_MI_WGEVENTS_ABOUT', 'About');
 // ---------------- Admin Nav ----------------
 // Submenu
 \define('_MI_WGEVENTS_SMNAME1', 'Index page');
-\define('_MI_WGEVENTS_SMNAME2', 'Event');
+\define('_MI_WGEVENTS_SMNAME2', 'Events');
 \define('_MI_WGEVENTS_SMNAME3', 'Submit Event');
 \define('_MI_WGEVENTS_SMNAME4', 'Registration');
-\define('_MI_WGEVENTS_SMNAME5', 'Show my Registration');
+\define('_MI_WGEVENTS_SMNAME5', 'Show my Registrations');
 \define('_MI_WGEVENTS_SMNAME6', 'Calendar');
 //\define('_MI_WGEVENTS_SMNAME7', 'Submit Answer');
 \define('_MI_WGEVENTS_SMNAME8', 'Textblock');
 //\define('_MI_WGEVENTS_SMNAME9', 'Submit Textblock');
-\define('_MI_WGEVENTS_SMNAME10', 'Show my Event');
+\define('_MI_WGEVENTS_SMNAME10', 'Show my Events');
 \define('_MI_WGEVENTS_SMNAME15', 'Search');
 // Blocks
 //\define('_MI_WGEVENTS_EVENTS_BLOCK', 'Event block');

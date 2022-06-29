@@ -158,6 +158,24 @@ class AccountHandler extends \XoopsPersistableObjectHandler
             }
         }
         return $accountConfig;
+    }
 
+    /**
+     * Get the value of limit_hour of primary account
+     * @return int
+     */
+    public function getLimitHour() {
+
+        $limitHour = 0;
+        $crAccount = new \CriteriaCompo();
+        $crAccount->add(new \Criteria('primary', 1));
+        $primaryCount = $this->getCount($crAccount);
+        if ($primaryCount > 0) {
+            $accountAll = $this->getAll($crAccount);
+            foreach (\array_keys($accountAll) as $i) {
+                $limitHour = $accountAll[$i]->getVar('limit_hour');
+            }
+        }
+        return (int)$limitHour;
     }
 }
