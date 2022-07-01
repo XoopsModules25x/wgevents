@@ -171,6 +171,7 @@ class TaskHandler extends \XoopsPersistableObjectHandler
         $crTaskDone->add(new \Criteria('datedone', time() - 3600, '>'));
         $tasksCountPending = $this->getCount($crTaskPending);
         $tasksCountDone = $this->getCount($crTaskDone);
+        $counterDone = 0;
         if (($tasksCountPending > 0) && ($tasksCountDone < $limitHour || 0 == $limitHour)) {
             $tasksAll = $this->getAll($crTaskPending);
             foreach (\array_keys($tasksAll) as $i) {
@@ -193,7 +194,8 @@ class TaskHandler extends \XoopsPersistableObjectHandler
                         //update task list corresponding the result
                         if ($result) {
                             $taskProcessObj->setVar('status', Constants::STATUS_DONE);
-                            $taskProcessObj->setVar('done', time());
+                            $taskProcessObj->setVar('datedone', time());
+                            $counterDone++;
                         } else {
                             $taskProcessObj->setVar('status', Constants::STATUS_PENDING);
                         }
@@ -205,6 +207,6 @@ class TaskHandler extends \XoopsPersistableObjectHandler
             }
         }
 
-        return true;
+        return ['pending' => $tasksCountPending, 'done' => $counterDone];
     }
 }
