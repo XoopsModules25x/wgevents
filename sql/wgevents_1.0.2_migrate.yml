@@ -565,9 +565,6 @@ wgevents_task:
             name: params
             attributes: ' TEXT         NOT NULL  '
         -
-            name: infotext
-            attributes: ' VARCHAR(200) NOT NULL DEFAULT '''''''' '
-        -
             name: recipient
             attributes: ' VARCHAR(200) NOT NULL DEFAULT '''''''' '
         -

@@ -113,16 +113,16 @@ class MailHandler
         $errors = 0;
 
         $eventUrl       = \WGEVENTS_URL . '/event.php?op=show&id=' . $this->mailParams['evId'];
-        $eventName      = $this->mailParams['evName'];
+        $eventName      = $this->getCleanParam('evName');
         $eventDate      = \formatTimestamp($this->mailParams['evDatefrom'], 'm');
-        $eventLocation  = '' == (string)$this->mailParams['evLocation'] ? ' ' : $this->mailParams['evLocation'];
-        $senderMail     = '' == (string)$this->mailParams['evRegister_sendermail'] ? ' ' : $this->mailParams['evRegister_sendermail'];
-        $senderName     = '' == (string)$this->mailParams['evRegister_sendername'] ? ' ' : $this->mailParams['evRegister_sendername'];
-        $senderSignatur = '' == (string)$this->mailParams['evRegister_signature'] ? ' ' : $this->mailParams['evRegister_signature'];
-        $firstname      = '' == (string)$this->mailParams['regFirstname'] ? ' ' : $this->mailParams['regFirstname'];
-        $lastname       = '' == (string)$this->mailParams['regLastname'] ? ' ' : $this->mailParams['regLastname'];
-        $infotext       = '' == (string)$this->mailParams['infotext'] ? ' ' : $this->mailParams['infotext'];
-        $mailBody       = '' == (string)$this->mailParams['mailBody'] ? ' ' : $this->mailParams['mailBody'];
+        $eventLocation  = $this->getCleanParam('evLocation');
+        $senderMail     = $this->getCleanParam('evRegister_sendermail');
+        $senderName     = $this->getCleanParam('evRegister_sendername');
+        $senderSignatur = $this->getCleanParam('evRegister_signature');
+        $firstname      = $this->getCleanParam('regFirstname');
+        $lastname       = $this->getCleanParam('regLastname');
+        $infotext       = $this->getCleanParam('infotext');
+        $mailBody       = $this->getCleanParam('mailBody');
         $recipients     = $this->mailParams['recipients'];
         $userName       = $GLOBALS['xoopsConfig']['anonymous'];
         if (\is_object($GLOBALS['xoopsUser'])) {
@@ -284,6 +284,21 @@ class MailHandler
         }
 
         return (0 == $errors);
+    }
+
+    /**
+     * Function to get clean mail parameter if exists
+     *
+     * @param string $name
+     * @return string
+     */
+    private function getCleanParam($name) {
+        $return = ' ';
+        if (array_key_exists($name, $this->mailParams)) {
+            $return  = '' == (string)$this->mailParams[$name] ? ' ' : $this->mailParams[$name];
+        }
+
+        return $return;
     }
 
     /**
