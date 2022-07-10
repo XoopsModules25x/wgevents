@@ -64,7 +64,15 @@ $keywords = [];
 $xoBreadcrumbs[] = ['title' => \_MA_WGEVENTS_INDEX, 'link' => 'index.php'];
 
 $GLOBALS['xoopsTpl']->assign('showItem', $evId > 0);
-$useGMaps = $helper->getConfig('use_gmaps');
+
+$gmapsEnableEvent = false;
+$gmapsHeight      = false;
+$useGMaps         = (bool)$helper->getConfig('use_gmaps');
+if ($useGMaps) {
+    $gmapsPositionList = (string)$helper->getConfig('gmaps_enableevent');
+    $gmapsEnableEvent  = ('top' == $gmapsPositionList || 'bottom' == $gmapsPositionList);
+    $gmapsHeight       = $helper->getConfig('gmaps_height');
+}
 
 $uidCurrent = \is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->uid() : 0;
 
@@ -84,10 +92,6 @@ switch ($op) {
             case 'show':
             default:
                 $listDescr = '';
-                if ($useGMaps) {
-                    $GLOBALS['xoopsTpl']->assign('gmapsShow', true);
-                    $GLOBALS['xoopsTpl']->assign('api_key', $helper->getConfig('gmaps_api'));
-                }
                 break;
             case 'list':
                 // get events from the past
@@ -135,8 +139,9 @@ switch ($op) {
         }
         if ($eventsCount > 0) {
             $eventsAll = $eventHandler->getAll($crEvent);
-            $events = [];
-            $evName = '';
+            $events    = [];
+            $eventsMap = [];
+            $evName    = '';
             // Get All Event
             foreach (\array_keys($eventsAll) as $i) {
                 $events[$i] = $eventsAll[$i]->getValuesEvents();
@@ -179,10 +184,32 @@ switch ($op) {
                 $events[$i]['locked'] = (Constants::STATUS_LOCKED == $events[$i]['status']);
                 $events[$i]['canceled'] = (Constants::STATUS_CANCELED == $events[$i]['status']);
                 $evName = $eventsAll[$i]->getVar('name');
+                if ($useGMaps && $gmapsEnableEvent && (float)$eventsAll[$i]->getVar('locgmlat') > 0) {
+                    $eventsMap[$i] = [
+                        'name' => $evName,
+                        'location' => $events[$i]['location_text_user'],
+                        'from' => $events[$i]['datefrom_text'],
+                        'url' => 'event.php?op=show&id=' . $i,
+                        'lat'  => (float)$eventsAll[$i]->getVar('locgmlat'),
+                        'lon'  => (float)$eventsAll[$i]->getVar('locgmlon')
+                    ];
+                }
                 $keywords[$i] = $evName;
             }
             $GLOBALS['xoopsTpl']->assign('events', $events);
-            unset($events);
+            if ($useGMaps && count($eventsMap) > 0) {
+                if ('show' == $op) {
+                    $GLOBALS['xoopsTpl']->assign('gmapsShow', true);
+                } else {
+                    $GLOBALS['xoopsTpl']->assign('gmapsShowList', true);
+                    $GLOBALS['xoopsTpl']->assign('gmapsEnableEvent', $gmapsEnableEvent);
+                    $GLOBALS['xoopsTpl']->assign('gmapsHeight', $gmapsHeight);
+                    $GLOBALS['xoopsTpl']->assign('gmapsPositionList', $gmapsPositionList);
+                }
+                $GLOBALS['xoopsTpl']->assign('api_key', $helper->getConfig('gmaps_api'));
+                $GLOBALS['xoopsTpl']->assign('eventsMap', $eventsMap);
+            }
+            unset($events, $eventMaps);
             // Display Navigation
             if ($eventsCount > $limit) {
                 require_once \XOOPS_ROOT_PATH . '/class/pagenav.php';

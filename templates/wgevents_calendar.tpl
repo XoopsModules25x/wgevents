@@ -1,9 +1,14 @@
 <{include file='db:wgevents_header.tpl' }>
 
-
 <h3><{$smarty.const._MA_WGEVENTS_CAL_ITEMS}></h3>
 
 <{if $formFilter|default:''}><{$formFilter}><{/if}>
+
+<{if $gmapsShowList|default:false && $gmapsEnableCal|default:false && $gmapsPositionList|default:'none' == 'top'}>
+    <div class="row wge-row1">
+        <span class='col-sm-12 center'><{include file='db:wgevents_gmaps_show.tpl' }></span>
+    </div>
+<{/if}>
 
 <{if $events_calendar|default:''}>
     <div class="row wg-cal-navbar">
@@ -20,6 +25,11 @@
     </div>
 <{/if}>
 
+<{if $gmapsShowList|default:false && $gmapsEnableCal|default:false && $gmapsPositionList|default:'none' == 'bottom'}>
+    <div class="row wge-row1">
+        <span class='col-sm-12 center'><{include file='db:wgevents_gmaps_show.tpl' }></span>
+    </div>
+<{/if}>
 
 <{if $form|default:''}>
     <{$form|default:false}>
