@@ -156,7 +156,10 @@ require_once __DIR__ . '/common.php';
                                        <br>necessary APIs: Geocoding API, Maps JavaScript API, Places API');
 \define('_MI_WGEVENTS_GMAPS_HEIGHT', '"Google Map" Höhe (in Pixel)');
 \define('_MI_WGEVENTS_GMAPS_ENABLECAL', 'Google Map in der Kalenderansicht anzeigen');
-\define('_MI_WGEVENTS_GMAPS_ENABLEEVENT', 'Google Map in der Event-Detailansicht anzeigen');
+\define('_MI_WGEVENTS_GMAPS_ENABLEEVENT', 'Google Map in der Event-Listenansicht anzeigen');
+\define('_MI_WGEVENTS_GMAPS_POSITION_NONE', 'Nicht anzeigen');
+\define('_MI_WGEVENTS_GMAPS_POSITION_TOP', 'Google Map am Beginn anzeigen');
+\define('_MI_WGEVENTS_GMAPS_POSITION_BOTTOM', 'Google Map am Ende anzeigen');
 //Index page
 \define('_MI_WGEVENTS_GROUP_INDEX', 'Index-Seite');
 \define('_MI_WGEVENTS_INDEXHEADER', 'Index Kopfzeile');

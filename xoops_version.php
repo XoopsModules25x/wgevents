@@ -31,7 +31,7 @@ $moduleDirNameUpper = \mb_strtoupper($moduleDirName);
 // ------------------- Informations ------------------- //
 $modversion = [
     'name'                => \_MI_WGEVENTS_NAME,
-    'version'             => '1.0.2',
+    'version'             => '1.0.3',
     'description'         => \_MI_WGEVENTS_DESC,
     'author'              => 'Goffy - Wedega',
     'author_mail'         => 'webmaster@wedega.com',
@@ -64,7 +64,7 @@ $modversion = [
     'module_website_url'  => 'www.xoops.org',
     'module_website_name' => 'XOOPS Project',
     'release'             => '25.12.2021',
-    'module_status'       => 'Alpha 1',
+    'module_status'       => 'RC 1',
     'system_menu'         => 1,
     'hasAdmin'            => 1,
     'hasMain'             => 1,
@@ -109,6 +109,7 @@ $modversion['templates'] = [
     ['file' => 'wgevents_event_item_list.tpl', 'description' => ''],
     ['file' => 'wgevents_footer.tpl', 'description' => ''],
     ['file' => 'wgevents_gmaps_getcoords_modal.tpl', 'description' => ''],
+    ['file' => 'wgevents_gmaps_show.tpl', 'description' => ''],
     ['file' => 'wgevents_gmaps_show_modal.tpl', 'description' => ''],
     ['file' => 'wgevents_googlemaps.tpl', 'description' => ''],
     ['file' => 'wgevents_header.tpl', 'description' => ''],
@@ -668,6 +669,14 @@ $modversion['config'][] = [
     'default'     => 0,
 ];
 // GOOGLE MAP
+$modversion['config'][] = [
+    'name'        => 'break_maps',
+    'title'       => '\_MI_WGEVENTS_GROUP_GMAPS',
+    'description' => '',
+    'formtype'    => 'line_break',
+    'valuetype'   => 'textbox',
+    'default'     => 'even',
+];
 // use google maps
 $modversion['config'][] = [
     'name'        => 'use_gmaps',
@@ -676,14 +685,6 @@ $modversion['config'][] = [
     'formtype'    => 'yesno',
     'valuetype'   => 'int',
     'default'     => 0,
-];
-$modversion['config'][] = [
-    'name'        => 'break_maps',
-    'title'       => '\_MI_WGEVENTS_GROUP_GMAPS',
-    'description' => '',
-    'formtype'    => 'line_break',
-    'valuetype'   => 'textbox',
-    'default'     => 'even',
 ];
 $modversion['config'][] = [
     'name'        => 'gmaps_api',
@@ -696,26 +697,28 @@ $modversion['config'][] = [
 $modversion['config'][] = [
     'name'        => 'gmaps_enablecal',
     'title'       => '\_MI_WGEVENTS_GMAPS_ENABLECAL',
-    'description' => '',
-    'formtype'    => 'yesno',
-    'valuetype'   => 'int',
-    'default'     => '0',
+    'description' => '\_MI_WGEVENTS_GMAPS_ENABLECAL_DESC',
+    'formtype'    => 'select',
+    'valuetype'   => 'text',
+    'default'     => 'none',
+    'options'     => [\_MI_WGEVENTS_GMAPS_POSITION_NONE => 'none', \_MI_WGEVENTS_GMAPS_POSITION_TOP => 'top', \_MI_WGEVENTS_GMAPS_POSITION_BOTTOM => 'bottom'],
 ];
 $modversion['config'][] = [
     'name'        => 'gmaps_enableevent',
     'title'       => '\_MI_WGEVENTS_GMAPS_ENABLEEVENT',
-    'description' => '',
-    'formtype'    => 'yesno',
-    'valuetype'   => 'int',
-    'default'     => '0',
+    'description' => '\_MI_WGEVENTS_GMAPS_ENABLEEVENT',
+    'formtype'    => 'select',
+    'valuetype'   => 'text',
+    'default'     => 'none',
+    'options'     => [\_MI_WGEVENTS_GMAPS_POSITION_NONE => 'none', \_MI_WGEVENTS_GMAPS_POSITION_TOP => 'top', \_MI_WGEVENTS_GMAPS_POSITION_BOTTOM => 'bottom'],
 ];
 $modversion['config'][] = [
     'name'        => 'gmaps_height',
     'title'       => '\_MI_WGEVENTS_GMAPS_HEIGHT',
     'description' => '',
     'formtype'    => 'textbox',
-    'valuetype'   => 'int',
-    'default'     => '350',
+    'valuetype'   => 'text',
+    'default'     => '350px',
 ];
 // ------------------- Group header: Index page ------------------- //
 $modversion['config'][] = [
