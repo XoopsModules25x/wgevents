@@ -197,15 +197,14 @@ switch ($op) {
                 $keywords[$i] = $evName;
             }
             $GLOBALS['xoopsTpl']->assign('events', $events);
+            if ('show' == $op && $useGMaps) {
+                $GLOBALS['xoopsTpl']->assign('gmapsShow', true);
+            }
             if ($useGMaps && count($eventsMap) > 0) {
-                if ('show' == $op) {
-                    $GLOBALS['xoopsTpl']->assign('gmapsShow', true);
-                } else {
-                    $GLOBALS['xoopsTpl']->assign('gmapsShowList', true);
-                    $GLOBALS['xoopsTpl']->assign('gmapsEnableEvent', $gmapsEnableEvent);
-                    $GLOBALS['xoopsTpl']->assign('gmapsHeight', $gmapsHeight);
-                    $GLOBALS['xoopsTpl']->assign('gmapsPositionList', $gmapsPositionList);
-                }
+                $GLOBALS['xoopsTpl']->assign('gmapsShowList', true);
+                $GLOBALS['xoopsTpl']->assign('gmapsEnableEvent', $gmapsEnableEvent);
+                $GLOBALS['xoopsTpl']->assign('gmapsHeight', $gmapsHeight);
+                $GLOBALS['xoopsTpl']->assign('gmapsPositionList', $gmapsPositionList);
                 $GLOBALS['xoopsTpl']->assign('api_key', $helper->getConfig('gmaps_api'));
                 $GLOBALS['xoopsTpl']->assign('eventsMap', $eventsMap);
             }
