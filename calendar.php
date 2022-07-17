@@ -16,8 +16,6 @@
  * @copyright      2020 XOOPS Project (https://xooops.org)
  * @license        GPL 2.0 or later
  * @package        wgevents
- * @since          1.0
- * @min_xoops      2.5.9
  * @author         wedega - Email:<webmaster@wedega.com> - Website:<https://xoops.wedega.com>
  */
 

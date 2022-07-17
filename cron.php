@@ -18,8 +18,6 @@ declare(strict_types=1);
  * @copyright    2021 XOOPS Project (https://xoops.org)
  * @license      GPL 2.0 or later
  * @package      wgevents
- * @since        1.0.0
- * @min_xoops    2.5.11 Beta1
  * @author       Goffy - Wedega - Email:webmaster@wedega.com - Website:https://xoops.wedega.com
  */
 

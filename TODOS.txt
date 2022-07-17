@@ -1,6 +1,4 @@
 
-Senden der Mail über Task und Limit pro Stunde
-
 
 print a ticket
 
@@ -16,7 +14,9 @@ create plugin for extcal
 implementation fullcalendar?
 Implementation of recurring events?
 
-
+import:
+events of apcal
+events of extcal
 
 
 
