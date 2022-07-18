@@ -16,8 +16,6 @@
  * @copyright    2021 XOOPS Project (https://xoops.org)
  * @license      GPL 2.0 or later
  * @package      wgevents
- * @since        1.0.0
- * @min_xoops    2.5.11 Beta1
  * @author       Goffy - Wedega - Email:webmaster@wedega.com - Website:https://xoops.wedega.com
  */
 
@@ -108,6 +106,11 @@ $adminmenu[] = [
     'title' => \_MI_WGEVENTS_ADMENU9,
     'link' => 'admin/maintenance.php',
     'icon' => 'assets/icons/32/maintenance.png',
+];
+$adminmenu[] = [
+    'title' => \_MI_WGEVENTS_ADMENU22,
+    'link' => 'admin/import.php',
+    'icon' => 'assets/icons/32/import.png',
 ];
 $adminmenu[] = [
     'title' => \_MI_WGEVENTS_ADMENU20,

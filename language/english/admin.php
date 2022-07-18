@@ -16,8 +16,6 @@
  * @copyright    2021 XOOPS Project (https://xoops.org)
  * @license      GPL 2.0 or later
  * @package      wgevents
- * @since        1.0.0
- * @min_xoops    2.5.11 Beta1
  * @author       Goffy - Wedega - Email:webmaster@wedega.com - Website:https://xoops.wedega.com
  */
 
@@ -313,7 +311,6 @@ Please define, until which date all data should be anonymized.');
 \define('_AM_WGEVENTS_SUPPORT_FORUM', 'Support Forum');
 \define('_AM_WGEVENTS_DONATION_AMOUNT', 'Donation Amount');
 \define('_AM_WGEVENTS_MAINTAINEDBY', ' is maintained by ');
-// ---------------- End ----------------
 // Task add/edit
 \define('_AM_WGEVENTS_ADD_TASK', 'Add Task');
 \define('_AM_WGEVENTS_EDIT_TASK', 'Edit Task');
@@ -326,3 +323,20 @@ Please define, until which date all data should be anonymized.');
 \define('_AM_WGEVENTS_TASK_PARAMS', 'Parameters');
 \define('_AM_WGEVENTS_TASK_RECIPIENT', 'Recipients');
 \define('_AM_WGEVENTS_TASK_DATEDONE', 'Date done');
+// Import
+\define('_AM_WGEVENTS_IMPORT_MODULES', 'Available import routines');
+\define('_AM_WGEVENTS_IMPORT_NOTINSTALLED', 'Module is not installed');
+\define('_AM_WGEVENTS_IMPORT_SHOWFORM', 'Show form');
+\define('_AM_WGEVENTS_IMPORT_ATTENTION', 'Attention');
+\define('_AM_WGEVENTS_IMPORT_EXEC', 'Execute import');
+\define('_AM_WGEVENTS_IMPORT_RESULT', 'Import results');
+\define('_AM_WGEVENTS_IMPORT_RESULT_CATS', 'Imported categories');
+\define('_AM_WGEVENTS_IMPORT_RESULT_EVENTS', 'Imported events');
+\define('_AM_WGEVENTS_IMPORT_RESULT_OF', '%s of %s');
+\define('_AM_WGEVENTS_IMPORT_DELETE', 'All existing data will be deleted');
+\define('_AM_WGEVENTS_IMPORT_NORECCUR', 'Recurring events are not imported');
+\define('_AM_WGEVENTS_IMPORT_NOPERM', 'Permissions are not imported');
+\define('_AM_WGEVENTS_IMPORT_DATEFROM', 'Import events from');
+\define('_AM_WGEVENTS_IMPORT_DATETO', 'Import events to');
+\define('_AM_WGEVENTS_IMPORT_APCAL', 'Import APCal');
+\define('_AM_WGEVENTS_IMPORT_APCAL_CATS', 'Import APCal Categories');

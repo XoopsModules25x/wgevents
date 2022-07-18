@@ -11,12 +11,11 @@
  */
 
 /**
-/**
+ * Common for xoops modules
  *
  * @copyright       XOOPS Project (https://xoops.org)
- * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @since           1
+ * @license         GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @package         general
  * @author          Xoops Development Team
  */
 $moduleDirName      = \basename(\dirname(__DIR__, 2));

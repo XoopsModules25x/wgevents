@@ -16,8 +16,6 @@
  * @copyright    2021 XOOPS Project (https://xoops.org)
  * @license      GPL 2.0 or later
  * @package      wgevents
- * @since        1.0.0
- * @min_xoops    2.5.11 Beta1
  * @author       Goffy - Wedega - Email:webmaster@wedega.com - Website:https://xoops.wedega.com
  */
 
@@ -172,7 +170,7 @@ Eine Teilnahme an der Veranstaltung ohne Zustimmung zu diesen Bestimmungen ist l
 ');
 \define('_MA_WGEVENTS_REGISTRATION_IP', 'Ip-Adresse');
 \define('_MA_WGEVENTS_REGISTRATION_FINANCIAL', 'Zahlungsstatus');
-\define('_MA_WGEVENTS_REGISTRATION_FINANCIAL_UNPAID', 'Unbezahlt');
+\define('_MA_WGEVENTS_REGISTRATION_FINANCIAL_UNPAID', 'Offen');
 \define('_MA_WGEVENTS_REGISTRATION_FINANCIAL_PAID', 'Bezahlt');
 \define('_MA_WGEVENTS_REGISTRATION_FINANCIAL_CHANGE_0','Status auf unbezahlt ändern');
 \define('_MA_WGEVENTS_REGISTRATION_FINANCIAL_CHANGE_1','Status auf bezahlt ändern');
