@@ -178,6 +178,7 @@ switch ($op) {
             $eventObj->setVar('register_forceverif', 0);
             $eventObj->setVar('status', Constants::STATUS_ONLINE);
             $eventObj->setVar('galid', 0);
+            $eventObj->setVar('identifier', 'cat' . $row['mainCategory'] . '_' . (int)$row['id']);
             $eventObj->setVar('datecreated', time());
             $eventObj->setVar('submitter', (int)$row['uid']);
             // Insert Data
