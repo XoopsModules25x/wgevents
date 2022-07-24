@@ -21,6 +21,7 @@
                         <span class="wge-progress-text"><{$event.regcurrent}></span>
                     </div>
                 </div>
+                <{if $event.regpercentage|default:0 >= 100 && $event.register_listwait|default:0 == 1}><p class="wge-reg-list-full"><{$smarty.const._MA_WGEVENTS_REGISTRATIONS_FULL_LISTWAIT}></p><{/if}>
             <{/if}>
         </div>
         <div class='col-sm-7 right'>
@@ -36,7 +37,7 @@
                 <a class='btn btn-success right wge-btn' href='event.php?op=show&amp;id=<{$event.id}>&amp;filter=<{$filter}>&amp;start=<{$start}>&amp;limit=<{$limit}>' title='<{$smarty.const._MA_WGEVENTS_DETAILS}>'><{$smarty.const._MA_WGEVENTS_DETAILS}></a>
             <{/if}>
             <{if $event.register_use|default:0 > 0}>
-                <a class='btn btn-primary wge-btn' href='registration.php?op=listmyevent&amp;redir=listmyevent&amp;evid=<{$event.id}>' title='<{$smarty.const._MA_WGEVENTS_REGISTRATION_GOTO}>'><{$smarty.const._MA_WGEVENTS_REGISTRATION_GOTO}></a>
+                <a class='btn btn-primary wge-btn' href='registration.php?op=listeventmy&amp;redir=listeventmy&amp;evid=<{$event.id}>' title='<{$smarty.const._MA_WGEVENTS_REGISTRATION_GOTO}>'><{$smarty.const._MA_WGEVENTS_REGISTRATION_GOTO}></a>
             <{/if}>
             <{if $permEdit|default:''}>
                 <a class='btn btn-success right wge-btn' href='event.php?op=edit&amp;id=<{$event.id}>&amp;start=<{$start}>&amp;limit=<{$limit}>' title='<{$smarty.const._EDIT}>'><{$smarty.const._EDIT}></a>

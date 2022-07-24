@@ -16,8 +16,6 @@
  * @copyright    2021 XOOPS Project (https://xoops.org)
  * @license      GPL 2.0 or later
  * @package      wgevents
- * @since        1.0.0
- * @min_xoops    2.5.11 Beta1
  * @author       Goffy - Wedega - Email:webmaster@wedega.com - Website:https://xoops.wedega.com
  */
 
@@ -41,8 +39,10 @@ require_once __DIR__ . '/common.php';
 \define('_MI_WGEVENTS_ADMENU12', 'Antworten Historie');
 \define('_MI_WGEVENTS_ADMENU13', 'Logs');
 \define('_MI_WGEVENTS_ADMENU14', 'E-Mail-Konten');
+\define('_MI_WGEVENTS_ADMENU15', 'Aufgaben');
 \define('_MI_WGEVENTS_ADMENU20', 'Klonen');
 \define('_MI_WGEVENTS_ADMENU21', 'Feedback');
+\define('_MI_WGEVENTS_ADMENU22', 'Import');
 \define('_MI_WGEVENTS_ABOUT', 'Über');
 // ---------------- Admin Nav ----------------
 // Submenu
@@ -68,6 +68,7 @@ require_once __DIR__ . '/common.php';
 \define('_MI_WGEVENTS_EVENTS_BLOCK_NEW_DESC', 'Anzeige der neuesten Veranstaltungen (letzte Woche)');
 \define('_MI_WGEVENTS_EVENTS_BLOCK_CAL', 'Minikalender');
 \define('_MI_WGEVENTS_EVENTS_BLOCK_CAL_DESC', 'Block mit Minikalender');
+//\define('_MI_WGEVENTS_EVENTS_BLOCK_TOP', 'Block Top Veranstaltungen');
 //\define('_MI_WGEVENTS_EVENTS_BLOCK_TOP_DESC', 'Veranstaltungen block top description');
 \define('_MI_WGEVENTS_EVENTS_BLOCK_RANDOM', 'Zufällige Veranstaltungen');
 \define('_MI_WGEVENTS_EVENTS_BLOCK_RANDOM_DESC', 'Anzeige von zufälligen Veranstaltungen');
@@ -88,12 +89,16 @@ require_once __DIR__ . '/common.php';
 \define('_MI_WGEVENTS_USER_MAXCHAR_DESC', 'Maximale Anzahl an Zeichen für die Anzeige von Texten in Listen im Benutzerbereich');
 \define('_MI_WGEVENTS_ADMIN_PAGER', 'Listen Admin');
 \define('_MI_WGEVENTS_ADMIN_PAGER_DESC', 'Anzahl Einträge in Listen im Adminbereich');
+\define('_MI_WGEVENTS_TABLESORTER_ADMIN', 'TableSorter Theme Admin');
+\define('_MI_WGEVENTS_TABLESORTER_ADMIN_DESC', 'Bitte das TableSorter Theme für den Admin-Bereich wählen');
 \define('_MI_WGEVENTS_USER_PAGER', 'Listen User');
 \define('_MI_WGEVENTS_USER_PAGER_DESC', 'Anzahl Einträge in Listen im Userbereich');
+\define('_MI_WGEVENTS_TABLESORTER_USER', 'TableSorter Theme Benutzer');
+\define('_MI_WGEVENTS_TABLESORTER_USER_DESC', 'Bitte das TableSorter Theme für den Benutzer-Bereich wählen');
+\define('_MI_WGEVENTS_SHOWCOPYRIGHT', 'Copyright anzeigen');
+\define('_MI_WGEVENTS_SHOWCOPYRIGHT_DESC', 'Sie können das Copyright bei der wgEvents-Ansicht entfernen, jedoch wird ersucht, an einer beliebigen Stelle einen Backlink auf www.wedega.com anzubringen');
 \define('_MI_WGEVENTS_SHOW_BREADCRUMBS', 'Brotkrumen-Navigation (breadcrumbs) anzeigen');
 \define('_MI_WGEVENTS_SHOW_BREADCRUMBS_DESC', 'Eine Brotkrumen-Navigation zeigt den aktuellen Seitenstand innerhalb der Websitestruktur');
-\define('_MI_WGEVENTS_SHOWCOPYRIGHT', 'Copyright anzeigen');
-\define('_MI_WGEVENTS_SHOWCOPYRIGHT_DESC', 'Sie können das Copyright bei der wgSimpleAcc-Ansicht entfernen, jedoch wird ersucht, an einer beliebigen Stelle einen Backlink auf www.wedega.com anzubringen');
 \define('_MI_WGEVENTS_TABLE_TYPE', 'Table Type');
 \define('_MI_WGEVENTS_TABLE_TYPE_DESC', 'Table Type is the bootstrap html table');
 \define('_MI_WGEVENTS_PANEL_TYPE', 'Panel Type');
@@ -142,15 +147,20 @@ require_once __DIR__ . '/common.php';
 \define('_MI_WGEVENTS_USE_WGGALLERY_DESC', 'wgGallery zum Verlinken von Veranstaltungen und Bildergalerien verwenden');
 \define('_MI_WGEVENTS_USE_GMAPS', 'Google Maps verwenden');
 \define('_MI_WGEVENTS_USE_GMAPS_DESC', 'Zeigt Veranstaltungen mit Google Maps');
+\define('_MI_WGEVENTS_USE_GROUPS', 'Anzeige je Gruppen verwenden');
+\define('_MI_WGEVENTS_USE_GROUPS_DESC', 'Wenn ja, dann werden die Veranstaltungen immer nur den entsprechenden Gruppen angezeigt. Wenn nein, dann sehen immer alle Gruppen alle Veranstaltungen, die online sind');
 //Google Maps
 \define('_MI_WGEVENTS_GROUP_GMAPS', 'Google Maps');
 //Google Maps API Key
-define('_MI_WGEVENTS_GMAPS_API', 'Fügen Sie Ihren Google Maps API Schlüssel für Ihre Webseite hier ein.');
-define('_MI_WGEVENTS_GMAPS_API_DESC', 'Ihren Schlüssel erhalten Sie von <a href="https://developers.google.com/maps/documentation/javascript/get-api-key/">https://developers.google.com/maps/documentation/javascript/get-api-key/</a>
+\define('_MI_WGEVENTS_GMAPS_API', 'Fügen Sie Ihren Google Maps API Schlüssel für Ihre Webseite hier ein.');
+\define('_MI_WGEVENTS_GMAPS_API_DESC', 'Ihren Schlüssel erhalten Sie von <a href="https://developers.google.com/maps/documentation/javascript/get-api-key/">https://developers.google.com/maps/documentation/javascript/get-api-key/</a>
                                        <br>necessary APIs: Geocoding API, Maps JavaScript API, Places API');
-define('_MI_WGEVENTS_GMAPS_HEIGHT' , '"Google Map" Höhe (in Pixel)' ) ;
-define('_MI_WGEVENTS_GMAPS_ENABLECAL', 'Google Map in der Kalenderansicht anzeigen');
-define('_MI_WGEVENTS_GMAPS_ENABLEEVENT', 'Google Map in der Event-Detailansicht anzeigen');
+\define('_MI_WGEVENTS_GMAPS_HEIGHT', '"Google Map" Höhe (in Pixel)');
+\define('_MI_WGEVENTS_GMAPS_ENABLECAL', 'Google Map in der Kalenderansicht anzeigen');
+\define('_MI_WGEVENTS_GMAPS_ENABLEEVENT', 'Google Map in der Event-Listenansicht anzeigen');
+\define('_MI_WGEVENTS_GMAPS_POSITION_NONE', 'Nicht anzeigen');
+\define('_MI_WGEVENTS_GMAPS_POSITION_TOP', 'Google Map am Beginn anzeigen');
+\define('_MI_WGEVENTS_GMAPS_POSITION_BOTTOM', 'Google Map am Ende anzeigen');
 //Index page
 \define('_MI_WGEVENTS_GROUP_INDEX', 'Index-Seite');
 \define('_MI_WGEVENTS_INDEXHEADER', 'Index Kopfzeile');
@@ -188,7 +198,7 @@ define('_MI_WGEVENTS_GMAPS_ENABLEEVENT', 'Google Map in der Event-Detailansicht 
 \define('_MI_WGEVENTS_NOTIFY_GLOBAL_APPROVE', 'Alle auf Freigabe wartende Einträge');
 \define('_MI_WGEVENTS_NOTIFY_GLOBAL_APPROVE_CAPTION', 'Benachrichtige mich über alle auf Freigabe wartende Einträge');
 \define('_MI_WGEVENTS_NOTIFY_GLOBAL_APPROVE_SUBJECT', 'Benachrichtigung über auf Freigabe wartenden Eintrag');
-// event notifications
+// Event notifications
 \define('_MI_WGEVENTS_NOTIFY_EVENT', 'Benachrichtigung Veranstaltung');
 \define('_MI_WGEVENTS_NOTIFY_EVENT_MODIFY', 'Änderung Veranstaltung');
 \define('_MI_WGEVENTS_NOTIFY_EVENT_MODIFY_CAPTION', 'Benachrichtige mich über die Änderung der Veranstaltung');
@@ -199,7 +209,7 @@ define('_MI_WGEVENTS_GMAPS_ENABLEEVENT', 'Google Map in der Event-Detailansicht 
 \define('_MI_WGEVENTS_NOTIFY_EVENT_APPROVE', 'Freigabe Veranstaltung');
 \define('_MI_WGEVENTS_NOTIFY_EVENT_APPROVE_CAPTION', 'Benachrichtige mich über auf Freigabe wartende Veranstaltungen');
 \define('_MI_WGEVENTS_NOTIFY_EVENT_APPROVE_SUBJECT', 'Benachrichtigung Veranstaltung wartet auf Freigabe');
-// registration notifications
+// Registration notifications
 \define('_MI_WGEVENTS_NOTIFY_REGISTRATION', 'Benachrichtigung Anmeldung');
 \define('_MI_WGEVENTS_NOTIFY_REGISTRATION_MODIFY', 'Anmeldung Änderung');
 \define('_MI_WGEVENTS_NOTIFY_REGISTRATION_MODIFY_CAPTION', 'Benachrichtige mich über die Änderung der Anmeldung');
@@ -210,6 +220,6 @@ define('_MI_WGEVENTS_GMAPS_ENABLEEVENT', 'Google Map in der Event-Detailansicht 
 \define('_MI_WGEVENTS_NOTIFY_REGISTRATION_APPROVE', 'Freigabe Anmeldung');
 \define('_MI_WGEVENTS_NOTIFY_REGISTRATION_APPROVE_CAPTION', 'Benachrichtige mich über auf Freigabe wartende Anmeldung');
 \define('_MI_WGEVENTS_NOTIFY_REGISTRATION_APPROVE_SUBJECT', 'Benachrichtigung Anmeldung wartet auf Freigabe');
-// tablesorter
+//tablesorter
 \define('_MI_WGEVENTS_TABLESORTER_SHOW_ALL', 'Alle anzeigen');
 // ---------------- End ----------------

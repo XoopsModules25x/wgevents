@@ -16,8 +16,6 @@
  * @copyright    2021 XOOPS Project (https://xoops.org)
  * @license      GPL 2.0 or later
  * @package      wgevents
- * @since        1.0.0
- * @min_xoops    2.5.11 Beta1
  * @author       Goffy - Wedega - Email:webmaster@wedega.com - Website:https://xoops.wedega.com
  */
 
@@ -31,7 +29,7 @@ $moduleDirNameUpper = \mb_strtoupper($moduleDirName);
 // ------------------- Informations ------------------- //
 $modversion = [
     'name'                => \_MI_WGEVENTS_NAME,
-    'version'             => '1.0.1',
+    'version'             => '1.0.3',
     'description'         => \_MI_WGEVENTS_DESC,
     'author'              => 'Goffy - Wedega',
     'author_mail'         => 'webmaster@wedega.com',
@@ -46,7 +44,7 @@ $modversion = [
     'release_date'        => '2022/01/04',
     'manual'              => 'link to manual file',
     'manual_file'         => \XOOPS_URL . '/modules/wgevents/docs/install.txt',
-    'min_php'             => '5.5',
+    'min_php'             => '7.4',
     'min_xoops'           => '2.5.11 Beta1',
     'min_admin'           => '1.2',
     'min_db'              => ['mysql' => '5.5', 'mysqli' => '5.5'],
@@ -64,7 +62,7 @@ $modversion = [
     'module_website_url'  => 'www.xoops.org',
     'module_website_name' => 'XOOPS Project',
     'release'             => '25.12.2021',
-    'module_status'       => 'Alpha 1',
+    'module_status'       => 'RC 1',
     'system_menu'         => 1,
     'hasAdmin'            => 1,
     'hasMain'             => 1,
@@ -77,26 +75,29 @@ $modversion = [
 // ------------------- Templates ------------------- //
 $modversion['templates'] = [
     // Admin templates
-
     ['file' => 'wgevents_admin_about.tpl', 'description' => '', 'type' => 'admin'],
     ['file' => 'wgevents_admin_account.tpl', 'description' => '', 'type' => 'admin'],
     ['file' => 'wgevents_admin_answer.tpl', 'description' => '', 'type' => 'admin'],
+    ['file' => 'wgevents_admin_answerhist.tpl', 'description' => '', 'type' => 'admin'],
     ['file' => 'wgevents_admin_category.tpl', 'description' => '', 'type' => 'admin'],
     ['file' => 'wgevents_admin_clone.tpl', 'description' => '', 'type' => 'admin'],
     ['file' => 'wgevents_admin_event.tpl', 'description' => '', 'type' => 'admin'],
     ['file' => 'wgevents_admin_field.tpl', 'description' => '', 'type' => 'admin'],
     ['file' => 'wgevents_admin_footer.tpl', 'description' => '', 'type' => 'admin'],
     ['file' => 'wgevents_admin_header.tpl', 'description' => '', 'type' => 'admin'],
+    ['file' => 'wgevents_admin_import.tpl', 'description' => '', 'type' => 'admin'],
     ['file' => 'wgevents_admin_index.tpl', 'description' => '', 'type' => 'admin'],
     ['file' => 'wgevents_admin_log.tpl', 'description' => '', 'type' => 'admin'],
     ['file' => 'wgevents_admin_maintenance.tpl', 'description' => '', 'type' => 'admin'],
     ['file' => 'wgevents_admin_permission.tpl', 'description' => '', 'type' => 'admin'],
     ['file' => 'wgevents_admin_question.tpl', 'description' => '', 'type' => 'admin'],
     ['file' => 'wgevents_admin_registration.tpl', 'description' => '', 'type' => 'admin'],
+    ['file' => 'wgevents_admin_registrationhist.tpl', 'description' => '', 'type' => 'admin'],
+    ['file' => 'wgevents_admin_task.tpl', 'description' => '', 'type' => 'admin'],
     ['file' => 'wgevents_admin_textblock.tpl', 'description' => '', 'type' => 'admin'],
-    ['file' => 'admin_pagertop.tpl', 'description' => '', 'type' => 'admin'],
-    ['file' => 'admin_pagerbottom.tpl', 'description' => '', 'type' => 'admin'],
     // User templates
+    ['file' => 'tablesorter_pagertop.tpl', 'description' => ''],
+    ['file' => 'tablesorter_pagerbottom.tpl', 'description' => ''],
     ['file' => 'wgevents_breadcrumbs.tpl', 'description' => ''],
     ['file' => 'wgevents_calendar.tpl', 'description' => ''],
     ['file' => 'wgevents_category_index_list.tpl', 'description' => ''],
@@ -107,6 +108,7 @@ $modversion['templates'] = [
     ['file' => 'wgevents_event_item_list.tpl', 'description' => ''],
     ['file' => 'wgevents_footer.tpl', 'description' => ''],
     ['file' => 'wgevents_gmaps_getcoords_modal.tpl', 'description' => ''],
+    ['file' => 'wgevents_gmaps_show.tpl', 'description' => ''],
     ['file' => 'wgevents_gmaps_show_modal.tpl', 'description' => ''],
     ['file' => 'wgevents_googlemaps.tpl', 'description' => ''],
     ['file' => 'wgevents_header.tpl', 'description' => ''],
@@ -136,6 +138,7 @@ $modversion['tables'] = [
     'wgevents_question',
     'wgevents_registration',
     'wgevents_registration_hist',
+    'wgevents_task',
     'wgevents_textblock',
 ];
 // ------------------- Search ------------------- //
@@ -348,6 +351,28 @@ $modversion['config'][] = [
     'valuetype'   => 'int',
     'default'     => 200,
 ];
+// Tablesorter Admin
+$modversion['config'][] = [
+    'name'        => 'tablesorter_admin',
+    'title'       => '\_MI_WGEVENTS_TABLESORTER_ADMIN',
+    'description' => '\_MI_WGEVENTS_TABLESORTER_ADMIN_DESC',
+    'formtype'    => 'select',
+    'valuetype'   => 'text',
+    'default'     => 'xoopsadmin',
+    'options'     => ['blackice' => 'blackice',
+        'blue' => 'blue',
+        'bootstrap' => 'bootstrap',
+        'dark' => 'dark',
+        'default' => 'default',
+        'dropbox' => 'dropbox',
+        'green' => 'green',
+        'grey' => 'grey',
+        'ice' => 'ice',
+        'materialize' => 'materialize',
+        'metro-dark' => 'metro-dark',
+        'xoopsadmin' => 'xoopsadmin',
+    ],
+];
 // Admin pager
 $modversion['config'][] = [
     'name'        => 'adminpager',
@@ -356,16 +381,41 @@ $modversion['config'][] = [
     'formtype'    => 'select',
     'valuetype'   => 'text',
     'default'     => '10',
-    'options'     => ['10' => 10, '20' => 20, '30' => 30, '40' => 40, 'all' => \_MI_WGEVENTS_TABLESORTER_SHOW_ALL],
+    'options'     => ['10' => 10, '20' => 20, '30' => 30, '40' => 40, '50' => 50, '100' => 100, 'all' => \_MI_WGEVENTS_TABLESORTER_SHOW_ALL],
+];
+// Tablesorter User
+$modversion['config'][] = [
+    'name'        => 'tablesorter_user',
+    'title'       => '\_MI_WGEVENTS_TABLESORTER_USER',
+    'description' => '\_MI_WGEVENTS_TABLESORTER_USER_DESC',
+    'formtype'    => 'select',
+    'valuetype'   => 'text',
+    'default'     => 'default',
+    'options'     => ['blackice' => 'blackice',
+        'blue' => 'blue',
+        'bootstrap' => 'bootstrap',
+        'bootstrap_4' => 'bootstrap_4',
+        'dark' => 'dark',
+        'default' => 'default',
+        'dropbox' => 'dropbox',
+        'green' => 'green',
+        'grey' => 'grey',
+        'ice' => 'ice',
+        'materialize' => 'materialize',
+        'metro-dark' => 'metro-dark',
+        'wedega_1' => 'wedega_1',
+        'xoopsadmin' => 'xoopsadmin',
+    ],
 ];
 // User pager
 $modversion['config'][] = [
     'name'        => 'userpager',
     'title'       => '\_MI_WGEVENTS_USER_PAGER',
     'description' => '\_MI_WGEVENTS_USER_PAGER_DESC',
-    'formtype'    => 'textbox',
-    'valuetype'   => 'int',
-    'default'     => 10,
+    'formtype'    => 'select',
+    'valuetype'   => 'text',
+    'default'     => '10',
+    'options'     => ['10' => 10, '20' => 20, '30' => 30, '40' => 40, '50' => 50, '100' => 100],
 ];
 // Show copyright
 $modversion['config'][] = [
@@ -608,7 +658,7 @@ $modversion['config'][] = [
     'valuetype'   => 'int',
     'default'     => 1,
 ];
-// use wgEvents module
+// use wgGallery module
 $modversion['config'][] = [
     'name'        => 'use_wggallery',
     'title'       => '\_MI_WGEVENTS_USE_WGGALLERY',
@@ -617,7 +667,24 @@ $modversion['config'][] = [
     'valuetype'   => 'int',
     'default'     => 0,
 ];
+// use groups permissions
+$modversion['config'][] = [
+    'name'        => 'use_groups',
+    'title'       => '\_MI_WGEVENTS_USE_GROUPS',
+    'description' => '\_MI_WGEVENTS_USE_GROUPS_DESC',
+    'formtype'    => 'yesno',
+    'valuetype'   => 'int',
+    'default'     => 0,
+];
 // GOOGLE MAP
+$modversion['config'][] = [
+    'name'        => 'break_maps',
+    'title'       => '\_MI_WGEVENTS_GROUP_GMAPS',
+    'description' => '',
+    'formtype'    => 'line_break',
+    'valuetype'   => 'textbox',
+    'default'     => 'even',
+];
 // use google maps
 $modversion['config'][] = [
     'name'        => 'use_gmaps',
@@ -626,14 +693,6 @@ $modversion['config'][] = [
     'formtype'    => 'yesno',
     'valuetype'   => 'int',
     'default'     => 0,
-];
-$modversion['config'][] = [
-    'name'        => 'break_maps',
-    'title'       => '\_MI_WGEVENTS_GROUP_GMAPS',
-    'description' => '',
-    'formtype'    => 'line_break',
-    'valuetype'   => 'textbox',
-    'default'     => 'even',
 ];
 $modversion['config'][] = [
     'name'        => 'gmaps_api',
@@ -646,26 +705,28 @@ $modversion['config'][] = [
 $modversion['config'][] = [
     'name'        => 'gmaps_enablecal',
     'title'       => '\_MI_WGEVENTS_GMAPS_ENABLECAL',
-    'description' => '',
-    'formtype'    => 'yesno',
-    'valuetype'   => 'int',
-    'default'     => '0',
+    'description' => '\_MI_WGEVENTS_GMAPS_ENABLECAL_DESC',
+    'formtype'    => 'select',
+    'valuetype'   => 'text',
+    'default'     => 'none',
+    'options'     => [\_MI_WGEVENTS_GMAPS_POSITION_NONE => 'none', \_MI_WGEVENTS_GMAPS_POSITION_TOP => 'top', \_MI_WGEVENTS_GMAPS_POSITION_BOTTOM => 'bottom'],
 ];
 $modversion['config'][] = [
     'name'        => 'gmaps_enableevent',
     'title'       => '\_MI_WGEVENTS_GMAPS_ENABLEEVENT',
-    'description' => '',
-    'formtype'    => 'yesno',
-    'valuetype'   => 'int',
-    'default'     => '0',
+    'description' => '\_MI_WGEVENTS_GMAPS_ENABLEEVENT',
+    'formtype'    => 'select',
+    'valuetype'   => 'text',
+    'default'     => 'none',
+    'options'     => [\_MI_WGEVENTS_GMAPS_POSITION_NONE => 'none', \_MI_WGEVENTS_GMAPS_POSITION_TOP => 'top', \_MI_WGEVENTS_GMAPS_POSITION_BOTTOM => 'bottom'],
 ];
 $modversion['config'][] = [
     'name'        => 'gmaps_height',
     'title'       => '\_MI_WGEVENTS_GMAPS_HEIGHT',
     'description' => '',
     'formtype'    => 'textbox',
-    'valuetype'   => 'int',
-    'default'     => '350',
+    'valuetype'   => 'text',
+    'default'     => '350px',
 ];
 // ------------------- Group header: Index page ------------------- //
 $modversion['config'][] = [
@@ -725,6 +786,7 @@ $modversion['config'][] = [
     'valuetype'   => 'text',
     'default'     => 'wgevents, events, categories, registrations, questions, answers, textblocks, fields',
 ];
+/*
 // Paypal ID
 $modversion['config'][] = [
     'name'        => 'donations',
@@ -733,15 +795,6 @@ $modversion['config'][] = [
     'formtype'    => 'textbox',
     'valuetype'   => 'textbox',
     'default'     => 'XYZ123',
-];
-// Maintained by
-$modversion['config'][] = [
-    'name'        => 'maintainedby',
-    'title'       => '\_MI_WGEVENTS_MAINTAINEDBY',
-    'description' => '\_MI_WGEVENTS_MAINTAINEDBY_DESC',
-    'formtype'    => 'textbox',
-    'valuetype'   => 'text',
-    'default'     => 'https://xoops.org/modules/newbb',
 ];
 // Advertise
 $modversion['config'][] = [
@@ -760,6 +813,16 @@ $modversion['config'][] = [
     'formtype'    => 'yesno',
     'valuetype'   => 'int',
     'default'     => 0,
+];
+*/
+// Maintained by
+$modversion['config'][] = [
+    'name'        => 'maintainedby',
+    'title'       => '\_MI_WGEVENTS_MAINTAINEDBY',
+    'description' => '\_MI_WGEVENTS_MAINTAINEDBY_DESC',
+    'formtype'    => 'textbox',
+    'valuetype'   => 'text',
+    'default'     => 'https://xoops.org/modules/newbb',
 ];
 // ------------------- Notifications ------------------- //
 $modversion['hasNotification'] = 0;

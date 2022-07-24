@@ -16,15 +16,16 @@
  * @copyright    2021 XOOPS Project (https://xoops.org)
  * @license      GPL 2.0 or later
  * @package      wgevents
- * @since        1.0.0
- * @min_xoops    2.5.11 Beta1
  * @author       Goffy - Wedega - Email:webmaster@wedega.com - Website:https://xoops.wedega.com
  */
 
 use Xmf\Request;
 use XoopsModules\Wgevents;
-use XoopsModules\Wgevents\Constants;
-use XoopsModules\Wgevents\Common;
+use XoopsModules\Wgevents\ {
+    Constants,
+    Common,
+    Utility
+};
 
 require __DIR__ . '/header.php';
 // Get all request values
@@ -38,9 +39,7 @@ $GLOBALS['xoopsTpl']->assign('limit', $limit);
 
 $moduleDirName = \basename(\dirname(__DIR__));
 
-
 $GLOBALS['xoopsTpl']->assign('mod_url', XOOPS_URL . '/modules/' . $moduleDirName);
-$xoTheme->addStylesheet($helper->url('assets/js/tablesorter/css/theme.blue.css'));
 
 switch ($op) {
     case 'list':
@@ -63,19 +62,13 @@ switch ($op) {
             if ($registrationCount > 0) {
                 $crRegistration->setSort('id');
                 $crRegistration->setOrder('DESC');
-                $crRegistration->setStart($start);
-                $crRegistration->setLimit($limit);
+                //$crRegistration->setStart($start);
+                //$crRegistration->setLimit($limit);
                 $registrationAll = $registrationHandler->getAll($crRegistration);
                 foreach (\array_keys($registrationAll) as $i) {
                     $registration = $registrationAll[$i]->getValuesRegistrations();
                     $GLOBALS['xoopsTpl']->append('registrations_list', $registration);
                     unset($registration);
-                }
-                // Display Navigation
-                if ($registrationCount > $limit) {
-                    require_once \XOOPS_ROOT_PATH . '/class/pagenav.php';
-                    $pagenav = new \XoopsPageNav($registrationCount, $limit, $start, 'start', 'op=list&limit=' . $limit);
-                    $GLOBALS['xoopsTpl']->assign('pagenav', $pagenav->renderNav());
                 }
             } else {
                 $GLOBALS['xoopsTpl']->assign('error', \_AM_WGEVENTS_THEREARENT_REGISTRATIONS);
@@ -145,6 +138,8 @@ switch ($op) {
         $registrationObj->setVar('ip', Request::getString('ip'));
         $registrationObj->setVar('status', Request::getInt('status'));
         $registrationObj->setVar('financial', Request::getInt('financial'));
+        $regPaidamount = Utility::StringToFloat(Request::getString('paidamount'));
+        $registrationObj->setVar('paidamount', $regPaidamount);
         $registrationObj->setVar('listwait', Request::getInt('listwait'));
         $registrationDatecreatedObj = \DateTime::createFromFormat(\_SHORTDATESTRING, Request::getString('datecreated'));
         $registrationObj->setVar('datecreated', $registrationDatecreatedObj->getTimestamp());
@@ -216,7 +211,7 @@ switch ($op) {
             $customConfirm = new Common\Confirm(
                 ['ok' => 1, 'id' => $regId, 'start' => $start, 'limit' => $limit, 'op' => 'delete'],
                 $_SERVER['REQUEST_URI'],
-                \sprintf(\_MA_WGEVENTS_FORM_SURE_DELETE, $registrationObj->getVar('evid')));
+                \sprintf(\_MA_WGEVENTS_FORM_SURE_DELETE, $registrationObj->getVar('firstname'). ' ' . $registrationObj->getVar('lastname')));
             $form = $customConfirm->getFormConfirm();
             $GLOBALS['xoopsTpl']->assign('form', $form->render());
         }

@@ -16,8 +16,6 @@
  * @copyright    2021 XOOPS Project (https://xoops.org)
  * @license      GPL 2.0 or later
  * @package      wgevents
- * @since        1.0.0
- * @min_xoops    2.5.11 Beta1
  * @author       Goffy - Wedega - Email:webmaster@wedega.com - Website:https://xoops.wedega.com
  */
 
@@ -30,24 +28,30 @@ require_once __DIR__ . '/main.php';
 \define('_AM_WGEVENTS_THEREARE_EVENTS', "There are <span class='bold'>%s</span> events in the database");
 \define('_AM_WGEVENTS_THEREARE_CATEGORIES', "There are <span class='bold'>%s</span> categories in the database");
 \define('_AM_WGEVENTS_THEREARE_REGISTRATIONS', "There are <span class='bold'>%s</span> registrations in the database");
+\define('_AM_WGEVENTS_THEREARE_REGISTRATIONHISTS', "There are <span class='bold'>%s</span> historic registrations in the database");
 \define('_AM_WGEVENTS_THEREARE_QUESTIONS', "There are <span class='bold'>%s</span> questions in the database");
 \define('_AM_WGEVENTS_THEREARE_FIELDS', "There are <span class='bold'>%s</span> types of questions in the database");
 \define('_AM_WGEVENTS_THEREARE_ANSWERS', "There are <span class='bold'>%s</span> answers in the database");
+\define('_AM_WGEVENTS_THEREARE_ANSWERHISTS', "There are <span class='bold'>%s</span> historic answers in the database");
 \define('_AM_WGEVENTS_THEREARE_TEXTBLOCKS', "There are <span class='bold'>%s</span> textblocks in the database");
 \define('_AM_WGEVENTS_THEREARE_LOGS', "There are <span class='bold'>%s</span> logs in the database");
 \define('_AM_WGEVENTS_THEREARE_ACCOUNTS', "There are <span class='bold'>%s</span> email accounts in the Database");
+\define('_AM_WGEVENTS_THEREARE_TASKS', "There are <span class='bold'>%s</span> tasks in the Database");
 // ---------------- Admin Files ----------------
 // There aren't
 \define('_AM_WGEVENTS_THEREARENT_EVENTS', "There aren't events");
 \define('_AM_WGEVENTS_THEREARENT_CATEGORIES', "There aren't categories");
 \define('_AM_WGEVENTS_THEREARENT_REGISTRATIONS', "There aren't registrations");
+\define('_AM_WGEVENTS_THEREARENT_REGISTRATIONHISTS', "There aren't historic registrations");
 \define('_AM_WGEVENTS_THEREARENT_QUESTIONS', "There aren't questions");
 \define('_AM_WGEVENTS_THEREARENT_ANSWERS', "There aren't answers");
+\define('_AM_WGEVENTS_THEREARENT_ANSWERHISTS', "There aren't historic answers");
 \define('_AM_WGEVENTS_THEREARENT_TEXTBLOCKS', "There aren't textblocks");
 \define('_AM_WGEVENTS_THEREARENT_FIELDS', "There aren't fields");
 \define('_AM_WGEVENTS_THEREARENT_LOGS', "There aren't logs");
 \define('_AM_WGEVENTS_THEREARENT_ACCOUNTS', 'There are no email accounts in the Database');
 \define('_AM_WGEVENTS_THEREARENT_ACCOUNTS_DESC', 'There are no primary email accounts in the Database. The default email settings of XOOPS Core will be used for sending mail notifications.');
+\define('_AM_WGEVENTS_THEREARENT_TASKS', 'There are no tasks in the Database');
 // timezones
 \define('_AM_WGEVENTS_TIMEZONES', 'Timezone settings');
 // There are
@@ -74,6 +78,11 @@ require_once __DIR__ . '/main.php';
 \define('_AM_WGEVENTS_LIST_FIELDS', 'List of Question Type');
 \define('_AM_WGEVENTS_LIST_EVENTS_LAST', 'List of last %s Event');
 // ---------------- Admin Classes ----------------
+\define('_AM_WGEVENTS_HIST_ID', 'History Id');
+\define('_AM_WGEVENTS_HIST_INFO', 'Info');
+\define('_AM_WGEVENTS_HIST_DATECREATED', 'History date created');
+\define('_AM_WGEVENTS_HIST_SUBMITTER', 'History submitter');
+\define('_AM_WGEVENTS_REGISTRATIONHISTS_CURR', 'Historic registration currently');
 // Category add/edit
 \define('_AM_WGEVENTS_CATEGORY_ADD', 'Add Category');
 \define('_AM_WGEVENTS_CATEGORY_EDIT', 'Edit Category');
@@ -179,6 +188,8 @@ require_once __DIR__ . '/main.php';
 \define('_AM_WGEVENTS_ACCOUNT_SERVER_OUT', 'Server outgoing');
 \define('_AM_WGEVENTS_ACCOUNT_PORT_OUT', 'Port out');
 \define('_AM_WGEVENTS_ACCOUNT_SECURETYPE_OUT', 'Secure type out');
+\define('_AM_WGEVENTS_ACCOUNT_LIMIT_HOUR', 'Limit per hour');
+\define('_AM_WGEVENTS_ACCOUNT_LIMIT_HOUR_DESC', 'Define the limit of mails sent per hour (0 means no limit)');
 \define('_AM_WGEVENTS_ACCOUNT_PRIMARY', 'Primary email account');
 \define('_AM_WGEVENTS_ACCOUNT_ERROR_OPEN_MAILBOX', 'Error open mailbox! Please check your settings!');
 \define('_AM_WGEVENTS_SAVE_AND_CHECK', 'Save and check settings');
@@ -269,8 +280,6 @@ Please define, until which date all data should be anonymized.');
 </ul>
 ');
 \define('_AM_WGEVENTS_PERMISSIONS_EVENTS_VIEW', 'Permission to view events');
-
-
 //\define('_AM_WGEVENTS_PERMISSIONS_QUESTIONS_VIEW', 'Permission to view questions');
 //\define('_AM_WGEVENTS_PERMISSIONS_QUESTIONS_SUBMIT', 'Permission to submit questions');
 //\define('_AM_WGEVENTS_PERMISSIONS_REGISTRATIONS_VIEW', 'Permission to view registrations');
@@ -302,4 +311,33 @@ Please define, until which date all data should be anonymized.');
 \define('_AM_WGEVENTS_SUPPORT_FORUM', 'Support Forum');
 \define('_AM_WGEVENTS_DONATION_AMOUNT', 'Donation Amount');
 \define('_AM_WGEVENTS_MAINTAINEDBY', ' is maintained by ');
-// ---------------- End ----------------
+// Task add/edit
+\define('_AM_WGEVENTS_ADD_TASK', 'Add Task');
+\define('_AM_WGEVENTS_EDIT_TASK', 'Edit Task');
+\define('_AM_WGEVENTS_LIST_TASKS', 'List Tasks');
+\define('_AM_WGEVENTS_DELETE_TASKS_DONE', 'Delete all done tasks');
+\define('_AM_WGEVENTS_DELETE_TASKS_PENDING', 'Delete all pending tasks');
+// Elements of Task
+\define('_AM_WGEVENTS_TASK_ID', 'Id');
+\define('_AM_WGEVENTS_TASK_TYPE', 'Type');
+\define('_AM_WGEVENTS_TASK_PARAMS', 'Parameters');
+\define('_AM_WGEVENTS_TASK_RECIPIENT', 'Recipients');
+\define('_AM_WGEVENTS_TASK_DATEDONE', 'Date done');
+// Import
+\define('_AM_WGEVENTS_IMPORT_MODULES', 'Available import routines');
+\define('_AM_WGEVENTS_IMPORT_NOTINSTALLED', 'Module is not installed');
+\define('_AM_WGEVENTS_IMPORT_SHOWFORM', 'Show form');
+\define('_AM_WGEVENTS_IMPORT_ATTENTION', 'Attention');
+\define('_AM_WGEVENTS_IMPORT_EXEC', 'Execute import');
+\define('_AM_WGEVENTS_IMPORT_RESULT', 'Import results');
+\define('_AM_WGEVENTS_IMPORT_RESULT_CATS', 'Imported categories');
+\define('_AM_WGEVENTS_IMPORT_RESULT_EVENTS', 'Imported events');
+\define('_AM_WGEVENTS_IMPORT_RESULT_OF', '%s of %s');
+\define('_AM_WGEVENTS_IMPORT_DELETE', 'All existing data will be deleted');
+\define('_AM_WGEVENTS_IMPORT_NORECCUR', 'Recurring events are not imported');
+\define('_AM_WGEVENTS_IMPORT_NOPERM', 'Permissions are not imported');
+\define('_AM_WGEVENTS_IMPORT_DATEFROM', 'Import events from');
+\define('_AM_WGEVENTS_IMPORT_DATETO', 'Import events to');
+\define('_AM_WGEVENTS_IMPORT_CATS', 'Import Categories');
+\define('_AM_WGEVENTS_IMPORT_APCAL', 'Import APCal');
+\define('_AM_WGEVENTS_IMPORT_EXTCAL', 'Import ExtCal');

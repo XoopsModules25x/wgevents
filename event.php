@@ -16,8 +16,6 @@
  * @copyright    2021 XOOPS Project (https://xoops.org)
  * @license      GPL 2.0 or later
  * @package      wgevents
- * @since        1.0.0
- * @min_xoops    2.5.11 Beta1
  * @author       Goffy - Wedega - Email:webmaster@wedega.com - Website:https://xoops.wedega.com
  */
 
@@ -64,7 +62,15 @@ $keywords = [];
 $xoBreadcrumbs[] = ['title' => \_MA_WGEVENTS_INDEX, 'link' => 'index.php'];
 
 $GLOBALS['xoopsTpl']->assign('showItem', $evId > 0);
-$useGMaps = $helper->getConfig('use_gmaps');
+
+$gmapsEnableEvent = false;
+$gmapsHeight      = false;
+$useGMaps         = (bool)$helper->getConfig('use_gmaps');
+if ($useGMaps) {
+    $gmapsPositionList = (string)$helper->getConfig('gmaps_enableevent');
+    $gmapsEnableEvent  = ('top' == $gmapsPositionList || 'bottom' == $gmapsPositionList);
+    $gmapsHeight       = $helper->getConfig('gmaps_height');
+}
 
 $uidCurrent = \is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->uid() : 0;
 
@@ -79,15 +85,13 @@ switch ($op) {
 
         $GLOBALS['xoTheme']->addScript(\WGEVENTS_URL . '/assets/js/expander/jquery.expander.min.js');
         $GLOBALS['xoopsTpl']->assign('user_maxchar', $helper->getConfig('user_maxchar'));
+        $useGroups = (bool)$helper->getConfig('use_groups');
+        $GLOBALS['xoopsTpl']->assign('use_groups', $useGroups);
 
         switch($op) {
             case 'show':
             default:
                 $listDescr = '';
-                if ($useGMaps) {
-                    $GLOBALS['xoopsTpl']->assign('gmapsShow', true);
-                    $GLOBALS['xoopsTpl']->assign('api_key', $helper->getConfig('gmaps_api'));
-                }
                 break;
             case 'list':
                 // get events from the past
@@ -116,8 +120,24 @@ switch ($op) {
             $GLOBALS['xoopsTpl']->assign('showList', true);
             $xoBreadcrumbs[] = ['title' => $listDescr];
         }
+        if ($useGroups) {
+            $crEventGroup = new \CriteriaCompo();
+            $crEventGroup->add(new \Criteria('groups', '%00000%', 'LIKE')); //all users
+            if ($uidCurrent > 0) {
+                // Get groups
+                $memberHandler = \xoops_getHandler('member');
+                $xoopsGroups  = $memberHandler->getGroupsByUser($uidCurrent);
+                foreach ($xoopsGroups as $group) {
+                    $groupsIN .= ",'" . substr('00000' . $group,  -5) .  "'" ;
+                    $crEventGroup->add(new \Criteria('groups', '%' . substr('00000' . $group,  -5) .  '%', 'LIKE'), 'OR');
+                }
+            }
+            $crEvent->add($crEventGroup);
+            unset($crEventGroup);
+        }
         $eventsCount = $eventHandler->getCount($crEvent);
         $GLOBALS['xoopsTpl']->assign('eventsCount', $eventsCount);
+
 
         if (0 === $evId) {
             if ('past' == $op) {
@@ -135,8 +155,9 @@ switch ($op) {
         }
         if ($eventsCount > 0) {
             $eventsAll = $eventHandler->getAll($crEvent);
-            $events = [];
-            $evName = '';
+            $events    = [];
+            $eventsMap = [];
+            $evName    = '';
             // Get All Event
             foreach (\array_keys($eventsAll) as $i) {
                 $events[$i] = $eventsAll[$i]->getValuesEvents();
@@ -156,12 +177,10 @@ switch ($op) {
                     $proportion = $numberRegCurr / $registerMax;
                     if ($proportion >= 1) {
                         $events[$i]['regcurrent'] = \_MA_WGEVENTS_REGISTRATIONS_FULL;
+                    } else if (0 == $numberRegCurr) {
+                        $events[$i]['regcurrent'] = \_MA_WGEVENTS_REGISTRATIONS_NBCURR_0;
                     } else {
-                        if (0 == $numberRegCurr) {
-                            $events[$i]['regcurrent'] = \_MA_WGEVENTS_REGISTRATIONS_NBCURR_0;
-                        } else {
-                            $events[$i]['regcurrent'] = \sprintf(\_MA_WGEVENTS_REGISTRATIONS_NBCURR_INDEX, $numberRegCurr, $registerMax);
-                        }
+                        $events[$i]['regcurrent'] = \sprintf(\_MA_WGEVENTS_REGISTRATIONS_NBCURR_INDEX, $numberRegCurr, $registerMax);
                     }
                     $events[$i]['regcurrent_text'] = $events[$i]['regcurrent'];
                     $events[$i]['regcurrent_tip'] = true;
@@ -174,19 +193,38 @@ switch ($op) {
                         $events[$i]['regcurrent_tip'] = false;
                     }
                     $events[$i]['regpercentage'] = (int)($proportion * 100);
-                } else {
-                    if ('show' == $op) {
-                        $events[$i]['regcurrent'] = $numberRegCurr;
-                    }
+                } else if ('show' == $op) {
+                    $events[$i]['regcurrent'] = $numberRegCurr;
                 }
                 $events[$i]['regenabled'] = $permEdit || (\time() >= $events[$i]['register_from'] && \time() <= $events[$i]['register_to']);
                 $events[$i]['locked'] = (Constants::STATUS_LOCKED == $events[$i]['status']);
                 $events[$i]['canceled'] = (Constants::STATUS_CANCELED == $events[$i]['status']);
                 $evName = $eventsAll[$i]->getVar('name');
+                if ($useGMaps && $gmapsEnableEvent && (float)$eventsAll[$i]->getVar('locgmlat') > 0) {
+                    $eventsMap[$i] = [
+                        'name' => $evName,
+                        'location' => $events[$i]['location_text_user'],
+                        'from' => $events[$i]['datefrom_text'],
+                        'url' => 'event.php?op=show&id=' . $i,
+                        'lat'  => (float)$eventsAll[$i]->getVar('locgmlat'),
+                        'lon'  => (float)$eventsAll[$i]->getVar('locgmlon')
+                    ];
+                }
                 $keywords[$i] = $evName;
             }
             $GLOBALS['xoopsTpl']->assign('events', $events);
-            unset($events);
+            if ('show' == $op && $useGMaps) {
+                $GLOBALS['xoopsTpl']->assign('gmapsShow', true);
+            }
+            if ($useGMaps && count($eventsMap) > 0) {
+                $GLOBALS['xoopsTpl']->assign('gmapsShowList', true);
+                $GLOBALS['xoopsTpl']->assign('gmapsEnableEvent', $gmapsEnableEvent);
+                $GLOBALS['xoopsTpl']->assign('gmapsHeight', $gmapsHeight);
+                $GLOBALS['xoopsTpl']->assign('gmapsPositionList', $gmapsPositionList);
+                $GLOBALS['xoopsTpl']->assign('api_key', $helper->getConfig('gmaps_api'));
+                $GLOBALS['xoopsTpl']->assign('eventsMap', $eventsMap);
+            }
+            unset($events, $eventMaps);
             // Display Navigation
             if ($eventsCount > $limit) {
                 require_once \XOOPS_ROOT_PATH . '/class/pagenav.php';
@@ -262,7 +300,10 @@ switch ($op) {
             if ($filename > '') {
                 $uploaderErrors .= '<br>' . $uploader->getErrors();
             }
-            $eventObj->setVar('logo', Request::getString('logo'));
+            $filename = Request::getString('logo');
+            if ('' != $filename) {
+                $eventObj->setVar('logo', $filename);
+            }
         }
         $eventObj->setVar('desc', Request::getText('desc'));
         $eventDatefromArr = Request::getArray('datefrom');
@@ -277,12 +318,14 @@ switch ($op) {
         $eventObj->setVar('dateto', $eventDateto);
         $eventObj->setVar('contact', Request::getString('contact'));
         $eventObj->setVar('email', Request::getString('email'));
+        $eventObj->setVar('url', Request::getString('url'));
         $eventObj->setVar('location', Request::getString('location'));
         $eventObj->setVar('locgmlat', Request::getFloat('locgmlat'));
         $eventObj->setVar('locgmlon', Request::getFloat('locgmlon'));
         $eventObj->setVar('locgmzoom', Request::getInt('locgmzoom'));
         $evFee = Utility::StringToFloat(Request::getString('fee'));
         $eventObj->setVar('fee', $evFee);
+        $eventObj->setVar('paymentinfo', Request::getText('paymentinfo'));
         $evRegisterUse = Request::getInt('register_use');
         $eventObj->setVar('register_use', $evRegisterUse);
         if ($evRegisterUse) {
@@ -326,7 +369,12 @@ switch ($op) {
         }
         $eventObj->setVar('status', Request::getInt('status'));
         $eventObj->setVar('galid', Request::getInt('galid'));
-
+        $arrGroups = Request::getArray('groups');
+        if (in_array('00000', $arrGroups)) {
+            $eventObj->setVar('groups', '00000');
+        } else {
+            $eventObj->setVar('groups', implode("|", $arrGroups));
+        }
         if (Request::hasVar('datecreated_int')) {
             $eventObj->setVar('datecreated', Request::getInt('datecreated_int'));
         } else {
@@ -419,30 +467,28 @@ switch ($op) {
             // redirect after insert
             if ('' !== $uploaderErrors) {
                 \redirect_header('event.php?op=edit&id=' . $newEvId, 5, $uploaderErrors);
-            } else {
-                if ($evRegisterUse) {
-                    // check whether there are already question infos
-                    $crQuestion = new \CriteriaCompo();
-                    $crQuestion->add(new \Criteria('evid', $newEvId));
-                    if ($evId > 0) {
-                        \redirect_header('event.php?op=show&amp;id=' . $evId . '&amp;start=' . $start . '&amp;limit=' . $limit, 2, \_MA_WGEVENTS_FORM_OK);
-                    } else {
-                        if ($questionHandler->getCount($crQuestion) > 0) {
-                            // set of questions already existing
-                            \redirect_header('question.php?op=list&amp;evid=' . $newEvId, 2, \_MA_WGEVENTS_FORM_OK);
-                        } else {
-                            // redirect to question.php in order to add default set of questions
-                            \redirect_header('question.php?op=newset&amp;evid=' . $newEvId, 0, \_MA_WGEVENTS_FORM_OK);
-                        }
-                    }
+            } else if ($evRegisterUse) {
+                // check whether there are already question infos
+                $crQuestion = new \CriteriaCompo();
+                $crQuestion->add(new \Criteria('evid', $newEvId));
+                if ($evId > 0) {
+                    \redirect_header('event.php?op=show&amp;id=' . $evId . '&amp;start=' . $start . '&amp;limit=' . $limit, 2, \_MA_WGEVENTS_FORM_OK);
                 } else {
-                    if ($evId > 0) {
-                        $registrationHandler->cleanupRegistrations($evId);
-                        $questionHandler->cleanupQuestions($evId);
-                        $answerHandler->cleanupAnswers($evId);
+                    if ($questionHandler->getCount($crQuestion) > 0) {
+                        // set of questions already existing
+                        \redirect_header('question.php?op=list&amp;evid=' . $newEvId, 2, \_MA_WGEVENTS_FORM_OK);
+                    } else {
+                        // redirect to question.php in order to add default set of questions
+                        \redirect_header('question.php?op=newset&amp;evid=' . $newEvId, 0, \_MA_WGEVENTS_FORM_OK);
                     }
-                    \redirect_header('event.php?op=list&amp;start=' . $start . '&amp;limit=' . $limit, 2, \_MA_WGEVENTS_FORM_OK);
                 }
+            } else {
+                if ($evId > 0) {
+                    $registrationHandler->cleanupRegistrations($evId);
+                    $questionHandler->cleanupQuestions($evId);
+                    $answerHandler->cleanupAnswers($evId);
+                }
+                \redirect_header('event.php?op=list&amp;start=' . $start . '&amp;limit=' . $limit, 2, \_MA_WGEVENTS_FORM_OK);
             }
         }
         // Get Form Error

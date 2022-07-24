@@ -194,8 +194,11 @@ class Utility
     public static function getStatusText($status)
     {
         switch ($status) {
-            case Constants::STATUS_NONE:
+            case '':
             default:
+                $status_text = 'invalid status';
+                break;
+            case Constants::STATUS_NONE:
                 $status_text = \_MA_WGEVENTS_STATUS_NONE;
                 break;
             case Constants::STATUS_OFFLINE:
@@ -218,6 +221,15 @@ class Utility
                 break;
             case Constants::STATUS_CANCELED:
                 $status_text = \_MA_WGEVENTS_STATUS_CANCELED;
+                break;
+            case Constants::STATUS_PENDING:
+                $status_text = \_MA_WGEVENTS_STATUS_PENDING;
+                break;
+            case Constants::STATUS_PROCESSING:
+                $status_text = \_MA_WGEVENTS_STATUS_PROCESSING;
+                break;
+            case Constants::STATUS_DONE:
+                $status_text = \_MA_WGEVENTS_STATUS_DONE;
                 break;
         }
 
@@ -293,5 +305,4 @@ class Utility
         return $listwait_text;
 
     }
-
 }

@@ -6,4 +6,8 @@ Location: {EVENTLOCATION}
 Date: {EVENTDATEFROM}
 Link to event: {EVENTURL}
 
-{SIGNATURE}
+------------------------------------------------------------------
+
+{X_SITENAME} ({X_SITEURL})
+
+------------------------------------------------------------------

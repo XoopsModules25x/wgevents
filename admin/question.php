@@ -16,8 +16,6 @@
  * @copyright    2021 XOOPS Project (https://xoops.org)
  * @license      GPL 2.0 or later
  * @package      wgevents
- * @since        1.0.0
- * @min_xoops    2.5.11 Beta1
  * @author       Goffy - Wedega - Email:webmaster@wedega.com - Website:https://xoops.wedega.com
  */
 
@@ -72,12 +70,6 @@ switch ($op) {
                     $question = $questionAll[$i]->getValuesQuestions();
                     $GLOBALS['xoopsTpl']->append('questions_list', $question);
                     unset($question);
-                }
-                // Display Navigation
-                if ($questionCount > $limit) {
-                    require_once \XOOPS_ROOT_PATH . '/class/pagenav.php';
-                    $pagenav = new \XoopsPageNav($questionCount, $limit, $start, 'start', 'op=list&limit=' . $limit);
-                    $GLOBALS['xoopsTpl']->assign('pagenav', $pagenav->renderNav());
                 }
             } else {
                 $GLOBALS['xoopsTpl']->assign('error', \_AM_WGEVENTS_THEREARENT_QUESTIONS);

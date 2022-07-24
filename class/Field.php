@@ -110,7 +110,7 @@ class Field extends \XoopsObject
         }
         $isAdmin = \is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->isAdmin($GLOBALS['xoopsModule']->mid()) : false;
         // Title
-        $title = $this->isNew() ? \sprintf(\_AM_WGEVENTS_FIELD_ADD) : \sprintf(\_AM_WGEVENTS_FIELD_EDIT);
+        $title = $this->isNew() ? \_AM_WGEVENTS_FIELD_ADD : \_AM_WGEVENTS_FIELD_EDIT;
         // Get Theme Form
         \xoops_load('XoopsFormLoader');
         $form = new \XoopsThemeForm($title, 'form', $action, 'post', true);

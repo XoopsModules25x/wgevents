@@ -1,4 +1,9 @@
 
+define display for specific groups
+
+import: delete imported events
+
+
 print a ticket
 
 define personal templates for each user
@@ -13,7 +18,6 @@ create plugin for extcal
 implementation fullcalendar?
 Implementation of recurring events?
 
-
-
+event cloning (event.php)
 
 

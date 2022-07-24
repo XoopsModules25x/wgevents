@@ -100,9 +100,9 @@ class Category extends \XoopsObject
         if (!$action) {
             $action = $_SERVER['REQUEST_URI'];
         }
-        $isAdmin = \is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->isAdmin($GLOBALS['xoopsModule']->mid()) : false;
+        $isAdmin = \is_object($GLOBALS['xoopsUser']) && $GLOBALS['xoopsUser']->isAdmin($GLOBALS['xoopsModule']->mid());
         // Title
-        $title = $this->isNew() ? \sprintf(\_AM_WGEVENTS_CATEGORY_ADD) : \sprintf(\_AM_WGEVENTS_CATEGORY_EDIT);
+        $title = $this->isNew() ? \_AM_WGEVENTS_CATEGORY_ADD : \_AM_WGEVENTS_CATEGORY_EDIT;
         // Get Theme Form
         \xoops_load('XoopsFormLoader');
         $form = new \XoopsThemeForm($title, 'form', $action, 'post', true);
@@ -161,7 +161,7 @@ class Category extends \XoopsObject
         $catOtherstyles = $this->isNew() ? 'margin:1px 0;padding:8px 5px 20px 5px;border-radius:5px;' : $this->getVar('othercss');
         $form->addElement(new \XoopsFormText(\_AM_WGEVENTS_CATEGORY_OTHERCSS, 'othercss', 100, 255, $catOtherstyles));
         // Form Text identifier
-        $form->addElement(new \XoopsFormText(\_AM_WGEVENTS_CATEGORY_IDENTIFIER, 'identifier', 100, 255, ''), true);
+        $form->addElement(new \XoopsFormText(\_AM_WGEVENTS_CATEGORY_IDENTIFIER, 'identifier', 100, 255, $this->getVar('identifier')), true);
         // Form Radio catStatus
         $catStatus = $this->isNew() ? Constants::STATUS_OFFLINE : $this->getVar('status');
         $catStatusSelect = new \XoopsFormRadio(\_MA_WGEVENTS_STATUS, 'status', $catStatus);
@@ -255,9 +255,13 @@ class Category extends \XoopsObject
         $ret = $this->getValues($keys, $format, $maxDepth);
         $categoryHandler = $helper->getHandler('Category');
         $categoryObj = $categoryHandler->get($this->getVar('pid'));
-        $editorMaxchar = $helper->getConfig('admin_maxchar');
-        $ret['pid_text']         = $categoryObj->getVar('name');
+        $pidText = '(' . $this->getVar('pid') . ') ';
+        if (is_object($categoryObj)) {
+            $pidText .= $categoryObj->getVar('name');
+        }
+        $ret['pid_text']         = $pidText;
         $ret['desc_text']        = $this->getVar('desc', 'e');
+        $editorMaxchar = $helper->getConfig('admin_maxchar');
         $ret['desc_short']       = $utility::truncateHtml($ret['desc_text'], $editorMaxchar);
         $ret['status_text']      = Utility::getStatusText($this->getVar('status'));
         $ret['datecreated_text'] = \formatTimestamp($this->getVar('datecreated'), 's');

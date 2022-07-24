@@ -4,6 +4,12 @@
     <div class="col-12 center wge-error-msg"><{$error|default:false}></div>
 <{/if}>
 
+<{if $gmapsShowList|default:false && $gmapsEnableEvent|default:false && $gmapsPositionList|default:'none' == 'top'}>
+    <div class="row wge-row1">
+        <span class='col-sm-12 center'><{include file='db:wgevents_gmaps_show.tpl' }></span>
+    </div>
+<{/if}>
+
 <{if $eventsCount|default:0 > 0}>
     <div class='table-responsive'>
         <table class='table table-<{$table_type|default:false}>'>
@@ -27,11 +33,18 @@
     </div>
 <{/if}>
 
+<{if $gmapsShowList|default:false && $gmapsEnableEvent|default:false && $gmapsPositionList|default:'none' == 'bottom'}>
+    <div class="row wge-row1">
+        <span class='col-sm-12 center'><{include file='db:wgevents_gmaps_show.tpl' }></span>
+    </div>
+<{/if}>
+
 <{if $showBtnComing|default:false}>
     <div class="row wge-row1">
         <span class='col-sm-12 center'><a class='btn btn-success' href='event.php?op=list&amp;filter=<{$filter}>' title='<{$smarty.const._MA_WGEVENTS_EVENTS_LISTCOMING}>'><{$smarty.const._MA_WGEVENTS_EVENTS_LISTCOMING}></a></span>
     </div>
-    <{/if}>
+<{/if}>
+
 <{if $showBtnPast|default:false}>
     <div class="row wge-row1">
         <span class='col-sm-12 center'><a class='btn btn-success' href='event.php?op=past&amp;filter=<{$filter}>' title='<{$smarty.const._MA_WGEVENTS_EVENTS_LISTPAST}>'><{$smarty.const._MA_WGEVENTS_EVENTS_LISTPAST}></a></span>

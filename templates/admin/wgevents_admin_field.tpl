@@ -2,9 +2,9 @@
 <{include file='db:wgevents_admin_header.tpl' }>
 
 <{if $fields_list|default:''}>
-    <{include file='db:admin_pagertop.tpl' }>
+    <{include file='db:tablesorter_pagertop.tpl' }>
 
-    <table id="sortTable" class="tablesorter-blue" cellspacing="1" cellpadding="0"  width="100%">
+    <table id="sortTable" class="tablesorter-<{$tablesorter_theme}>" cellspacing="1" cellpadding="0"  width="100%">
         <thead>
             <tr class='head'>
                 <th class="center sorter-false filter-false">&nbsp;</th>
@@ -95,7 +95,7 @@
         <{/if}>
     </table>
     <div class="clear">&nbsp;</div>
-    <{include file='db:admin_pagerbottom.tpl' }>
+    <{include file='db:tablesorter_pagerbottom.tpl' }>
 <{/if}>
 <{if $form|default:''}>
     <{$form|default:false}>

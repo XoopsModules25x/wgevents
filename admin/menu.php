@@ -16,8 +16,6 @@
  * @copyright    2021 XOOPS Project (https://xoops.org)
  * @license      GPL 2.0 or later
  * @package      wgevents
- * @since        1.0.0
- * @min_xoops    2.5.11 Beta1
  * @author       Goffy - Wedega - Email:webmaster@wedega.com - Website:https://xoops.wedega.com
  */
 
@@ -50,10 +48,34 @@ $adminmenu[] = [
     'link' => 'admin/registration.php',
     'icon' => 'assets/icons/32/registrations.png',
 ];
+if (is_object($helper->getModule()) && null !== $helper->getConfig() && (bool)$helper->getConfig('use_history')) {
+    $adminmenu[] = [
+        'title' => \_MI_WGEVENTS_ADMENU11,
+        'link'  => 'admin/registrationhist.php',
+        'icon'  => 'assets/icons/32/registrationshist.png',
+    ];
+}
 $adminmenu[] = [
     'title' => \_MI_WGEVENTS_ADMENU4,
     'link' => 'admin/answer.php',
     'icon' => 'assets/icons/32/answers.png',
+];
+if (is_object($helper->getModule()) && null !== $helper->getConfig() && (bool)$helper->getConfig('use_history')) {
+    $adminmenu[] = [
+        'title' => \_MI_WGEVENTS_ADMENU12,
+        'link'  => 'admin/answerhist.php',
+        'icon'  => 'assets/icons/32/answershist.png',
+    ];
+}
+$adminmenu[] = [
+    'title' => \_MI_WGEVENTS_ADMENU13,
+    'link' => 'admin/log.php',
+    'icon' => 'assets/icons/32/logs.png',
+];
+$adminmenu[] = [
+    'title' => \_MI_WGEVENTS_ADMENU15,
+    'link' => 'admin/task.php',
+    'icon' => 'assets/icons/32/tasks.png',
 ];
 $adminmenu[] = [
     'title' => \_MI_WGEVENTS_ADMENU7,
@@ -76,26 +98,6 @@ $adminmenu[] = [
     'icon' => 'assets/icons/32/permissions.png',
 ];
 $adminmenu[] = [
-    'title' => \_MI_WGEVENTS_ADMENU13,
-    'link' => 'admin/log.php',
-    'icon' => 'assets/icons/32/logs.png',
-];
-
-if (is_object($helper->getModule()) && null !== $helper->getConfig()) {
-    if ((bool)$helper->getConfig('use_history')) {
-        $adminmenu[] = [
-            'title' => \_MI_WGEVENTS_ADMENU11,
-            'link'  => 'admin/registrationshist.php',
-            'icon'  => 'assets/icons/32/registrationshist.png',
-        ];
-        $adminmenu[] = [
-            'title' => \_MI_WGEVENTS_ADMENU12,
-            'link'  => 'admin/answershist.php',
-            'icon'  => 'assets/icons/32/answershist.png',
-        ];
-    }
-}
-$adminmenu[] = [
     'title' => \_MI_WGEVENTS_ADMENU14,
     'link' => 'admin/account.php',
     'icon' => 'assets/icons/32/accounts.png',
@@ -104,6 +106,11 @@ $adminmenu[] = [
     'title' => \_MI_WGEVENTS_ADMENU9,
     'link' => 'admin/maintenance.php',
     'icon' => 'assets/icons/32/maintenance.png',
+];
+$adminmenu[] = [
+    'title' => \_MI_WGEVENTS_ADMENU22,
+    'link' => 'admin/import.php',
+    'icon' => 'assets/icons/32/import.png',
 ];
 $adminmenu[] = [
     'title' => \_MI_WGEVENTS_ADMENU20,

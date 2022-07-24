@@ -1,4 +1,23 @@
 ==============================================================
+1.0.3 RC1 [2022/07/10]
+==============================================================
+ - implemented google maps in calendar and list view (goffy)
+ - implemented import for apcal (goffy)
+ - implemented import for extcal (goffy)
+ - implemented group permissions (goffy)
+
+==============================================================
+1.0.2 [2022/06/17]
+==============================================================
+ - added paid amount (goffy)
+ - added ajax support for most used functions (goffy)
+ - added history lists (registrations, answers) in admin area (goffy)
+ - implemented tablesorter in list of registrations (goffy)
+ - fixed bug in blocks (cronywell/goffy)
+ - implemented mail handling by task list (goffy)
+ - implemented cron job (goffy)
+
+==============================================================
 1.0.1 [2022/01/31]
 ==============================================================
  - removed field prefix (mamba/goffy)
@@ -18,6 +37,15 @@
  - multiple selections for checkbox and combobox (goffy)
  - theme xswatch4_wge (goffy)
  - replacing includeq and foreachq (mamba/goffy)
+ - fixed bugs (cesagonchu/goffy)
+ - removed renaming upload folder when uninstalling (cesagonchu/goffy)
+ - fixed bug of display result selectbox (goffy)
+ - added payment info for events (goffy)
+ - fixed bug of preselect selectbox (goffy)
+ - removed line breaks in mails for location text (goffy)
+ - removed query limits in admin area -> handled by tablesorter (goffy)
+ - updated rules for displaying data (goffy)
+ - customization of tablesorter (goffy)
  
 ==============================================================
 1.0.0 [2022/01/04 9:28:23]

@@ -16,8 +16,6 @@
  * @copyright    2021 XOOPS Project (https://xoops.org)
  * @license      GPL 2.0 or later
  * @package      wgevents
- * @since        1.0.0
- * @min_xoops    2.5.11 Beta1
  * @author       Goffy - Wedega - Email:webmaster@wedega.com - Website:https://xoops.wedega.com
  */
 
@@ -55,6 +53,9 @@ require_once __DIR__ . '/admin.php';
 \define('_MA_WGEVENTS_STATUS_APPROVED', 'Bestätigt');
 \define('_MA_WGEVENTS_STATUS_LOCKED', 'Gesperrt');
 \define('_MA_WGEVENTS_STATUS_CANCELED', 'Abgesagt');
+\define('_MA_WGEVENTS_STATUS_PENDING', 'Wartend');
+\define('_MA_WGEVENTS_STATUS_PROCESSING', 'Processing');
+\define('_MA_WGEVENTS_STATUS_DONE', 'Erledigt');
 // ---------------- Contents ----------------
 // Event
 \define('_MA_WGEVENTS_EVENT', 'Veranstaltung');
@@ -70,8 +71,8 @@ require_once __DIR__ . '/admin.php';
 \define('_MA_WGEVENTS_EVENTS_LIST', 'Liste der Veranstaltungen');
 \define('_MA_WGEVENTS_EVENTS_TITLE', 'Veranstaltungen Titel');
 \define('_MA_WGEVENTS_EVENTS_DESC', 'Veranstaltungen Beschreibung');
-\define('_MA_WGEVENTS_EVENTS_LISTPAST', 'Vergangene Veranstaltungen');
 \define('_MA_WGEVENTS_EVENTS_LISTCOMING', 'Kommende Veranstaltungen');
+\define('_MA_WGEVENTS_EVENTS_LISTPAST', 'Vergangene Veranstaltungen');
 // Caption of Event
 \define('_MA_WGEVENTS_EVENT_ID', 'Id');
 \define('_MA_WGEVENTS_EVENT_IDENTIFIER', 'Eindeutige Kennung der Veranstaltung');
@@ -90,8 +91,8 @@ require_once __DIR__ . '/admin.php';
 \define('_MA_WGEVENTS_EVENT_LOCGMLAT', 'Ort Latitude');
 \define('_MA_WGEVENTS_EVENT_LOCGMLON', 'Ort Longitude');
 \define('_MA_WGEVENTS_EVENT_LOCGMZOOM', 'Zoom-Faktor');
-
 \define('_MA_WGEVENTS_EVENT_FEE', 'Gebühr');
+\define('_MA_WGEVENTS_EVENT_PAYMENTINFO', 'Zahlungshinweis');
 \define('_MA_WGEVENTS_EVENT_REGISTER_USE', 'Anmeldesystem verwenden');
 \define('_MA_WGEVENTS_EVENT_REGISTER_FROM', 'Anmeldung vom');
 \define('_MA_WGEVENTS_EVENT_REGISTER_TO', 'Anmeldung bis');
@@ -120,7 +121,11 @@ require_once __DIR__ . '/admin.php';
 \define('_MA_WGEVENTS_EVENT_GM_APPLYCOORDS', 'Koordinaten übernehmen');
 \define('_MA_WGEVENTS_EVENT_INFORM_MODIF', 'Teilnehmer informieren');
 \define('_MA_WGEVENTS_EVENT_INFORM_MODIF_DESC', 'Sollen die Teilnehmer per Mail über Änderungen der Veranstaltung informiert werden?');
-// Category
+\define('_MA_WGEVENTS_EVENT_URL', 'Webseite');
+\define('_MA_WGEVENTS_EVENT_GROUPS', 'Anzeige für Gruppen');
+\define('_MA_WGEVENTS_EVENT_GROUPS_DESC', 'Definiere, welche Gruppen diese Veranstaltung sehen sollen');
+\define('_MA_WGEVENTS_EVENT_GROUPS_ALL', 'Alle Gruppen');
+// Categories
 \define('_MA_WGEVENTS_CATEGORY_LOGO', 'Logo');
 \define('_MA_WGEVENTS_CATEGORY_NOEVENTS', 'Keine Veranstaltungen verfügbar');
 \define('_MA_WGEVENTS_CATEGORY_EVENT', '1 Veranstaltung');
@@ -144,7 +149,7 @@ require_once __DIR__ . '/admin.php';
 \define('_MA_WGEVENTS_REGISTRATIONS_NBCURR', '%s von %s verfügbaren Plätzen bereits belegt');
 \define('_MA_WGEVENTS_REGISTRATIONS_NBCURR_INDEX', '%s von %s belegt');
 \define('_MA_WGEVENTS_REGISTRATIONS_FULL', 'ausgebucht');
-\define('_MA_WGEVENTS_REGISTRATIONS_FULL_LISTWAIT', 'Anmeldung für Warteliste möglich');
+\define('_MA_WGEVENTS_REGISTRATIONS_FULL_LISTWAIT', 'Anmeldung auf Warteliste möglich');
 \define('_MA_WGEVENTS_REGISTRATION_TOEARLY', 'Entschuldigung, aber die Anmeldung ist erst ab %s möglich');
 \define('_MA_WGEVENTS_REGISTRATION_TOLATE', 'Entschuldigung, aber die Anmeldung ist seit %s nicht mehr möglich');
 // Caption of Registration
@@ -154,9 +159,9 @@ require_once __DIR__ . '/admin.php';
 \define('_MA_WGEVENTS_REGISTRATION_SALUTATION_MEN', 'Herr');
 \define('_MA_WGEVENTS_REGISTRATION_SALUTATION_WOMEN', 'Frau');
 \define('_MA_WGEVENTS_REGISTRATION_FIRSTNAME', 'Vorname');
-\define('_MA_WGEVENTS_REGISTRATION_FIRSTNAME_PLACEHOLDER', 'Bitte Vorname eingeben');
+\define('_MA_WGEVENTS_REGISTRATION_FIRSTNAME_PLACEHOLDER', 'Bitte Vorname des Teilnehemers/der Teilnehmerin eingeben');
 \define('_MA_WGEVENTS_REGISTRATION_LASTNAME', 'Familienname');
-\define('_MA_WGEVENTS_REGISTRATION_LASTNAME_PLACEHOLDER', 'Bitte Familienname eingeben');
+\define('_MA_WGEVENTS_REGISTRATION_LASTNAME_PLACEHOLDER', 'Bitte Familienname des Teilnehemers/der Teilnehmerin eingeben');
 \define('_MA_WGEVENTS_REGISTRATION_EMAIL', 'E-Mail');
 \define('_MA_WGEVENTS_REGISTRATION_EMAIL_PLACEHOLDER', 'Bitte E-Mail eingeben');
 \define('_MA_WGEVENTS_REGISTRATION_EMAIL_CONFIRM', 'Bestätigung oder Informationen über Änderungen per Mail senden?');
@@ -169,16 +174,18 @@ Eine Teilnahme an der Veranstaltung ohne Zustimmung zu diesen Bestimmungen ist l
 ');
 \define('_MA_WGEVENTS_REGISTRATION_IP', 'Ip-Adresse');
 \define('_MA_WGEVENTS_REGISTRATION_FINANCIAL', 'Zahlungsstatus');
-\define('_MA_WGEVENTS_REGISTRATION_FINANCIAL_UNPAID', 'Unbezahlt');
+\define('_MA_WGEVENTS_REGISTRATION_FINANCIAL_UNPAID', 'Offen');
 \define('_MA_WGEVENTS_REGISTRATION_FINANCIAL_PAID', 'Bezahlt');
 \define('_MA_WGEVENTS_REGISTRATION_FINANCIAL_CHANGE_0','Status auf unbezahlt ändern');
 \define('_MA_WGEVENTS_REGISTRATION_FINANCIAL_CHANGE_1','Status auf bezahlt ändern');
+\define('_MA_WGEVENTS_REGISTRATION_PAIDAMOUNT', 'Bezahlter Betrag');
 \define('_MA_WGEVENTS_REGISTRATION_LISTWAIT', 'Warteliste');
 \define('_MA_WGEVENTS_REGISTRATION_LISTWAIT_TAKEOVER', 'Von Warteliste übernehmen');
 \define('_MA_WGEVENTS_REGISTRATION_LISTWAIT_Y', 'Auf Warteliste');
 \define('_MA_WGEVENTS_REGISTRATION_LISTWAIT_N', 'Auf endgültiger Teilnehmerliste');
 \define('_MA_WGEVENTS_REGISTRATION_VERIFKEY', 'Verifizierungsschlüssel');
 \define('_MA_WGEVENTS_REGISTRATION_CONFIRM', 'Teilnahme bestätigen');
+\define('_MA_WGEVENTS_REGISTRATION_CHANGED','Daten Registrierung erfolgreich geändert');
 // Question
 \define('_MA_WGEVENTS_QUESTION', 'Fragen');
 \define('_MA_WGEVENTS_QUESTION_ADD', 'Frage hinzufügen');
@@ -250,7 +257,7 @@ Eine Teilnahme an der Veranstaltung ohne Zustimmung zu diesen Bestimmungen ist l
 \define('_MA_WGEVENTS_FIELD_TEXTBOX', 'Textfeld');
 \define('_MA_WGEVENTS_FIELD_TEXTAREA', 'Mehrzeiliges Textfeld');
 \define('_MA_WGEVENTS_FIELD_SELECTBOX', 'Dropdownliste');
-\define('_MA_WGEVENTS_FIELD_COMBOBOX', 'Kombinationsfeld');
+\define('_MA_WGEVENTS_FIELD_COMBOBOX', 'Mehrfach-Auswahlliste');
 \define('_MA_WGEVENTS_FIELD_CHECKBOX', 'Kontrollkästchen');
 \define('_MA_WGEVENTS_FIELD_RADIO', 'Optionsfeld');
 \define('_MA_WGEVENTS_FIELD_RADIOYN', 'Optionsfeld Ja/Nein');
@@ -270,6 +277,7 @@ Eine Teilnahme an der Veranstaltung ohne Zustimmung zu diesen Bestimmungen ist l
 \define('_MA_WGEVENTS_GOTO_EVENT', 'Zur Veranstaltung');
 \define('_MA_WGEVENTS_GOTO_EVENTSLIST', 'Zur Veranstaltungsliste');
 \define('_MA_WGEVENTS_OUTPUT_EXCEL', 'Ausgabe in Excel');
+\define('_MA_WGEVENTS_ERROR_SAVE', 'Beim Speichern der Daten ist ein Fehler aufgetreten');
 // Form
 \define('_MA_WGEVENTS_FORM_OK', 'Erfolgreich gespeichert');
 \define('_MA_WGEVENTS_FORM_DELETE_OK', 'Erfolgreich gelöscht');

@@ -138,9 +138,10 @@ function b_wgevents_calendar_show($options)
     }
 
     $GLOBALS['xoopsTpl']->assign('wgevents_upload_eventlogos_url', \WGEVENTS_UPLOAD_EVENTLOGOS_URL . '/');
+    $GLOBALS['xoopsTpl']->assign('wgevents_url', \WGEVENTS_URL . '/');
 
-    $block = ['dummy']; //create dummy return in order to show block
-    return $block;
+    //create dummy return in order to show block
+    return ['dummy'];
 
 }
 

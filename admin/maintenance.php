@@ -15,8 +15,6 @@
  * @copyright      module for xoops
  * @license        GPL 2.0 or later
  * @package        wgevents
- * @since          1.0
- * @min_xoops      2.5.11
  * @author         Wedega - Email:<webmaster@wedega.com> - Website:<https://wedega.com>
  */
 
@@ -76,8 +74,19 @@ switch ($op) {
         $err_text     = '';
 
         $sql = 'DELETE ' . $GLOBALS['xoopsDB']->prefix('wgevents_answer') . '.* ';
-        $sql .= 'FROM ' . $GLOBALS['xoopsDB']->prefix('wgevents_answer') . ' LEFT JOIN ' . $GLOBALS['xoopsDB']->prefix('wgevents_question') . ' ON ' . $GLOBALS['xoopsDB']->prefix('wgevents_answer') . '.ans_queid = ' . $GLOBALS['xoopsDB']->prefix('wgevents_question') . '.id ';
+        $sql .= 'FROM ' . $GLOBALS['xoopsDB']->prefix('wgevents_answer') . ' LEFT JOIN ' . $GLOBALS['xoopsDB']->prefix('wgevents_question') . ' ON ' . $GLOBALS['xoopsDB']->prefix('wgevents_answer') . '.queid = ' . $GLOBALS['xoopsDB']->prefix('wgevents_question') . '.id ';
         $sql .= 'WHERE (((' . $GLOBALS['xoopsDB']->prefix('wgevents_question') . '.id) Is Null));';
+        if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
+            $errors[] = $GLOBALS['xoopsDB']->error();
+        }
+        if (\count($errors) > 0) {
+            foreach ($errors as $error) {
+                $err_text .= '<br>' . $error;
+            }
+        }
+        $sql = 'DELETE ' . $GLOBALS['xoopsDB']->prefix('wgevents_answer') . '.* ';
+        $sql .= 'FROM ' . $GLOBALS['xoopsDB']->prefix('wgevents_answer') . ' LEFT JOIN ' . $GLOBALS['xoopsDB']->prefix('wgevents_registration') . ' ON ' . $GLOBALS['xoopsDB']->prefix('wgevents_answer') . '.regid = ' . $GLOBALS['xoopsDB']->prefix('wgevents_registration') . '.id ';
+        $sql .= 'WHERE (((' . $GLOBALS['xoopsDB']->prefix('wgevents_registration') . '.id) Is Null));';
         if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
             $errors[] = $GLOBALS['xoopsDB']->error();
         }

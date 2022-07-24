@@ -99,33 +99,31 @@ class MigrateHelper
                 $tables[$tableName]['options'] = '';
                 $tables[$tableName]['columns'] = [];
                 $tables[$tableName]['keys'] = [];
-            } else {
-                if (false == $skip) {
-                    if (')' === \mb_strtoupper(\substr($line, 0, 1))) {
-                        // end of table definition
-                        // get options
-                        $this->getOptions($line, $options);
-                        $tables[$tableName]['options'] = $options;
-                    } elseif ('ENGINE' === \mb_strtoupper(\substr($line, 0, 6))) {
-                        $this->getOptions($line, $options);
-                        $tables[$tableName]['options'] = $options;
-                    } elseif ('DEFAULT CHARSET ' === \mb_strtoupper(\substr($line, 0, 16))) {
-                        $this->getOptions($line, $options);
-                        $tables[$tableName]['options'] = $options;
-                    } else {
-                        // get keys and fields
-                        switch (\mb_strtoupper(\substr($line, 0, 3))) {
-                            case 'KEY':
-                            case 'PRI':
-                            case 'UNI':
-                                $tables[$tableName]['keys'][] = $this->getKey($line);
-                                break;
-                            case 'else':
-                            default:
-                                $columns = $this->getColumns($line);
-                                $tables[$tableName]['columns'][] = $columns;
-                                break;
-                        }
+            } else if (false == $skip) {
+                if (')' === \mb_strtoupper(\substr($line, 0, 1))) {
+                    // end of table definition
+                    // get options
+                    $this->getOptions($line, $options);
+                    $tables[$tableName]['options'] = $options;
+                } elseif ('ENGINE' === \mb_strtoupper(\substr($line, 0, 6))) {
+                    $this->getOptions($line, $options);
+                    $tables[$tableName]['options'] = $options;
+                } elseif ('DEFAULT CHARSET ' === \mb_strtoupper(\substr($line, 0, 16))) {
+                    $this->getOptions($line, $options);
+                    $tables[$tableName]['options'] = $options;
+                } else {
+                    // get keys and fields
+                    switch (\mb_strtoupper(\substr($line, 0, 3))) {
+                        case 'KEY':
+                        case 'PRI':
+                        case 'UNI':
+                            $tables[$tableName]['keys'][] = $this->getKey($line);
+                            break;
+                        case 'else':
+                        default:
+                            $columns = $this->getColumns($line);
+                            $tables[$tableName]['columns'][] = $columns;
+                            break;
                     }
                 }
             }
@@ -163,7 +161,7 @@ class MigrateHelper
         }
 
         // create new file and write schema array into this file
-        $myfile = \fopen($this->fileYaml, "w");
+        $myfile = \fopen($this->fileYaml, 'wb');
         if (false == $myfile || null === $myfile) {
             \xoops_error('Error: Unable to open sql file!');
             return false;
@@ -260,7 +258,7 @@ class MigrateHelper
 
         if (\strpos($line, 'RIMARY') > 0) {
             $key['PRIMARY'] = [];
-            $fields = \substr($line, 13, \strlen($line) - 13);
+            $fields = \substr($line, 13);
             $key['PRIMARY']['columns'] = \str_replace(['`', '),', ')'], '', $fields);
             $key['PRIMARY']['unique'] = 'true';
         } else {

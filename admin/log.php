@@ -16,8 +16,6 @@
  * @copyright    2021 XOOPS Project (https://xoops.org)
  * @license      GPL 2.0 or later
  * @package      wgevents
- * @since        1.0.0
- * @min_xoops    2.5.11 Beta1
  * @author       Goffy - Wedega - Email:webmaster@wedega.com - Website:https://xoops.wedega.com
  */
 
@@ -37,9 +35,7 @@ $GLOBALS['xoopsTpl']->assign('limit', $limit);
 
 $moduleDirName = \basename(\dirname(__DIR__));
 
-
 $GLOBALS['xoopsTpl']->assign('mod_url', XOOPS_URL . '/modules/' . $moduleDirName);
-$xoTheme->addStylesheet($helper->url('assets/js/tablesorter/css/theme.blue.css'));
 
 switch ($op) {
     case 'list':
@@ -51,7 +47,7 @@ switch ($op) {
         $adminObject->addItemButton(\_AM_WGEVENTS_DELETE_LOGS, 'log.php?op=deleteall', 'delete');
         $GLOBALS['xoopsTpl']->assign('buttons', $adminObject->displayButton('left'));
         $logCount = $logHandler->getCountLogs();
-        $logAll = $logHandler->getAllLogs($start, $limit);
+        $logAll = $logHandler->getAllLogs();
         $GLOBALS['xoopsTpl']->assign('logCount', $logCount);
         $GLOBALS['xoopsTpl']->assign('wgevents_url', \WGEVENTS_URL);
         $GLOBALS['xoopsTpl']->assign('wgevents_upload_url', \WGEVENTS_UPLOAD_URL);
@@ -61,12 +57,6 @@ switch ($op) {
                 $log = $logAll[$i]->getValuesLogs();
                 $GLOBALS['xoopsTpl']->append('logs_list', $log);
                 unset($log);
-            }
-            // Display Navigation
-            if ($logCount > $limit) {
-                require_once \XOOPS_ROOT_PATH . '/class/pagenav.php';
-                $pagenav = new \XoopsPageNav($logCount, $limit, $start, 'start', 'op=list&limit=' . $limit);
-                $GLOBALS['xoopsTpl']->assign('pagenav', $pagenav->renderNav());
             }
         } else {
             $GLOBALS['xoopsTpl']->assign('error', \_AM_WGEVENTS_THEREARENT_LOGS);

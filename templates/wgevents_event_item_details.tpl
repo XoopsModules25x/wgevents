@@ -41,6 +41,21 @@
                 </div>
             </div>
         <{/if}>
+        <{if $event.url|default:false}>
+            <div class="row">
+                <div class="col-xs-12 col-sm-3 col-lg-2"><{$smarty.const._MA_WGEVENTS_EVENT_URL}>: </div>
+                <div class="col-xs-12 col-sm-9 col-lg-10">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-5 col-lg-4">
+                            <{$event.url}>
+                        </div>
+                        <div class="col-xs-12 col-sm-7 col-lg-8">
+                            <a class="btn btn-primary" href="<{$event.url}>"><{$event.url}></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <{/if}>
         <{if $event.location_text_user|default:false}>
             <div class="row">
                 <div class="col-xs-12 col-sm-3 col-lg-2"><{$smarty.const._MA_WGEVENTS_EVENT_LOCATION}>: </div>
@@ -74,6 +89,12 @@
                 <div class="col-xs-12 col-sm-3 col-lg-2"><{$smarty.const._MA_WGEVENTS_EVENT_FEE}>: </div>
                 <div class="col-xs-12 col-sm-9 col-lg-10"><{$event.fee_text}></div>
             </div>
+        <{/if}>
+        <{if $event.paymentinfo_text|default:false}>
+        <div class="row">
+            <div class="col-xs-12 col-sm-3 col-lg-2"><{$smarty.const._MA_WGEVENTS_EVENT_PAYMENTINFO}>: </div>
+            <div class="col-xs-12 col-sm-9 col-lg-10"><{$event.paymentinfo_text}></div>
+        </div>
         <{/if}>
         <{if $event.permEdit|default:false && $event.status|default:false}>
             <div class="row">
@@ -149,6 +170,12 @@
             </div>
         <{/if}>
     <{/if}>
+    <{if $use_groups|default:''}>
+        <div class="row">
+            <div class="col-xs-12 col-sm-3 col-lg-2"><{$smarty.const._MA_WGEVENTS_EVENT_GROUPS}>: </div>
+            <div class="col-xs-12 col-sm-9 col-lg-10"><{$event.groups_text}></div>
+        </div>
+    <{/if}>
 </div>
 <div class='panel-foot'>
     <div class='col-sm-12 right'>
@@ -158,7 +185,7 @@
             <a class='btn btn-success right wge-btn' href='event.php?op=show&amp;id=<{$event.id}>&amp;start=<{$start}>&amp;limit=<{$limit}>' title='<{$smarty.const._MA_WGEVENTS_DETAILS}>'><{$smarty.const._MA_WGEVENTS_DETAILS}></a>
         <{/if}>
         <{if $event.register_use|default:'' &&  $permRegister|default:false}>
-            <a class='btn btn-<{if !$event.regenabled|default:false}>outline-<{/if}>primary right wge-btn <{if !$event.regenabled|default:false}>disabled<{/if}>' href='registration.php?op=listmyevent&amp;redir=listmyevent&amp;evid=<{$event.id}>' title='<{$smarty.const._MA_WGEVENTS_GOTO_REGISTRATION}>'><{$smarty.const._MA_WGEVENTS_GOTO_REGISTRATION}></a>
+            <a class='btn btn-<{if !$event.regenabled|default:false}>outline-<{/if}>primary right wge-btn <{if !$event.regenabled|default:false}>disabled<{/if}>' href='registration.php?op=listeventmy&amp;redir=listeventmy&amp;evid=<{$event.id}>' title='<{$smarty.const._MA_WGEVENTS_GOTO_REGISTRATION}>'><{$smarty.const._MA_WGEVENTS_GOTO_REGISTRATION}></a>
         <{/if}>
         <{if $event.permEdit|default:false || $permApprove|default:false}>
             <br><a class='btn btn-primary right wge-btn' href='event.php?op=edit&amp;id=<{$event.id}>&amp;start=<{$start}>&amp;limit=<{$limit}>' title='<{$smarty.const._EDIT}>'><{$smarty.const._EDIT}></a>

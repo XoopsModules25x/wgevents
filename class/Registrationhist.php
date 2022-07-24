@@ -55,6 +55,7 @@ class Registrationhist extends \XoopsObject
         $this->initVar('ip', \XOBJ_DTYPE_TXTBOX);
         $this->initVar('status', \XOBJ_DTYPE_INT);
         $this->initVar('financial', \XOBJ_DTYPE_INT);
+        $this->initVar('paidamount', \XOBJ_DTYPE_FLOAT);
         $this->initVar('listwait', \XOBJ_DTYPE_INT);
         $this->initVar('datecreated', \XOBJ_DTYPE_INT);
         $this->initVar('submitter', \XOBJ_DTYPE_INT);
@@ -71,6 +72,32 @@ class Registrationhist extends \XoopsObject
         if (!$instance) {
             $instance = new self();
         }
+    }
+
+    /**
+     * Get Values
+     * @param null $keys
+     * @param null $format
+     * @param null $maxDepth
+     * @return array
+     */
+    public function getValuesRegistrationhists($keys = null, $format = null, $maxDepth = null)
+    {
+        $helper  = \XoopsModules\Wgevents\Helper::getInstance();
+        $ret = $this->getValues($keys, $format, $maxDepth);
+        $ret['hist_datecreated_text'] = \formatTimestamp($this->getVar('hist_datecreated'), 'm');
+        $ret['hist_submitter_text']   = \XoopsUser::getUnameFromId($this->getVar('hist_submitter'));
+        $eventHandler = $helper->getHandler('Event');
+        $eventObj = $eventHandler->get($this->getVar('evid'));
+        $ret['eventname']        = $eventObj->getVar('name');
+        $ret['salutation_text']  = Utility::getSalutationText($this->getVar('salutation'));
+        $ret['status_text']      = Utility::getStatusText($this->getVar('status'));
+        $ret['financial_text']   = Utility::getFinancialText($this->getVar('financial'));
+        $ret['paidamount_text']  = Utility::FloatToString($this->getVar('paidamount'));
+        $ret['listwait_text']    = (int)$this->getVar('listwait') > 0 ? \_YES : \_NO;
+        $ret['datecreated_text'] = \formatTimestamp($this->getVar('datecreated'), 'm');
+        $ret['submitter_text']   = \XoopsUser::getUnameFromId($this->getVar('submitter'));
+        return $ret;
     }
 
 }

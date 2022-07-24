@@ -16,8 +16,6 @@
  * @copyright      2020 XOOPS Project (https://xooops.org)
  * @license        GPL 2.0 or later
  * @package        wgevents
- * @since          1.0
- * @min_xoops      2.5.9
  * @author         wedega - Email:<webmaster@wedega.com> - Website:<https://xoops.wedega.com>
  */
 
@@ -44,9 +42,9 @@ $dayEnd   = \mktime(23, 59, 59, $month, $lastday, $year);
 
 //request
 $op            = Request::getCmd('op', 'list');
-$filterFrom    = Request::getInt('filterFrom', 0);
-$filterTo      = Request::getInt('filterTo', 0);
-$filterCat     = Request::getInt('filterCat', 0);
+$filterFrom    = Request::getInt('filterFrom');
+$filterTo      = Request::getInt('filterTo');
+$filterCat     = Request::getInt('filterCat');
 $filterSort    = 'datefrom-ASC';
 if (0 == $filterFrom) {
     $filterFrom = $dayStart;
@@ -144,6 +142,16 @@ $formFilter = $filterHandler->getFormFilterItems();
 $GLOBALS['xoopsTpl']->assign('formFilter', $formFilter->render());
 */
 $filtered = false;
+
+$gmapsEnableCal = false;
+$gmapsHeight    = false;
+$useGMaps       = (bool)$helper->getConfig('use_gmaps');
+if ($useGMaps) {
+    $gmapsPositionList = (string)$helper->getConfig('gmaps_enablecal');
+    $gmapsEnableCal    = ('top' == $gmapsPositionList || 'bottom' == $gmapsPositionList);
+    $gmapsHeight       = $helper->getConfig('gmaps_height');
+}
+
 $events = [];
 /*
 switch ($op) {
@@ -180,6 +188,7 @@ $events = $eventHandler->getEvents(0, 0, $filterFrom, $filterTo, $filterCat, $so
 
 $eventsCount = \count($events);
 if ($eventsCount > 0) {
+    $eventsMap = [];
     $calendar->setDate($filterFrom);
     $GLOBALS['xoopsTpl']->assign('eventsCount', $eventsCount);
     foreach($events as $event) {
@@ -200,8 +209,31 @@ if ($eventsCount > 0) {
             $evName = \substr($evName, 0, $lengthTitle - 3) . '...';
         }
         $eventLink .= $evName;
+        if ($useGMaps && $gmapsEnableCal && (float)$event['locgmlat'] > 0) {
+            $eventsMap[$event['id']] = [
+                'name' => $evName,
+                'location' => $event['location_text_user'],
+                'from' => $event['datefrom_text'],
+                'url' => 'event.php?op=show&id=' . $event['id'],
+                'lat'  => (float)$event['locgmlat'],
+                'lon'  => (float)$event['locgmlon']
+            ];
+        }
+        
         $eventLink .= '</span><i class="fa fa-edit wg-cal-icon pull-right" title="' . \_MA_WGEVENTS_CAL_EDITITEM . '"></i></a>';
         $calendar->addDailyHtml($eventLink, $event['datefrom'], $event['dateto'], $linkStyle);
+    }
+    if ($useGMaps && count($eventsMap) > 0) {
+        if ('show' == $op) {
+            $GLOBALS['xoopsTpl']->assign('gmapsShow', true);
+        } else {
+            $GLOBALS['xoopsTpl']->assign('gmapsShowList', true);
+            $GLOBALS['xoopsTpl']->assign('gmapsEnableCal', $gmapsEnableCal);
+            $GLOBALS['xoopsTpl']->assign('gmapsHeight', $gmapsHeight);
+            $GLOBALS['xoopsTpl']->assign('gmapsPositionList', $gmapsPositionList);
+        }
+        $GLOBALS['xoopsTpl']->assign('api_key', $helper->getConfig('gmaps_api'));
+        $GLOBALS['xoopsTpl']->assign('eventsMap', $eventsMap);
     }
 }
 $calendar->setPermSubmit($permissionsHandler->getPermEventsSubmit());

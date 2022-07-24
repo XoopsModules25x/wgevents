@@ -94,7 +94,7 @@ class Answer extends \XoopsObject
         }
         $isAdmin = \is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->isAdmin($GLOBALS['xoopsModule']->mid()) : false;
         // Title
-        $title = $this->isNew() ? \sprintf(\_MA_WGEVENTS_ANSWER_ADD) : \sprintf(\_MA_WGEVENTS_ANSWER_EDIT);
+        $title = $this->isNew() ? \_MA_WGEVENTS_ANSWER_ADD : \_MA_WGEVENTS_ANSWER_EDIT;
         // Get Theme Form
         \xoops_load('XoopsFormLoader');
         $form = new \XoopsThemeForm($title, 'form', $action, 'post', true);

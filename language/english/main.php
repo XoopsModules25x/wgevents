@@ -16,8 +16,6 @@
  * @copyright    2021 XOOPS Project (https://xoops.org)
  * @license      GPL 2.0 or later
  * @package      wgevents
- * @since        1.0.0
- * @min_xoops    2.5.11 Beta1
  * @author       Goffy - Wedega - Email:webmaster@wedega.com - Website:https://xoops.wedega.com
  */
 
@@ -55,6 +53,9 @@ require_once __DIR__ . '/admin.php';
 \define('_MA_WGEVENTS_STATUS_APPROVED', 'Approved');
 \define('_MA_WGEVENTS_STATUS_LOCKED', 'Locked');
 \define('_MA_WGEVENTS_STATUS_CANCELED', 'Canceled');
+\define('_MA_WGEVENTS_STATUS_PENDING', 'Pending');
+\define('_MA_WGEVENTS_STATUS_PROCESSING', 'Processing');
+\define('_MA_WGEVENTS_STATUS_DONE', 'Done');
 // ---------------- Contents ----------------
 // Event
 \define('_MA_WGEVENTS_EVENT', 'Event');
@@ -91,6 +92,7 @@ require_once __DIR__ . '/admin.php';
 \define('_MA_WGEVENTS_EVENT_LOCGMLON', 'Location Longitude');
 \define('_MA_WGEVENTS_EVENT_LOCGMZOOM', 'Zoom factor');
 \define('_MA_WGEVENTS_EVENT_FEE', 'Fee');
+\define('_MA_WGEVENTS_EVENT_PAYMENTINFO', 'Payment Info');
 \define('_MA_WGEVENTS_EVENT_REGISTER_USE', 'Use Registration');
 \define('_MA_WGEVENTS_EVENT_REGISTER_FROM', 'Registration from');
 \define('_MA_WGEVENTS_EVENT_REGISTER_TO', 'Registration to');
@@ -119,6 +121,10 @@ require_once __DIR__ . '/admin.php';
 \define('_MA_WGEVENTS_EVENT_GM_APPLYCOORDS', 'Apply coordinates');
 \define('_MA_WGEVENTS_EVENT_INFORM_MODIF', 'Inform participants');
 \define('_MA_WGEVENTS_EVENT_INFORM_MODIF_DESC', 'Should participants be informed about the changes by mail?');
+\define('_MA_WGEVENTS_EVENT_URL', 'Website');
+\define('_MA_WGEVENTS_EVENT_GROUPS', 'Display for groups');
+\define('_MA_WGEVENTS_EVENT_GROUPS_DESC', 'Define which groups should be able to see this event');
+\define('_MA_WGEVENTS_EVENT_GROUPS_ALL', 'All groups');
 // Categories
 \define('_MA_WGEVENTS_CATEGORY_LOGO', 'Logo');
 \define('_MA_WGEVENTS_CATEGORY_NOEVENTS', 'No events available');
@@ -170,14 +176,16 @@ Participation without agreement to this conditions is not possible.
 \define('_MA_WGEVENTS_REGISTRATION_FINANCIAL', 'Financial state');
 \define('_MA_WGEVENTS_REGISTRATION_FINANCIAL_UNPAID', 'Unpaid');
 \define('_MA_WGEVENTS_REGISTRATION_FINANCIAL_PAID', 'Paid');
-\define('_MA_WGEVENTS_REGISTRATION_FINANCIAL_CHANGE_0','Change status to unpaid+');
-\define('_MA_WGEVENTS_REGISTRATION_FINANCIAL_CHANGE_1','Status auf bezahlt ändern');
+\define('_MA_WGEVENTS_REGISTRATION_FINANCIAL_CHANGE_0','Change status to unpaid');
+\define('_MA_WGEVENTS_REGISTRATION_FINANCIAL_CHANGE_1','Change status to paid');
+\define('_MA_WGEVENTS_REGISTRATION_PAIDAMOUNT', 'Paid amount');
 \define('_MA_WGEVENTS_REGISTRATION_LISTWAIT', 'Waiting list');
 \define('_MA_WGEVENTS_REGISTRATION_LISTWAIT_TAKEOVER', 'Take over from waiting list');
 \define('_MA_WGEVENTS_REGISTRATION_LISTWAIT_Y', 'On waiting list');
 \define('_MA_WGEVENTS_REGISTRATION_LISTWAIT_N', 'On final list of participants');
 \define('_MA_WGEVENTS_REGISTRATION_VERIFKEY', 'Verification key');
 \define('_MA_WGEVENTS_REGISTRATION_CONFIRM', 'Confirm participation');
+\define('_MA_WGEVENTS_REGISTRATION_CHANGED','Registration data successfully changed');
 // Question
 \define('_MA_WGEVENTS_QUESTION', 'Question');
 \define('_MA_WGEVENTS_QUESTION_ADD', 'Add Question');
@@ -269,6 +277,7 @@ Participation without agreement to this conditions is not possible.
 \define('_MA_WGEVENTS_GOTO_EVENT', 'Goto event');
 \define('_MA_WGEVENTS_GOTO_EVENTSLIST', 'Goto eventlist');
 \define('_MA_WGEVENTS_OUTPUT_EXCEL', 'Output to Excel');
+\define('_MA_WGEVENTS_ERROR_SAVE', 'An error occured when saving the data');
 // Form
 \define('_MA_WGEVENTS_FORM_OK', 'Successfully saved');
 \define('_MA_WGEVENTS_FORM_DELETE_OK', 'Successfully deleted');

@@ -16,8 +16,6 @@
  * @copyright    2021 XOOPS Project (https://xoops.org)
  * @license      GPL 2.0 or later
  * @package      wgevents
- * @since        1.0.0
- * @min_xoops    2.5.11 Beta1
  * @author       Goffy - Wedega - Email:webmaster@wedega.com - Website:https://xoops.wedega.com
  */
 
@@ -40,9 +38,7 @@ $GLOBALS['xoopsTpl']->assign('limit', $limit);
 
 $moduleDirName = \basename(\dirname(__DIR__));
 
-
 $GLOBALS['xoopsTpl']->assign('mod_url', XOOPS_URL . '/modules/' . $moduleDirName);
-$xoTheme->addStylesheet($helper->url('assets/js/tablesorter/css/theme.blue.css'));
 
 switch ($op) {
     case 'list':
@@ -55,26 +51,21 @@ switch ($op) {
         $adminObject->addItemButton(\_AM_WGEVENTS_ADD_EVENT, 'event.php?op=new');
         $GLOBALS['xoopsTpl']->assign('buttons', $adminObject->displayButton('left'));
         $eventCount = $eventHandler->getCountEvents();
-        $eventAll = $eventHandler->getAllEvents($start, $limit);
+        $eventAll = $eventHandler->getAllEvents();
         $GLOBALS['xoopsTpl']->assign('eventCount', $eventCount);
         $GLOBALS['xoopsTpl']->assign('wgevents_url', \WGEVENTS_URL);
         $GLOBALS['xoopsTpl']->assign('wgevents_upload_url', \WGEVENTS_UPLOAD_URL);
-        $GLOBALS['xoopsTpl']->assign('wgevents_upload_eventlogos_url_uid', \WGEVENTS_UPLOAD_EVENTLOGOS_URL . '/' . $uidCurrent . '/');
+        $GLOBALS['xoopsTpl']->assign('wgevents_upload_eventlogos_url', \WGEVENTS_UPLOAD_EVENTLOGOS_URL . '/');
         $GLOBALS['xoopsTpl']->assign('use_gmaps', $helper->getConfig('use_gmaps'));
         $GLOBALS['xoopsTpl']->assign('use_wggallery', $helper->getConfig('use_wggallery'));
         $GLOBALS['xoopsTpl']->assign('use_register', $helper->getConfig('use_register'));
+        $GLOBALS['xoopsTpl']->assign('use_groups', $helper->getConfig('use_groups'));
         // Table view events
         if ($eventCount > 0) {
             foreach (\array_keys($eventAll) as $i) {
                 $event = $eventAll[$i]->getValuesEvents();
                 $GLOBALS['xoopsTpl']->append('events_list', $event);
                 unset($event);
-            }
-            // Display Navigation
-            if ($eventCount > $limit) {
-                require_once \XOOPS_ROOT_PATH . '/class/pagenav.php';
-                $pagenav = new \XoopsPageNav($eventCount, $limit, $start, 'start', 'op=list&limit=' . $limit);
-                $GLOBALS['xoopsTpl']->assign('pagenav', $pagenav->renderNav());
             }
         } else {
             $GLOBALS['xoopsTpl']->assign('error', \_AM_WGEVENTS_THEREARENT_EVENTS);
@@ -154,10 +145,13 @@ switch ($op) {
                 $uploaderErrors .= '<br>' . $uploader->getErrors();
             }
         } else {
-            if ($filename > '') {
+            if ('' != $filename) {
                 $uploaderErrors .= '<br>' . $uploader->getErrors();
             }
-            $eventObj->setVar('logo', Request::getString('logo'));
+            $filename = Request::getString('logo');
+            if ('' != $filename) {
+                $eventObj->setVar('logo', $filename);
+            }
         }
         $eventObj->setVar('desc', Request::getText('desc'));
         $eventDatefromArr = Request::getArray('datefrom');
@@ -172,12 +166,14 @@ switch ($op) {
         $eventObj->setVar('dateto', $eventDateto);
         $eventObj->setVar('contact', Request::getString('contact'));
         $eventObj->setVar('email', Request::getString('email'));
+        $eventObj->setVar('url', Request::getString('url'));
         $eventObj->setVar('location', Request::getString('location'));
         $eventObj->setVar('locgmlat', Request::getFloat('locgmlat'));
         $eventObj->setVar('locgmlon', Request::getFloat('locgmlon'));
         $eventObj->setVar('locgmzoom', Request::getInt('locgmzoom'));
         $evFee = Utility::StringToFloat(Request::getString('fee'));
         $eventObj->setVar('fee', $evFee);
+        $eventObj->setVar('paymentinfo', Request::getText('paymentinfo'));
         $eventObj->setVar('register_use', Request::getInt('register_use'));
         if ($helper->getConfig('use_register')) {
             $evRegisterUse = Request::getInt('register_use');
@@ -200,25 +196,24 @@ switch ($op) {
                 $eventObj->setVar('register_sendermail', Request::getString('register_sendermail'));
                 $eventObj->setVar('register_sendername', Request::getString('register_sendername'));
                 $eventObj->setVar('register_signature', Request::getString('register_signature'));
-            } else {
-                if ($evId > 0) {
-                    //reset previous values
-                    $eventObj->setVar('register_to', 0);
-                    $eventObj->setVar('register_max', 0);
-                    $eventObj->setVar('register_listwait', 0);
-                    $eventObj->setVar('register_autoaccept', 0);
-                    $eventObj->setVar('register_notify', '');
-                    $eventObj->setVar('register_sendermail', '');
-                    $eventObj->setVar('register_sendername', '');
-                    $eventObj->setVar('register_signature', '');
-                    $registrationHandler->cleanupRegistrations($evId);
-                    $questionHandler->cleanupQuestions($evId);
-                    $answerHandler->cleanupAnswers($evId);
-                }
+            } else if ($evId > 0) {
+                //reset previous values
+                $eventObj->setVar('register_to', 0);
+                $eventObj->setVar('register_max', 0);
+                $eventObj->setVar('register_listwait', 0);
+                $eventObj->setVar('register_autoaccept', 0);
+                $eventObj->setVar('register_notify', '');
+                $eventObj->setVar('register_sendermail', '');
+                $eventObj->setVar('register_sendername', '');
+                $eventObj->setVar('register_signature', '');
+                $registrationHandler->cleanupRegistrations($evId);
+                $questionHandler->cleanupQuestions($evId);
+                $answerHandler->cleanupAnswers($evId);
             }
         }
         $eventObj->setVar('status', Request::getInt('status'));
         $eventObj->setVar('galid', Request::getInt('galid'));
+        $eventObj->setVar('groups', implode("|", Request::getArray('groups')));
         $eventObj->setVar('identifier', Request::getString('identifier'));
         $eventDatecreatedObj = \DateTime::createFromFormat(\_SHORTDATESTRING, Request::getString('datecreated'));
         $eventObj->setVar('datecreated', $eventDatecreatedObj->getTimestamp());
@@ -228,12 +223,10 @@ switch ($op) {
             $newEvId = $eventObj->getNewInsertedId();
             if ('' !== $uploaderErrors) {
                 \redirect_header('event.php?op=edit&id=' . $evId, 5, $uploaderErrors);
+            } else if ($continueAddtionals) {
+                \redirect_header('question.php?op=edit&amp;evid=' . $newEvId, 2, \_MA_WGEVENTS_FORM_OK);
             } else {
-                if ($continueAddtionals) {
-                    \redirect_header('question.php?op=edit&amp;evid=' . $newEvId, 2, \_MA_WGEVENTS_FORM_OK);
-                } else {
-                    \redirect_header('event.php?op=list&amp;start=' . $start . '&amp;limit=' . $limit, 2, \_MA_WGEVENTS_FORM_OK);
-                }
+                \redirect_header('event.php?op=list&amp;start=' . $start . '&amp;limit=' . $limit, 2, \_MA_WGEVENTS_FORM_OK);
             }
         }
         // Get Form

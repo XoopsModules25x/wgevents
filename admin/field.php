@@ -16,8 +16,6 @@
  * @copyright    2021 XOOPS Project (https://xoops.org)
  * @license      GPL 2.0 or later
  * @package      wgevents
- * @since        1.0.0
- * @min_xoops    2.5.11 Beta1
  * @author       Goffy - Wedega - Email:webmaster@wedega.com - Website:https://xoops.wedega.com
  */
 
@@ -38,7 +36,6 @@ $GLOBALS['xoopsTpl']->assign('limit', $limit);
 $moduleDirName = \basename(\dirname(__DIR__));
 
 $GLOBALS['xoopsTpl']->assign('mod_url', XOOPS_URL . '/modules/' . $moduleDirName);
-$xoTheme->addStylesheet($helper->url('assets/js/tablesorter/css/theme.blue.css'));
 
 switch ($op) {
     case 'list':
@@ -68,12 +65,6 @@ switch ($op) {
                 $field = $fieldAll[$i]->getValuesFields();
                 $GLOBALS['xoopsTpl']->append('fields_list', $field);
                 unset($field);
-            }
-            // Display Navigation
-            if ($fieldCount > $limit) {
-                require_once \XOOPS_ROOT_PATH . '/class/pagenav.php';
-                $pagenav = new \XoopsPageNav($fieldCount, $limit, $start, 'start', 'op=list&limit=' . $limit);
-                $GLOBALS['xoopsTpl']->assign('pagenav', $pagenav->renderNav());
             }
         } else {
             $GLOBALS['xoopsTpl']->assign('error', \_AM_WGEVENTS_THEREARENT_FIELDS);
@@ -192,12 +183,10 @@ switch ($op) {
         $GLOBALS['xoopsTpl']->assign('navigation', $adminObject->displayNavigation('field.php'));
         if (isset($_REQUEST['ok']) && 1 == $_REQUEST['ok']) {
             if (!$GLOBALS['xoopsSecurity']->check()) {
-                //\redirect_header('field.php', 3, \implode(', ', $GLOBALS['xoopsSecurity']->getErrors()));
+                \redirect_header('field.php', 3, \implode(', ', $GLOBALS['xoopsSecurity']->getErrors()));
             }
-            if ($fieldHandler->getCount() > 0) {
-                if (!$fieldHandler->deleteAll()) {
-                    $GLOBALS['xoopsTpl']->assign('error', $fieldHandler->getHtmlErrors());
-                }
+            if (($fieldHandler->getCount() > 0) && !$fieldHandler->deleteAll()) {
+                $GLOBALS['xoopsTpl']->assign('error', $fieldHandler->getHtmlErrors());
             }
             $items = BuildDefaultSet();
             $uid = $GLOBALS['xoopsUser']->uid();

@@ -24,7 +24,10 @@ namespace XoopsModules\Wgevents;
  */
 
 use XoopsModules\Wgevents;
-use XoopsModules\Wgevents\Helper;
+use XoopsModules\Wgevents\{
+    Helper,
+    Utility
+};
 
 /**
  * Class Object Handler Registration
@@ -54,13 +57,13 @@ class RegistrationHandler extends \XoopsPersistableObjectHandler
     /**
      * retrieve a field
      *
-     * @param int $i field id
+     * @param int $id field id
      * @param null fields
      * @return \XoopsObject|null reference to the {@link Get} object
      */
-    public function get($i = null, $fields = null)
+    public function get($id = null, $fields = null)
     {
-        return parent::get($i, $fields);
+        return parent::get($id, $fields);
     }
 
     /**
@@ -193,9 +196,11 @@ class RegistrationHandler extends \XoopsPersistableObjectHandler
      * @param int $evId // id of event
      * @param array $questionsArr // array with all questions for this event
      * @param bool $currentUserOnly // true: filter result for current user - false: return all for given event
+     * @param string $sortBy // sort registrations by
+     * @param string $orderBy // order for sorting
      * @return bool|array
      */
-    public function getRegistrationDetailsByEvent(int $evId, array $questionsArr, $currentUserOnly = true)
+    public function getRegistrationDetailsByEvent(int $evId, array $questionsArr, $currentUserOnly = true, $sortBy = 'datecreated', $orderBy = 'ASC')
     {
         if ($evId > 0) {
             $helper  = \XoopsModules\Wgevents\Helper::getInstance();
@@ -219,6 +224,8 @@ class RegistrationHandler extends \XoopsPersistableObjectHandler
                     $crRegistration->add(new \Criteria('ip', $regIp));
                 }
             }
+            $crRegistration->setSort($sortBy);
+            $crRegistration->setOrder($orderBy);
             $registrationsCount = $this->getCount($crRegistration);
             $GLOBALS['xoopsTpl']->assign('registrationsCount', $registrationsCount);
             $registrationsAll = $this->getAll($crRegistration);
@@ -268,14 +275,22 @@ class RegistrationHandler extends \XoopsPersistableObjectHandler
         $fields[] = ['name' => 'firstname', 'caption' => \_MA_WGEVENTS_REGISTRATION_FIRSTNAME, 'type' => 'text'];
         $fields[] = ['name' => 'lastname', 'caption' => \_MA_WGEVENTS_REGISTRATION_LASTNAME, 'type' => 'text'];
         $fields[] = ['name' => 'email', 'caption' => \_MA_WGEVENTS_REGISTRATION_EMAIL, 'type' => 'text'];
+        $fields[] = ['name' => 'paidamount', 'caption' => \_MA_WGEVENTS_REGISTRATION_PAIDAMOUNT, 'type' => 'float'];
         foreach ($fields as $field) {
             $valueOld = $versionOld->getVar($field['name']);
             $valueNew = $versionNew->getVar($field['name']);
             if ($valueOld != $valueNew) {
-                if ('datetime' == $field['type']) {
-                    $infotext .= \sprintf(\_MA_WGEVENTS_MAIL_REG_MODIFICATION, $field['caption'], \formatTimestamp($valueOld, 'm'), \formatTimestamp($valueNew, 'm')) . PHP_EOL;
-                } else {
-                    $infotext .= \sprintf(\_MA_WGEVENTS_MAIL_REG_MODIFICATION, $field['caption'], $valueOld, $valueNew) . PHP_EOL;
+                switch ($field['type']) {
+                    case 'text':
+                    default:
+                        $infotext .= \sprintf(\_MA_WGEVENTS_MAIL_REG_MODIFICATION, $field['caption'], $valueOld, $valueNew) . PHP_EOL;
+                        break;
+                    case 'datetime':
+                        $infotext .= \sprintf(\_MA_WGEVENTS_MAIL_REG_MODIFICATION, $field['caption'], \formatTimestamp($valueOld, 'm'), \formatTimestamp($valueNew, 'm')) . PHP_EOL;
+                        break;
+                    case 'float':
+                        $infotext .= \sprintf(\_MA_WGEVENTS_MAIL_REG_MODIFICATION, $field['caption'], Utility::FloatToString($valueOld), Utility::FloatToString($valueNew)) . PHP_EOL;
+                        break;
                 }
             }
         }

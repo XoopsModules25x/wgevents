@@ -64,11 +64,13 @@ class Event extends \XoopsObject
         $this->initVar('dateto', \XOBJ_DTYPE_INT);
         $this->initVar('contact', \XOBJ_DTYPE_TXTAREA);
         $this->initVar('email', \XOBJ_DTYPE_TXTBOX);
+        $this->initVar('url', \XOBJ_DTYPE_TXTBOX);
         $this->initVar('location', \XOBJ_DTYPE_TXTAREA);
         $this->initVar('locgmlat', \XOBJ_DTYPE_FLOAT);
         $this->initVar('locgmlon', \XOBJ_DTYPE_FLOAT);
         $this->initVar('locgmzoom', \XOBJ_DTYPE_INT);
         $this->initVar('fee', \XOBJ_DTYPE_FLOAT);
+        $this->initVar('paymentinfo', \XOBJ_DTYPE_OTHER);
         $this->initVar('register_use', \XOBJ_DTYPE_INT);
         $this->initVar('register_from', \XOBJ_DTYPE_INT);
         $this->initVar('register_to', \XOBJ_DTYPE_INT);
@@ -83,6 +85,7 @@ class Event extends \XoopsObject
         $this->initVar('status', \XOBJ_DTYPE_INT);
         $this->initVar('galid', \XOBJ_DTYPE_INT);
         $this->initVar('identifier', \XOBJ_DTYPE_TXTBOX);
+        $this->initVar('groups', \XOBJ_DTYPE_TXTBOX);
         $this->initVar('datecreated', \XOBJ_DTYPE_INT);
         $this->initVar('submitter', \XOBJ_DTYPE_INT);
     }
@@ -140,7 +143,7 @@ class Event extends \XoopsObject
         $imgInfo = '<img class="wge-img-info" src="' . \WGEVENTS_ICONS_URL_24 . '/info.png" alt="img-info" title="%s">';
 
         // Title
-        $title = $this->isNew() ? \sprintf(\_MA_WGEVENTS_EVENT_ADD) : \sprintf(\_MA_WGEVENTS_EVENT_EDIT);
+        $title = $this->isNew() ? \_MA_WGEVENTS_EVENT_ADD : \_MA_WGEVENTS_EVENT_EDIT;
         // Get Theme Form
         \xoops_load('XoopsFormLoader');
         $form = new \XoopsThemeForm($title, 'formEvent', $action, 'post', true);
@@ -213,6 +216,8 @@ class Event extends \XoopsObject
         $form->addElement(new \XoopsFormTextArea(\_MA_WGEVENTS_EVENT_CONTACT, 'contact', $this->getVar('contact', 'e'), 4, 30));
         // Form Text evEmail
         $form->addElement(new \XoopsFormText(\_MA_WGEVENTS_EVENT_EMAIL, 'email', 50, 255, $this->getVar('email')));
+        // Form Text evUrl
+        $form->addElement(new \XoopsFormText(\_MA_WGEVENTS_EVENT_URL, 'url', 50, 255, $this->getVar('url')));
         // Location
         // Form Editor TextArea evLocation
         $evLocation = $this->isNew() ? '' : $this->getVar('location', 'e');
@@ -243,6 +248,16 @@ class Event extends \XoopsObject
         $default0 = '0' . $helper->getConfig('sep_comma') . '00';
         $evFee = $this->isNew() ? $default0 : Utility::FloatToString($this->getVar('fee'));
         $form->addElement(new \XoopsFormText(\_MA_WGEVENTS_EVENT_FEE, 'fee', 20, 150, $evFee));
+        // Form TextArea evPaymentinfo
+        $editorConfigs2 = [];
+        $editorConfigs2['name'] = 'paymentinfo';
+        $editorConfigs2['value'] = $this->getVar('paymentinfo', 'e');
+        $editorConfigs2['rows'] = 5;
+        $editorConfigs2['cols'] = 40;
+        $editorConfigs2['width'] = '100%';
+        $editorConfigs2['height'] = '400px';
+        $editorConfigs2['editor'] = $editor;
+        $form->addElement(new \XoopsFormEditor(\_MA_WGEVENTS_EVENT_PAYMENTINFO, 'paymentinfo', $editorConfigs2));
         // Start block registration options
         if ($helper->getConfig('use_register')) {
             // Form Radio Yes/No evRegister_use
@@ -310,6 +325,27 @@ class Event extends \XoopsObject
             $form->addElement($evGalidSelect);
             */
         }
+        // Form Select evGroups
+        if ($helper->getConfig('use_groups')) {
+            if ($this->isNew()) {
+                $groups = [0];
+            } else {
+                $groups = \explode("|", $this->getVar('groups'));
+            }
+            $evGroupsSelect = new \XoopsFormSelect(\_MA_WGEVENTS_EVENT_GROUPS, 'groups', $groups, 5, true);
+            $evGroupsSelect->addOption(0, \_MA_WGEVENTS_EVENT_GROUPS_ALL);
+            // Get groups
+            $memberHandler = \xoops_getHandler('member');
+            $xoopsGroups = $memberHandler->getGroupList();
+            foreach ($xoopsGroups as $key => $group) {
+                if (3 !== (int)$key) {
+                    $evGroupsSelect->addOption(substr('00000' . $key,  -5), $group);
+                }
+            }
+            $form->addElement($evGroupsSelect, true);
+        } else {
+            $form->addElement(new \XoopsFormHidden('groups', '00000'));
+        }
         // Form Select Status evStatus
         // Form Text Date Select evDatecreated
         // Form Select User evSubmitter
@@ -337,17 +373,15 @@ class Event extends \XoopsObject
             $form->addElement(new \XoopsFormHidden('status', $evStatus));
             $form->addElement(new \XoopsFormHidden('datecreated_int', $evDatecreated));
             $form->addElement(new \XoopsFormHidden('submitter', $evSubmitter));
-            if (!$this->isNew()) {
-                if ($permEventsApprove) {
-                    $evStatusSelect = new \XoopsFormSelect(\_MA_WGEVENTS_STATUS, 'status', $evStatus);
-                    $evStatusSelect->addOption(Constants::STATUS_NONE, \_MA_WGEVENTS_STATUS_NONE);
-                    $evStatusSelect->addOption(Constants::STATUS_OFFLINE, \_MA_WGEVENTS_STATUS_OFFLINE);
-                    $evStatusSelect->addOption(Constants::STATUS_SUBMITTED, \_MA_WGEVENTS_STATUS_SUBMITTED);
-                    $evStatusSelect->addOption(Constants::STATUS_APPROVED, \_MA_WGEVENTS_STATUS_APPROVED);
-                    $form->addElement($evStatusSelect, true);
-                    $form->addElement(new \XoopsFormLabel(\_MA_WGEVENTS_DATECREATED, \formatTimestamp($evDatecreated, 's')));
-                    $form->addElement(new \XoopsFormLabel(\_MA_WGEVENTS_SUBMITTER, \XoopsUser::getUnameFromId($evSubmitter)));
-                }
+            if (!$this->isNew() && $permEventsApprove) {
+                $evStatusSelect = new \XoopsFormSelect(\_MA_WGEVENTS_STATUS, 'status', $evStatus);
+                $evStatusSelect->addOption(Constants::STATUS_NONE, \_MA_WGEVENTS_STATUS_NONE);
+                $evStatusSelect->addOption(Constants::STATUS_OFFLINE, \_MA_WGEVENTS_STATUS_OFFLINE);
+                $evStatusSelect->addOption(Constants::STATUS_SUBMITTED, \_MA_WGEVENTS_STATUS_SUBMITTED);
+                $evStatusSelect->addOption(Constants::STATUS_APPROVED, \_MA_WGEVENTS_STATUS_APPROVED);
+                $form->addElement($evStatusSelect, true);
+                $form->addElement(new \XoopsFormLabel(\_MA_WGEVENTS_DATECREATED, \formatTimestamp($evDatecreated, 's')));
+                $form->addElement(new \XoopsFormLabel(\_MA_WGEVENTS_SUBMITTER, \XoopsUser::getUnameFromId($evSubmitter)));
             }
         }
         if (!$this->isNew()) {
@@ -488,6 +522,7 @@ class Event extends \XoopsObject
             $ret['contact_text_user']  = \implode('<br>', $contactLines);
         }
         $ret['fee_text']           = Utility::FloatToString($this->getVar('fee'));
+        $ret['paymentinfo_text']   = $this->getVar('paymentinfo', 'e');
         $ret['register_use_text']  = (int)$this->getVar('register_use') > 0 ? \_YES : \_NO;
         $ret['register_from_text'] = '';
         if ($this->getVar('register_from') > 0) {
@@ -508,9 +543,25 @@ class Event extends \XoopsObject
             $ret['register_notify_user']  = \implode('<br>', $notifyEmails);
         }
         $ret['register_forceverif_text'] = (int)$this->getVar('register_forceverif') > 0 ? \_YES : \_NO;
-        $ret['status_text']              = Utility::getStatusText($this->getVar('status'));
-        $ret['datecreated_text']         = \formatTimestamp($this->getVar('datecreated'), 's');
-        $ret['submitter_text']           = \XoopsUser::getUnameFromId($this->getVar('submitter'));
+        $evGroups                        = $this->getVar('groups', 'e');
+        $groups_text                     = '';
+        if (0 == (int)$evGroups) {
+            $groups_text = \_MA_WGEVENTS_EVENT_GROUPS_ALL;
+        } else {
+            // Get groups
+            $groups_text .= '<ul>';
+            $memberHandler = \xoops_getHandler('member');
+            $xoopsGroups  = $memberHandler->getGroupList();
+            $groups   = explode("|", $evGroups);
+            foreach ($groups as $group) {
+                $groups_text .= '<li>' . $xoopsGroups[(int)$group] .  '</li>' ;
+            }
+            $groups_text .= '</ul>';
+        }
+        $ret['groups_text']      = $groups_text;
+        $ret['status_text']      = Utility::getStatusText($this->getVar('status'));
+        $ret['datecreated_text'] = \formatTimestamp($this->getVar('datecreated'), 's');
+        $ret['submitter_text']   = \XoopsUser::getUnameFromId($this->getVar('submitter'));
         return $ret;
     }
 

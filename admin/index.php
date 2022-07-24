@@ -33,12 +33,15 @@ $templateMain = 'wgevents_admin_index.tpl';
 $countEvents = $eventHandler->getCount();
 $countQuestions = $questionHandler->getCount();
 $countAnswers = $answerHandler->getCount();
+$countAnswerhists = $answerhistHandler->getCount();
 $countRegistrations = $registrationHandler->getCount();
+$countRegistrationhists = $registrationhistHandler->getCount();
 $countCategories = $categoryHandler->getCount();
 $countFields = $fieldHandler->getCount();
 $countTextblocks = $textblockHandler->getCount();
 $countLogs = $logHandler->getCount();
 $countAccounts = $accountHandler->getCount();
+$countTasks = $taskHandler->getCount();
 
 // InfoBox Statistics
 $adminObject->addInfoBox(\_AM_WGEVENTS_STATISTICS);
@@ -46,12 +49,15 @@ $adminObject->addInfoBox(\_AM_WGEVENTS_STATISTICS);
 $adminObject->addInfoBoxLine(\sprintf( '<label>' . \_AM_WGEVENTS_THEREARE_EVENTS . '</label>', $countEvents));
 $adminObject->addInfoBoxLine(\sprintf( '<label>' . \_AM_WGEVENTS_THEREARE_QUESTIONS . '</label>', $countQuestions));
 $adminObject->addInfoBoxLine(\sprintf( '<label>' . \_AM_WGEVENTS_THEREARE_ANSWERS . '</label>', $countAnswers));
+$adminObject->addInfoBoxLine(\sprintf( '<label>' . \_AM_WGEVENTS_THEREARE_ANSWERHISTS . '</label>', $countAnswerhists));
 $adminObject->addInfoBoxLine(\sprintf( '<label>' . \_AM_WGEVENTS_THEREARE_REGISTRATIONS . '</label>', $countRegistrations));
+$adminObject->addInfoBoxLine(\sprintf( '<label>' . \_AM_WGEVENTS_THEREARE_REGISTRATIONHISTS . '</label>', $countRegistrationhists));
 $adminObject->addInfoBoxLine(\sprintf( '<label>' . \_AM_WGEVENTS_THEREARE_CATEGORIES . '</label>', $countCategories));
 $adminObject->addInfoBoxLine(\sprintf( '<label>' . \_AM_WGEVENTS_THEREARE_FIELDS . '</label>', $countFields));
 $adminObject->addInfoBoxLine(\sprintf( '<label>' . \_AM_WGEVENTS_THEREARE_TEXTBLOCKS . '</label>', $countTextblocks));
 $adminObject->addInfoBoxLine(\sprintf( '<label>' . \_AM_WGEVENTS_THEREARE_LOGS . '</label>', $countLogs));
 $adminObject->addInfoBoxLine(\sprintf( '<label>' . \_AM_WGEVENTS_THEREARE_ACCOUNTS . '</label>', $countAccounts));
+$adminObject->addInfoBoxLine(\sprintf( '<label>' . \_AM_WGEVENTS_THEREARE_TASKS . '</label>', $countTasks));
 
 $timezones = XoopsLists::getTimeZoneList();
 $adminObject->addInfoBox(\_AM_WGEVENTS_TIMEZONES);

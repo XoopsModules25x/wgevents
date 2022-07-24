@@ -16,8 +16,6 @@
  * @copyright    2021 XOOPS Project (https://xoops.org)
  * @license      GPL 2.0 or later
  * @package      wgevents
- * @since        1.0.0
- * @min_xoops    2.5.11 Beta1
  * @author       Goffy - Wedega - Email:webmaster@wedega.com - Website:https://xoops.wedega.com
  */
 
@@ -35,12 +33,16 @@ $helper = \XoopsModules\Wgevents\Helper::getInstance();
 $eventHandler = $helper->getHandler('Event');
 $categoryHandler = $helper->getHandler('Category');
 $registrationHandler = $helper->getHandler('Registration');
+$registrationhistHandler = $helper->getHandler('Registrationhist');
 $questionHandler = $helper->getHandler('Question');
 $answerHandler = $helper->getHandler('Answer');
+$answerhistHandler = $helper->getHandler('Answerhist');
 $textblockHandler = $helper->getHandler('Textblock');
 $fieldHandler = $helper->getHandler('Field');
 $logHandler = $helper->getHandler('Log');
 $accountHandler = $helper->getHandler('Account');
+$taskHandler = $helper->getHandler('Task');
+$importHandler = $helper->getHandler('Import');
 $myts = MyTextSanitizer::getInstance();
 // 
 if (!isset($xoopsTpl) || !\is_object($xoopsTpl)) {
@@ -68,6 +70,9 @@ $GLOBALS['xoopsTpl']->assign('sysPathIcon32', $sysPathIcon32);
 $GLOBALS['xoopsTpl']->assign('modPathIcon16', $modPathIcon16);
 $GLOBALS['xoopsTpl']->assign('modPathIcon32', $modPathIcon32);
 
+$adminObject = \Xmf\Module\Admin::getInstance();
+$style = \WGEVENTS_URL . '/assets/css/admin/style.css';
+
 // tablesorter
 $GLOBALS['xoopsTpl']->assign('tablesorter_allrows', \_AM_WGEVENTS_TABLESORTER_SHOW_ALL);
 $GLOBALS['xoopsTpl']->assign('tablesorter_of', \_AM_WGEVENTS_TABLESORTER_OF);
@@ -80,7 +85,8 @@ if ('d.m.Y' == _SHORTDATESTRING) {
 }
 $GLOBALS['xoopsTpl']->assign('tablesorter_dateformat', $dateformat);
 
-$adminObject = \Xmf\Module\Admin::getInstance();
-$style = \WGEVENTS_URL . '/assets/css/admin/style.css';
-
 $xoTheme->addStylesheet($helper->url('assets/js/tablesorter/css/jquery.tablesorter.pager.min.css'));
+$tablesorterTheme = $helper->getConfig('tablesorter_admin');
+$xoTheme->addStylesheet($helper->url('assets/js/tablesorter/css/theme.' . $tablesorterTheme . '.min.css'));
+$GLOBALS['xoopsTpl']->assign('tablesorter_theme', $tablesorterTheme);
+

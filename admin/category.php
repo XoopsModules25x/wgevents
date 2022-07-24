@@ -16,8 +16,6 @@
  * @copyright    2021 XOOPS Project (https://xoops.org)
  * @license      GPL 2.0 or later
  * @package      wgevents
- * @since        1.0.0
- * @min_xoops    2.5.11 Beta1
  * @author       Goffy - Wedega - Email:webmaster@wedega.com - Website:https://xoops.wedega.com
  */
 
@@ -37,9 +35,7 @@ $GLOBALS['xoopsTpl']->assign('limit', $limit);
 
 $moduleDirName = \basename(\dirname(__DIR__));
 
-
 $GLOBALS['xoopsTpl']->assign('mod_url', XOOPS_URL . '/modules/' . $moduleDirName);
-$xoTheme->addStylesheet($helper->url('assets/js/tablesorter/css/theme.blue.css'));
 
 switch ($op) {
     case 'list':
@@ -53,7 +49,7 @@ switch ($op) {
         $adminObject->addItemButton(\_AM_WGEVENTS_ADD_CATEGORY, 'category.php?op=new');
         $GLOBALS['xoopsTpl']->assign('buttons', $adminObject->displayButton('left'));
         $categoryCount = $categoryHandler->getCountCategories();
-        $categoryAll = $categoryHandler->getAllCategories($start, $limit);
+        $categoryAll = $categoryHandler->getAllCategories();
         $GLOBALS['xoopsTpl']->assign('categorieCount', $categoryCount);
         $GLOBALS['xoopsTpl']->assign('wgevents_url', \WGEVENTS_URL);
         $GLOBALS['xoopsTpl']->assign('wgevents_upload_url', \WGEVENTS_UPLOAD_URL);
@@ -64,12 +60,6 @@ switch ($op) {
                 $category = $categoryAll[$i]->getValuesCategories();
                 $GLOBALS['xoopsTpl']->append('categories_list', $category);
                 unset($category);
-            }
-            // Display Navigation
-            if ($categoryCount > $limit) {
-                require_once \XOOPS_ROOT_PATH . '/class/pagenav.php';
-                $pagenav = new \XoopsPageNav($categoryCount, $limit, $start, 'start', 'op=list&limit=' . $limit);
-                $GLOBALS['xoopsTpl']->assign('pagenav', $pagenav->renderNav());
             }
         } else {
             $GLOBALS['xoopsTpl']->assign('error', \_AM_WGEVENTS_THEREARENT_CATEGORIES);

@@ -16,8 +16,6 @@
  * @copyright    2021 XOOPS Project (https://xoops.org)
  * @license      GPL 2.0 or later
  * @package      wgevents
- * @since        1.0.0
- * @min_xoops    2.5.11 Beta1
  * @author       Goffy - Wedega - Email:webmaster@wedega.com - Website:https://xoops.wedega.com
  */
 
@@ -49,12 +47,10 @@ $verifKeyArray  = explode('||', base64_decode($verifKey, true));
 $regId = $verifKeyArray[0];
 $registrationObj = $registrationHandler->get($regId);
 $eventName = $eventHandler->get($registrationObj->getVar('evid'))->getVar('name');
-if ($regId > 0 && \is_object($registrationObj)) {
-    if (WGEVENTS_URL == (string)$verifKeyArray[1] &&
-        (int)$registrationObj->getVar('evid') == (int)$verifKeyArray[2] &&
-        (string)$registrationObj->getVar('email') == (string)$verifKeyArray[3] &&
-        (string)$registrationObj->getVar('verifkey') == (string)$verifKeyArray[4]
-    ) {
+if ($regId > 0 && \is_object($registrationObj) && WGEVENTS_URL == (string)$verifKeyArray[1] &&
+    (int)$registrationObj->getVar('evid') == (int)$verifKeyArray[2] &&
+    (string)$registrationObj->getVar('email') == (string)$verifKeyArray[3] &&
+    (string)$registrationObj->getVar('verifkey') == (string)$verifKeyArray[4]) {
         $registrationhistHandler->createHistory($registrationObj, 'update');
         $registrationObj->setVar('status', Constants::STATUS_VERIFIED);
         $registrationObj->setVar('datecreated', \time());
@@ -64,9 +60,6 @@ if ($regId > 0 && \is_object($registrationObj)) {
             $GLOBALS['xoopsTpl']->assign('verif_error', \sprintf(\_MA_WGEVENTS_MAIL_REG_VERIF_ERROR, $eventName));
         }
     } else {
-        $GLOBALS['xoopsTpl']->assign('verif_error', \sprintf(\_MA_WGEVENTS_MAIL_REG_VERIF_ERROR, $eventName));
-    }
-} else {
     $GLOBALS['xoopsTpl']->assign('verif_error', \sprintf(\_MA_WGEVENTS_MAIL_REG_VERIF_ERROR, $eventName));
 }
 

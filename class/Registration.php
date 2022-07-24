@@ -67,6 +67,7 @@ class Registration extends \XoopsObject
         $this->initVar('verifkey', \XOBJ_DTYPE_TXTBOX);
         $this->initVar('status', \XOBJ_DTYPE_INT);
         $this->initVar('financial', \XOBJ_DTYPE_INT);
+        $this->initVar('paidamount', \XOBJ_DTYPE_FLOAT);
         $this->initVar('listwait', \XOBJ_DTYPE_INT);
         $this->initVar('datecreated', \XOBJ_DTYPE_INT);
         $this->initVar('submitter', \XOBJ_DTYPE_INT);
@@ -112,11 +113,11 @@ class Registration extends \XoopsObject
         if (!$action) {
             $action = $_SERVER['REQUEST_URI'];
         }
-        $isAdmin = \is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->isAdmin($GLOBALS['xoopsModule']->mid()) : false;
+        $isAdmin = \is_object($GLOBALS['xoopsUser']) && $GLOBALS['xoopsUser']->isAdmin($GLOBALS['xoopsModule']->mid());
         $answersExist = true;
         // Title
         if ($this->isNew()) {
-            $title = $test ? \sprintf(\_MA_WGEVENTS_QUESTIONS_PREVIEW) : \sprintf(\_MA_WGEVENTS_REGISTRATION_ADD);
+            $title = $test ? \_MA_WGEVENTS_QUESTIONS_PREVIEW : \_MA_WGEVENTS_REGISTRATION_ADD;
             $answersExist = false;
         } else {
             $title =\_MA_WGEVENTS_REGISTRATION_EDIT;
@@ -198,6 +199,10 @@ class Registration extends \XoopsObject
                                     $ansText = $answersAll[$ansId]->getVar('text', 'n');
                                     $value = \unserialize($ansText);
                                     break;
+                                case Constants::FIELD_SELECTBOX:
+                                    $ansText = $answersAll[$ansId]->getVar('text', 'n');
+                                    $value = (string)\unserialize($ansText);
+                                    break;
                                 case 0:
                                 default:
                                     $value = $answersAll[$ansId]->getVar('text');
@@ -241,17 +246,23 @@ class Registration extends \XoopsObject
         $regGdpr->addOption(1, \_MA_WGEVENTS_REGISTRATION_GDPR_VALUE);
         $form->addElement($regGdpr, true);
         // Form Text Date Select regFinancial
+        // Form Text Date Select regPaidamount
         $regFinancial = $this->isNew() ? Constants::FINANCIAL_UNPAID : $this->getVar('financial');
+        $default0 = '0' . $helper->getConfig('sep_comma') . '00';
+        $regPaidamount = $this->isNew() ? $default0 : Utility::FloatToString($this->getVar('paidamount'));
         if ($eventFee > 0 && $permRegistrationsApprove && !$test) {
             $regFinancialRadio = new \XoopsFormRadio(\_MA_WGEVENTS_REGISTRATION_FINANCIAL, 'financial', $regFinancial);
             $regFinancialRadio->addOption(Constants::FINANCIAL_UNPAID, \_MA_WGEVENTS_REGISTRATION_FINANCIAL_UNPAID);
             $regFinancialRadio->addOption(Constants::FINANCIAL_PAID, \_MA_WGEVENTS_REGISTRATION_FINANCIAL_PAID);
             $form->addElement($regFinancialRadio, true);
+            $form->addElement(new \XoopsFormText(\_MA_WGEVENTS_REGISTRATION_PAIDAMOUNT, 'paidamount', 20, 150, $regPaidamount));
         } else {
             if (!$this->isNew() && $eventFee > 0  && $test) {
                 $form->addElement(new \XoopsFormLabel(\_MA_WGEVENTS_REGISTRATION_FINANCIAL, Utility::getFinancialText($regFinancial)));
+                $form->addElement(new \XoopsFormLabel(\_MA_WGEVENTS_REGISTRATION_PAIDAMOUNT, $regPaidamount));
             }
             $form->addElement(new \XoopsFormHidden('financial', $regFinancial));
+            $form->addElement(new \XoopsFormHidden('paidamount', $regPaidamount));
         }
         // Form Radio Yes/No regListwait
         $regListwait = $this->isNew() ? 0 : (int)$this->getVar('listwait');
@@ -350,13 +361,11 @@ class Registration extends \XoopsObject
         $ret = $this->getValues($keys, $format, $maxDepth);
         $eventHandler = $helper->getHandler('Event');
         $eventObj = $eventHandler->get($this->getVar('evid'));
-        $ret['eventname']       = $eventObj->getVar('name');
-        $ret['salutation_text'] = Utility::getSalutationText($this->getVar('salutation'));
-        $ret['status_text']     = Utility::getStatusText($this->getVar('status'));
-        if ((int)$this->getVar('listwait') > 0) {
-            $ret['listwait_text'] = '(' . \_MA_WGEVENTS_REGISTRATION_LISTWAIT  . ')';
-        }
+        $ret['eventname']        = $eventObj->getVar('name');
+        $ret['salutation_text']  = Utility::getSalutationText($this->getVar('salutation'));
+        $ret['status_text']      = Utility::getStatusText($this->getVar('status'));
         $ret['financial_text']   = Utility::getFinancialText($this->getVar('financial'));
+        $ret['paidamount_text']  = Utility::FloatToString($this->getVar('paidamount'));
         $ret['listwait_text']    = (int)$this->getVar('listwait') > 0 ? \_YES : \_NO;
         $ret['datecreated_text'] = \formatTimestamp($this->getVar('datecreated'), 'm');
         $ret['submitter_text']   = \XoopsUser::getUnameFromId($this->getVar('submitter'));
