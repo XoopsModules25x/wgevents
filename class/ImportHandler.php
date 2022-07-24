@@ -64,13 +64,48 @@ class ImportHandler
                  </ul>';
         $form->addElement(new \XoopsFormLabel(\_AM_WGEVENTS_IMPORT_ATTENTION, $info));
         // Form Radio Categories
-        $form->addElement(new \XoopsFormRadioYN(\_AM_WGEVENTS_IMPORT_APCAL_CATS, 'cats', 1, _YES, _NO), false);
+        $form->addElement(new \XoopsFormRadioYN(\_AM_WGEVENTS_IMPORT_CATS, 'cats', 1, _YES, _NO), false);
 
         $form->addElement(new \XoopsFormTextDateSelect(\_AM_WGEVENTS_IMPORT_DATEFROM, 'datefrom', '', time()));
         $dateTo = date(strtotime(date('d-m-Y 23:59:59', strtotime('+1 year'))));
         $form->addElement(new \XoopsFormTextDateSelect(\_AM_WGEVENTS_IMPORT_DATETO, 'dateto', '', $dateTo));
         // Buttons
         $form->addElement(new \XoopsFormHidden('op', 'apcal_exec'));
+        $form->addElement(new \XoopsFormButtonTray('', \_AM_WGEVENTS_IMPORT_EXEC, 'submit', '', false));
+
+        return $form;
+    }
+
+    /**
+     * @param bool $action
+     *
+     * @return \XoopsThemeForm
+     */
+    public function getFormExtcal($action = false)
+    {
+
+        if (false === $action) {
+            $action = $_SERVER['REQUEST_URI'];
+        }
+
+        require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
+        $form = new \XoopsThemeForm(\_AM_WGEVENTS_IMPORT_EXTCAL, 'import_form', $action, 'post', true);
+        $form->setExtra('enctype="multipart/form-data"');
+        // Form label
+        $info = '<ul>
+                    <li>' . \_AM_WGEVENTS_IMPORT_DELETE . '</li>
+                    <li>' . \_AM_WGEVENTS_IMPORT_NORECCUR . '</li>
+                    <li>' . \_AM_WGEVENTS_IMPORT_NOPERM . '</li>
+                 </ul>';
+        $form->addElement(new \XoopsFormLabel(\_AM_WGEVENTS_IMPORT_ATTENTION, $info));
+        // Form Radio Categories
+        $form->addElement(new \XoopsFormRadioYN(\_AM_WGEVENTS_IMPORT_CATS, 'cats', 1, _YES, _NO), false);
+
+        $form->addElement(new \XoopsFormTextDateSelect(\_AM_WGEVENTS_IMPORT_DATEFROM, 'datefrom', '', time()));
+        $dateTo = date(strtotime(date('d-m-Y 23:59:59', strtotime('+1 year'))));
+        $form->addElement(new \XoopsFormTextDateSelect(\_AM_WGEVENTS_IMPORT_DATETO, 'dateto', '', $dateTo));
+        // Buttons
+        $form->addElement(new \XoopsFormHidden('op', 'extcal_exec'));
         $form->addElement(new \XoopsFormButtonTray('', \_AM_WGEVENTS_IMPORT_EXEC, 'submit', '', false));
 
         return $form;

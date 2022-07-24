@@ -85,6 +85,8 @@ switch ($op) {
 
         $GLOBALS['xoTheme']->addScript(\WGEVENTS_URL . '/assets/js/expander/jquery.expander.min.js');
         $GLOBALS['xoopsTpl']->assign('user_maxchar', $helper->getConfig('user_maxchar'));
+        $useGroups = (bool)$helper->getConfig('use_groups');
+        $GLOBALS['xoopsTpl']->assign('use_groups', $useGroups);
 
         switch($op) {
             case 'show':
@@ -118,8 +120,24 @@ switch ($op) {
             $GLOBALS['xoopsTpl']->assign('showList', true);
             $xoBreadcrumbs[] = ['title' => $listDescr];
         }
+        if ($useGroups) {
+            $crEventGroup = new \CriteriaCompo();
+            $crEventGroup->add(new \Criteria('groups', '%00000%', 'LIKE')); //all users
+            if ($uidCurrent > 0) {
+                // Get groups
+                $memberHandler = \xoops_getHandler('member');
+                $xoopsGroups  = $memberHandler->getGroupsByUser($uidCurrent);
+                foreach ($xoopsGroups as $group) {
+                    $groupsIN .= ",'" . substr('00000' . $group,  -5) .  "'" ;
+                    $crEventGroup->add(new \Criteria('groups', '%' . substr('00000' . $group,  -5) .  '%', 'LIKE'), 'OR');
+                }
+            }
+            $crEvent->add($crEventGroup);
+            unset($crEventGroup);
+        }
         $eventsCount = $eventHandler->getCount($crEvent);
         $GLOBALS['xoopsTpl']->assign('eventsCount', $eventsCount);
+
 
         if (0 === $evId) {
             if ('past' == $op) {
@@ -300,6 +318,7 @@ switch ($op) {
         $eventObj->setVar('dateto', $eventDateto);
         $eventObj->setVar('contact', Request::getString('contact'));
         $eventObj->setVar('email', Request::getString('email'));
+        $eventObj->setVar('url', Request::getString('url'));
         $eventObj->setVar('location', Request::getString('location'));
         $eventObj->setVar('locgmlat', Request::getFloat('locgmlat'));
         $eventObj->setVar('locgmlon', Request::getFloat('locgmlon'));
@@ -350,7 +369,12 @@ switch ($op) {
         }
         $eventObj->setVar('status', Request::getInt('status'));
         $eventObj->setVar('galid', Request::getInt('galid'));
-
+        $arrGroups = Request::getArray('groups');
+        if (in_array('00000', $arrGroups)) {
+            $eventObj->setVar('groups', '00000');
+        } else {
+            $eventObj->setVar('groups', implode("|", $arrGroups));
+        }
         if (Request::hasVar('datecreated_int')) {
             $eventObj->setVar('datecreated', Request::getInt('datecreated_int'));
         } else {

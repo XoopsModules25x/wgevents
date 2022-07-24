@@ -338,5 +338,6 @@ Please define, until which date all data should be anonymized.');
 \define('_AM_WGEVENTS_IMPORT_NOPERM', 'Permissions are not imported');
 \define('_AM_WGEVENTS_IMPORT_DATEFROM', 'Import events from');
 \define('_AM_WGEVENTS_IMPORT_DATETO', 'Import events to');
+\define('_AM_WGEVENTS_IMPORT_CATS', 'Import Categories');
 \define('_AM_WGEVENTS_IMPORT_APCAL', 'Import APCal');
-\define('_AM_WGEVENTS_IMPORT_APCAL_CATS', 'Import APCal Categories');
+\define('_AM_WGEVENTS_IMPORT_EXTCAL', 'Import ExtCal');

@@ -4,6 +4,7 @@
  - implemented google maps in calendar and list view (goffy)
  - implemented import for apcal (goffy)
  - implemented import for extcal (goffy)
+ - implemented group permissions (goffy)
 
 ==============================================================
 1.0.2 [2022/06/17]

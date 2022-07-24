@@ -658,11 +658,20 @@ $modversion['config'][] = [
     'valuetype'   => 'int',
     'default'     => 1,
 ];
-// use wgEvents module
+// use wgGallery module
 $modversion['config'][] = [
     'name'        => 'use_wggallery',
     'title'       => '\_MI_WGEVENTS_USE_WGGALLERY',
     'description' => '\_MI_WGEVENTS_USE_WGGALLERY_DESC',
+    'formtype'    => 'yesno',
+    'valuetype'   => 'int',
+    'default'     => 0,
+];
+// use groups permissions
+$modversion['config'][] = [
+    'name'        => 'use_groups',
+    'title'       => '\_MI_WGEVENTS_USE_GROUPS',
+    'description' => '\_MI_WGEVENTS_USE_GROUPS_DESC',
     'formtype'    => 'yesno',
     'valuetype'   => 'int',
     'default'     => 0,

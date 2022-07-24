@@ -121,6 +121,10 @@ require_once __DIR__ . '/admin.php';
 \define('_MA_WGEVENTS_EVENT_GM_APPLYCOORDS', 'Koordinaten übernehmen');
 \define('_MA_WGEVENTS_EVENT_INFORM_MODIF', 'Teilnehmer informieren');
 \define('_MA_WGEVENTS_EVENT_INFORM_MODIF_DESC', 'Sollen die Teilnehmer per Mail über Änderungen der Veranstaltung informiert werden?');
+\define('_MA_WGEVENTS_EVENT_URL', 'Webseite');
+\define('_MA_WGEVENTS_EVENT_GROUPS', 'Anzeige für Gruppen');
+\define('_MA_WGEVENTS_EVENT_GROUPS_DESC', 'Definiere, welche Gruppen diese Veranstaltung sehen sollen');
+\define('_MA_WGEVENTS_EVENT_GROUPS_ALL', 'Alle Gruppen');
 // Categories
 \define('_MA_WGEVENTS_CATEGORY_LOGO', 'Logo');
 \define('_MA_WGEVENTS_CATEGORY_NOEVENTS', 'Keine Veranstaltungen verfügbar');

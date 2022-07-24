@@ -121,6 +121,10 @@ require_once __DIR__ . '/admin.php';
 \define('_MA_WGEVENTS_EVENT_GM_APPLYCOORDS', 'Apply coordinates');
 \define('_MA_WGEVENTS_EVENT_INFORM_MODIF', 'Inform participants');
 \define('_MA_WGEVENTS_EVENT_INFORM_MODIF_DESC', 'Should participants be informed about the changes by mail?');
+\define('_MA_WGEVENTS_EVENT_URL', 'Website');
+\define('_MA_WGEVENTS_EVENT_GROUPS', 'Display for groups');
+\define('_MA_WGEVENTS_EVENT_GROUPS_DESC', 'Define which groups should be able to see this event');
+\define('_MA_WGEVENTS_EVENT_GROUPS_ALL', 'All groups');
 // Categories
 \define('_MA_WGEVENTS_CATEGORY_LOGO', 'Logo');
 \define('_MA_WGEVENTS_CATEGORY_NOEVENTS', 'No events available');

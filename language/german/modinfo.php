@@ -147,6 +147,8 @@ require_once __DIR__ . '/common.php';
 \define('_MI_WGEVENTS_USE_WGGALLERY_DESC', 'wgGallery zum Verlinken von Veranstaltungen und Bildergalerien verwenden');
 \define('_MI_WGEVENTS_USE_GMAPS', 'Google Maps verwenden');
 \define('_MI_WGEVENTS_USE_GMAPS_DESC', 'Zeigt Veranstaltungen mit Google Maps');
+\define('_MI_WGEVENTS_USE_GROUPS', 'Anzeige je Gruppen verwenden');
+\define('_MI_WGEVENTS_USE_GROUPS_DESC', 'Wenn ja, dann werden die Veranstaltungen immer nur den entsprechenden Gruppen angezeigt. Wenn nein, dann sehen immer alle Gruppen alle Veranstaltungen, die online sind');
 //Google Maps
 \define('_MI_WGEVENTS_GROUP_GMAPS', 'Google Maps');
 //Google Maps API Key

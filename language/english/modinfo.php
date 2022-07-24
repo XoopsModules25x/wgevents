@@ -147,6 +147,8 @@ require_once __DIR__ . '/common.php';
 \define('_MI_WGEVENTS_USE_WGGALLERY_DESC', 'Use module wgEvents to link events with galleries');
 \define('_MI_WGEVENTS_USE_GMAPS', 'Use Google Maps');
 \define('_MI_WGEVENTS_USE_GMAPS_DESC', 'Show events with google maps');
+\define('_MI_WGEVENTS_USE_GROUPS', 'Use display per groups');
+\define('_MI_WGEVENTS_USE_GROUPS_DESC', 'If yes, then the events will be shown allways the defined groups. If no, all groups can see all events which are online.');
 //Google Maps
 \define('_MI_WGEVENTS_GROUP_GMAPS', 'Google Maps');
 //Google Maps API Key

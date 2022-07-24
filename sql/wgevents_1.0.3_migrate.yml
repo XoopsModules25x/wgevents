@@ -32,6 +32,9 @@ wgevents_event:
             name: email
             attributes: ' VARCHAR(255)    NOT NULL DEFAULT '''''''' '
         -
+            name: url
+            attributes: ' VARCHAR(255)    NOT NULL DEFAULT '''''''' '
+        -
             name: location
             attributes: ' TEXT            NULL '
         -
@@ -88,6 +91,9 @@ wgevents_event:
         -
             name: galid
             attributes: ' INT(10)         NOT NULL DEFAULT ''0'' '
+        -
+            name: groups
+            attributes: ' VARCHAR(255)    NOT NULL DEFAULT ''00000'' '
         -
             name: datecreated
             attributes: ' INT(11)         NOT NULL DEFAULT ''0'' '

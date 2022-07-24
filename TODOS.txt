@@ -1,6 +1,8 @@
 
 define display for specific groups
 
+import: delete imported events
+
 
 print a ticket
 
@@ -16,9 +18,6 @@ create plugin for extcal
 implementation fullcalendar?
 Implementation of recurring events?
 
-import:
-events of apcal
-events of extcal
-
+event cloning (event.php)
 
 
