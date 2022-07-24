@@ -47,8 +47,10 @@
             <tr class='head'>
                 <th class='center' style='width:10%'><{$smarty.const._AM_WGEVENTS_MAINTENANCE_TYP}></th>
                 <th class='center' style='width:30%'><{$smarty.const._AM_WGEVENTS_MAINTENANCE_DESC}></th>
-                <{if $show_result|default:false}><th class='center' style='width:35%'><{$smarty.const._AM_WGEVENTS_MAINTENANCE_RESULTS}></th><{/if}>
+                <{if $show_result|default:false}><th class='center' style='width:35%'><{$smarty.const._AM_WGEVENTS_MAINTENANCE_RESULTS}></th>
+                <{else}>
                 <th class='center' style='width:25%'><{$smarty.const._MA_WGEVENTS_ACTION}></th>
+				<{/if}>
             </tr>
         </thead>
         <tbody>
@@ -61,10 +63,11 @@
 						<{if $result_success|default:''}><span><{$result_success}></span><{/if}>
 						<{if $result_error|default:''}><span class='maintenance-error'><{$result_error}></span><{/if}>
 					</td>
-					<{/if}>
+					<{else}>
 					<td class='center'>
 						<p class='maintenance-btn center'><a class='btn' href='maintenance.php?op=invalid_adds_exec' title='<{$smarty.const._MA_WGEVENTS_EXEC}>'><{$smarty.const._MA_WGEVENTS_EXEC}></a></p>
 					</td>
+					<{/if}>
 				</tr>
 			<{/if}>
 			<{if $invalid_answers_show|default:false}>
@@ -76,12 +79,29 @@
 						<{if $result_success|default:''}><span><{$result_success}></span><{/if}>
 						<{if $result_error|default:''}><span class='maintenance-error'><{$result_error}></span><{/if}>
 					</td>
-					<{/if}>
+					<{else}>
 					<td class='center'>
 						<p class='maintenance-btn center'><a class='btn' href='maintenance.php?op=invalid_answers_exec' title='<{$smarty.const._MA_WGEVENTS_EXEC}>'><{$smarty.const._MA_WGEVENTS_EXEC}></a></p>
 					</td>
+					<{/if}>
 				</tr>
 			<{/if}>
+			<{if $invalid_regs_show|default:false}>
+				<tr class="<{cycle values='odd, even'}>">
+					<td class='left'><{$smarty.const._AM_WGEVENTS_MAINTENANCE_INVALID_REG}></td>
+					<td class='left'><{$smarty.const._AM_WGEVENTS_MAINTENANCE_INVALID_REG_DESC}></td>
+					<{if $show_result|default:false}>
+					<td class='left'>
+						<{if $result_success|default:''}><span><{$result_success}></span><{/if}>
+						<{if $result_error|default:''}><span class='maintenance-error'><{$result_error}></span><{/if}>
+					</td>
+					<{else}>
+					<td class='center'>
+						<p class='maintenance-btn center'><a class='btn' href='maintenance.php?op=invalid_regs_exec' title='<{$smarty.const._MA_WGEVENTS_EXEC}>'><{$smarty.const._MA_WGEVENTS_EXEC}></a></p>
+					</td>
+					<{/if}>
+				</tr>
+				<{/if}>
 			<{if $anon_data_show|default:false}>
 				<tr class="<{cycle values='odd, even'}>">
 					<td class='left'><{$smarty.const._AM_WGEVENTS_MAINTENANCE_ANON_DATA}></td>
@@ -91,10 +111,11 @@
 						<{if $result_success|default:''}><span><{$result_success}></span><{/if}>
 						<{if $result_error|default:''}><span class='maintenance-error'><{$result_error}></span><{/if}>
 					</td>
-					<{/if}>
+					<{else}>
 					<td class='center'>
 						<{$formGdpr|default:''}>
 					</td>
+					<{/if}>
 				</tr>
 			<{/if}>
 
