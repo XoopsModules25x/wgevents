@@ -16,8 +16,6 @@
  * @copyright    2021 XOOPS Project (https://xoops.org)
  * @license      GPL 2.0 or later
  * @package      wgevents
- * @since        1.0.0
- * @min_xoops    2.5.11 Beta1
  * @author       Goffy - Wedega - Email:webmaster@wedega.com - Website:https://xoops.wedega.com
  */
 
@@ -87,6 +85,7 @@ $modversion['templates'] = [
     ['file' => 'wgevents_admin_field.tpl', 'description' => '', 'type' => 'admin'],
     ['file' => 'wgevents_admin_footer.tpl', 'description' => '', 'type' => 'admin'],
     ['file' => 'wgevents_admin_header.tpl', 'description' => '', 'type' => 'admin'],
+    ['file' => 'wgevents_admin_import.tpl', 'description' => '', 'type' => 'admin'],
     ['file' => 'wgevents_admin_index.tpl', 'description' => '', 'type' => 'admin'],
     ['file' => 'wgevents_admin_log.tpl', 'description' => '', 'type' => 'admin'],
     ['file' => 'wgevents_admin_maintenance.tpl', 'description' => '', 'type' => 'admin'],
@@ -659,11 +658,20 @@ $modversion['config'][] = [
     'valuetype'   => 'int',
     'default'     => 1,
 ];
-// use wgEvents module
+// use wgGallery module
 $modversion['config'][] = [
     'name'        => 'use_wggallery',
     'title'       => '\_MI_WGEVENTS_USE_WGGALLERY',
     'description' => '\_MI_WGEVENTS_USE_WGGALLERY_DESC',
+    'formtype'    => 'yesno',
+    'valuetype'   => 'int',
+    'default'     => 0,
+];
+// use groups permissions
+$modversion['config'][] = [
+    'name'        => 'use_groups',
+    'title'       => '\_MI_WGEVENTS_USE_GROUPS',
+    'description' => '\_MI_WGEVENTS_USE_GROUPS_DESC',
     'formtype'    => 'yesno',
     'valuetype'   => 'int',
     'default'     => 0,

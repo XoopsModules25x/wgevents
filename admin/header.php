@@ -16,8 +16,6 @@
  * @copyright    2021 XOOPS Project (https://xoops.org)
  * @license      GPL 2.0 or later
  * @package      wgevents
- * @since        1.0.0
- * @min_xoops    2.5.11 Beta1
  * @author       Goffy - Wedega - Email:webmaster@wedega.com - Website:https://xoops.wedega.com
  */
 
@@ -44,6 +42,7 @@ $fieldHandler = $helper->getHandler('Field');
 $logHandler = $helper->getHandler('Log');
 $accountHandler = $helper->getHandler('Account');
 $taskHandler = $helper->getHandler('Task');
+$importHandler = $helper->getHandler('Import');
 $myts = MyTextSanitizer::getInstance();
 // 
 if (!isset($xoopsTpl) || !\is_object($xoopsTpl)) {

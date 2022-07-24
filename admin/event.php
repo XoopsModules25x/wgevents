@@ -16,8 +16,6 @@
  * @copyright    2021 XOOPS Project (https://xoops.org)
  * @license      GPL 2.0 or later
  * @package      wgevents
- * @since        1.0.0
- * @min_xoops    2.5.11 Beta1
  * @author       Goffy - Wedega - Email:webmaster@wedega.com - Website:https://xoops.wedega.com
  */
 
@@ -61,6 +59,7 @@ switch ($op) {
         $GLOBALS['xoopsTpl']->assign('use_gmaps', $helper->getConfig('use_gmaps'));
         $GLOBALS['xoopsTpl']->assign('use_wggallery', $helper->getConfig('use_wggallery'));
         $GLOBALS['xoopsTpl']->assign('use_register', $helper->getConfig('use_register'));
+        $GLOBALS['xoopsTpl']->assign('use_groups', $helper->getConfig('use_groups'));
         // Table view events
         if ($eventCount > 0) {
             foreach (\array_keys($eventAll) as $i) {
@@ -167,6 +166,7 @@ switch ($op) {
         $eventObj->setVar('dateto', $eventDateto);
         $eventObj->setVar('contact', Request::getString('contact'));
         $eventObj->setVar('email', Request::getString('email'));
+        $eventObj->setVar('url', Request::getString('url'));
         $eventObj->setVar('location', Request::getString('location'));
         $eventObj->setVar('locgmlat', Request::getFloat('locgmlat'));
         $eventObj->setVar('locgmlon', Request::getFloat('locgmlon'));
@@ -213,6 +213,7 @@ switch ($op) {
         }
         $eventObj->setVar('status', Request::getInt('status'));
         $eventObj->setVar('galid', Request::getInt('galid'));
+        $eventObj->setVar('groups', implode("|", Request::getArray('groups')));
         $eventObj->setVar('identifier', Request::getString('identifier'));
         $eventDatecreatedObj = \DateTime::createFromFormat(\_SHORTDATESTRING, Request::getString('datecreated'));
         $eventObj->setVar('datecreated', $eventDatecreatedObj->getTimestamp());

@@ -16,8 +16,6 @@
  * @copyright    2021 XOOPS Project (https://xoops.org)
  * @license      GPL 2.0 or later
  * @package      wgevents
- * @since        1.0.0
- * @min_xoops    2.5.11 Beta1
  * @author       Goffy - Wedega - Email:webmaster@wedega.com - Website:https://xoops.wedega.com
  */
 
@@ -123,6 +121,10 @@ require_once __DIR__ . '/admin.php';
 \define('_MA_WGEVENTS_EVENT_GM_APPLYCOORDS', 'Koordinaten übernehmen');
 \define('_MA_WGEVENTS_EVENT_INFORM_MODIF', 'Teilnehmer informieren');
 \define('_MA_WGEVENTS_EVENT_INFORM_MODIF_DESC', 'Sollen die Teilnehmer per Mail über Änderungen der Veranstaltung informiert werden?');
+\define('_MA_WGEVENTS_EVENT_URL', 'Webseite');
+\define('_MA_WGEVENTS_EVENT_GROUPS', 'Anzeige für Gruppen');
+\define('_MA_WGEVENTS_EVENT_GROUPS_DESC', 'Definiere, welche Gruppen diese Veranstaltung sehen sollen');
+\define('_MA_WGEVENTS_EVENT_GROUPS_ALL', 'Alle Gruppen');
 // Categories
 \define('_MA_WGEVENTS_CATEGORY_LOGO', 'Logo');
 \define('_MA_WGEVENTS_CATEGORY_NOEVENTS', 'Keine Veranstaltungen verfügbar');
@@ -172,7 +174,7 @@ Eine Teilnahme an der Veranstaltung ohne Zustimmung zu diesen Bestimmungen ist l
 ');
 \define('_MA_WGEVENTS_REGISTRATION_IP', 'Ip-Adresse');
 \define('_MA_WGEVENTS_REGISTRATION_FINANCIAL', 'Zahlungsstatus');
-\define('_MA_WGEVENTS_REGISTRATION_FINANCIAL_UNPAID', 'Unbezahlt');
+\define('_MA_WGEVENTS_REGISTRATION_FINANCIAL_UNPAID', 'Offen');
 \define('_MA_WGEVENTS_REGISTRATION_FINANCIAL_PAID', 'Bezahlt');
 \define('_MA_WGEVENTS_REGISTRATION_FINANCIAL_CHANGE_0','Status auf unbezahlt ändern');
 \define('_MA_WGEVENTS_REGISTRATION_FINANCIAL_CHANGE_1','Status auf bezahlt ändern');

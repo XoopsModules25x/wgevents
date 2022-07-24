@@ -41,6 +41,21 @@
                 </div>
             </div>
         <{/if}>
+        <{if $event.url|default:false}>
+            <div class="row">
+                <div class="col-xs-12 col-sm-3 col-lg-2"><{$smarty.const._MA_WGEVENTS_EVENT_URL}>: </div>
+                <div class="col-xs-12 col-sm-9 col-lg-10">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-5 col-lg-4">
+                            <{$event.url}>
+                        </div>
+                        <div class="col-xs-12 col-sm-7 col-lg-8">
+                            <a class="btn btn-primary" href="<{$event.url}>"><{$event.url}></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <{/if}>
         <{if $event.location_text_user|default:false}>
             <div class="row">
                 <div class="col-xs-12 col-sm-3 col-lg-2"><{$smarty.const._MA_WGEVENTS_EVENT_LOCATION}>: </div>
@@ -154,6 +169,12 @@
                 </div>
             </div>
         <{/if}>
+    <{/if}>
+    <{if $use_groups|default:''}>
+        <div class="row">
+            <div class="col-xs-12 col-sm-3 col-lg-2"><{$smarty.const._MA_WGEVENTS_EVENT_GROUPS}>: </div>
+            <div class="col-xs-12 col-sm-9 col-lg-10"><{$event.groups_text}></div>
+        </div>
     <{/if}>
 </div>
 <div class='panel-foot'>

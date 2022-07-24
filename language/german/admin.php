@@ -16,8 +16,6 @@
  * @copyright    2021 XOOPS Project (https://xoops.org)
  * @license      GPL 2.0 or later
  * @package      wgevents
- * @since        1.0.0
- * @min_xoops    2.5.11 Beta1
  * @author       Goffy - Wedega - Email:webmaster@wedega.com - Website:https://xoops.wedega.com
  */
 
@@ -313,7 +311,6 @@ Bitte definiere das Datum, bis zu dem alle Daten anonymisiert werden sollen.');
 \define('_AM_WGEVENTS_SUPPORT_FORUM', 'Support Forum');
 \define('_AM_WGEVENTS_DONATION_AMOUNT', 'Spendenbetrag');
 \define('_AM_WGEVENTS_MAINTAINEDBY', ' wird unterstützt von ');
-// ---------------- End ----------------
 // Task add/edit
 \define('_AM_WGEVENTS_ADD_TASK', 'Aufgabe hinzufügen');
 \define('_AM_WGEVENTS_EDIT_TASK', 'Aufgabe bearbeiten');
@@ -326,3 +323,21 @@ Bitte definiere das Datum, bis zu dem alle Daten anonymisiert werden sollen.');
 \define('_AM_WGEVENTS_TASK_PARAMS', 'Parameter');
 \define('_AM_WGEVENTS_TASK_RECIPIENT', 'Empfänger');
 \define('_AM_WGEVENTS_TASK_DATEDONE', 'Datum erledigt');
+// Import
+\define('_AM_WGEVENTS_IMPORT_MODULES', 'Verfügbare Importroutinen');
+\define('_AM_WGEVENTS_IMPORT_NOTINSTALLED', 'Modul ist nicht installiert');
+\define('_AM_WGEVENTS_IMPORT_SHOWFORM', 'Formular anzeigen');
+\define('_AM_WGEVENTS_IMPORT_ATTENTION', 'Achtung');
+\define('_AM_WGEVENTS_IMPORT_EXEC', 'Import ausführen');
+\define('_AM_WGEVENTS_IMPORT_RESULT', 'Ergebnisse Import');
+\define('_AM_WGEVENTS_IMPORT_RESULT_CATS', 'Importierte Kategorien');
+\define('_AM_WGEVENTS_IMPORT_RESULT_EVENTS', 'Importierte Events');
+\define('_AM_WGEVENTS_IMPORT_RESULT_OF', '%s von %s');
+\define('_AM_WGEVENTS_IMPORT_DELETE', 'Alle existierenden Daten werden gelöscht');
+\define('_AM_WGEVENTS_IMPORT_NORECCUR', 'Wiederkehrende Events werden derzeit nicht importiert');
+\define('_AM_WGEVENTS_IMPORT_NOPERM', 'Berechtigungen werden derzeit nicht importiert');
+\define('_AM_WGEVENTS_IMPORT_DATEFROM', 'Importiere Events von');
+\define('_AM_WGEVENTS_IMPORT_DATETO', 'Importiere Events bis');
+\define('_AM_WGEVENTS_IMPORT_CATS', 'Importiere Kategorien');
+\define('_AM_WGEVENTS_IMPORT_APCAL', 'Importiere APCal');
+\define('_AM_WGEVENTS_IMPORT_EXTCAL', 'Importiere ExtCal');

@@ -17,6 +17,7 @@
                 <th class="center"><{$smarty.const._MA_WGEVENTS_EVENT_DATETO}></th>
                 <th class="center"><{$smarty.const._MA_WGEVENTS_EVENT_CONTACT}></th>
                 <th class="center"><{$smarty.const._MA_WGEVENTS_EVENT_EMAIL}></th>
+                <th class="center"><{$smarty.const._MA_WGEVENTS_EVENT_URL}></th>
                 <th class="center"><{$smarty.const._MA_WGEVENTS_EVENT_LOCATION}></th>
                 <{if $use_gmaps|default:''}>
                     <th class="center"><{$smarty.const._MA_WGEVENTS_EVENT_LOCGMLAT}></th>
@@ -35,10 +36,13 @@
                     <th class="center"><{$smarty.const._MA_WGEVENTS_EVENT_REGISTER_NOTIFY}></th>
                     <th class="center"><{$smarty.const._MA_WGEVENTS_EVENT_REGISTER_FORCEVERIF}></th>
                 <{/if}>
-                <th class="center"><{$smarty.const._MA_WGEVENTS_STATUS}></th>
                 <{if $use_wggallery|default:''}>
                     <th class="center"><{$smarty.const._MA_WGEVENTS_EVENT_GALID}></th>
                 <{/if}>
+                <{if $use_groups|default:''}>
+                    <th class="center"><{$smarty.const._MA_WGEVENTS_EVENT_GROUPS}></th>
+                <{/if}>
+                <th class="center"><{$smarty.const._MA_WGEVENTS_STATUS}></th>
                 <th class="center"><{$smarty.const._MA_WGEVENTS_DATECREATED}></th>
                 <th class="center"><{$smarty.const._MA_WGEVENTS_SUBMITTER}></th>
                 <th class="center width5 sorter-false filter-false"><{$smarty.const._MA_WGEVENTS_ACTION}></th>
@@ -58,6 +62,7 @@
                 <td class='center'><{$event.dateto_text}></td>
                 <td class='center'><{$event.contact}></td>
                 <td class='center'><{$event.email}></td>
+                <td class='center'><{$event.url}></td>
                 <td class='center'><{$event.location_text_user}></td>
                 <{if $use_gmaps|default:''}>
                     <td class='center'><{$event.locgmlat}></td>
@@ -76,10 +81,13 @@
                     <td class='center'><{$event.register_notify_text}></td>
                     <td class='center'><{$event.register_forceverif_text}></td>
                 <{/if}>
-                <td class='center'><img src="<{$modPathIcon16}>status<{$event.status}>.png" alt="<{$event.status_text}>" title="<{$event.status_text}>" ></td>
                 <{if $use_wggallery|default:''}>
                     <td class='center'><{$event.galid}></td>
                 <{/if}>
+                <{if $use_groups|default:''}>
+                    <td class='center'><{$event.groups}><br><{$event.groups_text}></td>
+                <{/if}>
+                <td class='center'><img src="<{$modPathIcon16}>status<{$event.status}>.png" alt="<{$event.status_text}>" title="<{$event.status_text}>" ></td>
                 <td class='center'><{$event.datecreated_text}></td>
                 <td class='center'><{$event.submitter_text}></td>
                 <td class="center  width5">

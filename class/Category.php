@@ -255,9 +255,13 @@ class Category extends \XoopsObject
         $ret = $this->getValues($keys, $format, $maxDepth);
         $categoryHandler = $helper->getHandler('Category');
         $categoryObj = $categoryHandler->get($this->getVar('pid'));
-        $editorMaxchar = $helper->getConfig('admin_maxchar');
-        $ret['pid_text']         = $categoryObj->getVar('name');
+        $pidText = '(' . $this->getVar('pid') . ') ';
+        if (is_object($categoryObj)) {
+            $pidText .= $categoryObj->getVar('name');
+        }
+        $ret['pid_text']         = $pidText;
         $ret['desc_text']        = $this->getVar('desc', 'e');
+        $editorMaxchar = $helper->getConfig('admin_maxchar');
         $ret['desc_short']       = $utility::truncateHtml($ret['desc_text'], $editorMaxchar);
         $ret['status_text']      = Utility::getStatusText($this->getVar('status'));
         $ret['datecreated_text'] = \formatTimestamp($this->getVar('datecreated'), 's');

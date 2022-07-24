@@ -22,6 +22,7 @@ CREATE TABLE `wgevents_event` (
     `dateto`               INT(11)         NOT NULL DEFAULT '0',
     `contact`              TEXT            NULL,
     `email`                VARCHAR(255)    NOT NULL DEFAULT '',
+    `url`                  VARCHAR(255)    NOT NULL DEFAULT '',
     `location`             TEXT            NULL,
     `locgmlat`             FLOAT(16,8)     NOT NULL DEFAULT '0.00',
     `locgmlon`             FLOAT(16,8)     NOT NULL DEFAULT '0.00',
@@ -41,6 +42,7 @@ CREATE TABLE `wgevents_event` (
     `register_forceverif`  INT(1)          NOT NULL DEFAULT '0',
     `status`               INT(1)          NOT NULL DEFAULT '0',
     `galid`                INT(10)         NOT NULL DEFAULT '0',
+    `groups`               VARCHAR(255)    NOT NULL DEFAULT '00000',
     `datecreated`          INT(11)         NOT NULL DEFAULT '0',
     `submitter`            INT(10)         NOT NULL DEFAULT '0',
     PRIMARY KEY (`id`)

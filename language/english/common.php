@@ -11,12 +11,11 @@
  */
 
 /**
- * Wfdownloads module
+ * Common for xoops modules
  *
  * @copyright       XOOPS Project (https://xoops.org)
  * @license         GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
- * @package         wfdownload
- * @since           3.23
+ * @package         general
  * @author          Xoops Development Team
  */
 $moduleDirName      = \basename(\dirname(__DIR__, 2));

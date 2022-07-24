@@ -16,8 +16,6 @@
  * @copyright    2021 XOOPS Project (https://xoops.org)
  * @license      GPL 2.0 or later
  * @package      wgevents
- * @since        1.0.0
- * @min_xoops    2.5.11 Beta1
  * @author       Goffy - Wedega - Email:webmaster@wedega.com - Website:https://xoops.wedega.com
  */
 
@@ -44,6 +42,7 @@ require_once __DIR__ . '/common.php';
 \define('_MI_WGEVENTS_ADMENU15', 'Tasks');
 \define('_MI_WGEVENTS_ADMENU20', 'Clone');
 \define('_MI_WGEVENTS_ADMENU21', 'Feedback');
+\define('_MI_WGEVENTS_ADMENU22', 'Import');
 \define('_MI_WGEVENTS_ABOUT', 'About');
 // ---------------- Admin Nav ----------------
 // Submenu
@@ -97,7 +96,7 @@ require_once __DIR__ . '/common.php';
 \define('_MI_WGEVENTS_TABLESORTER_USER', 'TableSorter Theme User');
 \define('_MI_WGEVENTS_TABLESORTER_USER_DESC', 'Select TableSorter Theme which should be used in user area');
 \define('_MI_WGEVENTS_SHOWCOPYRIGHT', 'Show copyright');
-\define('_MI_WGEVENTS_SHOWCOPYRIGHT_DESC', 'You can remove the copyright from the wgteams pages, but a backlinks to www.wedega.com is expected, anywhere on your site');
+\define('_MI_WGEVENTS_SHOWCOPYRIGHT_DESC', 'You can remove the copyright from the wgEvents pages, but a backlinks to www.wedega.com is expected, anywhere on your site');
 \define('_MI_WGEVENTS_SHOW_BREADCRUMBS', 'Show breadcrumb navigation');
 \define('_MI_WGEVENTS_SHOW_BREADCRUMBS_DESC', 'Show breadcrumb navigation which displays the current page in context within the site structure');
 \define('_MI_WGEVENTS_TABLE_TYPE', 'Table Type');
@@ -148,6 +147,8 @@ require_once __DIR__ . '/common.php';
 \define('_MI_WGEVENTS_USE_WGGALLERY_DESC', 'Use module wgEvents to link events with galleries');
 \define('_MI_WGEVENTS_USE_GMAPS', 'Use Google Maps');
 \define('_MI_WGEVENTS_USE_GMAPS_DESC', 'Show events with google maps');
+\define('_MI_WGEVENTS_USE_GROUPS', 'Use display per groups');
+\define('_MI_WGEVENTS_USE_GROUPS_DESC', 'If yes, then the events will be shown allways the defined groups. If no, all groups can see all events which are online.');
 //Google Maps
 \define('_MI_WGEVENTS_GROUP_GMAPS', 'Google Maps');
 //Google Maps API Key
@@ -221,6 +222,6 @@ require_once __DIR__ . '/common.php';
 \define('_MI_WGEVENTS_NOTIFY_REGISTRATION_APPROVE', 'Registration approve');
 \define('_MI_WGEVENTS_NOTIFY_REGISTRATION_APPROVE_CAPTION', 'Notify me about registrations waiting for approvement');
 \define('_MI_WGEVENTS_NOTIFY_REGISTRATION_APPROVE_SUBJECT', 'Notification registration waiting for approvement');
-//tablesorter
+// Tablesorter
 \define('_MI_WGEVENTS_TABLESORTER_SHOW_ALL', 'Show all');
 // ---------------- End ----------------

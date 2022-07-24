@@ -16,8 +16,6 @@
  * @copyright    2021 XOOPS Project (https://xoops.org)
  * @license      GPL 2.0 or later
  * @package      wgevents
- * @since        1.0.0
- * @min_xoops    2.5.11 Beta1
  * @author       Goffy - Wedega - Email:webmaster@wedega.com - Website:https://xoops.wedega.com
  */
 
@@ -87,6 +85,8 @@ switch ($op) {
 
         $GLOBALS['xoTheme']->addScript(\WGEVENTS_URL . '/assets/js/expander/jquery.expander.min.js');
         $GLOBALS['xoopsTpl']->assign('user_maxchar', $helper->getConfig('user_maxchar'));
+        $useGroups = (bool)$helper->getConfig('use_groups');
+        $GLOBALS['xoopsTpl']->assign('use_groups', $useGroups);
 
         switch($op) {
             case 'show':
@@ -120,8 +120,24 @@ switch ($op) {
             $GLOBALS['xoopsTpl']->assign('showList', true);
             $xoBreadcrumbs[] = ['title' => $listDescr];
         }
+        if ($useGroups) {
+            $crEventGroup = new \CriteriaCompo();
+            $crEventGroup->add(new \Criteria('groups', '%00000%', 'LIKE')); //all users
+            if ($uidCurrent > 0) {
+                // Get groups
+                $memberHandler = \xoops_getHandler('member');
+                $xoopsGroups  = $memberHandler->getGroupsByUser($uidCurrent);
+                foreach ($xoopsGroups as $group) {
+                    $groupsIN .= ",'" . substr('00000' . $group,  -5) .  "'" ;
+                    $crEventGroup->add(new \Criteria('groups', '%' . substr('00000' . $group,  -5) .  '%', 'LIKE'), 'OR');
+                }
+            }
+            $crEvent->add($crEventGroup);
+            unset($crEventGroup);
+        }
         $eventsCount = $eventHandler->getCount($crEvent);
         $GLOBALS['xoopsTpl']->assign('eventsCount', $eventsCount);
+
 
         if (0 === $evId) {
             if ('past' == $op) {
@@ -197,15 +213,14 @@ switch ($op) {
                 $keywords[$i] = $evName;
             }
             $GLOBALS['xoopsTpl']->assign('events', $events);
+            if ('show' == $op && $useGMaps) {
+                $GLOBALS['xoopsTpl']->assign('gmapsShow', true);
+            }
             if ($useGMaps && count($eventsMap) > 0) {
-                if ('show' == $op) {
-                    $GLOBALS['xoopsTpl']->assign('gmapsShow', true);
-                } else {
-                    $GLOBALS['xoopsTpl']->assign('gmapsShowList', true);
-                    $GLOBALS['xoopsTpl']->assign('gmapsEnableEvent', $gmapsEnableEvent);
-                    $GLOBALS['xoopsTpl']->assign('gmapsHeight', $gmapsHeight);
-                    $GLOBALS['xoopsTpl']->assign('gmapsPositionList', $gmapsPositionList);
-                }
+                $GLOBALS['xoopsTpl']->assign('gmapsShowList', true);
+                $GLOBALS['xoopsTpl']->assign('gmapsEnableEvent', $gmapsEnableEvent);
+                $GLOBALS['xoopsTpl']->assign('gmapsHeight', $gmapsHeight);
+                $GLOBALS['xoopsTpl']->assign('gmapsPositionList', $gmapsPositionList);
                 $GLOBALS['xoopsTpl']->assign('api_key', $helper->getConfig('gmaps_api'));
                 $GLOBALS['xoopsTpl']->assign('eventsMap', $eventsMap);
             }
@@ -303,6 +318,7 @@ switch ($op) {
         $eventObj->setVar('dateto', $eventDateto);
         $eventObj->setVar('contact', Request::getString('contact'));
         $eventObj->setVar('email', Request::getString('email'));
+        $eventObj->setVar('url', Request::getString('url'));
         $eventObj->setVar('location', Request::getString('location'));
         $eventObj->setVar('locgmlat', Request::getFloat('locgmlat'));
         $eventObj->setVar('locgmlon', Request::getFloat('locgmlon'));
@@ -353,7 +369,12 @@ switch ($op) {
         }
         $eventObj->setVar('status', Request::getInt('status'));
         $eventObj->setVar('galid', Request::getInt('galid'));
-
+        $arrGroups = Request::getArray('groups');
+        if (in_array('00000', $arrGroups)) {
+            $eventObj->setVar('groups', '00000');
+        } else {
+            $eventObj->setVar('groups', implode("|", $arrGroups));
+        }
         if (Request::hasVar('datecreated_int')) {
             $eventObj->setVar('datecreated', Request::getInt('datecreated_int'));
         } else {

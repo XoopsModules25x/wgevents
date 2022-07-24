@@ -16,8 +16,6 @@
  * @copyright    2021 XOOPS Project (https://xoops.org)
  * @license      GPL 2.0 or later
  * @package      wgevents
- * @since        1.0.0
- * @min_xoops    2.5.11 Beta1
  * @author       Goffy - Wedega - Email:webmaster@wedega.com - Website:https://xoops.wedega.com
  */
 
@@ -44,6 +42,7 @@ require_once __DIR__ . '/common.php';
 \define('_MI_WGEVENTS_ADMENU15', 'Aufgaben');
 \define('_MI_WGEVENTS_ADMENU20', 'Klonen');
 \define('_MI_WGEVENTS_ADMENU21', 'Feedback');
+\define('_MI_WGEVENTS_ADMENU22', 'Import');
 \define('_MI_WGEVENTS_ABOUT', 'Über');
 // ---------------- Admin Nav ----------------
 // Submenu
@@ -97,7 +96,7 @@ require_once __DIR__ . '/common.php';
 \define('_MI_WGEVENTS_TABLESORTER_USER', 'TableSorter Theme Benutzer');
 \define('_MI_WGEVENTS_TABLESORTER_USER_DESC', 'Bitte das TableSorter Theme für den Benutzer-Bereich wählen');
 \define('_MI_WGEVENTS_SHOWCOPYRIGHT', 'Copyright anzeigen');
-\define('_MI_WGEVENTS_SHOWCOPYRIGHT_DESC', 'Sie können das Copyright bei der wgSimpleAcc-Ansicht entfernen, jedoch wird ersucht, an einer beliebigen Stelle einen Backlink auf www.wedega.com anzubringen');
+\define('_MI_WGEVENTS_SHOWCOPYRIGHT_DESC', 'Sie können das Copyright bei der wgEvents-Ansicht entfernen, jedoch wird ersucht, an einer beliebigen Stelle einen Backlink auf www.wedega.com anzubringen');
 \define('_MI_WGEVENTS_SHOW_BREADCRUMBS', 'Brotkrumen-Navigation (breadcrumbs) anzeigen');
 \define('_MI_WGEVENTS_SHOW_BREADCRUMBS_DESC', 'Eine Brotkrumen-Navigation zeigt den aktuellen Seitenstand innerhalb der Websitestruktur');
 \define('_MI_WGEVENTS_TABLE_TYPE', 'Table Type');
@@ -148,6 +147,8 @@ require_once __DIR__ . '/common.php';
 \define('_MI_WGEVENTS_USE_WGGALLERY_DESC', 'wgGallery zum Verlinken von Veranstaltungen und Bildergalerien verwenden');
 \define('_MI_WGEVENTS_USE_GMAPS', 'Google Maps verwenden');
 \define('_MI_WGEVENTS_USE_GMAPS_DESC', 'Zeigt Veranstaltungen mit Google Maps');
+\define('_MI_WGEVENTS_USE_GROUPS', 'Anzeige je Gruppen verwenden');
+\define('_MI_WGEVENTS_USE_GROUPS_DESC', 'Wenn ja, dann werden die Veranstaltungen immer nur den entsprechenden Gruppen angezeigt. Wenn nein, dann sehen immer alle Gruppen alle Veranstaltungen, die online sind');
 //Google Maps
 \define('_MI_WGEVENTS_GROUP_GMAPS', 'Google Maps');
 //Google Maps API Key
