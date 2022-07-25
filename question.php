@@ -105,8 +105,8 @@ switch ($op) {
         $crQuestion->setOrder('DESC');
         $crQuestion->setStart($start);
         $crQuestion->setLimit($limit);
-        $questionsAll = $questionHandler->getAll($crQuestion);
         if ($questionsCount > 0) {
+            $questionsAll = $questionHandler->getAll($crQuestion);
             $questions = [];
             $evName = '';
             $evSubmitter = 0;

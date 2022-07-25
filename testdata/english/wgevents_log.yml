@@ -48,3 +48,18 @@
     text: 'Result Test send mail to office@wedega.com: failed - <h4>Fehler</h4>SMTP connect() failed. https://github.com/PHPMailer/PHPMailer/wiki/Troubleshooting<br>'
     datecreated: '1643190598'
     submitter: '1'
+-
+    id: '58'
+    text: 'Result MailHandler/executeReg: failed<h4>Fehler</h4>Could not instantiate mail function.<br><br>Task ID: 1<br>Mailer: XOOPS system<br>Template: mail_reg_confirm_modify.tpl'
+    datecreated: '1658756596'
+    submitter: '1'
+-
+    id: '59'
+    text: 'Result MailHandler/executeReg: failed<h4>Fehler</h4>Could not instantiate mail function.<br><br>Task ID: 2<br>Mailer: XOOPS system<br>Template: mail_reg_confirm_modify.tpl'
+    datecreated: '1658756598'
+    submitter: '1'
+-
+    id: '60'
+    text: 'Result MailHandler/executeReg: failed<h4>Fehler</h4>Could not instantiate mail function.<br><br>Task ID: 1<br>Mailer: XOOPS system<br>Template: mail_reg_confirm_modify.tpl'
+    datecreated: '1658756624'
+    submitter: '1'

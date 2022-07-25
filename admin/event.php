@@ -82,22 +82,7 @@ switch ($op) {
         $form = $eventObj->getForm();
         $GLOBALS['xoopsTpl']->assign('form', $form->render());
         break;
-    case 'clone':
-        $templateMain = 'wgevents_admin_event.tpl';
-        $GLOBALS['xoopsTpl']->assign('navigation', $adminObject->displayNavigation('event.php'));
-        $adminObject->addItemButton(\_AM_WGEVENTS_LIST_EVENTS, 'event.php', 'list');
-        $adminObject->addItemButton(\_AM_WGEVENTS_ADD_EVENT, 'event.php?op=new');
-        $GLOBALS['xoopsTpl']->assign('buttons', $adminObject->displayButton('left'));
-        // Request source
-        $evIdSource = Request::getInt('id_source');
-        // Get Form
-        $eventObjSource = $eventHandler->get($evIdSource);
-        $eventObj = $eventObjSource->xoopsClone();
-        $form = $eventObj->getForm();
-        $GLOBALS['xoopsTpl']->assign('form', $form->render());
-        break;
     case 'save':
-        $continueAddtionals = Request::hasVar('continue_questions');
         // Security Check
         if (!$GLOBALS['xoopsSecurity']->check()) {
             \redirect_header('event.php', 3, \implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
@@ -213,7 +198,12 @@ switch ($op) {
         }
         $eventObj->setVar('status', Request::getInt('status'));
         $eventObj->setVar('galid', Request::getInt('galid'));
-        $eventObj->setVar('groups', implode("|", Request::getArray('groups')));
+        $arrGroups = Request::getArray('groups');
+        if (in_array('00000', $arrGroups)) {
+            $eventObj->setVar('groups', '00000');
+        } else {
+            $eventObj->setVar('groups', implode("|", $arrGroups));
+        }
         $eventObj->setVar('identifier', Request::getString('identifier'));
         $eventDatecreatedObj = \DateTime::createFromFormat(\_SHORTDATESTRING, Request::getString('datecreated'));
         $eventObj->setVar('datecreated', $eventDatecreatedObj->getTimestamp());
@@ -223,8 +213,6 @@ switch ($op) {
             $newEvId = $eventObj->getNewInsertedId();
             if ('' !== $uploaderErrors) {
                 \redirect_header('event.php?op=edit&id=' . $evId, 5, $uploaderErrors);
-            } else if ($continueAddtionals) {
-                \redirect_header('question.php?op=edit&amp;evid=' . $newEvId, 2, \_MA_WGEVENTS_FORM_OK);
             } else {
                 \redirect_header('event.php?op=list&amp;start=' . $start . '&amp;limit=' . $limit, 2, \_MA_WGEVENTS_FORM_OK);
             }

@@ -14,6 +14,7 @@
     locgmlon: '0.00000000'
     locgmzoom: '0'
     fee: '25.00'
+    paymentinfo: ''
     register_use: '1'
     register_from: '1641803400'
     register_to: '1644481800'
@@ -29,6 +30,8 @@
     galid: '0'
     datecreated: '1641284507'
     submitter: '1'
+    url: ''
+    groups: '00000'
 -
     id: '3'
     identifier: FP2022_2
@@ -45,6 +48,7 @@
     locgmlon: '0.00000000'
     locgmzoom: '0'
     fee: '5.00'
+    paymentinfo: ''
     register_use: '0'
     register_from: '0'
     register_to: '0'
@@ -60,6 +64,8 @@
     galid: '0'
     datecreated: '1641310990'
     submitter: '1'
+    url: ''
+    groups: '00000'
 -
     id: '4'
     identifier: FP2022_3
@@ -76,10 +82,11 @@
     locgmlon: '0.00000000'
     locgmzoom: '0'
     fee: '50.00'
+    paymentinfo: ''
     register_use: '1'
     register_from: '1668269400'
     register_to: '1670688600'
-    register_max: '10'
+    register_max: '6'
     register_listwait: '1'
     register_autoaccept: '0'
     register_notify: "webmaster@wedega.com\r\noffice@wedega.com"
@@ -89,8 +96,10 @@
     register_forceverif: '0'
     status: '5'
     galid: '0'
-    datecreated: '1642023250'
+    datecreated: '1641988936'
     submitter: '1'
+    url: ''
+    groups: '00000'
 -
     id: '6'
     identifier: FP2022_4
@@ -107,6 +116,7 @@
     locgmlon: '0.00000000'
     locgmzoom: '0'
     fee: '13.00'
+    paymentinfo: ''
     register_use: '1'
     register_from: '1643380800'
     register_to: '1643464800'
@@ -122,3 +132,5 @@
     galid: '0'
     datecreated: '1643385452'
     submitter: '1'
+    url: ''
+    groups: '00000'

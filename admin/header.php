@@ -43,6 +43,7 @@ $logHandler = $helper->getHandler('Log');
 $accountHandler = $helper->getHandler('Account');
 $taskHandler = $helper->getHandler('Task');
 $importHandler = $helper->getHandler('Import');
+$mailHandler = $helper->getHandler('Mail');
 $myts = MyTextSanitizer::getInstance();
 // 
 if (!isset($xoopsTpl) || !\is_object($xoopsTpl)) {
