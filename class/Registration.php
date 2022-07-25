@@ -309,7 +309,7 @@ class Registration extends \XoopsObject
             $form->addElement(new \XoopsFormHidden('status', $regStatus));
         }
         if ($isAdmin) {
-            $form->addElement(new \XoopsFormText(\_MA_WGEVENTS_REGISTRATION_IP, 'ip', 20, 150, $regIp));
+            $form->addElement(new \XoopsFormText(\_MA_WGEVENTS_REGISTRATION_IP, 'ip', 20, 150, $this->getVar('ip')));
             $form->addElement(new \XoopsFormText(\_MA_WGEVENTS_REGISTRATION_VERIFKEY, 'verifkey', 20, 150, $resVerifkey));
             // Form Text Date Select queDatecreated
             $form->addElement(new \XoopsFormTextDateSelect(\_MA_WGEVENTS_DATECREATED, 'datecreated', '', $regDatecreated));
