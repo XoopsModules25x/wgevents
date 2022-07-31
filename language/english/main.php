@@ -277,7 +277,7 @@ Participation without agreement to this conditions is not possible.
 \define('_MA_WGEVENTS_GOTO_EVENT', 'Goto event');
 \define('_MA_WGEVENTS_GOTO_EVENTSLIST', 'Goto eventlist');
 \define('_MA_WGEVENTS_OUTPUT_EXCEL', 'Output to Excel');
-\define('_MA_WGEVENTS_ERROR_SAVE', 'An error occured when saving the data');
+\define('_MA_WGEVENTS_ERROR_SAVE', 'An error occurred when saving the data');
 // Form
 \define('_MA_WGEVENTS_FORM_OK', 'Successfully saved');
 \define('_MA_WGEVENTS_FORM_DELETE_OK', 'Successfully deleted');
@@ -303,7 +303,7 @@ Participation without agreement to this conditions is not possible.
 \define('_MA_WGEVENTS_CONTACT_ALL_MAILSUBJECT_TEXT', 'Information for: %s');
 \define('_MA_WGEVENTS_CONTACT_MAILBODY', 'Notification text');
 \define('_MA_WGEVENTS_CONTACT_ALL_SUCCESS', 'Sending mail to all participants successful');
-\define('_MA_WGEVENTS_CONTACT_ALL_ERROR', 'Unfortunately an error occured during sending mail to all participants');
+\define('_MA_WGEVENTS_CONTACT_ALL_ERROR', 'Unfortunately an error occurred during sending mail to all participants');
 // calendar
 \define('_MA_WGEVENTS_CAL_ITEMS', 'Items Calendar');
 \define('_MA_WGEVENTS_CAL_EDITITEM', 'Edit Item');
@@ -355,7 +355,7 @@ Participation without agreement to this conditions is not possible.
 \define('_MA_WGEVENTS_MAIL_REG_IN_VERIF', 'For verification of your registration please click on following link: %s');
 \define('_MA_WGEVENTS_MAIL_REG_IN_FINAL', 'About final confirmation you will be informed separately by the organizer.');
 \define('_MA_WGEVENTS_MAIL_REG_IN_LISTWAIT', 'Your registration was put on a waiting list.');
-\define('_MA_WGEVENTS_MAIL_REG_VERIF_ERROR', "Sorry, but an error occured in the verification process for event '%s'. Please contact the organizer of the event.");
+\define('_MA_WGEVENTS_MAIL_REG_VERIF_ERROR', "Sorry, but an error occurred in the verification process for event '%s'. Please contact the organizer of the event.");
 \define('_MA_WGEVENTS_MAIL_REG_VERIF_SUCCESS', "The registration for the event '%s' was verified successfully");
 \define('_MA_WGEVENTS_MAIL_REG_VERIF_INFO', 'Verification of registration');
 // Admin link
