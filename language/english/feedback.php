@@ -38,4 +38,4 @@ $moduleDirNameUpper = \mb_strtoupper($moduleDirName);
 \define('CO_' . $moduleDirNameUpper . '_' . 'FB_TYPE_CONTENT', 'Feedback content');
 \define('CO_' . $moduleDirNameUpper . '_' . 'FB_SEND_FOR', 'Feedback for module ');
 \define('CO_' . $moduleDirNameUpper . '_' . 'FB_SEND_SUCCESS', 'Feedback successfully sent');
-\define('CO_' . $moduleDirNameUpper . '_' . 'FB_SEND_ERROR', 'An errror occured when feedback was sent!');
+\define('CO_' . $moduleDirNameUpper . '_' . 'FB_SEND_ERROR', 'An errror occurred when feedback was sent!');

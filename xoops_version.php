@@ -26,7 +26,7 @@ require_once \dirname(__DIR__) . '/wgevents/preloads/autoloader.php';
 // 
 $moduleDirName      = \basename(__DIR__);
 $moduleDirNameUpper = \mb_strtoupper($moduleDirName);
-// ------------------- Informations ------------------- //
+// ------------------- Information ------------------- //
 $modversion = [
     'name'                => \_MI_WGEVENTS_NAME,
     'version'             => '1.0.3',
