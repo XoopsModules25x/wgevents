@@ -46,7 +46,27 @@ $GLOBALS['xoopsTpl']->assign('formGdpr', $formGdpr->render());
 
 
 switch ($op) {
+    case 'invalid_regs_exec':
+        $errors = [];
+        $templateMain = 'wgevents_admin_maintenance.tpl';
+        $err_text     = '';
 
+        $sql = 'DELETE ' . $GLOBALS['xoopsDB']->prefix('wgevents_registration') . '.* ';
+        $sql .= 'FROM ' . $GLOBALS['xoopsDB']->prefix('wgevents_registration') . ' LEFT JOIN ' . $GLOBALS['xoopsDB']->prefix('wgevents_event') . ' ON ' . $GLOBALS['xoopsDB']->prefix('wgevents_registration') . '.evid = ' . $GLOBALS['xoopsDB']->prefix('wgevents_event') . '.id ';
+        $sql .= 'WHERE (((' . $GLOBALS['xoopsDB']->prefix('wgevents_event') . '.id) Is Null))';
+        if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
+            $errors[] = $GLOBALS['xoopsDB']->error();
+        }
+        if (\count($errors) > 0) {
+            foreach ($errors as $error) {
+                $err_text .= '<br>' . $error;
+            }
+        }
+        $GLOBALS['xoopsTpl']->assign('result_success', \_AM_WGEVENTS_MAINTENANCE_CHECKTABLE_SUCCESS);
+        $GLOBALS['xoopsTpl']->assign('result_error', $err_text);
+        $GLOBALS['xoopsTpl']->assign('invalid_regs_show', true);
+        $GLOBALS['xoopsTpl']->assign('show_result', true);
+        break;
     case 'invalid_adds_exec':
         $errors = [];
         $templateMain = 'wgevents_admin_maintenance.tpl';
@@ -133,6 +153,7 @@ switch ($op) {
 
         $GLOBALS['xoopsTpl']->assign('invalid_adds_show', true);
         $GLOBALS['xoopsTpl']->assign('invalid_answers_show', true);
+        $GLOBALS['xoopsTpl']->assign('invalid_regs_show', true);
         $GLOBALS['xoopsTpl']->assign('anon_data_show', true);
 
         break;

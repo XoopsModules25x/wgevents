@@ -121,23 +121,28 @@ switch ($op) {
             $xoBreadcrumbs[] = ['title' => $listDescr];
         }
         if ($useGroups) {
-            $crEventGroup = new \CriteriaCompo();
-            $crEventGroup->add(new \Criteria('groups', '%00000%', 'LIKE')); //all users
-            if ($uidCurrent > 0) {
-                // Get groups
-                $memberHandler = \xoops_getHandler('member');
-                $xoopsGroups  = $memberHandler->getGroupsByUser($uidCurrent);
-                foreach ($xoopsGroups as $group) {
-                    $groupsIN .= ",'" . substr('00000' . $group,  -5) .  "'" ;
-                    $crEventGroup->add(new \Criteria('groups', '%' . substr('00000' . $group,  -5) .  '%', 'LIKE'), 'OR');
+            // current user
+            // - must have perm to see event or
+            // - must be event owner
+            // - is admin
+            if (!$GLOBALS['xoopsUser']->isAdmin()) {
+                $crEventGroup = new \CriteriaCompo();
+                $crEventGroup->add(new \Criteria('groups', '%00000%', 'LIKE')); //all users
+                if ($uidCurrent > 0) {
+                    // Get groups
+                    $memberHandler = \xoops_getHandler('member');
+                    $xoopsGroups = $memberHandler->getGroupsByUser($uidCurrent);
+                    foreach ($xoopsGroups as $group) {
+                        $crEventGroup->add(new \Criteria('groups', '%' . substr('00000' . $group, -5) . '%', 'LIKE'), 'OR');
+                    }
                 }
+                $crEventGroup->add(new \Criteria('submitter', $uidCurrent), 'OR');
+                $crEvent->add($crEventGroup);
+                unset($crEventGroup);
             }
-            $crEvent->add($crEventGroup);
-            unset($crEventGroup);
         }
         $eventsCount = $eventHandler->getCount($crEvent);
         $GLOBALS['xoopsTpl']->assign('eventsCount', $eventsCount);
-
 
         if (0 === $evId) {
             if ('past' == $op) {
@@ -257,8 +262,6 @@ switch ($op) {
         } else {
             $eventObj = $eventHandler->create();
         }
-
-        $continueAddtionals = Request::hasVar('continue_questions');
 
         $uploaderErrors = '';
         $catId = Request::getInt('catid');
@@ -468,12 +471,47 @@ switch ($op) {
             if ('' !== $uploaderErrors) {
                 \redirect_header('event.php?op=edit&id=' . $newEvId, 5, $uploaderErrors);
             } else if ($evRegisterUse) {
-                // check whether there are already question infos
-                $crQuestion = new \CriteriaCompo();
-                $crQuestion->add(new \Criteria('evid', $newEvId));
-                if ($evId > 0) {
+                // clone questions, if event is clone of other event
+                $idEvSource = Request::getInt('id_source');
+                $cloneQuestions = Request::getBool('clone_question');
+                if ($cloneQuestions) {
+                    $crQuestion = new \CriteriaCompo();
+                    $crQuestion->add(new \Criteria('evid', $idEvSource));
+                    $questionsCount = $questionHandler->getCount($crQuestion);
+                    if ($questionsCount > 0) {
+                        $questionsAllSource = $questionHandler->getAll($crQuestion);
+                        foreach ($questionsAllSource as $questionObjSource) {
+                            $questionObjNew = $questionHandler->create();
+                            $vars = $questionObjSource->getVars();
+                            foreach (\array_keys($vars) as $var) {
+                                switch ($var) {
+                                    case 'id':
+                                        break;
+                                    case 'evid':
+                                        $questionObjNew->setVar('evid', $newEvId);
+                                        break;
+                                    case 'datecreated':
+                                        $questionObjNew->setVar('datecreated', \time());
+                                        break;
+                                    case 'submitter':
+                                        $questionObjNew->setVar('submitter', $uidCurrent);
+                                        break;
+                                    case '':
+                                    default:
+                                        $questionObjNew->setVar($var, $questionObjSource->getVar($var));
+                                        break;
+                                }
+                            }
+                            $questionHandler->insert($questionObjNew);
+                        }
+                    }
+                }
+                if ($evId > 0 || !$cloneQuestions) {
                     \redirect_header('event.php?op=show&amp;id=' . $evId . '&amp;start=' . $start . '&amp;limit=' . $limit, 2, \_MA_WGEVENTS_FORM_OK);
                 } else {
+                    // check whether there are already question infos
+                    $crQuestion = new \CriteriaCompo();
+                    $crQuestion->add(new \Criteria('evid', $newEvId));
                     if ($questionHandler->getCount($crQuestion) > 0) {
                         // set of questions already existing
                         \redirect_header('question.php?op=list&amp;evid=' . $newEvId, 2, \_MA_WGEVENTS_FORM_OK);
@@ -544,35 +582,37 @@ switch ($op) {
         $GLOBALS['xoopsTpl']->assign('form', $form->render());
         break;
     case 'clone':
-        // Request source
-        $evIdSource = Request::getInt('id_source');
-
-
-
-
-
-        \redirect_header('event.php?op=show&id=' . $evIdSource, 3, 'Funktion noch nicht fertig!');
-
-
-
-
-
-
-        // Breadcrumbs
-        $xoBreadcrumbs[] = ['title' => \_MA_WGEVENTS_EVENT_CLONE];
         // Check permissions
         if (!$permissionsHandler->getPermEventsSubmit()) {
             \redirect_header('event.php?op=list', 3, \_NOPERM);
         }
 
+        // Request source
+        $evIdSource = Request::getInt('id_source');
         // Check params
         if (0 == $evIdSource) {
             \redirect_header('event.php?op=list', 3, \_MA_WGEVENTS_INVALID_PARAM);
         }
+
+        // Breadcrumbs
+        $xoBreadcrumbs[] = ['title' => \_MA_WGEVENTS_EVENT_CLONE];
+
+        $GLOBALS['xoTheme']->addScript(\WGEVENTS_URL . '/assets/js/forms.js');
+        if ($useGMaps) {
+            $GLOBALS['xoopsTpl']->assign('gmapsModalSave', $permissionsHandler->getPermEventsSubmit());
+            $GLOBALS['xoopsTpl']->assign('gmapsModal', true);
+            $GLOBALS['xoopsTpl']->assign('api_key', $helper->getConfig('gmaps_api'));
+        }
+
         // Get Form
         $eventObjSource = $eventHandler->get($evIdSource);
-        $eventObj = $eventObjSource->xoopsClone();
-        $form = $eventObj->getForm();
+        $eventObjClone  = $eventHandler->create();
+        $vars = $eventObjSource->getVars();
+        foreach (\array_keys($vars) as $var) {
+            $eventObjClone->setVar($var, $eventObjSource->getVar($var));
+        }
+        $eventObjClone->idSource = $evIdSource;
+        $form = $eventObjClone->getForm();
         $GLOBALS['xoopsTpl']->assign('form', $form->render());
         break;
     case 'delete':

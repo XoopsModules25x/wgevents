@@ -210,6 +210,8 @@ require_once __DIR__ . '/main.php';
 \define('_AM_WGEVENTS_MAINTENANCE_INVALID_QUE_DESC', 'Check the table questions and search for questions without link to a valid event');
 \define('_AM_WGEVENTS_MAINTENANCE_INVALID_ANSWERS', 'Check table answers');
 \define('_AM_WGEVENTS_MAINTENANCE_INVALID_ANSWERS_DESC', 'Check the table answers and search for answers without link to a valid question');
+\define('_AM_WGEVENTS_MAINTENANCE_INVALID_REG', 'Check table registrations');
+\define('_AM_WGEVENTS_MAINTENANCE_INVALID_REG_DESC', 'Check the table registrations and search for registrations without link to a valid event');
 \define('_AM_WGEVENTS_MAINTENANCE_CHECKTABLE_SUCCESS', 'Check table successfully finished');
 \define('_AM_WGEVENTS_MAINTENANCE_ANON_DATA', 'Anonymize old registration data');
 \define('_AM_WGEVENTS_MAINTENANCE_ANON_DATA_DESC', 'In order to fullfill the opbligations of data protection data of events, which will be not needed anymore, has to be deleted.<br>

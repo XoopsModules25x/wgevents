@@ -49,6 +49,11 @@ class Event extends \XoopsObject
     public $limit = 0;
 
     /**
+     * @var int
+     */
+    public $idSource = 0;
+
+    /**
      * Constructor
      *
      * @param null
@@ -144,6 +149,10 @@ class Event extends \XoopsObject
 
         // Title
         $title = $this->isNew() ? \_MA_WGEVENTS_EVENT_ADD : \_MA_WGEVENTS_EVENT_EDIT;
+        if ($this->idSource > 0) {
+            $this->unsetNew();
+        }
+
         // Get Theme Form
         \xoops_load('XoopsFormLoader');
         $form = new \XoopsThemeForm($title, 'formEvent', $action, 'post', true);
@@ -328,12 +337,12 @@ class Event extends \XoopsObject
         // Form Select evGroups
         if ($helper->getConfig('use_groups')) {
             if ($this->isNew()) {
-                $groups = [0];
+                $groups = ['00000'];
             } else {
                 $groups = \explode("|", $this->getVar('groups'));
             }
             $evGroupsSelect = new \XoopsFormSelect(\_MA_WGEVENTS_EVENT_GROUPS, 'groups', $groups, 5, true);
-            $evGroupsSelect->addOption(0, \_MA_WGEVENTS_EVENT_GROUPS_ALL);
+            $evGroupsSelect->addOption('00000', \_MA_WGEVENTS_EVENT_GROUPS_ALL);
             // Get groups
             $memberHandler = \xoops_getHandler('member');
             $xoopsGroups = $memberHandler->getGroupList();
@@ -384,7 +393,11 @@ class Event extends \XoopsObject
                 $form->addElement(new \XoopsFormLabel(\_MA_WGEVENTS_SUBMITTER, \XoopsUser::getUnameFromId($evSubmitter)));
             }
         }
-        if (!$this->isNew()) {
+        if ($this->idSource > 0 && $helper->getConfig('use_register')) {
+            $form->addElement(new \XoopsFormRadioYN(\_MA_WGEVENTS_EVENT_CLONE_QUESTION, 'clone_question', 1));
+            $form->addElement(new \XoopsFormHidden('id_source', $this->idSource));
+        }
+        if (!$this->isNew() && 0 === $this->idSource) {
             $informModif = new \XoopsFormRadioYN(\_MA_WGEVENTS_EVENT_INFORM_MODIF, 'informModif', 0);
             $informModif->setDescription(\_MA_WGEVENTS_EVENT_INFORM_MODIF_DESC);
             $form->addElement($informModif);

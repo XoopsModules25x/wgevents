@@ -125,6 +125,7 @@ require_once __DIR__ . '/admin.php';
 \define('_MA_WGEVENTS_EVENT_GROUPS', 'Display for groups');
 \define('_MA_WGEVENTS_EVENT_GROUPS_DESC', 'Define which groups should be able to see this event');
 \define('_MA_WGEVENTS_EVENT_GROUPS_ALL', 'All groups');
+\define('_MA_WGEVENTS_EVENT_CLONE_QUESTION', 'Clone also existing questions');
 // Categories
 \define('_MA_WGEVENTS_CATEGORY_LOGO', 'Logo');
 \define('_MA_WGEVENTS_CATEGORY_NOEVENTS', 'No events available');
