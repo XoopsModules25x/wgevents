@@ -181,7 +181,7 @@ require_once __DIR__ . '/common.php';
 \define('_MI_WGEVENTS_ADVERTISE', 'Code Werbung');
 \define('_MI_WGEVENTS_ADVERTISE_DESC', 'Bitte Code für Werbungen eingeben');
 \define('_MI_WGEVENTS_MAINTAINEDBY', 'Unterstützt durch');
-\define('_MI_WGEVENTS_MAINTAINEDBY_DESC', 'Bitte Url für Support oder zur Community angeben');
+\define('_MI_WGEVENTS_MAINTAINEDBY_DESC', 'Bitte URL für Support oder zur Community angeben');
 \define('_MI_WGEVENTS_BOOKMARKS', 'Social Bookmarks');
 \define('_MI_WGEVENTS_BOOKMARKS_DESC', 'Show Social Bookmarks in the single page');
 // Global notifications
