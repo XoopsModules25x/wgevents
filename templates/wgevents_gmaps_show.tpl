@@ -29,17 +29,17 @@
         // Multiple Markers
         var markers = [
             <{foreach item=evmap from=$eventsMap name=eventsMap}>
-                ['<{$evmap.name}>', <{$evmap.lat}>, <{$evmap.lon}>],
+                ['<{$evmap.name|default:''}>', <{$evmap.lat|default:0}>, <{$evmap.lon|default:0}>],
             <{/foreach}>
         ];
         // Info Window Content
         var infoWindowContent = [
             <{foreach item=evmap from=$eventsMap name=eventsMap}>
                 ['<div class="info_content">' +
-                    '<h3><{$evmap.name}></h3>' +
-                    '<p><{$evmap.location}></p>' +
-                    '<p><{$smarty.const._MA_WGEVENTS_EVENT_DATEFROM}>: <{$evmap.from}></p>' +
-                    '<p><a class="btn btn-primary" href="<{$evmap.url}>"><{$smarty.const._MA_WGEVENTS_DETAILS}></a></p>' +
+                    '<h3><{$evmap.name|default:''}></h3>' +
+                    '<p><{$evmap.location|default:''}></p>' +
+                    '<p><{$smarty.const._MA_WGEVENTS_EVENT_DATEFROM}>: <{$evmap.from|default:0}></p>' +
+                    '<p><a class="btn btn-primary" href="<{$evmap.url|default:''}>"><{$smarty.const._MA_WGEVENTS_DETAILS}></a></p>' +
                 '</div>'],
             <{/foreach}>
         ];
