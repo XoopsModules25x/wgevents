@@ -24,7 +24,7 @@
     </div>
 </div>
 
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=<{$api_key}>" type="text/javascript"></script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=<{$api_key|default:''}>" type="text/javascript"></script>
 
 <script type="text/javascript">
     var map;
@@ -52,7 +52,7 @@
         new google.maps.Marker({
             position: myLatlng,
             map,
-            title: "<{$event.name}>",
+            title: "<{$event.name|default:''}>",
         });
     }
 
