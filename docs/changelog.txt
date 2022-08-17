@@ -8,6 +8,7 @@
  - new maintenance for table registration (goffy)
  - implemented clone feature fo events (goffy)
  - adapted update due to new semantic versioning (goffy)
+ - fixed bug in MigrateHelper (goffy)
 
 ==============================================================
 1.0.2 [2022/06/17]
