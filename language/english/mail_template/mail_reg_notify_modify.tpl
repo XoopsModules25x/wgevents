@@ -1,3 +1,6 @@
+Information for event owners:
+-----------------------------
+
 Event: {EVENTNAME}
 Location: {EVENTLOCATION}
 Date: {EVENTDATEFROM}

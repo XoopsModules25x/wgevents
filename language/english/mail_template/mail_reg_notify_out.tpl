@@ -1,3 +1,5 @@
+Information for event owners:
+-----------------------------
 
 {UNAME} deregistered {NAME} from following event:
 
