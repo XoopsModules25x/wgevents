@@ -1,5 +1,5 @@
-Info für Veranstalter
----------------------
+Informationen für Veranstalter:
+-------------------------------
 
 {UNAME} hat {NAME} zu folgender Veranstaltung angemeldet:
 

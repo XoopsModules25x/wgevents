@@ -1,3 +1,5 @@
+Information for event owners:
+-----------------------------
 
 {UNAME} registered {NAME} for following event:
 
