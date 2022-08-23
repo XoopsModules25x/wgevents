@@ -343,3 +343,4 @@ Bitte definiere das Datum, bis zu dem alle Daten anonymisiert werden sollen.');
 \define('_AM_WGEVENTS_IMPORT_CATS', 'Importiere Kategorien');
 \define('_AM_WGEVENTS_IMPORT_APCAL', 'Importiere APCal');
 \define('_AM_WGEVENTS_IMPORT_EXTCAL', 'Importiere ExtCal');
+\define('_AM_WGEVENTS_IMPORT_DELETE_ORIGIN', 'Möchtest Du die Einträge nach einem erfolgreichen Import aus der Quelltabelle löschen');
