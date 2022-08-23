@@ -9,6 +9,7 @@
  - implemented clone feature fo events (goffy)
  - adapted update due to new semantic versioning (goffy)
  - fixed bug in MigrateHelper (goffy)
+ - implemented deletion of imported events (goffy)
 
 ==============================================================
 1.0.2 [2022/06/17]

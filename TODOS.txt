@@ -1,6 +1,11 @@
+upload new lang files to transifex
 
-import: delete imported events
+implement handlers for:
+- todos
+- helpers
+- jobs
 
+implement mutiple fees for different participants
 
 print a ticket
 

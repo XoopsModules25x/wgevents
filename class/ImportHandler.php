@@ -64,11 +64,13 @@ class ImportHandler
                  </ul>';
         $form->addElement(new \XoopsFormLabel(\_AM_WGEVENTS_IMPORT_ATTENTION, $info));
         // Form Radio Categories
-        $form->addElement(new \XoopsFormRadioYN(\_AM_WGEVENTS_IMPORT_CATS, 'cats', 1, _YES, _NO), false);
-
+        $form->addElement(new \XoopsFormRadioYN(\_AM_WGEVENTS_IMPORT_CATS, 'cats', 1, _YES, _NO));
+        // Form Date Select for period
         $form->addElement(new \XoopsFormTextDateSelect(\_AM_WGEVENTS_IMPORT_DATEFROM, 'datefrom', '', time()));
         $dateTo = date(strtotime(date('d-m-Y 23:59:59', strtotime('+1 year'))));
         $form->addElement(new \XoopsFormTextDateSelect(\_AM_WGEVENTS_IMPORT_DATETO, 'dateto', '', $dateTo));
+        // Form Radio delete source data
+        $form->addElement(new \XoopsFormRadioYN(\_AM_WGEVENTS_IMPORT_DELETE_ORIGIN, 'del_source', 0, _YES, _NO));
         // Buttons
         $form->addElement(new \XoopsFormHidden('op', 'apcal_exec'));
         $form->addElement(new \XoopsFormButtonTray('', \_AM_WGEVENTS_IMPORT_EXEC, 'submit', '', false));
@@ -99,11 +101,13 @@ class ImportHandler
                  </ul>';
         $form->addElement(new \XoopsFormLabel(\_AM_WGEVENTS_IMPORT_ATTENTION, $info));
         // Form Radio Categories
-        $form->addElement(new \XoopsFormRadioYN(\_AM_WGEVENTS_IMPORT_CATS, 'cats', 1, _YES, _NO), false);
-
+        $form->addElement(new \XoopsFormRadioYN(\_AM_WGEVENTS_IMPORT_CATS, 'cats', 1, _YES, _NO));
+        // Form Date Select for period
         $form->addElement(new \XoopsFormTextDateSelect(\_AM_WGEVENTS_IMPORT_DATEFROM, 'datefrom', '', time()));
         $dateTo = date(strtotime(date('d-m-Y 23:59:59', strtotime('+1 year'))));
         $form->addElement(new \XoopsFormTextDateSelect(\_AM_WGEVENTS_IMPORT_DATETO, 'dateto', '', $dateTo));
+        // Form Radio delete source data
+        $form->addElement(new \XoopsFormRadioYN(\_AM_WGEVENTS_IMPORT_DELETE_ORIGIN, 'del_source', 0, _YES, _NO));
         // Buttons
         $form->addElement(new \XoopsFormHidden('op', 'extcal_exec'));
         $form->addElement(new \XoopsFormButtonTray('', \_AM_WGEVENTS_IMPORT_EXEC, 'submit', '', false));

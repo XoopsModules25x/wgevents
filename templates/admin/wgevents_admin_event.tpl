@@ -57,20 +57,20 @@
                 <td class='center'><{$event.identifier}></td>
                 <td class='center'><{$event.name}></td>
                 <td class='center'><img src="<{$wgevents_upload_eventlogos_url|default:false}><{$event.submitter}>/<{$event.logo}>" alt="events" style="max-width:100px" ></td>
-                <td class='center'><{$event.desc_short_admin}></td>
-                <td class='center'><{$event.datefrom_text}></td>
-                <td class='center'><{$event.dateto_text}></td>
-                <td class='center'><{$event.contact}></td>
-                <td class='center'><{$event.email}></td>
-                <td class='center'><{$event.url}></td>
-                <td class='center'><{$event.location_text_user}></td>
+                <td class='center'><{$event.desc_short_admin|default:''}></td>
+                <td class='center'><{$event.datefrom_text|default:''}></td>
+                <td class='center'><{$event.dateto_text|default:''}></td>
+                <td class='center'><{$event.contact|default:''}></td>
+                <td class='center'><{$event.email|default:''}></td>
+                <td class='center'><{$event.url|default:''}></td>
+                <td class='center'><{$event.location_text_user|default:''}></td>
                 <{if $use_gmaps|default:''}>
                     <td class='center'><{$event.locgmlat}></td>
                     <td class='center'><{$event.locgmlon}></td>
                     <td class='center'><{$event.locgmzoom}></td>
                 <{/if}>
-                <td class='center'><{$event.fee_text}></td>
-                <td class='center'><{$event.paymentinfo_text}></td>
+                <td class='center'><{$event.fee_text|default:''}></td>
+                <td class='center'><{$event.paymentinfo_text|default:''}></td>
                 <{if $use_register|default:''}>
                     <td class='center'><{$event.register_use_text}></td>
                     <td class='center'><{$event.register_from_text}></td>
@@ -78,7 +78,7 @@
                     <td class='center'><{$event.register_max}></td>
                     <td class='center'><{$event.register_listwait_text}></td>
                     <td class='center'><{$event.register_autoaccept_text}></td>
-                    <td class='center'><{$event.register_notify_text}></td>
+                    <td class='center'><{$event.register_notify_text|default:''}></td>
                     <td class='center'><{$event.register_forceverif_text}></td>
                 <{/if}>
                 <{if $use_wggallery|default:''}>

@@ -343,3 +343,4 @@ Please define, until which date all data should be anonymized.');
 \define('_AM_WGEVENTS_IMPORT_CATS', 'Import Categories');
 \define('_AM_WGEVENTS_IMPORT_APCAL', 'Import APCal');
 \define('_AM_WGEVENTS_IMPORT_EXTCAL', 'Import ExtCal');
+\define('_AM_WGEVENTS_IMPORT_DELETE_ORIGIN', 'Do you want to delete the events from source table after successful import');

@@ -112,6 +112,8 @@ switch ($op) {
 
         $eventsCount    = 0;
         $eventsImported = 0;
+        $deleteArr      = [];
+        $delSource      = Request::getBool('del_source');
         // delete all existing data
         $eventHandler->deleteAll();
         $GLOBALS['xoopsDB']->queryF('ALTER TABLE ' . $GLOBALS['xoopsDB']->prefix('wgevents_event') . ' AUTO_INCREMENT = 1');
@@ -186,7 +188,15 @@ switch ($op) {
             $eventObj->setVar('submitter', (int)$row['uid']);
             // Insert Data
             if ($eventHandler->insert($eventObj)) {
+                if ($delSource) {
+                    $deleteArr[] = (int)$row['id'];
+                }
                 $eventsImported++;
+            }
+        }
+        if ($delSource && \count($deleteArr) > 0) {
+            foreach ($deleteArr as $idSource) {
+                $GLOBALS['xoopsDB']->queryF('DELETE FROM `' . $GLOBALS['xoopsDB']->prefix('apcal_event') . '` WHERE `' . $GLOBALS['xoopsDB']->prefix('apcal_event') . '`.`id` = ' . $idSource);
             }
         }
         $modulesList[] = ['name' => \_AM_WGEVENTS_IMPORT_APCAL, 'catsResult' => \sprintf(_AM_WGEVENTS_IMPORT_RESULT_OF, $catsImported, $catsCount), 'eventsResult'=> \sprintf(_AM_WGEVENTS_IMPORT_RESULT_OF, $eventsImported, $eventsCount)];
@@ -262,6 +272,8 @@ switch ($op) {
 
         $eventsCount    = 0;
         $eventsImported = 0;
+        $deleteArr      = [];
+        $delSource      = Request::getBool('del_source');
         // delete all existing data
         $eventHandler->deleteAll();
         $GLOBALS['xoopsDB']->queryF('ALTER TABLE ' . $GLOBALS['xoopsDB']->prefix('wgevents_event') . ' AUTO_INCREMENT = 1');
@@ -365,7 +377,15 @@ switch ($op) {
             $eventObj->setVar('submitter', (int)$row['event_submitter']);
             // Insert Data
             if ($eventHandler->insert($eventObj)) {
+                if ($delSource) {
+                    $deleteArr[] = (int)$row['event_id'];
+                }
                 $eventsImported++;
+            }
+        }
+        if ($delSource && \count($deleteArr) > 0) {
+            foreach ($deleteArr as $idSource) {
+                $GLOBALS['xoopsDB']->queryF('DELETE FROM `' . $GLOBALS['xoopsDB']->prefix('extcal_event') . '` WHERE `' . $GLOBALS['xoopsDB']->prefix('extcal_event') . '`.`event_id` = ' . $idSource);
             }
         }
         $modulesList[] = ['name' => \_AM_WGEVENTS_IMPORT_EXTCAL, 'catsResult' => \sprintf(_AM_WGEVENTS_IMPORT_RESULT_OF, $catsImported, $catsCount), 'eventsResult'=> \sprintf(_AM_WGEVENTS_IMPORT_RESULT_OF, $eventsImported, $eventsCount)];
