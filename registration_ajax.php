@@ -31,9 +31,10 @@ use XoopsModules\Wgevents\{
 require __DIR__ . '/header.php';
 require_once \XOOPS_ROOT_PATH . '/header.php';
 
-$op      = Request::getCmd('op', 'list');
-$regId   = Request::getInt('id');
-$regEvid = Request::getInt('evid');
+$op       = Request::getCmd('op', 'list');
+$regId    = Request::getInt('id');
+$regEvid  = Request::getInt('evid');
+$feeValue = Request::getFloat('feevalue');
 
 $uidCurrent = \is_object($GLOBALS['xoopsUser']) ? (int)$GLOBALS['xoopsUser']->uid() : 0;
 
@@ -75,7 +76,7 @@ switch ($op) {
         $regFinancial = Request::getInt('changeto');
         $registrationObj->setVar('financial', $regFinancial);
         if (Constants::FINANCIAL_PAID == $regFinancial) {
-            $registrationObj->setVar('paidamount', $eventObj->getVar('fee'));
+            $registrationObj->setVar('paidamount', $feeValue);
         } else {
             $registrationObj->setVar('paidamount', 0);
         }

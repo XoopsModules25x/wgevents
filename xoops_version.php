@@ -29,7 +29,7 @@ $moduleDirNameUpper = \mb_strtoupper($moduleDirName);
 // ------------------- Information ------------------- //
 $modversion = [
     'name'                => \_MI_WGEVENTS_NAME,
-    'version'             => '1.0.3',
+    'version'             => '1.0.4',
     'description'         => \_MI_WGEVENTS_DESC,
     'author'              => 'Goffy - Wedega',
     'author_mail'         => 'webmaster@wedega.com',

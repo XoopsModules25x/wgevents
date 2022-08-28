@@ -28,7 +28,7 @@
     verifkey: R7MFIs4R30
     status: '5'
     financial: '1'
-    paidamount: '50.00'
+    paidamount: '70.10'
     listwait: '0'
     datecreated: '1613484165'
     submitter: '1'
@@ -78,8 +78,8 @@
     ip: 67.122.10
     verifkey: z4NBI7sYn3
     status: '4'
-    financial: '0'
-    paidamount: '0.00'
+    financial: '1'
+    paidamount: '27.50'
     listwait: '1'
     datecreated: '1614946493'
     submitter: '1'
@@ -112,7 +112,7 @@
     ip: 129.0.0.1
     verifkey: DdlY89m4QD
     status: '4'
-    financial: '0'
+    financial: '1'
     paidamount: '0.00'
     listwait: '1'
     datecreated: '1622900622'
@@ -129,8 +129,8 @@
     ip: 0.0.1
     verifkey: JiYMssuaBl
     status: '2'
-    financial: '0'
-    paidamount: '0.00'
+    financial: '1'
+    paidamount: '110.05'
     listwait: '0'
     datecreated: '1613397201'
     submitter: '1'
@@ -215,7 +215,7 @@
     verifkey: io4cjlnSep
     status: '5'
     financial: '1'
-    paidamount: '25.00'
+    paidamount: '27.50'
     listwait: '0'
     datecreated: '1618580594'
     submitter: '1'

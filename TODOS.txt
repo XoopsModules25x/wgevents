@@ -5,8 +5,6 @@ implement handlers for:
 - helpers
 - jobs
 
-implement mutiple fees for different participants
-
 print a ticket
 
 define personal templates for each user
