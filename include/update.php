@@ -89,6 +89,11 @@ function xoops_module_update_wgevents($module, $prev_version = null)
     require_once __DIR__ . '/install.php';
     xoops_module_install_wgevents($module);
 
+    $moduleVersion = (int)\str_replace(['.', '-'], '', $module->getInfo('version'));
+    if ($moduleVersion < 104) {
+        wgevents_update_fee($module);
+    }
+
     $errors = $module->getErrors();
     if (!empty($errors)) {
         \print_r($errors);
@@ -96,6 +101,52 @@ function xoops_module_update_wgevents($module, $prev_version = null)
 
     return true;
 
+}
+
+/**
+ * @param $module
+ *
+ * @return bool
+ */
+function wgevents_update_fee($module)
+{
+    // transform float value into json
+    $table   = $GLOBALS['xoopsDB']->prefix('wgevents_event');
+    $result  = $GLOBALS['xoopsDB']->queryF('SELECT * FROM `' . $table . '`');
+    $numRows = $GLOBALS['xoopsDB']->getRowsNum($result);
+    if ($numRows > 0) {
+        while ($row = $GLOBALS['xoopsDB']->fetchArray($result)) {
+            $newValue = \json_encode([[$row['fee'], '']]);
+            $sql = 'UPDATE `' . $table . "` SET `fee` = '" . $newValue . "' WHERE `" . $table . '`.`id` = ' . $row['id'];
+            if (!$GLOBALS['xoopsDB']->queryF($sql)) {
+                xoops_error($GLOBALS['xoopsDB']->error() . '<br>' . $sql);
+                $module->setErrors("Error when updating 'fee' in table '$table'.");
+                $ret = false;
+            }
+        }
+    }
+/*
+    // Example: create new table
+    $table   = $GLOBALS['xoopsDB']->prefix('wgevents_categories');
+    $check   = $GLOBALS['xoopsDB']->queryF("SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA=DATABASE() AND TABLE_NAME='$table'");
+    $numRows = $GLOBALS['xoopsDB']->getRowsNum($check);
+    if (!$numRows) {
+        // create new table 'wgevents_categories'
+        $sql = "CREATE TABLE `$table` (
+                  `id`        INT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
+                  `text`      VARCHAR(100)    NOT NULL DEFAULT '',
+                  `date`      INT(8)          NOT NULL DEFAULT '0',
+                  `submitter` INT(8)          NOT NULL DEFAULT '0',
+                  PRIMARY KEY (`id`)
+                ) ENGINE=InnoDB;";
+        if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
+            xoops_error($GLOBALS['xoopsDB']->error() . '<br>' . $sql);
+            $module->setErrors("Error when creating table '$table'.");
+            $ret = false;
+        }
+    }
+    */
+    return true;
 }
 
 /**

@@ -74,7 +74,7 @@ class Event extends \XoopsObject
         $this->initVar('locgmlat', \XOBJ_DTYPE_FLOAT);
         $this->initVar('locgmlon', \XOBJ_DTYPE_FLOAT);
         $this->initVar('locgmzoom', \XOBJ_DTYPE_INT);
-        $this->initVar('fee', \XOBJ_DTYPE_FLOAT);
+        $this->initVar('fee', \XOBJ_DTYPE_OTHER);
         $this->initVar('paymentinfo', \XOBJ_DTYPE_OTHER);
         $this->initVar('register_use', \XOBJ_DTYPE_INT);
         $this->initVar('register_from', \XOBJ_DTYPE_INT);
@@ -252,11 +252,25 @@ class Event extends \XoopsObject
             $locLabel .= '</div></div>';
             $form->addElement(new \XoopsFormLabel('', $locLabel));
         }
-
         // Form Text evFee
         $default0 = '0' . $helper->getConfig('sep_comma') . '00';
-        $evFee = $this->isNew() ? $default0 : Utility::FloatToString($this->getVar('fee'));
-        $form->addElement(new \XoopsFormText(\_MA_WGEVENTS_EVENT_FEE, 'fee', 20, 150, $evFee));
+        $evFeeArr = [];
+        if ($this->isNew()) {
+            $evFeeArr = [[$default0, '', 'placeholder' => \_MA_WGEVENTS_EVENT_FEE_DESC_PH]];
+        } else {
+            $evFee = \json_decode($this->getVar('fee'), true);
+            foreach($evFee as $fee) {
+                $evFeeArr[] = [Utility::FloatToString((float)$fee[0]), $fee[1]];
+            }
+        }
+        $evFeeTray = new Forms\FormElementTray(\_MA_WGEVENTS_EVENT_FEE, '<br>');
+        $evFeeGroup = new Forms\FormTextDouble('', 'fee', 0, 0, '');
+        $evFeeGroup->setElements($evFeeArr);
+        $evFeeGroup->setPlaceholder1(\_MA_WGEVENTS_EVENT_FEE_VAL_PH);
+        $evFeeGroup->setPlaceholder2(\_MA_WGEVENTS_EVENT_FEE_DESC_PH);
+        $evFeeTray->addElement($evFeeGroup);
+
+        $form->addElement($evFeeTray);
         // Form TextArea evPaymentinfo
         $editorConfigs2 = [];
         $editorConfigs2['name'] = 'paymentinfo';
@@ -267,6 +281,7 @@ class Event extends \XoopsObject
         $editorConfigs2['height'] = '400px';
         $editorConfigs2['editor'] = $editor;
         $form->addElement(new \XoopsFormEditor(\_MA_WGEVENTS_EVENT_PAYMENTINFO, 'paymentinfo', $editorConfigs2));
+
         // Start block registration options
         if ($helper->getConfig('use_register')) {
             // Form Radio Yes/No evRegister_use
@@ -534,7 +549,12 @@ class Event extends \XoopsObject
             $contactLines   = preg_split("/\r\n|\n|\r/", $evContact);
             $ret['contact_text_user']  = \implode('<br>', $contactLines);
         }
-        $ret['fee_text']           = Utility::FloatToString($this->getVar('fee'));
+        $evFee = \json_decode($this->getVar('fee'), true);
+        $evFeeText = '';
+        foreach($evFee as $fee) {
+            $evFeeText .= Utility::FloatToString((float)$fee[0]) . ' ' . $fee[1] . '<br>';
+        }
+        $ret['fee_text']           = $evFeeText;
         $ret['paymentinfo_text']   = $this->getVar('paymentinfo', 'e');
         $ret['register_use_text']  = (int)$this->getVar('register_use') > 0 ? \_YES : \_NO;
         $ret['register_from_text'] = '';

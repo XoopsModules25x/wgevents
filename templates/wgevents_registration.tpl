@@ -24,7 +24,7 @@
                             <th><{$question.caption|default:'false'}></th>
                         <{/foreach}>
                         <th><{$smarty.const._MA_WGEVENTS_STATUS}></th>
-                        <{if $registration.event_fee|default:0 > 0}>
+                        <{if $registration.evfees_count|default:0 > 0}>
                             <th><{$smarty.const._MA_WGEVENTS_REGISTRATION_FINANCIAL}></th>
                             <th><{$smarty.const._MA_WGEVENTS_REGISTRATION_PAIDAMOUNT}></th>
                         <{/if}>
@@ -109,7 +109,7 @@
 
 
 <script>
-    function change_financial($regid, $evid, $change_to) {
+    function change_financial($regid, $evid, $change_to, $amount_text, $amount_value) {
         //update data with ajax call of registration_ajax.php
         $.ajax({
             beforeSend: function() {
@@ -117,24 +117,24 @@
             }, //Show spinner
             complete: function() {
                 setTimeout(function(){
-                    $("#overlay").fadeOut(300);},500);
+                    $("#overlay").fadeOut(300);},200);
             }, //Hide spinner
             url: 'registration_ajax.php',
             dataType: 'json',
             type: "POST",
-            data: {op: "change_financial", changeto: $change_to, id: $regid, evid: $evid},
+            data: {op: "change_financial", changeto: $change_to, id: $regid, evid: $evid, feevalue: $amount_value},
             success: function (response) {
                 //update current list
-                document.getElementById("paidamount_" + $regid).innerHTML = "<{$js_feedefault|default:'?'}>";
+                document.getElementById("paidamount_" + $regid).innerHTML = $amount_text;
                 if (parseInt($change_to) === 1) {
                     //change status to paid
                     document.getElementById("financial_" + $regid).innerHTML = "<{$js_lang_paid|default:'paid'}>";
-                    document.getElementById("paidamount_" + $regid).innerHTML = "<{$js_feedefault|default:'?'}>";
+                    document.getElementById("paidamount_" + $regid).innerHTML = $amount_text;
                     document.getElementById("btn_change_financial_0_" + $regid).classList.remove('hidden');
                     document.getElementById("btn_change_financial_1_" + $regid).classList.add('hidden');
                 } else {
                     document.getElementById("financial_" + $regid).innerHTML = "<{$js_lang_unpaid|default:'unpaid'}>";
-                    document.getElementById("paidamount_" + $regid).innerHTML = "<{$js_feezero|default:'?'}>";
+                    document.getElementById("paidamount_" + $regid).innerHTML = $amount_text;
                     document.getElementById("btn_change_financial_0_" + $regid).classList.add('hidden');
                     document.getElementById("btn_change_financial_1_" + $regid).classList.remove('hidden');
                 }

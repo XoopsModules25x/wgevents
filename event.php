@@ -326,7 +326,16 @@ switch ($op) {
         $eventObj->setVar('locgmlat', Request::getFloat('locgmlat'));
         $eventObj->setVar('locgmlon', Request::getFloat('locgmlon'));
         $eventObj->setVar('locgmzoom', Request::getInt('locgmzoom'));
-        $evFee = Utility::StringToFloat(Request::getString('fee'));
+        //$evFeeArr = Utility::StringToFloat(Request::getString('fee'));
+        $evFeeAmountArr = Request::getArray('fee');
+        $evFeeDescArr = Request::getArray('feedesc');
+        $evFeeArr = [];
+        foreach ($evFeeAmountArr as $key => $evFeeAmount) {
+            $evFeeArr[] = [Utility::StringToFloat($evFeeAmount), $evFeeDescArr[$key]];
+        }
+        // remove last array item, as this is from hidden group
+        \array_pop($evFeeArr);
+        $evFee = \json_encode($evFeeArr);
         $eventObj->setVar('fee', $evFee);
         $eventObj->setVar('paymentinfo', Request::getText('paymentinfo'));
         $evRegisterUse = Request::getInt('register_use');

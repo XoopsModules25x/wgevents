@@ -166,6 +166,14 @@ switch ($op) {
         $registrations[$regEvid]['event_name'] = $event_name;
         $registrations[$regEvid]['permEditEvent'] = $permEdit;
         $registrations[$regEvid]['event_fee'] = $eventObj->getVar('fee');
+
+        $evFee = \json_decode($eventObj->getVar('fee'), true);
+        $evFeeArr = [];
+        foreach($evFee as $fee) {
+            $evFeeArr[] = ['text' => Utility::FloatToString((float)$fee[0]), 'value' => (float)$fee[0]];
+        }
+        $registrations[$regEvid]['evfees'] = $evFeeArr;
+        $registrations[$regEvid]['evfees_count'] = \count($evFeeArr);
         $registrations[$regEvid]['event_register_max'] = $eventObj->getVar('register_max');
         $registrations[$regEvid]['questions'] = $questionsArr;
         $registrations[$regEvid]['footerCols'] = \count($questionsArr) + 9;
@@ -198,8 +206,12 @@ switch ($op) {
         //assign language vars for js calls
         $GLOBALS['xoopsTpl']->assign('js_lang_paid', \_MA_WGEVENTS_REGISTRATION_FINANCIAL_PAID);
         $GLOBALS['xoopsTpl']->assign('js_lang_unpaid', \_MA_WGEVENTS_REGISTRATION_FINANCIAL_UNPAID);
-        $GLOBALS['xoopsTpl']->assign('js_feedefault', $eventObj->getVar('fee'));
-        $GLOBALS['xoopsTpl']->assign('js_feezero', Utility::FloatToString(0));
+        if (1 === \count($evFeeArr)) {
+            $GLOBALS['xoopsTpl']->assign('js_feedefault_value', $evFeeArr[0]['value']);
+            $GLOBALS['xoopsTpl']->assign('js_feedefault_text', $evFeeArr[0]['text']);
+
+        }
+        $GLOBALS['xoopsTpl']->assign('js_feezero_text', Utility::FloatToString(0));
         $GLOBALS['xoopsTpl']->assign('js_lang_changed', \_MA_WGEVENTS_REGISTRATION_CHANGED);
         $GLOBALS['xoopsTpl']->assign('js_lang_approved', \_MA_WGEVENTS_STATUS_APPROVED);
         $GLOBALS['xoopsTpl']->assign('js_lang_error_save', \_MA_WGEVENTS_ERROR_SAVE);

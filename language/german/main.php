@@ -92,6 +92,8 @@ require_once __DIR__ . '/admin.php';
 \define('_MA_WGEVENTS_EVENT_LOCGMLON', 'Ort Longitude');
 \define('_MA_WGEVENTS_EVENT_LOCGMZOOM', 'Zoom-Faktor');
 \define('_MA_WGEVENTS_EVENT_FEE', 'Gebühr');
+\define('_MA_WGEVENTS_EVENT_FEE_VAL_PH', 'Betrag');
+\define('_MA_WGEVENTS_EVENT_FEE_DESC_PH', 'Beschreibung eingeben (z.B. Kinder 0 - 6 Jahre)');
 \define('_MA_WGEVENTS_EVENT_PAYMENTINFO', 'Zahlungshinweis');
 \define('_MA_WGEVENTS_EVENT_REGISTER_USE', 'Anmeldesystem verwenden');
 \define('_MA_WGEVENTS_EVENT_REGISTER_FROM', 'Anmeldung vom');

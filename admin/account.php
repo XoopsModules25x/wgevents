@@ -243,7 +243,7 @@ switch ($op) {
         break;
     case 'new':
         $templateMain = 'wgevents_admin_account.tpl';
-        $GLOBALS['xoTheme']->addScript(\WGEVENTS_URL . '/assets/js/forms.js');
+        $GLOBALS['xoTheme']->addScript(\WGEVENTS_URL . '/assets/js/forms_admin.js');
         $GLOBALS['xoopsTpl']->assign('navigation', $adminObject->displayNavigation('account.php'));
         $adminObject->addItemButton(\_AM_WGEVENTS_LIST_ACCOUNTS, 'account.php', 'list');
         $GLOBALS['xoopsTpl']->assign('buttons', $adminObject->displayButton('left'));
@@ -294,7 +294,7 @@ switch ($op) {
         break;
     case 'edit':
         $templateMain = 'wgevents_admin_account.tpl';
-        $GLOBALS['xoTheme']->addScript(\WGEVENTS_URL . '/assets/js/forms.js');
+        $GLOBALS['xoTheme']->addScript(\WGEVENTS_URL . '/assets/js/forms_admin.js');
         $GLOBALS['xoopsTpl']->assign('navigation', $adminObject->displayNavigation('account.php'));
         $adminObject->addItemButton(\_AM_WGEVENTS_ADD_ACCOUNT, 'account.php?op=new');
         $adminObject->addItemButton(\_AM_WGEVENTS_LIST_ACCOUNTS, 'account.php', 'list');
