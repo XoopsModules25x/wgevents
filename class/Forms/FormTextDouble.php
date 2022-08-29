@@ -57,20 +57,6 @@ class FormTextDouble extends \XoopsFormText
     private $placeholder2;
 
     /**
-     * value first textbox
-     *
-     * @var string
-     */
-    private $value1;
-
-    /**
-     * value second textbox
-     *
-     * @var string
-     */
-    private $value2;
-
-    /**
      * create HTML to output the group of text fields
      *
      * @return string
@@ -128,9 +114,9 @@ class FormTextDouble extends \XoopsFormText
     }
 
     /**
-     * Get first placeholder value
+     * Get elements
      *
-     * @return string
+     * @return array
      */
     public function getElements() {
 
@@ -139,7 +125,7 @@ class FormTextDouble extends \XoopsFormText
     }
 
     /**
-     * Set first placeholder value
+     * Set elements
      *
      * @param array $value
      */
