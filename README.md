@@ -50,6 +50,13 @@ If you like the wgEvents module and thanks to the long process for giving the op
 - Monitoring of payment status
 - Implementation of SimpleCalendar
 - Export of list of participants in xlsx or csv file
+- Usage of Google Maps to show marker for location
+- Support of multiple fees for each event (e.g. different fees for child, adults,...)
+- Sending mails by using a task handler (mails per hour can be defined)
+- Ajax support for most used functions for event organizers (e.g. set status, confirm payment,...)
+- Support of saving historical data (registrations, answers)
+- Implementation of tablesorter
+- Import of events from Apcal und ExtCal module
 - All templates are based on bootstrap and fully responsive
 - Maintenance tools
 - Cloning of module
