@@ -326,7 +326,6 @@ switch ($op) {
         $eventObj->setVar('locgmlat', Request::getFloat('locgmlat'));
         $eventObj->setVar('locgmlon', Request::getFloat('locgmlon'));
         $eventObj->setVar('locgmzoom', Request::getInt('locgmzoom'));
-        //$evFeeArr = Utility::StringToFloat(Request::getString('fee'));
         $evFeeAmountArr = Request::getArray('fee');
         $evFeeDescArr = Request::getArray('feedesc');
         $evFeeArr = [];
