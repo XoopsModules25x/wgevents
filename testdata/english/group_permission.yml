@@ -1,28 +1,8 @@
 -
-    gperm_groupid: '3'
-    gperm_itemid: '8'
-    gperm_modid: '48'
-    gperm_name: wgevents_ac
--
-    gperm_groupid: '1'
-    gperm_itemid: '3'
-    gperm_modid: '48'
-    gperm_name: wgevents_ac
--
-    gperm_groupid: '1'
-    gperm_itemid: '6'
-    gperm_modid: '48'
-    gperm_name: wgevents_ac
--
     gperm_groupid: '1'
     gperm_itemid: '1'
     gperm_modid: '48'
-    gperm_name: wgevents_ac
--
-    gperm_groupid: '1'
-    gperm_itemid: '2'
-    gperm_modid: '48'
-    gperm_name: wgevents_ac
+    gperm_name: wgevents_approve_categories
 -
     gperm_groupid: '1'
     gperm_itemid: '2'
@@ -39,13 +19,13 @@
     gperm_modid: '48'
     gperm_name: wgevents_ac
 -
-    gperm_groupid: '1'
-    gperm_itemid: '1'
+    gperm_groupid: '2'
+    gperm_itemid: '9'
     gperm_modid: '48'
-    gperm_name: wgevents_approve_categories
+    gperm_name: wgevents_ac
 -
     gperm_groupid: '2'
-    gperm_itemid: '7'
+    gperm_itemid: '4'
     gperm_modid: '48'
     gperm_name: wgevents_ac
 -
@@ -70,17 +50,37 @@
     gperm_name: wgevents_ac
 -
     gperm_groupid: '2'
-    gperm_itemid: '4'
-    gperm_modid: '48'
-    gperm_name: wgevents_ac
--
-    gperm_groupid: '2'
-    gperm_itemid: '9'
+    gperm_itemid: '7'
     gperm_modid: '48'
     gperm_name: wgevents_ac
 -
     gperm_groupid: '1'
     gperm_itemid: '2'
+    gperm_modid: '48'
+    gperm_name: wgevents_ac
+-
+    gperm_groupid: '1'
+    gperm_itemid: '1'
+    gperm_modid: '48'
+    gperm_name: wgevents_ac
+-
+    gperm_groupid: '1'
+    gperm_itemid: '6'
+    gperm_modid: '48'
+    gperm_name: wgevents_ac
+-
+    gperm_groupid: '1'
+    gperm_itemid: '3'
+    gperm_modid: '48'
+    gperm_name: wgevents_ac
+-
+    gperm_groupid: '3'
+    gperm_itemid: '8'
+    gperm_modid: '48'
+    gperm_name: wgevents_ac
+-
+    gperm_groupid: '1'
+    gperm_itemid: '1'
     gperm_modid: '48'
     gperm_name: wgevents_submit_categories
 -
@@ -90,29 +90,9 @@
     gperm_name: wgevents_submit_textblocks
 -
     gperm_groupid: '1'
-    gperm_itemid: '1'
+    gperm_itemid: '2'
     gperm_modid: '48'
     gperm_name: wgevents_submit_categories
--
-    gperm_groupid: '1'
-    gperm_itemid: '2'
-    gperm_modid: '48'
-    gperm_name: wgevents_view_categories
--
-    gperm_groupid: '1'
-    gperm_itemid: '2'
-    gperm_modid: '48'
-    gperm_name: wgevents_view_textblocks
--
-    gperm_groupid: '3'
-    gperm_itemid: '2'
-    gperm_modid: '48'
-    gperm_name: wgevents_view_textblocks
--
-    gperm_groupid: '3'
-    gperm_itemid: '1'
-    gperm_modid: '48'
-    gperm_name: wgevents_view_categories
 -
     gperm_groupid: '2'
     gperm_itemid: '1'
@@ -121,5 +101,25 @@
 -
     gperm_groupid: '1'
     gperm_itemid: '1'
+    gperm_modid: '48'
+    gperm_name: wgevents_view_categories
+-
+    gperm_groupid: '3'
+    gperm_itemid: '1'
+    gperm_modid: '48'
+    gperm_name: wgevents_view_categories
+-
+    gperm_groupid: '3'
+    gperm_itemid: '2'
+    gperm_modid: '48'
+    gperm_name: wgevents_view_textblocks
+-
+    gperm_groupid: '1'
+    gperm_itemid: '2'
+    gperm_modid: '48'
+    gperm_name: wgevents_view_textblocks
+-
+    gperm_groupid: '1'
+    gperm_itemid: '2'
     gperm_modid: '48'
     gperm_name: wgevents_view_categories
