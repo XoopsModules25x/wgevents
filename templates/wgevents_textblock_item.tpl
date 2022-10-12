@@ -1,12 +1,12 @@
 <i id='tbId_<{$textblock.id}>'></i>
 <div class='panel-heading'>
+    <{$textblock.name}>
 </div>
 <div class='panel-body'>
-    <span class='col-sm-9 justify'><{$textblock.name}></span>
-    <span class='col-sm-9 justify'><{$textblock.text}></span>
+    <span><{$textblock.text}></span>
 </div>
 <div class='panel-foot'>
-    <div class='col-sm-12 right'>
+    <div class='col-sm-12 right wge-spacer2'>
         <{if !$showItem|default:false}>
             <a class='btn btn-success right wge-btn' href='textblock.php?op=show&amp;id=<{$textblock.id}>&amp;start=<{$start}>&amp;limit=<{$limit}>' title='<{$smarty.const._MA_WGEVENTS_DETAILS}>'><{$smarty.const._MA_WGEVENTS_DETAILS}></a>
         <{/if}>

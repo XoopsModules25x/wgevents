@@ -57,9 +57,6 @@ switch ($op) {
         $GLOBALS['xoTheme']->addScript(\WGEVENTS_URL . '/assets/js/jquery-ui.min.js');
         $GLOBALS['xoTheme']->addScript(\WGEVENTS_URL . '/assets/js/sortables.js');
 
-        // Breadcrumbs
-        $xoBreadcrumbs[] = ['title' => \_MA_WGEVENTS_QUESTIONS_LIST];
-
         // check whether there are textblocks available
         $uidCurrent = \is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->uid() : 0;
         $crTextblock = new \CriteriaCompo();
@@ -96,6 +93,19 @@ switch ($op) {
         ];
         $GLOBALS['xoopsTpl']->assign('regdefaults', $regdefaults);
 
+        //get event details
+        $eventObj = $eventHandler->get($queEvid);
+        $evName = $eventObj->getVar('name');
+        $evSubmitter = $eventObj->getVar('submitter');
+        $evStatus = $eventObj->getVar('status');
+        $keywords[] = $evName;
+
+        // Breadcrumbs
+        if ('' !== $evName) {
+            $xoBreadcrumbs[] = ['title' => $evName];
+        }
+        $xoBreadcrumbs[] = ['title' => \_MA_WGEVENTS_QUESTIONS_LIST];
+
         // get question fields
         $crQuestion = new \CriteriaCompo();
         $crQuestion->add(new \Criteria('evid', $queEvid));
@@ -114,13 +124,6 @@ switch ($op) {
             // Get All Question
             foreach (\array_keys($questionsAll) as $i) {
                 $questions[$i] = $questionsAll[$i]->getValuesQuestions();
-                if ('' == $evName) {
-                    $eventObj = $eventHandler->get($questionsAll[$i]->getVar('evid'));
-                    $evName = $eventObj->getVar('name');
-                    $evSubmitter = $eventObj->getVar('submitter');
-                    $evStatus = $eventObj->getVar('status');
-                    $keywords[$i] = $evName;
-                }
             }
             $GLOBALS['xoopsTpl']->assign('questions', $questions);
             unset($questions);
@@ -300,7 +303,7 @@ switch ($op) {
             \redirect_header('index.php?op=list', 3, \_NOPERM);
         }
         // Breadcrumbs
-        $xoBreadcrumbs[] = ['title' => \_MA_WGEVENTS_QUESTION_ADD];
+        $xoBreadcrumbs[] = ['title' => $eventObj->getVar('name')];
         // Form Create
         $registrationObj = $registrationHandler->create();
         $registrationObj->setVar('evid', $queEvid);

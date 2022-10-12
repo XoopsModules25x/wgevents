@@ -94,6 +94,9 @@ switch ($op) {
             }
         } else {
             $GLOBALS['xoopsTpl']->assign('error', \_MA_WGEVENTS_TEXTBLOCKS_THEREARENT);
+            if ($permSubmit) {
+                $GLOBALS['xoopsTpl']->assign('permSubmitFirst', true);
+            }
         }
         break;
     case 'save':
