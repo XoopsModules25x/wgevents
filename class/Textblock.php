@@ -90,7 +90,7 @@ class Textblock extends \XoopsObject
     public function getForm($action = false)
     {
         $helper = Helper::getInstance();
-        $categoryHandler = $helper->getHandler('Category');
+        //$categoryHandler = $helper->getHandler('Category');
         $textblockHandler = $helper->getHandler('Textblock');
 
         if (!$action) {
