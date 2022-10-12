@@ -104,9 +104,11 @@ class Textblock extends \XoopsObject
         $form = new \XoopsThemeForm($title, 'formTextblock', $action, 'post', true);
         $form->setExtra('enctype="multipart/form-data"');
         // Form Table categories
+        /*  for the moment textblocks are valid for all categories
         $evCatidSelect = new \XoopsFormSelect(\_MA_WGEVENTS_EVENT_CATID, 'catid', $this->getVar('catid'));
         $evCatidSelect->addOptionArray($categoryHandler->getList());
         $form->addElement($evCatidSelect);
+        */
         // Form Text tbName
         $form->addElement(new \XoopsFormText(\_MA_WGEVENTS_TEXTBLOCK_NAME, 'name', 50, 255, $this->getVar('name')));
         // Form Editor DhtmlTextArea tbText
