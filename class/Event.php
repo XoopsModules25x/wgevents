@@ -167,7 +167,10 @@ class Event extends \XoopsObject
         }
         // Form Table categories
         $evCatidSelect = new \XoopsFormSelect(\_MA_WGEVENTS_EVENT_CATID, 'catid', $this->getVar('catid'));
-        $evCatidSelect->addOptionArray($categoryHandler->getList());
+        $crCategory = new \CriteriaCompo();
+        $crCategory->setSort('weight ASC, id');
+        $crCategory->setOrder('ASC');
+        $evCatidSelect->addOptionArray($categoryHandler->getList($crCategory));
         $form->addElement($evCatidSelect);
         // Form Text evName
         $form->addElement(new \XoopsFormText(\_MA_WGEVENTS_EVENT_NAME, 'name', 50, 255, $this->getVar('name')), true);
@@ -260,7 +263,7 @@ class Event extends \XoopsObject
         } else {
             $evFee = \json_decode($this->getVar('fee'), true);
             foreach($evFee as $fee) {
-                $evFeeArr[] = [Utility::FloatToString((float)$fee[0]), $fee[1]];
+                $evFeeArr[] = [Utility::FloatToString((float)$fee[0]), $fee[1], 'placeholder' => \_MA_WGEVENTS_EVENT_FEE_DESC_PH];
             }
         }
         $evFeeTray = new Forms\FormElementTray(\_MA_WGEVENTS_EVENT_FEE, '<br>');

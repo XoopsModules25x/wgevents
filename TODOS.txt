@@ -1,3 +1,9 @@
+Dropdown: leere Zeile am Anfang????
+
+index.php: pagination for cats
+
+index.php and event.php: Filter list by category
+
 upload new lang files to transifex
 
 implement handlers for:

@@ -101,6 +101,7 @@ $modversion['templates'] = [
     ['file' => 'wgevents_breadcrumbs.tpl', 'description' => ''],
     ['file' => 'wgevents_calendar.tpl', 'description' => ''],
     ['file' => 'wgevents_category_index_list.tpl', 'description' => ''],
+    ['file' => 'wgevents_category_index_button.tpl', 'description' => ''],
     ['file' => 'wgevents_event.tpl', 'description' => ''],
     ['file' => 'wgevents_event_index_bcard.tpl', 'description' => ''],
     ['file' => 'wgevents_event_index_list.tpl', 'description' => ''],
@@ -119,7 +120,6 @@ $modversion['templates'] = [
     ['file' => 'wgevents_registration_item.tpl', 'description' => ''],
     ['file' => 'wgevents_search.tpl', 'description' => ''],
     ['file' => 'wgevents_textblock.tpl', 'description' => ''],
-    ['file' => 'wgevents_textblock_list.tpl', 'description' => ''],
     ['file' => 'wgevents_textblock_item.tpl', 'description' => ''],
     ['file' => 'wgevents_verification.tpl', 'description' => ''],
     ['file' => 'wgevents_mail_table.tpl', 'description' => ''],
@@ -755,7 +755,7 @@ $modversion['config'][] = [
     'formtype'    => 'select',
     'valuetype'   => 'text',
     'default'     => 'list',
-    'options'     => [\_MI_WGEVENTS_INDEX_DISPLAY_NONE => 'none', \_MI_WGEVENTS_INDEX_DISPLAY_LIST => 'list'],
+    'options'     => [\_MI_WGEVENTS_INDEX_DISPLAY_NONE => 'none', \_MI_WGEVENTS_INDEX_DISPLAY_LIST => 'list', \_MI_WGEVENTS_INDEX_DISPLAY_BUTTON=> 'button'],
 ];
 // index display type
 $modversion['config'][] = [

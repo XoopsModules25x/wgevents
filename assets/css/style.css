@@ -80,6 +80,12 @@ ul.menu > li + li:before {
     padding:5px !important;
 }
 
+.wge-error-msg {
+    border:1px solid #ff0000;
+    padding:25px;
+    text-align:center;
+}
+
 /*tablesorter-filter-row*/
 .tablesorter-filter-row td input.disabled {
     display: none;

@@ -72,7 +72,13 @@ if ($useGMaps) {
     $gmapsHeight       = $helper->getConfig('gmaps_height');
 }
 
-$uidCurrent = \is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->uid() : 0;
+$uidCurrent  = 0;
+$userIsAdmin = false;
+if (\is_object($GLOBALS['xoopsUser'])) {
+    $uidCurrent  = $GLOBALS['xoopsUser']->uid();
+    $userIsAdmin = $GLOBALS['xoopsUser']->isAdmin();
+}
+
 
 switch ($op) {
     case 'show':
@@ -125,7 +131,7 @@ switch ($op) {
             // - must have perm to see event or
             // - must be event owner
             // - is admin
-            if (!$GLOBALS['xoopsUser']->isAdmin()) {
+            if (!$userIsAdmin) {
                 $crEventGroup = new \CriteriaCompo();
                 $crEventGroup->add(new \Criteria('groups', '%00000%', 'LIKE')); //all users
                 if ($uidCurrent > 0) {
@@ -400,11 +406,15 @@ switch ($op) {
             if (0 == $evId) {
                 $categoryObj = $categoryHandler->get($catId);
                 $identifier = $categoryObj->getVar('identifier');
+                if (\substr($identifier, -1) !== '_') {
+                    $identifier .= '_';
+                }
+                $identifier .= $eventDatefromObj->format('Y') . '_';
                 $crEvent = new \CriteriaCompo();
                 $crEvent->add(new \Criteria('identifier', $identifier . '%', 'LIKE'));
                 $eventsCount = $eventHandler->getCount($crEvent) + 1;
                 $eventIdentifierObj = $eventHandler->get($newEvId);
-                $eventIdentifierObj->setVar('identifier', $identifier . '_' . ($eventsCount));
+                $eventIdentifierObj->setVar('identifier', $identifier . ($eventsCount));
                 $eventHandler->insert($eventIdentifierObj);
                 unset($eventIdentifierObj);
             }
@@ -513,6 +523,9 @@ switch ($op) {
                             $questionHandler->insert($questionObjNew);
                         }
                     }
+                }
+                if (Request::hasVar('continue_questions')) {
+                    \redirect_header('question.php?op=list&amp;evid=' . $newEvId . '&amp;start=' . $start . '&amp;limit=' . $limit, 2, \_MA_WGEVENTS_FORM_OK);
                 }
                 if ($evId > 0 || !$cloneQuestions) {
                     \redirect_header('event.php?op=show&amp;id=' . $evId . '&amp;start=' . $start . '&amp;limit=' . $limit, 2, \_MA_WGEVENTS_FORM_OK);

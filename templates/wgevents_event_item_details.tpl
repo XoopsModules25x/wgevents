@@ -180,7 +180,7 @@
 <div class='panel-foot'>
     <div class='col-sm-12 right'>
         <{if $showItem|default:false}>
-            <a class='btn btn-success right wge-btn' href='event.php?op=list&amp;start=<{$start}>&amp;limit=<{$limit}>#evId_<{$event.id}>' title='<{$smarty.const._MA_WGEVENTS_EVENTS_LIST}>'><{$smarty.const._MA_WGEVENTS_EVENTS_LIST}></a>
+            <a class='btn btn-success right wge-btn' href='event.php?op=list&amp;start=<{$start}>&amp;limit=<{$limit}>' title='<{$smarty.const._MA_WGEVENTS_EVENTS_LIST}>'><{$smarty.const._MA_WGEVENTS_EVENTS_LIST}></a>
         <{else}>
             <a class='btn btn-success right wge-btn' href='event.php?op=show&amp;id=<{$event.id}>&amp;start=<{$start}>&amp;limit=<{$limit}>' title='<{$smarty.const._MA_WGEVENTS_DETAILS}>'><{$smarty.const._MA_WGEVENTS_DETAILS}></a>
         <{/if}>

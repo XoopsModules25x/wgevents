@@ -218,14 +218,18 @@ class Registration extends \XoopsObject
                     Constants::FIELD_SELECTBOX == $queType ||
                     Constants::FIELD_CHECKBOX == $queType ||
                     Constants::FIELD_COMBOBOX == $queType) {
-                        //$formelementsHandler->options = preg_split('/\r\n|\r|\n/', $questionsAll[$queId]->getVar('values'));
                         $formelementsHandler->optionsArr = \unserialize($addValue);
                 }
                 /*
-                if (Constants::FIELD_CHECKBOX == $queType) {
-                    //$addValueArr = \unserialize($addValue);
-                    //$formelementsHandler->optionsText = $addValueArr[0];
-                    $formelementsHandler->optionsArr = \unserialize($addValue);
+                if (Constants::FIELD_SELECTBOX == $queType) {
+                    $options = [];
+                    if ((bool)$required) {
+                        $options[''] = ' ';
+                    }
+                    foreach (\unserialize($addValue) as $opt) {
+                        $options[] = $opt;
+                    }
+                    $formelementsHandler->optionsArr = $options;
                 }
                 */
                 if (Constants::FIELD_LABEL == $queType) {
