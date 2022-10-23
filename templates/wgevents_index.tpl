@@ -13,14 +13,11 @@
     </div>
 <{/if}>
 <!-- End index list -->
-
 <{if $index_displaycats|default:'' != 'none'}>
     <{if $categoriesCount|default:0 > 0}>
         <!-- Start new link loop -->
         <{foreach item=category from=$categories name=categories}>
-            <div class='top center'>
-                <{include file='db:wgevents_category_index_list.tpl' category=$category}>
-            </div>
+            <{include file="db:wgevents_category_index_$index_displaycats.tpl" category=$category}>
         <{/foreach}>
         <!-- End new link loop -->
     <{else}>
@@ -49,12 +46,12 @@
     <{/if}>
     <{if $showBtnComing|default:false}>
         <div class="row wge-row1">
-            <span class='col-sm-12 center'><a class='btn btn-success' href='index.php?op=coming' title='<{$smarty.const._MA_WGEVENTS_EVENTS_LISTCOMING}>'><{$smarty.const._MA_WGEVENTS_EVENTS_LISTCOMING}></a></span>
+            <span class='col-sm-12 center'><a class='btn btn-success' href='index.php?op=coming&amp;cat_id=<{$categoryCurrent}>' title='<{$smarty.const._MA_WGEVENTS_EVENTS_LISTCOMING}>'><{$smarty.const._MA_WGEVENTS_EVENTS_LISTCOMING}></a></span>
         </div>
     <{/if}>
     <{if $showBtnPast|default:false}>
         <div class="row wge-row1">
-            <span class='col-sm-12 center'><a class='btn btn-success' href='index.php?op=past' title='<{$smarty.const._MA_WGEVENTS_EVENTS_LISTPAST}>'><{$smarty.const._MA_WGEVENTS_EVENTS_LISTPAST}></a></span>
+            <span class='col-sm-12 center'><a class='btn btn-success' href='index.php?op=past&amp;cat_id=<{$categoryCurrent}>' title='<{$smarty.const._MA_WGEVENTS_EVENTS_LISTPAST}>'><{$smarty.const._MA_WGEVENTS_EVENTS_LISTPAST}></a></span>
         </div>
     <{/if}>
     <{if $errorPerm|default:false}>

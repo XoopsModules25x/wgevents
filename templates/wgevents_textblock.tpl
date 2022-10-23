@@ -31,7 +31,9 @@
                         <{if $showItem|default:false}>
                             <a class='btn btn-success right wge-btn' href='textblock.php?op=list&amp;start=<{$start}>&amp;limit=<{$limit}>#tbId_<{$textblock.id}>' title='<{$smarty.const._MA_WGEVENTS_TEXTBLOCKS_LIST}>'><{$smarty.const._MA_WGEVENTS_TEXTBLOCKS_LIST}></a>
                         <{/if}>
-                        <a class='btn btn-primary center wge-btn' href='textblock.php?op=new' title='<{$smarty.const._MA_WGEVENTS_TEXTBLOCK_ADD}>'><{$smarty.const._MA_WGEVENTS_TEXTBLOCK_ADD}></a>
+                        <{if $permSubmit|default:false}>
+                            <a class='btn btn-primary center wge-btn' href='textblock.php?op=new' title='<{$smarty.const._MA_WGEVENTS_TEXTBLOCK_ADD}>'><{$smarty.const._MA_WGEVENTS_TEXTBLOCK_ADD}></a>
+                        <{/if}>
                     </td>
                 </tr>
             </tfoot>

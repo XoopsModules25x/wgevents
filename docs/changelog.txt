@@ -2,7 +2,12 @@
 1.0.4 RC1 [2022/08/29]
 ==============================================================
  - implement multiple fees for different participants (goffy)
-
+ - removed unused tpl (goffy)
+ - add year to identifier (goffy)
+ - fixed bug with redirect to questions (goffy)
+ - added cat selection with buttons (goffy)
+ - fixed bug with groups (goffy)
+ 
 ==============================================================
 1.0.3 RC1 [2022/07/10]
 ==============================================================
