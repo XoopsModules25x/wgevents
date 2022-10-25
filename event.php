@@ -579,6 +579,8 @@ switch ($op) {
         $eventDate = Request::getInt('eventDate', \time());
         $eventObj->setVar('datefrom', $eventDate);
         $eventObj->setVar('dateto', $eventDate);
+        $eventObj->start = $start;
+        $eventObj->limit = $limit;
         $form = $eventObj->getForm();
         $GLOBALS['xoopsTpl']->assign('form', $form->render());
         break;
