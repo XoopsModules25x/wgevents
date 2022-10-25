@@ -1,4 +1,4 @@
-<div class="card" style="width: 18rem;">
+<div class="col-xs-12 col-sm-6 card">
     <img class="card-img-top" src='<{$wgevents_upload_eventlogos_url|default:false}><{$event.submitter}>/<{$event.logo}>' alt='<{$event.name}>''>
     <div class="card-body">
         <h5 class="card-title"><{$event.name}></h5>
@@ -9,3 +9,4 @@
         <a class='btn btn-success wge-btn' href='event.php?op=show&amp;id=<{$event.id}>' title='<{$smarty.const._MA_WGEVENTS_DETAILS}>'><{$smarty.const._MA_WGEVENTS_DETAILS}></a>
     </div>
 </div>
+

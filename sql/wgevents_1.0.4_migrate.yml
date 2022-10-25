@@ -6,7 +6,7 @@ wgevents_event:
             attributes: ' INT(8) UNSIGNED NOT NULL AUTO_INCREMENT '
         -
             name: identifier
-            attributes: ' VARCHAR(255)    NOT NULL DEFAULT '''''''' '
+            attributes: ' VARCHAR(255)    NULL '
         -
             name: catid
             attributes: ' INT(10)         NOT NULL DEFAULT ''0'' '

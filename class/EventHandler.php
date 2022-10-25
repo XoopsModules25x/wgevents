@@ -157,9 +157,9 @@ class EventHandler extends \XoopsPersistableObjectHandler
      *
      * @param int $start
      * @param int $limit
-     * @param int $from : filter date created from (timestamp)
-     * @param int $to : filter date created to (timestamp)
-     * @param int $catid : filter by given cat id
+     * @param int $from      // filter date created from (timestamp)
+     * @param int $to        // filter date created to (timestamp)
+     * @param int $catid     // filter by given cat id
      * @param string $sortBy
      * @param string $orderBy
      * @return array
@@ -171,8 +171,17 @@ class EventHandler extends \XoopsPersistableObjectHandler
             $crEvent->add(new \Criteria('catid', $catid));
         }
         if ($from >  0) {
-            $crEvent->add(new \Criteria('datefrom', $from, '>='));
-            $crEvent->add(new \Criteria('dateto', $to, '<='));
+            //event start is between from and to
+            $crEventStart = new \CriteriaCompo();
+            $crEventStart->add(new \Criteria('datefrom', $from, '>='));
+            $crEventStart->add(new \Criteria('datefrom', $to, '<='));
+            $crEvent->add($crEventStart);
+            //event end is between from and to
+            $crEventEnd = new \CriteriaCompo();
+            $crEventEnd->add(new \Criteria('dateto', $from, '>='));
+            $crEventEnd->add(new \Criteria('dateto', $to, '<='));
+            $crEvent->add($crEventEnd, 'OR');
+            unset($crEventStart, $crEventEnd);
         }
         $crEvent->setSort($sortBy);
         $crEvent->setOrder($orderBy);

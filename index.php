@@ -62,6 +62,9 @@ $catName = '';
 
 $indexDisplayCats = (string)$helper->getConfig('index_displaycats');
 $GLOBALS['xoopsTpl']->assign('index_displaycats', $indexDisplayCats);
+$indexDisplayEvents = (string)$helper->getConfig('index_displayevents');
+$GLOBALS['xoopsTpl']->assign('index_displayevents', $indexDisplayEvents);
+
 if ('none' != $indexDisplayCats) {
     $GLOBALS['xoopsTpl']->assign('wgevents_upload_catlogos_url', \WGEVENTS_UPLOAD_CATLOGOS_URL . '/');
     $crCategory = new \CriteriaCompo();
@@ -70,8 +73,8 @@ if ('none' != $indexDisplayCats) {
     $categoriesCount = $categoryHandler->getCount($crCategory);
     $GLOBALS['xoopsTpl']->assign('categoriesCount', $categoriesCount);
     if ($categoriesCount > 0) {
-        $crCategory->setStart($start);
-        $crCategory->setLimit($limit);
+        //$crCategory->setStart($start);
+        //$crCategory->setLimit($limit);
         $categoriesAll = $categoryHandler->getAll($crCategory);
         $categories = [];
         if ('button' === $indexDisplayCats) {

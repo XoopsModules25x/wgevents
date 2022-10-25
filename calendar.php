@@ -33,20 +33,26 @@ if (!$permissionsHandler->getPermEventsView()) {
     \redirect_header('index.php?op=list', 3, \_NOPERM);
 }
 
-//default params
-$year     = (int)\date('Y');
-$month    = (int)\date('n');
-$lastday  = (int)\date('t', \strtotime($month . '/1/' . $year));
-$dayStart = \mktime(0, 0, 0, $month, 1, $year);
-$dayEnd   = \mktime(23, 59, 59, $month, $lastday, $year);
-
 //request
 $op            = Request::getCmd('op', 'list');
 $filterFrom    = Request::getInt('filterFrom');
 $filterTo      = Request::getInt('filterTo');
+
+if (Request::hasVar('gotoMonth')) {
+    $month   = Request::getInt('gotoMonth');
+    $year    = Request::getInt('gotoYear');
+} else {
+    //default params
+    $year     = (int)\date('Y');
+    $month    = (int)\date('n');
+}
+$lastday  = (int)\date('t', \strtotime($month . '/1/' . $year));
+$dayStart = \mktime(0, 0, 0, $month, 1, $year);
+$dayEnd   = \mktime(23, 59, 59, $month, $lastday, $year);
+
 $filterCat     = Request::getInt('filterCat');
 $filterSort    = 'datefrom-ASC';
-if (0 == $filterFrom) {
+if (0 == $filterFrom || Request::hasVar('gotoMonth')) {
     $filterFrom = $dayStart;
     $filterTo   = $dayEnd;
 }
@@ -127,6 +133,10 @@ $calendar->setWeekDayNames([
     \_MA_WGEVENTS_CAL_MIN_SATURDAY ]);
 
 $uid = \is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->uid() : 0;
+
+$formSimpleCal = new SimpleCalendar\SimpleCalendarforms();
+$formFilter = $formSimpleCal->getFormGotoMonth($arrMonth, \date('n', $filterFrom), \date('Y', $filterFrom), $filterCat);
+$GLOBALS['xoopsTpl']->assign('formGoto', $formFilter->render());
 
 /*
 $filterHandler = new Filterhandler();

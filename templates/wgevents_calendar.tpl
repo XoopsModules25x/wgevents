@@ -25,6 +25,12 @@
     </div>
 <{/if}>
 
+<{if $formGoto|default:''}>
+    <div class="col-12 center wge-form-goto">
+        <{$formGoto}>
+    </div>
+<{/if}>
+
 <{if $gmapsShowList|default:false && $gmapsEnableCal|default:false && $gmapsPositionList|default:'none' == 'bottom'}>
     <div class="row wge-row1">
         <span class='col-sm-12 center'><{include file='db:wgevents_gmaps_show.tpl' }></span>

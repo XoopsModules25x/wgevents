@@ -79,7 +79,6 @@ if (\is_object($GLOBALS['xoopsUser'])) {
     $userIsAdmin = $GLOBALS['xoopsUser']->isAdmin();
 }
 
-
 switch ($op) {
     case 'show':
     case 'list':
@@ -402,19 +401,26 @@ switch ($op) {
         // Insert Data
         if ($eventHandler->insert($eventObj)) {
             $newEvId = $evId > 0 ? $evId : $eventObj->getNewInsertedId();
-            // create unique identifier if new event
+            // create unique identifier if new event and identifier exists
             if (0 == $evId) {
                 $categoryObj = $categoryHandler->get($catId);
-                $identifier = $categoryObj->getVar('identifier');
-                if (\substr($identifier, -1) !== '_') {
-                    $identifier .= '_';
+                $identifier = (string)$categoryObj->getVar('identifier');
+                if ('' !== $identifier){
+                    if (\substr($identifier, -1) !== '_') {
+                        $identifier .= '_';
+                    }
+                    $identifier .= $eventDatefromObj->format('Y') . '_';
+                    $crEvent = new \CriteriaCompo();
+                    $crEvent->add(new \Criteria('identifier', $identifier . '%', 'LIKE'));
+                    $eventsCount = $eventHandler->getCount($crEvent) + 1;
+                    $eventIdentifierObj = $eventHandler->get($newEvId);
+                    $eventIdentifierObj->setVar('identifier', $identifier . ($eventsCount));
+                    $eventHandler->insert($eventIdentifierObj);
+                    unset($eventIdentifierObj);
                 }
-                $identifier .= $eventDatefromObj->format('Y') . '_';
-                $crEvent = new \CriteriaCompo();
-                $crEvent->add(new \Criteria('identifier', $identifier . '%', 'LIKE'));
-                $eventsCount = $eventHandler->getCount($crEvent) + 1;
-                $eventIdentifierObj = $eventHandler->get($newEvId);
-                $eventIdentifierObj->setVar('identifier', $identifier . ($eventsCount));
+            } else {
+                $eventIdentifierObj = $eventHandler->get($evId);
+                $eventIdentifierObj->setVar('identifier', Request::getString('identifier'));
                 $eventHandler->insert($eventIdentifierObj);
                 unset($eventIdentifierObj);
             }

@@ -160,8 +160,10 @@ class Category extends \XoopsObject
         // Form Text catOtherstyles
         $catOtherstyles = $this->isNew() ? 'margin:1px 0;padding:8px 5px 20px 5px;border-radius:5px;' : $this->getVar('othercss');
         $form->addElement(new \XoopsFormText(\_AM_WGEVENTS_CATEGORY_OTHERCSS, 'othercss', 100, 255, $catOtherstyles));
-        // Form Text identifier
-        $form->addElement(new \XoopsFormText(\_AM_WGEVENTS_CATEGORY_IDENTIFIER, 'identifier', 100, 255, $this->getVar('identifier')), true);
+        // Form Text catIdentifier
+        $catIdentifier = new \XoopsFormText(\_AM_WGEVENTS_CATEGORY_IDENTIFIER, 'identifier', 100, 255, $this->getVar('identifier'));
+        $catIdentifier->setDescription(\_AM_WGEVENTS_CATEGORY_IDENTIFIER_DESC);
+        $form->addElement($catIdentifier);
         // Form Radio catStatus
         $catStatus = $this->isNew() ? Constants::STATUS_OFFLINE : $this->getVar('status');
         $catStatusSelect = new \XoopsFormRadio(\_MA_WGEVENTS_STATUS, 'status', $catStatus);

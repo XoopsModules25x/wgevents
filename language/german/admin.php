@@ -89,6 +89,7 @@ require_once __DIR__ . '/main.php';
 // Elements of Category
 \define('_AM_WGEVENTS_CATEGORY_ID', 'Id');
 \define('_AM_WGEVENTS_CATEGORY_IDENTIFIER', 'Präfix Eindeutige Kennung');
+\define('_AM_WGEVENTS_CATEGORY_IDENTIFIER_DESC', 'Präfix für eindeutige Kennung angeben. Wenn du keine eindeutige Kennung verwenden möchtest dann bitte frei lassen.');
 \define('_AM_WGEVENTS_CATEGORY_PID', 'übergeordnete Kategorie');
 \define('_AM_WGEVENTS_CATEGORY_NAME', 'Name');
 \define('_AM_WGEVENTS_CATEGORY_DESC', 'Beschreibung');

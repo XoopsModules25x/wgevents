@@ -7,7 +7,9 @@
  - fixed bug with redirect to questions (goffy)
  - added cat selection with buttons (goffy)
  - fixed bug with groups (goffy)
- 
+ - optional identifier (goffy)
+ - added goto form in simplecalendar (goffy)
+
 ==============================================================
 1.0.3 RC1 [2022/07/10]
 ==============================================================

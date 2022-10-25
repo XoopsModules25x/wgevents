@@ -150,7 +150,7 @@ switch ($op) {
                 }
             }
             // redirect after insert
-                \redirect_header('textblock.php?op=list&amp;start=' . $start . '&amp;limit=' . $limit, 2, \_MA_WGEVENTS_FORM_OK);
+            \redirect_header('textblock.php?op=list&amp;start=' . $start . '&amp;limit=' . $limit, 2, \_MA_WGEVENTS_FORM_OK);
         }
         // Get Form Error
         $GLOBALS['xoopsTpl']->assign('error', $textblockObj->getHtmlErrors());

@@ -8,10 +8,12 @@
         <div class="col-xs-12 col-sm-6 wge-panel-details1"><{$event.desc_text}></div>
     </div>
     <div class="wge-row1">
-        <div class="row">
-            <div class="col-xs-12 col-sm-3 col-lg-2"><{$smarty.const._MA_WGEVENTS_EVENT_IDENTIFIER}>: </div>
-            <div class="col-xs-12 col-sm-9 col-lg-10"><{$event.identifier|default:''}></div>
-        </div>
+        <{if $event.identifier|default:''}>
+            <div class="row">
+                <div class="col-xs-12 col-sm-3 col-lg-2"><{$smarty.const._MA_WGEVENTS_EVENT_IDENTIFIER}>: </div>
+                <div class="col-xs-12 col-sm-9 col-lg-10"><{$event.identifier|default:''}></div>
+            </div>
+        <{/if}>
         <div class="row">
             <div class="col-xs-12 col-sm-3 col-lg-2"><{$smarty.const._MA_WGEVENTS_EVENT_DATEFROM}>: </div>
             <div class="col-xs-12 col-sm-9 col-lg-10"><{$event.datefrom_text}></div>
