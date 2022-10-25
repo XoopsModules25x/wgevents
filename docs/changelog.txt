@@ -10,6 +10,7 @@
  - optional identifier (goffy)
  - added goto form in simplecalendar (goffy)
  - fixed bug with missing limit (goffy)
+ - fixed bug with groups on index page (goffy)
 
 ==============================================================
 1.0.3 RC1 [2022/07/10]

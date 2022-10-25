@@ -274,11 +274,11 @@ switch ($op) {
         $eventObj->setVar('name', Request::getString('name'));
         // Set Var logo
         require_once \XOOPS_ROOT_PATH . '/class/uploader.php';
-        $filename       = $_FILES['logo']['name'];
-        $imgMimetype    = $_FILES['logo']['type'];
-        $imgNameDef     = Request::getString('name');
-        $uploadPath = \WGEVENTS_UPLOAD_EVENTLOGOS_PATH . '/' . $uidCurrent . '/';
-        $uploader = new \XoopsMediaUploader($uploadPath,
+        $filename    = $_FILES['logo']['name'];
+        $imgMimetype = $_FILES['logo']['type'];
+        $imgNameDef  = Request::getString('name');
+        $uploadPath  = \WGEVENTS_UPLOAD_EVENTLOGOS_PATH . '/' . $uidCurrent . '/';
+        $uploader    = new \XoopsMediaUploader($uploadPath,
                                                     $helper->getConfig('mimetypes_image'), 
                                                     $helper->getConfig('maxsize_image'), null, null);
         if ($uploader->fetchMedia($_POST['xoops_upload_file'][0])) {

@@ -64,6 +64,14 @@ $indexDisplayCats = (string)$helper->getConfig('index_displaycats');
 $GLOBALS['xoopsTpl']->assign('index_displaycats', $indexDisplayCats);
 $indexDisplayEvents = (string)$helper->getConfig('index_displayevents');
 $GLOBALS['xoopsTpl']->assign('index_displayevents', $indexDisplayEvents);
+$useGroups = (bool)$helper->getConfig('use_groups');
+
+$uidCurrent  = 0;
+$userIsAdmin = false;
+if (\is_object($GLOBALS['xoopsUser'])) {
+    $uidCurrent  = $GLOBALS['xoopsUser']->uid();
+    $userIsAdmin = $GLOBALS['xoopsUser']->isAdmin();
+}
 
 if ('none' != $indexDisplayCats) {
     $GLOBALS['xoopsTpl']->assign('wgevents_upload_catlogos_url', \WGEVENTS_UPLOAD_CATLOGOS_URL . '/');
@@ -90,16 +98,37 @@ if ('none' != $indexDisplayCats) {
             }
             $crEvent = new \CriteriaCompo();
             $crEvent->add(new \Criteria('catid',$i));
-            $eventsCount = $eventHandler->getCount($crEvent);
-            $nbEvents = \_MA_WGEVENTS_CATEGORY_NOEVENTS;
-            if ($eventsCount > 0) {
-                if ($eventsCount > 1) {
-                    $nbEvents = \sprintf(\_MA_WGEVENTS_CATEGORY_EVENTS, $eventsCount);
-                } else {
-                    $nbEvents = \_MA_WGEVENTS_CATEGORY_EVENT;
+            if ($useGroups) {
+                // current user
+                // - must have perm to see event or
+                // - must be event owner
+                // - is admin
+                if (!$userIsAdmin) {
+                    $crEventGroup = new \CriteriaCompo();
+                    $crEventGroup->add(new \Criteria('groups', '%00000%', 'LIKE')); //all users
+                    if ($uidCurrent > 0) {
+                        // Get groups
+                        $memberHandler = \xoops_getHandler('member');
+                        $xoopsGroups = $memberHandler->getGroupsByUser($uidCurrent);
+                        foreach ($xoopsGroups as $group) {
+                            $crEventGroup->add(new \Criteria('groups', '%' . substr('00000' . $group, -5) . '%', 'LIKE'), 'OR');
+                        }
+                    }
+                    $crEventGroup->add(new \Criteria('submitter', $uidCurrent), 'OR');
+                    $crEvent->add($crEventGroup);
+                    unset($crEventGroup);
                 }
             }
-            $categories[$i]['nbevents'] = $nbEvents;
+            $eventsCount = $eventHandler->getCount($crEvent);
+            $nbEventsText = \_MA_WGEVENTS_CATEGORY_NOEVENTS;
+            if ($eventsCount > 0) {
+                if ($eventsCount > 1) {
+                    $nbEventsText = \sprintf(\_MA_WGEVENTS_CATEGORY_EVENTS, $eventsCount);
+                } else {
+                    $nbEventsText = \_MA_WGEVENTS_CATEGORY_EVENT;
+                }
+            }
+            $categories[$i]['nbeventsText'] = $nbEventsText;
             $categories[$i]['eventsCount'] = $eventsCount;
         }
         $GLOBALS['xoopsTpl']->assign('categories', $categories);
@@ -131,6 +160,27 @@ if ('none' != $indexDisplayEvents) {
     if ($catId > 0) {
         $crEvent->add(new \Criteria('catid', $catId));
         $listDescr .= ' - ' . $catName;
+    }
+    if ($useGroups) {
+        // current user
+        // - must have perm to see event or
+        // - must be event owner
+        // - is admin
+        if (!$userIsAdmin) {
+            $crEventGroup = new \CriteriaCompo();
+            $crEventGroup->add(new \Criteria('groups', '%00000%', 'LIKE')); //all users
+            if ($uidCurrent > 0) {
+                // Get groups
+                $memberHandler = \xoops_getHandler('member');
+                $xoopsGroups = $memberHandler->getGroupsByUser($uidCurrent);
+                foreach ($xoopsGroups as $group) {
+                    $crEventGroup->add(new \Criteria('groups', '%' . substr('00000' . $group, -5) . '%', 'LIKE'), 'OR');
+                }
+            }
+            $crEventGroup->add(new \Criteria('submitter', $uidCurrent), 'OR');
+            $crEvent->add($crEventGroup);
+            unset($crEventGroup);
+        }
     }
     $GLOBALS['xoopsTpl']->assign('listDescr', $listDescr);
     $eventsCount = $eventHandler->getCount($crEvent);
