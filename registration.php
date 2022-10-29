@@ -276,8 +276,7 @@ switch ($op) {
         }
         // create item in table registrations
         $answersValueArr = [];
-        $answersTypeArr = [];
-        $answersValueArr = Request::getArray('ans_id');
+        $answersIdArr = Request::getArray('ans_id');
         $answersTypeArr = Request::getArray('type');
         $registrationObj->setVar('evid', $regEvid);
         $registrationObj->setVar('salutation', Request::getInt('salutation'));
@@ -332,19 +331,30 @@ switch ($op) {
                 // delete all existing answers
                 $answerHandler->cleanupAnswers($regEvid, $regId);
             }
-            // create items in table answers
-            foreach ($answersValueArr as $key => $value) {
-                $answer = '';
-                switch ($answersTypeArr[$key]) {
-                    case Constants::FIELD_CHECKBOX:
-                    case Constants::FIELD_COMBOBOX:
-                    case Constants::FIELD_SELECTBOX:
-                        $answer = serialize($value);
-                        break;
-                    default:
-                        $answer = $value;
-                        break;
+            // get all questions
+            if (\count($answersIdArr) > 0) {
+                foreach (\array_keys($answersIdArr) as $queId) {
+                    $answer = '';
+                    if (Request::hasVar('ans_id_' . $queId) && '' !== Request::getString('ans_id_' . $queId)) {
+                        switch ($answersTypeArr[$queId]) {
+                            case Constants::FIELD_CHECKBOX:
+                            case Constants::FIELD_COMBOBOX:
+                                $answer = serialize(Request::getArray('ans_id_' . $queId));
+                                break;
+                            case Constants::FIELD_SELECTBOX: //selectbox expect/gives single value, but stored as array
+                                $answer = serialize(Request::getString('ans_id_' . $queId));
+                                break;
+                            default:
+                                $answer = Request::getString('ans_id_' . $queId);
+                                break;
+                        }
+                        $answersValueArr[$queId] = $answer;
+                    }
                 }
+            }
+
+            // create items in table answers
+            foreach ($answersValueArr as $key => $answer) {
                 if ('' != $answer) {
                     $answerObj = $answerHandler->create();
                     $answerObj->setVar('regid', $newRegId);

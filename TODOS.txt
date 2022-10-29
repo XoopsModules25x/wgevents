@@ -1,19 +1,16 @@
-EVent für anderen eintragen => uploads bilder ordern für user und blank.gif
 
 Blöcke design
 
 full day
-
-nach speichern Event ist Liste nicht mit Limit begrenzt
 
 update macht default ' statt ''
 
 
 Dropdown: leere Zeile am Anfang????
 
-index.php: pagination for cats
-
 index.php and event.php: Filter list by category
+
+
 
 upload new lang files to transifex
 

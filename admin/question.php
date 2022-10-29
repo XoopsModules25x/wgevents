@@ -141,7 +141,10 @@ switch ($op) {
         $queValuesText = '';
         $queValues = Request::getString('values');
         if ('' != $queValues) {
-            if (Constants::FIELD_COMBOBOX == $queType || Constants::FIELD_SELECTBOX == $queType || Constants::FIELD_RADIO == $queType) {
+            if (Constants::FIELD_COMBOBOX == $queType ||
+                Constants::FIELD_SELECTBOX == $queType ||
+                Constants::FIELD_RADIO == $queType ||
+                Constants::FIELD_CHECKBOX == $queType) {
                 $queValuesText = \serialize(\preg_split('/\r\n|\r|\n/', $queValues));
             } else {
                 $tmpArr = [$queValues];
