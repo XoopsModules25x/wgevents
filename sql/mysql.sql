@@ -13,7 +13,7 @@
 
 CREATE TABLE `wgevents_event` (
     `id`                   INT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
-    `identifier`           VARCHAR(255)    NOT NULL DEFAULT '',
+    `identifier`           VARCHAR(255)    NULL,
     `catid`                INT(10)         NOT NULL DEFAULT '0',
     `name`                 VARCHAR(255)    NOT NULL DEFAULT '',
     `logo`                 VARCHAR(255)    NOT NULL DEFAULT '',

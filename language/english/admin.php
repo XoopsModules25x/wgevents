@@ -89,6 +89,7 @@ require_once __DIR__ . '/main.php';
 // Elements of Category
 \define('_AM_WGEVENTS_CATEGORY_ID', 'Id');
 \define('_AM_WGEVENTS_CATEGORY_IDENTIFIER', 'Prefix Unique Identifier');
+\define('_AM_WGEVENTS_CATEGORY_IDENTIFIER_DESC', 'Prefix for unique identifier. If you do not want to use an identifier then leave it blank');
 \define('_AM_WGEVENTS_CATEGORY_PID', 'Parent Category');
 \define('_AM_WGEVENTS_CATEGORY_NAME', 'Name');
 \define('_AM_WGEVENTS_CATEGORY_DESC', 'Description');

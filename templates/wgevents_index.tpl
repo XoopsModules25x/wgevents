@@ -23,8 +23,6 @@
     <{else}>
         <div class="col-12 center wge-error-msg"><{$smarty.const._MA_WGEVENTS_INDEX_THEREARENT_CATS}></div>
     <{/if}>
-
-
 <{/if}>
 
 <{if $index_displayevents|default:'' != 'none'}>
@@ -33,11 +31,7 @@
         <!-- Start new link loop -->
         <{foreach item=event from=$events name=event}>
             <div class='top center'>
-                <{if $index_displayevent|default:'' == 'bcard'}>
-                    <{include file='db:wgevents_event_index_bcard.tpl' event=$event}>
-                <{else}>
-                    <{include file='db:wgevents_event_index_list.tpl' event=$event}>
-                <{/if}>
+                <{include file="db:wgevents_event_index_$index_displayevents.tpl" event=$event}>
             </div>
         <{/foreach}>
         <!-- End new link loop -->

@@ -7,7 +7,13 @@
  - fixed bug with redirect to questions (goffy)
  - added cat selection with buttons (goffy)
  - fixed bug with groups (goffy)
- 
+ - optional identifier (goffy)
+ - added goto form in simplecalendar (goffy)
+ - fixed bug with missing limit (goffy)
+ - fixed bug with groups on index page (goffy)
+ - fixed bug in none working "required" for custom question (goffy)
+ - fixed bug with multiple checkboxes (goffy)
+
 ==============================================================
 1.0.3 RC1 [2022/07/10]
 ==============================================================

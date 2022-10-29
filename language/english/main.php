@@ -316,6 +316,8 @@ Participation without agreement to this conditions is not possible.
 \define('_MA_WGEVENTS_CAL_NEXTMONTH', 'Next Month');
 \define('_MA_WGEVENTS_CAL_PREVYEAR', 'Previous Year');
 \define('_MA_WGEVENTS_CAL_NEXTYEAR', 'Next Year');
+\define('_MA_WGEVENTS_CAL_GOTO', 'Switch month/year');
+\define('_MA_WGEVENTS_CAL_SHOW', 'Show');
 //days
 \define('_MA_WGEVENTS_CAL_MIN_SUNDAY', 'Su');
 \define('_MA_WGEVENTS_CAL_MIN_MONDAY', 'Mo');

@@ -316,6 +316,8 @@ Eine Teilnahme an der Veranstaltung ohne Zustimmung zu diesen Bestimmungen ist l
 \define('_MA_WGEVENTS_CAL_NEXTMONTH', 'Nächster Monat');
 \define('_MA_WGEVENTS_CAL_PREVYEAR', 'Vorheriges Jahr');
 \define('_MA_WGEVENTS_CAL_NEXTYEAR', 'Nächstes Jahr');
+\define('_MA_WGEVENTS_CAL_GOTO', 'Monat/Jahr wechseln');
+\define('_MA_WGEVENTS_CAL_SHOW', 'Anzeigen');
 //days
 \define('_MA_WGEVENTS_CAL_MIN_SUNDAY', 'So');
 \define('_MA_WGEVENTS_CAL_MIN_MONDAY', 'Mo');

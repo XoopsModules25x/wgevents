@@ -90,3 +90,8 @@ ul.menu > li + li:before {
 .tablesorter-filter-row td input.disabled {
     display: none;
 }
+
+/*calendar page*/
+.wge-form-goto {
+    margin:20px 0;
+}

@@ -122,7 +122,6 @@ class Question extends \XoopsObject
         $fieldObj = $fieldHandler->get($queType);
         $fieldType = $fieldObj->getVar('type');
 
-
         $crField = new \CriteriaCompo();
         $crField->add(new \Criteria('status', Constants::STATUS_ONLINE));
         $crField->setSort('weight');

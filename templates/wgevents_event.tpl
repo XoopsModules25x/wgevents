@@ -11,25 +11,14 @@
 <{/if}>
 
 <{if $eventsCount|default:0 > 0}>
-    <div class='table-responsive'>
-        <table class='table table-<{$table_type|default:false}>'>
-            <tbody>
-                <{foreach item=event from=$events name=event}>
-                    <tr>
-                        <td>
-                            <div class='panel'>
-                                <{if $showList|default:false}>
-                                    <{include file='db:wgevents_event_item_list.tpl' }>
-                                <{else}>
-                                    <{include file='db:wgevents_event_item_details.tpl' }>
-                                <{/if}>
-                            </div>
-                        </td>
-                    <tr>
-                <{/foreach}>
-            </tbody>
-            <tfoot><tr><td>&nbsp;</td></tr></tfoot>
-        </table>
+    <div class='col-12'>
+        <{foreach item=event from=$events name=event}>
+            <{if $showList|default:false}>
+                <{include file='db:wgevents_event_item_list.tpl' }>
+            <{else}>
+                <{include file='db:wgevents_event_item_details.tpl' }>
+            <{/if}>
+        <{/foreach}>
     </div>
 <{/if}>
 

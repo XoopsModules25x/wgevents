@@ -79,7 +79,6 @@ if (\is_object($GLOBALS['xoopsUser'])) {
     $userIsAdmin = $GLOBALS['xoopsUser']->isAdmin();
 }
 
-
 switch ($op) {
     case 'show':
     case 'list':
@@ -275,11 +274,11 @@ switch ($op) {
         $eventObj->setVar('name', Request::getString('name'));
         // Set Var logo
         require_once \XOOPS_ROOT_PATH . '/class/uploader.php';
-        $filename       = $_FILES['logo']['name'];
-        $imgMimetype    = $_FILES['logo']['type'];
-        $imgNameDef     = Request::getString('name');
-        $uploadPath = \WGEVENTS_UPLOAD_EVENTLOGOS_PATH . '/' . $uidCurrent . '/';
-        $uploader = new \XoopsMediaUploader($uploadPath,
+        $filename    = $_FILES['logo']['name'];
+        $imgMimetype = $_FILES['logo']['type'];
+        $imgNameDef  = Request::getString('name');
+        $uploadPath  = \WGEVENTS_UPLOAD_EVENTLOGOS_PATH . '/' . $uidCurrent . '/';
+        $uploader    = new \XoopsMediaUploader($uploadPath,
                                                     $helper->getConfig('mimetypes_image'), 
                                                     $helper->getConfig('maxsize_image'), null, null);
         if ($uploader->fetchMedia($_POST['xoops_upload_file'][0])) {
@@ -402,19 +401,26 @@ switch ($op) {
         // Insert Data
         if ($eventHandler->insert($eventObj)) {
             $newEvId = $evId > 0 ? $evId : $eventObj->getNewInsertedId();
-            // create unique identifier if new event
+            // create unique identifier if new event and identifier exists
             if (0 == $evId) {
                 $categoryObj = $categoryHandler->get($catId);
-                $identifier = $categoryObj->getVar('identifier');
-                if (\substr($identifier, -1) !== '_') {
-                    $identifier .= '_';
+                $identifier = (string)$categoryObj->getVar('identifier');
+                if ('' !== $identifier){
+                    if (\substr($identifier, -1) !== '_') {
+                        $identifier .= '_';
+                    }
+                    $identifier .= $eventDatefromObj->format('Y') . '_';
+                    $crEvent = new \CriteriaCompo();
+                    $crEvent->add(new \Criteria('identifier', $identifier . '%', 'LIKE'));
+                    $eventsCount = $eventHandler->getCount($crEvent) + 1;
+                    $eventIdentifierObj = $eventHandler->get($newEvId);
+                    $eventIdentifierObj->setVar('identifier', $identifier . ($eventsCount));
+                    $eventHandler->insert($eventIdentifierObj);
+                    unset($eventIdentifierObj);
                 }
-                $identifier .= $eventDatefromObj->format('Y') . '_';
-                $crEvent = new \CriteriaCompo();
-                $crEvent->add(new \Criteria('identifier', $identifier . '%', 'LIKE'));
-                $eventsCount = $eventHandler->getCount($crEvent) + 1;
-                $eventIdentifierObj = $eventHandler->get($newEvId);
-                $eventIdentifierObj->setVar('identifier', $identifier . ($eventsCount));
+            } else {
+                $eventIdentifierObj = $eventHandler->get($evId);
+                $eventIdentifierObj->setVar('identifier', Request::getString('identifier'));
                 $eventHandler->insert($eventIdentifierObj);
                 unset($eventIdentifierObj);
             }
@@ -573,6 +579,8 @@ switch ($op) {
         $eventDate = Request::getInt('eventDate', \time());
         $eventObj->setVar('datefrom', $eventDate);
         $eventObj->setVar('dateto', $eventDate);
+        $eventObj->start = $start;
+        $eventObj->limit = $limit;
         $form = $eventObj->getForm();
         $GLOBALS['xoopsTpl']->assign('form', $form->render());
         break;

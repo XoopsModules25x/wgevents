@@ -174,7 +174,7 @@ class Registration extends \XoopsObject
             $questionsAll = $questionHandler->getAll($crQuestion);
             foreach (\array_keys($questionsAll) as $queId) {
                 $formelementsHandler = new FormelementsHandler();
-                $formelementsHandler->name = 'ans_id[' . $queId . ']';
+                $formelementsHandler->name = 'ans_id_' . $queId;
                 $queType = (int)$questionsAll[$queId]->getVar('type');
                 $addValue = (string)$questionsAll[$queId]->getVar('values');
                 $formelementsHandler->type = $queType;
@@ -215,32 +215,34 @@ class Registration extends \XoopsObject
                     //TODO
                 }
                 if (Constants::FIELD_RADIO == $queType ||
-                    Constants::FIELD_SELECTBOX == $queType ||
+                    //Constants::FIELD_SELECTBOX == $queType ||
                     Constants::FIELD_CHECKBOX == $queType ||
                     Constants::FIELD_COMBOBOX == $queType) {
                         $formelementsHandler->optionsArr = \unserialize($addValue);
                 }
-                /*
+                /**/
+                $required = (bool)$questionsAll[$queId]->getVar('required');
                 if (Constants::FIELD_SELECTBOX == $queType) {
-                    $options = [];
-                    if ((bool)$required) {
-                        $options[''] = ' ';
+                    //required selectboxes get a blank link in order to force user to input
+                    $optionsSB = [];
+                    if ($required) {
+                        $optionsSB[''] = ' ';
                     }
-                    foreach (\unserialize($addValue) as $opt) {
-                        $options[] = $opt;
+                    foreach (\unserialize($addValue) as $optSB) {
+                        $optionsSB[] = $optSB;
                     }
-                    $formelementsHandler->optionsArr = $options;
+                    $formelementsHandler->optionsArr = $optionsSB;
                 }
-                */
+
                 if (Constants::FIELD_LABEL == $queType) {
                     $desc = \preg_replace('/\r\n|\r|\n/', '<br>', $questionsAll[$queId]->getVar('desc', 'e'));
                     $formelementsHandler->value = $desc;
                 }
                 $formelementsHandler->placeholder = $questionsAll[$queId]->getVar('placeholder');
                 $formelementsHandler->desc = $questionsAll[$queId]->getVar('desc');
-                $required = $questionsAll[$queId]->getVar('required');
                 $form->addElement($formelementsHandler->render(), $required);
                 $form->addElement(new \XoopsFormHidden('type[' . $questionsAll[$queId]->getVar('id') . ']', $questionsAll[$queId]->getVar('type')));
+                $form->addElement(new \XoopsFormHidden('ans_id[' . $questionsAll[$queId]->getVar('id') . ']', $questionsAll[$queId]->getVar('id')));
             }
             unset($questions);
         }
