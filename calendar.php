@@ -53,8 +53,8 @@ $dayEnd   = \mktime(23, 59, 59, $month, $lastday, $year);
 $filterCat     = Request::getInt('filterCat');
 $filterSort    = 'datefrom-ASC';
 if (0 == $filterFrom || Request::hasVar('gotoMonth')) {
-    $filterFrom = $dayStart;
-    $filterTo   = $dayEnd;
+    $filterFrom = (int)$dayStart;
+    $filterTo   = (int)$dayEnd;
 }
 
 $filterFromPrevM = \mktime(0, 0, 0, (int)\date('n', $filterFrom - 1), 1, (int)\date('Y', $filterFrom - 1));

@@ -23,7 +23,6 @@ class SimpleCalendarforms {
      */
     public function getFormGotoMonth($arrMonth, $month = 0, $year = 0, $filterCat = 0, $action = false)
     {
-        $helper = \XoopsModules\Wgevents\Helper::getInstance();
         if (!$action) {
             $action = $_SERVER['REQUEST_URI'];
         }
