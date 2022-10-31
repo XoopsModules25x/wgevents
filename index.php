@@ -196,6 +196,8 @@ if ('none' != $indexDisplayEvents) {
             $events[$i] = $eventsAll[$i]->getValuesEvents();
             $events[$i]['locked'] = (Constants::STATUS_LOCKED == $events[$i]['status']);
             $events[$i]['canceled'] = (Constants::STATUS_CANCELED == $events[$i]['status']);
+            $permEdit = $permissionsHandler->getPermEventsEdit($events[$i]['submitter'], $events[$i]['status']) || $uidCurrent == $events[$i]['submitter'];
+            $events[$i]['permEdit'] = $permEdit;
 
             $crRegistration = new \CriteriaCompo();
             $crRegistration->add(new \Criteria('evid', $i));

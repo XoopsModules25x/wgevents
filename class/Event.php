@@ -531,10 +531,15 @@ class Event extends \XoopsObject
         $adminMaxchar = $helper->getConfig('admin_maxchar');
         $userMaxchar = $helper->getConfig('user_maxchar');
         $catName = '';
+        $catLogo = '';
         if (\is_object($categoryObj)) {
             $catName = $categoryObj->getVar('name');
+            if ('blank.gif' !== (string)$categoryObj->getVar('logo')) {
+                $catLogo = $categoryObj->getVar('logo');
+            }
         }
         $ret['catname']          = $catName;
+        $ret['catlogo']          = $catLogo;
         $ret['desc_text']        = $this->getVar('desc', 'e');
         $ret['desc_short_admin'] = $utility::truncateHtml($ret['desc_text'], $adminMaxchar);
         $ret['desc_short_user']  = $utility::truncateHtml($ret['desc_text'], $userMaxchar);
