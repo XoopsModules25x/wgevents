@@ -106,7 +106,7 @@ class CategoryHandler extends \XoopsPersistableObjectHandler
 
     /**
      * Get All online categories in the database
-     * @param bool   $type
+     * @param int    $type
      * @param string $sort
      * @param string $order
      * @return array
