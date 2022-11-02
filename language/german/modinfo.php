@@ -168,6 +168,7 @@ require_once __DIR__ . '/common.php';
 \define('_MI_WGEVENTS_INDEX_DISPLAY_NONE', 'Keine Anzeige');
 \define('_MI_WGEVENTS_INDEX_DISPLAY_LIST', 'Als Liste anzeigen');
 \define('_MI_WGEVENTS_INDEX_DISPLAY_BUTTON', 'Als Buttons anzeigen');
+\define('_MI_WGEVENTS_INDEX_DISPLAY_FORM', 'Als Formular anzeigen');
 \define('_MI_WGEVENTS_INDEX_DISPLAY_BCARDS', 'Bootstrap Cards verwenden');
 \define('_MI_WGEVENTS_INDEX_DISPLAYCATS', 'Anzeige Kategorien auf Index-Seite');
 \define('_MI_WGEVENTS_INDEX_DISPLAYCATS_DESC', 'Bitte definiere wie die Kategorien auf der Indexseite dargestellt werden sollen');

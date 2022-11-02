@@ -1,5 +1,16 @@
 <i id='evId_<{$event.id}>'></i>
-<div class='panel-heading center wge-eventheader'><h4><span><{$event.name}></span></h4></div>
+<div class='panel-heading center wge-eventheader'> <h4>
+        <span><{$event.name}></span>
+        <{if $event.catlogo|default:false}>
+            <span class="pull-right wge-event-catlogo-cont">
+                <img class="wge-event-catlogo" src='<{$wgevents_upload_catlogos_url|default:false}><{$event.catlogo}>' alt='<{$event.catname}>' title='<{$event.catname}>'>
+                <{foreach item=subcat from=$event.subcats_arr name=subcats}>
+                    <img class="wge-event-catlogo" src='<{$wgevents_upload_catlogos_url|default:false}><{$subcat.logo}>' alt='<{$subcat.name}>' title='<{$subcat.name}>'>
+                <{/foreach}>
+            </span>
+        <{/if}>
+    </h4>
+</div>
 <div class='panel-body'>
     <div class="row wge-row1">
         <div class="col-xs-12 col-sm-5">
@@ -14,14 +25,21 @@
                 <div class="col-xs-12 col-sm-9 col-lg-10"><{$event.identifier|default:''}></div>
             </div>
         <{/if}>
-        <div class="row">
-            <div class="col-xs-12 col-sm-3 col-lg-2"><{$smarty.const._MA_WGEVENTS_EVENT_DATEFROM}>: </div>
-            <div class="col-xs-12 col-sm-9 col-lg-10"><{$event.datefrom_text}></div>
-        </div>
-        <div class="row">
-            <div class="col-xs-12 col-sm-3 col-lg-2"><{$smarty.const._MA_WGEVENTS_EVENT_DATETO}>: </div>
-            <div class="col-xs-12 col-sm-9 col-lg-10"><{$event.dateto_text}></div>
-        </div>
+        <{if $event.allday_single|default:false}>
+            <div class="row">
+                <div class="col-xs-12 col-sm-3 col-lg-2"><{$smarty.const._MA_WGEVENTS_EVENT_DATE}>: </div>
+                <div class="col-xs-12 col-sm-9 col-lg-10"><{$event.datefrom_text}></div>
+            </div>
+        <{else}>
+            <div class="row">
+                <div class="col-xs-12 col-sm-3 col-lg-2"><{$smarty.const._MA_WGEVENTS_EVENT_DATEFROM}>: </div>
+                <div class="col-xs-12 col-sm-9 col-lg-10"><{$event.datefrom_text}></div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-3 col-lg-2"><{$smarty.const._MA_WGEVENTS_EVENT_DATETO}>: </div>
+                <div class="col-xs-12 col-sm-9 col-lg-10"><{$event.dateto_text}></div>
+            </div>
+        <{/if}>
         <{if $event.contact|default:false}>
             <div class="row">
                 <div class="col-xs-12 col-sm-3 col-lg-2"><{$smarty.const._MA_WGEVENTS_EVENT_CONTACT}>: </div>

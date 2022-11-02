@@ -1,5 +1,9 @@
 <{include file='db:wgevents_header.tpl' }>
 
+<{if $index_displaycats|default:'' == 'form'}>
+    <{include file="db:wgevents_category_index_form.tpl"}>
+<{/if}>
+
 <{if $error|default:''}>
     <div class="col-12 center wge-error-msg"><{$error|default:false}></div>
 <{/if}>

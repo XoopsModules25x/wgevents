@@ -20,6 +20,7 @@
                 <th class="center"><{$smarty.const._AM_WGEVENTS_CATEGORY_BORDERCOLOR}></th>
                 <th class="center"><{$smarty.const._AM_WGEVENTS_CATEGORY_BGCOLOR}></th>
                 <th class="center"><{$smarty.const._AM_WGEVENTS_CATEGORY_OTHERCSS}></th>
+                <th class="center"><{$smarty.const._AM_WGEVENTS_CATEGORY_TYPE}></th>
                 <th class="center"><{$smarty.const._MA_WGEVENTS_STATUS}></th>
                 <th class="center"><{$smarty.const._MA_WGEVENTS_DATECREATED}></th>
                 <th class="center"><{$smarty.const._MA_WGEVENTS_SUBMITTER}></th>
@@ -41,6 +42,7 @@
                 <td class='center'><span style='background-color:<{$category.bordercolor}>;'>&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
                 <td class='center'><span style='background-color:<{$category.bgcolor}>;'>&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
                 <td class='center'><{$category.othercss}></td>
+                <td class='center'><{$category.type_text}></td>
                 <td class='center'><img src="<{$modPathIcon16}>status<{$category.status}>.png" alt="<{$category.status_text}>" title="<{$category.status_text}>" ></td>
                 <td class='center'><{$category.datecreated_text}></td>
                 <td class='center'><{$category.submitter_text}></td>

@@ -99,6 +99,10 @@ require_once __DIR__ . '/main.php';
 \define('_AM_WGEVENTS_CATEGORY_BORDERCOLOR', 'Border Color');
 \define('_AM_WGEVENTS_CATEGORY_BGCOLOR', 'Background Color');
 \define('_AM_WGEVENTS_CATEGORY_OTHERCSS', 'Other css-styles');
+\define('_AM_WGEVENTS_CATEGORY_TYPE', 'Type of category');
+\define('_AM_WGEVENTS_CATEGORY_TYPE_BOTH', 'Use as main and sub category');
+\define('_AM_WGEVENTS_CATEGORY_TYPE_MAIN', 'Use only as main category');
+\define('_AM_WGEVENTS_CATEGORY_TYPE_SUB', 'Use only as sub category');
 // Addtype add/edit
 \define('_AM_WGEVENTS_FIELD_ADD', 'Add Question Type');
 \define('_AM_WGEVENTS_FIELD_EDIT', 'Edit Question Type');

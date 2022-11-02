@@ -49,6 +49,35 @@ function toogleRegistrationOpts() {
     
 }
 
+function toogleAllday() {
+
+    var cb_allday = document.getElementById('allday1');
+    if (cb_allday.checked) {
+        xoopsGetElementById('datefrom[time]').setAttribute("disabled", "disabled");
+        xoopsGetElementById('dateto[time]').setAttribute("disabled", "disabled");
+    } else {
+        xoopsGetElementById('datefrom[time]').removeAttribute("disabled");
+        xoopsGetElementById('dateto[time]').removeAttribute("disabled");
+    }
+
+}
+
+function toogleAllCats() {
+
+    var cb_all = document.getElementById('all_cats1');
+    var checkboxes = document.getElementsByName('filter_cats[]');
+    if (cb_all.checked) {
+        for (var i in checkboxes){
+            checkboxes[i].checked = true;
+        }
+    } else {
+        for (var i in checkboxes){
+            checkboxes[i].checked = false;
+        }
+    }
+
+}
+
 function fillInQuestions() {
 
     var select = document.getElementById('type');

@@ -1,14 +1,36 @@
 <div class='wge-panel'>
-    <div class='panel-heading center wge-eventheader'><h4><span><{$event.name}></span><{if $event.identifier|default:false}><span class="wge-identifier"><{$event.identifier}></span><{/if}></h4></div>
+    <div class='panel-heading center wge-eventheader'>
+        <h4>
+            <span><{$event.name}></span>
+            <{if $event.identifier|default:false}><span class="wge-identifier"><{$event.identifier}></span><{/if}>
+            <{if $event.catlogo|default:false}>
+                <span class="pull-right wge-event-catlogo-cont">
+                    <img class="wge-event-catlogo" src='<{$wgevents_upload_catlogos_url|default:false}><{$event.catlogo}>' alt='<{$event.catname}>' title='<{$event.catname}>'>
+                    <{foreach item=subcat from=$event.subcats_arr name=subcats}>
+                        <img class="wge-event-catlogo" src='<{$wgevents_upload_catlogos_url|default:false}><{$subcat.logo}>' alt='<{$subcat.name}>' title='<{$subcat.name}>'>
+                    <{/foreach}>
+                </span>
+            <{/if}>
+        </h4>
+    </div>
     <div class='panel-body'>
         <div class="row">
-            <div class="col-xs-12 col-sm-2">
-                <img class="img-responsive img-fluid" src='<{$wgevents_upload_eventlogos_url|default:false}><{$event.submitter}>/<{$event.logo}>' alt='<{$event.name}> title='<{$event.catname}' >
-            </div>
-            <div class="col-xs-12 col-sm-6 wge-panel-details1 left expander"><{$event.desc_text}></div>
+            <{if $event.logo|default:false}>
+                <div class="col-xs-12 col-sm-2">
+                    <img class="img-responsive img-fluid" src='<{$wgevents_upload_eventlogos_url|default:false}><{$event.submitter}>/<{$event.logo}>' alt='<{$event.name|default:''}> title='<{$event.name|default:''}>' >
+                </div>
+                <div class="col-xs-12 col-sm-6 wge-panel-details1 left expander">
+            <{else}>
+                <div class="col-xs-12 col-sm-8 wge-panel-details1 left expander">
+            <{/if}>
+            <{$event.desc_text|default:''}></div>
             <div class="col-xs-12 col-sm-4 wge-panel-details2 right">
-                <p><{$smarty.const._MA_WGEVENTS_EVENT_DATEFROM}>: <{$event.datefrom_text}><br>
-                    <{$smarty.const._MA_WGEVENTS_EVENT_DATETO}>: <{$event.dateto_text}></p>
+                <{if $event.allday_single|default:false}>
+                    <p><{$event.datefrom_text}></p>
+                <{else}>
+                    <p><{$smarty.const._MA_WGEVENTS_EVENT_DATEFROM}>: <{$event.datefrom_text}><br>
+                        <{$smarty.const._MA_WGEVENTS_EVENT_DATETO}>: <{$event.dateto_text}></p>
+                <{/if}>
             </div>
         </div>
     </div>

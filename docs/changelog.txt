@@ -1,4 +1,11 @@
 ==============================================================
+1.0.5 RC1 [2022/11/01]
+==============================================================
+ - implementation allday (goffy)
+ - implementation subcats (goffy)
+ - implementation filter events by cats (goffy)
+
+==============================================================
 1.0.4 RC1 [2022/08/29]
 ==============================================================
  - implement multiple fees for different participants (goffy)

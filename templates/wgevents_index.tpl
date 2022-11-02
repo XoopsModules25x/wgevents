@@ -15,11 +15,15 @@
 <!-- End index list -->
 <{if $index_displaycats|default:'' != 'none'}>
     <{if $categoriesCount|default:0 > 0}>
-        <!-- Start new link loop -->
-        <{foreach item=category from=$categories name=categories}>
+        <{if $index_displaycats|default:'' == 'form'}>
+            <{include file="db:wgevents_category_index_form.tpl"}>
+        <{else}>
+            <!-- Start cat loop -->
+            <{foreach item=category from=$categories name=categories}>
             <{include file="db:wgevents_category_index_$index_displaycats.tpl" category=$category}>
-        <{/foreach}>
-        <!-- End new link loop -->
+            <{/foreach}>
+            <!-- End cat loop -->
+        <{/if}>
     <{else}>
         <div class="col-12 center wge-error-msg"><{$smarty.const._MA_WGEVENTS_INDEX_THEREARENT_CATS}></div>
     <{/if}>

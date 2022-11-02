@@ -95,3 +95,10 @@ ul.menu > li + li:before {
 .wge-form-goto {
     margin:20px 0;
 }
+
+/*form filter events by cat*/
+.wge-form-filter-cat {
+    margin:20px 0;
+    padding:15px;
+    border:1px solid #eeeeee;
+}

@@ -29,7 +29,7 @@ $moduleDirNameUpper = \mb_strtoupper($moduleDirName);
 // ------------------- Information ------------------- //
 $modversion = [
     'name'                => \_MI_WGEVENTS_NAME,
-    'version'             => '1.0.4',
+    'version'             => '1.0.5',
     'description'         => \_MI_WGEVENTS_DESC,
     'author'              => 'Goffy - Wedega',
     'author_mail'         => 'webmaster@wedega.com',
@@ -41,7 +41,7 @@ $modversion = [
     'help'                => 'page=help',
     'release_info'        => 'release_info',
     'release_file'        => \XOOPS_URL . '/modules/wgevents/docs/release_info file',
-    'release_date'        => '2022/08/29',
+    'release_date'        => '2022/01/11',
     'manual'              => 'link to manual file',
     'manual_file'         => \XOOPS_URL . '/modules/wgevents/docs/install.txt',
     'min_php'             => '7.4',
@@ -61,7 +61,7 @@ $modversion = [
     'support_name'        => 'Support Forum',
     'module_website_url'  => 'www.xoops.org',
     'module_website_name' => 'XOOPS Project',
-    'release'             => '29.08.2022',
+    'release'             => '01.11.2022',
     'module_status'       => 'RC 1',
     'system_menu'         => 1,
     'hasAdmin'            => 1,
@@ -102,6 +102,7 @@ $modversion['templates'] = [
     ['file' => 'wgevents_calendar.tpl', 'description' => ''],
     ['file' => 'wgevents_category_index_list.tpl', 'description' => ''],
     ['file' => 'wgevents_category_index_button.tpl', 'description' => ''],
+    ['file' => 'wgevents_category_index_form.tpl', 'description' => ''],
     ['file' => 'wgevents_event.tpl', 'description' => ''],
     ['file' => 'wgevents_event_index_bcard.tpl', 'description' => ''],
     ['file' => 'wgevents_event_index_list.tpl', 'description' => ''],
@@ -755,7 +756,7 @@ $modversion['config'][] = [
     'formtype'    => 'select',
     'valuetype'   => 'text',
     'default'     => 'list',
-    'options'     => [\_MI_WGEVENTS_INDEX_DISPLAY_NONE => 'none', \_MI_WGEVENTS_INDEX_DISPLAY_LIST => 'list', \_MI_WGEVENTS_INDEX_DISPLAY_BUTTON=> 'button'],
+    'options'     => [\_MI_WGEVENTS_INDEX_DISPLAY_NONE => 'none', \_MI_WGEVENTS_INDEX_DISPLAY_LIST => 'list', \_MI_WGEVENTS_INDEX_DISPLAY_BUTTON => 'button', \_MI_WGEVENTS_INDEX_DISPLAY_FORM => 'form'],
 ];
 // index display type
 $modversion['config'][] = [

@@ -24,7 +24,7 @@ namespace XoopsModules\Wgevents;
  */
 
 use XoopsModules\Wgevents;
-
+use XoopsModules\Wgevents\Forms;
 
 /**
  * Class Object Handler Category
@@ -105,6 +105,36 @@ class CategoryHandler extends \XoopsPersistableObjectHandler
     }
 
     /**
+     * Get All online categories in the database
+     * @param bool   $type
+     * @param string $sort
+     * @param string $order
+     * @return array
+     */
+    public function getAllCatsOnline($type = 0, $sort = 'weight ASC, id', $order = 'ASC')
+    {
+        $cats = [];
+        $crCategory = new \CriteriaCompo();
+        $crCategory->add(new \Criteria('status', Constants::STATUS_ONLINE));
+        if (Constants::CATEGORY_TYPE_MAIN == $type) {
+            $crCategory->add(new \Criteria('type', Constants::CATEGORY_TYPE_SUB, '<'));
+        }
+        if (Constants::CATEGORY_TYPE_SUB == $type) {
+            $crCategory->add(new \Criteria('type', Constants::CATEGORY_TYPE_MAIN, '<>'));
+        }
+        $crCategory->setSort($sort);
+        $crCategory->setOrder($order);
+        $categoriesCount = $this->getCount($crCategory);
+        if ($categoriesCount > 0) {
+            $categoriesAll = $this->getAll($crCategory);
+            foreach (\array_keys($categoriesAll) as $i) {
+                $cats[$i] = $categoriesAll[$i]->getVar('name');
+            }
+        }
+        return $cats;
+    }
+
+    /**
      * Get Criteria Category
      * @param        $crCategory
      * @param int $start
@@ -172,5 +202,44 @@ class CategoryHandler extends \XoopsPersistableObjectHandler
 
         return $categories;
 
+    }
+
+    /**
+     * @public function getFormCatsCb: form with checkboxes of cats with events
+     * @param bool $action
+     * @return Forms\FormInline
+     */
+    public function getFormCatsCb($filterCats = [], $start = 0, $limit = 0, $op = 'list')
+    {
+        // Get Theme Form
+        \xoops_load('XoopsFormLoader');
+        $form = new Forms\FormInline('', 'formCatsCb', $_SERVER['REQUEST_URI'], 'post', true);
+        $form->setExtra('enctype="multipart/form-data"');
+        $cbAll = 1;
+        // Form Select categories
+        $catsOnline = $this->getAllCatsOnline();
+        if (0 == \count($filterCats)) {
+            foreach (\array_keys($catsOnline) as $i) {
+                $filterCats[] = $i;
+            }
+        } elseif (\count($filterCats) < \count($catsOnline)) {
+            $cbAll = 0;
+        }
+        $catAllSelect = new Forms\FormCheckboxInline(\_MA_WGEVENTS_CATEGORY_FILTER, 'all_cats', $cbAll);
+        $catAllSelect->addOption(1, _ALL);
+        $catAllSelect->setExtra(" onclick='toogleAllCats()' ");
+        $form->addElement($catAllSelect);
+        $catSelect = new Forms\FormCheckboxInline('', 'filter_cats', $filterCats);
+        $catSelect->addOptionArray($catsOnline);
+        $form->addElement($catSelect);
+        $btnFilter = new \XoopsFormButton('', 'submit', \_MA_WGEVENTS_APPLY_FILTER, 'submit');
+        $btnFilter->setClass('btn btn-success');
+        $form->addElement($btnFilter);
+
+        // To Save
+        $form->addElement(new \XoopsFormHidden('op', $op));
+        $form->addElement(new \XoopsFormHidden('start', $start));
+        $form->addElement(new \XoopsFormHidden('limit', $limit));
+        return $form;
     }
 }

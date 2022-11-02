@@ -8,6 +8,7 @@
     bordercolor: '#003366'
     bgcolor: '#3399ff'
     othercss: 'margin:1px 0;padding:8px 5px 20px 5px;border-radius:5px;'
+    subcat: '0'
     status: '3'
     weight: '1'
     identifier: FP2022

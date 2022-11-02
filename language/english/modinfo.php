@@ -170,6 +170,7 @@ require_once __DIR__ . '/common.php';
 \define('_MI_WGEVENTS_INDEX_DISPLAY_NONE', 'Do not display');
 \define('_MI_WGEVENTS_INDEX_DISPLAY_LIST', 'Show as list');
 \define('_MI_WGEVENTS_INDEX_DISPLAY_BUTTON', 'Show as button');
+\define('_MI_WGEVENTS_INDEX_DISPLAY_FORM', 'Show as form');
 \define('_MI_WGEVENTS_INDEX_DISPLAY_BCARDS', 'Use Bootstrap Cards');
 \define('_MI_WGEVENTS_INDEX_DISPLAYCATS', 'Display type for categories on index page');
 \define('_MI_WGEVENTS_INDEX_DISPLAYCATS_DESC', 'Please define how you want to displayed categories on index page');
