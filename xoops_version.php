@@ -768,6 +768,36 @@ $modversion['config'][] = [
     'default'     => 'list',
     'options'     => [\_MI_WGEVENTS_INDEX_DISPLAY_NONE => 'none', \_MI_WGEVENTS_INDEX_DISPLAY_LIST => 'list', \_MI_WGEVENTS_INDEX_DISPLAY_BCARDS => 'bcard'],
 ];
+// ------------------- Group header: Index page ------------------- //
+$modversion['config'][] = [
+    'name'        => 'group_event',
+    'title'       => '\_MI_WGEVENTS_GROUP_EVENT',
+    'description' => '',
+    'formtype'    => 'line_break',
+    'valuetype'   => 'textbox',
+    'default'     => 'even',
+    'category'    => 'group_header',
+];
+// index display type
+$modversion['config'][] = [
+    'name'        => 'event_displaycats',
+    'title'       => '\_MI_WGEVENTS_EVENT_DISPLAYCATS',
+    'description' => '\_MI_WGEVENTS_EVENT_DISPLAYCATS_DESC',
+    'formtype'    => 'select',
+    'valuetype'   => 'text',
+    'default'     => 'none',
+    'options'     => [\_MI_WGEVENTS_INDEX_DISPLAY_NONE => 'none', \_MI_WGEVENTS_INDEX_DISPLAY_BUTTON => 'button', \_MI_WGEVENTS_INDEX_DISPLAY_FORM => 'form'],
+];
+// index display type
+$modversion['config'][] = [
+    'name'        => 'event_displayevents',
+    'title'       => '\_MI_WGEVENTS_EVENT_DISPLAYEVENTS',
+    'description' => '\_MI_WGEVENTS_EVENT_DISPLAYEVENTS_DESC',
+    'formtype'    => 'select',
+    'valuetype'   => 'text',
+    'default'     => 'list',
+    'options'     => [\_MI_WGEVENTS_INDEX_DISPLAY_NONE => 'none', \_MI_WGEVENTS_INDEX_DISPLAY_LIST => 'list', \_MI_WGEVENTS_INDEX_DISPLAY_BCARDS => 'bcard'],
+];
 // ------------------- Group header: Misc ------------------- //
 $modversion['config'][] = [
     'name'        => 'group_misc',

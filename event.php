@@ -51,6 +51,10 @@ $limit  = Request::getInt('limit', $helper->getConfig('userpager'));
 $GLOBALS['xoopsTpl']->assign('start', $start);
 $GLOBALS['xoopsTpl']->assign('limit', $limit);
 $filterCats = Request::getArray('filter_cats');
+$urlCats = Request::getString('cats');
+if (0 == \count($filterCats) && '' != $urlCats) {
+    $filterCats = \explode(',', $urlCats);
+}
 
 // Define Stylesheet
 $GLOBALS['xoTheme']->addStylesheet($style, null);
@@ -73,8 +77,8 @@ if ($useGMaps) {
     $gmapsEnableEvent  = ('top' == $gmapsPositionList || 'bottom' == $gmapsPositionList);
     $gmapsHeight       = $helper->getConfig('gmaps_height');
 }
-$indexDisplayCats = (string)$helper->getConfig('index_displaycats');
-$GLOBALS['xoopsTpl']->assign('index_displaycats', $indexDisplayCats);
+$eventDisplayCats = (string)$helper->getConfig('event_displaycats');
+$GLOBALS['xoopsTpl']->assign('event_displaycats', $eventDisplayCats);
 
 //misc
 $uidCurrent  = 0;
@@ -83,7 +87,9 @@ if (\is_object($GLOBALS['xoopsUser'])) {
     $uidCurrent  = $GLOBALS['xoopsUser']->uid();
     $userIsAdmin = $GLOBALS['xoopsUser']->isAdmin();
 }
-$GLOBALS['xoopsTpl']->assign('showItem', $evId > 0);
+
+$showItem = ($evId > 0);
+$GLOBALS['xoopsTpl']->assign('showItem', $showItem);
 
 switch ($op) {
     case 'show':
@@ -100,6 +106,72 @@ switch ($op) {
         $useGroups = (bool)$helper->getConfig('use_groups');
         $GLOBALS['xoopsTpl']->assign('use_groups', $useGroups);
 
+        if ('none' != $eventDisplayCats && !$showItem) {
+            $crCategory = new \CriteriaCompo();
+            $crCategory->setSort('weight');
+            $crCategory->setOrder('ASC');
+            $categoriesCount = $categoryHandler->getCount($crCategory);
+            $GLOBALS['xoopsTpl']->assign('categoriesCount', $categoriesCount);
+            if ($categoriesCount > 0) {
+                if ('form' == $eventDisplayCats) {
+                    $formCatsCb = $categoryHandler->getFormCatsCb($filterCats, $start, $limit, $op);
+                    $GLOBALS['xoopsTpl']->assign('formCatsCb', $formCatsCb->render());
+                } else {
+                    //$crCategory->setStart($start);
+                    //$crCategory->setLimit($limit);
+                    $categoriesAll = $categoryHandler->getAll($crCategory);
+                    $categories = [];
+                    if ('button' === $eventDisplayCats) {
+                        $categories[0] = ['id' => 0, 'logo' => 'blank.gif', 'name' => 'alle', 'eventsCount' => 0];
+                    }
+                    $evName = '';
+                    // Get All Event
+                    foreach (\array_keys($categoriesAll) as $i) {
+                        $categories[$i] = $categoriesAll[$i]->getValuesCategories();
+                        $keywords[$i] = $categories[$i]['name'];
+                        if ($i == $catId) {
+                            $catName = $categories[$i]['name'];
+                        }
+                        $crEvent = new \CriteriaCompo();
+                        $crEvent->add(new \Criteria('catid',$i));
+                        if ($useGroups) {
+                            // current user
+                            // - must have perm to see event or
+                            // - must be event owner
+                            // - is admin
+                            if (!$userIsAdmin) {
+                                $crEventGroup = new \CriteriaCompo();
+                                $crEventGroup->add(new \Criteria('groups', '%00000%', 'LIKE')); //all users
+                                if ($uidCurrent > 0) {
+                                    // Get groups
+                                    $memberHandler = \xoops_getHandler('member');
+                                    $xoopsGroups = $memberHandler->getGroupsByUser($uidCurrent);
+                                    foreach ($xoopsGroups as $group) {
+                                        $crEventGroup->add(new \Criteria('groups', '%' . substr('00000' . $group, -5) . '%', 'LIKE'), 'OR');
+                                    }
+                                }
+                                $crEventGroup->add(new \Criteria('submitter', $uidCurrent), 'OR');
+                                $crEvent->add($crEventGroup);
+                                unset($crEventGroup);
+                            }
+                        }
+                        $eventsCount = $eventHandler->getCount($crEvent);
+                        $nbEventsText = \_MA_WGEVENTS_CATEGORY_NOEVENTS;
+                        if ($eventsCount > 0) {
+                            if ($eventsCount > 1) {
+                                $nbEventsText = \sprintf(\_MA_WGEVENTS_CATEGORY_EVENTS, $eventsCount);
+                            } else {
+                                $nbEventsText = \_MA_WGEVENTS_CATEGORY_EVENT;
+                            }
+                        }
+                        $categories[$i]['nbeventsText'] = $nbEventsText;
+                        $categories[$i]['eventsCount'] = $eventsCount;
+                    }
+                    $GLOBALS['xoopsTpl']->assign('categories', $categories);
+                }
+            }
+        }
+
         switch($op) {
             case 'show':
             default:
@@ -113,7 +185,7 @@ switch ($op) {
                 unset($crEventArchieve);
                 $GLOBALS['xoopsTpl']->assign('showBtnPast', $eventsCountArchieve > 0);
                 $listDescr = \_MA_WGEVENTS_EVENTS_LISTCOMING;
-                if ('form' == $indexDisplayCats) {
+                if ('form' == $eventDisplayCats) {
                     $formCatsCb = $categoryHandler->getFormCatsCb($filterCats, $start, $limit, $op);
                     $GLOBALS['xoopsTpl']->assign('formCatsCb', $formCatsCb->render());
                 }
@@ -121,7 +193,7 @@ switch ($op) {
             case 'past':
                 $GLOBALS['xoopsTpl']->assign('showBtnComing', true);
                 $listDescr = \_MA_WGEVENTS_EVENTS_LISTPAST;
-                if ('form' == $indexDisplayCats) {
+                if ('form' == $eventDisplayCats) {
                     $formCatsCb = $categoryHandler->getFormCatsCb($filterCats, $start, $limit, $op);
                     $GLOBALS['xoopsTpl']->assign('formCatsCb', $formCatsCb->render());
                 }
@@ -129,7 +201,7 @@ switch ($op) {
         }
         $GLOBALS['xoopsTpl']->assign('listDescr', $listDescr);
         $crEvent = new \CriteriaCompo();
-        if ($evId > 0) {
+        if ($showItem) {
             $crEvent->add(new \Criteria('id', $evId));
             $GLOBALS['xoopsTpl']->assign('showList', false);
             $xoBreadcrumbs[] = ['title' => \_MA_WGEVENTS_EVENT_DETAILS];
@@ -164,7 +236,7 @@ switch ($op) {
         $eventsCount = $eventHandler->getCount($crEvent);
         $GLOBALS['xoopsTpl']->assign('eventsCount', $eventsCount);
 
-        if (0 === $evId) {
+        if (!$showItem) {
             if ('past' == $op) {
                 // list events before now
                 $crEvent->add(new \Criteria('datefrom', \time(), '<'));
@@ -260,8 +332,9 @@ switch ($op) {
             unset($events, $eventMaps);
             // Display Navigation
             if ($eventsCount > $limit) {
+                $urlCats = \implode(',', $filterCats);
                 require_once \XOOPS_ROOT_PATH . '/class/pagenav.php';
-                $pagenav = new \XoopsPageNav($eventsCount, $limit, $start, 'start', 'op=list&filter=' . $filter . '&limit=' . $limit);
+                $pagenav = new \XoopsPageNav($eventsCount, $limit, $start, 'start', 'op=list&amp;filter=' . $filter . '&amp;limit=' . $limit . '&amp;cats=' . $urlCats);
                 $GLOBALS['xoopsTpl']->assign('pagenav', $pagenav->renderNav());
             }
             $GLOBALS['xoopsTpl']->assign('table_type', $helper->getConfig('table_type'));

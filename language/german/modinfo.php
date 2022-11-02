@@ -174,6 +174,11 @@ require_once __DIR__ . '/common.php';
 \define('_MI_WGEVENTS_INDEX_DISPLAYCATS_DESC', 'Bitte definiere wie die Kategorien auf der Indexseite dargestellt werden sollen');
 \define('_MI_WGEVENTS_INDEX_DISPLAYEVENTS', 'Anzeige Veranstaltungen auf Index-Seite');
 \define('_MI_WGEVENTS_INDEX_DISPLAYEVENTS_DESC', 'Bitte definiere wie die nächsten Veranstaltungen auf der Indexseite dargestellt werden sollen');
+\define('_MI_WGEVENTS_GROUP_EVENT', 'Event-Seite');
+\define('_MI_WGEVENTS_EVENT_DISPLAYCATS', 'Anzeige Kategorien auf Event-Seite');
+\define('_MI_WGEVENTS_EVENT_DISPLAYCATS_DESC', 'Bitte definiere wie die Kategorien auf der Eventseite dargestellt werden sollen');
+\define('_MI_WGEVENTS_EVENT_DISPLAYEVENTS', 'Anzeige Veranstaltungen auf Event-Seite');
+\define('_MI_WGEVENTS_EVENT_DISPLAYEVENTS_DESC', 'Bitte definiere wie die nächsten Veranstaltungen auf der Eventseite dargestellt werden sollen');
 //Misc
 \define('_MI_WGEVENTS_GROUP_MISC', 'Verschiedenes');
 \define('_MI_WGEVENTS_KEYWORDS', 'Schlüsselworter');
