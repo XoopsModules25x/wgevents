@@ -114,7 +114,7 @@ switch ($op) {
             $GLOBALS['xoopsTpl']->assign('categoriesCount', $categoriesCount);
             if ($categoriesCount > 0) {
                 if ('form' == $eventDisplayCats) {
-                    $formCatsCb = $categoryHandler->getFormCatsCb($filterCats, $start, $limit, $op);
+                    $formCatsCb = $categoryHandler->getFormCatsCb($filterCats, $op, $filter);
                     $GLOBALS['xoopsTpl']->assign('formCatsCb', $formCatsCb->render());
                 } else {
                     //$crCategory->setStart($start);
@@ -186,7 +186,7 @@ switch ($op) {
                 $GLOBALS['xoopsTpl']->assign('showBtnPast', $eventsCountArchieve > 0);
                 $listDescr = \_MA_WGEVENTS_EVENTS_LISTCOMING;
                 if ('form' == $eventDisplayCats) {
-                    $formCatsCb = $categoryHandler->getFormCatsCb($filterCats, $start, $limit, $op);
+                    $formCatsCb = $categoryHandler->getFormCatsCb($filterCats, $op, $filter);
                     $GLOBALS['xoopsTpl']->assign('formCatsCb', $formCatsCb->render());
                 }
                 break;
@@ -194,12 +194,13 @@ switch ($op) {
                 $GLOBALS['xoopsTpl']->assign('showBtnComing', true);
                 $listDescr = \_MA_WGEVENTS_EVENTS_LISTPAST;
                 if ('form' == $eventDisplayCats) {
-                    $formCatsCb = $categoryHandler->getFormCatsCb($filterCats, $start, $limit, $op);
+                    $formCatsCb = $categoryHandler->getFormCatsCb($filterCats, $op, $filter);
                     $GLOBALS['xoopsTpl']->assign('formCatsCb', $formCatsCb->render());
                 }
                 break;
         }
         $GLOBALS['xoopsTpl']->assign('listDescr', $listDescr);
+        //apply criteria for events
         $crEvent = new \CriteriaCompo();
         if ($showItem) {
             $crEvent->add(new \Criteria('id', $evId));
@@ -233,9 +234,6 @@ switch ($op) {
                 unset($crEventGroup);
             }
         }
-        $eventsCount = $eventHandler->getCount($crEvent);
-        $GLOBALS['xoopsTpl']->assign('eventsCount', $eventsCount);
-
         if (!$showItem) {
             if ('past' == $op) {
                 // list events before now
@@ -255,9 +253,11 @@ switch ($op) {
                 }
                 $crEvent->add($crEventCats);
             }
-            $crEvent->setStart($start);
-            $crEvent->setLimit($limit);
         }
+        $eventsCount = $eventHandler->getCount($crEvent);
+        $GLOBALS['xoopsTpl']->assign('eventsCount', $eventsCount);
+        $crEvent->setStart($start);
+        $crEvent->setLimit($limit);
         if ($eventsCount > 0) {
             $eventsAll = $eventHandler->getAll($crEvent);
             $events    = [];

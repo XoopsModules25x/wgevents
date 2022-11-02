@@ -38,10 +38,14 @@ if (!$permissionsHandler->getPermEventsView()) {
 
 $op         = Request::getCmd('op', 'coming');
 $start      = Request::getInt('start');
-$limit      = Request::getInt('limit', $helper->getConfig('userpager'));
+$limit      = Request::getInt('limit', (int)$helper->getConfig('userpager'));
 $catId      = Request::getInt('cat_id');
 $filterCats = Request::getArray('filter_cats');
-
+$urlCats = Request::getString('cats');
+if (0 == \count($filterCats) && '' != $urlCats) {
+    $filterCats = \explode(',', $urlCats);
+}
+echo "<br>start:" . $start . " limit:" . $limit;
 // Define Stylesheet
 $GLOBALS['xoTheme']->addStylesheet($style, null);
 // Keywords
@@ -85,7 +89,7 @@ if ('none' != $indexDisplayCats) {
     $GLOBALS['xoopsTpl']->assign('categoriesCount', $categoriesCount);
     if ($categoriesCount > 0) {
         if ('form' == $indexDisplayCats) {
-            $formCatsCb = $categoryHandler->getFormCatsCb($filterCats, $start, $limit, $op);
+            $formCatsCb = $categoryHandler->getFormCatsCb($filterCats, $op);
             $GLOBALS['xoopsTpl']->assign('formCatsCb', $formCatsCb->render());
         } else {
             //$crCategory->setStart($start);
@@ -177,6 +181,14 @@ if ('none' != $indexDisplayEvents) {
         }
         $crEvent->add($crEventCats);
     }
+    if (\count($filterCats) > 0) {
+        $crEventCats = new \CriteriaCompo();
+        $crEventCats->add(new \Criteria('catid', '(' . \implode(',', $filterCats) . ')', 'IN'));
+        foreach ($filterCats as $filterCat) {
+            $crEventCats->add(new \Criteria('subcats', '%"' . $filterCat . '"%', 'LIKE'), 'OR');
+        }
+        $crEvent->add($crEventCats);
+    }
 
     if ($useGroups) {
         // current user
@@ -203,6 +215,7 @@ if ('none' != $indexDisplayEvents) {
     $eventsCount = $eventHandler->getCount($crEvent);
     $GLOBALS['xoopsTpl']->assign('eventsCount', $eventsCount);
     if ($eventsCount > 0) {
+        echo "<br>start:" . $start . " limit:" . $limit;
         $crEvent->setStart($start);
         $crEvent->setLimit($limit);
         $eventsAll = $eventHandler->getAll($crEvent);
@@ -248,8 +261,9 @@ if ('none' != $indexDisplayEvents) {
         unset($events);
         // Display Navigation
         if ($eventsCount > $limit) {
+            $urlCats = \implode(',', $filterCats);
             require_once \XOOPS_ROOT_PATH . '/class/pagenav.php';
-            $pagenav = new \XoopsPageNav($eventsCount, $limit, $start, 'start', 'op=list&limit=' . $limit . '&cat_id=' . $catId);
+            $pagenav = new \XoopsPageNav($eventsCount, $limit, $start, 'start', 'op=list&limit=' . $limit . '&cat_id=' . $catId . '&amp;cats=' . $urlCats);
             $GLOBALS['xoopsTpl']->assign('pagenav', $pagenav->renderNav());
         }
     }

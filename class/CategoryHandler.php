@@ -25,6 +25,7 @@ namespace XoopsModules\Wgevents;
 
 use XoopsModules\Wgevents;
 use XoopsModules\Wgevents\Forms;
+use XoopsModules\Wgevents\Forms\FormInline;
 
 /**
  * Class Object Handler Category
@@ -206,10 +207,12 @@ class CategoryHandler extends \XoopsPersistableObjectHandler
 
     /**
      * @public function getFormCatsCb: form with checkboxes of cats with events
-     * @param bool $action
-     * @return Forms\FormInline
+     * @param array $filterCats
+     * @param string $op
+     * @param string $filter
+     * @return FormInline
      */
-    public function getFormCatsCb($filterCats = [], $start = 0, $limit = 0, $op = 'list')
+    public function getFormCatsCb($filterCats = [], $op = 'list', $filter = '')
     {
         // Get Theme Form
         \xoops_load('XoopsFormLoader');
@@ -238,8 +241,7 @@ class CategoryHandler extends \XoopsPersistableObjectHandler
 
         // To Save
         $form->addElement(new \XoopsFormHidden('op', $op));
-        $form->addElement(new \XoopsFormHidden('start', $start));
-        $form->addElement(new \XoopsFormHidden('limit', $limit));
+        $form->addElement(new \XoopsFormHidden('filter', $filter));
         return $form;
     }
 }

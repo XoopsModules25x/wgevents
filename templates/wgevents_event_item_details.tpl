@@ -14,7 +14,7 @@
 <div class='panel-body'>
     <div class="row wge-row1">
         <div class="col-xs-12 col-sm-5">
-            <img class="img-responsive img-fluid" src='<{$wgevents_upload_eventlogos_url|default:false}><{$event.submitter}>/<{$event.logo}>' alt='<{$event.name}>' >
+            <img class="img-responsive img-fluid" src='<{$wgevents_upload_eventlogos_url|default:false}><{$event.submitter}>/<{$event.logo}>' alt='<{$event.name_clean|default:''}>' title='<{$event.name_clean|default:''}>' >
         </div>
         <div class="col-xs-12 col-sm-6 wge-panel-details1"><{$event.desc_text}></div>
     </div>

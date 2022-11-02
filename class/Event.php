@@ -569,6 +569,7 @@ class Event extends \XoopsObject
             }
         }
         $ret['subcats_arr']      = $subcatsArr;
+        $ret['name_clean']       = \htmlspecialchars($this->getVar('name'), ENT_QUOTES | ENT_HTML5);
         $ret['desc_text']        = $this->getVar('desc', 'e');
         $ret['desc_short_admin'] = $utility::truncateHtml($ret['desc_text'], $adminMaxchar);
         $ret['desc_short_user']  = $utility::truncateHtml($ret['desc_text'], $userMaxchar);
