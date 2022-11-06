@@ -40,6 +40,7 @@ function b_wgevents_event_show($options)
     $helper  = Helper::getInstance();
     $eventHandler = $helper->getHandler('Event');
     $permissionsHandler = $helper->getHandler('Permission');
+    $registrationHandler = $helper->getHandler('Registration');
 
     $GLOBALS['xoopsTpl']->assign('user_maxchar', $helper->getConfig('user_maxchar'));
     $uidCurrent  = 0;
@@ -94,6 +95,35 @@ function b_wgevents_event_show($options)
         $eventsAll = $eventsArr['eventsAll'];
         foreach (\array_keys($eventsAll) as $i) {
             $block[$i] = $eventsAll[$i]->getValuesEvents();
+            //get progress of registrations
+            //currently only for wgevents_block_events_panel
+            if ('panel' === $blockType) {
+                $crRegistration = new \CriteriaCompo();
+                $crRegistration->add(new \Criteria('evid', $i));
+                $numberRegCurr = $registrationHandler->getCount($crRegistration);
+                $block[$i]['nb_registrations'] = $numberRegCurr;
+                $registerMax = (int)$block[$i]['register_max'];
+                if ($registerMax > 0) {
+                    $block[$i]['regmax'] = $registerMax;
+                    $proportion = $numberRegCurr / $registerMax;
+                    if ($proportion >= 1) {
+                        $block[$i]['regcurrent'] = \_MA_WGEVENTS_REGISTRATIONS_FULL;
+                    } else {
+                        $block[$i]['regcurrent'] = \sprintf(\_MA_WGEVENTS_REGISTRATIONS_NBCURR_INDEX, $numberRegCurr, $registerMax);
+                    }
+                    $block[$i]['regcurrent_text'] = $block[$i]['regcurrent'];
+                    $block[$i]['regcurrent_tip'] = true;
+                    if ($proportion < 0.75) {
+                        $block[$i]['regcurrentstate'] = 'success';
+                    } elseif ($proportion < 1) {
+                        $block[$i]['regcurrentstate'] = 'warning';
+                    } else {
+                        $block[$i]['regcurrentstate'] = 'danger';
+                        $block[$i]['regcurrent_tip'] = false;
+                    }
+                    $block[$i]['regpercentage'] = (int)($proportion * 100);
+                }
+            }
             $block[$i]['datefromto_text'] = $eventHandler->getDateFromToText($eventsAll[$i]->getVar('datefrom'), $eventsAll[$i]->getVar('dateto'), $eventsAll[$i]->getVar('allday'));
             $block[$i]['permEdit'] = ($permissionsHandler->getPermEventsEdit($eventsAll[$i]->getVar('submitter'), $eventsAll[$i]->getVar('status')) || $uidCurrent == $eventsAll[$i]->getVar('submitter'));
         }
