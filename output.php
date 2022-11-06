@@ -32,11 +32,6 @@ require __DIR__ . '/header.php';
 require_once \XOOPS_ROOT_PATH . '/header.php';
 $GLOBALS['xoopsTpl']->assign('template_sub', 'db:wgevents_output.tpl');
 
-// Permission
-if (!$permissionsHandler->getPermGlobalView()) {
-    \redirect_header('index.php', 0);
-}
-
 $op      = Request::getCmd('op', 'none');
 $evId    = Request::getInt('id');
 $redir   = Request::getString('redir');
@@ -47,8 +42,6 @@ switch ($op) {
     default:
         echo 'Invalid op';
         break;
-
-
     case 'reg_all';
         if (0 == $evId) {
             \redirect_header('registration.php?op=list', 3, \_MA_WGEVENTS_INVALID_PARAM);
