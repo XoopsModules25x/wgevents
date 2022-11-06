@@ -18,6 +18,9 @@
  * @package      wgevents
  * @author       Goffy - Wedega - Email:webmaster@wedega.com - Website:https://xoops.wedega.com
  */
+
+require_once __DIR__ . '/main.php';
+
 // Admin Edit
 \define('_MB_WGEVENTS_DISPLAY', 'How Many Items to Display');
 \define('_MB_WGEVENTS_DISPLAY_SPOTLIGHT', "How Many Items to Display (only valid if you select 'all')");
@@ -25,13 +28,13 @@
 \define('_MB_WGEVENTS_CATTODISPLAY', 'Category to Display');
 \define('_MB_WGEVENTS_ALLCAT', 'All Category');
 // Event
-\define('_MB_WGEVENTS_EVENTS_TO_DISPLAY', 'Event to Display');
-\define('_MB_WGEVENTS_ALL_EVENTS', 'All Event');
-\define('_MB_WGEVENTS_EV_NAME', 'Name');
-\define('_MB_WGEVENTS_EV_LOGO', 'Logo');
-\define('_MB_WGEVENTS_EV_DATEFROM', 'Date');
-\define('_MB_WGEVENTS_EVENT_GOTO', 'Goto Event');
 \define('_MB_WGEVENTS_EVENT_SHOWMORE', 'Show more events');
+\define('_MB_WGEVENTS_BLOCKTYPE', 'Block type');
+\define('_MB_WGEVENTS_BLOCKTYPE_TABLE', 'Table');
+\define('_MB_WGEVENTS_BLOCKTYPE_SIMPLE', 'Simple');
+\define('_MB_WGEVENTS_BLOCKTYPE_EXTENDED', 'Extended');
+\define('_MB_WGEVENTS_BLOCKTYPE_PANEL', 'Panel');
+\define('_MB_WGEVENTS_BLOCKTYPE_BCARD2', 'Bootstrap card 2');
 // Calendar
 \define('_MB_WGEVENTS_CAL_DISPLAY_DESC', 'You can display below the mini calendar a list of the next comming events. 0 means no list');
 \define('_MB_WGEVENTS_CAL_DISPLAY', 'How Many Items to Display in this list');

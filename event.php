@@ -50,19 +50,29 @@ $start  = Request::getInt('start');
 $limit  = Request::getInt('limit', $helper->getConfig('userpager'));
 $GLOBALS['xoopsTpl']->assign('start', $start);
 $GLOBALS['xoopsTpl']->assign('limit', $limit);
+$catId  = Request::getInt('catid');
+$filterCats = Request::getArray('filter_cats');
+if ($catId > 0 && 0 == \count($filterCats)) {
+    $filterCats[$catId] = $catId;
+}
+$urlCats = Request::getString('cats');
+if (0 == \count($filterCats) && '' != $urlCats) {
+    $filterCats = \explode(',', $urlCats);
+}
 
 // Define Stylesheet
 $GLOBALS['xoTheme']->addStylesheet($style, null);
 // Paths
 $GLOBALS['xoopsTpl']->assign('xoops_icons32_url', \XOOPS_ICONS32_URL);
 $GLOBALS['xoopsTpl']->assign('wgevents_url', \WGEVENTS_URL);
+// JS
+$GLOBALS['xoTheme']->addScript(\WGEVENTS_URL . '/assets/js/forms.js');
 // Keywords
 $keywords = [];
 // Breadcrumbs
 $xoBreadcrumbs[] = ['title' => \_MA_WGEVENTS_INDEX, 'link' => 'index.php'];
 
-$GLOBALS['xoopsTpl']->assign('showItem', $evId > 0);
-
+//preferences
 $gmapsEnableEvent = false;
 $gmapsHeight      = false;
 $useGMaps         = (bool)$helper->getConfig('use_gmaps');
@@ -71,7 +81,10 @@ if ($useGMaps) {
     $gmapsEnableEvent  = ('top' == $gmapsPositionList || 'bottom' == $gmapsPositionList);
     $gmapsHeight       = $helper->getConfig('gmaps_height');
 }
+$eventDisplayCats = (string)$helper->getConfig('event_displaycats');
+$GLOBALS['xoopsTpl']->assign('event_displaycats', $eventDisplayCats);
 
+//misc
 $uidCurrent  = 0;
 $userIsAdmin = false;
 if (\is_object($GLOBALS['xoopsUser'])) {
@@ -79,12 +92,16 @@ if (\is_object($GLOBALS['xoopsUser'])) {
     $userIsAdmin = $GLOBALS['xoopsUser']->isAdmin();
 }
 
+$showItem = ($evId > 0);
+$GLOBALS['xoopsTpl']->assign('showItem', $showItem);
+
 switch ($op) {
     case 'show':
     case 'list':
     case 'past':
     default:
-        $GLOBALS['xoopsTpl']->assign('wgevents_upload_eventlogos_url', \WGEVENTS_UPLOAD_EVENTLOGOS_URL . '/');
+        $GLOBALS['xoopsTpl']->assign('wgevents_upload_eventlogos_url', \WGEVENTS_UPLOAD_EVENTLOGOS_URL);
+        $GLOBALS['xoopsTpl']->assign('wgevents_upload_catlogos_url', \WGEVENTS_UPLOAD_CATLOGOS_URL);
         $GLOBALS['xoopsTpl']->assign('wgevents_icons_url_24', \WGEVENTS_ICONS_URL_24 . '/');
         $GLOBALS['xoopsTpl']->assign('filter', $filter);
 
@@ -93,6 +110,15 @@ switch ($op) {
         $useGroups = (bool)$helper->getConfig('use_groups');
         $GLOBALS['xoopsTpl']->assign('use_groups', $useGroups);
 
+        // get categories if they should be displayed
+        if ('none' != $eventDisplayCats && !$showItem) {
+            $categories = $categoryHandler->getCategoriesForFilter($eventDisplayCats, $filterCats, $op, $useGroups, $filter);
+            $GLOBALS['xoopsTpl']->assign('categories', $categories);
+        }
+
+        // determine whether there are
+        // - past events if coming are shown
+        // - coming events if past are shown
         switch($op) {
             case 'show':
             default:
@@ -106,71 +132,46 @@ switch ($op) {
                 unset($crEventArchieve);
                 $GLOBALS['xoopsTpl']->assign('showBtnPast', $eventsCountArchieve > 0);
                 $listDescr = \_MA_WGEVENTS_EVENTS_LISTCOMING;
+                if ('form' == $eventDisplayCats) {
+                    $formCatsCb = $categoryHandler->getFormCatsCb($filterCats, $op, $filter);
+                    $GLOBALS['xoopsTpl']->assign('formCatsCb', $formCatsCb->render());
+                }
                 break;
             case 'past':
                 $GLOBALS['xoopsTpl']->assign('showBtnComing', true);
                 $listDescr = \_MA_WGEVENTS_EVENTS_LISTPAST;
+                if ('form' == $eventDisplayCats) {
+                    $formCatsCb = $categoryHandler->getFormCatsCb($filterCats, $op, $filter);
+                    $GLOBALS['xoopsTpl']->assign('formCatsCb', $formCatsCb->render());
+                }
                 break;
         }
         $GLOBALS['xoopsTpl']->assign('listDescr', $listDescr);
+
+        //misc for displaying events
         $crEvent = new \CriteriaCompo();
-        if ($evId > 0) {
-            $crEvent->add(new \Criteria('id', $evId));
+        if ($showItem) {
             $GLOBALS['xoopsTpl']->assign('showList', false);
             $xoBreadcrumbs[] = ['title' => \_MA_WGEVENTS_EVENT_DETAILS];
         } else {
-            if ('me' == $filter && $uidCurrent > 0) {
-                $crEvent->add(new \Criteria('submitter', $uidCurrent));
-            }
             $GLOBALS['xoopsTpl']->assign('showList', true);
             $xoBreadcrumbs[] = ['title' => $listDescr];
         }
-        if ($useGroups) {
-            // current user
-            // - must have perm to see event or
-            // - must be event owner
-            // - is admin
-            if (!$userIsAdmin) {
-                $crEventGroup = new \CriteriaCompo();
-                $crEventGroup->add(new \Criteria('groups', '%00000%', 'LIKE')); //all users
-                if ($uidCurrent > 0) {
-                    // Get groups
-                    $memberHandler = \xoops_getHandler('member');
-                    $xoopsGroups = $memberHandler->getGroupsByUser($uidCurrent);
-                    foreach ($xoopsGroups as $group) {
-                        $crEventGroup->add(new \Criteria('groups', '%' . substr('00000' . $group, -5) . '%', 'LIKE'), 'OR');
-                    }
-                }
-                $crEventGroup->add(new \Criteria('submitter', $uidCurrent), 'OR');
-                $crEvent->add($crEventGroup);
-                unset($crEventGroup);
-            }
-        }
-        $eventsCount = $eventHandler->getCount($crEvent);
-        $GLOBALS['xoopsTpl']->assign('eventsCount', $eventsCount);
 
-        if (0 === $evId) {
-            if ('past' == $op) {
-                // list events before now
-                $crEvent->add(new \Criteria('datefrom', \time(), '<'));
-                $crEvent->setSort('datefrom');
-                $crEvent->setOrder('DESC');
-            } else {
-                $crEvent->add(new \Criteria('datefrom', \time(), '>='));
-                $crEvent->setSort('datefrom');
-                $crEvent->setOrder('ASC');
-            }
-            $crEvent->setStart($start);
-            $crEvent->setLimit($limit);
-        }
+        // get events
+        $eventsArr = $eventHandler->getEvents($start, $limit, \time(), 0, '', '', $op, $evId, $filter, $filterCats);
+
+        $eventsCount = $eventsArr['count'];
+        $GLOBALS['xoopsTpl']->assign('eventsCount', $eventsCount);
         if ($eventsCount > 0) {
-            $eventsAll = $eventHandler->getAll($crEvent);
+            $eventsAll = $eventsArr['eventsAll'];
             $events    = [];
             $eventsMap = [];
             $evName    = '';
             // Get All Event
             foreach (\array_keys($eventsAll) as $i) {
                 $events[$i] = $eventsAll[$i]->getValuesEvents();
+
                 $permEdit = $permissionsHandler->getPermEventsEdit($eventsAll[$i]->getVar('submitter'), $eventsAll[$i]->getVar('status')) || $uidCurrent == $eventsAll[$i]->getVar('submitter');
                 $events[$i]['permEdit'] = $permEdit;
                 $crQuestion = new \CriteriaCompo();
@@ -237,8 +238,9 @@ switch ($op) {
             unset($events, $eventMaps);
             // Display Navigation
             if ($eventsCount > $limit) {
+                $urlCats = \implode(',', $filterCats);
                 require_once \XOOPS_ROOT_PATH . '/class/pagenav.php';
-                $pagenav = new \XoopsPageNav($eventsCount, $limit, $start, 'start', 'op=list&filter=' . $filter . '&limit=' . $limit);
+                $pagenav = new \XoopsPageNav($eventsCount, $limit, $start, 'start', 'op=list&amp;filter=' . $filter . '&amp;limit=' . $limit . '&amp;cats=' . $urlCats);
                 $GLOBALS['xoopsTpl']->assign('pagenav', $pagenav->renderNav());
             }
             $GLOBALS['xoopsTpl']->assign('table_type', $helper->getConfig('table_type'));
@@ -271,6 +273,8 @@ switch ($op) {
         $uploaderErrors = '';
         $catId = Request::getInt('catid');
         $eventObj->setVar('catid', $catId);
+        $subCats = \serialize(Request::getArray('subcats'));
+        $eventObj->setVar('subcats', $subCats);
         $eventObj->setVar('name', Request::getString('name'));
         // Set Var logo
         require_once \XOOPS_ROOT_PATH . '/class/uploader.php';
@@ -324,6 +328,7 @@ switch ($op) {
         $eventDatetoObj->setTime(0, 0);
         $eventDateto = $eventDatetoObj->getTimestamp() + (int)$eventDatetoArr['time'];
         $eventObj->setVar('dateto', $eventDateto);
+        $eventObj->setVar('allday', Request::getInt('allday'));
         $eventObj->setVar('contact', Request::getString('contact'));
         $eventObj->setVar('email', Request::getString('email'));
         $eventObj->setVar('url', Request::getString('url'));
@@ -568,7 +573,6 @@ switch ($op) {
         if (!$permissionsHandler->getPermEventsSubmit()) {
             \redirect_header('event.php?op=list', 3, \_NOPERM);
         }
-        $GLOBALS['xoTheme']->addScript(\WGEVENTS_URL . '/assets/js/forms.js');
         if ($useGMaps) {
             $GLOBALS['xoopsTpl']->assign('gmapsModalSave', $permissionsHandler->getPermEventsSubmit());
             $GLOBALS['xoopsTpl']->assign('gmapsModal', true);
@@ -597,7 +601,6 @@ switch ($op) {
         if ($permEdit) {
             \redirect_header('index.php?op=list', 3, \_NOPERM);
         }
-        $GLOBALS['xoTheme']->addScript(\WGEVENTS_URL . '/assets/js/forms.js');
         if ($useGMaps) {
             $GLOBALS['xoopsTpl']->assign('gmapsModalSave', $permEdit);
             $GLOBALS['xoopsTpl']->assign('gmapsModal', true);
@@ -626,7 +629,6 @@ switch ($op) {
         // Breadcrumbs
         $xoBreadcrumbs[] = ['title' => \_MA_WGEVENTS_EVENT_CLONE];
 
-        $GLOBALS['xoTheme']->addScript(\WGEVENTS_URL . '/assets/js/forms.js');
         if ($useGMaps) {
             $GLOBALS['xoopsTpl']->assign('gmapsModalSave', $permissionsHandler->getPermEventsSubmit());
             $GLOBALS['xoopsTpl']->assign('gmapsModal', true);

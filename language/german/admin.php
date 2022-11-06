@@ -99,6 +99,11 @@ require_once __DIR__ . '/main.php';
 \define('_AM_WGEVENTS_CATEGORY_BORDERCOLOR', 'Rahmenfarbe');
 \define('_AM_WGEVENTS_CATEGORY_BGCOLOR', 'Hintergrundfarbe');
 \define('_AM_WGEVENTS_CATEGORY_OTHERCSS', 'Weitere css-Styles');
+\define('_AM_WGEVENTS_CATEGORY_SUBCAT', 'Als Unterkategorie verwenden as sub category');
+\define('_AM_WGEVENTS_CATEGORY_TYPE', 'Type of category');
+\define('_AM_WGEVENTS_CATEGORY_TYPE_BOTH', 'Als Haupt- und Unterkategorie verwenden');
+\define('_AM_WGEVENTS_CATEGORY_TYPE_MAIN', 'Nur als Hauptkategorie verwenden');
+\define('_AM_WGEVENTS_CATEGORY_TYPE_SUB', 'Nur als Unterkategorie verwenden');
 // Addtype add/edit
 \define('_AM_WGEVENTS_FIELD_ADD', 'Art Zusatzinfo hinzufügen');
 \define('_AM_WGEVENTS_FIELD_EDIT', 'Art Zusatzinfo bearbeiten');

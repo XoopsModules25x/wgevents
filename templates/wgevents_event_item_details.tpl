@@ -1,9 +1,20 @@
 <i id='evId_<{$event.id}>'></i>
-<div class='panel-heading center wge-eventheader'><h4><span><{$event.name}></span></h4></div>
+<div class='panel-heading center wge-eventheader'> <h4>
+        <span><{$event.name}></span>
+        <{if $event.catlogo|default:false}>
+            <span class="pull-right wge-event-catlogo-cont">
+                <img class="wge-event-catlogo" src='<{$wgevents_upload_catlogos_url|default:false}>/<{$event.catlogo}>' alt='<{$event.catname}>' title='<{$event.catname}>'>
+                <{foreach item=subcat from=$event.subcats_arr name=subcats}>
+                    <img class="wge-event-catlogo" src='<{$wgevents_upload_catlogos_url|default:false}>/<{$subcat.logo}>' alt='<{$subcat.name}>' title='<{$subcat.name}>'>
+                <{/foreach}>
+            </span>
+        <{/if}>
+    </h4>
+</div>
 <div class='panel-body'>
     <div class="row wge-row1">
         <div class="col-xs-12 col-sm-5">
-            <img class="img-responsive img-fluid" src='<{$wgevents_upload_eventlogos_url|default:false}><{$event.submitter}>/<{$event.logo}>' alt='<{$event.name}>' >
+            <img class="img-responsive img-fluid" src='<{$wgevents_upload_eventlogos_url|default:false}>/<{$event.submitter}>/<{$event.logo}>' alt='<{$event.name_clean|default:''}>' title='<{$event.name_clean|default:''}>' >
         </div>
         <div class="col-xs-12 col-sm-6 wge-panel-details1"><{$event.desc_text}></div>
     </div>
@@ -14,14 +25,21 @@
                 <div class="col-xs-12 col-sm-9 col-lg-10"><{$event.identifier|default:''}></div>
             </div>
         <{/if}>
-        <div class="row">
-            <div class="col-xs-12 col-sm-3 col-lg-2"><{$smarty.const._MA_WGEVENTS_EVENT_DATEFROM}>: </div>
-            <div class="col-xs-12 col-sm-9 col-lg-10"><{$event.datefrom_text}></div>
-        </div>
-        <div class="row">
-            <div class="col-xs-12 col-sm-3 col-lg-2"><{$smarty.const._MA_WGEVENTS_EVENT_DATETO}>: </div>
-            <div class="col-xs-12 col-sm-9 col-lg-10"><{$event.dateto_text}></div>
-        </div>
+        <{if $event.allday_single|default:false}>
+            <div class="row">
+                <div class="col-xs-12 col-sm-3 col-lg-2"><{$smarty.const._MA_WGEVENTS_EVENT_DATE}>: </div>
+                <div class="col-xs-12 col-sm-9 col-lg-10"><{$event.datefrom_text}></div>
+            </div>
+        <{else}>
+            <div class="row">
+                <div class="col-xs-12 col-sm-3 col-lg-2"><{$smarty.const._MA_WGEVENTS_EVENT_DATEFROM}>: </div>
+                <div class="col-xs-12 col-sm-9 col-lg-10"><{$event.datefrom_text}></div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-3 col-lg-2"><{$smarty.const._MA_WGEVENTS_EVENT_DATETO}>: </div>
+                <div class="col-xs-12 col-sm-9 col-lg-10"><{$event.dateto_text}></div>
+            </div>
+        <{/if}>
         <{if $event.contact|default:false}>
             <div class="row">
                 <div class="col-xs-12 col-sm-3 col-lg-2"><{$smarty.const._MA_WGEVENTS_EVENT_CONTACT}>: </div>
@@ -186,8 +204,8 @@
         <{else}>
             <a class='btn btn-success right wge-btn' href='event.php?op=show&amp;id=<{$event.id}>&amp;start=<{$start}>&amp;limit=<{$limit}>' title='<{$smarty.const._MA_WGEVENTS_DETAILS}>'><{$smarty.const._MA_WGEVENTS_DETAILS}></a>
         <{/if}>
-        <{if $event.register_use|default:'' &&  $permRegister|default:false}>
-            <a class='btn btn-<{if !$event.regenabled|default:false}>outline-<{/if}>primary right wge-btn <{if !$event.regenabled|default:false}>disabled<{/if}>' href='registration.php?op=listeventmy&amp;redir=listeventmy&amp;evid=<{$event.id}>' title='<{$smarty.const._MA_WGEVENTS_GOTO_REGISTRATION}>'><{$smarty.const._MA_WGEVENTS_GOTO_REGISTRATION}></a>
+        <{if $event.register_use|default:'' && $permRegister|default:false}>
+            <a class='btn btn-<{if !$event.regenabled|default:false}>outline-<{/if}>primary right wge-btn' href='registration.php?op=listeventmy&amp;redir=listeventmy&amp;evid=<{$event.id}>' title='<{$smarty.const._MA_WGEVENTS_GOTO_REGISTRATION}>'><{$smarty.const._MA_WGEVENTS_GOTO_REGISTRATION}></a>
         <{/if}>
         <{if $event.permEdit|default:false || $permApprove|default:false}>
             <br><a class='btn btn-primary right wge-btn' href='event.php?op=edit&amp;id=<{$event.id}>&amp;start=<{$start}>&amp;limit=<{$limit}>' title='<{$smarty.const._EDIT}>'><{$smarty.const._EDIT}></a>

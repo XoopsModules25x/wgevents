@@ -60,6 +60,7 @@ class Category extends \XoopsObject
         $this->initVar('bordercolor', \XOBJ_DTYPE_TXTBOX);
         $this->initVar('bgcolor', \XOBJ_DTYPE_TXTBOX);
         $this->initVar('othercss', \XOBJ_DTYPE_TXTBOX);
+        $this->initVar('type', \XOBJ_DTYPE_INT);
         $this->initVar('status', \XOBJ_DTYPE_INT);
         $this->initVar('weight', \XOBJ_DTYPE_INT);
         $this->initVar('identifier', \XOBJ_DTYPE_TXTBOX);
@@ -166,10 +167,17 @@ class Category extends \XoopsObject
         $form->addElement($catIdentifier);
         // Form Radio catStatus
         $catStatus = $this->isNew() ? Constants::STATUS_OFFLINE : $this->getVar('status');
-        $catStatusSelect = new \XoopsFormRadio(\_MA_WGEVENTS_STATUS, 'status', $catStatus);
-        $catStatusSelect->addOption(Constants::STATUS_OFFLINE, \_MA_WGEVENTS_STATUS_OFFLINE);
-        $catStatusSelect->addOption(Constants::STATUS_ONLINE, \_MA_WGEVENTS_STATUS_ONLINE);
-        $form->addElement($catStatusSelect);
+        $catStatusRadio = new \XoopsFormRadio(\_MA_WGEVENTS_STATUS, 'status', $catStatus);
+        $catStatusRadio->addOption(Constants::STATUS_OFFLINE, \_MA_WGEVENTS_STATUS_OFFLINE);
+        $catStatusRadio->addOption(Constants::STATUS_ONLINE, \_MA_WGEVENTS_STATUS_ONLINE);
+        $form->addElement($catStatusRadio);
+        // Form Radio catType
+        $catType = $this->isNew() ? Constants::CATEGORY_TYPE_BOTH : (int)$this->getVar('type');
+        $catTypeRadio = new \XoopsFormRadio(\_AM_WGEVENTS_CATEGORY_TYPE, 'type', $catType);
+        $catTypeRadio->addOption(Constants::CATEGORY_TYPE_MAIN, \_AM_WGEVENTS_CATEGORY_TYPE_MAIN);
+        $catTypeRadio->addOption(Constants::CATEGORY_TYPE_SUB, \_AM_WGEVENTS_CATEGORY_TYPE_SUB);
+        $catTypeRadio->addOption(Constants::CATEGORY_TYPE_BOTH, \_AM_WGEVENTS_CATEGORY_TYPE_BOTH);
+        $form->addElement($catTypeRadio);
         // Form Text catWeight
         $catWeight = $this->getVar('weight');
         if ($this->isNew()) {
@@ -266,6 +274,20 @@ class Category extends \XoopsObject
         $editorMaxchar = $helper->getConfig('admin_maxchar');
         $ret['desc_short']       = $utility::truncateHtml($ret['desc_text'], $editorMaxchar);
         $ret['status_text']      = Utility::getStatusText($this->getVar('status'));
+        $catType = (int)$this->getVar('type');
+        switch ($catType) {
+            case Constants::CATEGORY_TYPE_MAIN:
+                $catTypeText = \_AM_WGEVENTS_CATEGORY_TYPE_MAIN;
+                break;
+            case Constants::CATEGORY_TYPE_SUB:
+                $catTypeText = \_AM_WGEVENTS_CATEGORY_TYPE_SUB;
+                break;
+            case Constants::CATEGORY_TYPE_BOTH:
+            default:
+                $catTypeText = \_AM_WGEVENTS_CATEGORY_TYPE_BOTH;
+                break;
+        }
+        $ret['type_text']        = $catTypeText;
         $ret['datecreated_text'] = \formatTimestamp($this->getVar('datecreated'), 's');
         $ret['submitter_text']   = \XoopsUser::getUnameFromId($this->getVar('submitter'));
         return $ret;

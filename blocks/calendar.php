@@ -60,7 +60,6 @@ function b_wgevents_calendar_show($options)
 
     $filterFrom = $dayStart;
     $filterTo   = $dayEnd;
-    $filterCat     = 0;
     $filterSort    = 'datefrom-ASC';
     [$sortBy, $orderBy] = \explode('-', $filterSort);
 
@@ -98,7 +97,7 @@ function b_wgevents_calendar_show($options)
     // get categories collection
     $categories = $categoryHandler->getCollection();
     // get events of period
-    $events = $eventHandler->getEvents(0, 0, $filterFrom, $filterTo, $filterCat, $sortBy, $orderBy);
+    $events = $eventHandler->getEvents(0, 0, $filterFrom, $filterTo, $sortBy, $orderBy);
 
     $eventsCount = \count($events);
     if ($eventsCount > 0) {
@@ -137,7 +136,7 @@ function b_wgevents_calendar_show($options)
         }
     }
 
-    $GLOBALS['xoopsTpl']->assign('wgevents_upload_eventlogos_url', \WGEVENTS_UPLOAD_EVENTLOGOS_URL . '/');
+    $GLOBALS['xoopsTpl']->assign('wgevents_upload_eventlogos_url', \WGEVENTS_UPLOAD_EVENTLOGOS_URL);
     $GLOBALS['xoopsTpl']->assign('wgevents_url', \WGEVENTS_URL . '/');
 
     //create dummy return in order to show block

@@ -95,3 +95,63 @@ ul.menu > li + li:before {
 .wge-form-goto {
     margin:20px 0;
 }
+
+/*form filter events by cat*/
+.wge-filter-cat-form,
+.wge-filter-cat-button {
+    margin:20px 0;
+    padding:15px;
+    border:1px solid #eeeeee;
+}
+
+/*block bcard*/
+.wge-block-bcard-group {
+    padding:10px;
+}
+.wge-block-bcard-group-left {
+    padding:20px 20px 20px 0;
+}
+.wge-block-bcard-group-right {
+    padding:20px 0 20px 20px;
+}
+@media (max-width: 575px) {
+    .wge-block-bcard-group-left,
+    .wge-block-bcard-group-right  {
+        padding:10px;
+    }
+}
+.wge-block-bcard-itemPanel {
+    background-color:#ffffff;
+    border:1px solid #cccccc;
+}
+.wge-block-bcard-itemPanel div {
+    padding-left:0;
+    padding-right:0;
+}
+.wge-block-bcard-itemHeader {
+    border-bottom: 1px solid #337ab7;
+}
+.wge-block-bcard-itemTitle {
+    padding:10px 10px 0 10px;
+}
+.wge-block-bcard-itemInfo {
+    padding:5px 0;
+}
+.wge-block-bcard-itemInfo .glyphicon {
+    padding:0 5px 0 15px;
+}
+.wge-block-bcard-itemText {
+    padding:10px;
+    border-bottom: 1px solid #337ab7;
+}
+.wge-block-bcard-itemText img {
+    padding:0;
+    border: 1px solid #cccccc;
+}
+.wge-block-bcard-itemFooter {
+    width:100%;
+    padding:10px;
+    margin:10px 0;
+    height:50px;
+    text-align:center;
+}

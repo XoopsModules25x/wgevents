@@ -170,11 +170,17 @@ require_once __DIR__ . '/common.php';
 \define('_MI_WGEVENTS_INDEX_DISPLAY_NONE', 'Do not display');
 \define('_MI_WGEVENTS_INDEX_DISPLAY_LIST', 'Show as list');
 \define('_MI_WGEVENTS_INDEX_DISPLAY_BUTTON', 'Show as button');
+\define('_MI_WGEVENTS_INDEX_DISPLAY_FORM', 'Show as form');
 \define('_MI_WGEVENTS_INDEX_DISPLAY_BCARDS', 'Use Bootstrap Cards');
 \define('_MI_WGEVENTS_INDEX_DISPLAYCATS', 'Display type for categories on index page');
 \define('_MI_WGEVENTS_INDEX_DISPLAYCATS_DESC', 'Please define how you want to displayed categories on index page');
 \define('_MI_WGEVENTS_INDEX_DISPLAYEVENTS', 'Display type for events on index page');
 \define('_MI_WGEVENTS_INDEX_DISPLAYEVENTS_DESC', 'Please define how you want to displayed next events on index page');
+\define('_MI_WGEVENTS_GROUP_EVENT', 'Event page');
+\define('_MI_WGEVENTS_EVENT_DISPLAYCATS', 'Display type for categories on event page');
+\define('_MI_WGEVENTS_EVENT_DISPLAYCATS_DESC', 'Please define how you want to displayed categories on event page');
+\define('_MI_WGEVENTS_EVENT_DISPLAYEVENTS', 'Display type for events on event page');
+\define('_MI_WGEVENTS_EVENT_DISPLAYEVENTS_DESC', 'Please define how you want to displayed next events on event page');
 //Misc
 \define('_MI_WGEVENTS_GROUP_MISC', 'Misc');
 \define('_MI_WGEVENTS_KEYWORDS', 'Keywords');

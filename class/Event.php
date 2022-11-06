@@ -62,11 +62,13 @@ class Event extends \XoopsObject
     {
         $this->initVar('id', \XOBJ_DTYPE_INT);
         $this->initVar('catid', \XOBJ_DTYPE_INT);
+        $this->initVar('subcats', \XOBJ_DTYPE_OTHER);
         $this->initVar('name', \XOBJ_DTYPE_TXTBOX);
         $this->initVar('logo', \XOBJ_DTYPE_TXTBOX);
         $this->initVar('desc', \XOBJ_DTYPE_OTHER);
         $this->initVar('datefrom', \XOBJ_DTYPE_INT);
         $this->initVar('dateto', \XOBJ_DTYPE_INT);
+        $this->initVar('allday', \XOBJ_DTYPE_INT);
         $this->initVar('contact', \XOBJ_DTYPE_TXTAREA);
         $this->initVar('email', \XOBJ_DTYPE_TXTBOX);
         $this->initVar('url', \XOBJ_DTYPE_TXTBOX);
@@ -163,15 +165,18 @@ class Event extends \XoopsObject
                 $form->addElement(new \XoopsFormText(\_MA_WGEVENTS_EVENT_IDENTIFIER, 'identifier', 50, 255, $this->getVar('identifier')));
             } else {
                 $form->addElement(new \XoopsFormLabel(\_MA_WGEVENTS_EVENT_IDENTIFIER, $this->getVar('identifier')));
+                $form->addElement(new \XoopsFormHidden('identifier', (string)$this->getVar('identifier')));
             }
         }
         // Form Table categories
         $evCatidSelect = new \XoopsFormSelect(\_MA_WGEVENTS_EVENT_CATID, 'catid', $this->getVar('catid'));
-        $crCategory = new \CriteriaCompo();
-        $crCategory->setSort('weight ASC, id');
-        $crCategory->setOrder('ASC');
-        $evCatidSelect->addOptionArray($categoryHandler->getList($crCategory));
+        $evCatidSelect->addOptionArray($categoryHandler->getAllCatsOnline(Constants::CATEGORY_TYPE_MAIN));
         $form->addElement($evCatidSelect);
+        // Form Table sub categories
+        $evSubCats = $this->isNew() ? [] : \unserialize($this->getVar('subcats'));
+        $evSubCatsSelect = new \XoopsFormCheckBox(\_MA_WGEVENTS_EVENT_SUBCATS, 'subcats', $evSubCats);
+        $evSubCatsSelect->addOptionArray($categoryHandler->getAllCatsOnline(Constants::CATEGORY_TYPE_SUB));
+        $form->addElement($evSubCatsSelect);
         // Form Text evName
         $form->addElement(new \XoopsFormText(\_MA_WGEVENTS_EVENT_NAME, 'name', 50, 255, $this->getVar('name')), true);
         // Form Editor DhtmlTextArea evDesc
@@ -218,9 +223,18 @@ class Event extends \XoopsObject
         $imageTray->addElement(new \XoopsFormLabel(\_AM_WGEVENTS_FORM_UPLOAD_IMG_WIDTH, $helper->getConfig('maxwidth_image') . ' px'));
         $imageTray->addElement(new \XoopsFormLabel(\_AM_WGEVENTS_FORM_UPLOAD_IMG_HEIGHT, $helper->getConfig('maxheight_image') . ' px'));
         $form->addElement($imageTray);
-        // Form Text Date Select evDatefrom
+        // Form Tray Datefrom
+        $evDatefromTray = new Forms\FormElementTray(\_MA_WGEVENTS_EVENT_DATEFROM, '&nbsp;');
+        // Text Date Select evDatefrom
         $evDatefrom = ($this->isNew() && 0 == (int)$this->getVar('datefrom')) ? \time() : $this->getVar('datefrom');
-        $form->addElement(new \XoopsFormDateTime(\_MA_WGEVENTS_EVENT_DATEFROM, 'datefrom', '', $evDatefrom), true);
+        $evDatefromTray->addElement(new \XoopsFormDateTime('', 'datefrom', '', $evDatefrom), true);
+        // Text Date Checkbox evAllday
+        $evAllday = $this->isNew() ? 0 : (int)$this->getVar('allday');
+        $checkAllday = new \XoopsFormCheckBox('', 'allday', $evAllday);
+        $checkAllday->addOption(1, \_MA_WGEVENTS_EVENT_ALLDAY);
+        $checkAllday->setExtra(" onclick='toogleAllday()' ");
+        $evDatefromTray->addElement($checkAllday);
+        $form->addElement($evDatefromTray);
         // Form Text Date Select evDateto
         $evDateto = ($this->isNew() && 0 == (int)$this->getVar('dateto')) ? \time() : $this->getVar('dateto');
         $form->addElement(new \XoopsFormDateTime(\_MA_WGEVENTS_EVENT_DATETO, 'dateto', '', $evDateto));
@@ -526,20 +540,57 @@ class Event extends \XoopsObject
         $helper  = \XoopsModules\Wgevents\Helper::getInstance();
         $utility = new \XoopsModules\Wgevents\Utility();
         $ret = $this->getValues($keys, $format, $maxDepth);
+        $adminMaxchar = $helper->getConfig('admin_maxchar');
+        $userMaxchar  = $helper->getConfig('user_maxchar');
         $categoryHandler = $helper->getHandler('Category');
         $categoryObj = $categoryHandler->get($this->getVar('catid'));
-        $adminMaxchar = $helper->getConfig('admin_maxchar');
-        $userMaxchar = $helper->getConfig('user_maxchar');
         $catName = '';
+        $catLogo = '';
         if (\is_object($categoryObj)) {
             $catName = $categoryObj->getVar('name');
+            if ('blank.gif' !== (string)$categoryObj->getVar('logo')) {
+                $catLogo = $categoryObj->getVar('logo');
+            }
         }
-        $ret['catname']          = $catName;
+        $ret['catname'] = $catName;
+        $ret['catlogo'] = $catLogo;
+        $subcatsArr = [];
+        $subcats = \unserialize($this->getVar('subcats'));
+        if (\count($subcats) > 0) {
+            foreach ($subcats as $subcat) {
+                $subcategoryObj = $categoryHandler->get($subcat);
+                if (\is_object($subcategoryObj)) {
+                    $subcatsArr[$subcat]['id'] = $subcat;
+                    $subcatsArr[$subcat]['name'] = $subcategoryObj->getVar('name');
+                    $subcatsArr[$subcat]['logo'] = $subcat;
+                    if ('blank.gif' !== (string)$subcategoryObj->getVar('logo')) {
+                        $subcatsArr[$subcat]['logo'] = $subcategoryObj->getVar('logo');
+                    }
+                }
+            }
+        }
+        $ret['subcats_arr']      = $subcatsArr;
+        $ret['name_clean']       = \htmlspecialchars($this->getVar('name'), ENT_QUOTES | ENT_HTML5);
         $ret['desc_text']        = $this->getVar('desc', 'e');
         $ret['desc_short_admin'] = $utility::truncateHtml($ret['desc_text'], $adminMaxchar);
         $ret['desc_short_user']  = $utility::truncateHtml($ret['desc_text'], $userMaxchar);
-        $ret['datefrom_text']    = \formatTimestamp($this->getVar('datefrom'), 'm');
-        $ret['dateto_text']      = \formatTimestamp($this->getVar('dateto'), 'm');
+        $evAllday                = (int)$this->getVar('allday');
+        $ret['allday_single']    = 0;
+        if ($evAllday > 0) {
+            $datefrom_text = \formatTimestamp($this->getVar('datefrom'), 's');
+            $dateto_text   = \formatTimestamp($this->getVar('dateto'), 's');
+            $ret['datefrom_text'] = $datefrom_text . ' ' . \_MA_WGEVENTS_EVENT_ALLDAY;
+            if ($datefrom_text === $dateto_text) {
+                //single allday
+                $ret['allday_single'] = 1;
+                $ret['dateto_text']   = ' ';
+            } else {
+                $ret['dateto_text']   = $dateto_text . ' ' . \_MA_WGEVENTS_EVENT_ALLDAY;
+            }
+        } else {
+            $ret['datefrom_text']    = \formatTimestamp($this->getVar('datefrom'), 'm');
+            $ret['dateto_text']      = \formatTimestamp($this->getVar('dateto'), 'm');
+        }
         $evLocation              = $this->getVar('location', 'e');
         $ret['location_text']    = $evLocation;
         if ($evLocation) {

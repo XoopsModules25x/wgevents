@@ -17,13 +17,11 @@ class SimpleCalendarforms {
      * @param array $arrMonth
      * @param int   $month
      * @param int   $year
-     * @param int   $filterCat
      * @param bool  $action
      * @return Forms\FormInline
      */
-    public function getFormGotoMonth($arrMonth, $month = 0, $year = 0, $filterCat = 0, $action = false)
+    public function getFormGotoMonth($arrMonth, $month = 0, $year = 0, $action = false)
     {
-        $helper = \XoopsModules\Wgevents\Helper::getInstance();
         if (!$action) {
             $action = $_SERVER['REQUEST_URI'];
         }
@@ -49,7 +47,6 @@ class SimpleCalendarforms {
 
         // To Save
         $form->addElement(new \XoopsFormHidden('op', 'list'));
-        $form->addElement(new \XoopsFormHidden('filterCat', $filterCat));
         $form->addElement(new \XoopsFormButton('', 'submit_monthyear' , \_MA_WGEVENTS_CAL_SHOW, 'submit'));
         return $form;
     }

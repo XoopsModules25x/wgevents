@@ -43,6 +43,7 @@ require_once __DIR__ . '/admin.php';
 \define('_MA_WGEVENTS_READMORE', 'Mehr lesen');
 \define('_MA_WGEVENTS_READLESS', 'Weniger lesen');
 \define('_MA_WGEVENTS_SEND_ALL', 'An alle senden');
+\define('_MA_WGEVENTS_APPLY_FILTER', 'Filter anwenden');
 // Status
 \define('_MA_WGEVENTS_STATUS', 'Status');
 \define('_MA_WGEVENTS_STATUS_NONE', 'Kein Status');
@@ -76,13 +77,17 @@ require_once __DIR__ . '/admin.php';
 // Caption of Event
 \define('_MA_WGEVENTS_EVENT_ID', 'Id');
 \define('_MA_WGEVENTS_EVENT_IDENTIFIER', 'Eindeutige Kennung der Veranstaltung');
-\define('_MA_WGEVENTS_EVENT_CATID', 'Kategorie Id');
+\define('_MA_WGEVENTS_EVENT_CATID', 'Hauptkategorie');
+\define('_MA_WGEVENTS_EVENT_SUBCATS', 'Unterkategorien');
 \define('_MA_WGEVENTS_EVENT_NAME', 'Name');
 \define('_MA_WGEVENTS_EVENT_LOGO', 'Logo');
 \define('_MA_WGEVENTS_EVENT_LOGO_UPLOADS', 'Logos in deinem Verzeichnis:');
 \define('_MA_WGEVENTS_EVENT_DESC', 'Beschreibung');
+\define('_MA_WGEVENTS_EVENT_DATE', 'Datum');
 \define('_MA_WGEVENTS_EVENT_DATEFROM', 'Datum von');
 \define('_MA_WGEVENTS_EVENT_DATETO', 'Datum bis');
+\define('_MA_WGEVENTS_EVENT_ALLDAY', 'Ganztags');
+\define('_MA_WGEVENTS_EVENT_TODAY', 'Heute');
 \define('_MA_WGEVENTS_EVENT_CONTACT', 'Kontakt');
 \define('_MA_WGEVENTS_EVENT_EMAIL', 'E-Mail');
 \define('_MA_WGEVENTS_EVENT_EMAIL_SENDTO', 'E-Mail an der Veranstalter senden');
@@ -133,6 +138,7 @@ require_once __DIR__ . '/admin.php';
 \define('_MA_WGEVENTS_CATEGORY_NOEVENTS', 'Keine Veranstaltungen verfügbar');
 \define('_MA_WGEVENTS_CATEGORY_EVENT', '1 Veranstaltung');
 \define('_MA_WGEVENTS_CATEGORY_EVENTS', '%s Veranstaltungen');
+\define('_MA_WGEVENTS_CATEGORY_FILTER', 'Filter nach Kategorien:');
 // Registration
 \define('_MA_WGEVENTS_REGISTRATION', 'Anmeldung');
 \define('_MA_WGEVENTS_REGISTRATION_DETAILS', 'Details Anmeldung');

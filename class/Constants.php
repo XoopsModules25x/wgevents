@@ -113,4 +113,9 @@ interface Constants
     public const TEXTBLOCK_CLASS_PRIVATE = 0;
     public const TEXTBLOCK_CLASS_PUBLIC  = 1;
 
+    // Constants for category types
+    public const CATEGORY_TYPE_BOTH = 0;
+    public const CATEGORY_TYPE_MAIN = 1;
+    public const CATEGORY_TYPE_SUB  = 2;
+
 }

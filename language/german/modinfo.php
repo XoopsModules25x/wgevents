@@ -74,7 +74,7 @@ require_once __DIR__ . '/common.php';
 \define('_MI_WGEVENTS_EVENTS_BLOCK_RANDOM_DESC', 'Anzeige von zufälligen Veranstaltungen');
 \define('_MI_WGEVENTS_EVENTS_BLOCK_SPOTLIGHT', 'Bestimmte Veranstaltungen');
 \define('_MI_WGEVENTS_EVENTS_BLOCK_SPOTLIGHT_DESC', 'Anzeige der bestimmten Veranstaltungen');
-\define('_MI_WGEVENTS_EVENTS_BLOCK_COMING', 'Block kommmende Veranstaltungen');
+\define('_MI_WGEVENTS_EVENTS_BLOCK_COMING', 'Block kommende Veranstaltungen');
 \define('_MI_WGEVENTS_EVENTS_BLOCK_COMING_DESC', 'Block mit den nächsten kommenden Veranstaltungen');
 // Config
 //Display
@@ -168,11 +168,17 @@ require_once __DIR__ . '/common.php';
 \define('_MI_WGEVENTS_INDEX_DISPLAY_NONE', 'Keine Anzeige');
 \define('_MI_WGEVENTS_INDEX_DISPLAY_LIST', 'Als Liste anzeigen');
 \define('_MI_WGEVENTS_INDEX_DISPLAY_BUTTON', 'Als Buttons anzeigen');
+\define('_MI_WGEVENTS_INDEX_DISPLAY_FORM', 'Als Formular anzeigen');
 \define('_MI_WGEVENTS_INDEX_DISPLAY_BCARDS', 'Bootstrap Cards verwenden');
 \define('_MI_WGEVENTS_INDEX_DISPLAYCATS', 'Anzeige Kategorien auf Index-Seite');
 \define('_MI_WGEVENTS_INDEX_DISPLAYCATS_DESC', 'Bitte definiere wie die Kategorien auf der Indexseite dargestellt werden sollen');
 \define('_MI_WGEVENTS_INDEX_DISPLAYEVENTS', 'Anzeige Veranstaltungen auf Index-Seite');
 \define('_MI_WGEVENTS_INDEX_DISPLAYEVENTS_DESC', 'Bitte definiere wie die nächsten Veranstaltungen auf der Indexseite dargestellt werden sollen');
+\define('_MI_WGEVENTS_GROUP_EVENT', 'Event-Seite');
+\define('_MI_WGEVENTS_EVENT_DISPLAYCATS', 'Anzeige Kategorien auf Event-Seite');
+\define('_MI_WGEVENTS_EVENT_DISPLAYCATS_DESC', 'Bitte definiere wie die Kategorien auf der Eventseite dargestellt werden sollen');
+\define('_MI_WGEVENTS_EVENT_DISPLAYEVENTS', 'Anzeige Veranstaltungen auf Event-Seite');
+\define('_MI_WGEVENTS_EVENT_DISPLAYEVENTS_DESC', 'Bitte definiere wie die nächsten Veranstaltungen auf der Eventseite dargestellt werden sollen');
 //Misc
 \define('_MI_WGEVENTS_GROUP_MISC', 'Verschiedenes');
 \define('_MI_WGEVENTS_KEYWORDS', 'Schlüsselworter');

@@ -55,7 +55,7 @@ switch ($op) {
         $GLOBALS['xoopsTpl']->assign('eventCount', $eventCount);
         $GLOBALS['xoopsTpl']->assign('wgevents_url', \WGEVENTS_URL);
         $GLOBALS['xoopsTpl']->assign('wgevents_upload_url', \WGEVENTS_UPLOAD_URL);
-        $GLOBALS['xoopsTpl']->assign('wgevents_upload_eventlogos_url', \WGEVENTS_UPLOAD_EVENTLOGOS_URL . '/');
+        $GLOBALS['xoopsTpl']->assign('wgevents_upload_eventlogos_url', \WGEVENTS_UPLOAD_EVENTLOGOS_URL);
         $GLOBALS['xoopsTpl']->assign('use_gmaps', $helper->getConfig('use_gmaps'));
         $GLOBALS['xoopsTpl']->assign('use_wggallery', $helper->getConfig('use_wggallery'));
         $GLOBALS['xoopsTpl']->assign('use_register', $helper->getConfig('use_register'));
@@ -96,6 +96,8 @@ switch ($op) {
         // Set Vars
         $uploaderErrors = '';
         $eventObj->setVar('catid', Request::getInt('catid'));
+        $subCats = \serialize(Request::getArray('subcats'));
+        $eventObj->setVar('subcats', $subCats);
         $eventObj->setVar('name', Request::getString('name'));
         // Set Var logo
         require_once \XOOPS_ROOT_PATH . '/class/uploader.php';
@@ -149,6 +151,7 @@ switch ($op) {
         $eventDatetoObj->setTime(0, 0);
         $eventDateto = $eventDatetoObj->getTimestamp() + (int)$eventDatetoArr['time'];
         $eventObj->setVar('dateto', $eventDateto);
+        $eventObj->setVar('allday', Request::getInt('allday'));
         $eventObj->setVar('contact', Request::getString('contact'));
         $eventObj->setVar('email', Request::getString('email'));
         $eventObj->setVar('url', Request::getString('url'));

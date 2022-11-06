@@ -93,6 +93,9 @@ function xoops_module_update_wgevents($module, $prev_version = null)
     if ($moduleVersion < 104) {
         wgevents_update_fee($module);
     }
+    if ($moduleVersion < 105) {
+        wgevents_update_subcats($module);
+    }
 
     $errors = $module->getErrors();
     if (!empty($errors)) {
@@ -121,6 +124,31 @@ function wgevents_update_fee($module)
             if (!$GLOBALS['xoopsDB']->queryF($sql)) {
                 xoops_error($GLOBALS['xoopsDB']->error() . '<br>' . $sql);
                 $module->setErrors("Error when updating 'fee' in table '$table'.");
+            }
+        }
+    }
+    return true;
+}
+/**
+ * @param $module
+ *
+ * @return bool
+ */
+function wgevents_update_subcats($module)
+{
+    // fix wrong default value
+    $table   = $GLOBALS['xoopsDB']->prefix('wgevents_event');
+    $result  = $GLOBALS['xoopsDB']->queryF('SELECT * FROM `' . $table . '`');
+    $numRows = $GLOBALS['xoopsDB']->getRowsNum($result);
+    if ($numRows > 0) {
+        while ($row = $GLOBALS['xoopsDB']->fetchArray($result)) {
+            if ("'" === (string)$row['subcats']) {
+                $newValue = \serialize([]);
+                $sql = 'UPDATE `' . $table . "` SET `subcats` = '" . $newValue . "' WHERE `" . $table . '`.`id` = ' . $row['id'];
+                if (!$GLOBALS['xoopsDB']->queryF($sql)) {
+                    xoops_error($GLOBALS['xoopsDB']->error() . '<br>' . $sql);
+                    $module->setErrors("Error when updating 'fee' in table '$table'.");
+                }
             }
         }
     }

@@ -1,5 +1,24 @@
 <{include file='db:wgevents_header.tpl' }>
 
+<!-- start display categories -->
+<{if $event_displaycats|default:'' != 'none'}>
+    <{if $categoriesCount|default:0 > 0}>
+        <div class="col-12 wge-filter-cat-<{$event_displaycats}>">
+            <{if $event_displaycats|default:'' == 'form'}>
+                <{include file="db:wgevents_category_index_form.tpl"}>
+            <{else}>
+                <!-- Start cat loop -->
+
+                <{foreach item=category from=$categories name=categories}>
+                    <{include file="db:wgevents_category_index_$event_displaycats.tpl" category=$category}>
+                <{/foreach}>
+                <!-- End cat loop -->
+            <{/if}>
+        </div>
+    <{/if}>
+<{/if}>
+<!-- end display categories -->
+
 <{if $error|default:''}>
     <div class="col-12 center wge-error-msg"><{$error|default:false}></div>
 <{/if}>
