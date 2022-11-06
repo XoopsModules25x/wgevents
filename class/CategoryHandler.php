@@ -248,7 +248,7 @@ class CategoryHandler extends \XoopsPersistableObjectHandler
     /**
      * @public function getCategoriesForFilter: get all cats wtih number of events for displying as filter
      * @param string $eventDisplayCats
-     * @param string $filterCats
+     * @param array  $filterCats
      * @param string $op
      * @param bool   $useGroups
      * @param string $filter

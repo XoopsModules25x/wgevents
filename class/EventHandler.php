@@ -233,8 +233,8 @@ class EventHandler extends \XoopsPersistableObjectHandler
             if ('past' == $op) {
                 // list events before now
                 $crEvent->add(new \Criteria('datefrom', $dateFrom, '<'));
-                $crEvent->setSort('datefrom');
-                $crEvent->setOrder('DESC');
+                $sortBy  = 'datefrom';
+                $orderBy = 'DESC';
             } else {
                 // calendar view:
                 // - event start is between dateFrom and dateTo
@@ -260,8 +260,8 @@ class EventHandler extends \XoopsPersistableObjectHandler
                 $crEvent->add($crEventFromTo);
 
                 unset($crEventStart, $crEventEnd, $crEventFromTo);
-                $crEvent->setSort('datefrom');
-                $crEvent->setOrder('ASC');
+                $sortBy  = 'datefrom';
+                $orderBy = 'ASC';
             }
             if (\count($filterCats) > 0) {
                 $crEventCats = new \CriteriaCompo();
@@ -272,7 +272,8 @@ class EventHandler extends \XoopsPersistableObjectHandler
                 $crEvent->add($crEventCats);
             }
         }
-
+        $crEvent->setSort($sortBy);
+        $crEvent->setOrder($orderBy);
         $eventsCount = $this->getCount($crEvent);
         if ($eventsCount > 0) {
             if ($limit > 0) {

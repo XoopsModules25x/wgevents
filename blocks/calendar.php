@@ -60,7 +60,6 @@ function b_wgevents_calendar_show($options)
 
     $filterFrom = $dayStart;
     $filterTo   = $dayEnd;
-    $filterCat     = 0;
     $filterSort    = 'datefrom-ASC';
     [$sortBy, $orderBy] = \explode('-', $filterSort);
 

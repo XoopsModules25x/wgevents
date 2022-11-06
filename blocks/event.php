@@ -64,25 +64,26 @@ function b_wgevents_event_show($options)
         case 'last':
         default:
             // For the block: events last
-            $sortBy = 'datecreated';
+            $sortBy  = 'datecreated';
             $orderBy = 'DESC';
             break;
         case 'new':
             // For the block: events new
             // new since last week: 7 * 24 * 60 * 60 = 604800
             $dateCreated = \time() - 604800;
-            $sortBy = 'datecreated';
-            $orderBy = 'ASC';
+            $sortBy      = 'datecreated';
+            $orderBy     = 'ASC';
             break;
         case 'random':
             // For the block: events random
-            $sortBy = 'RAND()';
+            $sortBy  = 'RAND()';
+            $orderBy = '';
             break;
         case 'coming':
             // For the block: next events
             $dateFrom = \time();
-            $sortBy = 'datefrom';
-            $orderBy = 'ASC';
+            $sortBy   = 'datefrom';
+            $orderBy  = 'ASC';
             break;
     }
 

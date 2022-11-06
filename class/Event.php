@@ -165,7 +165,7 @@ class Event extends \XoopsObject
                 $form->addElement(new \XoopsFormText(\_MA_WGEVENTS_EVENT_IDENTIFIER, 'identifier', 50, 255, $this->getVar('identifier')));
             } else {
                 $form->addElement(new \XoopsFormLabel(\_MA_WGEVENTS_EVENT_IDENTIFIER, $this->getVar('identifier')));
-                $form->addElement(new \XoopsFormHidden('identifier', $this->getVar('identifier')));
+                $form->addElement(new \XoopsFormHidden('identifier', (string)$this->getVar('identifier')));
             }
         }
         // Form Table categories
