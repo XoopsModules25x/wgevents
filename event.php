@@ -50,7 +50,11 @@ $start  = Request::getInt('start');
 $limit  = Request::getInt('limit', $helper->getConfig('userpager'));
 $GLOBALS['xoopsTpl']->assign('start', $start);
 $GLOBALS['xoopsTpl']->assign('limit', $limit);
+$catId  = Request::getInt('catid');
 $filterCats = Request::getArray('filter_cats');
+if ($catId > 0 && 0 == \count($filterCats)) {
+    $filterCats[$catId] = $catId;
+}
 $urlCats = Request::getString('cats');
 if (0 == \count($filterCats) && '' != $urlCats) {
     $filterCats = \explode(',', $urlCats);
@@ -96,8 +100,8 @@ switch ($op) {
     case 'list':
     case 'past':
     default:
-        $GLOBALS['xoopsTpl']->assign('wgevents_upload_eventlogos_url', \WGEVENTS_UPLOAD_EVENTLOGOS_URL . '/');
-        $GLOBALS['xoopsTpl']->assign('wgevents_upload_catlogos_url', \WGEVENTS_UPLOAD_CATLOGOS_URL . '/');
+        $GLOBALS['xoopsTpl']->assign('wgevents_upload_eventlogos_url', \WGEVENTS_UPLOAD_EVENTLOGOS_URL);
+        $GLOBALS['xoopsTpl']->assign('wgevents_upload_catlogos_url', \WGEVENTS_UPLOAD_CATLOGOS_URL);
         $GLOBALS['xoopsTpl']->assign('wgevents_icons_url_24', \WGEVENTS_ICONS_URL_24 . '/');
         $GLOBALS['xoopsTpl']->assign('filter', $filter);
 
@@ -106,72 +110,15 @@ switch ($op) {
         $useGroups = (bool)$helper->getConfig('use_groups');
         $GLOBALS['xoopsTpl']->assign('use_groups', $useGroups);
 
+        // get categories if they should be displayed
         if ('none' != $eventDisplayCats && !$showItem) {
-            $crCategory = new \CriteriaCompo();
-            $crCategory->setSort('weight');
-            $crCategory->setOrder('ASC');
-            $categoriesCount = $categoryHandler->getCount($crCategory);
-            $GLOBALS['xoopsTpl']->assign('categoriesCount', $categoriesCount);
-            if ($categoriesCount > 0) {
-                if ('form' == $eventDisplayCats) {
-                    $formCatsCb = $categoryHandler->getFormCatsCb($filterCats, $op, $filter);
-                    $GLOBALS['xoopsTpl']->assign('formCatsCb', $formCatsCb->render());
-                } else {
-                    //$crCategory->setStart($start);
-                    //$crCategory->setLimit($limit);
-                    $categoriesAll = $categoryHandler->getAll($crCategory);
-                    $categories = [];
-                    if ('button' === $eventDisplayCats) {
-                        $categories[0] = ['id' => 0, 'logo' => 'blank.gif', 'name' => 'alle', 'eventsCount' => 0];
-                    }
-                    $evName = '';
-                    // Get All Event
-                    foreach (\array_keys($categoriesAll) as $i) {
-                        $categories[$i] = $categoriesAll[$i]->getValuesCategories();
-                        $keywords[$i] = $categories[$i]['name'];
-                        if ($i == $catId) {
-                            $catName = $categories[$i]['name'];
-                        }
-                        $crEvent = new \CriteriaCompo();
-                        $crEvent->add(new \Criteria('catid',$i));
-                        if ($useGroups) {
-                            // current user
-                            // - must have perm to see event or
-                            // - must be event owner
-                            // - is admin
-                            if (!$userIsAdmin) {
-                                $crEventGroup = new \CriteriaCompo();
-                                $crEventGroup->add(new \Criteria('groups', '%00000%', 'LIKE')); //all users
-                                if ($uidCurrent > 0) {
-                                    // Get groups
-                                    $memberHandler = \xoops_getHandler('member');
-                                    $xoopsGroups = $memberHandler->getGroupsByUser($uidCurrent);
-                                    foreach ($xoopsGroups as $group) {
-                                        $crEventGroup->add(new \Criteria('groups', '%' . substr('00000' . $group, -5) . '%', 'LIKE'), 'OR');
-                                    }
-                                }
-                                $crEventGroup->add(new \Criteria('submitter', $uidCurrent), 'OR');
-                                $crEvent->add($crEventGroup);
-                                unset($crEventGroup);
-                            }
-                        }
-                        $eventsCount = $eventHandler->getCount($crEvent);
-                        $nbEventsText = \_MA_WGEVENTS_CATEGORY_NOEVENTS;
-                        if ($eventsCount > 0) {
-                            if ($eventsCount > 1) {
-                                $nbEventsText = \sprintf(\_MA_WGEVENTS_CATEGORY_EVENTS, $eventsCount);
-                            } else {
-                                $nbEventsText = \_MA_WGEVENTS_CATEGORY_EVENT;
-                            }
-                        }
-                        $categories[$i]['nbeventsText'] = $nbEventsText;
-                        $categories[$i]['eventsCount'] = $eventsCount;
-                    }
-                    $GLOBALS['xoopsTpl']->assign('categories', $categories);
-                }
-            }
+            $categories = $categoryHandler->getCategoriesForFilter($eventDisplayCats, $filterCats, $op, $useGroups, $filter);
+            $GLOBALS['xoopsTpl']->assign('categories', $categories);
         }
 
+        // determine whether there are
+        // - past events if coming are shown
+        // - coming events if past are shown
         switch($op) {
             case 'show':
             default:
@@ -200,72 +147,31 @@ switch ($op) {
                 break;
         }
         $GLOBALS['xoopsTpl']->assign('listDescr', $listDescr);
-        //apply criteria for events
+
+        //misc for displaying events
         $crEvent = new \CriteriaCompo();
         if ($showItem) {
-            $crEvent->add(new \Criteria('id', $evId));
             $GLOBALS['xoopsTpl']->assign('showList', false);
             $xoBreadcrumbs[] = ['title' => \_MA_WGEVENTS_EVENT_DETAILS];
         } else {
-            if ('me' == $filter && $uidCurrent > 0) {
-                $crEvent->add(new \Criteria('submitter', $uidCurrent));
-            }
             $GLOBALS['xoopsTpl']->assign('showList', true);
             $xoBreadcrumbs[] = ['title' => $listDescr];
         }
-        if ($useGroups) {
-            // current user
-            // - must have perm to see event or
-            // - must be event owner
-            // - is admin
-            if (!$userIsAdmin) {
-                $crEventGroup = new \CriteriaCompo();
-                $crEventGroup->add(new \Criteria('groups', '%00000%', 'LIKE')); //all users
-                if ($uidCurrent > 0) {
-                    // Get groups
-                    $memberHandler = \xoops_getHandler('member');
-                    $xoopsGroups = $memberHandler->getGroupsByUser($uidCurrent);
-                    foreach ($xoopsGroups as $group) {
-                        $crEventGroup->add(new \Criteria('groups', '%' . substr('00000' . $group, -5) . '%', 'LIKE'), 'OR');
-                    }
-                }
-                $crEventGroup->add(new \Criteria('submitter', $uidCurrent), 'OR');
-                $crEvent->add($crEventGroup);
-                unset($crEventGroup);
-            }
-        }
-        if (!$showItem) {
-            if ('past' == $op) {
-                // list events before now
-                $crEvent->add(new \Criteria('datefrom', \time(), '<'));
-                $crEvent->setSort('datefrom');
-                $crEvent->setOrder('DESC');
-            } else {
-                $crEvent->add(new \Criteria('datefrom', \time(), '>='));
-                $crEvent->setSort('datefrom');
-                $crEvent->setOrder('ASC');
-            }
-            if (\count($filterCats) > 0) {
-                $crEventCats = new \CriteriaCompo();
-                $crEventCats->add(new \Criteria('catid', '(' . \implode(',', $filterCats) . ')', 'IN'));
-                foreach ($filterCats as $filterCat) {
-                    $crEventCats->add(new \Criteria('subcats', '%"' . $filterCat . '"%', 'LIKE'), 'OR');
-                }
-                $crEvent->add($crEventCats);
-            }
-        }
-        $eventsCount = $eventHandler->getCount($crEvent);
+
+        // get events
+        $eventsArr = $eventHandler->getEvents($start, $limit, \time(), 0, '', '', $op, $evId, $filter, $filterCats);
+
+        $eventsCount = $eventsArr['count'];
         $GLOBALS['xoopsTpl']->assign('eventsCount', $eventsCount);
-        $crEvent->setStart($start);
-        $crEvent->setLimit($limit);
         if ($eventsCount > 0) {
-            $eventsAll = $eventHandler->getAll($crEvent);
+            $eventsAll = $eventsArr['eventsAll'];
             $events    = [];
             $eventsMap = [];
             $evName    = '';
             // Get All Event
             foreach (\array_keys($eventsAll) as $i) {
                 $events[$i] = $eventsAll[$i]->getValuesEvents();
+
                 $permEdit = $permissionsHandler->getPermEventsEdit($eventsAll[$i]->getVar('submitter'), $eventsAll[$i]->getVar('status')) || $uidCurrent == $eventsAll[$i]->getVar('submitter');
                 $events[$i]['permEdit'] = $permEdit;
                 $crQuestion = new \CriteriaCompo();

@@ -55,7 +55,7 @@ switch ($op) {
         $GLOBALS['xoopsTpl']->assign('eventCount', $eventCount);
         $GLOBALS['xoopsTpl']->assign('wgevents_url', \WGEVENTS_URL);
         $GLOBALS['xoopsTpl']->assign('wgevents_upload_url', \WGEVENTS_UPLOAD_URL);
-        $GLOBALS['xoopsTpl']->assign('wgevents_upload_eventlogos_url', \WGEVENTS_UPLOAD_EVENTLOGOS_URL . '/');
+        $GLOBALS['xoopsTpl']->assign('wgevents_upload_eventlogos_url', \WGEVENTS_UPLOAD_EVENTLOGOS_URL);
         $GLOBALS['xoopsTpl']->assign('use_gmaps', $helper->getConfig('use_gmaps'));
         $GLOBALS['xoopsTpl']->assign('use_wggallery', $helper->getConfig('use_wggallery'));
         $GLOBALS['xoopsTpl']->assign('use_register', $helper->getConfig('use_register'));

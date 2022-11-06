@@ -95,6 +95,11 @@ $modversion['templates'] = [
     ['file' => 'wgevents_admin_registrationhist.tpl', 'description' => '', 'type' => 'admin'],
     ['file' => 'wgevents_admin_task.tpl', 'description' => '', 'type' => 'admin'],
     ['file' => 'wgevents_admin_textblock.tpl', 'description' => '', 'type' => 'admin'],
+    ['file' => 'wgevents_block_events_table.tpl', 'description' => '', 'type' => 'block'],
+    ['file' => 'wgevents_block_events_simple.tpl', 'description' => '', 'type' => 'block'],
+    ['file' => 'wgevents_block_events_extended.tpl', 'description' => '', 'type' => 'block'],
+    ['file' => 'wgevents_block_events_panel.tpl', 'description' => '', 'type' => 'block'],
+    ['file' => 'wgevents_block_events_bcard2.tpl', 'description' => '', 'type' => 'block'],
     // User templates
     ['file' => 'tablesorter_pagertop.tpl', 'description' => ''],
     ['file' => 'tablesorter_pagerbottom.tpl', 'description' => ''],
@@ -296,7 +301,7 @@ $modversion['blocks'][] = [
     'show_func'   => 'b_wgevents_event_show',
     'edit_func'   => 'b_wgevents_event_edit',
     'template'    => 'wgevents_block_events.tpl',
-    'options'     => 'coming|5|25|0',
+    'options'     => 'coming|5|25|table|0',
 ];
 // ------------------- Config ------------------- //
 // ------------------- Group header: Display ------------------- //

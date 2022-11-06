@@ -87,6 +87,7 @@ require_once __DIR__ . '/admin.php';
 \define('_MA_WGEVENTS_EVENT_DATEFROM', 'Datum von');
 \define('_MA_WGEVENTS_EVENT_DATETO', 'Datum bis');
 \define('_MA_WGEVENTS_EVENT_ALLDAY', 'Ganztags');
+\define('_MA_WGEVENTS_EVENT_TODAY', 'Heute');
 \define('_MA_WGEVENTS_EVENT_CONTACT', 'Kontakt');
 \define('_MA_WGEVENTS_EVENT_EMAIL', 'E-Mail');
 \define('_MA_WGEVENTS_EVENT_EMAIL_SENDTO', 'E-Mail an der Veranstalter senden');

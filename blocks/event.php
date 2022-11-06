@@ -22,8 +22,11 @@
  */
 
 use XoopsModules\Wgevents;
-use XoopsModules\Wgevents\Helper;
-use XoopsModules\Wgevents\Constants;
+use XoopsModules\Wgevents\{
+    Helper,
+    Constants,
+    Utility
+};
 
 require_once \XOOPS_ROOT_PATH . '/modules/wgevents/include/common.php';
 
@@ -34,85 +37,71 @@ require_once \XOOPS_ROOT_PATH . '/modules/wgevents/include/common.php';
  */
 function b_wgevents_event_show($options)
 {
+    $helper  = Helper::getInstance();
+    $eventHandler = $helper->getHandler('Event');
+    $permissionsHandler = $helper->getHandler('Permission');
+
+    $GLOBALS['xoopsTpl']->assign('user_maxchar', $helper->getConfig('user_maxchar'));
+    $uidCurrent  = 0;
+    if (\is_object($GLOBALS['xoopsUser'])) {
+        $uidCurrent  = $GLOBALS['xoopsUser']->uid();
+    }
+
     $block       = [];
     $typeBlock   = $options[0];
     $limit       = $options[1];
     $lenghtTitle = $options[2];
-    $helper      = Helper::getInstance();
-    $eventHandler = $helper->getHandler('Event');
-    $crEvent = new \CriteriaCompo();
+    $blockType   = (string)$options[3];
+    \array_shift($options);
     \array_shift($options);
     \array_shift($options);
     \array_shift($options);
 
-    // Criteria for status field
-    $crEvent->add(new \Criteria('status', Constants::STATUS_SUBMITTED, '>'));
+    $GLOBALS['xoTheme']->addStylesheet(\WGEVENTS_URL . '/assets/css/style.css', null);
 
+    $dateCreated = 0;
     switch ($typeBlock) {
         case 'last':
         default:
             // For the block: events last
-            $crEvent->setSort('datecreated');
-            $crEvent->setOrder('DESC');
+            $sortBy = 'datecreated';
+            $orderBy = 'DESC';
             break;
         case 'new':
             // For the block: events new
             // new since last week: 7 * 24 * 60 * 60 = 604800
-            $crEvent->add(new \Criteria('datecreated', \time() - 604800, '>='));
-            $crEvent->add(new \Criteria('datecreated', \time(), '<='));
-            $crEvent->setSort('datecreated');
-            $crEvent->setOrder('ASC');
+            $dateCreated = \time() - 604800;
+            $sortBy = 'datecreated';
+            $orderBy = 'ASC';
             break;
-        /*
-        case 'hits':
-            // For the block: events hits
-            $crEvent->setSort('hits');
-            $crEvent->setOrder('DESC');
-            break;
-        case 'top':
-            // For the block: events top
-            $crEvent->setSort('top');
-            $crEvent->setOrder('ASC');
-            break;
-        */    
         case 'random':
             // For the block: events random
-            $crEvent->setSort('RAND()');
+            $sortBy = 'RAND()';
             break;
         case 'coming':
             // For the block: next events
-            $crEvent->add(new \Criteria('datefrom', \time(), '>='));
-            $crEvent->setSort('datefrom');
-            $crEvent->setOrder('ASC');
+            $dateFrom = \time();
+            $sortBy = 'datefrom';
+            $orderBy = 'ASC';
             break;
     }
 
-    $crEvent->setLimit($limit);
-    $eventsAll = $eventHandler->getAll($crEvent);
-    unset($crEvent);
-    if (\count($eventsAll) > 0) {
+    $eventsArr = $eventHandler->getEvents(0, $limit, $dateFrom, 0, $sortBy, $orderBy, '', 0, '', [], $dateCreated);
+    $eventsCount = $eventsArr['count'];
+
+    if ($eventsCount > 0) {
+        $eventsAll = $eventsArr['eventsAll'];
         foreach (\array_keys($eventsAll) as $i) {
-            /**
-             * If you want to use the parameter for limits you have to adapt the line where it should be applied
-             * e.g. change
-             *     $block[$i]['title'] = $eventsAll[$i]->getVar('art_title');
-             * into
-             *     $myTitle = $eventsAll[$i]->getVar('art_title');
-             *     if ($limit > 0) {
-             *         $myTitle = \substr($myTitle, 0, (int)$limit);
-             *     }
-             *     $block[$i]['title'] =  $myTitle;
-             */
-            $block[$i]['id'] = $eventsAll[$i]->getVar('id');
-            $block[$i]['name'] = \htmlspecialchars($eventsAll[$i]->getVar('name'), ENT_QUOTES | ENT_HTML5);
-            $block[$i]['logo'] = $eventsAll[$i]->getVar('logo');
-            $block[$i]['datefrom_text'] = \formatTimestamp($eventsAll[$i]->getVar('datefrom'), 'm');
-            $block[$i]['submitter'] = $eventsAll[$i]->getVar('submitter');
+            $block[$i] = $eventsAll[$i]->getValuesEvents();
+            $block[$i]['datefromto_text'] = $eventHandler->getDateFromToText($eventsAll[$i]->getVar('datefrom'), $eventsAll[$i]->getVar('dateto'), $eventsAll[$i]->getVar('allday'));
+            $block[$i]['permEdit'] = ($permissionsHandler->getPermEventsEdit($eventsAll[$i]->getVar('submitter'), $eventsAll[$i]->getVar('status')) || $uidCurrent == $eventsAll[$i]->getVar('submitter'));
         }
     }
-
-    $GLOBALS['xoopsTpl']->assign('wgevents_upload_eventlogos_url', \WGEVENTS_UPLOAD_EVENTLOGOS_URL . '/');
-    $GLOBALS['xoopsTpl']->assign('wgevents_url', \WGEVENTS_URL . '/');
+    $GLOBALS['xoopsTpl']->assign('wgevents_permAdd', ($uidCurrent > 0 && $permissionsHandler->getPermEventsSubmit()));
+    $GLOBALS['xoopsTpl']->assign('permRegister', $permissionsHandler->getPermRegistrationsSubmit());
+    $GLOBALS['xoopsTpl']->assign('wgevents_blocktype', $blockType);
+    $GLOBALS['xoopsTpl']->assign('wgevents_upload_eventlogos_url', \WGEVENTS_UPLOAD_EVENTLOGOS_URL);
+    $GLOBALS['xoopsTpl']->assign('wgevents_url', \WGEVENTS_URL);
 
     return $block;
 
@@ -129,7 +118,17 @@ function b_wgevents_event_edit($options)
     $form = \_MB_WGEVENTS_DISPLAY . ' : ';
     $form .= "<input type='hidden' name='options[0]' value='".$options[0]."' >";
     $form .= "<input type='text' name='options[1]' size='5' maxlength='255' value='" . $options[1] . "' >&nbsp;<br>";
-    $form .= \_MB_WGEVENTS_TITLE_LENGTH . " : <input type='text' name='options[2]' size='5' maxlength='255' value='" . $options[2] . "' ><br><br>";
+    $form .= \_MB_WGEVENTS_TITLE_LENGTH . " : <input type='text' name='options[2]' size='5' maxlength='255' value='" . $options[2] . "' ><br>";
+    $form .= \_MB_WGEVENTS_BLOCKTYPE . ": <select name='options[3]' size='4'>";
+    $form .= "<option value='table' " . ('table' === (string)$options[3] ? "selected='selected'" : '') . '>' . \_MB_WGEVENTS_BLOCKTYPE_TABLE . '</option>';
+    $form .= "<option value='simple' " . ('simple' === (string)$options[3] ? "selected='selected'" : '') . '>' . \_MB_WGEVENTS_BLOCKTYPE_SIMPLE . '</option>';
+    $form .= "<option value='extended' " . ('extended' === (string)$options[3] ? "selected='selected'" : '') . '>' . \_MB_WGEVENTS_BLOCKTYPE_EXTENDED . '</option>';
+    $form .= "<option value='panel' " . ('panel' === (string)$options[3] ? "selected='selected'" : '') . '>' . \_MB_WGEVENTS_BLOCKTYPE_PANEL . '</option>';
+    $form .= "<option value='bcard2' " . ('bcard2' === (string)$options[3] ? "selected='selected'" : '') . '>' . \_MB_WGEVENTS_BLOCKTYPE_BCARD2 . '</option>';
+    $form .= '</select><br>';
+    
+    /*
+    \array_shift($options);
     \array_shift($options);
     \array_shift($options);
     \array_shift($options);
@@ -138,7 +137,7 @@ function b_wgevents_event_edit($options)
     $crEvent->add(new \Criteria('id', 0, '!='));
     $crEvent->setSort('id');
     $crEvent->setOrder('ASC');
-
+    */
     /**
      * If you want to filter your results by e.g. a category used in yourevents
      * then you can activate the following code, but you have to change it according your category

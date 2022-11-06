@@ -74,7 +74,7 @@ require_once __DIR__ . '/common.php';
 \define('_MI_WGEVENTS_EVENTS_BLOCK_RANDOM_DESC', 'Anzeige von zufälligen Veranstaltungen');
 \define('_MI_WGEVENTS_EVENTS_BLOCK_SPOTLIGHT', 'Bestimmte Veranstaltungen');
 \define('_MI_WGEVENTS_EVENTS_BLOCK_SPOTLIGHT_DESC', 'Anzeige der bestimmten Veranstaltungen');
-\define('_MI_WGEVENTS_EVENTS_BLOCK_COMING', 'Block kommmende Veranstaltungen');
+\define('_MI_WGEVENTS_EVENTS_BLOCK_COMING', 'Block kommende Veranstaltungen');
 \define('_MI_WGEVENTS_EVENTS_BLOCK_COMING_DESC', 'Block mit den nächsten kommenden Veranstaltungen');
 // Config
 //Display

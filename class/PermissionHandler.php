@@ -24,6 +24,7 @@ namespace XoopsModules\Wgevents;
  * @author       Goffy - Wedega - Email:webmaster@wedega.com - Website:https://xoops.wedega.com
  */
 
+use XoopsModule;
 use XoopsModules\Wgevents;
 
 \defined('XOOPS_ROOT_PATH') || die('Restricted access');
@@ -51,17 +52,20 @@ class PermissionHandler extends \XoopsPersistableObjectHandler
      */
     private function getPerm($constantPerm)
     {
-        global $xoopsUser, $xoopsModule;
+        global $xoopsUser;
 
+        $moduleDirName = \basename(\dirname(__DIR__));;
+        $mid = XoopsModule::getByDirname($moduleDirName)->mid();
         $currentuid = 0;
         if (isset($xoopsUser) && \is_object($xoopsUser)) {
-            if ($xoopsUser->isAdmin($xoopsModule->mid())) {
+            if ($xoopsUser->isAdmin($mid)) {
                 return true;
             }
             $currentuid = $xoopsUser->uid();
         }
         $grouppermHandler = \xoops_getHandler('groupperm');
-        $mid = $xoopsModule->mid();
+
+
         $memberHandler = \xoops_getHandler('member');
         if (0 == $currentuid) {
             $my_group_ids = [\XOOPS_GROUP_ANONYMOUS];

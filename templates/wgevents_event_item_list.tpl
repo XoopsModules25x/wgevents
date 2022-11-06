@@ -5,9 +5,9 @@
             <{if $event.identifier|default:false}><span class="wge-identifier"><{$event.identifier}></span><{/if}>
             <{if $event.catlogo|default:false}>
                 <span class="pull-right wge-event-catlogo-cont">
-                    <img class="wge-event-catlogo" src='<{$wgevents_upload_catlogos_url|default:false}><{$event.catlogo}>' alt='<{$event.catname}>' title='<{$event.catname}>'>
+                    <img class="wge-event-catlogo" src='<{$wgevents_upload_catlogos_url|default:false}>/<{$event.catlogo}>' alt='<{$event.catname}>' title='<{$event.catname}>'>
                     <{foreach item=subcat from=$event.subcats_arr name=subcats}>
-                        <img class="wge-event-catlogo" src='<{$wgevents_upload_catlogos_url|default:false}><{$subcat.logo}>' alt='<{$subcat.name}>' title='<{$subcat.name}>'>
+                        <img class="wge-event-catlogo" src='<{$wgevents_upload_catlogos_url|default:false}>/<{$subcat.logo}>' alt='<{$subcat.name}>' title='<{$subcat.name}>'>
                     <{/foreach}>
                 </span>
             <{/if}>
@@ -16,7 +16,7 @@
     <div class='panel-body'>
         <div class="row">
             <div class="col-xs-12 col-sm-2">
-                <img class="img-responsive img-fluid" src='<{$wgevents_upload_eventlogos_url|default:false}><{$event.submitter}>/<{$event.logo}>' alt='<{$event.name_clean|default:''}>' title='<{$event.name_clean|default:''}>' >
+                <img class="img-responsive img-fluid" src='<{$wgevents_upload_eventlogos_url|default:false}>/<{$event.submitter}>/<{$event.logo}>' alt='<{$event.name_clean|default:''}>' title='<{$event.name_clean|default:''}>' >
             </div>
             <div class="col-xs-12 col-sm-6 wge-panel-details1 expander"><{$event.desc_text}></div>
             <{if $event.allday_single|default:false}>

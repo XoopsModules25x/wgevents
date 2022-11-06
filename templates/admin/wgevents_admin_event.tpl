@@ -56,7 +56,7 @@
                 <td class='center'><{$event.catname}></td>
                 <td class='center'><{$event.identifier}></td>
                 <td class='center'><{$event.name}></td>
-                <td class='center'><img src="<{$wgevents_upload_eventlogos_url|default:false}><{$event.submitter}>/<{$event.logo}>" alt="events" style="max-width:100px" ></td>
+                <td class='center'><img src="<{$wgevents_upload_eventlogos_url|default:false}>/<{$event.submitter}>/<{$event.logo}>" alt="events" style="max-width:100px" ></td>
                 <td class='center'><{$event.desc_short_admin|default:''}></td>
                 <td class='center'><{$event.datefrom_text|default:''}></td>
                 <td class='center'><{$event.dateto_text|default:''}></td>

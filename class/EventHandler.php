@@ -155,53 +155,137 @@ class EventHandler extends \XoopsPersistableObjectHandler
     /**
      * @public function to get events for given params
      *
-     * @param int $start
-     * @param int $limit
-     * @param int $from      // filter date created from (timestamp)
-     * @param int $to        // filter date created to (timestamp)
-     * @param int $catid     // filter by given cat id
+     * @param int    $start
+     * @param int    $limit
+     * @param int    $dateFrom      // filter date created from (timestamp)
+     * @param int    $dateTo        // filter date created to (timestamp)
      * @param string $sortBy
      * @param string $orderBy
+     * @param string $op
+     * @param int    $evId
+     * @param string $filter
+     * @param array  $filterCats
+     * @param int    $dateCreated
      * @return array
      */
-    public function getEvents($start = 0, $limit = 0, $from = 0, $to = 0, $catid = 0, $sortBy = 'id', $orderBy = 'DESC')
+    public function getEvents($start = 0, $limit = 0, $dateFrom = 0, $dateTo = 0, $sortBy = 'datefrom', $orderBy = 'ASC', $op = 'list', $evId = 0, $filter = '', $filterCats = [], $dateCreated = 0)
     {
+        $helper = Helper::getInstance();
+
+        /*
+        echo '<br>start:'.$start;
+        echo '<br>limit:'.$limit;
+        echo '<br>datefrom:'.\formatTimestamp($dateFrom, 'm').'('.$dateFrom.')';
+        echo '<br>dateto:'.\formatTimestamp($dateTo, 'm').'('.$dateTo.')';
+        echo '<br>sortBy:'.$sortBy;
+        echo '<br>orderBy:'.$orderBy;
+        echo '<br>op:'.$op;
+        echo '<br>evId:'.$evId;
+        echo '<br>filter:'.$filter;
+        foreach ($filterCats as $filterCat) {
+            echo '<br>filterCat:'.$filterCat;
+        }
+        */
+
+        $showItem = ($evId > 0);
+        $uidCurrent  = 0;
+        $userIsAdmin = false;
+        if (\is_object($GLOBALS['xoopsUser'])) {
+            $uidCurrent  = $GLOBALS['xoopsUser']->uid();
+            $userIsAdmin = $GLOBALS['xoopsUser']->isAdmin();
+        }
+        $useGroups = (bool)$helper->getConfig('use_groups');
+
+        //apply criteria for events
         $crEvent = new \CriteriaCompo();
-        if ($catid >  0) {
-            $crEvent->add(new \Criteria('catid', $catid));
+        if ($showItem) {
+            $crEvent->add(new \Criteria('id', $evId));
+        } else {
+            if ('me' == $filter && $uidCurrent > 0) {
+                $crEvent->add(new \Criteria('submitter', $uidCurrent));
+            }
         }
-        if ($from >  0) {
-            //event start is between from and to
-            $crEventStart = new \CriteriaCompo();
-            $crEventStart->add(new \Criteria('datefrom', $from, '>='));
-            $crEventStart->add(new \Criteria('datefrom', $to, '<='));
-            $crEvent->add($crEventStart);
-            //event end is between from and to
-            $crEventEnd = new \CriteriaCompo();
-            $crEventEnd->add(new \Criteria('dateto', $from, '>='));
-            $crEventEnd->add(new \Criteria('dateto', $to, '<='));
-            $crEvent->add($crEventEnd, 'OR');
-            unset($crEventStart, $crEventEnd);
+        if ($dateCreated > 0) {
+            $crEvent->add(new \Criteria('datecreated', $dateCreated, '>='));
         }
-        $crEvent->setSort($sortBy);
-        $crEvent->setOrder($orderBy);
+        if ($useGroups) {
+            // current user
+            // - must have perm to see event or
+            // - must be event owner
+            // - is admin
+            if (!$userIsAdmin) {
+                $crEventGroup = new \CriteriaCompo();
+                $crEventGroup->add(new \Criteria('groups', '%00000%', 'LIKE')); //all users
+                if ($uidCurrent > 0) {
+                    // Get groups
+                    $memberHandler = \xoops_getHandler('member');
+                    $xoopsGroups = $memberHandler->getGroupsByUser($uidCurrent);
+                    foreach ($xoopsGroups as $group) {
+                        $crEventGroup->add(new \Criteria('groups', '%' . substr('00000' . $group, -5) . '%', 'LIKE'), 'OR');
+                    }
+                }
+                $crEventGroup->add(new \Criteria('submitter', $uidCurrent), 'OR');
+                $crEvent->add($crEventGroup);
+                unset($crEventGroup);
+            }
+        }
+        if (!$showItem) {
+            if ('past' == $op) {
+                // list events before now
+                $crEvent->add(new \Criteria('datefrom', $dateFrom, '<'));
+                $crEvent->setSort('datefrom');
+                $crEvent->setOrder('DESC');
+            } else {
+                // calendar view:
+                // - event start is between dateFrom and dateTo
+                // - event end is between dateFrom and dateTo
+                // ==> dateFrom and dateTo needed
+
+                // index/event/block view:
+                // - event start or event end is greater than dateFrom
+                // ==> dateFrom needed, dateTo must be 0
+                $crEventFromTo = new \CriteriaCompo();
+                $crEventStart = new \CriteriaCompo();
+                $crEventStart->add(new \Criteria('datefrom', $dateFrom, '>='));
+                if ($dateTo > 0) {
+                    $crEventStart->add(new \Criteria('datefrom', $dateTo, '<='));
+                }
+                $crEventFromTo->add($crEventStart);
+                $crEventEnd = new \CriteriaCompo();
+                $crEventEnd->add(new \Criteria('dateto', $dateFrom, '>='));
+                if ($dateTo > 0) {
+                    $crEventEnd->add(new \Criteria('dateto', $dateTo, '<='));
+                }
+                $crEventFromTo->add($crEventEnd, 'OR');
+                $crEvent->add($crEventFromTo);
+
+                unset($crEventStart, $crEventEnd, $crEventFromTo);
+                $crEvent->setSort('datefrom');
+                $crEvent->setOrder('ASC');
+            }
+            if (\count($filterCats) > 0) {
+                $crEventCats = new \CriteriaCompo();
+                $crEventCats->add(new \Criteria('catid', '(' . \implode(',', $filterCats) . ')', 'IN'));
+                foreach ($filterCats as $filterCat) {
+                    $crEventCats->add(new \Criteria('subcats', '%"' . $filterCat . '"%', 'LIKE'), 'OR');
+                }
+                $crEvent->add($crEventCats);
+            }
+        }
+
         $eventsCount = $this->getCount($crEvent);
         if ($eventsCount > 0) {
             if ($limit > 0) {
                 $crEvent->setStart($start);
                 $crEvent->setLimit($limit);
             }
-            $eventsAll = $this->getAll($crEvent);
             // Get All Event
-            $events = [];
-            foreach (\array_keys($eventsAll) as $i) {
-                $events[$i] = $eventsAll[$i]->getValuesEvents();
-            }
+            $eventsAll = $this->getAll($crEvent);
 
-            return $events;
+            return ['count' => $eventsCount, 'eventsAll' => $eventsAll];
         }
 
-        return [];
+        return ['count' => 0, 'eventsAll' => []];
     }
 
     /**
@@ -276,5 +360,58 @@ class EventHandler extends \XoopsPersistableObjectHandler
        }
 
         return $notifyEmails;
+    }
+    /**
+     * get clean date from/to for displaying
+     * @param  int $datefrom
+     * @param  int $dateto
+     * @param  bool $allday
+     * @return string
+     */
+    public function getDateFromToText($datefrom, $dateto, $allday)
+    {
+        $text = '';
+        $today = date('d.m.Y', time()) === date('d.m.Y', $datefrom);
+        $multiday = (int)date('j', $dateto) > (int)date('j', $datefrom);
+
+        // currently only used by blocks
+        //if (\defined(\_MB_WGEVENTS_EVENT_TODAY)) {
+            $lng_today = \_MA_WGEVENTS_EVENT_TODAY;
+            $lng_allday = \_MA_WGEVENTS_EVENT_ALLDAY;
+        //}
+
+        if ($today) {
+            // get all types of today
+            if ($allday && !$multiday) {
+                // today, allday, no multiday
+                $text = $lng_today . ' ' . $lng_allday;
+            } else if ($today && !$allday && !$multiday) {
+                // today, no allday, no multiday
+                $text = $lng_today . ' ' . date('H:i', $datefrom) . ' - ' . date('H:i', $dateto);
+            } else {
+                // today, no allday, multiday
+                $text = $lng_today . ' ' . date('H:i', $datefrom) . ' - ' . \formatTimestamp($dateto, 'm');
+            }
+        } else {
+            // not today
+            if ($allday && $multiday) {
+                // allday, multiday
+                $text =  \formatTimestamp($datefrom, 's') . $lng_allday . ' - ' . \formatTimestamp($dateto, 'm') . $lng_allday;
+            } else if (!$allday && !$multiday) {
+                // no allday, no multiday
+                $text = \formatTimestamp($datefrom, 's') . ' ' . date('H:i', $datefrom) . ' - ' . date('H:i', $dateto);
+            } else {
+                // no allday, multiday
+                $text = \formatTimestamp($datefrom, 'm') . ' - ' . \formatTimestamp($dateto, 'm');
+            }
+        }
+        /*
+        echo '<br>today:'.$today;
+        echo '<br>datefrom:'.\formatTimestamp($datefrom, 'm');
+        echo '<br>dateto:'.\formatTimestamp($dateto, 'm');
+        echo '<br>multiday:'.$multiday;
+        echo '<br>return:'.$text;
+        */
+        return $text;
     }
 }

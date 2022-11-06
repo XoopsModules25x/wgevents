@@ -1,15 +1,5 @@
 
-Blöcke design
-
-full day
-
 update macht default ' statt ''
-
-
-Dropdown: leere Zeile am Anfang????
-
-index.php and event.php: Filter list by category
-
 
 
 upload new lang files to transifex

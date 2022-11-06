@@ -78,7 +78,7 @@ function b_wgevents_event_spotlight_show($options)
         }
     }
 
-    $GLOBALS['xoopsTpl']->assign('wgevents_upload_eventlogos_url', \WGEVENTS_UPLOAD_EVENTLOGOS_URL . '/');
+    $GLOBALS['xoopsTpl']->assign('wgevents_upload_eventlogos_url', \WGEVENTS_UPLOAD_EVENTLOGOS_URL);
     $GLOBALS['xoopsTpl']->assign('wgevents_url', \WGEVENTS_URL . '/');
 
     return $block;

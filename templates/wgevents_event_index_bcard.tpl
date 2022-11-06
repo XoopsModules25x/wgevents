@@ -1,6 +1,6 @@
 <div class="col-xs-12 col-sm-6 card">
     <div class="wge-card">
-        <img class="card-img-top" src='<{$wgevents_upload_eventlogos_url|default:false}><{$event.submitter}>/<{$event.logo}>' alt='<{$event.name_clean|default:''}>' title='<{$event.name_clean|default:''}>'>
+        <img class="card-img-top" src='<{$wgevents_upload_eventlogos_url|default:false}>/<{$event.submitter}>/<{$event.logo}>' alt='<{$event.name_clean|default:''}>' title='<{$event.name_clean|default:''}>'>
         <div class="card-body">
             <h4 class="card-title"><{$event.name}></h4>
             <{if $event.allday_single|default:false}>

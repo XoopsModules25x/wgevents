@@ -50,7 +50,7 @@ $lastday  = (int)\date('t', \strtotime($month . '/1/' . $year));
 $dayStart = \mktime(0, 0, 0, $month, 1, $year);
 $dayEnd   = \mktime(23, 59, 59, $month, $lastday, $year);
 
-$filterCat     = Request::getInt('filterCat');
+//$filterCat     = Request::getInt('filterCat');
 $filterSort    = 'datefrom-ASC';
 if (0 == $filterFrom || Request::hasVar('gotoMonth')) {
     $filterFrom = (int)$dayStart;
@@ -135,7 +135,7 @@ $calendar->setWeekDayNames([
 $uid = \is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->uid() : 0;
 
 $formSimpleCal = new SimpleCalendar\SimpleCalendarforms();
-$formFilter = $formSimpleCal->getFormGotoMonth($arrMonth, \date('n', $filterFrom), \date('Y', $filterFrom), $filterCat);
+$formFilter = $formSimpleCal->getFormGotoMonth($arrMonth, \date('n', $filterFrom), \date('Y', $filterFrom));
 $GLOBALS['xoopsTpl']->assign('formGoto', $formFilter->render());
 
 /*
@@ -194,7 +194,7 @@ switch ($op) {
 // get categories collection
 $categories = $categoryHandler->getCollection();
 // get events of period
-$events = $eventHandler->getEvents(0, 0, $filterFrom, $filterTo, $filterCat, $sortBy, $orderBy);
+$events = $eventHandler->getEvents(0, 0, $filterFrom, $filterTo, $sortBy, $orderBy);
 
 $eventsCount = \count($events);
 if ($eventsCount > 0) {

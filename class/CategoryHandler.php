@@ -244,4 +244,89 @@ class CategoryHandler extends \XoopsPersistableObjectHandler
         $form->addElement(new \XoopsFormHidden('filter', $filter));
         return $form;
     }
+
+    /**
+     * @public function getCategoriesForFilter: get all cats wtih number of events for displying as filter
+     * @param string $eventDisplayCats
+     * @param string $filterCats
+     * @param string $op
+     * @param bool   $useGroups
+     * @param string $filter
+     * @return array
+     */
+    public function getCategoriesForFilter ($eventDisplayCats, $filterCats, $op, $useGroups, $filter = '') {
+
+        $helper = Helper::getInstance();
+        $eventHandler = $helper->getHandler('Event');
+
+        $uidCurrent  = 0;
+        $userIsAdmin = false;
+        if (\is_object($GLOBALS['xoopsUser'])) {
+            $uidCurrent  = $GLOBALS['xoopsUser']->uid();
+            $userIsAdmin = $GLOBALS['xoopsUser']->isAdmin();
+        }
+
+        $crCategory = new \CriteriaCompo();
+        $crCategory->setSort('weight');
+        $crCategory->setOrder('ASC');
+        $categoriesCount = $this->getCount($crCategory);
+        $GLOBALS['xoopsTpl']->assign('categoriesCount', $categoriesCount);
+        if ($categoriesCount > 0) {
+            if ('form' == $eventDisplayCats) {
+                $formCatsCb = $this->getFormCatsCb($filterCats, $op, $filter);
+                $GLOBALS['xoopsTpl']->assign('formCatsCb', $formCatsCb->render());
+            } else {
+                //$crCategory->setStart($start);
+                //$crCategory->setLimit($limit);
+                $categoriesAll = $this->getAll($crCategory);
+                $categories = [];
+                if ('button' === $eventDisplayCats) {
+                    $categories[0] = ['id' => 0, 'logo' => 'blank.gif', 'name' => 'alle', 'eventsCount' => 0];
+                }
+                // Get All Event
+                foreach (\array_keys($categoriesAll) as $i) {
+                    $categories[$i] = $categoriesAll[$i]->getValuesCategories();
+                    $keywords[$i] = $categories[$i]['name'];
+                    $crEvent = new \CriteriaCompo();
+                    $crEvent->add(new \Criteria('catid',$i));
+                    if ($useGroups) {
+                        // current user
+                        // - must have perm to see event or
+                        // - must be event owner
+                        // - is admin
+                        if (!$userIsAdmin) {
+                            $crEventGroup = new \CriteriaCompo();
+                            $crEventGroup->add(new \Criteria('groups', '%00000%', 'LIKE')); //all users
+                            if ($uidCurrent > 0) {
+                                // Get groups
+                                $memberHandler = \xoops_getHandler('member');
+                                $xoopsGroups = $memberHandler->getGroupsByUser($uidCurrent);
+                                foreach ($xoopsGroups as $group) {
+                                    $crEventGroup->add(new \Criteria('groups', '%' . substr('00000' . $group, -5) . '%', 'LIKE'), 'OR');
+                                }
+                            }
+                            $crEventGroup->add(new \Criteria('submitter', $uidCurrent), 'OR');
+                            $crEvent->add($crEventGroup);
+                            unset($crEventGroup);
+                        }
+                    }
+                    $eventsCount = $eventHandler->getCount($crEvent);
+                    $nbEventsText = \_MA_WGEVENTS_CATEGORY_NOEVENTS;
+                    if ($eventsCount > 0) {
+                        if ($eventsCount > 1) {
+                            $nbEventsText = \sprintf(\_MA_WGEVENTS_CATEGORY_EVENTS, $eventsCount);
+                        } else {
+                            $nbEventsText = \_MA_WGEVENTS_CATEGORY_EVENT;
+                        }
+                    }
+                    $categories[$i]['nbeventsText'] = $nbEventsText;
+                    $categories[$i]['eventsCount'] = $eventsCount;
+                }
+
+                return $categories;
+            }
+        }
+
+        return [];
+    }
 }
