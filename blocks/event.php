@@ -50,8 +50,8 @@ function b_wgevents_event_show($options)
 
     $block       = [];
     $typeBlock   = $options[0];
-    $limit       = $options[1];
-    $lenghtTitle = $options[2];
+    $limit       = (int)$options[1];
+    $lenghtTitle = (int)$options[2];
     $blockType   = (string)$options[3];
     \array_shift($options);
     \array_shift($options);
