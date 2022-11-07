@@ -540,12 +540,13 @@ class Event extends \XoopsObject
         $helper  = \XoopsModules\Wgevents\Helper::getInstance();
         $utility = new \XoopsModules\Wgevents\Utility();
         $ret = $this->getValues($keys, $format, $maxDepth);
-        $adminMaxchar = $helper->getConfig('admin_maxchar');
-        $userMaxchar  = $helper->getConfig('user_maxchar');
+        $adminMaxchar    = $helper->getConfig('admin_maxchar');
+        $userMaxchar     = $helper->getConfig('user_maxchar');
         $categoryHandler = $helper->getHandler('Category');
-        $categoryObj = $categoryHandler->get($this->getVar('catid'));
-        $catName = '';
-        $catLogo = '';
+        $catId       = (int)$this->getVar('catid');
+        $categoryObj = $categoryHandler->get($catId);
+        $catName     = '';
+        $catLogo     = '';
         if (\is_object($categoryObj)) {
             $catName = $categoryObj->getVar('name');
             if ('blank.gif' !== (string)$categoryObj->getVar('logo')) {
@@ -556,10 +557,12 @@ class Event extends \XoopsObject
         $ret['catlogo'] = $catLogo;
         $subcatsArr = [];
         $subcats = \unserialize($this->getVar('subcats'));
-        if (\count($subcats) > 0) {
+        if (\is_array($subcats) && \count($subcats) > 0) {
             foreach ($subcats as $subcat) {
                 $subcategoryObj = $categoryHandler->get($subcat);
-                if (\is_object($subcategoryObj)) {
+                // do not repeat main cat in sub cats even if it is checked there once more
+                if (\is_object($subcategoryObj) && $catId !== (int)$subcat) {
+                    //if (\is_object($subcategoryObj)) {
                     $subcatsArr[$subcat]['id'] = $subcat;
                     $subcatsArr[$subcat]['name'] = $subcategoryObj->getVar('name');
                     $subcatsArr[$subcat]['logo'] = $subcat;
