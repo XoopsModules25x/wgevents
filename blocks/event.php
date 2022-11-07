@@ -131,6 +131,7 @@ function b_wgevents_event_show($options)
     $GLOBALS['xoopsTpl']->assign('wgevents_permAdd', ($uidCurrent > 0 && $permissionsHandler->getPermEventsSubmit()));
     $GLOBALS['xoopsTpl']->assign('permRegister', $permissionsHandler->getPermRegistrationsSubmit());
     $GLOBALS['xoopsTpl']->assign('wgevents_blocktype', $blockType);
+    $GLOBALS['xoopsTpl']->assign('wgevents_upload_catlogos_url', \WGEVENTS_UPLOAD_CATLOGOS_URL);
     $GLOBALS['xoopsTpl']->assign('wgevents_upload_eventlogos_url', \WGEVENTS_UPLOAD_EVENTLOGOS_URL);
     $GLOBALS['xoopsTpl']->assign('wgevents_url', \WGEVENTS_URL);
 
