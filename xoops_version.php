@@ -718,9 +718,18 @@ $modversion['config'][] = [
     'options'     => [\_MI_WGEVENTS_GMAPS_POSITION_NONE => 'none', \_MI_WGEVENTS_GMAPS_POSITION_TOP => 'top', \_MI_WGEVENTS_GMAPS_POSITION_BOTTOM => 'bottom'],
 ];
 $modversion['config'][] = [
+    'name'        => 'gmaps_enableindex',
+    'title'       => '\_MI_WGEVENTS_GMAPS_ENABLEINDEX',
+    'description' => '\_MI_WGEVENTS_GMAPS_ENABLEINDEX_DESC',
+    'formtype'    => 'select',
+    'valuetype'   => 'text',
+    'default'     => 'none',
+    'options'     => [\_MI_WGEVENTS_GMAPS_POSITION_NONE => 'none', \_MI_WGEVENTS_GMAPS_POSITION_TOP => 'top', \_MI_WGEVENTS_GMAPS_POSITION_BOTTOM => 'bottom'],
+];
+$modversion['config'][] = [
     'name'        => 'gmaps_enableevent',
     'title'       => '\_MI_WGEVENTS_GMAPS_ENABLEEVENT',
-    'description' => '\_MI_WGEVENTS_GMAPS_ENABLEEVENT',
+    'description' => '\_MI_WGEVENTS_GMAPS_ENABLEEVENT_DESC',
     'formtype'    => 'select',
     'valuetype'   => 'text',
     'default'     => 'none',

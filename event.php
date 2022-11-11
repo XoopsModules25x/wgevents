@@ -244,6 +244,8 @@ switch ($op) {
                 $GLOBALS['xoopsTpl']->assign('pagenav', $pagenav->renderNav());
             }
             $GLOBALS['xoopsTpl']->assign('table_type', $helper->getConfig('table_type'));
+            $GLOBALS['xoopsTpl']->assign('start', $start);
+            $GLOBALS['xoopsTpl']->assign('limit', $limit);
 
             if ('show' == $op && '' != $evName) {
                 $GLOBALS['xoopsTpl']->assign('xoops_pagetitle', \strip_tags($evName . ' - ' . $GLOBALS['xoopsModule']->getVar('name')));
@@ -272,6 +274,8 @@ switch ($op) {
 
         $uploaderErrors = '';
         $catId = Request::getInt('catid');
+        $evSubmitter = Request::getInt('submitter');
+
         $eventObj->setVar('catid', $catId);
         $subCats = \serialize(Request::getArray('subcats'));
         $eventObj->setVar('subcats', $subCats);
@@ -304,6 +308,7 @@ switch ($op) {
                     $imgHandler->maxHeight     = $maxheight;
                     $result                    = $imgHandler->resizeImage();
                 }
+                $filename = $savedFilename;
                 $eventObj->setVar('logo', $savedFilename);
             } else {
                 $uploaderErrors .= '<br>' . $uploader->getErrors();
@@ -315,6 +320,21 @@ switch ($op) {
             $filename = Request::getString('logo');
             if ('' != $filename) {
                 $eventObj->setVar('logo', $filename);
+            }
+        }
+        if ($evSubmitter !== $uidCurrent) {
+            //if someone creates/save event for someone else then copy logo
+            $submitterDirectory = \WGEVENTS_UPLOAD_EVENTLOGOS_PATH . '/' . $evSubmitter;
+            if (!\file_exists($submitterDirectory)) {
+                Utility::createFolder($submitterDirectory);
+                \chmod($submitterDirectory, 0777);
+                $source = \WGEVENTS_PATH . '/assets/images/blank.gif';
+                $dest = $submitterDirectory . '/blank.gif';
+                Utility::copyFile($source, $dest);
+            }
+            $dest = \WGEVENTS_UPLOAD_EVENTLOGOS_PATH . '/' . $evSubmitter . '/' . $filename;
+            if (!\file_exists($dest)) {
+                Utility::copyFile($uploadPath . $filename, $dest);
             }
         }
         $eventObj->setVar('desc', Request::getText('desc'));

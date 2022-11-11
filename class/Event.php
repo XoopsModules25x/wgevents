@@ -397,8 +397,8 @@ class Event extends \XoopsObject
         } else {
             $evStatus = $this->getVar('status');
         }
-        $evDatecreated = $this->isNew() ? \time() : $this->getVar('datecreated');
-        $evSubmitter = $this->isNew() ? $userUid : $this->getVar('submitter');
+        $evDatecreated = $this->isNew() ? \time() : (int)$this->getVar('datecreated');
+        $evSubmitter = $this->isNew() ? $userUid : (int)$this->getVar('submitter');
         if ($isAdmin) {
             $evStatusSelect = new \XoopsFormSelect(\_MA_WGEVENTS_STATUS, 'status', $evStatus);
             $evStatusSelect->addOption(Constants::STATUS_NONE, \_MA_WGEVENTS_STATUS_NONE);
