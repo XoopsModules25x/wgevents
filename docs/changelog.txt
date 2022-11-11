@@ -10,6 +10,7 @@
  - fixed bug in output excel (goffy)
  - removed duplicates of cats (goffy)
  - gmap on index page (goffy)
+ - fixed bug in calendar page (goffy)
 
 ==============================================================
 1.0.4 RC1 [2022/08/29]

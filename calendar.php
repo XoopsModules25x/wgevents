@@ -94,7 +94,7 @@ $GLOBALS['xoopsTpl']->assign('filterToNextY', $filterToNextY);
 //$otherParams = "op=filter&amp;filterByOwner=$filterByOwner&amp;filterGroup=$filterGroup";
 //$GLOBALS['xoopsTpl']->assign('otherParams', $otherParams);
 
-$lengthTitle = 15;
+$lengthTitle = 25;
 
 
 /*
@@ -194,20 +194,26 @@ switch ($op) {
 // get categories collection
 $categories = $categoryHandler->getCollection();
 // get events of period
-$events = $eventHandler->getEvents(0, 0, $filterFrom, $filterTo, $sortBy, $orderBy);
+$eventsArr = $eventHandler->getEvents(0, 0, $filterFrom, $filterTo, $sortBy, $orderBy);
 
-$eventsCount = \count($events);
+$eventsCount = $eventsArr['count'];
 if ($eventsCount > 0) {
+    $eventsAll = $eventsArr['eventsAll'];
     $eventsMap = [];
     $calendar->setDate($filterFrom);
     $GLOBALS['xoopsTpl']->assign('eventsCount', $eventsCount);
-    foreach($events as $event) {
+    foreach (\array_keys($eventsAll) as $i) {
+        $event = $eventsAll[$i]->getValuesEvents();
         $linkStyle = 'color:' . $categories[$event['catid']]['color'] . '!important;';
         $linkStyle .= 'border:1px solid ' . $categories[$event['catid']]['bordercolor'] . '!important;';
         $linkStyle .= 'background-color:' . $categories[$event['catid']]['bgcolor'] . '!important;';
         $linkStyle .= $categories[$event['catid']]['othercss'];
-
-        $eventLink = '<a href="event.php?op=show&amp;id=' . $event['id'] .'">';
+        $evTitle = \_MA_WGEVENTS_EVENT_NAME . ': ' . $event['name'] . PHP_EOL;
+        $evTitle .= \_MA_WGEVENTS_EVENT_DATE . ': ' . $eventHandler->getDateFromToText($event['datefrom'], $event['dateto'], $event['allday']) . PHP_EOL;
+        if ($event['location']) {
+            $evTitle .= \_MA_WGEVENTS_EVENT_LOCATION . ': ' .$event['location'] . PHP_EOL;
+        }
+        $eventLink = '<a href="event.php?op=show&amp;id=' . $event['id'] .'" title="' . $evTitle .'">';
         /*
         if ($event['catlogo']) {
             $eventLink .= '<img class="wg-cal-catlogo" src="' . \WGEVENTS_UPLOAD_CATLOGOS_URL . '/' . $event['catlogo'] .'" alt="' . \_MA_WGEVENTS_CATEGORY_LOGO .'" title="' . \_MA_WGEVENTS_CATEGORY_LOGO .'">';

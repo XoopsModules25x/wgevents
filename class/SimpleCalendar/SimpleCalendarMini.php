@@ -147,7 +147,7 @@ class SimpleCalendarMini {
      * @param null $endDate Date string for when the event ends. Defaults to start date
      * @throws \Exception
      */
-    public function addDailyHtml(string $html, \DateTimeInterface|int|string $startDate, $endDate = null) {
+    public function addDailyHtml(string $html, $startDate, $endDate = null) {
         static $htmlCount = 0;
 
         $start = $this->parseDate($startDate);
