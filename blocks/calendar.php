@@ -97,19 +97,19 @@ function b_wgevents_calendar_show($options)
     // get categories collection
     $categories = $categoryHandler->getCollection();
     // get events of period
-    $events = $eventHandler->getEvents(0, 0, $filterFrom, $filterTo, $sortBy, $orderBy);
+    $eventsArr = $eventHandler->getEvents(0, 0, $filterFrom, $filterTo, $sortBy, $orderBy);
 
-    $eventsCount = \count($events);
+    $eventsCount = $eventsArr['count'];
     if ($eventsCount > 0) {
         $calendar->setDate($filterFrom);
         $GLOBALS['xoopsTpl']->assign('eventsCount', $eventsCount);
-        foreach($events as $event) {
-            $badgeStyle = 'border:1px solid ' . $categories[$event['catid']]['bordercolor'] . '!important;';
-            $badgeStyle .= 'background-color:' . $categories[$event['catid']]['bgcolor'] . '!important;';
+        foreach($eventsArr['eventsAll'] as $event) {
+            $badgeStyle = 'border:1px solid ' . $categories[$event->getVar('catid')]['bordercolor'] . '!important;';
+            $badgeStyle .= 'background-color:' . $categories[$event->getVar('catid')]['bgcolor'] . '!important;';
             $badgeStyle .= 'border-radius:50% !important;';
-            $eventLink = '<a href="' . \WGEVENTS_URL . '/event.php?op=show&amp;id=' . $event['id'] .'">';
+            $eventLink = '<a href="' . \WGEVENTS_URL . '/event.php?op=show&amp;id=' . $event->getVar('id') .'" title="' . $event->getVar('name') .'">';
             $eventLink .= '<span class="badge" style="' . $badgeStyle . '">&nbsp;&nbsp;</span></a>';
-            $calendar->addDailyHtml($eventLink, $event['datefrom'], $event['dateto']);
+            $calendar->addDailyHtml($eventLink, $event->getVar('datefrom'), $event->getVar('dateto'));
         }
     }
     $GLOBALS['xoopsTpl']->assign('events_calendar', $calendar->render());
@@ -136,6 +136,7 @@ function b_wgevents_calendar_show($options)
         }
     }
 
+    $GLOBALS['xoopsTpl']->assign('wgevents_upload_catlogos_url', \WGEVENTS_UPLOAD_CATLOGOS_URL);
     $GLOBALS['xoopsTpl']->assign('wgevents_upload_eventlogos_url', \WGEVENTS_UPLOAD_EVENTLOGOS_URL);
     $GLOBALS['xoopsTpl']->assign('wgevents_url', \WGEVENTS_URL . '/');
 

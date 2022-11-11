@@ -71,6 +71,14 @@ $GLOBALS['xoopsTpl']->assign('index_displaycats', $indexDisplayCats);
 $indexDisplayEvents = (string)$helper->getConfig('index_displayevents');
 $GLOBALS['xoopsTpl']->assign('index_displayevents', $indexDisplayEvents);
 $useGroups = (bool)$helper->getConfig('use_groups');
+$gmapsEnableEvent = false;
+$gmapsHeight      = false;
+$useGMaps         = (bool)$helper->getConfig('use_gmaps');
+if ($useGMaps) {
+    $gmapsPositionList = (string)$helper->getConfig('gmaps_enableindex');
+    $gmapsEnableEvent  = ('top' == $gmapsPositionList || 'bottom' == $gmapsPositionList);
+    $gmapsHeight       = $helper->getConfig('gmaps_height');
+}
 
 //misc
 $GLOBALS['xoopsTpl']->assign('categoryCurrent', $catId);
@@ -122,6 +130,7 @@ if ('none' != $indexDisplayEvents) {
     if ($eventsCount > 0) {
         $eventsAll = $eventsArr['eventsAll'];
         $events = [];
+        $eventsMap = [];
         $evName = '';
         // Get All Event
         foreach (\array_keys($eventsAll) as $i) {
@@ -158,9 +167,30 @@ if ('none' != $indexDisplayEvents) {
             }
             $evName = $eventsAll[$i]->getVar('name');
             $keywords[$i] = $evName;
+            if ($useGMaps && $gmapsEnableEvent && (float)$eventsAll[$i]->getVar('locgmlat') > 0) {
+                $eventsMap[$i] = [
+                    'name' => $evName,
+                    'location' => $events[$i]['location_text_user'],
+                    'from' => $events[$i]['datefrom_text'],
+                    'url' => 'event.php?op=show&id=' . $i,
+                    'lat'  => (float)$eventsAll[$i]->getVar('locgmlat'),
+                    'lon'  => (float)$eventsAll[$i]->getVar('locgmlon')
+                ];
+            }
         }
         $GLOBALS['xoopsTpl']->assign('events', $events);
-        unset($events);
+        if ('show' == $op && $useGMaps) {
+            $GLOBALS['xoopsTpl']->assign('gmapsShow', true);
+        }
+        if ($useGMaps && count($eventsMap) > 0) {
+            $GLOBALS['xoopsTpl']->assign('gmapsShowList', true);
+            $GLOBALS['xoopsTpl']->assign('gmapsEnableEvent', $gmapsEnableEvent);
+            $GLOBALS['xoopsTpl']->assign('gmapsHeight', $gmapsHeight);
+            $GLOBALS['xoopsTpl']->assign('gmapsPositionList', $gmapsPositionList);
+            $GLOBALS['xoopsTpl']->assign('api_key', $helper->getConfig('gmaps_api'));
+            $GLOBALS['xoopsTpl']->assign('eventsMap', $eventsMap);
+        }
+        unset($events, $eventMaps);
         // Display Navigation
         if ($eventsCount > $limit) {
             $urlCats = \implode(',', $filterCats);

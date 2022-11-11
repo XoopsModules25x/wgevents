@@ -71,13 +71,11 @@ function b_wgevents_event_spotlight_show($options)
              *     }
              *     $block[$i]['title'] =  $myTitle;
              */
-            $block[$i]['id'] = $eventsAll[$i]->getVar('id');
-            $block[$i]['name'] = \htmlspecialchars($eventsAll[$i]->getVar('name'), ENT_QUOTES | ENT_HTML5);
-            $block[$i]['logo'] = $eventsAll[$i]->getVar('logo');
-            $block[$i]['submitter'] = $eventsAll[$i]->getVar('submitter');
+            $block[$i] = $eventsAll[$i]->getValuesEvents();
         }
     }
 
+    $GLOBALS['xoopsTpl']->assign('wgevents_upload_catlogos_url', \WGEVENTS_UPLOAD_CATLOGOS_URL);
     $GLOBALS['xoopsTpl']->assign('wgevents_upload_eventlogos_url', \WGEVENTS_UPLOAD_EVENTLOGOS_URL);
     $GLOBALS['xoopsTpl']->assign('wgevents_url', \WGEVENTS_URL . '/');
 

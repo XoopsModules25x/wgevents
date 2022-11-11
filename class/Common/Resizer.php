@@ -30,7 +30,7 @@ class Resizer
     public $maxWidth      = 0;
     public $maxHeight     = 0;
     public $imageMimetype = '';
-    public $jpgQuality    = 90;
+    public $jpgQuality    = 80;
     public $mergeType     = 0;
     public $mergePos      = 0;
     public $degrees       = 0;

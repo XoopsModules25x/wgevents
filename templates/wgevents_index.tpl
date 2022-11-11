@@ -36,6 +36,11 @@
 
 <{if $index_displayevents|default:'' != 'none'}>
     <div class='wge-spacer2 center'><h3 class="center"><{$listDescr|default:''}></h3></div>
+    <{if $gmapsShowList|default:false && $gmapsEnableEvent|default:false && $gmapsPositionList|default:'none' == 'top'}>
+        <div class="row wge-row1">
+            <span class='col-sm-12 center'><{include file='db:wgevents_gmaps_show.tpl' }></span>
+        </div>
+    <{/if}>
     <{if $eventsCount|default:0 > 0}>
         <!-- Start new link loop -->
         <{foreach item=event from=$events name=event}>
@@ -46,6 +51,11 @@
         <!-- End new link loop -->
     <{else}>
         <div class="col-12 center wge-error-msg"><{$smarty.const._MA_WGEVENTS_INDEX_THEREARENT_EVENTS}></div>
+    <{/if}>
+    <{if $gmapsShowList|default:false && $gmapsEnableEvent|default:false && $gmapsPositionList|default:'none' == 'bottom'}>
+        <div class="row wge-row1">
+            <span class='col-sm-12 center'><{include file='db:wgevents_gmaps_show.tpl' }></span>
+        </div>
     <{/if}>
     <{if $showBtnComing|default:false}>
         <div class="row wge-row1">
