@@ -88,7 +88,7 @@ class Log extends \XoopsObject
         if (!$action) {
             $action = $_SERVER['REQUEST_URI'];
         }
-        $isAdmin = \is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->isAdmin($GLOBALS['xoopsModule']->mid()) : false;
+        $isAdmin = (\is_object($GLOBALS['xoopsUser']) && \is_object($GLOBALS['xoopsModule'])) ? $GLOBALS['xoopsUser']->isAdmin($GLOBALS['xoopsModule']->mid()) : false;
         // Title
         $title = $this->isNew() ? \_AM_WGEVENTS_ADD_LOG : \_AM_WGEVENTS_EDIT_LOG;
         // Get Theme Form

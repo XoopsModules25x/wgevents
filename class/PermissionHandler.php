@@ -54,7 +54,7 @@ class PermissionHandler extends \XoopsPersistableObjectHandler
     {
         global $xoopsUser;
 
-        $moduleDirName = \basename(\dirname(__DIR__));;
+        $moduleDirName = \basename(\dirname(__DIR__));
         $mid = XoopsModule::getByDirname($moduleDirName)->mid();
         $currentuid = 0;
         if (isset($xoopsUser) && \is_object($xoopsUser)) {
@@ -64,7 +64,6 @@ class PermissionHandler extends \XoopsPersistableObjectHandler
             $currentuid = $xoopsUser->uid();
         }
         $grouppermHandler = \xoops_getHandler('groupperm');
-
 
         $memberHandler = \xoops_getHandler('member');
         if (0 == $currentuid) {
@@ -229,7 +228,7 @@ class PermissionHandler extends \XoopsPersistableObjectHandler
 
         $currentuid = 0;
         if (isset($xoopsUser) && \is_object($xoopsUser)) {
-            if ($xoopsUser->isAdmin($xoopsModule->mid())) {
+            if (isset($xoopsModule) && \is_object($xoopsModule) && $xoopsUser->isAdmin($xoopsModule->mid())) {
                 return true;
             }
             $currentuid = $xoopsUser->uid();
@@ -378,7 +377,7 @@ class PermissionHandler extends \XoopsPersistableObjectHandler
 
         $currentuid = 0;
         if (isset($xoopsUser) && \is_object($xoopsUser)) {
-            if ($xoopsUser->isAdmin($xoopsModule->mid())) {
+            if (isset($xoopsModule) && \is_object($xoopsModule) && $xoopsUser->isAdmin($xoopsModule->mid())) {
                 return true;
             }
             $currentuid = $xoopsUser->uid();
@@ -403,7 +402,7 @@ class PermissionHandler extends \XoopsPersistableObjectHandler
 
         $currentuid = 0;
         if (isset($xoopsUser) && \is_object($xoopsUser)) {
-            if ($xoopsUser->isAdmin($xoopsModule->mid())) {
+            if (isset($xoopsModule) && \is_object($xoopsModule) && $xoopsUser->isAdmin($xoopsModule->mid())) {
                 return true;
             }
             $currentuid = $xoopsUser->uid();
