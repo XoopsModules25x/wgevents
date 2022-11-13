@@ -276,6 +276,7 @@ switch ($op) {
         $accountObj->setVar('port_out', Request::getInt('port_out'));
         $accountObj->setVar('securetype_out', Request::getString('securetype_out'));
         $accountObj->setVar('primary', Request::getInt('primary'));
+        $accountObj->setVar('limit_hour', Request::getInt('limit_hour'));
         $accountObj->setVar('datecreated', Request::getInt('datecreated'));
         $accountObj->setVar('submitter', Request::getInt('submitter'));
         // Insert Data
