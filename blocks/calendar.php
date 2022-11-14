@@ -107,7 +107,12 @@ function b_wgevents_calendar_show($options)
             $badgeStyle = 'border:1px solid ' . $categories[$event->getVar('catid')]['bordercolor'] . '!important;';
             $badgeStyle .= 'background-color:' . $categories[$event->getVar('catid')]['bgcolor'] . '!important;';
             $badgeStyle .= 'border-radius:50% !important;';
-            $eventLink = '<a href="' . \WGEVENTS_URL . '/event.php?op=show&amp;id=' . $event->getVar('id') .'" title="' . $event->getVar('name') .'">';
+            $evTitle = \_MA_WGEVENTS_EVENT_NAME . ': ' . $event->getVar('name') . PHP_EOL;
+            $evTitle .= \_MA_WGEVENTS_EVENT_DATE . ': ' . $eventHandler->getDateFromToText($event->getVar('datefrom'), $event->getVar('dateto'), $event->getVar('allday')) . PHP_EOL;
+            if ($event->getVar('location')) {
+                $evTitle .= \_MA_WGEVENTS_EVENT_LOCATION . ': ' . $event->getVar('location') . PHP_EOL;
+            }
+            $eventLink = '<a href="' . \WGEVENTS_URL . '/event.php?op=show&amp;id=' . $event->getVar('id') .'" title="' . $evTitle .'">';
             $eventLink .= '<span class="badge" style="' . $badgeStyle . '">&nbsp;&nbsp;</span></a>';
             $calendar->addDailyHtml($eventLink, $event->getVar('datefrom'), $event->getVar('dateto'));
         }

@@ -40,7 +40,7 @@ echo '<br>start cron.php';
 $log_level = 2;
 
 // execute all pending tasks
-$result_exec = $taskHandler->processTasks();
+$result_exec = $taskHandler->processTasks($log_level);
 
 if ($log_level > 0) {
     $helper = \XoopsModules\Wgevents\Helper::getInstance();

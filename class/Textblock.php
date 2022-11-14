@@ -96,7 +96,7 @@ class Textblock extends \XoopsObject
         if (!$action) {
             $action = $_SERVER['REQUEST_URI'];
         }
-        $isAdmin = (\is_object($GLOBALS['xoopsUser']) && \is_object($GLOBALS['xoopsModule'])) && $GLOBALS['xoopsUser']->isAdmin($GLOBALS['xoopsModule']->mid());
+        $isAdmin = \is_object($GLOBALS['xoopsUser']) && $GLOBALS['xoopsUser']->isAdmin($GLOBALS['xoopsModule']->mid());
         // Title
         $title = $this->isNew() ? \_MA_WGEVENTS_TEXTBLOCK_ADD : \_MA_WGEVENTS_TEXTBLOCK_EDIT;
         // Get Theme Form

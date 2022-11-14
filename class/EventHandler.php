@@ -205,12 +205,6 @@ class EventHandler extends \XoopsPersistableObjectHandler
                 $crEvent->add(new \Criteria('submitter', $uidCurrent));
             }
         }
-        //get only events which are online or from me
-        $crEventOnline = new \CriteriaCompo();
-        $crEventOnline->add(new \Criteria('status', Constants::STATUS_OFFLINE, '>'));
-        $crEventOnline->add(new \Criteria('submitter', $uidCurrent), 'OR');
-        $crEvent->add($crEventOnline);
-
         if ($dateCreated > 0) {
             $crEvent->add(new \Criteria('datecreated', $dateCreated, '>='));
         }

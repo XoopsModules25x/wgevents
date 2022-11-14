@@ -92,7 +92,7 @@ class Answer extends \XoopsObject
         if (!$action) {
             $action = $_SERVER['REQUEST_URI'];
         }
-        $isAdmin = (\is_object($GLOBALS['xoopsUser']) && \is_object($GLOBALS['xoopsModule'])) ? $GLOBALS['xoopsUser']->isAdmin($GLOBALS['xoopsModule']->mid()) : false;
+        $isAdmin = \is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->isAdmin($GLOBALS['xoopsModule']->mid()) : false;
         // Title
         $title = $this->isNew() ? \_MA_WGEVENTS_ANSWER_ADD : \_MA_WGEVENTS_ANSWER_EDIT;
         // Get Theme Form

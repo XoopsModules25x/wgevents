@@ -47,6 +47,8 @@ function b_wgevents_event_show($options)
     if (\is_object($GLOBALS['xoopsUser'])) {
         $uidCurrent  = $GLOBALS['xoopsUser']->uid();
     }
+    $GLOBALS['xoopsTpl']->assign('start', 0);
+    $GLOBALS['xoopsTpl']->assign('limit', (int)$helper->getConfig('userpager'));
 
     $block       = [];
     $typeBlock   = $options[0];

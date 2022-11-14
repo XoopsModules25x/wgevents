@@ -39,6 +39,8 @@
             <{/if}>
         <{/foreach}>
     </div>
+<{else}>
+    <{if $noEventsReason|default:false}><div class="col-12 center wge-error-msg"><{$noEventsReason}></div><{/if}>
 <{/if}>
 
 <{if $gmapsShowList|default:false && $gmapsEnableEvent|default:false && $gmapsPositionList|default:'none' == 'bottom'}>

@@ -154,9 +154,10 @@ class TaskHandler extends \XoopsPersistableObjectHandler
 
     /**
      * process all task if limit is not exceeded
+     * @param $log_level
      * @return bool
      */
-    public function processTasks()
+    public function processTasks($log_level = 0)
     {
         $helper = \XoopsModules\Wgevents\Helper::getInstance();
 
@@ -172,11 +173,23 @@ class TaskHandler extends \XoopsPersistableObjectHandler
         $tasksCountPending = $this->getCount($crTaskPending);
         $tasksCountDone = $this->getCount($crTaskDone);
         $counterDone = 0;
+        if ($log_level > 0) {
+            echo '<br>Sart processTasks';
+            echo '<br>time - 3600: ' . \formatTimestamp(time() - 3600, 'm');
+            echo '<br>tasksCountPending: ' . $tasksCountPending;
+            echo '<br>tasksCountDone: ' . $tasksCountDone;
+        }
         if (($tasksCountPending > 0) && ($tasksCountDone < $limitHour || 0 == $limitHour)) {
+            if ($limitHour > 0) {
+                $crTaskPending->setLimit($limitHour);
+            }
             $tasksAll = $this->getAll($crTaskPending);
             foreach (\array_keys($tasksAll) as $i) {
                 // check whether task is still pending
                 // ignore it if meanwhile another one started to process the task
+                if ($log_level > 0) {
+                    echo '<br>tasksAll key: ' . $i;
+                }
                 if ((Constants::STATUS_PENDING == (int)$tasksAll[$i]->getVar('status'))
                     && ($tasksCountDone < $limitHour || 0 == $limitHour)) {
                     $taskProcessObj = $this->get($i);
@@ -196,17 +209,27 @@ class TaskHandler extends \XoopsPersistableObjectHandler
                             $taskProcessObj->setVar('status', Constants::STATUS_DONE);
                             $taskProcessObj->setVar('datedone', time());
                             $counterDone++;
+                            if ($log_level > 0) {
+                                echo ' - done';
+                            }
                         } else {
                             $taskProcessObj->setVar('status', Constants::STATUS_PENDING);
+                            if ($log_level > 0) {
+                                echo ' - failed';
+                            }
                         }
                         $this->insert($taskProcessObj);
+                    } else {
+                        echo ' - skipped';
                     }
                 }
                 // check once more number of done
                 $tasksCountDone = $this->getCount($crTaskDone);
             }
         }
-
+        if ($log_level > 0) {
+            echo '<br>End processTasks';
+        }
         return ['pending' => $tasksCountPending, 'done' => $counterDone];
     }
 }

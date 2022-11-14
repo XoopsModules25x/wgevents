@@ -79,6 +79,8 @@ if ($useGMaps) {
     $gmapsEnableEvent  = ('top' == $gmapsPositionList || 'bottom' == $gmapsPositionList);
     $gmapsHeight       = $helper->getConfig('gmaps_height');
 }
+$GLOBALS['xoopsTpl']->assign('start', $start);
+$GLOBALS['xoopsTpl']->assign('limit', $limit);
 
 //misc
 $GLOBALS['xoopsTpl']->assign('categoryCurrent', $catId);
@@ -197,6 +199,12 @@ if ('none' != $indexDisplayEvents) {
             require_once \XOOPS_ROOT_PATH . '/class/pagenav.php';
             $pagenav = new \XoopsPageNav($eventsCount, $limit, $start, 'start', 'op=list&limit=' . $limit . '&cat_id=' . $catId . '&amp;cats=' . $urlCats);
             $GLOBALS['xoopsTpl']->assign('pagenav', $pagenav->renderNav());
+        }
+    } else {
+        if (\count($filterCats) > 0) {
+            $GLOBALS['xoopsTpl']->assign('noEventsReason', \_MA_WGEVENTS_INDEX_THEREARENT_EVENTS_FILTER);
+        } else {
+            $GLOBALS['xoopsTpl']->assign('noEventsReason', \_MA_WGEVENTS_INDEX_THEREARENT_EVENTS);
         }
     }
 }

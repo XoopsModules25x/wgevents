@@ -113,10 +113,7 @@ class Registration extends \XoopsObject
         if (!$action) {
             $action = $_SERVER['REQUEST_URI'];
         }
-        $isAdmin = false;
-        if (\is_object($GLOBALS['xoopsUser']) && \is_object($GLOBALS['xoopsUser']) && \is_object($GLOBALS['xoopsModule']) && \is_object($GLOBALS['xoopsModule'])) {
-            $isAdmin = $GLOBALS['xoopsUser']->isAdmin($GLOBALS['xoopsModule']->mid());
-        }
+        $isAdmin = \is_object($GLOBALS['xoopsUser']) && $GLOBALS['xoopsUser']->isAdmin($GLOBALS['xoopsModule']->mid());
         $answersExist = true;
         // Title
         if ($this->isNew()) {

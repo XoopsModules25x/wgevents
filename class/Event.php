@@ -141,9 +141,7 @@ class Event extends \XoopsObject
         $userEmail = '';
         $userName  = '';
         if (\is_object($GLOBALS['xoopsUser'])) {
-            if (\is_object($GLOBALS['xoopsModule'])) {
-                $isAdmin   = $GLOBALS['xoopsUser']->isAdmin($GLOBALS['xoopsModule']->mid());
-            }
+            $isAdmin   = $GLOBALS['xoopsUser']->isAdmin($GLOBALS['xoopsModule']->mid());
             $userUid   = $GLOBALS['xoopsUser']->uid();
             $userEmail = $GLOBALS['xoopsUser']->email();
             $userName  = ('' != (string)$GLOBALS['xoopsUser']->name()) ? $GLOBALS['xoopsUser']->name() : $GLOBALS['xoopsUser']->uname();
@@ -175,14 +173,10 @@ class Event extends \XoopsObject
         $evCatidSelect->addOptionArray($categoryHandler->getAllCatsOnline(Constants::CATEGORY_TYPE_MAIN));
         $form->addElement($evCatidSelect);
         // Form Table sub categories
-        // count sub categories
-        $catsSubOnline = $categoryHandler->getAllCatsOnline(Constants::CATEGORY_TYPE_SUB);
-        if (\count($catsSubOnline) > 0) {
-            $evSubCats = $this->isNew() ? [] : \unserialize($this->getVar('subcats'));
-            $evSubCatsSelect = new \XoopsFormCheckBox(\_MA_WGEVENTS_EVENT_SUBCATS, 'subcats', $evSubCats);
-            $evSubCatsSelect->addOptionArray($catsSubOnline);
-            $form->addElement($evSubCatsSelect);
-        }
+        $evSubCats = $this->isNew() ? [] : \unserialize($this->getVar('subcats'));
+        $evSubCatsSelect = new \XoopsFormCheckBox(\_MA_WGEVENTS_EVENT_SUBCATS, 'subcats', $evSubCats);
+        $evSubCatsSelect->addOptionArray($categoryHandler->getAllCatsOnline(Constants::CATEGORY_TYPE_SUB));
+        $form->addElement($evSubCatsSelect);
         // Form Text evName
         $form->addElement(new \XoopsFormText(\_MA_WGEVENTS_EVENT_NAME, 'name', 50, 255, $this->getVar('name')), true);
         // Form Editor DhtmlTextArea evDesc

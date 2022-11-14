@@ -250,7 +250,14 @@ switch ($op) {
             if ('show' == $op && '' != $evName) {
                 $GLOBALS['xoopsTpl']->assign('xoops_pagetitle', \strip_tags($evName . ' - ' . $GLOBALS['xoopsModule']->getVar('name')));
             }
+        } else {
+            if (\count($filterCats) > 0) {
+                $GLOBALS['xoopsTpl']->assign('noEventsReason', \_MA_WGEVENTS_INDEX_THEREARENT_EVENTS_FILTER);
+            } else {
+                $GLOBALS['xoopsTpl']->assign('noEventsReason', \_MA_WGEVENTS_INDEX_THEREARENT_EVENTS);
+            }
         }
+
         break;
     case 'save':
         // Security Check
