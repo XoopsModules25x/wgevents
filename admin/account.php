@@ -149,17 +149,28 @@ switch ($op) {
 
                     if (Constants::ACCOUNT_TYPE_VAL_SMTP == $account_type
                         || Constants::ACCOUNT_TYPE_VAL_GMAIL == $account_type) {
+
+                        $xoopsMailer->multimailer->isSMTP();
+                        $xoopsMailer->multimailer->Port       = $account_port_out; // set the SMTP port
+                        $xoopsMailer->multimailer->Host       = $account_server_out; //sometimes necessary to repeat
+                        $xoopsMailer->multimailer->SMTPAuth   = true;
+                        $xoopsMailer->multimailer->SMTPSecure = $account_securetype_out;
+                        $xoopsMailer->multimailer->Username   = $account_username; // SMTP account username
+                        $xoopsMailer->multimailer->Password   = $account_password; // SMTP account password
+                        $xoopsMailer->multimailer->SMTPDebug = 4;
+                        /*
                         $xoopsMailer->Port = $account_port_out; // set the SMTP port
                         $logDetails .= '<br>account_port_out:' . $account_port_out;
                         $xoopsMailer->Host = $account_server_out; //sometimes necessary to repeat
-                        $logDetails .= '<br>account_server_out:' . $account_server_out;
+                        $logDetails .= '<br>account_server_out:' . $account_server_out;*/
                     }
-
+                    /*
                     if ('' != $account_securetype_out) {
                         $xoopsMailer->SMTPAuth   = true;
                         $xoopsMailer->SMTPSecure = $account_securetype_out; // sets the prefix to the server
                         $logDetails .= '<br>account_securetype_out:' . $account_securetype_out;
                     }
+                    */
                     $xoopsMailer->setFromEmail($account_yourmail);
                     $xoopsMailer->setFromName($account_yourname);
                     $logDetails .= '<br>from:' . $account_yourmail . ' ' . $account_yourname;
@@ -175,7 +186,7 @@ switch ($op) {
                         $export = var_export($xoopsMailer, TRUE);
                         $export = \preg_replace("/\n/", '<br>', $export);
                         $logHandler->createLog('Result Test send mail to ' . $usermail .': success' . '<br>' . $export);
-                        $result = \_AM_WGEVENTS_ACCOUNT_CHECK_OK;
+                        $result = \_AM_WGEVENTS_ACCOUNT_CHECK_OK . '<br>' . $xoopsMailer->getErrors();;
                         $resultImg = $imgOK;
                     } else {
                         $export = var_export($xoopsMailer, TRUE);

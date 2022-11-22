@@ -174,7 +174,7 @@ class TaskHandler extends \XoopsPersistableObjectHandler
         $tasksCountDone = $this->getCount($crTaskDone);
         $counterDone = 0;
         if ($log_level > 0) {
-            echo '<br>Sart processTasks';
+            echo '<br>Start processTasks';
             echo '<br>time - 3600: ' . \formatTimestamp(time() - 3600, 'm');
             echo '<br>tasksCountPending: ' . $tasksCountPending;
             echo '<br>tasksCountDone: ' . $tasksCountDone;

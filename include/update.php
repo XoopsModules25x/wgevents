@@ -72,7 +72,6 @@ function xoops_module_update_wgevents($module, $prev_version = null)
 
     // create a schema file based on sql/mysql.sql
     $migratehelper = new MigrateHelper($fileSql, $fileYaml);
-    /**/
     if (!$migratehelper->createSchemaFromSqlfile()) {
         \xoops_error('Error: creation schema file failed!');
         return false;

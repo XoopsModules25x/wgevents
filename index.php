@@ -79,10 +79,11 @@ if ($useGMaps) {
     $gmapsEnableEvent  = ('top' == $gmapsPositionList || 'bottom' == $gmapsPositionList);
     $gmapsHeight       = $helper->getConfig('gmaps_height');
 }
-$GLOBALS['xoopsTpl']->assign('start', $start);
-$GLOBALS['xoopsTpl']->assign('limit', $limit);
 
 //misc
+$GLOBALS['xoopsTpl']->assign('categoryCurrent', $catId);
+$GLOBALS['xoopsTpl']->assign('start', $start);
+$GLOBALS['xoopsTpl']->assign('limit', $limit);
 $GLOBALS['xoopsTpl']->assign('categoryCurrent', $catId);
 $catName = '';
 
@@ -97,6 +98,10 @@ if ('none' != $indexDisplayCats) {
     $GLOBALS['xoopsTpl']->assign('wgevents_upload_catlogos_url', \WGEVENTS_UPLOAD_CATLOGOS_URL);
     $categories = $categoryHandler->getCategoriesForFilter($indexDisplayCats, $filterCats, $op, $useGroups, '');
     $GLOBALS['xoopsTpl']->assign('categories', $categories);
+    if ('form' == $indexDisplayCats) {
+        $formCatsCb = $categoryHandler->getFormCatsCb($filterCats, $op);
+        $GLOBALS['xoopsTpl']->assign('formCatsCb', $formCatsCb->render());
+    }
 }
 
 $indexDisplayEvents = (string)$helper->getConfig('index_displayevents');
