@@ -134,6 +134,8 @@ require_once __DIR__ . '/admin.php';
 \define('_MA_WGEVENTS_EVENT_GROUPS_DESC', 'Definiere, welche Gruppen diese Veranstaltung sehen sollen');
 \define('_MA_WGEVENTS_EVENT_GROUPS_ALL', 'Alle Gruppen');
 \define('_MA_WGEVENTS_EVENT_CLONE_QUESTION', 'Vorhandene Fragen auch duplizieren');
+\define('_MA_WGEVENTS_EVENT_DATE_ERROR1', "Das Datum 'Datum bis' war kleiner als 'Datum von' und wurde angepasst!");
+\define('_MA_WGEVENTS_EVENT_DATE_ERROR2', "Das Datum 'Anmeldung bis' war kleiner als 'Anmeldung von' und wurde angepasst!");
 // Categories
 \define('_MA_WGEVENTS_CATEGORY_LOGO', 'Logo');
 \define('_MA_WGEVENTS_CATEGORY_NOEVENTS', 'Keine Veranstaltungen verfügbar');

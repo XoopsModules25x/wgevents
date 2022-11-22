@@ -280,6 +280,7 @@ switch ($op) {
         }
 
         $uploaderErrors = '';
+        $dateErrors = '';
         $catId = Request::getInt('catid');
         $evSubmitter = Request::getInt('submitter');
 
@@ -354,6 +355,10 @@ switch ($op) {
         $eventDatetoObj = \DateTime::createFromFormat(\_SHORTDATESTRING, $eventDatetoArr['date']);
         $eventDatetoObj->setTime(0, 0);
         $eventDateto = $eventDatetoObj->getTimestamp() + (int)$eventDatetoArr['time'];
+        if ($eventDateto < $eventDatefrom) {
+            $eventDateto = $eventDatefrom;
+            $dateErrors .= '<br>' . \_MA_WGEVENTS_EVENT_DATE_ERROR1;
+        }
         $eventObj->setVar('dateto', $eventDateto);
         $eventObj->setVar('allday', Request::getInt('allday'));
         $eventObj->setVar('contact', Request::getString('contact'));
@@ -387,6 +392,10 @@ switch ($op) {
             $evRegistertoObj->setTime(0, 0);
             $evRegisterto = $evRegistertoObj->getTimestamp() + (int)$evRegistertoArr['time'];
             $eventObj->setVar('register_to', $evRegisterto);
+            if ($evRegisterto < $evRegisterfrom) {
+                $evRegisterto = $evRegisterfrom;
+                $dateErrors .= '<br>' . \_MA_WGEVENTS_EVENT_DATE_ERROR2;
+            }
             $eventObj->setVar('register_max', Request::getInt('register_max'));
             $eventObj->setVar('register_listwait', Request::getInt('register_listwait'));
             $eventObj->setVar('register_autoaccept', Request::getInt('register_autoaccept'));
@@ -562,21 +571,22 @@ switch ($op) {
                         }
                     }
                 }
+                $textFormOK = \_MA_WGEVENTS_FORM_OK . $dateErrors;
                 if (Request::hasVar('continue_questions')) {
-                    \redirect_header('question.php?op=list&amp;evid=' . $newEvId . '&amp;start=' . $start . '&amp;limit=' . $limit, 2, \_MA_WGEVENTS_FORM_OK);
+                    \redirect_header('question.php?op=list&amp;evid=' . $newEvId . '&amp;start=' . $start . '&amp;limit=' . $limit, 2, $textFormOK);
                 }
                 if ($evId > 0 || !$cloneQuestions) {
-                    \redirect_header('event.php?op=show&amp;id=' . $evId . '&amp;start=' . $start . '&amp;limit=' . $limit, 2, \_MA_WGEVENTS_FORM_OK);
+                    \redirect_header('event.php?op=show&amp;id=' . $evId . '&amp;start=' . $start . '&amp;limit=' . $limit, 2, $textFormOK);
                 } else {
                     // check whether there are already question infos
                     $crQuestion = new \CriteriaCompo();
                     $crQuestion->add(new \Criteria('evid', $newEvId));
                     if ($questionHandler->getCount($crQuestion) > 0) {
                         // set of questions already existing
-                        \redirect_header('question.php?op=list&amp;evid=' . $newEvId, 2, \_MA_WGEVENTS_FORM_OK);
+                        \redirect_header('question.php?op=list&amp;evid=' . $newEvId, 2, $textFormOK);
                     } else {
                         // redirect to question.php in order to add default set of questions
-                        \redirect_header('question.php?op=newset&amp;evid=' . $newEvId, 0, \_MA_WGEVENTS_FORM_OK);
+                        \redirect_header('question.php?op=newset&amp;evid=' . $newEvId, 0, $textFormOK);
                     }
                 }
             } else {
@@ -585,7 +595,7 @@ switch ($op) {
                     $questionHandler->cleanupQuestions($evId);
                     $answerHandler->cleanupAnswers($evId);
                 }
-                \redirect_header('event.php?op=list&amp;start=' . $start . '&amp;limit=' . $limit, 2, \_MA_WGEVENTS_FORM_OK);
+                \redirect_header('event.php?op=list&amp;start=' . $start . '&amp;limit=' . $limit, 2, \_MA_WGEVENTS_FORM_OK . $dateErrors);
             }
         }
         // Get Form Error

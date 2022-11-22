@@ -11,6 +11,7 @@
  - removed duplicates of cats (goffy)
  - gmap on index page (goffy)
  - fixed bug in calendar page (goffy)
+ - added check for dates from/to (goffy)
 
 ==============================================================
 1.0.4 RC1 [2022/08/29]
