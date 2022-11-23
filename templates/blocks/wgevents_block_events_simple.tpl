@@ -1,7 +1,11 @@
 <{if count($block)}>
     <{foreach item=event from=$block}>
         <div class='row wge-block-row'>
-            <div class='col-xs-4 col-4 center'><img class="img-responsive img-fluid" src="<{$wgevents_upload_eventlogos_url|default:false}>/<{$event.submitter}>/<{$event.logo}>" alt="<{$event.name}>" ></div>
+            <div class='col-xs-4 col-4 center'>
+                <{if $event.logoExist|default:false}>
+                    <img class="img-responsive img-fluid wge-event-block-img" src="<{$wgevents_upload_eventlogos_url|default:false}>/<{$event.submitter}>/<{$event.logo}>" alt="<{$event.name}>" >
+                <{/if}>
+            </div>
             <div class='col-xs-8 col-8 left'>
                 <p><{$event.name}></p>
                 <p><{$event.datefrom_text}></p>

@@ -11,7 +11,11 @@
     <tbody>
         <{foreach item=event from=$block}>
         <tr class='<{cycle values="odd, even"}>'>
-            <td class='center'><img class="img-responsive img-fluid" src="<{$wgevents_upload_eventlogos_url|default:false}>/<{$event.submitter}>/<{$event.logo}>" alt="<{$event.name}>" ></td>
+            <td class='center'>
+                <{if $event.logoExist|default:false}>
+                    <img class="img-responsive img-fluid wge-event-block-img" src="<{$wgevents_upload_eventlogos_url|default:false}>/<{$event.submitter}>/<{$event.logo}>" alt="<{$event.name}>" >
+                <{/if}>
+            </td>
             <td class='center'><{$event.name}></td>
             <td class='center'><{$event.datefrom_text}></td>
             <td class='center'><a href='<{$wgevents_url|default:false}>/event.php?op=show&amp;id=<{$event.id}>' title='<{$smarty.const._MA_WGEVENTS_EVENT_DETAILS}>'><{$smarty.const._MA_WGEVENTS_EVENT_DETAILS}></a></td>
