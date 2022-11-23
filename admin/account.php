@@ -156,14 +156,14 @@ switch ($op) {
                         $xoopsMailer->multimailer->SMTPSecure = $account_securetype_out;
                         $xoopsMailer->multimailer->Username   = $account_username; // SMTP account username
                         $xoopsMailer->multimailer->Password   = $account_password; // SMTP account password
-                        $xoopsMailer->multimailer->SMTPDebug = 4;
+                        $xoopsMailer->multimailer->SMTPDebug  = 4;
                         /*
                         $xoopsMailer->Port = $account_port_out; // set the SMTP port
                         $logDetails .= '<br>account_port_out:' . $account_port_out;
                         $xoopsMailer->Host = $account_server_out; //sometimes necessary to repeat
                         $logDetails .= '<br>account_server_out:' . $account_server_out;*/
                     }
-                    /*
+                    /* old version:
                     if ('' != $account_securetype_out) {
                         $xoopsMailer->SMTPAuth   = true;
                         $xoopsMailer->SMTPSecure = $account_securetype_out; // sets the prefix to the server

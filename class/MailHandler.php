@@ -224,10 +224,9 @@ class MailHandler
             $xoopsMailer->setTemplate($template);
             $xoopsMailer->CharSet = _CHARSET; //use xoops default character set
             //set account settings
-
-            /*Test version neu
             if (Constants::ACCOUNT_TYPE_VAL_SMTP == $account_type
                 || Constants::ACCOUNT_TYPE_VAL_GMAIL == $account_type) {
+
                 $xoopsMailer->multimailer->isSMTP();
                 $xoopsMailer->multimailer->Port       = $account_port_out; // set the SMTP port
                 $xoopsMailer->multimailer->Host       = $account_server_out; //sometimes necessary to repeat
@@ -235,33 +234,14 @@ class MailHandler
                 $xoopsMailer->multimailer->SMTPSecure = $account_securetype_out;
                 $xoopsMailer->multimailer->Username   = $account_username; // SMTP account username
                 $xoopsMailer->multimailer->Password   = $account_password; // SMTP account password
-                $xoopsMailer->SMTPDebug = 4;
-            } else {
-                if ('' != $account_username) {
-                    $xoopsMailer->Username = $account_username; // SMTP account username
-                }
-                if ('' != $account_password) {
-                    $xoopsMailer->Password = $account_password; // SMTP account password
-                }
-                if (Constants::ACCOUNT_TYPE_VAL_POP3 == $account_type) {
-                    //xoopsMailer->isSMTP();
-                    //$xoopsMailer->SMTPDebug = 2;
-                    $xoopsMailer->Host = $account_server_out;
-                }
-                /*
-                if ('' != $account_securetype_out) {
-                    $xoopsMailer->SMTPAuth   = true;
-                    $xoopsMailer->SMTPSecure = $account_securetype_out; // sets the prefix to the server
-                }
-                *//*
+                $xoopsMailer->multimailer->SMTPDebug  = 0;
+            }
+            /* old version:
+            if ('' != $account_securetype_out) {
+                $xoopsMailer->SMTPAuth   = true;
+                $xoopsMailer->SMTPSecure = $account_securetype_out; // sets the prefix to the server
             }
             */
-        /*Version alt*/
-            if (Constants::ACCOUNT_TYPE_VAL_POP3 == $account_type) {
-                //xoopsMailer->isSMTP();
-                //$xoopsMailer->SMTPDebug = 2;
-                $xoopsMailer->Host = $account_server_out;
-            }
 
             if (Constants::ACCOUNT_TYPE_VAL_SMTP == $account_type
                 || Constants::ACCOUNT_TYPE_VAL_GMAIL == $account_type) {

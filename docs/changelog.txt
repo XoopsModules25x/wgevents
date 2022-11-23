@@ -14,6 +14,7 @@
  - added check for dates from/to (goffy)
  - fixed multiple primary mail accounts (goffy)
  - keep filter cats when editing event (goffy)
+ - fixed problems with smtp mail accounts (goffy)
 
 ==============================================================
 1.0.4 RC1 [2022/08/29]
