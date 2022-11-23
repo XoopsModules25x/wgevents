@@ -48,6 +48,7 @@ $urlCats = Request::getString('cats');
 if (0 == \count($filterCats) && '' != $urlCats) {
     $filterCats = \explode(',', $urlCats);
 }
+$GLOBALS['xoopsTpl']->assign('urlCats', \implode(',', $filterCats));
 
 // Define Stylesheet
 $GLOBALS['xoTheme']->addStylesheet($style, null);

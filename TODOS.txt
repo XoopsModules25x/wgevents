@@ -1,7 +1,14 @@
+ssl mail
+
 export
 - excel
 - ics
 
+https://github.com/azuyalabs/yasumi
+
+
+
+give possibility to change counter for page nav
 
 update macht default ' statt ''
 

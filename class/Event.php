@@ -54,6 +54,11 @@ class Event extends \XoopsObject
     public $idSource = 0;
 
     /**
+     * @var string
+     */
+    public $cats = '';
+
+    /**
      * Constructor
      *
      * @param null
@@ -156,7 +161,6 @@ class Event extends \XoopsObject
         if ($this->idSource > 0) {
             $this->unsetNew();
         }
-
         // Get Theme Form
         \xoops_load('XoopsFormLoader');
         $form = new \XoopsThemeForm($title, 'formEvent', $action, 'post', true);
@@ -447,6 +451,7 @@ class Event extends \XoopsObject
         $form->addElement(new \XoopsFormHidden('op', 'save'));
         $form->addElement(new \XoopsFormHidden('start', $this->start));
         $form->addElement(new \XoopsFormHidden('limit', $this->limit));
+        $form->addElement(new \XoopsFormHidden('cats', $this->cats));
         // button tray
         $buttonTray = new \XoopsFormElementTray('');
         $buttonBack = new Forms\FormButton('', 'confirm_back', \_CANCEL, 'button');

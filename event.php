@@ -52,13 +52,14 @@ $GLOBALS['xoopsTpl']->assign('start', $start);
 $GLOBALS['xoopsTpl']->assign('limit', $limit);
 $catId  = Request::getInt('catid');
 $filterCats = Request::getArray('filter_cats');
-if ($catId > 0 && 0 == \count($filterCats)) {
+if ($catId > 0 && 'save' !== $op) {
     $filterCats[$catId] = $catId;
 }
 $urlCats = Request::getString('cats');
 if (0 == \count($filterCats) && '' != $urlCats) {
     $filterCats = \explode(',', $urlCats);
 }
+$GLOBALS['xoopsTpl']->assign('urlCats', \implode(',', $filterCats));
 
 // Define Stylesheet
 $GLOBALS['xoTheme']->addStylesheet($style, null);
@@ -578,10 +579,10 @@ switch ($op) {
                 }
                 $textFormOK = \_MA_WGEVENTS_FORM_OK . $dateErrors;
                 if (Request::hasVar('continue_questions')) {
-                    \redirect_header('question.php?op=list&amp;evid=' . $newEvId . '&amp;start=' . $start . '&amp;limit=' . $limit, 2, $textFormOK);
+                    \redirect_header('question.php?op=list&amp;evid=' . $newEvId . '&amp;start=' . $start . '&amp;limit=' . $limit. '&amp;cats=' . $urlCats, 2, $textFormOK);
                 }
                 if ($evId > 0 || !$cloneQuestions) {
-                    \redirect_header('event.php?op=show&amp;id=' . $evId . '&amp;start=' . $start . '&amp;limit=' . $limit, 2, $textFormOK);
+                    \redirect_header('event.php?op=show&amp;id=' . $evId . '&amp;start=' . $start . '&amp;limit=' . $limit. '&amp;cats=' . $urlCats, 2, $textFormOK);
                 } else {
                     // check whether there are already question infos
                     $crQuestion = new \CriteriaCompo();
@@ -600,7 +601,7 @@ switch ($op) {
                     $questionHandler->cleanupQuestions($evId);
                     $answerHandler->cleanupAnswers($evId);
                 }
-                \redirect_header('event.php?op=list&amp;start=' . $start . '&amp;limit=' . $limit, 2, \_MA_WGEVENTS_FORM_OK . $dateErrors);
+                \redirect_header('event.php?op=list&amp;start=' . $start . '&amp;limit=' . $limit. '&amp;cats=' . $urlCats, 2, \_MA_WGEVENTS_FORM_OK . $dateErrors);
             }
         }
         // Get Form Error
@@ -652,6 +653,7 @@ switch ($op) {
         $eventObj = $eventHandler->get($evId);
         $eventObj->start = $start;
         $eventObj->limit = $limit;
+        $eventObj->cats  = $urlCats;
         $form = $eventObj->getForm();
         $GLOBALS['xoopsTpl']->assign('form', $form->render());
         break;
