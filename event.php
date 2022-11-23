@@ -242,6 +242,11 @@ switch ($op) {
                 require_once \XOOPS_ROOT_PATH . '/class/pagenav.php';
                 $pagenav = new \XoopsPageNav($eventsCount, $limit, $start, 'start', 'op=list&amp;filter=' . $filter . '&amp;limit=' . $limit . '&amp;cats=' . $urlCats);
                 $GLOBALS['xoopsTpl']->assign('pagenav', $pagenav->renderNav());
+                /*
+                $params = [];
+                $formPageNavCounter = $eventHandler->getFormPageNavCounter($params);
+                $GLOBALS['xoopsTpl']->assign('formPageNavCounter', $formPageNavCounter->render());
+                */
             }
             $GLOBALS['xoopsTpl']->assign('table_type', $helper->getConfig('table_type'));
             $GLOBALS['xoopsTpl']->assign('start', $start);

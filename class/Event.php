@@ -586,6 +586,7 @@ class Event extends \XoopsObject
         $ret['desc_text']        = $this->getVar('desc', 'e');
         $ret['desc_short_admin'] = $utility::truncateHtml($ret['desc_text'], $adminMaxchar);
         $ret['desc_short_user']  = $utility::truncateHtml($ret['desc_text'], $userMaxchar);
+        $ret['logoExist']        = ('blank.gif' !== (string)$this->getVar('logo') && 'blank.png' !== (string)$this->getVar('logo'));
         $evAllday                = (int)$this->getVar('allday');
         $ret['allday_single']    = 0;
         if ($evAllday > 0) {

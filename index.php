@@ -202,8 +202,17 @@ if ('none' != $indexDisplayEvents) {
         if ($eventsCount > $limit) {
             $urlCats = \implode(',', $filterCats);
             require_once \XOOPS_ROOT_PATH . '/class/pagenav.php';
-            $pagenav = new \XoopsPageNav($eventsCount, $limit, $start, 'start', 'op=list&limit=' . $limit . '&cat_id=' . $catId . '&amp;cats=' . $urlCats);
+            $pagenav = new \XoopsPageNav($eventsCount, $limit, $start, 'start', 'op=list&amp;limit=' . $limit . '&amp;cat_id=' . $catId . '&amp;cats=' . $urlCats);
             $GLOBALS['xoopsTpl']->assign('pagenav', $pagenav->renderNav());
+            /*TODO: give possibility to change counter for page nav*/
+            /*
+            $params = [];
+            $params['op'] = $op;
+            $params['limit'] = $limit;
+            $params['catId'] = $catId;
+            $params['filterCats'] = $filterCats;
+            $formPageNavCounter = $eventHandler->getFormPageNavCounterSelect($params);
+            $GLOBALS['xoopsTpl']->assign('formPageNavCounter', $formPageNavCounter->render());*/
         }
     } else {
         if (\count($filterCats) > 0) {

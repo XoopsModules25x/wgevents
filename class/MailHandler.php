@@ -224,6 +224,8 @@ class MailHandler
             $xoopsMailer->setTemplate($template);
             $xoopsMailer->CharSet = _CHARSET; //use xoops default character set
             //set account settings
+
+            /*Test version neu
             if (Constants::ACCOUNT_TYPE_VAL_SMTP == $account_type
                 || Constants::ACCOUNT_TYPE_VAL_GMAIL == $account_type) {
                 $xoopsMailer->multimailer->isSMTP();
@@ -251,8 +253,27 @@ class MailHandler
                     $xoopsMailer->SMTPAuth   = true;
                     $xoopsMailer->SMTPSecure = $account_securetype_out; // sets the prefix to the server
                 }
-                */
+                *//*
             }
+            */
+        /*Version alt*/
+            if (Constants::ACCOUNT_TYPE_VAL_POP3 == $account_type) {
+                //xoopsMailer->isSMTP();
+                //$xoopsMailer->SMTPDebug = 2;
+                $xoopsMailer->Host = $account_server_out;
+            }
+
+            if (Constants::ACCOUNT_TYPE_VAL_SMTP == $account_type
+                || Constants::ACCOUNT_TYPE_VAL_GMAIL == $account_type) {
+                $xoopsMailer->Port = $account_port_out; // set the SMTP port
+                $xoopsMailer->Host = $account_server_out; //sometimes necessary to repeat
+            }
+
+            if ('' != $account_securetype_out) {
+                $xoopsMailer->SMTPAuth   = true;
+                $xoopsMailer->SMTPSecure = $account_securetype_out; // sets the prefix to the server
+            }
+
             //set sender
             $xoopsMailer->setFromEmail($senderMail);
             //set sender name

@@ -38,7 +38,6 @@ $moduleDirName = \basename(\dirname(__DIR__));
 
 $GLOBALS['xoopsTpl']->assign('mod_url', XOOPS_URL . '/modules/' . $moduleDirName);
 
-
 switch ($op) {
     case 'check_account':
         $imgFailed = WGEVENTS_ICONS_URL_16 . '/0.png';
@@ -273,6 +272,13 @@ switch ($op) {
         } else {
             $accountObj = $accountHandler->create();
         }
+        $crAccount = new \CriteriaCompo();
+        $crAccount->add(new \Criteria('primary', 1));
+        if ($accId > 0) {
+            $crAccount->add(new \Criteria('id', $accId, '<>'));
+        }
+        $accPrimaryCount = $accountHandler->getCount($crAccount);
+        unset($crAccount);
         // Set Vars
         $accountObj->setVar('type', Request::getInt('type'));
         $accountObj->setVar('name', Request::getString('name'));
@@ -286,6 +292,12 @@ switch ($op) {
         $accountObj->setVar('server_out', Request::getString('server_out'));
         $accountObj->setVar('port_out', Request::getInt('port_out'));
         $accountObj->setVar('securetype_out', Request::getString('securetype_out'));
+        $accPrimary = Request::getInt('primary');
+        if ($accPrimary > 0 && $accPrimaryCount > 0) {
+            $crAccount = new \CriteriaCompo();
+            $crAccount->add(new \Criteria('primary', 1));
+            $accountHandler->updateAll('primary', 0, $crAccount,true);
+        }
         $accountObj->setVar('primary', Request::getInt('primary'));
         $accountObj->setVar('limit_hour', Request::getInt('limit_hour'));
         $accountObj->setVar('datecreated', Request::getInt('datecreated'));

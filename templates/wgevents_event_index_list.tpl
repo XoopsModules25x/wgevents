@@ -13,11 +13,11 @@
             <{/if}>
         </h4>
     </div>
-    <div class='panel-body'>
+    <div class='panel-body wge-event-panel-body'>
         <div class="row">
-            <{if $event.logo|default:false}>
+            <{if $event.logoExist|default:false}>
                 <div class="col-xs-12 col-sm-2">
-                    <img class="img-responsive img-fluid" src='<{$wgevents_upload_eventlogos_url|default:false}>/<{$event.submitter}>/<{$event.logo}>' alt='<{$event.name_clean|default:''}>' title='<{$event.name_clean|default:''}>' >
+                    <img class="img-responsive img-fluid wge-event-panel-img" src='<{$wgevents_upload_eventlogos_url|default:false}>/<{$event.submitter}>/<{$event.logo}>' alt='<{$event.name_clean|default:''}>' title='<{$event.name_clean|default:''}>' >
                 </div>
                 <div class="col-xs-12 col-sm-6 wge-panel-details1 left expander">
             <{else}>

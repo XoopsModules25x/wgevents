@@ -153,6 +153,43 @@ class EventHandler extends \XoopsPersistableObjectHandler
     }
 
     /**
+     * @public function getForm
+     * @param array  $params
+     * @param string $action
+     * @return \XoopsThemeForm
+     */
+    public function getFormPageNavCounter($params = [], $action = '')
+    {
+        if (!$action) {
+            $action = $_SERVER['REQUEST_URI'];
+        }
+        // Get Theme Form
+        \xoops_load('XoopsFormLoader');
+        $form = new Forms\FormInline('', 'formPageNavCounter', $action, 'post', true);
+        $form->setExtra('enctype="multipart/form-data"');
+        // Form Table categories
+        $pageNavTray = new Forms\FormElementTray('', '');
+        $evidSelect = new \XoopsFormSelect(\_MA_WGEVENTS_EVENT_ID, 'limit', $params['limit']);
+        $evidSelect->addOption(10);
+        $evidSelect->addOption(20);
+        $evidSelect->addOption(30);
+        $evidSelect->addOption(40);
+        $evidSelect->addOption(50);
+        $evidSelect->addOption(100);
+        $evidSelect->addOption(0, _ALL);
+        $evidSelect->setExtra("onchange='submit()'");
+        $pageNavTray->addElement($evidSelect);
+        $form->addElement($pageNavTray);
+        // To list
+        $form->addElement(new \XoopsFormHidden('op',         $params['op']));
+        $form->addElement(new \XoopsFormHidden('start', 0));
+        $form->addElement(new \XoopsFormHidden('cat_id',     $params['cat_id']));
+        $form->addElement(new \XoopsFormHidden('filterCats', $params['filterCats']));
+
+        return $form;
+    }
+
+    /**
      * @public function to get events for given params
      *
      * @param int    $start
