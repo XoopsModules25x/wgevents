@@ -48,6 +48,7 @@ $urlCats = Request::getString('cats');
 if (0 == \count($filterCats) && '' != $urlCats) {
     $filterCats = \explode(',', $urlCats);
 }
+$GLOBALS['xoopsTpl']->assign('urlCats', \implode(',', $filterCats));
 
 // Define Stylesheet
 $GLOBALS['xoTheme']->addStylesheet($style, null);
@@ -82,6 +83,9 @@ if ($useGMaps) {
 
 //misc
 $GLOBALS['xoopsTpl']->assign('categoryCurrent', $catId);
+$GLOBALS['xoopsTpl']->assign('start', $start);
+$GLOBALS['xoopsTpl']->assign('limit', $limit);
+$GLOBALS['xoopsTpl']->assign('categoryCurrent', $catId);
 $catName = '';
 
 $uidCurrent  = 0;
@@ -95,6 +99,10 @@ if ('none' != $indexDisplayCats) {
     $GLOBALS['xoopsTpl']->assign('wgevents_upload_catlogos_url', \WGEVENTS_UPLOAD_CATLOGOS_URL);
     $categories = $categoryHandler->getCategoriesForFilter($indexDisplayCats, $filterCats, $op, $useGroups, '');
     $GLOBALS['xoopsTpl']->assign('categories', $categories);
+    if ('form' == $indexDisplayCats) {
+        $formCatsCb = $categoryHandler->getFormCatsCb($filterCats, $op);
+        $GLOBALS['xoopsTpl']->assign('formCatsCb', $formCatsCb->render());
+    }
 }
 
 $indexDisplayEvents = (string)$helper->getConfig('index_displayevents');
@@ -195,8 +203,23 @@ if ('none' != $indexDisplayEvents) {
         if ($eventsCount > $limit) {
             $urlCats = \implode(',', $filterCats);
             require_once \XOOPS_ROOT_PATH . '/class/pagenav.php';
-            $pagenav = new \XoopsPageNav($eventsCount, $limit, $start, 'start', 'op=list&limit=' . $limit . '&cat_id=' . $catId . '&amp;cats=' . $urlCats);
+            $pagenav = new \XoopsPageNav($eventsCount, $limit, $start, 'start', 'op=list&amp;limit=' . $limit . '&amp;cat_id=' . $catId . '&amp;cats=' . $urlCats);
             $GLOBALS['xoopsTpl']->assign('pagenav', $pagenav->renderNav());
+            /*TODO: give possibility to change counter for page nav*/
+            /*
+            $params = [];
+            $params['op'] = $op;
+            $params['limit'] = $limit;
+            $params['catId'] = $catId;
+            $params['filterCats'] = $filterCats;
+            $formPageNavCounter = $eventHandler->getFormPageNavCounterSelect($params);
+            $GLOBALS['xoopsTpl']->assign('formPageNavCounter', $formPageNavCounter->render());*/
+        }
+    } else {
+        if (\count($filterCats) > 0) {
+            $GLOBALS['xoopsTpl']->assign('noEventsReason', \_MA_WGEVENTS_INDEX_THEREARENT_EVENTS_FILTER);
+        } else {
+            $GLOBALS['xoopsTpl']->assign('noEventsReason', \_MA_WGEVENTS_INDEX_THEREARENT_EVENTS);
         }
     }
 }

@@ -22,35 +22,41 @@
 
 $(document).ready(function(){
 
+    /* start code fees in form edit event:
+    * add new fee and fee description field to current form
+    * remove existing fee and fee description field from current form
+    */
     var addButton = $('.btn_fee_add'); //Add button selector
     var wrapper = $('#wrapper_fee'); //Input field wrapper
-    var fieldHTML = document.getElementById("hidden_group").innerHTML; //New input field html
-
-    //Once add button is clicked
-    $(addButton).click(function(){
-        $(wrapper).append(fieldHTML); //Add field html
-    });
-
-    //Once remove button is clicked
-    $(wrapper).on('click', '.btn_fee_remove', function(e){
-        e.preventDefault();
-        $(this).parent('span').remove(); //Remove field html
-    });
+    var eleHidden = document.getElementById("hidden_group");
+    if(typeof(eleHidden) != 'undefined' && eleHidden != null){
+        var fieldHTML = eleHidden.innerHTML; //New input field html
+        //Once add button is clicked
+        $(addButton).click(function(){
+            $(wrapper).append(fieldHTML); //Add field html
+        });
+        //Once remove button is clicked
+        $(wrapper).on('click', '.btn_fee_remove', function(e){
+            e.preventDefault();
+            $(this).parent('span').remove(); //Remove field html
+        });
+    }
+    /* end code fees in form edit event */
 });
 
 function removeFieldFee(){
-    $(this).parent('span').remove(); //Remove field html
+    //$(this).parent('span').remove(); //Remove field html
 }
 
-function toogleRegistrationOpts() {
-
+function toggleRegistrationOpts() {
+    /* show/hide collection of fields concerning online registration*/
     $( "#registeropttray" ).toggle( "slow", function() {});
     $( "#continue_questions" ).toggle( "slow", function() {});
     
 }
 
-function toogleAllday() {
-
+function toggleAllday() {
+    /* enable or disable time input field of date related to input of checkbock "Allday" */
     var cb_allday = document.getElementById('allday1');
     if (cb_allday.checked) {
         xoopsGetElementById('datefrom[time]').setAttribute("disabled", "disabled");
@@ -62,10 +68,28 @@ function toogleAllday() {
 
 }
 
-function toogleAllCats() {
-
+function toggleAllCats() {
+    /* check or uncheck all categeories related to input of checkbock "All cats" */
+    /* used in class/CategoryHandler function getFormCatsCb */
     var cb_all = document.getElementById('all_cats1');
     var checkboxes = document.getElementsByName('filter_cats[]');
+    if (cb_all.checked) {
+        for (var i in checkboxes){
+            checkboxes[i].checked = true;
+        }
+    } else {
+        for (var i in checkboxes){
+            checkboxes[i].checked = false;
+        }
+    }
+
+}
+
+function toggleAllEvents() {
+    /* check or uncheck all events related to input of checkbock "All events" */
+    /* used in export.php /wgevents_export.tpl */
+    var cb_all = document.getElementById('all_events');
+    var checkboxes = document.getElementsByName('chk_event[]');
     if (cb_all.checked) {
         for (var i in checkboxes){
             checkboxes[i].checked = true;

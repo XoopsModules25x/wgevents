@@ -54,6 +54,11 @@ class Event extends \XoopsObject
     public $idSource = 0;
 
     /**
+     * @var string
+     */
+    public $cats = '';
+
+    /**
      * Constructor
      *
      * @param null
@@ -156,7 +161,6 @@ class Event extends \XoopsObject
         if ($this->idSource > 0) {
             $this->unsetNew();
         }
-
         // Get Theme Form
         \xoops_load('XoopsFormLoader');
         $form = new \XoopsThemeForm($title, 'formEvent', $action, 'post', true);
@@ -238,7 +242,7 @@ class Event extends \XoopsObject
         $evAllday = $this->isNew() ? 0 : (int)$this->getVar('allday');
         $checkAllday = new \XoopsFormCheckBox('', 'allday', $evAllday);
         $checkAllday->addOption(1, \_MA_WGEVENTS_EVENT_ALLDAY);
-        $checkAllday->setExtra(" onclick='toogleAllday()' ");
+        $checkAllday->setExtra(" onclick='toggleAllday()' ");
         $evDatefromTray->addElement($checkAllday);
         $form->addElement($evDatefromTray);
         // Form Text Date Select evDateto
@@ -285,6 +289,9 @@ class Event extends \XoopsObject
             foreach($evFee as $fee) {
                 $evFeeArr[] = [Utility::FloatToString((float)$fee[0]), $fee[1], 'placeholder' => \_MA_WGEVENTS_EVENT_FEE_DESC_PH];
             }
+            if (0 === \count($evFeeArr)) {
+                $evFeeArr = [[$default0, '', 'placeholder' => \_MA_WGEVENTS_EVENT_FEE_DESC_PH]];
+            }
         }
         $evFeeTray = new Forms\FormElementTray(\_MA_WGEVENTS_EVENT_FEE, '<br>');
         $evFeeGroup = new Forms\FormTextDouble('', 'fee', 0, 0, '');
@@ -310,9 +317,9 @@ class Event extends \XoopsObject
             // Form Radio Yes/No evRegister_use
             $evRegister_use = $this->isNew() ? 0 : $this->getVar('register_use');
             $evRegisterUseRadio = new \XoopsFormRadioYN(\_MA_WGEVENTS_EVENT_REGISTER_USE, 'register_use', $evRegister_use);
-            $evRegisterUseRadio->setExtra(" onclick='toogleRegistrationOpts()' ");
+            $evRegisterUseRadio->setExtra(" onclick='toggleRegistrationOpts()' ");
             $form->addElement($evRegisterUseRadio);
-            $evReservUseTray = new \XoopsFormElementTray('', '<br>'); //double element tray is necessary for proper toogle
+            $evReservUseTray = new \XoopsFormElementTray('', '<br>'); //double element tray is necessary for proper toggle
             $evRegisterOptsTray = new Forms\FormElementTray('', '<br>', 'registeropttray');
             $evRegisterOptsTray->setClass('col-xs-12 col-sm-5 col-lg-5');
             if (!$evRegister_use) {
@@ -444,6 +451,7 @@ class Event extends \XoopsObject
         $form->addElement(new \XoopsFormHidden('op', 'save'));
         $form->addElement(new \XoopsFormHidden('start', $this->start));
         $form->addElement(new \XoopsFormHidden('limit', $this->limit));
+        $form->addElement(new \XoopsFormHidden('cats', $this->cats));
         // button tray
         $buttonTray = new \XoopsFormElementTray('');
         $buttonBack = new Forms\FormButton('', 'confirm_back', \_CANCEL, 'button');
@@ -583,6 +591,7 @@ class Event extends \XoopsObject
         $ret['desc_text']        = $this->getVar('desc', 'e');
         $ret['desc_short_admin'] = $utility::truncateHtml($ret['desc_text'], $adminMaxchar);
         $ret['desc_short_user']  = $utility::truncateHtml($ret['desc_text'], $userMaxchar);
+        $ret['logoExist']        = ('blank.gif' !== (string)$this->getVar('logo') && 'blank.png' !== (string)$this->getVar('logo'));
         $evAllday                = (int)$this->getVar('allday');
         $ret['allday_single']    = 0;
         if ($evAllday > 0) {

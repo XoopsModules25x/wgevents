@@ -50,7 +50,7 @@
         <{/foreach}>
         <!-- End new link loop -->
     <{else}>
-        <div class="col-12 center wge-error-msg"><{$smarty.const._MA_WGEVENTS_INDEX_THEREARENT_EVENTS}></div>
+        <{if $noEventsReason|default:false}><div class="col-12 center wge-error-msg"><{$noEventsReason}></div><{/if}>
     <{/if}>
     <{if $gmapsShowList|default:false && $gmapsEnableEvent|default:false && $gmapsPositionList|default:'none' == 'bottom'}>
         <div class="row wge-row1">

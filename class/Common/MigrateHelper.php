@@ -218,6 +218,7 @@ class MigrateHelper
             $attributes = substr($attributes, 0, strlen($attributes) - 1);
         }
         $columns['name'] = $name;
+        /*
         // update quotes
         if (\strpos($attributes, "''") > 0) {
             $attributes = \trim(\str_replace("''", "''''''''" , $attributes));
@@ -225,7 +226,8 @@ class MigrateHelper
             $attributes = \trim(\str_replace("'", "''" , $attributes));
         }
         $columns['attributes'] = "' " . $attributes . " '";
-
+        */
+        $columns['attributes'] = '" ' . $attributes . ' "';
         return $columns;
 
     }
@@ -246,7 +248,8 @@ class MigrateHelper
         if ('' != $options) {
             $options .= ' ';
         }
-        $options = "'" . $options . $lineText . "'";
+        //$options = "'" . $options . $lineText . "'";
+        $options = '"' . $options . $lineText . '"';
 
     }
 

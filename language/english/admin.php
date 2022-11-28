@@ -214,7 +214,7 @@ require_once __DIR__ . '/main.php';
 \define('_AM_WGEVENTS_MAINTENANCE_INVALID_QUE', 'Check table questions');
 \define('_AM_WGEVENTS_MAINTENANCE_INVALID_QUE_DESC', 'Check the table questions and search for questions without link to a valid event');
 \define('_AM_WGEVENTS_MAINTENANCE_INVALID_ANSWERS', 'Check table answers');
-\define('_AM_WGEVENTS_MAINTENANCE_INVALID_ANSWERS_DESC', 'Check the table answers and search for answers without link to a valid question');
+\define('_AM_WGEVENTS_MAINTENANCE_INVALID_ANSWERS_DESC', 'Check the table answers/answerhist and search for answers with link to a non existing question or with a link to a non existing registration');
 \define('_AM_WGEVENTS_MAINTENANCE_INVALID_REG', 'Check table registrations');
 \define('_AM_WGEVENTS_MAINTENANCE_INVALID_REG_DESC', 'Check the table registrations and search for registrations without link to a valid event');
 \define('_AM_WGEVENTS_MAINTENANCE_CHECKTABLE_SUCCESS', 'Check table successfully finished');

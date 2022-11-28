@@ -38,7 +38,6 @@ $moduleDirName = \basename(\dirname(__DIR__));
 
 $GLOBALS['xoopsTpl']->assign('mod_url', XOOPS_URL . '/modules/' . $moduleDirName);
 
-
 switch ($op) {
     case 'check_account':
         $imgFailed = WGEVENTS_ICONS_URL_16 . '/0.png';
@@ -149,17 +148,28 @@ switch ($op) {
 
                     if (Constants::ACCOUNT_TYPE_VAL_SMTP == $account_type
                         || Constants::ACCOUNT_TYPE_VAL_GMAIL == $account_type) {
+
+                        $xoopsMailer->multimailer->isSMTP();
+                        $xoopsMailer->multimailer->Port       = $account_port_out; // set the SMTP port
+                        $xoopsMailer->multimailer->Host       = $account_server_out; //sometimes necessary to repeat
+                        $xoopsMailer->multimailer->SMTPAuth   = true;
+                        $xoopsMailer->multimailer->SMTPSecure = $account_securetype_out;
+                        $xoopsMailer->multimailer->Username   = $account_username; // SMTP account username
+                        $xoopsMailer->multimailer->Password   = $account_password; // SMTP account password
+                        $xoopsMailer->multimailer->SMTPDebug  = 4;
+                        /*
                         $xoopsMailer->Port = $account_port_out; // set the SMTP port
                         $logDetails .= '<br>account_port_out:' . $account_port_out;
                         $xoopsMailer->Host = $account_server_out; //sometimes necessary to repeat
-                        $logDetails .= '<br>account_server_out:' . $account_server_out;
+                        $logDetails .= '<br>account_server_out:' . $account_server_out;*/
                     }
-
+                    /* old version:
                     if ('' != $account_securetype_out) {
                         $xoopsMailer->SMTPAuth   = true;
                         $xoopsMailer->SMTPSecure = $account_securetype_out; // sets the prefix to the server
                         $logDetails .= '<br>account_securetype_out:' . $account_securetype_out;
                     }
+                    */
                     $xoopsMailer->setFromEmail($account_yourmail);
                     $xoopsMailer->setFromName($account_yourname);
                     $logDetails .= '<br>from:' . $account_yourmail . ' ' . $account_yourname;
@@ -175,7 +185,7 @@ switch ($op) {
                         $export = var_export($xoopsMailer, TRUE);
                         $export = \preg_replace("/\n/", '<br>', $export);
                         $logHandler->createLog('Result Test send mail to ' . $usermail .': success' . '<br>' . $export);
-                        $result = \_AM_WGEVENTS_ACCOUNT_CHECK_OK;
+                        $result = \_AM_WGEVENTS_ACCOUNT_CHECK_OK . '<br>' . $xoopsMailer->getErrors();;
                         $resultImg = $imgOK;
                     } else {
                         $export = var_export($xoopsMailer, TRUE);
@@ -262,6 +272,13 @@ switch ($op) {
         } else {
             $accountObj = $accountHandler->create();
         }
+        $crAccount = new \CriteriaCompo();
+        $crAccount->add(new \Criteria('primary', 1));
+        if ($accId > 0) {
+            $crAccount->add(new \Criteria('id', $accId, '<>'));
+        }
+        $accPrimaryCount = $accountHandler->getCount($crAccount);
+        unset($crAccount);
         // Set Vars
         $accountObj->setVar('type', Request::getInt('type'));
         $accountObj->setVar('name', Request::getString('name'));
@@ -275,7 +292,14 @@ switch ($op) {
         $accountObj->setVar('server_out', Request::getString('server_out'));
         $accountObj->setVar('port_out', Request::getInt('port_out'));
         $accountObj->setVar('securetype_out', Request::getString('securetype_out'));
+        $accPrimary = Request::getInt('primary');
+        if ($accPrimary > 0 && $accPrimaryCount > 0) {
+            $crAccount = new \CriteriaCompo();
+            $crAccount->add(new \Criteria('primary', 1));
+            $accountHandler->updateAll('primary', 0, $crAccount,true);
+        }
         $accountObj->setVar('primary', Request::getInt('primary'));
+        $accountObj->setVar('limit_hour', Request::getInt('limit_hour'));
         $accountObj->setVar('datecreated', Request::getInt('datecreated'));
         $accountObj->setVar('submitter', Request::getInt('submitter'));
         // Insert Data

@@ -104,8 +104,30 @@ switch ($op) {
                 $err_text .= '<br>' . $error;
             }
         }
+        $sql = 'DELETE ' . $GLOBALS['xoopsDB']->prefix('wgevents_answer_hist') . '.* ';
+        $sql .= 'FROM ' . $GLOBALS['xoopsDB']->prefix('wgevents_answer_hist') . ' LEFT JOIN ' . $GLOBALS['xoopsDB']->prefix('wgevents_question') . ' ON ' . $GLOBALS['xoopsDB']->prefix('wgevents_answer_hist') . '.queid = ' . $GLOBALS['xoopsDB']->prefix('wgevents_question') . '.id ';
+        $sql .= 'WHERE (((' . $GLOBALS['xoopsDB']->prefix('wgevents_question') . '.id) Is Null));';
+        if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
+            $errors[] = $GLOBALS['xoopsDB']->error();
+        }
+        if (\count($errors) > 0) {
+            foreach ($errors as $error) {
+                $err_text .= '<br>' . $error;
+            }
+        }
         $sql = 'DELETE ' . $GLOBALS['xoopsDB']->prefix('wgevents_answer') . '.* ';
         $sql .= 'FROM ' . $GLOBALS['xoopsDB']->prefix('wgevents_answer') . ' LEFT JOIN ' . $GLOBALS['xoopsDB']->prefix('wgevents_registration') . ' ON ' . $GLOBALS['xoopsDB']->prefix('wgevents_answer') . '.regid = ' . $GLOBALS['xoopsDB']->prefix('wgevents_registration') . '.id ';
+        $sql .= 'WHERE (((' . $GLOBALS['xoopsDB']->prefix('wgevents_registration') . '.id) Is Null));';
+        if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
+            $errors[] = $GLOBALS['xoopsDB']->error();
+        }
+        if (\count($errors) > 0) {
+            foreach ($errors as $error) {
+                $err_text .= '<br>' . $error;
+            }
+        }
+        $sql = 'DELETE ' . $GLOBALS['xoopsDB']->prefix('wgevents_answer_hist') . '.* ';
+        $sql .= 'FROM ' . $GLOBALS['xoopsDB']->prefix('wgevents_answer_hist') . ' LEFT JOIN ' . $GLOBALS['xoopsDB']->prefix('wgevents_registration') . ' ON ' . $GLOBALS['xoopsDB']->prefix('wgevents_answer_hist') . '.regid = ' . $GLOBALS['xoopsDB']->prefix('wgevents_registration') . '.id ';
         $sql .= 'WHERE (((' . $GLOBALS['xoopsDB']->prefix('wgevents_registration') . '.id) Is Null));';
         if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
             $errors[] = $GLOBALS['xoopsDB']->error();
@@ -125,15 +147,42 @@ switch ($op) {
         $templateMain = 'wgevents_admin_maintenance.tpl';
         $err_text     = '';
         $dateLimitObj = \DateTime::createFromFormat(\_SHORTDATESTRING, Request::getString('datelimit'));
-        $dateLimit = date('Y-m-d', $dateLimitObj->getTimestamp());
 
-        $sql = 'UPDATE `' . $GLOBALS['xoopsDB']->prefix('wgevents_registration_hist') . '` ';
-        $sql .= "SET `firstname` = '*****', `lastname` = '*****', `email` = '*@*.*' ";
-        $sql .= 'WHERE (((' . $GLOBALS['xoopsDB']->prefix('wgevents_registration') . ".datecreated)<='" . $dateLimit . "'))";
+        $crRegistration = new \CriteriaCompo();
+        $crRegistration->add(new \Criteria('datecreated', $dateLimitObj->getTimestamp(), '<='));
+        $numberReg = $registrationHandler->getCount($crRegistration);
+        if ($numberReg > 0) {
+            $registrationsAll = $registrationHandler->getAll($crRegistration);
+            foreach (\array_keys($registrationsAll) as $i) {
+                $regUpdateObj = $registrationHandler->get($i);
+                $regUpdateObj->setVar('salutation', 0);
+                $regUpdateObj->setVar('firstname', '*****');
+                $regUpdateObj->setVar('lastname', '*****');
+                $regUpdateObj->setVar('email', '*@*.*');
+                $regUpdateObj->setVar('ip', '*.*.*.*');
+                if($registrationHandler->insert($regUpdateObj, true)) {
+                    $crAnswer = new \CriteriaCompo();
+                    $crAnswer->add(new \Criteria('regid', $i));
+                    $answerHandler->deleteAll($crAnswer,true);
+                    $answerhistHandler->deleteAll($crAnswer,true);
+                }
+                unset($regUpdateObj, $crAnswer);
+            }
+            $registrationhistHandler->deleteAll($crRegistration,true);
+        }
+
+
+        /*
+        $sql = 'UPDATE `' . $GLOBALS['xoopsDB']->prefix('wgevents_registration') . '` ';
+        $sql .= "SET `salutation` = 0, `firstname` = '*****', `lastname` = '*****', `email` = '*@*.*', `ip` = '*.*.*.*' ";
+        $sql .= 'WHERE (((' . $GLOBALS['xoopsDB']->prefix('wgevents_registration') . ".datecreated)<='" . $dateLimitObj->getTimestamp() . "'))";
+        if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
+            $errors[] = $GLOBALS['xoopsDB']->error();
+        }
 
         $sql = 'DELETE ' . $GLOBALS['xoopsDB']->prefix('wgevents_registration_hist') . '.* ';
         $sql .= 'FROM ' . $GLOBALS['xoopsDB']->prefix('wgevents_registration_hist') . ' ';
-        $sql .= 'WHERE (((' . $GLOBALS['xoopsDB']->prefix('wgevents_registration_hist') . ".hist_datecreated)<='" . $dateLimit . "'))";
+        $sql .= 'WHERE (((' . $GLOBALS['xoopsDB']->prefix('wgevents_registration_hist') . ".hist_datecreated)<='" . $dateLimitObj->getTimestamp() . "'))";
         if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
             $errors[] = $GLOBALS['xoopsDB']->error();
         }
@@ -141,7 +190,7 @@ switch ($op) {
             foreach ($errors as $error) {
                 $err_text .= '<br>' . $error;
             }
-        }
+        }*/
         $GLOBALS['xoopsTpl']->assign('result_success', \_AM_WGEVENTS_MAINTENANCE_ANON_DATA_SUCCESS);
         $GLOBALS['xoopsTpl']->assign('result_error', $err_text);
         $GLOBALS['xoopsTpl']->assign('anon_data_show', true);

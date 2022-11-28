@@ -1,4 +1,14 @@
 
+option to show logo or image for cat list
+
+implement image editor
+
+https://github.com/azuyalabs/yasumi
+
+
+
+give possibility to change counter for page nav
+
 update macht default ' statt ''
 
 

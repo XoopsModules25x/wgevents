@@ -35,6 +35,7 @@ require_once __DIR__ . '/admin.php';
 \define('_MA_WGEVENTS_ACTION', 'Aktion');
 \define('_MA_WGEVENTS_INDEX_THEREARE', 'Es gibt %s Veranstaltungen');
 \define('_MA_WGEVENTS_INDEX_THEREARENT_EVENTS', 'Es gibt keine Veranstaltungen');
+\define('_MA_WGEVENTS_INDEX_THEREARENT_EVENTS_FILTER', 'Es gibt keine Veranstaltungen zur gewählten Filtereinstellung');
 \define('_MA_WGEVENTS_INDEX_THEREARENT_CATS', 'Es gibt keine Kategorien');
 \define('_MA_WGEVENTS_INDEX_LATEST_LIST', 'Letzte Veranstaltungen');
 // ---------------- Buttons ----------------
@@ -44,6 +45,7 @@ require_once __DIR__ . '/admin.php';
 \define('_MA_WGEVENTS_READLESS', 'Weniger lesen');
 \define('_MA_WGEVENTS_SEND_ALL', 'An alle senden');
 \define('_MA_WGEVENTS_APPLY_FILTER', 'Filter anwenden');
+\define('_MA_WGEVENTS_SELECT_ALL', 'Alle (nicht) auswählen');
 // Status
 \define('_MA_WGEVENTS_STATUS', 'Status');
 \define('_MA_WGEVENTS_STATUS_NONE', 'Kein Status');
@@ -74,6 +76,8 @@ require_once __DIR__ . '/admin.php';
 \define('_MA_WGEVENTS_EVENTS_DESC', 'Veranstaltungen Beschreibung');
 \define('_MA_WGEVENTS_EVENTS_LISTCOMING', 'Kommende Veranstaltungen');
 \define('_MA_WGEVENTS_EVENTS_LISTPAST', 'Vergangene Veranstaltungen');
+\define('_MA_WGEVENTS_EVENTS_EXPORT', 'Veranstaltungen exportieren');
+\define('_MA_WGEVENTS_EVENTS_FILTER_NB', 'Anzahl der Veranstaltungen');
 // Caption of Event
 \define('_MA_WGEVENTS_EVENT_ID', 'Id');
 \define('_MA_WGEVENTS_EVENT_IDENTIFIER', 'Eindeutige Kennung der Veranstaltung');
@@ -133,6 +137,8 @@ require_once __DIR__ . '/admin.php';
 \define('_MA_WGEVENTS_EVENT_GROUPS_DESC', 'Definiere, welche Gruppen diese Veranstaltung sehen sollen');
 \define('_MA_WGEVENTS_EVENT_GROUPS_ALL', 'Alle Gruppen');
 \define('_MA_WGEVENTS_EVENT_CLONE_QUESTION', 'Vorhandene Fragen auch duplizieren');
+\define('_MA_WGEVENTS_EVENT_DATE_ERROR1', "Das Datum 'Datum bis' war kleiner als 'Datum von' und wurde angepasst!");
+\define('_MA_WGEVENTS_EVENT_DATE_ERROR2', "Das Datum 'Anmeldung bis' war kleiner als 'Anmeldung von' und wurde angepasst!");
 // Categories
 \define('_MA_WGEVENTS_CATEGORY_LOGO', 'Logo');
 \define('_MA_WGEVENTS_CATEGORY_NOEVENTS', 'Keine Veranstaltungen verfügbar');
@@ -286,6 +292,7 @@ Eine Teilnahme an der Veranstaltung ohne Zustimmung zu diesen Bestimmungen ist l
 \define('_MA_WGEVENTS_GOTO_EVENT', 'Zur Veranstaltung');
 \define('_MA_WGEVENTS_GOTO_EVENTSLIST', 'Zur Veranstaltungsliste');
 \define('_MA_WGEVENTS_OUTPUT_EXCEL', 'Ausgabe in Excel');
+\define('_MA_WGEVENTS_OUTPUT_ICS', 'Ausgabe als ICS');
 \define('_MA_WGEVENTS_ERROR_SAVE', 'Beim Speichern der Daten ist ein Fehler aufgetreten');
 // Form
 \define('_MA_WGEVENTS_FORM_OK', 'Erfolgreich gespeichert');

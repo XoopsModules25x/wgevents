@@ -153,6 +153,44 @@ class EventHandler extends \XoopsPersistableObjectHandler
     }
 
     /**
+     * TODO: not in use currently
+     * @public function getForm
+     * @param array  $params
+     * @param string $action
+     * @return \XoopsThemeForm
+     */
+    public function getFormPageNavCounter($params = [], $action = '')
+    {
+        if (!$action) {
+            $action = $_SERVER['REQUEST_URI'];
+        }
+        // Get Theme Form
+        \xoops_load('XoopsFormLoader');
+        $form = new Forms\FormInline('', 'formPageNavCounter', $action, 'post', true);
+        $form->setExtra('enctype="multipart/form-data"');
+        // Form Table categories
+        $pageNavTray = new Forms\FormElementTray('', '');
+        $evidSelect = new \XoopsFormSelect(\_MA_WGEVENTS_EVENT_ID, 'limit', $params['limit']);
+        $evidSelect->addOption(10);
+        $evidSelect->addOption(20);
+        $evidSelect->addOption(30);
+        $evidSelect->addOption(40);
+        $evidSelect->addOption(50);
+        $evidSelect->addOption(100);
+        $evidSelect->addOption(0, _ALL);
+        $evidSelect->setExtra("onchange='submit()'");
+        $pageNavTray->addElement($evidSelect);
+        $form->addElement($pageNavTray);
+        // To list
+        $form->addElement(new \XoopsFormHidden('op',         $params['op']));
+        $form->addElement(new \XoopsFormHidden('start', 0));
+        $form->addElement(new \XoopsFormHidden('cat_id',     $params['cat_id']));
+        $form->addElement(new \XoopsFormHidden('filterCats', $params['filterCats']));
+
+        return $form;
+    }
+
+    /**
      * @public function to get events for given params
      *
      * @param int    $start
@@ -420,5 +458,70 @@ class EventHandler extends \XoopsPersistableObjectHandler
         echo '<br>return:'.$text;
         */
         return $text;
+    }
+
+
+    /**
+     * @public function getFormFilterExport: form for selecting cats and number of lines for export of events
+     * @param bool  $eventDisplayCats
+     * @param array $filterCats
+     * @return \XoopsThemeForm
+     */
+    public function getFormFilterExport($limit, $dateFrom, $dateTo, $eventDisplayCats = false, $filterCats = [])
+    {
+        $helper = Helper::getInstance();
+
+        $categoryHandler = $helper->getHandler('Category');
+        // Get Theme Form
+        \xoops_load('XoopsFormLoader');
+        $form = new \XoopsThemeForm('', 'formFilterExport', $_SERVER['REQUEST_URI'], 'post', true);
+        $form->setExtra('enctype="multipart/form-data"');
+
+        if ($eventDisplayCats) {
+            $cbAll = 1;
+            // Form Select categories
+            $catsOnline = $categoryHandler->getAllCatsOnline();
+            if (0 == \count($filterCats)) {
+                foreach (\array_keys($catsOnline) as $i) {
+                    $filterCats[] = $i;
+                }
+            } elseif (\count($filterCats) < \count($catsOnline)) {
+                $cbAll = 0;
+            }
+            $catTray = new \XoopsFormElementTray(\_MA_WGEVENTS_CATEGORY_FILTER);
+            // checkbox for(de)select all
+            $catAllSelect = new Forms\FormCheckboxInline('', 'all_cats', $cbAll);
+            $catAllSelect->addOption(1, _ALL);
+            $catAllSelect->setExtra(" onclick='toggleAllCats()' ");
+            // checkboxes for all existing categories
+            $catTray->addElement($catAllSelect);
+            $catSelect = new Forms\FormCheckboxInline('', 'filter_cats', $filterCats);
+            $catSelect->addOptionArray($catsOnline);
+            $catTray->addElement($catSelect);
+            $form->addElement($catTray);
+        }
+        // Form Text Date Select evDateto
+        $form->addElement(new \XoopsFormDateTime(\_MA_WGEVENTS_EVENT_DATEFROM, 'datefrom', '', $dateFrom), true);
+        // Form Text Date Select evDateto
+        $form->addElement(new \XoopsFormDateTime(\_MA_WGEVENTS_EVENT_DATETO, 'dateto', '', $dateTo));
+        // Form Select for setting limit of events
+        $eventCountSelect = new \XoopsFormSelect(\_MA_WGEVENTS_EVENTS_FILTER_NB, 'limit', $limit);
+        $eventCountSelect->addOption(10, 10);
+        $eventCountSelect->addOption(20, 20);
+        $eventCountSelect->addOption(30, 30);
+        $eventCountSelect->addOption(40, 40);
+        $eventCountSelect->addOption(50, 50);
+        $eventCountSelect->addOption(0, _ALL);
+        $form->addElement($eventCountSelect);
+        $btnFilter = new \XoopsFormButton('', 'submit', \_MA_WGEVENTS_APPLY_FILTER, 'submit');
+        $btnFilter->setClass('btn btn-success');
+        $form->addElement($btnFilter);
+
+        // To Save
+        $form->addElement(new \XoopsFormHidden('op', 'list'));
+        $form->addElement(new \XoopsFormHidden('start', '0'));
+        $form->addElement(new \XoopsFormHidden('new', '1'));
+        //$form->addElement(new \XoopsFormHidden('filter', $filter));
+        return $form;
     }
 }
