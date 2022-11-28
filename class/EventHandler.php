@@ -157,7 +157,7 @@ class EventHandler extends \XoopsPersistableObjectHandler
      * @public function getForm
      * @param array  $params
      * @param string $action
-     * @return \XoopsThemeForm
+     * @return Forms\FormInline
      */
     public function getFormPageNavCounter($params = [], $action = '')
     {
@@ -501,9 +501,9 @@ class EventHandler extends \XoopsPersistableObjectHandler
             $form->addElement($catTray);
         }
         // Form Text Date Select evDateto
-        $form->addElement(new \XoopsFormDateTime(\_MA_WGEVENTS_EVENT_DATEFROM, 'datefrom', '', $dateFrom), true);
+        $form->addElement(new \XoopsFormDateTime(\_MA_WGEVENTS_EVENT_DATEFROM, 'datefrom', 15, $dateFrom), true);
         // Form Text Date Select evDateto
-        $form->addElement(new \XoopsFormDateTime(\_MA_WGEVENTS_EVENT_DATETO, 'dateto', '', $dateTo));
+        $form->addElement(new \XoopsFormDateTime(\_MA_WGEVENTS_EVENT_DATETO, 'dateto', 15, $dateTo));
         // Form Select for setting limit of events
         $eventCountSelect = new \XoopsFormSelect(\_MA_WGEVENTS_EVENTS_FILTER_NB, 'limit', $limit);
         $eventCountSelect->addOption(10, 10);
