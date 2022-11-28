@@ -45,6 +45,7 @@ require_once __DIR__ . '/admin.php';
 \define('_MA_WGEVENTS_READLESS', 'Read less');
 \define('_MA_WGEVENTS_SEND_ALL', 'Send to all');
 \define('_MA_WGEVENTS_APPLY_FILTER', 'Apply filter');
+\define('_MA_WGEVENTS_SELECT_ALL', '(De)select all');
 // Status
 \define('_MA_WGEVENTS_STATUS', 'Status');
 \define('_MA_WGEVENTS_STATUS_NONE', 'No status');
@@ -75,6 +76,8 @@ require_once __DIR__ . '/admin.php';
 \define('_MA_WGEVENTS_EVENTS_DESC', 'Events description');
 \define('_MA_WGEVENTS_EVENTS_LISTCOMING', 'Coming Events');
 \define('_MA_WGEVENTS_EVENTS_LISTPAST', 'Past Events');
+\define('_MA_WGEVENTS_EVENTS_EXPORT', 'Export events');
+\define('_MA_WGEVENTS_EVENTS_FILTER_NB', 'Number of events');
 // Caption of Event
 \define('_MA_WGEVENTS_EVENT_ID', 'Id');
 \define('_MA_WGEVENTS_EVENT_IDENTIFIER', 'Unique Event Identifier');
@@ -289,6 +292,7 @@ Participation without agreement to this conditions is not possible.
 \define('_MA_WGEVENTS_GOTO_EVENT', 'Goto event');
 \define('_MA_WGEVENTS_GOTO_EVENTSLIST', 'Goto eventlist');
 \define('_MA_WGEVENTS_OUTPUT_EXCEL', 'Output to Excel');
+\define('_MA_WGEVENTS_OUTPUT_ICS', 'Output as ICS');
 \define('_MA_WGEVENTS_ERROR_SAVE', 'An error occurred when saving the data');
 // Form
 \define('_MA_WGEVENTS_FORM_OK', 'Successfully saved');

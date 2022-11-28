@@ -153,11 +153,14 @@ class Category extends \XoopsObject
         $imageTray->addElement(new \XoopsFormLabel(\_AM_WGEVENTS_FORM_UPLOAD_IMG_HEIGHT, $helper->getConfig('maxheight_image') . ' px'));
         $form->addElement($imageTray);
         // Form Color Picker catColor
-        $form->addElement(new \XoopsFormColorPicker(\_AM_WGEVENTS_CATEGORY_COLOR, 'color', $this->getVar('color')));
+        $catColor = $this->isNew() ? '#000000' : $this->getVar('color');
+        $form->addElement(new \XoopsFormColorPicker(\_AM_WGEVENTS_CATEGORY_COLOR, 'color', $catColor));
         // Form Color Picker catBorderColor
-        $form->addElement(new \XoopsFormColorPicker(\_AM_WGEVENTS_CATEGORY_BORDERCOLOR, 'bordercolor', $this->getVar('bordercolor')));
-        // Form Color Picker catColor
-        $form->addElement(new \XoopsFormColorPicker(\_AM_WGEVENTS_CATEGORY_BGCOLOR, 'bgcolor', $this->getVar('bgcolor')));
+        $catBorderColor = $this->isNew() ? '#cccccc' : $this->getVar('bordercolor');
+        $form->addElement(new \XoopsFormColorPicker(\_AM_WGEVENTS_CATEGORY_BORDERCOLOR, 'bordercolor', $catBorderColor));
+        // Form Color Picker catBgColor
+        $catBgColor = $this->isNew() ? '#ffffff' : $this->getVar('bgcolor');
+        $form->addElement(new \XoopsFormColorPicker(\_AM_WGEVENTS_CATEGORY_BGCOLOR, 'bgcolor', $catBgColor));
         // Form Text catOtherstyles
         $catOtherstyles = $this->isNew() ? 'margin:1px 0;padding:8px 5px 20px 5px;border-radius:5px;' : $this->getVar('othercss');
         $form->addElement(new \XoopsFormText(\_AM_WGEVENTS_CATEGORY_OTHERCSS, 'othercss', 100, 255, $catOtherstyles));

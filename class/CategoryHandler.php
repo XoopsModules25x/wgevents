@@ -230,7 +230,7 @@ class CategoryHandler extends \XoopsPersistableObjectHandler
         }
         $catAllSelect = new Forms\FormCheckboxInline(\_MA_WGEVENTS_CATEGORY_FILTER, 'all_cats', $cbAll);
         $catAllSelect->addOption(1, _ALL);
-        $catAllSelect->setExtra(" onclick='toogleAllCats()' ");
+        $catAllSelect->setExtra(" onclick='toggleAllCats()' ");
         $form->addElement($catAllSelect);
         $catSelect = new Forms\FormCheckboxInline('', 'filter_cats', $filterCats);
         $catSelect->addOptionArray($catsOnline);

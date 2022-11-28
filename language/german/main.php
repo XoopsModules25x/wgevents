@@ -45,6 +45,7 @@ require_once __DIR__ . '/admin.php';
 \define('_MA_WGEVENTS_READLESS', 'Weniger lesen');
 \define('_MA_WGEVENTS_SEND_ALL', 'An alle senden');
 \define('_MA_WGEVENTS_APPLY_FILTER', 'Filter anwenden');
+\define('_MA_WGEVENTS_SELECT_ALL', 'Alle (nicht) auswählen');
 // Status
 \define('_MA_WGEVENTS_STATUS', 'Status');
 \define('_MA_WGEVENTS_STATUS_NONE', 'Kein Status');
@@ -75,6 +76,8 @@ require_once __DIR__ . '/admin.php';
 \define('_MA_WGEVENTS_EVENTS_DESC', 'Veranstaltungen Beschreibung');
 \define('_MA_WGEVENTS_EVENTS_LISTCOMING', 'Kommende Veranstaltungen');
 \define('_MA_WGEVENTS_EVENTS_LISTPAST', 'Vergangene Veranstaltungen');
+\define('_MA_WGEVENTS_EVENTS_EXPORT', 'Veranstaltungen exportieren');
+\define('_MA_WGEVENTS_EVENTS_FILTER_NB', 'Anzahl der Veranstaltungen');
 // Caption of Event
 \define('_MA_WGEVENTS_EVENT_ID', 'Id');
 \define('_MA_WGEVENTS_EVENT_IDENTIFIER', 'Eindeutige Kennung der Veranstaltung');
@@ -289,6 +292,7 @@ Eine Teilnahme an der Veranstaltung ohne Zustimmung zu diesen Bestimmungen ist l
 \define('_MA_WGEVENTS_GOTO_EVENT', 'Zur Veranstaltung');
 \define('_MA_WGEVENTS_GOTO_EVENTSLIST', 'Zur Veranstaltungsliste');
 \define('_MA_WGEVENTS_OUTPUT_EXCEL', 'Ausgabe in Excel');
+\define('_MA_WGEVENTS_OUTPUT_ICS', 'Ausgabe als ICS');
 \define('_MA_WGEVENTS_ERROR_SAVE', 'Beim Speichern der Daten ist ein Fehler aufgetreten');
 // Form
 \define('_MA_WGEVENTS_FORM_OK', 'Erfolgreich gespeichert');

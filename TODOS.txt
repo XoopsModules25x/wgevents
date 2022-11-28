@@ -1,8 +1,7 @@
-ssl mail
 
-export
-- excel
-- ics
+option to show logo or image for cat list
+
+implement image editor
 
 https://github.com/azuyalabs/yasumi
 

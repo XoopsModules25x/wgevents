@@ -122,6 +122,12 @@
                 <div class="col-xs-12 col-sm-9 col-lg-10"><{$event.status_text}></div>
             </div>
         <{/if}>
+        <{if $use_groups|default:'' && ($event.permEdit|default:false || $permApprove|default:false)}>
+            <div class="row">
+                <div class="col-xs-12 col-sm-3 col-lg-2"><{$smarty.const._MA_WGEVENTS_EVENT_GROUPS}>: </div>
+                <div class="col-xs-12 col-sm-9 col-lg-10"><{$event.groups_text}></div>
+            </div>
+        <{/if}>
     </div>
     <{if $event.register_use|default:''}>
         <div class="wge-row1">
@@ -160,7 +166,6 @@
                 </div>
             <{/if}>
         </div>
-
         <div class="row wge-row1">
             <div class="col-xs-12 col-sm-3 col-lg-2"><{$smarty.const._MA_WGEVENTS_REGISTRATIONS_CURR}>: </div>
             <div class="col-xs-12 col-sm-4 col-lg-4">
@@ -189,12 +194,6 @@
                 </div>
             </div>
         <{/if}>
-    <{/if}>
-    <{if $use_groups|default:''}>
-        <div class="row">
-            <div class="col-xs-12 col-sm-3 col-lg-2"><{$smarty.const._MA_WGEVENTS_EVENT_GROUPS}>: </div>
-            <div class="col-xs-12 col-sm-9 col-lg-10"><{$event.groups_text}></div>
-        </div>
     <{/if}>
 </div>
 <div class='panel-foot'>

@@ -113,6 +113,7 @@ $modversion['templates'] = [
     ['file' => 'wgevents_event_index_list.tpl', 'description' => ''],
     ['file' => 'wgevents_event_item_details.tpl', 'description' => ''],
     ['file' => 'wgevents_event_item_list.tpl', 'description' => ''],
+    ['file' => 'wgevents_export.tpl', 'description' => ''],
     ['file' => 'wgevents_footer.tpl', 'description' => ''],
     ['file' => 'wgevents_gmaps_getcoords_modal.tpl', 'description' => ''],
     ['file' => 'wgevents_gmaps_show.tpl', 'description' => ''],
@@ -202,31 +203,11 @@ if ($currdirname == $moduleDirName) {
             'url' => 'calendar.php',
         ];
     }
-    /*
-
-    // Sub Submit
-
-    // Sub Submit
+    // export
     $modversion['sub'][] = [
-        'name' => \_MI_WGEVENTS_SMNAME6,
-        'url'  => 'question.php?op=new',
+        'name' => \_MI_WGEVENTS_SMNAME11,
+        'url' => 'export.php',
     ];
-    // Sub Submit
-    $modversion['sub'][] = [
-        'name' => \_MI_WGEVENTS_SMNAME7,
-        'url'  => 'answer.php?op=new',
-    ];
-    // Sub textblocks
-    $modversion['sub'][] = [
-        'name' => \_MI_WGEVENTS_SMNAME8,
-        'url'  => 'textblock.php',
-    ];
-    // Sub Submit
-    $modversion['sub'][] = [
-        'name' => \_MI_WGEVENTS_SMNAME9,
-        'url'  => 'textblock.php?op=new',
-    ];
-    */
 }
 // ------------------- Default Blocks ------------------- //
 // Event last

@@ -56,6 +56,7 @@ require_once __DIR__ . '/common.php';
 \define('_MI_WGEVENTS_SMNAME8', 'Textblock');
 //\define('_MI_WGEVENTS_SMNAME9', 'Submit Textblock');
 \define('_MI_WGEVENTS_SMNAME10', 'Show my Events');
+\define('_MI_WGEVENTS_SMNAME11', 'Export events');
 \define('_MI_WGEVENTS_SMNAME15', 'Search');
 // Blocks
 //\define('_MI_WGEVENTS_EVENTS_BLOCK', 'Event block');

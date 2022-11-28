@@ -242,7 +242,7 @@ class Event extends \XoopsObject
         $evAllday = $this->isNew() ? 0 : (int)$this->getVar('allday');
         $checkAllday = new \XoopsFormCheckBox('', 'allday', $evAllday);
         $checkAllday->addOption(1, \_MA_WGEVENTS_EVENT_ALLDAY);
-        $checkAllday->setExtra(" onclick='toogleAllday()' ");
+        $checkAllday->setExtra(" onclick='toggleAllday()' ");
         $evDatefromTray->addElement($checkAllday);
         $form->addElement($evDatefromTray);
         // Form Text Date Select evDateto
@@ -317,9 +317,9 @@ class Event extends \XoopsObject
             // Form Radio Yes/No evRegister_use
             $evRegister_use = $this->isNew() ? 0 : $this->getVar('register_use');
             $evRegisterUseRadio = new \XoopsFormRadioYN(\_MA_WGEVENTS_EVENT_REGISTER_USE, 'register_use', $evRegister_use);
-            $evRegisterUseRadio->setExtra(" onclick='toogleRegistrationOpts()' ");
+            $evRegisterUseRadio->setExtra(" onclick='toggleRegistrationOpts()' ");
             $form->addElement($evRegisterUseRadio);
-            $evReservUseTray = new \XoopsFormElementTray('', '<br>'); //double element tray is necessary for proper toogle
+            $evReservUseTray = new \XoopsFormElementTray('', '<br>'); //double element tray is necessary for proper toggle
             $evRegisterOptsTray = new Forms\FormElementTray('', '<br>', 'registeropttray');
             $evRegisterOptsTray->setClass('col-xs-12 col-sm-5 col-lg-5');
             if (!$evRegister_use) {
