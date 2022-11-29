@@ -94,7 +94,7 @@ $GLOBALS['xoopsTpl']->assign('filterToNextY', $filterToNextY);
 //$otherParams = "op=filter&amp;filterByOwner=$filterByOwner&amp;filterGroup=$filterGroup";
 //$GLOBALS['xoopsTpl']->assign('otherParams', $otherParams);
 
-$lengthTitle = 25;
+$lengthTitle = 30;
 
 
 /*

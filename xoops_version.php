@@ -206,7 +206,7 @@ if ($currdirname == $moduleDirName) {
     // export
     $modversion['sub'][] = [
         'name' => \_MI_WGEVENTS_SMNAME11,
-        'url' => 'export.php',
+        'url' => 'export.php?op=list&amp;new=1',
     ];
 }
 // ------------------- Default Blocks ------------------- //

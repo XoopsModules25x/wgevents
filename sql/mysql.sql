@@ -169,6 +169,7 @@ CREATE TABLE `wgevents_category` (
     `name`            VARCHAR(255)    NOT NULL DEFAULT '',
     `desc`            TEXT            NULL,
     `logo`            VARCHAR(255)    NOT NULL DEFAULT '',
+    `image`           VARCHAR(255)    NOT NULL DEFAULT '',
     `color`           VARCHAR(7)      NOT NULL DEFAULT '',
     `bordercolor`     VARCHAR(7)      NOT NULL DEFAULT '',
     `bgcolor`         VARCHAR(7)      NOT NULL DEFAULT '',

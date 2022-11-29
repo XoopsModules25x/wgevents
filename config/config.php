@@ -41,6 +41,7 @@ return (object)[
         \XOOPS_UPLOAD_PATH . '/' . $moduleDirName,
         \XOOPS_UPLOAD_PATH . '/' . $moduleDirName . '/categories',
         \XOOPS_UPLOAD_PATH . '/' . $moduleDirName . '/categories/logos',
+        \XOOPS_UPLOAD_PATH . '/' . $moduleDirName . '/categories/images',
         \XOOPS_UPLOAD_PATH . '/' . $moduleDirName . '/events',
         \XOOPS_UPLOAD_PATH . '/' . $moduleDirName . '/events/logos',
         \XOOPS_UPLOAD_PATH . '/' . $moduleDirName . '/events/images',
@@ -49,6 +50,7 @@ return (object)[
     ],
     'copyBlankFiles'  => [
         \XOOPS_UPLOAD_PATH . '/' . $moduleDirName . '/categories/logos',
+        \XOOPS_UPLOAD_PATH . '/' . $moduleDirName . '/categories/images',
         \XOOPS_UPLOAD_PATH . '/' . $moduleDirName . '/events/logos',
         \XOOPS_UPLOAD_PATH . '/' . $moduleDirName . '/events/images',
     ],

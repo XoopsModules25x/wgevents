@@ -16,6 +16,7 @@
                 <th class="center"><{$smarty.const._AM_WGEVENTS_CATEGORY_NAME}></th>
                 <th class="center"><{$smarty.const._AM_WGEVENTS_CATEGORY_DESC}></th>
                 <th class="center"><{$smarty.const._AM_WGEVENTS_CATEGORY_LOGO}></th>
+                <th class="center"><{$smarty.const._AM_WGEVENTS_CATEGORY_IMAGE}></th>
                 <th class="center"><{$smarty.const._AM_WGEVENTS_CATEGORY_COLOR}></th>
                 <th class="center"><{$smarty.const._AM_WGEVENTS_CATEGORY_BORDERCOLOR}></th>
                 <th class="center"><{$smarty.const._AM_WGEVENTS_CATEGORY_BGCOLOR}></th>
@@ -37,7 +38,8 @@
                 <td class='center'><{$category.identifier}></td>
                 <td class='center'><{$category.name}></td>
                 <td class='center'><{$category.desc_short}></td>
-                <td class='center'><img src="<{$wgevents_upload_url|default:false}>/categories/logos/<{$category.logo}>" alt="categories" style="max-width:100px" ></td>
+                <td class='center'><img src="<{$wgevents_upload_url|default:false}>/categories/logos/<{$category.logo}>" alt="category logo" style="max-width:100px" ></td>
+                <td class='center'><img src="<{$wgevents_upload_url|default:false}>/categories/images/<{$category.image}>" alt="category image" style="max-width:100px" ></td>
                 <td class='center'><span style='background-color:<{$category.color}>;'>&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
                 <td class='center'><span style='background-color:<{$category.bordercolor}>;'>&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
                 <td class='center'><span style='background-color:<{$category.bgcolor}>;'>&nbsp;&nbsp;&nbsp;&nbsp;</span></td>

@@ -368,6 +368,9 @@ wgevents_category:
             name: logo
             attributes: " VARCHAR(255)    NOT NULL DEFAULT '' "
         -
+            name: image
+            attributes: " VARCHAR(255)    NOT NULL DEFAULT '' "
+        -
             name: color
             attributes: " VARCHAR(7)      NOT NULL DEFAULT '' "
         -

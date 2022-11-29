@@ -95,6 +95,8 @@ require_once __DIR__ . '/main.php';
 \define('_AM_WGEVENTS_CATEGORY_DESC', 'Beschreibung');
 \define('_AM_WGEVENTS_CATEGORY_LOGO', 'Logo');
 \define('_AM_WGEVENTS_CATEGORY_LOGO_UPLOADS', 'Logo in %s :');
+\define('_AM_WGEVENTS_CATEGORY_IMAGE', 'Bild');
+\define('_AM_WGEVENTS_CATEGORY_IMAGE_UPLOADS', 'Bilder in %s :');
 \define('_AM_WGEVENTS_CATEGORY_COLOR', 'Schriftfarbe');
 \define('_AM_WGEVENTS_CATEGORY_BORDERCOLOR', 'Rahmenfarbe');
 \define('_AM_WGEVENTS_CATEGORY_BGCOLOR', 'Hintergrundfarbe');

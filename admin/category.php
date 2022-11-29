@@ -106,33 +106,68 @@ switch ($op) {
         $categoryObj->setVar('desc', Request::getText('desc'));
         // Set Var cat_logo
         require_once \XOOPS_ROOT_PATH . '/class/uploader.php';
-        $filename       = $_FILES['logo']['name'];
-        $imgMimetype    = $_FILES['logo']['type'];
-        $imgNameDef     = Request::getString('name');
-
+        $logoname       = $_FILES['logo']['name'];
+        $logoMimetype    = $_FILES['logo']['type'];
+        $logoNameDef     = Request::getString('name');
         $uploader = new \XoopsMediaUploader(\WGEVENTS_UPLOAD_CATLOGOS_PATH . '/',
                                                     $helper->getConfig('mimetypes_image'), 
                                                     $helper->getConfig('maxsize_image'), null, null);
         if ($uploader->fetchMedia($_POST['xoops_upload_file'][0])) {
-            $extension = \preg_replace('/^.+\.([^.]+)$/sU', '', $filename);
-            $imgName = \str_replace(' ', '', $imgNameDef) . '.' . $extension;
+            $extension = \preg_replace('/^.+\.([^.]+)$/sU', '', $logoname);
+            $imgName = \str_replace(' ', '', $logoNameDef) . '.' . $extension;
             $uploader->setPrefix($imgName);
             $uploader->fetchMedia($_POST['xoops_upload_file'][0]);
             if ($uploader->upload()) {
-                $savedFilename = $uploader->getSavedFileName();
+                $savedLogoname = $uploader->getSavedFileName();
                 $maxwidth  = (int)$helper->getConfig('maxwidth_image');
                 $maxheight = (int)$helper->getConfig('maxheight_image');
                 if ($maxwidth > 0 && $maxheight > 0) {
                     // Resize image
                     $imgHandler                = new Wgevents\Common\Resizer();
-                    $imgHandler->sourceFile    = \WGEVENTS_UPLOAD_CATLOGOS_PATH . '/' . $savedFilename;
-                    $imgHandler->endFile       = \WGEVENTS_UPLOAD_CATLOGOS_PATH . '/' . $savedFilename;
+                    $imgHandler->sourceFile    = \WGEVENTS_UPLOAD_CATLOGOS_PATH . '/' . $savedLogoname;
+                    $imgHandler->endFile       = \WGEVENTS_UPLOAD_CATLOGOS_PATH . '/' . $savedLogoname;
+                    $imgHandler->imageMimetype = $logoMimetype;
+                    $imgHandler->maxWidth      = $maxwidth;
+                    $imgHandler->maxHeight     = $maxheight;
+                    $result                    = $imgHandler->resizeImage();
+                }
+                $categoryObj->setVar('logo', $savedLogoname);
+            } else {
+                $uploaderErrors .= '<br>' . $uploader->getErrors();
+            }
+        } else {
+            if ($logoname > '') {
+                $uploaderErrors .= '<br>' . $uploader->getErrors();
+            }
+            $categoryObj->setVar('logo', Request::getString('logo'));
+        }
+        // Set Var cat_image
+        $filename       = $_FILES['image']['name'];
+        $imgMimetype    = $_FILES['image']['type'];
+        $imgNameDef     = Request::getString('name');
+        $uploader = new \XoopsMediaUploader(\WGEVENTS_UPLOAD_CATIMAGES_PATH . '/',
+            $helper->getConfig('mimetypes_image'),
+            $helper->getConfig('maxsize_image'), null, null);
+        if ($uploader->fetchMedia($_POST['xoops_upload_file'][1])) {
+            $extension = \preg_replace('/^.+\.([^.]+)$/sU', '', $filename);
+            $imgName = \str_replace(' ', '', $imgNameDef) . '.' . $extension;
+            $uploader->setPrefix($imgName);
+            $uploader->fetchMedia($_POST['xoops_upload_file'][1]);
+            if ($uploader->upload()) {
+                $savedImagename = $uploader->getSavedFileName();
+                $maxwidth  = (int)$helper->getConfig('maxwidth_image');
+                $maxheight = (int)$helper->getConfig('maxheight_image');
+                if ($maxwidth > 0 && $maxheight > 0) {
+                    // Resize image
+                    $imgHandler                = new Wgevents\Common\Resizer();
+                    $imgHandler->sourceFile    = \WGEVENTS_UPLOAD_CATIMAGES_PATH . '/' . $savedImagename;
+                    $imgHandler->endFile       = \WGEVENTS_UPLOAD_CATIMAGES_PATH . '/' . $savedImagename;
                     $imgHandler->imageMimetype = $imgMimetype;
                     $imgHandler->maxWidth      = $maxwidth;
                     $imgHandler->maxHeight     = $maxheight;
                     $result                    = $imgHandler->resizeImage();
                 }
-                $categoryObj->setVar('logo', $savedFilename);
+                $categoryObj->setVar('image', $savedImagename);
             } else {
                 $uploaderErrors .= '<br>' . $uploader->getErrors();
             }
@@ -140,7 +175,7 @@ switch ($op) {
             if ($filename > '') {
                 $uploaderErrors .= '<br>' . $uploader->getErrors();
             }
-            $categoryObj->setVar('logo', Request::getString('logo'));
+            $categoryObj->setVar('image', Request::getString('image'));
         }
         $categoryObj->setVar('color', Request::getString('color'));
         $categoryObj->setVar('bordercolor', Request::getString('bordercolor'));

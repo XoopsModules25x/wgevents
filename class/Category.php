@@ -56,6 +56,7 @@ class Category extends \XoopsObject
         $this->initVar('name', \XOBJ_DTYPE_TXTBOX);
         $this->initVar('desc', \XOBJ_DTYPE_OTHER);
         $this->initVar('logo', \XOBJ_DTYPE_TXTBOX);
+        $this->initVar('image', \XOBJ_DTYPE_TXTBOX);
         $this->initVar('color', \XOBJ_DTYPE_TXTBOX);
         $this->initVar('bordercolor', \XOBJ_DTYPE_TXTBOX);
         $this->initVar('bgcolor', \XOBJ_DTYPE_TXTBOX);
@@ -135,23 +136,50 @@ class Category extends \XoopsObject
         // Form Image catLogo: Select Uploaded Image 
         $getCatLogo = $this->getVar('logo');
         $catLogo = $getCatLogo ?: 'blank.gif';
-        $imageDirectory = '/uploads/wgevents/categories/logos';
-        $imageTray = new \XoopsFormElementTray(\_AM_WGEVENTS_CATEGORY_LOGO, '<br>');
-        $imageSelect = new \XoopsFormSelect(\sprintf(\_AM_WGEVENTS_CATEGORY_LOGO_UPLOADS, ".{$imageDirectory}/"), 'logo', $catLogo, 5);
+        $logoDirectory = '/uploads/wgevents/categories/logos';
+        $logoTray = new \XoopsFormElementTray(\_AM_WGEVENTS_CATEGORY_LOGO, '<br>');
+        $logoSelect = new \XoopsFormSelect(\sprintf(\_AM_WGEVENTS_CATEGORY_LOGO_UPLOADS, ".{$logoDirectory}/"), 'logo', $catLogo, 5);
+        $logoArray = \XoopsLists::getImgListAsArray( \XOOPS_ROOT_PATH . $logoDirectory );
+        foreach ($logoArray as $logo1) {
+            $logoSelect->addOption($logo1, $logo1);
+        }
+        $logoSelect->setExtra("onchange='showImgSelected(\"imglabel_cat_logo\", \"logo\", \"" . $logoDirectory . '", "", "' . \XOOPS_URL . "\")'");
+        $logoTray->addElement($logoSelect, false);
+        $logoTray->addElement(new \XoopsFormLabel('', "<br><img src='" . \XOOPS_URL . '/' . $logoDirectory . '/' . $catLogo . "' id='imglabel_cat_logo' alt='' style='max-width:100px' >"));
+        // Form Image catLogo: Upload new image
+        $maxsize = $helper->getConfig('maxsize_image');
+        $logoTray->addElement(new \XoopsFormFile('<br>' . \_AM_WGEVENTS_FORM_UPLOAD_NEW, 'logo', $maxsize));
+        $logoTray->addElement(new \XoopsFormLabel(\_AM_WGEVENTS_FORM_UPLOAD_SIZE, ($maxsize / 1048576) . ' '  . \_AM_WGEVENTS_FORM_UPLOAD_SIZE_MB));
+        $logoTray->addElement(new \XoopsFormLabel(\_AM_WGEVENTS_FORM_UPLOAD_IMG_WIDTH, $helper->getConfig('maxwidth_image') . ' px'));
+        $logoTray->addElement(new \XoopsFormLabel(\_AM_WGEVENTS_FORM_UPLOAD_IMG_HEIGHT, $helper->getConfig('maxheight_image') . ' px'));
+        $form->addElement($logoTray);
+
+
+
+        // Form Image catImage
+        // Form Image catImage: Select Uploaded Image
+        $getCatImage = $this->getVar('logo');
+        $catImage = $getCatImage ?: 'blank.gif';
+        $imageDirectory = '/uploads/wgevents/categories/images';
+        $imageTray = new \XoopsFormElementTray(\_AM_WGEVENTS_CATEGORY_IMAGE, '<br>');
+        $imageSelect = new \XoopsFormSelect(\sprintf(\_AM_WGEVENTS_CATEGORY_IMAGE_UPLOADS, ".{$imageDirectory}/"), 'image', $catImage, 5);
         $imageArray = \XoopsLists::getImgListAsArray( \XOOPS_ROOT_PATH . $imageDirectory );
         foreach ($imageArray as $image1) {
             $imageSelect->addOption(($image1), $image1);
         }
-        $imageSelect->setExtra("onchange='showImgSelected(\"imglabel_cat_logo\", \"logo\", \"" . $imageDirectory . '", "", "' . \XOOPS_URL . "\")'");
+        $imageSelect->setExtra("onchange='showImgSelected(\"imglabel_cat_image\", \"image\", \"" . $imageDirectory . '", "", "' . \XOOPS_URL . "\")'");
         $imageTray->addElement($imageSelect, false);
-        $imageTray->addElement(new \XoopsFormLabel('', "<br><img src='" . \XOOPS_URL . '/' . $imageDirectory . '/' . $catLogo . "' id='imglabel_cat_logo' alt='' style='max-width:100px' >"));
-        // Form Image catLogo: Upload new image
-        $maxsize = $helper->getConfig('maxsize_image');
-        $imageTray->addElement(new \XoopsFormFile('<br>' . \_AM_WGEVENTS_FORM_UPLOAD_NEW, 'logo', $maxsize));
+        $imageTray->addElement(new \XoopsFormLabel('', "<br><img src='" . \XOOPS_URL . '/' . $imageDirectory . '/' . $catImage . "' id='imglabel_cat_image' alt='' style='max-width:100px' >"));
+        // Form Image catImage: Upload new image
+        $imageTray->addElement(new \XoopsFormFile('<br>' . \_AM_WGEVENTS_FORM_UPLOAD_NEW, 'image', $maxsize));
         $imageTray->addElement(new \XoopsFormLabel(\_AM_WGEVENTS_FORM_UPLOAD_SIZE, ($maxsize / 1048576) . ' '  . \_AM_WGEVENTS_FORM_UPLOAD_SIZE_MB));
         $imageTray->addElement(new \XoopsFormLabel(\_AM_WGEVENTS_FORM_UPLOAD_IMG_WIDTH, $helper->getConfig('maxwidth_image') . ' px'));
         $imageTray->addElement(new \XoopsFormLabel(\_AM_WGEVENTS_FORM_UPLOAD_IMG_HEIGHT, $helper->getConfig('maxheight_image') . ' px'));
         $form->addElement($imageTray);
+
+
+
+
         // Form Color Picker catColor
         $catColor = $this->isNew() ? '#000000' : (string)$this->getVar('color');
         $form->addElement(new \XoopsFormColorPicker(\_AM_WGEVENTS_CATEGORY_COLOR, 'color', $catColor));

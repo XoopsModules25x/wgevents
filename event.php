@@ -249,7 +249,6 @@ switch ($op) {
                 $GLOBALS['xoopsTpl']->assign('formPageNavCounter', $formPageNavCounter->render());
                 */
             }
-            $GLOBALS['xoopsTpl']->assign('table_type', $helper->getConfig('table_type'));
             $GLOBALS['xoopsTpl']->assign('start', $start);
             $GLOBALS['xoopsTpl']->assign('limit', $limit);
 
