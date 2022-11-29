@@ -379,3 +379,43 @@ Participation without agreement to this conditions is not possible.
 // Admin link
 \define('_MA_WGEVENTS_ADMIN', 'Admin');
 // ---------------- End ----------------
+// image editor
+\define('_MA_WGEVENTS_IMG_EDITOR', 'Image editor');
+\define('_MA_WGEVENTS_IMG_EDITOR_CREATE', 'Create image');
+\define('_MA_WGEVENTS_IMG_EDITOR_APPLY', 'Apply');
+\define('_MA_WGEVENTS_IMG_EDITOR_IMAGE_EDIT', 'Edit album image');
+\define('_MA_WGEVENTS_IMG_EDITOR_CURRENT', 'Current');
+\define('_MA_WGEVENTS_IMG_EDITOR_USE_EXISTING', 'Use existing image');
+\define('_MA_WGEVENTS_IMG_EDITOR_GRID', 'Create an image grid');
+\define('_MA_WGEVENTS_IMG_EDITOR_GRID4', 'Use 4 images');
+\define('_MA_WGEVENTS_IMG_EDITOR_GRID6', 'Use 6 images');
+\define('_MA_WGEVENTS_IMG_EDITOR_GRID_SRC1', 'Select image 1');
+\define('_MA_WGEVENTS_IMG_EDITOR_GRID_SRC2', 'Select image 2');
+\define('_MA_WGEVENTS_IMG_EDITOR_GRID_SRC3', 'Select image 3');
+\define('_MA_WGEVENTS_IMG_EDITOR_GRID_SRC4', 'Select image 4');
+\define('_MA_WGEVENTS_IMG_EDITOR_GRID_SRC5', 'Select image 5');
+\define('_MA_WGEVENTS_IMG_EDITOR_GRID_SRC6', 'Select image 6');
+\define('_MA_WGEVENTS_IMG_EDITOR_CROP', 'Crop image');
+\define('_MA_WGEVENTS_IMG_EDITOR_CROP_MOVE', 'Move');
+\define('_MA_WGEVENTS_IMG_EDITOR_CROP_ZOOMIN', 'Zoom in');
+\define('_MA_WGEVENTS_IMG_EDITOR_CROP_ZOOMOUT', 'Zomm out');
+\define('_MA_WGEVENTS_IMG_EDITOR_CROP_MOVE_LEFT', 'Move left');
+\define('_MA_WGEVENTS_IMG_EDITOR_CROP_MOVE_RIGHT', 'Move right');
+\define('_MA_WGEVENTS_IMG_EDITOR_CROP_MOVE_UP', 'Move up');
+\define('_MA_WGEVENTS_IMG_EDITOR_CROP_MOVE_DOWN', 'Move down');
+\define('_MA_WGEVENTS_IMG_EDITOR_CROP_ROTATE_LEFT', 'Rotate left');
+\define('_MA_WGEVENTS_IMG_EDITOR_CROP_ROTATE_RIGHT', 'Rotate right');
+\define('_MA_WGEVENTS_IMG_EDITOR_CROP_FLIP_HORIZONTAL', 'Flip horizontal');
+\define('_MA_WGEVENTS_IMG_EDITOR_CROP_FLIP_VERTICAL', 'Flip vertical');
+\define('_MA_WGEVENTS_IMG_EDITOR_CROP_ASPECTRATIO', 'Aspect ratio');
+\define('_MA_WGEVENTS_IMG_EDITOR_CROP_ASPECTRATIO_FREE', 'Free');
+\define('_MA_WGEVENTS_IMG_EDITOR_CURRENT2', 'Source of current image');
+\define('_MA_WGEVENTS_IMG_EDITOR_RESXY', 'Resolution');
+\define('_MA_WGEVENTS_IMG_EDITOR_UPLOAD', 'Conditions for uploading images');
+\define('_MA_WGEVENTS_IMG_EDITOR_RESIZE', 'Resize image automatically');
+\define('_MA_WGEVENTS_IMG_EDITOR_RESIZE_DESC', 'Resize image automatically to default dimension (width max. %w px / height max. %h px): ');
+\define('_MA_WGEVENTS_FORM_ERROR_INVALID_ID', 'Invalid ID');
+\define('_MA_WGEVENTS_FORM_UPLOAD_IMG', 'Upload image');
+\define('_MA_WGEVENTS_IMG_MAXSIZE', 'Maximum image size');
+\define('_MA_WGEVENTS_IMG_MIMETYPES', 'Allowed mimetypes');
+\define('_MA_WGEVENTS_SIZE_MB', 'MB');

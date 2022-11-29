@@ -1,6 +1,4 @@
 
-implement image editor
-
 https://github.com/azuyalabs/yasumi
 
 

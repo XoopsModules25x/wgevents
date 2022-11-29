@@ -63,6 +63,7 @@
                 <{/if}>
                 <{if $event.permEdit|default:''}>
                     <a class='btn btn-primary right wge-btn' href='event.php?op=edit&amp;id=<{$event.id}>&amp;start=<{$start}>&amp;limit=<{$limit}>&amp;cats=<{$urlCats}>' title='<{$smarty.const._EDIT}>'><{$smarty.const._EDIT}></a>
+                    <a class='btn btn-primary right wge-btn' href='image_editor.php?op=list&amp;id=<{$event.id}>&amp;start=<{$start}>&amp;limit=<{$limit}>&amp;cats=<{$urlCats}>' title='<{$smarty.const._MA_WGEVENTS_IMG_EDITOR}>'><{$smarty.const._MA_WGEVENTS_IMG_EDITOR}></a>
                     <a class='btn btn-primary right wge-btn' href='event.php?op=clone&amp;id_source=<{$event.id}>' title='<{$smarty.const._CLONE}>'><{$smarty.const._CLONE}></a>
                     <a class='btn btn-danger right wge-btn' href='event.php?op=delete&amp;id=<{$event.id}>' title='<{$smarty.const._DELETE}>'><{$smarty.const._DELETE}></a>
                 <{/if}>

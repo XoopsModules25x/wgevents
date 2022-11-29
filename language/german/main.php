@@ -379,3 +379,43 @@ Eine Teilnahme an der Veranstaltung ohne Zustimmung zu diesen Bestimmungen ist l
 // Admin link
 \define('_MA_WGEVENTS_ADMIN', 'Administration');
 // ---------------- End ----------------
+// image editor
+\define('_MA_WGEVENTS_IMG_EDITOR', 'Bildbearbeitung');
+\define('_MA_WGEVENTS_IMG_EDITOR_CREATE', 'Bild erstellen');
+\define('_MA_WGEVENTS_IMG_EDITOR_APPLY', 'Anwenden');
+\define('_MA_WGEVENTS_IMG_EDITOR_IMAGE_EDIT', 'Albumbild bearbeiten');
+\define('_MA_WGEVENTS_IMG_EDITOR_CURRENT', 'Aktuell');
+\define('_MA_WGEVENTS_IMG_EDITOR_USE_EXISTING', 'Vorhandenes Bild verwenden');
+\define('_MA_WGEVENTS_IMG_EDITOR_GRID', 'Bildercollage erstellen');
+\define('_MA_WGEVENTS_IMG_EDITOR_GRID4', '4 Bilder verwenden');
+\define('_MA_WGEVENTS_IMG_EDITOR_GRID6', '6 Bilder verwenden');
+\define('_MA_WGEVENTS_IMG_EDITOR_GRID_SRC1', 'Bild 1 auswählen');
+\define('_MA_WGEVENTS_IMG_EDITOR_GRID_SRC2', 'Bild 2 auswählen');
+\define('_MA_WGEVENTS_IMG_EDITOR_GRID_SRC3', 'Bild 3 auswählen');
+\define('_MA_WGEVENTS_IMG_EDITOR_GRID_SRC4', 'Bild 4 auswählen');
+\define('_MA_WGEVENTS_IMG_EDITOR_GRID_SRC5', 'Bild 5 auswählen');
+\define('_MA_WGEVENTS_IMG_EDITOR_GRID_SRC6', 'Bild 6 auswählen');
+\define('_MA_WGEVENTS_IMG_EDITOR_CROP', 'Bild zuschneiden');
+\define('_MA_WGEVENTS_IMG_EDITOR_CROP_MOVE', 'Verschieben');
+\define('_MA_WGEVENTS_IMG_EDITOR_CROP_ZOOMIN', 'Hineinzoomen');
+\define('_MA_WGEVENTS_IMG_EDITOR_CROP_ZOOMOUT', 'Herauszoomen');
+\define('_MA_WGEVENTS_IMG_EDITOR_CROP_MOVE_LEFT', 'Nach links verschieben');
+\define('_MA_WGEVENTS_IMG_EDITOR_CROP_MOVE_RIGHT', 'Nach rechts verschieben');
+\define('_MA_WGEVENTS_IMG_EDITOR_CROP_MOVE_UP', 'Nach oben verschieben');
+\define('_MA_WGEVENTS_IMG_EDITOR_CROP_MOVE_DOWN', 'Nach unten verschieben');
+\define('_MA_WGEVENTS_IMG_EDITOR_CROP_ROTATE_LEFT', 'Links drehen');
+\define('_MA_WGEVENTS_IMG_EDITOR_CROP_ROTATE_RIGHT', 'Rechts drehen');
+\define('_MA_WGEVENTS_IMG_EDITOR_CROP_FLIP_HORIZONTAL', 'Horizontal spiegeln');
+\define('_MA_WGEVENTS_IMG_EDITOR_CROP_FLIP_VERTICAL', 'Vertikal spiegeln');
+\define('_MA_WGEVENTS_IMG_EDITOR_CROP_ASPECTRATIO', 'Seitenverhältnis');
+\define('_MA_WGEVENTS_IMG_EDITOR_CROP_ASPECTRATIO_FREE', 'Frei');
+\define('_MA_WGEVENTS_IMG_EDITOR_CURRENT2', 'Quelle für aktuelles Bild');
+\define('_MA_WGEVENTS_IMG_EDITOR_RESXY', 'Auflösung');
+\define('_MA_WGEVENTS_IMG_EDITOR_UPLOAD', 'Voraussetzungen für Bilderupload');
+\define('_MA_WGEVENTS_IMG_EDITOR_RESIZE', 'Bild automatisch verkleinern');
+\define('_MA_WGEVENTS_IMG_EDITOR_RESIZE_DESC', 'Bild automatisch auf Standardwerte (Breite max. %w px / Höhe max. %h px) verkleinern: ');
+\define('_MA_WGEVENTS_FORM_ERROR_INVALID_ID', 'Invalid ID');
+\define('_MA_WGEVENTS_FORM_UPLOAD_IMG', 'Bild hochladen');
+\define('_MA_WGEVENTS_IMG_MAXSIZE', 'Maximale Bildgröße');
+\define('_MA_WGEVENTS_IMG_MIMETYPES', 'Erlaubte Mimetypes');
+\define('_MA_WGEVENTS_SIZE_MB', 'MB');
