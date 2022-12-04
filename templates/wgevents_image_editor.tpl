@@ -113,15 +113,23 @@
                             <span class="docs-tooltip" data-toggle="tooltip" title="<{$smarty.const._MA_WGEVENTS_IMG_EDITOR_CROP_ASPECTRATIO}>: 4 / 3">4:3</span>
                         </label>
                         <label class="btn imageeditor-btn-crop <{$btn_style|default:''}>">
-                            <input type="radio" class="sr-only" id="aspectRatio3" name="aspectRatio" value="1">
+                            <input type="radio" class="sr-only" id="aspectRatio3" name="aspectRatio" value="1.5">
+                            <span class="docs-tooltip" data-toggle="tooltip" title="<{$smarty.const._MA_WGEVENTS_IMG_EDITOR_CROP_ASPECTRATIO}>: 3 / 2">3:2</span>
+                        </label>
+                        <label class="btn imageeditor-btn-crop <{$btn_style|default:''}>">
+                            <input type="radio" class="sr-only" id="aspectRatio4" name="aspectRatio" value="1">
                             <span class="docs-tooltip" data-toggle="tooltip" title="<{$smarty.const._MA_WGEVENTS_IMG_EDITOR_CROP_ASPECTRATIO}>: 1 / 1">1:1</span>
                         </label>
                         <label class="btn imageeditor-btn-crop <{$btn_style|default:''}>">
-                            <input type="radio" class="sr-only" id="aspectRatio4" name="aspectRatio" value="0.6666666666666666">
+                            <input type="radio" class="sr-only" id="aspectRatio5" name="aspectRatio" value="0.6666666666666666">
                             <span class="docs-tooltip" data-toggle="tooltip" title="<{$smarty.const._MA_WGEVENTS_IMG_EDITOR_CROP_ASPECTRATIO}>: 2 / 3">2:3</span>
                         </label>
                         <label class="btn imageeditor-btn-crop <{$btn_style|default:''}>">
-                            <input type="radio" class="sr-only" id="aspectRatio5" name="aspectRatio" value="NaN">
+                            <input type="radio" class="sr-only" id="aspectRatio6" name="aspectRatio" value="0.75">
+                            <span class="docs-tooltip" data-toggle="tooltip" title="<{$smarty.const._MA_WGEVENTS_IMG_EDITOR_CROP_ASPECTRATIO}>: 3 / 4">3:4</span>
+                        </label>
+                        <label class="btn imageeditor-btn-crop <{$btn_style|default:''}>">
+                            <input type="radio" class="sr-only" id="aspectRatio7" name="aspectRatio" value="NaN">
                             <span class="docs-tooltip" data-toggle="tooltip" title="<{$smarty.const._MA_WGEVENTS_IMG_EDITOR_CROP_ASPECTRATIO}>: NaN"><{$smarty.const._MA_WGEVENTS_IMG_EDITOR_CROP_ASPECTRATIO_FREE}></span>
                         </label>
                     </div>
