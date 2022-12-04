@@ -56,7 +56,7 @@ $imgCurrent = [];
     $imageObj     = $eventHandler->get($sourceId);
     $imageOrigin  = 'id';
     $imgName  = \mb_substr(\str_replace(' ', '', $imageObj->getVar('name')), 0, 20) . '.jpg';
-    $imageDir = '/uploads/wgevents/events/logos/' . $uid . '/';
+    $imageDir = '/uploads/wgevents/events/logos/' . $imageObj->getVar('submitter') . '/';
     $imgPath  = \XOOPS_ROOT_PATH . $imageDir;
     $imgUrl   = \XOOPS_URL . $imageDir;
     $imgFinal = $imgPath . $imgName;
@@ -116,6 +116,8 @@ $GLOBALS['xoopsTpl']->assign('gridtarget', $imgName);
 $GLOBALS['xoopsTpl']->assign('imgCurrent', $imgCurrent);
 $GLOBALS['xoopsTpl']->assign('imageId', $imageId);
 $GLOBALS['xoopsTpl']->assign('imageOrigin', $imageOrigin);
+$GLOBALS['xoopsTpl']->assign('start', $start);
+$GLOBALS['xoopsTpl']->assign('limit', $limit);
 
 // Breadcrumbs
 $xoBreadcrumbs[] = ['title' => \_MA_WGEVENTS_INDEX, 'link' => 'index.php'];
@@ -231,7 +233,7 @@ switch ($op) {
         // remove '_image' from id
         $image_id = \substr($image_id, 0, -6);
         $imageObj->setVar($fieldObj, $image_id);
-        $imageObj->setVar($submObj, $uid);
+        //$imageObj->setVar($submObj, $uid); // do not change submitter of event
         // Insert Data
         if ($imageHandler->insert($imageObj)) {
             \redirect_header($redir, 2, _MA_WGEVENTS_FORM_OK);
@@ -245,7 +247,7 @@ switch ($op) {
         $ret = \rename($imgTempGrid, $imgFinal);
         // Set Vars
         $imageObj->setVar($fieldObj, $imgName);
-        $imageObj->setVar($submObj, $uid);
+        //$imageObj->setVar($submObj, $uid); // do not change submitter of event
         // Insert Data
         if ($imageHandler->insert($imageObj)) {
             \redirect_header($redir, 2, _MA_WGEVENTS_FORM_OK);
@@ -259,7 +261,7 @@ switch ($op) {
         $ret = \rename($imgTemp, $imgFinal);
         // Set Vars
         $imageObj->setVar($fieldObj, $imgName);
-        $imageObj->setVar($submObj, $uid);
+        //$imageObj->setVar($submObj, $uid); // do not change submitter of event
         // Insert Data
         if ($imageHandler->insert($imageObj, true)) {
             \redirect_header($redir, 2, _MA_WGEVENTS_FORM_OK);
@@ -300,7 +302,7 @@ switch ($op) {
                 }
 
                 $imageObj->setVar($fieldObj, $savedFilename);
-                $imageObj->setVar($submObj, $uid);
+                //$imageObj->setVar($submObj, $uid); // do not change submitter of event
             }
         } else {
             if ($fileName > '') {
