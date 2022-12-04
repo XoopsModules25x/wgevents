@@ -17,6 +17,9 @@
  - fixed problems with smtp mail accounts (goffy)
  - added new checks/cleaning in maintenance (goffy)
  - added export as excel or ics (goffy)
+ - implementation image for cats (goffy)
+ - implementation of image editor (goffy)
+ - fixed problems image editor for events of other users (goffy)
 
 ==============================================================
 1.0.4 RC1 [2022/08/29]

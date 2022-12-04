@@ -81,7 +81,6 @@ function b_wgevents_calendar_show($options)
     $GLOBALS['xoopsTpl']->assign('monthNav', $arrMonth[\date('n', $filterFrom)]);
     $GLOBALS['xoopsTpl']->assign('yearNav', \date('Y', $filterFrom));
 
-
     $GLOBALS['xoTheme']->addStylesheet(\WGEVENTS_URL . '/class/SimpleCalendar/css/SimpleCalendarMini.css', null);
     $calendar = new SimpleCalendar\SimpleCalendarMini();
     $calendar->setStartOfWeek($helper->getConfig('cal_firstday'));
@@ -116,20 +115,15 @@ function b_wgevents_calendar_show($options)
     $GLOBALS['xoopsTpl']->assign('events_calendar_header', '');
 
     if($limit > 0) {
-        $crEvent = new \CriteriaCompo();
-        $crEvent->add(new \Criteria('status', Constants::STATUS_SUBMITTED, '>'));
-        $crEvent->add(new \Criteria('datefrom', \time(), '>'));
-        $crEvent->setStart();
-        $crEvent->setLimit($limit);
-        $crEvent->setSort('datefrom');
-        $crEvent->setOrder('ASC');
-
         if ($eventsCount > 0) {
-            $eventsAll = $eventHandler->getAll($crEvent);
+            $counter = 0;
             $eventsList = [];
             // Get All Event
-            foreach (\array_keys($eventsAll) as $i) {
-                $eventsList[$i] = $eventsAll[$i]->getValuesEvents();
+            foreach($eventsArr['eventsAll'] as $event) {
+                if ($counter < $limit) {
+                    $eventsList[$counter] = $event->getValuesEvents();
+                }
+                $counter++;
             }
             $GLOBALS['xoopsTpl']->assign('events_list', $eventsList);
             unset($eventsList);
@@ -142,7 +136,6 @@ function b_wgevents_calendar_show($options)
 
     //create dummy return in order to show block
     return ['dummy'];
-
 }
 
 /**

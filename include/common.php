@@ -42,6 +42,8 @@ if (!\defined('XOOPS_ICONS32_URL')) {
 \define('WGEVENTS_UPLOAD_EVENTLOGOS_URL', \WGEVENTS_UPLOAD_URL . '/events/logos');
 \define('WGEVENTS_UPLOAD_CATLOGOS_PATH', \WGEVENTS_UPLOAD_PATH . '/categories/logos');
 \define('WGEVENTS_UPLOAD_CATLOGOS_URL', \WGEVENTS_UPLOAD_URL . '/categories/logos');
+\define('WGEVENTS_UPLOAD_CATIMAGES_PATH', \WGEVENTS_UPLOAD_PATH . '/categories/images');
+\define('WGEVENTS_UPLOAD_CATIMAGES_URL', \WGEVENTS_UPLOAD_URL . '/categories/images');
 \define('WGEVENTS_ADMIN', \WGEVENTS_URL . '/admin/index.php');
 $localLogo = \WGEVENTS_IMAGE_URL . '/wedega_logo.png';
 // Module Information

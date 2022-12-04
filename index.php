@@ -97,6 +97,7 @@ if (\is_object($GLOBALS['xoopsUser'])) {
 
 if ('none' != $indexDisplayCats) {
     $GLOBALS['xoopsTpl']->assign('wgevents_upload_catlogos_url', \WGEVENTS_UPLOAD_CATLOGOS_URL);
+    $GLOBALS['xoopsTpl']->assign('wgevents_upload_catimages_url', \WGEVENTS_UPLOAD_CATIMAGES_URL);
     $categories = $categoryHandler->getCategoriesForFilter($indexDisplayCats, $filterCats, $op, $useGroups, '');
     $GLOBALS['xoopsTpl']->assign('categories', $categories);
     if ('form' == $indexDisplayCats) {

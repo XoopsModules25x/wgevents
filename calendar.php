@@ -94,7 +94,7 @@ $GLOBALS['xoopsTpl']->assign('filterToNextY', $filterToNextY);
 //$otherParams = "op=filter&amp;filterByOwner=$filterByOwner&amp;filterGroup=$filterGroup";
 //$GLOBALS['xoopsTpl']->assign('otherParams', $otherParams);
 
-$lengthTitle = 25;
+$lengthTitle = 30;
 
 
 /*
@@ -161,35 +161,6 @@ if ($useGMaps) {
     $gmapsEnableCal    = ('top' == $gmapsPositionList || 'bottom' == $gmapsPositionList);
     $gmapsHeight       = $helper->getConfig('gmaps_height');
 }
-
-$events = [];
-/*
-switch ($op) {
-    case 'list':
-    default:
-
-        break;
-
-    case 'filterOwn':
-        //$GLOBALS['xoopsTpl']->assign('resultTitle', \_MA_WGEVENTS_FILTER_RESULT);
-        if ($uid > 0) {
-            $events = $eventHandler->getItems($uid, 0, 0, $filterFrom, $filterTo, false, false, 0, $filterCat, $sortBy, $orderBy);
-        }
-        $filtered = true;
-        break;
-    case 'filterGroup':
-        //$GLOBALS['xoopsTpl']->assign('resultTitle', \_MA_WGEVENTS_FILTER_RESULT);
-        if ($permissionsHandler->getPermItemsGroupView()) {
-            if (Constants::FILTER_TYPEALL == $filterGroup) {
-                $events = $eventHandler->getItems(0, 0, 0, $filterFrom, $filterTo, true, false, 0, $filterCat, $sortBy, $orderBy);
-            } else {
-                $events = $eventHandler->getItems(0, 0, 0, $filterFrom, $filterTo, false, false, $filterGroup, $filterCat, $sortBy, $orderBy);
-            }
-        }
-        $filtered = true;
-        break;
-}
-*/
 
 // get categories collection
 $categories = $categoryHandler->getCollection();

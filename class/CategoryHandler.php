@@ -241,6 +241,7 @@ class CategoryHandler extends \XoopsPersistableObjectHandler
 
         // To Save
         $form->addElement(new \XoopsFormHidden('op', $op));
+        $form->addElement(new \XoopsFormHidden('start', '0'));
         $form->addElement(new \XoopsFormHidden('filter', $filter));
         return $form;
     }
@@ -267,6 +268,7 @@ class CategoryHandler extends \XoopsPersistableObjectHandler
         }
 
         $crCategory = new \CriteriaCompo();
+        $crCategory->add(new \Criteria('status',Constants::STATUS_ONLINE));
         $crCategory->setSort('weight');
         $crCategory->setOrder('ASC');
         $categoriesCount = $this->getCount($crCategory);

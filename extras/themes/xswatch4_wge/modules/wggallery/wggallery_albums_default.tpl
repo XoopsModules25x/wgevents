@@ -52,8 +52,8 @@
                             <{/if}>
 							<a class='btn btn-secondary wgg-btn' href='albums.php?op=edit&amp;alb_id=<{$album.id}>&amp;alb_pid=<{$album.pid}>' title='<{$smarty.const._CO_WGGALLERY_ALBUM_EDIT}>'>
                                 <img class='wgg-btn-icon' src='<{$wggallery_icon_url_16}>edit.png' alt='<{$smarty.const._CO_WGGALLERY_ALBUM_EDIT}>'><{if $displayButtonText}><{$smarty.const._CO_WGGALLERY_ALBUM_EDIT}><{/if}></a>
-                            <a class='btn btn-secondary wgg-btn' href='album_images.php?op=imghandler&amp;alb_id=<{$album.id}>&amp;alb_pid=<{$album.pid}>' title='<{$smarty.const._CO_WGGALLERY_ALBUM_IH_IMAGE_EDIT}>'>
-                                <img class='wgg-btn-icon' src='<{$wggallery_icon_url_16}>album_images.png' alt='<{$smarty.const._CO_WGGALLERY_ALBUM_IH_IMAGE_EDIT}>'><{if $displayButtonText}><{$smarty.const._CO_WGGALLERY_ALBUM_IH_IMAGE_EDIT}><{/if}></a>
+                            <a class='btn btn-secondary wgg-btn' href='album_images.php?op=imghandler&amp;alb_id=<{$album.id}>&amp;alb_pid=<{$album.pid}>' title='<{$smarty.const._MA_WGEVENTS_IMAGE_EDITOR_IMAGE_EDIT}>'>
+                                <img class='wgg-btn-icon' src='<{$wggallery_icon_url_16}>album_images.png' alt='<{$smarty.const._MA_WGEVENTS_IMAGE_EDITOR_IMAGE_EDIT}>'><{if $displayButtonText}><{$smarty.const._MA_WGEVENTS_IMAGE_EDITOR_IMAGE_EDIT}><{/if}></a>
                             <a class='btn btn-secondary wgg-btn' href='albums.php?op=delete&amp;alb_id=<{$album.id}>&amp;alb_pid=<{$album.pid}>' title='<{$smarty.const._DELETE}>'>
                                 <img class='wgg-btn-icon' src='<{$wggallery_icon_url_16}>delete.png' alt='<{$smarty.const._DELETE}>'><{if $displayButtonText}><{$smarty.const._DELETE}><{/if}></a>
                         <{/if}>

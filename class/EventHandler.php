@@ -320,7 +320,7 @@ class EventHandler extends \XoopsPersistableObjectHandler
         $crEvent->setOrder($orderBy);
         $eventsCount = $this->getCount($crEvent);
         if ($eventsCount > 0) {
-            if ($limit > 0) {
+            if ($limit > 0 && !$showItem) {
                 $crEvent->setStart($start);
                 $crEvent->setLimit($limit);
             }

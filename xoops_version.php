@@ -120,6 +120,7 @@ $modversion['templates'] = [
     ['file' => 'wgevents_gmaps_show_modal.tpl', 'description' => ''],
     ['file' => 'wgevents_googlemaps.tpl', 'description' => ''],
     ['file' => 'wgevents_header.tpl', 'description' => ''],
+    ['file' => 'wgevents_image_editor.tpl', 'description' => ''],
     ['file' => 'wgevents_index.tpl', 'description' => ''],
     ['file' => 'wgevents_question.tpl', 'description' => ''],
     ['file' => 'wgevents_question_item.tpl', 'description' => ''],
@@ -206,7 +207,7 @@ if ($currdirname == $moduleDirName) {
     // export
     $modversion['sub'][] = [
         'name' => \_MI_WGEVENTS_SMNAME11,
-        'url' => 'export.php',
+        'url' => 'export.php?op=list&amp;new=1',
     ];
 }
 // ------------------- Default Blocks ------------------- //
@@ -488,6 +489,7 @@ $modversion['config'][] = [
                      ],
 ];
 // Show calendar on index page
+/* not used currently
 $modversion['config'][] = [
     'name'        => 'cal_index',
     'title'       => '\_MI_WGEVENTS_CAL_INDEX',
@@ -495,7 +497,7 @@ $modversion['config'][] = [
     'formtype'    => 'yesno',
     'valuetype'   => 'int',
     'default'     => 0,
-];
+];*/
 // ------------------- Group header: Upload ------------------- //
 $modversion['config'][] = [
     'name'        => 'group_upload',
