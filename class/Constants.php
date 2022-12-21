@@ -125,4 +125,9 @@ interface Constants
     public const DAYNAME_SHORTCOMMA = 3;
     public const DAYNAME_LONG       = 4;
 
+    // Constants for progress bar for event registrations
+    public const REGPROCESSBAR_NONE = 0;
+    public const REGPROCESSBAR_PI   = 1;
+    public const REGPROCESSBAR_TB   = 2;
+
 }

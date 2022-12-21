@@ -41,36 +41,30 @@
                 </div>
                 <div class='panel-foot row right'>
                     <div class="col-sm-5">
-                        <{if $event.regmax|default:false && $event.nb_registrations|default:0 > 0}>
-                        <div class="progress wge-progress" <{if $event.regcurrent_tip|default:false}>title="<{$event.regcurrent_text}>"<{/if}>>
-                        <div <{if $event.regcurrent_tip|default:false}>title="<{$event.regcurrent_text}>"<{/if}> class="progress-bar progress-bar-<{$event.regcurrentstate|default:''}> " role="progressbar" aria-valuenow="<{$event.regpercentage|default:100}>"
-                        aria-valuemin="0" aria-valuemax="100" style="width:<{$event.regpercentage}>%">
-                        <span class="wge-progress-text"><{$event.regcurrent}></span>
+                        <{if $event_regprocessbar|default:0 > 0}>
+                            <{include file="db:wgevents_event_regprogressbar.tpl" event=$event}>
+                        <{/if}>
+                    </div>
+                    <div class="col-sm-7 right">
+                        <{if $event.locked|default:false}>
+                            <span class="badge badge-danger wge-badge-index"><{$smarty.const._MA_WGEVENTS_STATUS_LOCKED}></span>
+                        <{/if}>
+                        <{if $event.canceled|default:false}>
+                            <span class="badge badge-danger wge-badge-index"><{$smarty.const._MA_WGEVENTS_STATUS_CANCELED}></span>
+                        <{/if}>
+                        <span class='col-sm-12'>
+                            <a class='btn btn-success wge-btn' href='<{$wgevents_url|default:false}>/event.php?op=show&amp;id=<{$event.id}>' title='<{$smarty.const._MA_WGEVENTS_DETAILS}>'><{$smarty.const._MA_WGEVENTS_DETAILS}></a>
+                            <{if $event.register_use|default:'' && $permRegister|default:false}>
+                                <a class='btn btn-primary wge-btn' href='<{$wgevents_url|default:false}>/registration.php?op=listeventmy&amp;redir=listeventmy&amp;evid=<{$event.id}>' title='<{$smarty.const._MA_WGEVENTS_REGISTRATION_GOTO}>'><{$smarty.const._MA_WGEVENTS_REGISTRATION_GOTO}></a>
+                            <{/if}>
+                            <{if $event.permEdit|default:''}>
+                                <a class='btn btn-primary right wge-btn' href='<{$wgevents_url|default:false}>/event.php?op=edit&amp;id=<{$event.id}>' title='<{$smarty.const._EDIT}>'><{$smarty.const._EDIT}></a>
+                                <a class='btn btn-primary right wge-btn' href='<{$wgevents_url|default:false}>/event.php?op=clone&amp;id_source=<{$event.id}>' title='<{$smarty.const._CLONE}>'><{$smarty.const._CLONE}></a>
+                                <a class='btn btn-danger right wge-btn' href='<{$wgevents_url|default:false}>/event.php?op=delete&amp;id=<{$event.id}>' title='<{$smarty.const._DELETE}>'><{$smarty.const._DELETE}></a>
+                            <{/if}>
+                        </span>
                     </div>
                 </div>
-                <{if $event.regpercentage|default:0 >= 100 && $event.register_listwait|default:0 == 1}><p class="wge-reg-list-full"><{$smarty.const._MA_WGEVENTS_REGISTRATIONS_FULL_LISTWAIT}></p><{/if}>
-                <{/if}>
-            </div>
-            <div class="col-sm-7 right">
-                <{if $event.locked|default:false}>
-                    <span class="badge badge-danger wge-badge-index"><{$smarty.const._MA_WGEVENTS_STATUS_LOCKED}></span>
-                <{/if}>
-                <{if $event.canceled|default:false}>
-                    <span class="badge badge-danger wge-badge-index"><{$smarty.const._MA_WGEVENTS_STATUS_CANCELED}></span>
-                <{/if}>
-                <span class='col-sm-12'>
-                    <a class='btn btn-success wge-btn' href='<{$wgevents_url|default:false}>/event.php?op=show&amp;id=<{$event.id}>' title='<{$smarty.const._MA_WGEVENTS_DETAILS}>'><{$smarty.const._MA_WGEVENTS_DETAILS}></a>
-                    <{if $event.register_use|default:'' && $permRegister|default:false}>
-                        <a class='btn btn-primary wge-btn' href='<{$wgevents_url|default:false}>/registration.php?op=listeventmy&amp;redir=listeventmy&amp;evid=<{$event.id}>' title='<{$smarty.const._MA_WGEVENTS_REGISTRATION_GOTO}>'><{$smarty.const._MA_WGEVENTS_REGISTRATION_GOTO}></a>
-                    <{/if}>
-                    <{if $event.permEdit|default:''}>
-                        <a class='btn btn-primary right wge-btn' href='<{$wgevents_url|default:false}>/event.php?op=edit&amp;id=<{$event.id}>&amp;start=<{$start}>&amp;limit=<{$limit}>' title='<{$smarty.const._EDIT}>'><{$smarty.const._EDIT}></a>
-                        <a class='btn btn-primary right wge-btn' href='<{$wgevents_url|default:false}>/event.php?op=clone&amp;id_source=<{$event.id}>' title='<{$smarty.const._CLONE}>'><{$smarty.const._CLONE}></a>
-                        <a class='btn btn-danger right wge-btn' href='<{$wgevents_url|default:false}>/event.php?op=delete&amp;id=<{$event.id}>' title='<{$smarty.const._DELETE}>'><{$smarty.const._DELETE}></a>
-                    <{/if}>
-                </span>
-            </div>
-        </div>
         </div>
     <{/foreach}>
 <{/if}>

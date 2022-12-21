@@ -116,6 +116,7 @@ $modversion['templates'] = [
     ['file' => 'wgevents_event_index_list.tpl', 'description' => ''],
     ['file' => 'wgevents_event_item_details.tpl', 'description' => ''],
     ['file' => 'wgevents_event_item_list.tpl', 'description' => ''],
+    ['file' => 'wgevents_event_regprogressbar.tpl', 'description' => ''],
     ['file' => 'wgevents_export.tpl', 'description' => ''],
     ['file' => 'wgevents_footer.tpl', 'description' => ''],
     ['file' => 'wgevents_gmaps_getcoords_modal.tpl', 'description' => ''],
@@ -491,21 +492,6 @@ $modversion['config'][] = [
                         \_MI_WGEVENTS_CAL_SATURDAY => 6
                      ],
 ];
-// show day name for events
-$modversion['config'][] = [
-    'name'        => 'event_dayname',
-    'title'       => '\_MI_WGEVENTS_EVENT_DAYNAMES',
-    'description' => '\_MI_WGEVENTS_EVENT_DAYNAMES_DESC',
-    'formtype'    => 'select',
-    'valuetype'   => 'int',
-    'default'     => 0,
-    'options'     => [\_MI_WGEVENTS_EVENT_DAYNAMES_NONE => Constants::DAYNAME_NONE,
-                        \_MI_WGEVENTS_EVENT_DAYNAMES_SHORT => Constants::DAYNAME_SHORT,
-                        \_MI_WGEVENTS_EVENT_DAYNAMES_SHORTDOT => Constants::DAYNAME_SHORTDOT,
-                        \_MI_WGEVENTS_EVENT_DAYNAMES_SHORTCOMMA => Constants::DAYNAME_SHORTCOMMA,
-                        \_MI_WGEVENTS_EVENT_DAYNAMES_LONG => Constants::DAYNAME_LONG
-    ],
-];
 // Show calendar on index page
 /* not used currently
 $modversion['config'][] = [
@@ -516,6 +502,44 @@ $modversion['config'][] = [
     'valuetype'   => 'int',
     'default'     => 0,
 ];*/
+// ------------------- Group header: Event styles ------------------- //
+$modversion['config'][] = [
+    'name'        => 'group_eventstyles',
+    'title'       => '\_MI_WGEVENTS_GROUP_EVENTSTYLES',
+    'description' => '',
+    'formtype'    => 'line_break',
+    'valuetype'   => 'textbox',
+    'default'     => 'even',
+    'category'    => 'group_header',
+];
+// show progress bar for event registrations
+$modversion['config'][] = [
+    'name'        => 'event_regprocessbar',
+    'title'       => '\_MI_WGEVENTS_EVENT_REGPROCESSBAR',
+    'description' => '\_MI_WGEVENTS_EVENT_REGPROCESSBAR_DESC',
+    'formtype'    => 'select',
+    'valuetype'   => 'int',
+    'default'     => 1,
+    'options'     => [\_MI_WGEVENTS_EVENT_REGPROCESSBAR_NONE => Constants::REGPROCESSBAR_NONE,
+                        \_MI_WGEVENTS_EVENT_REGPROCESSBAR_PI => Constants::REGPROCESSBAR_PI,
+                        \_MI_WGEVENTS_EVENT_REGPROCESSBAR_TB => Constants::REGPROCESSBAR_TB
+    ],
+];
+// show day name for events
+$modversion['config'][] = [
+    'name'        => 'event_dayname',
+    'title'       => '\_MI_WGEVENTS_EVENT_DAYNAMES',
+    'description' => '\_MI_WGEVENTS_EVENT_DAYNAMES_DESC',
+    'formtype'    => 'select',
+    'valuetype'   => 'int',
+    'default'     => 0,
+    'options'     => [\_MI_WGEVENTS_EVENT_DAYNAMES_NONE => Constants::DAYNAME_NONE,
+        \_MI_WGEVENTS_EVENT_DAYNAMES_SHORT => Constants::DAYNAME_SHORT,
+        \_MI_WGEVENTS_EVENT_DAYNAMES_SHORTDOT => Constants::DAYNAME_SHORTDOT,
+        \_MI_WGEVENTS_EVENT_DAYNAMES_SHORTCOMMA => Constants::DAYNAME_SHORTCOMMA,
+        \_MI_WGEVENTS_EVENT_DAYNAMES_LONG => Constants::DAYNAME_LONG
+    ],
+];
 // ------------------- Group header: Upload ------------------- //
 $modversion['config'][] = [
     'name'        => 'group_upload',

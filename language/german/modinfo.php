@@ -136,6 +136,8 @@ require_once __DIR__ . '/common.php';
 \define('_MI_WGEVENTS_SEP_COMMA_DESC', 'Bitte das Zeichen für Komma definieren');
 \define('_MI_WGEVENTS_SEP_THSD', 'Tausender-Trennzeichen');
 \define('_MI_WGEVENTS_SEP_THSD_DESC', 'Bitte das Trennzeichen für Tausender definieren');
+//Event styles
+\define('_MI_WGEVENTS_GROUP_EVENTSTYLES', 'Event-Styles');
 \define('_MI_WGEVENTS_EVENT_DAYNAMES', 'Tagesnamen anzeigen');
 \define('_MI_WGEVENTS_EVENT_DAYNAMES_DESC', 'Bitte definieren Sie, ob bei einem Datum der Tagesname angezeigt werden soll');
 \define('_MI_WGEVENTS_EVENT_DAYNAMES_NONE', 'Nicht anzeigen');
@@ -143,6 +145,11 @@ require_once __DIR__ . '/common.php';
 \define('_MI_WGEVENTS_EVENT_DAYNAMES_SHORTDOT', 'Kurznamen mit Punkt anzeigen (z.B. "So." "Mo." usw.)');
 \define('_MI_WGEVENTS_EVENT_DAYNAMES_SHORTCOMMA', 'Kurznamen mit Komma anzeigen (z.B. "So," "Mo," usw.)');
 \define('_MI_WGEVENTS_EVENT_DAYNAMES_LONG', 'Langnamen anzeigen (z.B. "Sonntag" "Montag" usw.)');
+\define('_MI_WGEVENTS_EVENT_REGPROCESSBAR', 'Auslastungsanzeige');
+\define('_MI_WGEVENTS_EVENT_REGPROCESSBAR_DESC', 'Bitte definieren Sie, ob für die Veranstaltungsregistrierungen ein Auslastungsübersicht angezeigt werden soll');
+\define('_MI_WGEVENTS_EVENT_REGPROCESSBAR_NONE', 'Nicht anzeigen');
+\define('_MI_WGEVENTS_EVENT_REGPROCESSBAR_PI', 'Auslastungsanzeige mit Prozentwert inline');
+\define('_MI_WGEVENTS_EVENT_REGPROCESSBAR_TB', 'Auslastungsanzeige mit Text unterhalb der Übersicht');
 //Features
 \define('_MI_WGEVENTS_GROUP_FEATURES', 'Features');
 \define('_MI_WGEVENTS_USE_REGISTER', 'Anmeldung verwenden');

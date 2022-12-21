@@ -21,6 +21,7 @@
  - implementation of image editor (goffy)
  - fixed problems image editor for events of other users (goffy)
  - added option to show day names (goffy)
+ - added option for progress bars (goffy)
 
 ==============================================================
 1.0.4 RC1 [2022/08/29]

@@ -80,6 +80,8 @@ if ($useGMaps) {
     $gmapsEnableEvent  = ('top' == $gmapsPositionList || 'bottom' == $gmapsPositionList);
     $gmapsHeight       = $helper->getConfig('gmaps_height');
 }
+$eventRegprocessbar = (string)$helper->getConfig('event_regprocessbar');
+$GLOBALS['xoopsTpl']->assign('event_regprocessbar', $eventRegprocessbar);
 
 //misc
 $GLOBALS['xoopsTpl']->assign('categoryCurrent', $catId);
