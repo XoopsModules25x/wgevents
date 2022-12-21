@@ -27,8 +27,8 @@
                 </div>
             <{else}>
                 <div class="col-xs-12 col-sm-4 wge-panel-details2 right">
-                    <p><{$smarty.const._MA_WGEVENTS_EVENT_DATEFROM}>: <{$event.datefrom_text}><br>
-                        <{$smarty.const._MA_WGEVENTS_EVENT_DATETO}>: <{$event.dateto_text}></p>
+                    <p><{$smarty.const._MA_WGEVENTS_EVENT_DATEFROM}>: <{$event.datefrom_dayname}><{$event.datefrom_text}><br>
+                        <{$smarty.const._MA_WGEVENTS_EVENT_DATETO}>: <{$event.dateto_dayname}><{$event.dateto_text}></p>
                 </div>
             <{/if}>
         </div>

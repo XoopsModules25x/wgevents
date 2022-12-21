@@ -136,6 +136,13 @@ require_once __DIR__ . '/common.php';
 \define('_MI_WGEVENTS_SEP_COMMA_DESC', 'Bitte das Zeichen für Komma definieren');
 \define('_MI_WGEVENTS_SEP_THSD', 'Tausender-Trennzeichen');
 \define('_MI_WGEVENTS_SEP_THSD_DESC', 'Bitte das Trennzeichen für Tausender definieren');
+\define('_MI_WGEVENTS_EVENT_DAYNAMES', 'Tagesnamen anzeigen');
+\define('_MI_WGEVENTS_EVENT_DAYNAMES_DESC', 'Bitte definieren Sie, ob bei einem Datum der Tagesname angezeigt werden soll');
+\define('_MI_WGEVENTS_EVENT_DAYNAMES_NONE', 'Nicht anzeigen');
+\define('_MI_WGEVENTS_EVENT_DAYNAMES_SHORT', 'Kurznamen anzeigen (z.B. "So" "Mo" usw.)');
+\define('_MI_WGEVENTS_EVENT_DAYNAMES_SHORTDOT', 'Kurznamen mit Punkt anzeigen (z.B. "So." "Mo." usw.)');
+\define('_MI_WGEVENTS_EVENT_DAYNAMES_SHORTCOMMA', 'Kurznamen mit Komma anzeigen (z.B. "So," "Mo," usw.)');
+\define('_MI_WGEVENTS_EVENT_DAYNAMES_LONG', 'Langnamen anzeigen (z.B. "Sonntag" "Montag" usw.)');
 //Features
 \define('_MI_WGEVENTS_GROUP_FEATURES', 'Features');
 \define('_MI_WGEVENTS_USE_REGISTER', 'Anmeldung verwenden');

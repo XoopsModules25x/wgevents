@@ -20,6 +20,7 @@
  - implementation image for cats (goffy)
  - implementation of image editor (goffy)
  - fixed problems image editor for events of other users (goffy)
+ - added option to show day names (goffy)
 
 ==============================================================
 1.0.4 RC1 [2022/08/29]

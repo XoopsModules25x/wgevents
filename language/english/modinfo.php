@@ -136,6 +136,13 @@ require_once __DIR__ . '/common.php';
 \define('_MI_WGEVENTS_SEP_COMMA_DESC', 'Please define comma separator');
 \define('_MI_WGEVENTS_SEP_THSD', 'Thousands separator');
 \define('_MI_WGEVENTS_SEP_THSD_DESC', 'Please define thousands separator');
+\define('_MI_WGEVENTS_EVENT_DAYNAMES', 'Show dayname');
+\define('_MI_WGEVENTS_EVENT_DAYNAMES_DESC', 'Please define whether dayname should be shown with dates');
+\define('_MI_WGEVENTS_EVENT_DAYNAMES_NONE', 'Do not show');
+\define('_MI_WGEVENTS_EVENT_DAYNAMES_SHORT', 'Show short name (e.g. "Sun" "Mon" and so on)');
+\define('_MI_WGEVENTS_EVENT_DAYNAMES_SHORTDOT', 'Show short name with dot (e.g. "Sun." "Mon." and so on)');
+\define('_MI_WGEVENTS_EVENT_DAYNAMES_SHORTCOMMA', 'Show short name with comma (z.B. "Sun," "Mon," usw.)');
+\define('_MI_WGEVENTS_EVENT_DAYNAMES_LONG', 'Show long name (e.g. "Sunday" "Monday" and so on)');
 //Features
 \define('_MI_WGEVENTS_GROUP_FEATURES', 'Features');
 \define('_MI_WGEVENTS_USE_REGISTER', 'Use registration system');

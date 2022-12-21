@@ -118,4 +118,11 @@ interface Constants
     public const CATEGORY_TYPE_MAIN = 1;
     public const CATEGORY_TYPE_SUB  = 2;
 
+    // Constants for day names types
+    public const DAYNAME_NONE       = 0;
+    public const DAYNAME_SHORT      = 1;
+    public const DAYNAME_SHORTDOT   = 2;
+    public const DAYNAME_SHORTCOMMA = 3;
+    public const DAYNAME_LONG       = 4;
+
 }

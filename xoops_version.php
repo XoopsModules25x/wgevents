@@ -19,7 +19,10 @@
  * @author       Goffy - Wedega - Email:webmaster@wedega.com - Website:https://xoops.wedega.com
  */
 
-use  XoopsModules\Wgevents\Helper;
+use  XoopsModules\Wgevents\{
+    Helper,
+    Constants
+};
 
 require_once \dirname(__DIR__) . '/wgevents/preloads/autoloader.php';
 
@@ -488,6 +491,21 @@ $modversion['config'][] = [
                         \_MI_WGEVENTS_CAL_SATURDAY => 6
                      ],
 ];
+// show day name for events
+$modversion['config'][] = [
+    'name'        => 'event_dayname',
+    'title'       => '\_MI_WGEVENTS_EVENT_DAYNAMES',
+    'description' => '\_MI_WGEVENTS_EVENT_DAYNAMES_DESC',
+    'formtype'    => 'select',
+    'valuetype'   => 'int',
+    'default'     => 0,
+    'options'     => [\_MI_WGEVENTS_EVENT_DAYNAMES_NONE => Constants::DAYNAME_NONE,
+                        \_MI_WGEVENTS_EVENT_DAYNAMES_SHORT => Constants::DAYNAME_SHORT,
+                        \_MI_WGEVENTS_EVENT_DAYNAMES_SHORTDOT => Constants::DAYNAME_SHORTDOT,
+                        \_MI_WGEVENTS_EVENT_DAYNAMES_SHORTCOMMA => Constants::DAYNAME_SHORTCOMMA,
+                        \_MI_WGEVENTS_EVENT_DAYNAMES_LONG => Constants::DAYNAME_LONG
+    ],
+];
 // Show calendar on index page
 /* not used currently
 $modversion['config'][] = [
@@ -745,7 +763,7 @@ $modversion['config'][] = [
     'valuetype'   => 'text',
     'default'     => \_MI_WGEVENTS_DESC,
 ];
-// index display type
+// index display cats
 $modversion['config'][] = [
     'name'        => 'index_displaycats',
     'title'       => '\_MI_WGEVENTS_INDEX_DISPLAYCATS',
@@ -755,7 +773,7 @@ $modversion['config'][] = [
     'default'     => 'list',
     'options'     => [\_MI_WGEVENTS_INDEX_DISPLAY_NONE => 'none', \_MI_WGEVENTS_INDEX_DISPLAY_LIST => 'list', \_MI_WGEVENTS_INDEX_DISPLAY_BUTTON => 'button', \_MI_WGEVENTS_INDEX_DISPLAY_FORM => 'form'],
 ];
-// index display type
+// index display events
 $modversion['config'][] = [
     'name'        => 'index_displayevents',
     'title'       => '\_MI_WGEVENTS_INDEX_DISPLAYEVENTS',
@@ -765,7 +783,7 @@ $modversion['config'][] = [
     'default'     => 'list',
     'options'     => [\_MI_WGEVENTS_INDEX_DISPLAY_NONE => 'none', \_MI_WGEVENTS_INDEX_DISPLAY_LIST => 'list', \_MI_WGEVENTS_INDEX_DISPLAY_BCARDS => 'bcard'],
 ];
-// ------------------- Group header: Index page ------------------- //
+// ------------------- Group header: Event page ------------------- //
 $modversion['config'][] = [
     'name'        => 'group_event',
     'title'       => '\_MI_WGEVENTS_GROUP_EVENT',
