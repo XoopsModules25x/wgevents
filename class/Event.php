@@ -678,8 +678,8 @@ class Event extends \XoopsObject
     }
 
     /** function to get day name
-     * @param $eventDayname // module preference 'event_dayname'
-     * @param $day          // weekday of date
+     * @param $eventDayname (= module preference 'event_dayname')
+     * @param $day          (= weekday of date)
      * @return string
      */
     private function getDayname ($eventDayname, $day) {
@@ -687,7 +687,6 @@ class Event extends \XoopsObject
             case 0:
             default:
                 return '';
-
             case Constants::DAYNAME_SHORT:
                 $daynames_short = [\_MA_WGEVENTS_CAL_MIN_SUNDAY, \_MA_WGEVENTS_CAL_MIN_MONDAY, \_MA_WGEVENTS_CAL_MIN_TUESDAY, \_MA_WGEVENTS_CAL_MIN_WEDNESDAY, \_MA_WGEVENTS_CAL_MIN_THURSDAY, \_MA_WGEVENTS_CAL_MIN_FRIDAY, \_MA_WGEVENTS_CAL_MIN_SATURDAY];
                 return $daynames_short[$day] . ' ';
