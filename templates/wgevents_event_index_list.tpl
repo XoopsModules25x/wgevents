@@ -28,22 +28,16 @@
                 <{if $event.allday_single|default:false}>
                     <p><{$event.datefrom_text}></p>
                 <{else}>
-                    <p><{$smarty.const._MA_WGEVENTS_EVENT_DATEFROM}>: <{$event.datefrom_text}><br>
-                        <{$smarty.const._MA_WGEVENTS_EVENT_DATETO}>: <{$event.dateto_text}></p>
+                    <p><{$smarty.const._MA_WGEVENTS_EVENT_DATEFROM}>: <{$event.datefrom_dayname}><{$event.datefrom_text}><br>
+                        <{$smarty.const._MA_WGEVENTS_EVENT_DATETO}>: <{$event.dateto_dayname}><{$event.dateto_text}></p>
                 <{/if}>
             </div>
         </div>
     </div>
     <div class='panel-foot row right'>
         <div class="col-sm-5">
-            <{if $event.regmax|default:false && $event.nb_registrations|default:0 > 0}>
-                <div class="progress wge-progress" <{if $event.regcurrent_tip|default:false}>title="<{$event.regcurrent_text}>"<{/if}>>
-                    <div <{if $event.regcurrent_tip|default:false}>title="<{$event.regcurrent_text}>"<{/if}> class="progress-bar progress-bar-<{$event.regcurrentstate|default:''}> " role="progressbar" aria-valuenow="<{$event.regpercentage|default:100}>"
-                         aria-valuemin="0" aria-valuemax="100" style="width:<{$event.regpercentage}>%">
-                        <span class="wge-progress-text"><{$event.regcurrent}></span>
-                    </div>
-                </div>
-                <{if $event.regpercentage|default:0 >= 100 && $event.register_listwait|default:0 == 1}><p class="wge-reg-list-full"><{$smarty.const._MA_WGEVENTS_REGISTRATIONS_FULL_LISTWAIT}></p><{/if}>
+            <{if $event_regprocessbar|default:0 > 0}>
+                <{include file="db:wgevents_event_regprogressbar.tpl" event=$event}>
             <{/if}>
         </div>
         <div class="col-sm-7 right">

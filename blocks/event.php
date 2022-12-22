@@ -43,6 +43,8 @@ function b_wgevents_event_show($options)
     $registrationHandler = $helper->getHandler('Registration');
 
     $GLOBALS['xoopsTpl']->assign('user_maxchar', $helper->getConfig('user_maxchar'));
+    $eventRegprocessbar = (string)$helper->getConfig('event_regprocessbar');
+    $GLOBALS['xoopsTpl']->assign('event_regprocessbar', $eventRegprocessbar);
     $uidCurrent  = 0;
     if (\is_object($GLOBALS['xoopsUser'])) {
         $uidCurrent  = $GLOBALS['xoopsUser']->uid();

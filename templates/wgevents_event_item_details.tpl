@@ -28,16 +28,16 @@
         <{if $event.allday_single|default:false}>
             <div class="row">
                 <div class="col-xs-12 col-sm-3 col-lg-2"><{$smarty.const._MA_WGEVENTS_EVENT_DATE}>: </div>
-                <div class="col-xs-12 col-sm-9 col-lg-10"><{$event.datefrom_text}></div>
+                <div class="col-xs-12 col-sm-9 col-lg-10"><{$event.datefrom_dayname}><{$event.datefrom_text}></div>
             </div>
         <{else}>
             <div class="row">
                 <div class="col-xs-12 col-sm-3 col-lg-2"><{$smarty.const._MA_WGEVENTS_EVENT_DATEFROM}>: </div>
-                <div class="col-xs-12 col-sm-9 col-lg-10"><{$event.datefrom_text}></div>
+                <div class="col-xs-12 col-sm-9 col-lg-10"><{$event.datefrom_dayname}><{$event.datefrom_text}></div>
             </div>
             <div class="row">
                 <div class="col-xs-12 col-sm-3 col-lg-2"><{$smarty.const._MA_WGEVENTS_EVENT_DATETO}>: </div>
-                <div class="col-xs-12 col-sm-9 col-lg-10"><{$event.dateto_text}></div>
+                <div class="col-xs-12 col-sm-9 col-lg-10"><{$event.dateto_dayname}><{$event.dateto_text}></div>
             </div>
         <{/if}>
         <{if $event.contact|default:false}>
@@ -136,11 +136,11 @@
             </div>
             <div class="row">
                 <div class="col-xs-12 col-sm-3 col-lg-2"><{$smarty.const._MA_WGEVENTS_EVENT_REGISTER_FROM}>: </div>
-                <div class="col-xs-12 col-sm-9 col-lg-10"><{$event.register_from_text}></div>
+                <div class="col-xs-12 col-sm-9 col-lg-10"><{$event.register_from_dayname}><{$event.register_from_text}></div>
             </div>
             <div class="row">
                 <div class="col-xs-12 col-sm-3 col-lg-2"><{$smarty.const._MA_WGEVENTS_EVENT_REGISTER_TO}>: </div>
-                <div class="col-xs-12 col-sm-9 col-lg-10"><{$event.register_to_text}></div>
+                <div class="col-xs-12 col-sm-9 col-lg-10"><{$event.register_to_dayname}><{$event.register_to_text}></div>
             </div>
             <div class="row">
                 <div class="col-xs-12 col-sm-3 col-lg-2"><{$smarty.const._MA_WGEVENTS_EVENT_REGISTER_MAX}>: </div>

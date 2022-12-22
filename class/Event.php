@@ -556,6 +556,7 @@ class Event extends \XoopsObject
         $ret = $this->getValues($keys, $format, $maxDepth);
         $adminMaxchar    = $helper->getConfig('admin_maxchar');
         $userMaxchar     = $helper->getConfig('user_maxchar');
+        $eventDayname     = $helper->getConfig('event_dayname');
         $categoryHandler = $helper->getHandler('Category');
         $catId       = (int)$this->getVar('catid');
         $categoryObj = $categoryHandler->get($catId);
@@ -609,6 +610,8 @@ class Event extends \XoopsObject
             $ret['datefrom_text']    = \formatTimestamp($this->getVar('datefrom'), 'm');
             $ret['dateto_text']      = \formatTimestamp($this->getVar('dateto'), 'm');
         }
+        $ret['datefrom_dayname'] = $this->getDayname($eventDayname, \formatTimestamp($this->getVar('datefrom'), 'w'));
+        $ret['dateto_dayname']   = $this->getDayname($eventDayname, \formatTimestamp($this->getVar('dateto'), 'w'));
         $evLocation              = $this->getVar('location', 'e');
         $ret['location_text']    = $evLocation;
         if ($evLocation) {
@@ -626,16 +629,20 @@ class Event extends \XoopsObject
         foreach($evFee as $fee) {
             $evFeeText .= Utility::FloatToString((float)$fee[0]) . ' ' . $fee[1] . '<br>';
         }
-        $ret['fee_text']           = $evFeeText;
-        $ret['paymentinfo_text']   = $this->getVar('paymentinfo', 'e');
-        $ret['register_use_text']  = (int)$this->getVar('register_use') > 0 ? \_YES : \_NO;
-        $ret['register_from_text'] = '';
+        $ret['fee_text']              = $evFeeText;
+        $ret['paymentinfo_text']      = $this->getVar('paymentinfo', 'e');
+        $ret['register_use_text']     = (int)$this->getVar('register_use') > 0 ? \_YES : \_NO;
+        $ret['register_from_text']    = '';
+        $ret['register_from_dayname'] = '';
         if ($this->getVar('register_from') > 0) {
             $ret['register_from_text'] = \formatTimestamp($this->getVar('register_from'), 'm');
+            $ret['register_from_dayname'] = $this->getDayname($eventDayname, \formatTimestamp($this->getVar('register_from'), 'w'));
         }
-        $ret['register_to_text'] = '';
+        $ret['register_to_text']    = '';
+        $ret['register_to_dayname'] = '';
         if ($this->getVar('register_to') > 0) {
             $ret['register_to_text']       = \formatTimestamp($this->getVar('register_to'), 'm');
+            $ret['register_to_dayname']   = $this->getDayname($eventDayname, \formatTimestamp($this->getVar('register_to'), 'w'));
         }
         $regMax = $this->getVar('register_max');
         $ret['register_max_text']        = $regMax > 0 ? $this->getVar('register_max') : \_MA_WGEVENTS_EVENT_REGISTER_MAX_UNLIMITED;
@@ -668,6 +675,31 @@ class Event extends \XoopsObject
         $ret['datecreated_text'] = \formatTimestamp($this->getVar('datecreated'), 's');
         $ret['submitter_text']   = \XoopsUser::getUnameFromId($this->getVar('submitter'));
         return $ret;
+    }
+
+    /** function to get day name
+     * @param $eventDayname (= module preference 'event_dayname')
+     * @param $day          (= weekday of date)
+     * @return string
+     */
+    private function getDayname ($eventDayname, $day) {
+        switch ($eventDayname) {
+            case 0:
+            default:
+                return '';
+            case Constants::DAYNAME_SHORT:
+                $daynames_short = [\_MA_WGEVENTS_CAL_MIN_SUNDAY, \_MA_WGEVENTS_CAL_MIN_MONDAY, \_MA_WGEVENTS_CAL_MIN_TUESDAY, \_MA_WGEVENTS_CAL_MIN_WEDNESDAY, \_MA_WGEVENTS_CAL_MIN_THURSDAY, \_MA_WGEVENTS_CAL_MIN_FRIDAY, \_MA_WGEVENTS_CAL_MIN_SATURDAY];
+                return $daynames_short[$day] . ' ';
+            case Constants::DAYNAME_SHORTDOT:
+                $daynames_short = [\_MA_WGEVENTS_CAL_MIN_SUNDAY, \_MA_WGEVENTS_CAL_MIN_MONDAY, \_MA_WGEVENTS_CAL_MIN_TUESDAY, \_MA_WGEVENTS_CAL_MIN_WEDNESDAY, \_MA_WGEVENTS_CAL_MIN_THURSDAY, \_MA_WGEVENTS_CAL_MIN_FRIDAY, \_MA_WGEVENTS_CAL_MIN_SATURDAY];
+                return $daynames_short[$day] . '. ';
+            case Constants::DAYNAME_SHORTCOMMA:
+                $daynames_short = [\_MA_WGEVENTS_CAL_MIN_SUNDAY, \_MA_WGEVENTS_CAL_MIN_MONDAY, \_MA_WGEVENTS_CAL_MIN_TUESDAY, \_MA_WGEVENTS_CAL_MIN_WEDNESDAY, \_MA_WGEVENTS_CAL_MIN_THURSDAY, \_MA_WGEVENTS_CAL_MIN_FRIDAY, \_MA_WGEVENTS_CAL_MIN_SATURDAY];
+                return $daynames_short[$day] . ', ';
+            case Constants::DAYNAME_LONG:
+                $daynames_long = [\_MA_WGEVENTS_CAL_SUNDAY, \_MA_WGEVENTS_CAL_MONDAY, \_MA_WGEVENTS_CAL_TUESDAY, \_MA_WGEVENTS_CAL_WEDNESDAY, \_MA_WGEVENTS_CAL_THURSDAY, \_MA_WGEVENTS_CAL_FRIDAY, \_MA_WGEVENTS_CAL_SATURDAY];
+                return $daynames_long[$day] . ' ';
+        }
     }
 
     /**

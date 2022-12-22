@@ -45,6 +45,9 @@ function b_wgevents_event_spotlight_show($options)
     \array_shift($options);
     \array_shift($options);
 
+    $eventRegprocessbar = (string)$helper->getConfig('event_regprocessbar');
+    $GLOBALS['xoopsTpl']->assign('event_regprocessbar', $eventRegprocessbar);
+
     // Criteria for status field
     $crEvent->add(new \Criteria('status', Constants::STATUS_SUBMITTED, '>'));
 

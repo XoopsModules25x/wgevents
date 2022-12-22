@@ -13,22 +13,31 @@
                                 <br><span class="glyphicon glyphicon-map-marker" title="<{$smarty.const._MA_WGEVENTS_EVENT_LOCATION}>"></span><{$event.location}>
                             <{/if}>
                             <{if $event.catname}>
-                                <br><span class="glyphicon glyphicon-tag" title="<{$smarty.const._MA_WGEVENTS_EVENT_CATS}>"></span><{$event.catname}>
+                                <br><span class="glyphicon glyphicon-tag" title="<{$smarty.const._MA_WGEVENTS_EVENT_CATID}>"></span><{$event.catname}>
                             <{/if}>
                             <{if $event.contact}>
                                 <br><span class="glyphicon glyphicon-user" title="<{$smarty.const._MA_WGEVENTS_EVENT_CONTACT}>"></span><{$event.contact}>
                             <{/if}>
                         </div>
                     </div>
-                    <{if $event.desc_short_user|default:''}>
+                    <{if $event.desc_short_user|default:'' || $event.logoExist|default:false}>
                         <div class="wge-block-bcard-itemText col-xs-12">
-                            <{$event.desc_short_user}>
+                            <{if $event.logoExist|default:false}>
+                                <div class="block-bcard-img-div col-xs-12 col-sm-4">
+                                    <img class="img-responsive img-fluid" src='<{$wgevents_upload_eventlogos_url|default:false}>/<{$event.submitter}>/<{$event.logo}>' alt='<{$event.name_clean|default:''}>' title='<{$event.name_clean|default:''}>' >
+                                </div>
+                                <div class="wge-block-bcard-desc-div col-xs-12 col-sm-8">
+                            <{else}>
+                                <div class="col-xs-12">
+                            <{/if}>
+                                <{$event.desc_short_user}>
+                            </div>
                         </div>
                     <{/if}>
                     <div class="wge-block-bcard-itemFooter col-xs-12">
-                        <a class='btn btn-primary' href='<{$wgevents_url|default:false}>/event.php?op=show&amp;id=<{$event.id}>' title='<{$event.summary}>'><{$smarty.const._MA_WGEVENTS_EVENT_DETAILS}></a>
+                        <a class='btn btn-success' href='<{$wgevents_url|default:false}>/event.php?op=show&amp;id=<{$event.id}>' title='<{$event.summary}>'><{$smarty.const._MA_WGEVENTS_EVENT_DETAILS}></a>
                         <{if $block.permEdit|default:false}>
-                            <a class='btn btn-primary' href='<{$wgevents_url|default:false}>/event.php?op=edit&amp;id=<{$event.id}>' title='<{$event.summary}>'><{$smarty.const._MA_WGEVENTS_EVENT_EDIT}></a>
+                            <a class='btn btn-success' href='<{$wgevents_url|default:false}>/event.php?op=edit&amp;id=<{$event.id}>' title='<{$event.summary}>'><{$smarty.const._MA_WGEVENTS_EVENT_EDIT}></a>
                         <{/if}>
                     </div>
                 </div>
@@ -40,9 +49,9 @@
     </div>
     <div class="clear"></div>
     <div class="wge-block-bcard-footer center">
-        <a class="btn btn-primary" href="<{$wgevents_url|default:false}>/event.php?op=list"><{$smarty.const._MB_WGEVENTS_EVENT_SHOWMORE}></a>
+        <a class="btn btn-success" href="<{$wgevents_url|default:false}>/event.php?op=list"><{$smarty.const._MB_WGEVENTS_EVENT_SHOWMORE}></a>
         <{if $wgevents_permAdd|default:false}>
-            <a class='btn btn-primary' href='<{$wgevents_url|default:false}>/event.php?op=new' title='<{$event.summary}>'><{$smarty.const._MA_WGEVENTS_EVENT_ADD}></a>
+            <a class='btn btn-success' href='<{$wgevents_url|default:false}>/event.php?op=new' title='<{$event.summary}>'><{$smarty.const._MA_WGEVENTS_EVENT_ADD}></a>
         <{/if}>
     </div>
 <{/if}>

@@ -84,6 +84,8 @@ if ($useGMaps) {
 }
 $eventDisplayCats = (string)$helper->getConfig('event_displaycats');
 $GLOBALS['xoopsTpl']->assign('event_displaycats', $eventDisplayCats);
+$eventRegprocessbar = (string)$helper->getConfig('event_regprocessbar');
+$GLOBALS['xoopsTpl']->assign('event_regprocessbar', $eventRegprocessbar);
 
 //misc
 $uidCurrent  = 0;

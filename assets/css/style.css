@@ -104,6 +104,10 @@ ul.menu > li + li:before {
     border:1px solid #eeeeee;
 }
 
+/*wge-block-footer*/
+.wge-block-footer {
+    margin-bottom: 20px;
+}
 /*block bcard*/
 .wge-block-bcard-group {
     padding:10px;
@@ -132,7 +136,7 @@ ul.menu > li + li:before {
     border-bottom: 1px solid #337ab7;
 }
 .wge-block-bcard-itemTitle {
-    padding:10px 10px 0 10px;
+    padding:20px 10px 10px 10px;
 }
 .wge-block-bcard-itemInfo {
     padding:5px 0;
@@ -148,10 +152,18 @@ ul.menu > li + li:before {
     padding:0;
     border: 1px solid #cccccc;
 }
+.wge-block-bcard-desc-div {
+    padding-left:10px !important;
+}
 .wge-block-bcard-itemFooter {
     width:100%;
     padding:10px;
     margin:10px 0;
     height:50px;
     text-align:center;
+}
+
+/*js minicalendar of form events*/
+div.calendar {
+    z-index:1000 !important;
 }

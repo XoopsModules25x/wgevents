@@ -19,7 +19,10 @@
  * @author       Goffy - Wedega - Email:webmaster@wedega.com - Website:https://xoops.wedega.com
  */
 
-use  XoopsModules\Wgevents\Helper;
+use  XoopsModules\Wgevents\{
+    Helper,
+    Constants
+};
 
 require_once \dirname(__DIR__) . '/wgevents/preloads/autoloader.php';
 
@@ -113,6 +116,7 @@ $modversion['templates'] = [
     ['file' => 'wgevents_event_index_list.tpl', 'description' => ''],
     ['file' => 'wgevents_event_item_details.tpl', 'description' => ''],
     ['file' => 'wgevents_event_item_list.tpl', 'description' => ''],
+    ['file' => 'wgevents_event_regprogressbar.tpl', 'description' => ''],
     ['file' => 'wgevents_export.tpl', 'description' => ''],
     ['file' => 'wgevents_footer.tpl', 'description' => ''],
     ['file' => 'wgevents_gmaps_getcoords_modal.tpl', 'description' => ''],
@@ -498,6 +502,44 @@ $modversion['config'][] = [
     'valuetype'   => 'int',
     'default'     => 0,
 ];*/
+// ------------------- Group header: Event styles ------------------- //
+$modversion['config'][] = [
+    'name'        => 'group_eventstyles',
+    'title'       => '\_MI_WGEVENTS_GROUP_EVENTSTYLES',
+    'description' => '',
+    'formtype'    => 'line_break',
+    'valuetype'   => 'textbox',
+    'default'     => 'even',
+    'category'    => 'group_header',
+];
+// show progress bar for event registrations
+$modversion['config'][] = [
+    'name'        => 'event_regprocessbar',
+    'title'       => '\_MI_WGEVENTS_EVENT_REGPROCESSBAR',
+    'description' => '\_MI_WGEVENTS_EVENT_REGPROCESSBAR_DESC',
+    'formtype'    => 'select',
+    'valuetype'   => 'int',
+    'default'     => 1,
+    'options'     => [\_MI_WGEVENTS_EVENT_REGPROCESSBAR_NONE => Constants::REGPROCESSBAR_NONE,
+                        \_MI_WGEVENTS_EVENT_REGPROCESSBAR_PI => Constants::REGPROCESSBAR_PI,
+                        \_MI_WGEVENTS_EVENT_REGPROCESSBAR_TB => Constants::REGPROCESSBAR_TB
+    ],
+];
+// show day name for events
+$modversion['config'][] = [
+    'name'        => 'event_dayname',
+    'title'       => '\_MI_WGEVENTS_EVENT_DAYNAMES',
+    'description' => '\_MI_WGEVENTS_EVENT_DAYNAMES_DESC',
+    'formtype'    => 'select',
+    'valuetype'   => 'int',
+    'default'     => 0,
+    'options'     => [\_MI_WGEVENTS_EVENT_DAYNAMES_NONE => Constants::DAYNAME_NONE,
+        \_MI_WGEVENTS_EVENT_DAYNAMES_SHORT => Constants::DAYNAME_SHORT,
+        \_MI_WGEVENTS_EVENT_DAYNAMES_SHORTDOT => Constants::DAYNAME_SHORTDOT,
+        \_MI_WGEVENTS_EVENT_DAYNAMES_SHORTCOMMA => Constants::DAYNAME_SHORTCOMMA,
+        \_MI_WGEVENTS_EVENT_DAYNAMES_LONG => Constants::DAYNAME_LONG
+    ],
+];
 // ------------------- Group header: Upload ------------------- //
 $modversion['config'][] = [
     'name'        => 'group_upload',
@@ -745,7 +787,7 @@ $modversion['config'][] = [
     'valuetype'   => 'text',
     'default'     => \_MI_WGEVENTS_DESC,
 ];
-// index display type
+// index display cats
 $modversion['config'][] = [
     'name'        => 'index_displaycats',
     'title'       => '\_MI_WGEVENTS_INDEX_DISPLAYCATS',
@@ -755,7 +797,7 @@ $modversion['config'][] = [
     'default'     => 'list',
     'options'     => [\_MI_WGEVENTS_INDEX_DISPLAY_NONE => 'none', \_MI_WGEVENTS_INDEX_DISPLAY_LIST => 'list', \_MI_WGEVENTS_INDEX_DISPLAY_BUTTON => 'button', \_MI_WGEVENTS_INDEX_DISPLAY_FORM => 'form'],
 ];
-// index display type
+// index display events
 $modversion['config'][] = [
     'name'        => 'index_displayevents',
     'title'       => '\_MI_WGEVENTS_INDEX_DISPLAYEVENTS',
@@ -765,7 +807,7 @@ $modversion['config'][] = [
     'default'     => 'list',
     'options'     => [\_MI_WGEVENTS_INDEX_DISPLAY_NONE => 'none', \_MI_WGEVENTS_INDEX_DISPLAY_LIST => 'list', \_MI_WGEVENTS_INDEX_DISPLAY_BCARDS => 'bcard'],
 ];
-// ------------------- Group header: Index page ------------------- //
+// ------------------- Group header: Event page ------------------- //
 $modversion['config'][] = [
     'name'        => 'group_event',
     'title'       => '\_MI_WGEVENTS_GROUP_EVENT',

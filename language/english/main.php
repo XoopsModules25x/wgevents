@@ -332,13 +332,13 @@ Participation without agreement to this conditions is not possible.
 \define('_MA_WGEVENTS_CAL_GOTO', 'Switch month/year');
 \define('_MA_WGEVENTS_CAL_SHOW', 'Show');
 //days
-\define('_MA_WGEVENTS_CAL_MIN_SUNDAY', 'Su');
-\define('_MA_WGEVENTS_CAL_MIN_MONDAY', 'Mo');
-\define('_MA_WGEVENTS_CAL_MIN_TUESDAY', 'Tu');
-\define('_MA_WGEVENTS_CAL_MIN_WEDNESDAY', 'We');
-\define('_MA_WGEVENTS_CAL_MIN_THURSDAY', 'Th');
-\define('_MA_WGEVENTS_CAL_MIN_FRIDAY', 'Fr');
-\define('_MA_WGEVENTS_CAL_MIN_SATURDAY', 'Sa');
+\define('_MA_WGEVENTS_CAL_MIN_SUNDAY', 'Sun');
+\define('_MA_WGEVENTS_CAL_MIN_MONDAY', 'Mon');
+\define('_MA_WGEVENTS_CAL_MIN_TUESDAY', 'Tue');
+\define('_MA_WGEVENTS_CAL_MIN_WEDNESDAY', 'Wed');
+\define('_MA_WGEVENTS_CAL_MIN_THURSDAY', 'Thu');
+\define('_MA_WGEVENTS_CAL_MIN_FRIDAY', 'Fri');
+\define('_MA_WGEVENTS_CAL_MIN_SATURDAY', 'Sat');
 \define('_MA_WGEVENTS_CAL_SUNDAY', 'Sunday');
 \define('_MA_WGEVENTS_CAL_MONDAY', 'Monday');
 \define('_MA_WGEVENTS_CAL_TUESDAY', 'Tuesday');

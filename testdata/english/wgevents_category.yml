@@ -1,16 +1,34 @@
 -
     id: '1'
     pid: '0'
-    name: Default
+    name: Winter
     desc: ''
-    logo: defaultcat.61d49de6769d3.jpg
+    logo: Winter.63a4b1779f892.png
     color: '#000000'
-    bordercolor: '#804000'
-    bgcolor: '#ff8040'
+    bordercolor: '#006ad5'
+    bgcolor: '#d2ffff'
     othercss: 'margin:1px 0;padding:8px 5px 20px 5px;border-radius:5px;'
-    type: '0'
     status: '3'
     weight: '1'
-    identifier: FP2022
-    datecreated: '1667735422'
+    datecreated: '1667763319'
     submitter: '1'
+    identifier: FP2022
+    type: '0'
+    image: ''
+-
+    id: '2'
+    pid: '0'
+    name: Sommer
+    desc: ''
+    logo: Sommer.63a4b1b24956b.png
+    color: '#000000'
+    bordercolor: '#ff8000'
+    bgcolor: '#ffe2d5'
+    othercss: 'margin:1px 0;padding:8px 5px 20px 5px;border-radius:5px;'
+    status: '3'
+    weight: '2'
+    datecreated: '1671737778'
+    submitter: '1'
+    identifier: ''
+    type: '0'
+    image: blank.gif
