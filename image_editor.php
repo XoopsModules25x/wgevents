@@ -349,7 +349,7 @@ switch ($op) {
         $form = getFormUploadImage($imageOrigin, $imageId);
         $GLOBALS['xoopsTpl']->assign('form_uploadimage', $form->render());
 
-        $GLOBALS['xoopsTpl']->assign('btn_style', 'btn-default');
+        $GLOBALS['xoopsTpl']->assign('btn_style', 'btn-primary');
 
         break;
 }
