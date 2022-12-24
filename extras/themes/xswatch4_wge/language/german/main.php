@@ -11,6 +11,9 @@ define('THEME_MODULE3', 'Forum');
 define('THEME_MODULE4', 'Kontakt');
 define('THEME_MODULE5', 'Veranstaltungen');
 define('THEME_MODULE6', 'Rechtliche Hinweise');
+define('THEME_MODULE7', 'Hilfe');
+define('THEME_MODULE8', 'Bedienungsanleitung für Teilnehmer');
+define('THEME_MODULE9', 'Bedienungsanleitung für Veranstalter');
 define('THEME_SEARCH_TEXT', 'Suche');
 define('THEME_SEARCH_BUTTON', 'Los');
 

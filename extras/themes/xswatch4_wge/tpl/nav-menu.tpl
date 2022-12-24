@@ -17,11 +17,21 @@
                     <li class="nav-item">
                         <a class="nav-link wge-navbar-link" href="<{$xoops_url}>/modules/wgevents/event.php"><span class="fa fa-calendar wge-icon-1"></span><{$smarty.const.THEME_MODULE5}></a>
                     </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link wge-navbar-link dropdown-toggle" data-toggle="dropdown" href="#" id="xswatch-help-menu">
+                            <span class="fa fa-info-circle wge-icon-1"></span><{$smarty.const.THEME_MODULE7}>
+                            <span class="caret"></span>
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="xswatch-help-menu">
+                            <a class="dropdown-item"" href="<{$xoops_url}>/uploads/files/Bedienungsanleitung_Teilnehmer_Ferienprogramm_Hochburg_Ach.pdf" target="_blank"><span class="fa fa-info-circle wge-icon-1"></span><{$smarty.const.THEME_MODULE8}></a>
+                            <a class="dropdown-item"" href="<{$xoops_url}>/uploads/files/Bedienungsanleitung_Veranstalter_Ferienprogramm_Hochburg_Ach.pdf" target="_blank"><span class="fa fa-info-circle wge-icon-1"></span><{$smarty.const.THEME_MODULE9}></a>
+                        </div>
+                    </li>
                     <!-- end custom menus -->
                     <{xoInboxCount assign='unread_count'}>
                     <li class="nav-item dropdown">
-                        <a class="nav-link  wge-navbar-link dropdown-toggle" data-toggle="dropdown" href="#" id="xswatch-account-menu">
-                            <span class="fa fa-user wge-icon-1">
+                        <a class="nav-link wge-navbar-link dropdown-toggle" data-toggle="dropdown" href="#" id="xswatch-account-menu">
+                            <span class="fa fa-user wge-icon-1"></span>
                             <{if $xoops_isuser|default:false}>
                                 <{if $xoops_name|default:''}><{$xoops_name}><{else}><{$xoops_uname}><{/if}>
                             <{else}>
