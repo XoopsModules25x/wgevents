@@ -19,7 +19,7 @@
 <{/if}>
 
 <{if $eventsCount|default:0 > 0}>
-     <form class="" name="formListExport" id="formListExport" action="export.php" method="post" enctype="multipart/form-data">
+    <form class="" name="formListExport" id="formListExport" action="export.php" method="post" enctype="multipart/form-data">
         <table id="tableExportEvents" class="wge-export-table table table-<{$table_type|default:false}>">
             <thead>
             <tr class='head wge-export-thead-tr'>
@@ -63,8 +63,9 @@
             </tfoot>
         </table>
         <input type="hidden" name="op" id="op" value="<{$op|default:list}>">
-         <input type="hidden" name="datefrom_val" id="datefrom_val" value="<{$dateFrom|default:0}>">
-         <input type="hidden" name="dateto_val" id="dateto_val" value="<{$dateTo|default:0}>">
+        <input type="hidden" name="export_datefrom" id="export_datefrom" value="<{$dateFrom|default:0}>">
+        <input type="hidden" name="export_dateto" id="export_dateto" value="<{$dateTo|default:0}>">
+        <input type="hidden" name="export_limit" id="export_limit" value="<{$limit|default:0}>">
     </form>
     <div class="clear">&nbsp;</div>
 <{/if}>

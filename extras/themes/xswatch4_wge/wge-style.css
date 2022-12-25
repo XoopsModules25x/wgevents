@@ -77,113 +77,6 @@ a {
     font-weight:400;
 }
 
-.wge-icon-1 {
-    padding-right:5px;
-}
-.wge-panel {
-    padding:25px 0 50px 0;
-}
-.wge-eventheader h4 span {
-    padding:7px 20px 10px 20px;
-    color:var(--wgcolor1);
-    font-weight: 500;
-    background-color:var(--wgcolor2);
-    line-height:1.5;
-}
-.wge-eventheader {
-    text-align:left;
-    margin: 20px 0;
-    border-bottom:1px solid var(--wgcolor2);
-}
-.wge-row1 {
-    margin-top: 10px;
-    padding-top:5px;
-}
-.wge-row1 div {
-    padding-top:3px;
-    padding-bottom:3px;
-}
-.wge-row2 {
-    border-bottom:1px solid var(--wgcolor2);
-}
-.wge-row-gm div {
-    padding:0;
-}
-
-#formEvent h3,
-#formTextblock h3,
-#formRegistration h3,
-#formQuestion h3,
-#formContactAll h3,
-#formConfirm h3 {
-    padding:7px 20px;
-    color:var(--wgcolor1);
-    font-weight: 500;
-    background-color:var(--wgcolor2);
-}
-
-
-
-
-
-
-.wge-spacer2 {
-    margin: 20px 0 50px 0;
-    padding-top:5px;
-}
-
-
-
-
-/*
-.wge-heading {
-    font-size:120%;
-    font-weight: bold;
-    margin-bottom: 10px;
-}
-.wge-panel-details1 {
-
-}
-.wge-panel-details2 {
-    padding-left:20px;
-}
-*/
-
-
-
-.wge-form-registration {
-    margin-top:30px;
-}
-.wge-badge {
-    padding:10px;
-    margin:2px;
-}
-.wge-badge-index {
-    font-weight:400;
-    padding: .375rem .75rem;
-    font-size: 1rem;
-    line-height: 1.5;
-    border-radius:0;
-}
-.wge-label-left {
-    display:block !important;
-}
-.wge-img-info {
-    margin-left:5px;
-}
-.wge-p-small {
-    font-size:80%;
-}
-.wge-error-msg {
-    color: #ff0000;
-    font-size:120%;
-    border:1px solid #ff0000;
-    padding:50px;
-}
-.wge-identifier {
-    border-left:1px solid var(--wgcolor1);
-}
-
 /* new button styles*/
 .btn {
     margin:3px 2px;
@@ -260,36 +153,6 @@ a {
     color: var(--warning) !important;
     background-color: var(--white);
 }
-.wge-btn-1 {
-    padding:3px 10px;
-    font-size:1.2rem;
-}
-/* progress */
-.wge-progress {
-    height:37px;
-    max-width:300px;
-}
-.wge-progress-text {
-    font-size:16px;
-    margin:0 10px;
-}
-.progress {
-    margin-top:3px;
-    height:40px;
-}
-.progress-bar {
-    overflow: visible;
-}
-/*missing bootstrap css*/
-.progress-bar-success {
-    background-color: #5cb85c;
-}
-.progress-bar-warning {
-    background-color: #f0ad4e;
-}
-.progress-bar-danger {
-    background-color: #d9534f;
-}
 
 /*footer blocks*/
 .footer-blocks .container {
@@ -359,12 +222,6 @@ a {
     margin-bottom: 2rem;
 }
 
-/*simplecCalendar*/
-table.SimpleCalendar thead tr th {
-    color:var(--wgcolor1) !important;
-    background-color:var(--wgcolor2) !important;
-}
-
 /*wglinks*/
 .wglinks-block-li {
     padding:10px;
@@ -380,4 +237,139 @@ table.SimpleCalendar thead tr th {
 }
 .wglinks-block-img {
     margin:0 5px 0 0;
+}
+
+/* wgevents */
+.wge-btn-1 {
+    padding:3px 10px;
+    font-size:1.2rem;
+}
+.wge-icon-1 {
+    padding-right:5px;
+}
+.wge-panel {
+    padding:25px 0 50px 0;
+}
+.wge-eventheader {
+    text-align:left;
+    margin: 20px 0;
+    background-color:var(--wgcolor2);
+    border-bottom:1px solid var(--wgcolor2);
+}
+.wge-eventheader h4 {
+    padding-top: 5px;
+}
+.wge-eventheader h4 span {
+    padding:7px 20px 10px 20px;
+    color:var(--wgcolor1);
+    font-weight: 500;
+    background-color:var(--wgcolor2);
+    line-height:2;
+}
+.wge-event-catlogo-cont {
+    padding: 0 5px !important;
+    position: relative;
+}
+.wge-event-catlogo {
+    height: 35px;
+    border: 1px solid var(--wggreencolor5);
+    border-radius: 5px;
+}
+.wge-row1 {
+    margin-top: 10px;
+    padding-top:5px;
+}
+.wge-row1 div {
+    padding-top:3px;
+    padding-bottom:3px;
+}
+.wge-row2 {
+    border-bottom:1px solid var(--wgcolor2);
+}
+.wge-row-gm div {
+    padding:0;
+}
+#formEvent h3,
+#formTextblock h3,
+#formRegistration h3,
+#formQuestion h3,
+#formContactAll h3,
+#formConfirm h3 {
+    padding:7px 20px;
+    color:var(--wgcolor1);
+    font-weight: 500;
+    background-color:var(--wgcolor2);
+}
+.wge-spacer2 {
+    margin: 20px 0 50px 0;
+    padding-top:5px;
+}
+.wge-form-registration {
+    margin-top:30px;
+}
+.wge-badge {
+    padding:10px;
+    margin:2px;
+}
+.wge-badge-index {
+    font-weight:400;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius:0;
+}
+.wge-label-left {
+    display:block !important;
+}
+.wge-img-info {
+    margin-left:5px;
+}
+.wge-p-small {
+    font-size:80%;
+}
+.wge-error-msg {
+    color: #ff0000;
+    font-size:120%;
+    border:1px solid #ff0000;
+    padding:50px;
+}
+.wge-identifier {
+    border-left:1px solid var(--wgcolor1);
+}
+/* progress */
+.wge-progress {
+    height:37px;
+    max-width:300px;
+}
+.wge-progress-text {
+    font-size:16px;
+    margin:0 10px;
+}
+.progress {
+    margin-top:3px;
+    height:40px;
+}
+.progress-bar {
+    overflow: visible;
+}
+/*missing bootstrap css*/
+.progress-bar-success {
+    background-color: #5cb85c;
+}
+.progress-bar-warning {
+    background-color: #f0ad4e;
+}
+.progress-bar-danger {
+    background-color: #d9534f;
+}
+
+/*simplecCalendar*/
+table.SimpleCalendar thead tr th {
+    color:var(--wgcolor1) !important;
+    background-color:var(--wgcolor2) !important;
+}
+/*image editor*/
+.cropper-container {
+    text-align: center;
+    margin:10px auto;
 }

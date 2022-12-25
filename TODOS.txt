@@ -2,6 +2,7 @@ Reservierung ansehen:
 - bei Reservierung Reservierungnr. anzeigen, mit Reservierungsnummer und Email Reservierung wieder bearbeiten
 - Link in Bestätigungsmail, die Buchung direkt anzeigt (Bild Beispiel_Reservierung_2.JPG)
 
+
 https://github.com/azuyalabs/yasumi
 
 give possibility to change counter for page nav
