@@ -50,10 +50,10 @@ if (Request::hasVar('datefrom')) {
     $eventDatetoObj = \DateTime::createFromFormat(\_SHORTDATESTRING, $eventDatetoArr['date']);
     $eventDatetoObj->setTime(0, 0);
     $dateTo = $eventDatetoObj->getTimestamp() + (int)$eventDatetoArr['time'];
-} elseif (Request::hasVar('datefrom_val')) {
+} elseif (Request::hasVar('export_datefrom')) {
     // data from other sources
-    $dateFrom = Request::getInt('datefrom_val');
-    $dateTo   = Request::getInt('dateto_val');
+    $dateFrom = Request::getInt('export_datefrom');
+    $dateTo   = Request::getInt('export_dateto');
 } else {
     // new load
     $dateFrom = \time();
@@ -61,6 +61,11 @@ if (Request::hasVar('datefrom')) {
 }
 $GLOBALS['xoopsTpl']->assign('dateFrom', $dateFrom);
 $GLOBALS['xoopsTpl']->assign('dateTo', $dateTo);
+if (Request::hasVar('export_limit')) {
+    // data from filter form:
+    $limit = Request::getInt('export_limit');
+}
+$GLOBALS['xoopsTpl']->assign('limit', $limit);
 
 // get type of output
 $outType = 'none';
