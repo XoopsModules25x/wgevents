@@ -368,7 +368,7 @@ switch ($op) {
         $registrationObj->setVar('submitter', $regSubmitter);
         // Insert Data
         if ($registrationHandler->insert($registrationObj)) {
-            $newRegId = $regId > 0 ? $regId : $registrationObj->getNewInsertedId();
+            $newRegId = $regId > 0 ? $regId : (int)$registrationObj->getNewInsertedId();
             if ($regId > 0) {
                 // create copy before deleting
                 // get all questions for this event
