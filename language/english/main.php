@@ -92,6 +92,7 @@ require_once __DIR__ . '/admin.php';
 \define('_MA_WGEVENTS_EVENT_DATETO', 'Date to');
 \define('_MA_WGEVENTS_EVENT_ALLDAY', 'Allday');
 \define('_MA_WGEVENTS_EVENT_TODAY', 'Today');
+\define('_MA_WGEVENTS_EVENT_DATEUNTIL', 'until');
 \define('_MA_WGEVENTS_EVENT_CONTACT', 'Contact');
 \define('_MA_WGEVENTS_EVENT_EMAIL', 'Email');
 \define('_MA_WGEVENTS_EVENT_EMAIL_SENDTO', 'Send mail to organizer of event');
@@ -201,6 +202,7 @@ Participation without agreement to this conditions is not possible.
 \define('_MA_WGEVENTS_REGISTRATION_VERIFKEY', 'Verification key');
 \define('_MA_WGEVENTS_REGISTRATION_CONFIRM', 'Confirm participation');
 \define('_MA_WGEVENTS_REGISTRATION_CHANGED','Registration data successfully changed');
+\define('_MA_WGEVENTS_REGISTRATION_DATECREATED','Registration date');
 // Question
 \define('_MA_WGEVENTS_QUESTION', 'Question');
 \define('_MA_WGEVENTS_QUESTION_ADD', 'Add Question');
@@ -376,6 +378,7 @@ Participation without agreement to this conditions is not possible.
 \define('_MA_WGEVENTS_MAIL_REG_VERIF_ERROR', "Sorry, but an error occurred in the verification process for event '%s'. Please contact the organizer of the event.");
 \define('_MA_WGEVENTS_MAIL_REG_VERIF_SUCCESS', "The registration for the event '%s' was verified successfully");
 \define('_MA_WGEVENTS_MAIL_REG_VERIF_INFO', 'Verification of registration');
+\define('_MA_WGEVENTS_MAIL_REG_SINGLE', 'For showing your registration please click on following link: %s');
 // Admin link
 \define('_MA_WGEVENTS_ADMIN', 'Admin');
 // ---------------- End ----------------

@@ -556,12 +556,13 @@ class Event extends \XoopsObject
         $ret = $this->getValues($keys, $format, $maxDepth);
         $adminMaxchar    = $helper->getConfig('admin_maxchar');
         $userMaxchar     = $helper->getConfig('user_maxchar');
-        $eventDayname     = $helper->getConfig('event_dayname');
+        $eventDayname    = $helper->getConfig('event_dayname');
         $categoryHandler = $helper->getHandler('Category');
-        $catId       = (int)$this->getVar('catid');
-        $categoryObj = $categoryHandler->get($catId);
-        $catName     = '';
-        $catLogo     = '';
+        $eventHandler    = $helper->getHandler('Event');
+        $catId           = (int)$this->getVar('catid');
+        $categoryObj     = $categoryHandler->get($catId);
+        $catName         = '';
+        $catLogo         = '';
         if (\is_object($categoryObj)) {
             $catName = $categoryObj->getVar('name');
             if ('blank.gif' !== (string)$categoryObj->getVar('logo')) {
@@ -610,6 +611,7 @@ class Event extends \XoopsObject
             $ret['datefrom_text']    = \formatTimestamp($this->getVar('datefrom'), 'm');
             $ret['dateto_text']      = \formatTimestamp($this->getVar('dateto'), 'm');
         }
+        $ret['datefromto_text']  = $eventHandler->getDateFromToText($this->getVar('datefrom'), $this->getVar('dateto'), $evAllday);
         $ret['datefrom_dayname'] = $this->getDayname($eventDayname, \formatTimestamp($this->getVar('datefrom'), 'w'));
         $ret['dateto_dayname']   = $this->getDayname($eventDayname, \formatTimestamp($this->getVar('dateto'), 'w'));
         $evLocation              = $this->getVar('location', 'e');

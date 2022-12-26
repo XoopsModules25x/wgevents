@@ -90,7 +90,18 @@ switch ($op) {
             $mailParams = $mailsHandler->getMailParam($eventObj, $regId);
             unset($mailsHandler);
             // find changes in table registrations
-            $mailParams['infotext'] = $registrationHandler->getRegistrationsCompare($registrationObjOld, $registrationObj);
+            $codeArr = [
+                $regId,
+                \WGEVENTS_URL,
+                $regEvid,
+                $registrationObj->getVar('email'),
+                $registrationObj->getVar('verifkey')
+            ];
+            $code = base64_encode(implode('||', $codeArr));
+            $infotextReg = $registrationHandler->getRegistrationsCompare($registrationObjOld, $registrationObj);
+            $singleRegLink = \WGEVENTS_URL . '/registration.php?op=show&verifkey=' . $code;
+            $infotextReg .= PHP_EOL . \sprintf(\_MA_WGEVENTS_MAIL_REG_SINGLE, $singleRegLink) . PHP_EOL;
+            $mailParams['infotext'] = $infotextReg;
 
             // send notifications/confirmation emails
             $registerNotify = (string)$eventObj->getVar('register_notify', 'e');

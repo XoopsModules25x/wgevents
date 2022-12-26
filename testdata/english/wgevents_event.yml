@@ -1,5 +1,6 @@
 -
     id: '1'
+    identifier: FP2022_1
     catid: '2'
     name: 'Aktivtag mit den Naturfreunden'
     logo: AktivtagmitdenNaturfreunden.63a4ad83766f5.jpg
@@ -8,16 +9,18 @@
     dateto: '1691596800'
     contact: 'Gottfried +43 12345678'
     email: gottfried@mydomain.com
+    url: ''
     location: 'Waldgasthaus Naturfreunde'
     locgmlat: '0.00000000'
     locgmlon: '0.00000000'
     locgmzoom: '0'
     fee: '[[27.5,""]]'
+    paymentinfo: ''
     register_use: '1'
     register_from: '1688891400'
     register_to: '1690878600'
     register_max: '20'
-    register_listwait: '0'
+    register_listwait: '1'
     register_autoaccept: '0'
     register_notify: webmaster@mydomain.com
     register_sendermail: webmaster@mydomain.com
@@ -26,17 +29,15 @@
     register_forceverif: '1'
     status: '5'
     galid: '0'
-    datecreated: '1688413271'
+    groups: '00000'
+    datecreated: '1688371283'
     submitter: '1'
-    identifier: FP2022_1
-    paymentinfo: ''
     subcats: 'a:0:{}'
     allday: '0'
-    url: ''
-    groups: '00000'
     recurr_id: '0'
 -
     id: '3'
+    identifier: FP2022_2
     catid: '1'
     name: 'Kinderskikurs Skiing for childs'
     logo: KinderskikursSkiingforchilds.63a4acbabc956.jpg
@@ -45,14 +46,16 @@
     dateto: '1673200800'
     contact: 'Maria Musterfrau +43 7727 123456789'
     email: ''
+    url: ''
     location: 'Turnsaal der VS Hochburg-Ach'
     locgmlat: '0.00000000'
     locgmlon: '0.00000000'
     locgmzoom: '0'
     fee: '[[50,"Kinder \/ Childs 6 -10"],[70,"Kinder \/ Childs 10 -13"],[100,"Kinder \/ Childs 13 -18"]]'
+    paymentinfo: "Zahlbar bei Abfahrt\r\nPayment when starting the trip"
     register_use: '1'
-    register_from: '1703272200'
-    register_to: '1704049800'
+    register_from: '1671736200'
+    register_to: '1672513800'
     register_max: '50'
     register_listwait: '0'
     register_autoaccept: '0'
@@ -63,17 +66,15 @@
     register_forceverif: '0'
     status: '5'
     galid: '0'
-    datecreated: '1688412994'
+    groups: '00000'
+    datecreated: '1688375995'
     submitter: '1'
-    identifier: FP2022_2
-    paymentinfo: "Zahlbar bei Abfahrt\r\nPayment when starting the trip"
     subcats: 'a:0:{}'
     allday: '0'
-    url: ''
-    groups: '00000'
     recurr_id: '0'
 -
     id: '4'
+    identifier: FP2022_3
     catid: '2'
     name: Bastelkurs
     logo: Bastelkurs.63a4b2565ec7b.jpg
@@ -82,11 +83,13 @@
     dateto: '1686330000'
     contact: Gottfried
     email: ''
+    url: ''
     location: ''
     locgmlat: '0.00000000'
     locgmlon: '0.00000000'
     locgmzoom: '0'
     fee: '[[10,""]]'
+    paymentinfo: ''
     register_use: '1'
     register_from: '1683821400'
     register_to: '1686240600'
@@ -100,17 +103,15 @@
     register_forceverif: '1'
     status: '5'
     galid: '0'
+    groups: '00000'
     datecreated: '1689104342'
     submitter: '1'
-    identifier: FP2022_3
-    paymentinfo: ''
     subcats: 'a:1:{i:0;s:1:"2";}'
     allday: '0'
-    url: ''
-    groups: '00000'
     recurr_id: '0'
 -
     id: '6'
+    identifier: FP2022_4
     catid: '2'
     name: Mosaiktag
     logo: Mosaiktag.63a4ab1ce478f.jpg
@@ -119,11 +120,13 @@
     dateto: '1690644600'
     contact: 'Webmaster Wedega'
     email: webmaster@wedega.com
+    url: ''
     location: ''
     locgmlat: '0.00000000'
     locgmlon: '0.00000000'
     locgmzoom: '0'
     fee: '[[13,""]]'
+    paymentinfo: ''
     register_use: '1'
     register_from: '1690468800'
     register_to: '1690552800'
@@ -137,12 +140,9 @@
     register_forceverif: '0'
     status: '5'
     galid: '0'
+    groups: '00000'
     datecreated: '1690486854'
     submitter: '1'
-    identifier: FP2022_4
-    paymentinfo: ''
     subcats: 'a:0:{}'
     allday: '0'
-    url: ''
-    groups: '00000'
     recurr_id: '0'

@@ -29,10 +29,15 @@ use XoopsModules\Wgevents\{
 };
 
 require __DIR__ . '/header.php';
-$GLOBALS['xoopsOption']['template_main'] = 'wgevents_registration.tpl';
+
+$op = Request::getCmd('op', 'list');
+if ('show' === $op) {
+    $GLOBALS['xoopsOption']['template_main'] = 'wgevents_registration_single.tpl';
+} else  {
+    $GLOBALS['xoopsOption']['template_main'] = 'wgevents_registration.tpl';
+}
 require_once \XOOPS_ROOT_PATH . '/header.php';
 
-$op      = Request::getCmd('op', 'list');
 $regId   = Request::getInt('id');
 $regEvid = Request::getInt('evid');
 $start   = Request::getInt('start');
@@ -68,6 +73,41 @@ $uidCurrent = \is_object($GLOBALS['xoopsUser']) ? (int)$GLOBALS['xoopsUser']->ui
 
 switch ($op) {
     case 'show':
+        $verifKey = Request::getString('verifkey');
+        $verifKeyArray  = explode('||', base64_decode($verifKey, true));
+        $regId = $verifKeyArray[0];
+        $registrationObj = $registrationHandler->get($regId);
+        $eventName = $eventHandler->get($registrationObj->getVar('evid'))->getVar('name');
+        if ($regId > 0 && \is_object($registrationObj) && \WGEVENTS_URL == (string)$verifKeyArray[1] &&
+            (int)$registrationObj->getVar('evid') == (int)$verifKeyArray[2] &&
+            (string)$registrationObj->getVar('email') == (string)$verifKeyArray[3] &&
+            (string)$registrationObj->getVar('verifkey') == (string)$verifKeyArray[4]) {
+                $registration = [];
+                // get all detail of this registration
+                $registration = $registrationObj->getValuesRegistrations();
+                // get event info
+                $evId = $registrationObj->getVar('evid');
+                $eventObj = $eventHandler->get($evId);
+                $event = $eventObj->getValuesEvents();
+                $questionsArr = $questionHandler->getQuestionsByEvent($evId);
+                $registration['questions'] = $questionsArr;
+
+                // get all answers for this event
+                $answers = $answerHandler->getAnswersDetailsByRegistration($regId, $questionsArr);
+                foreach ($questionsArr as $key => $value) {
+                    $question_answer[$key]['caption'] = $value['caption'];
+                    $question_answer[$key]['answer'] = $answers[$key];
+                }
+                $registration['questions'] = \count($question_answer);
+                $registration['question_answer'] = $question_answer;
+
+                $GLOBALS['xoopsTpl']->assign('event', $event);
+                $GLOBALS['xoopsTpl']->assign('registration', $registration);
+                $GLOBALS['xoopsTpl']->assign('verifKey', $verifKey);
+                $GLOBALS['xoopsTpl']->assign('wgevents_upload_eventlogos_url', \WGEVENTS_UPLOAD_EVENTLOGOS_URL);
+        } else {
+            $GLOBALS['xoopsTpl']->assign('error', \sprintf(\_MA_WGEVENTS_MAIL_REG_VERIF_ERROR, $eventName));
+        }
     case 'list':
     default:
         break;
@@ -257,13 +297,20 @@ switch ($op) {
         if ($regId > 0) {
             // Check permissions
             $registrationObj = $registrationHandler->get($regId);
-            if (!$permissionsHandler->getPermRegistrationsEdit(
-                    $registrationObj->getVar('ip'),
-                    $registrationObj->getVar('submitter'),
-                    $evSubmitter,
-                    $evStatus,
-                )) {
-                    \redirect_header('registration.php?op=list', 3, \_NOPERM);
+            $permEdit = $permissionsHandler->getPermRegistrationsEdit($registrationObj->getVar('ip'), $registrationObj->getVar('submitter'), $evSubmitter, $evStatus);
+            if (!$permEdit) {
+                // check for valid verifKey
+                $verifKeyEdit = Request::getString('verifkeyEdit');
+                $verifKeyArray  = explode('||', base64_decode($verifKeyEdit, true));
+                if ($regId > 0 && \is_object($registrationObj) && \WGEVENTS_URL == (string)$verifKeyArray[1] &&
+                    (int)$registrationObj->getVar('evid') == (int)$verifKeyArray[2] &&
+                    (string)$registrationObj->getVar('email') == (string)$verifKeyArray[3] &&
+                    (string)$registrationObj->getVar('verifkey') == (string)$verifKeyArray[4]) {
+                    $permEdit = true;
+                }
+            }
+            if (!$permEdit) {
+                \redirect_header('registration.php?op=list', 3, \_NOPERM);
             }
             $registrationObj = $registrationHandler->get($regId);
             $registrationObjOld = $registrationHandler->get($regId);
@@ -373,6 +420,15 @@ switch ($op) {
             $infotextOrg     = ''; // infotext for organizer
             $previousMail    = '';
             $newRegistration = false;
+            // create code for verification and showing single registration
+            $codeArr = [
+                $newRegId,
+                \WGEVENTS_URL,
+                $regEvid,
+                $regEmail,
+                $regVerifkey
+            ];
+            $code = base64_encode(implode('||', $codeArr));
             if ($regId > 0) {
                 // find changes in table registrations
                 $infotextReg = $registrationHandler->getRegistrationsCompare($registrationObjOld, $registrationObj);
@@ -395,6 +451,8 @@ switch ($op) {
                     $infotextReg .= $result;
                 }
                 $infotextOrg = $infotextReg;
+                $singleRegLink = \WGEVENTS_URL . '/registration.php?op=show&verifkey=' . $code;
+                $infotextReg .= PHP_EOL . \sprintf(\_MA_WGEVENTS_MAIL_REG_SINGLE, $singleRegLink) . PHP_EOL;
                 // other params
                 $typeNotify  = Constants::MAIL_REG_NOTIFY_MODIFY;
                 $typeConfirm = Constants::MAIL_REG_CONFIRM_MODIFY;
@@ -404,24 +462,17 @@ switch ($op) {
                     // registration was put on a waiting list
                     $infotextReg .= \_MA_WGEVENTS_MAIL_REG_IN_LISTWAIT . PHP_EOL;
                 }
-
                 if (Constants::STATUS_SUBMITTED == $regStatus) {
-                    // user has no perm for autoverify
-                    $verif = [
-                        $newRegId,
-                        WGEVENTS_URL,
-                        $regEvid,
-                        $regEmail,
-                        $regVerifkey
-                    ];
-                    $verifCode = base64_encode(implode('||', $verif));
-                    $verifLink = WGEVENTS_URL . '/verification.php?verifkey=' . $verifCode;
-                    $infotextReg .= \sprintf(\_MA_WGEVENTS_MAIL_REG_IN_VERIF, $verifLink) . PHP_EOL;
+                    // user has no permission for autoverify
+                    $verifLink     = \WGEVENTS_URL . '/verification.php?verifkey=' . $code;
+                    $infotextReg   .= \sprintf(\_MA_WGEVENTS_MAIL_REG_IN_VERIF, $verifLink) . PHP_EOL;
                 }
                 if (1 == $regListwait || Constants::STATUS_SUBMITTED == $regStatus) {
                     // registration was put on a waiting list
                     $infotextReg .= \_MA_WGEVENTS_MAIL_REG_IN_FINAL . PHP_EOL;
                 }
+                $singleRegLink = \WGEVENTS_URL . '/registration.php?op=show&verifkey=' . $code;
+                $infotextReg   .= PHP_EOL . \sprintf(\_MA_WGEVENTS_MAIL_REG_SINGLE, $singleRegLink) . PHP_EOL;
                 $typeNotify  = Constants::MAIL_REG_NOTIFY_IN;
                 $typeConfirm = Constants::MAIL_REG_CONFIRM_IN;
             }
@@ -472,20 +523,30 @@ switch ($op) {
         if (0 == $regId) {
             \redirect_header('registration.php?op=list', 3, \_MA_WGEVENTS_INVALID_PARAM);
         }
+        $verifKey = Request::getString('verifkey');
         // Check permissions
         $registrationObj = $registrationHandler->get($regId);
         $eventObj = $eventHandler->get($registrationObj->getVar('evid'));
-        if (!$permissionsHandler->getPermRegistrationsEdit(
-                $registrationObj->getVar('ip'),
-                $registrationObj->getVar('submitter'),
-                $eventObj->getVar('submitter'),
-                $eventObj->getVar('status'),
-            )) {
-                \redirect_header('registration.php?op=list', 3, \_NOPERM);
+        $permEdit = $permissionsHandler->getPermRegistrationsEdit($registrationObj->getVar('ip'), $registrationObj->getVar('submitter'), $eventObj->getVar('submitter'), $eventObj->getVar('status'));
+        if (!$permEdit) {
+            // check for valid verifKey
+            $verifKeyArray  = explode('||', base64_decode($verifKey, true));
+            if ($regId > 0 && \is_object($registrationObj) && \WGEVENTS_URL == (string)$verifKeyArray[1] &&
+                (int)$registrationObj->getVar('evid') == (int)$verifKeyArray[2] &&
+                (string)$registrationObj->getVar('email') == (string)$verifKeyArray[3] &&
+                (string)$registrationObj->getVar('verifkey') == (string)$verifKeyArray[4]) {
+                $permEdit = true;
+            }
+        }
+        if (!$permEdit) {
+            \redirect_header('registration.php?op=list', 3, \_NOPERM);
+        }
+        if ('' !== $verifKey) {
+            $redir = 'listmy';
         }
         // Get Form
-        $registrationObj = $registrationHandler->get($regId);
         $registrationObj->setRedir($redir);
+        $registrationObj->setVerifkeyEdit($verifKey);
         $registrationObj->setStart = $start;
         $registrationObj->setLimit = $limit;
         $form = $registrationObj->getForm();

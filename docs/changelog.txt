@@ -24,6 +24,7 @@
  - added option for progress bars (goffy)
  - updated image editor to bootstrap 4 (goffy)
  - fixed bug in export events (goffy)
+ - added displaying single registration by verifkey (goffy)
 
 ==============================================================
 1.0.4 RC1 [2022/08/29]

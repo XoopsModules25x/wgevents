@@ -167,3 +167,22 @@ ul.menu > li + li:before {
 div.calendar {
     z-index:1000 !important;
 }
+
+/*single registration*/
+.wge-event-single-panel {
+    border:1px solid #ccc;
+    border-radius:5px;
+    padding:15px;
+    margin:20px 0;
+}
+.wge-event-single-panel h3 {
+    text-align: center;
+}
+.wge-event-single-panel img {
+    border:1px solid #ccc;
+    border-radius:5px;
+}
+.wge-event-single-panel .row {
+    border-top:1px solid #ccc;
+    padding:5px 0;
+}
