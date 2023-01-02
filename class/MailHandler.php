@@ -338,7 +338,7 @@ class MailHandler
         $mailParams['evStatus']              = $eventObj->getVar('status');
         $mailParams['evName']                = $eventObj->getVar('name');
         $mailParams['evDatefrom']            = $eventObj->getVar('datefrom');
-        $mailParams['evLocation']            = $this->replaceLinebreaks($eventObj->getVar('location'), ', ');
+        $mailParams['evLocation']            = $this->replaceLinebreaks((string)$eventObj->getVar('location'), ', ');
         $mailParams['evRegister_sendermail'] = $eventObj->getVar('register_sendermail');
         $mailParams['evRegister_sendername'] = $eventObj->getVar('register_sendername');
         $mailParams['evRegister_signature']  = $eventObj->getVar('register_signature');

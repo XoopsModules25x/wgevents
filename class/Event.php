@@ -543,7 +543,7 @@ class Event extends \XoopsObject
         $form->addElement(new \XoopsFormHidden('evid', $this->getVar('id')));
         $form->addElement(new \XoopsFormHidden('op', 'exec_contactall'));
         $form->addElement(new \XoopsFormButtonTray('', \_MA_WGEVENTS_SEND_ALL, 'submit', '', false));
-        $form->addElement(new \XoopsFormButton(\_MA_WGEVENTS_CONTACT_ALL_TEST, 'exec_contactall_test', \sprintf(\_MA_WGEVENTS_CONTACT_ALL_TEST_BTN , $this->getVar('email')), 'submit'));
+        $form->addElement(new \XoopsFormButton(\_MA_WGEVENTS_CONTACT_ALL_TEST, 'exec_contactall_test', \sprintf(\_MA_WGEVENTS_CONTACT_ALL_TEST_BTN , $mailFrom), 'submit'));
         return $form;
     }
 
