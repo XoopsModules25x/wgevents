@@ -54,6 +54,9 @@ $GLOBALS['xoopsTpl']->assign('evid', $regEvid);
 if (Request::hasVar('cancel')) {
     $op = 'listeventmy';
 }
+if (Request::hasVar('exec_contactall_test')) {
+    $op = 'exec_contactall_test';
+}
 
 // Define Stylesheet
 $GLOBALS['xoTheme']->addStylesheet($style, null);
@@ -75,6 +78,7 @@ switch ($op) {
     case 'show':
         $verifKey = Request::getString('verifkey');
         $verifKeyArray  = explode('||', base64_decode($verifKey, true));
+        // for testing purposes //$verifKeyArray = [5, 'http://localhost/wgevents/htdocs/modules/wgevents', 1, 'james.morrison@domain.com', 'z4NBI7sYn3'];
         $regId = $verifKeyArray[0];
         $registrationObj = $registrationHandler->get($regId);
         $eventName = $eventHandler->get($registrationObj->getVar('evid'))->getVar('name');
@@ -656,10 +660,11 @@ switch ($op) {
         }
         // Get Form
         $eventObj = $eventHandler->get($regEvid);
-        $form = $eventObj->getFormContactAll();
+        $form = $eventObj->getFormContactAll($eventObj->getVar('register_sendermail'), $eventObj->getVar('name'));
         $GLOBALS['xoopsTpl']->assign('form', $form->render());
         break;
     case 'exec_contactall':
+    case 'exec_contactall_test':
         // Security Check
         if (!$GLOBALS['xoopsSecurity']->check()) {
             \redirect_header('registration.php', 3, \implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
@@ -678,14 +683,17 @@ switch ($op) {
         $crRegistration->add(new \Criteria('evid', $regEvid));
         $numberRegCurr = $registrationHandler->getCount($crRegistration);
         $mailToArr = [];
-        if ($numberRegCurr > 0) {
+        if ($numberRegCurr > 0 && 'exec_contactall' === $op) {
             $registrationsAll = $registrationHandler->getAll($crRegistration);
             foreach (\array_keys($registrationsAll) as $i) {
                 $mailToArr[$registrationsAll[$i]->getVar('email')] = $registrationsAll[$i]->getVar('email');
             }
         }
-        $mailFrom = Request::getString('mail_from');
-        if (1 == Request::getInt('mail_copy')) {
+        $mailFrom    = Request::getString('mail_from');
+        $mailSubject = Request::getString('mail_subject');
+        $mailBody    = Request::getText('mail_body');
+        $mailCopy    = Request::getInt('mail_copy');
+        if (1 ===  $mailCopy) {
             $mailToArr[$mailFrom] = $mailFrom;
         }
         $mailParams = [];
@@ -699,17 +707,34 @@ switch ($op) {
         $mailParams['evRegister_sendername'] = $eventObj->getVar('register_sendername');
         $mailParams['evRegister_signature']  = $eventObj->getVar('register_signature');
         $mailParams['mailFrom']              = $mailFrom;
-        $mailParams['mailSubject']           = Request::getString('mail_subject');
-        $mailParams['mailBody']              = Request::getText('mail_body');
+        $mailParams['mailSubject']           = $mailSubject;
+        $mailParams['mailBody']              = $mailBody;
 
         foreach ($mailToArr as $mail) {
             $taskHandler->createTask(Constants::MAIL_EVENT_NOTIFY_ALL, $mail, json_encode($mailParams));
         }
 
         $result = $taskHandler->processTasks();
-        if ($result) {
+        $counterDone = (int)$result['done'];
+        $counterPending = (int)$result['pending'];
+
+        if ($counterDone > 0 || $counterPending > 0) {
+            if ('exec_contactall_test' === $op && $counterDone > 0) {
+                $eventObj = $eventHandler->get($regEvid);
+                $form = $eventObj->getFormContactAll($mailFrom, $mailSubject, $mailBody, $mailCopy);
+                $GLOBALS['xoopsTpl']->assign('warning', \_MA_WGEVENTS_CONTACT_ALL_TEST_SUCCESS);
+                $GLOBALS['xoopsTpl']->assign('form', $form->render());
+                break;
+            }
             // redirect after insert
-            \redirect_header('registration.php?op=listeventall&amp;evid=' . $regEvid, 2, \_MA_WGEVENTS_FORM_OK);
+            $message = '';
+            if ($counterDone > 0) {
+                $message .= sprintf( \_MA_WGEVENTS_CONTACT_ALL_SUCCESS, $counterDone) . '<br>';
+            }
+            if ($counterPending > 0) {
+                $message .= sprintf( \_MA_WGEVENTS_CONTACT_ALL_PENDING, $counterDone) . '<br>';
+            }
+            \redirect_header('registration.php?op=listeventall&amp;evid=' . $regEvid, 3, $message);
         } else {
             \redirect_header('index.php?op=list', 3, 'exec_contactall:' . \_MA_WGEVENTS_INVALID_PARAM);
         }

@@ -213,6 +213,10 @@ class MailHandler
             */
             $xoopsMailer = xoops_getMailer();
             $xoopsMailer->useMail();
+            // check whether mail body contains any html tags
+            if (\preg_match('/<\s?[^\>]*\/?\s?>/i', $mailBody)) {
+                $this->isHtml = true;
+            }
             $xoopsMailer->setHTML($this->isHtml);
             //set template path
             if (\file_exists(\WGEVENTS_PATH . '/language/' . $GLOBALS['xoopsConfig']['language'] . '/')) {
@@ -314,7 +318,7 @@ class MailHandler
     /**
      * Function to create mail parameters
      *
-     * @param     $eventObj
+     * @param \XoopsObject $eventObj
      * @param int $regId
      * @return array
      */

@@ -349,7 +349,7 @@ class EventHandler extends \XoopsPersistableObjectHandler
         $fields[] = ['name' => 'datefrom', 'caption' => \_MA_WGEVENTS_EVENT_DATEFROM, 'type' => 'datetime'];
         $fields[] = ['name' => 'dateto', 'caption' => \_MA_WGEVENTS_EVENT_DATETO, 'type' => 'datetime'];
         $fields[] = ['name' => 'location', 'caption' => \_MA_WGEVENTS_EVENT_LOCATION, 'type' => 'text'];
-        $fields[] = ['name' => 'fee', 'caption' => \_MA_WGEVENTS_EVENT_FEE, 'type' => 'text'];
+        $fields[] = ['name' => 'fee', 'caption' => \_MA_WGEVENTS_EVENT_FEE, 'type' => 'fee'];
 
         foreach ($fields as $field) {
             $valueOld = $versionOld->getVar($field['name']);
@@ -364,6 +364,25 @@ class EventHandler extends \XoopsPersistableObjectHandler
                             'caption' => $field['caption'],
                             'valueOld' => \formatTimestamp($valueOld, 'm'),
                             'valueNew' => \formatTimestamp($valueNew, 'm')
+                        ];
+                        break;
+                    case 'fee':
+                        $evFee = \json_decode($valueOld, true);
+                        $evFeeText = '';
+                        foreach($evFee as $fee) {
+                            $evFeeText .= Utility::FloatToString((float)$fee[0]) . ' ' . $fee[1] . '<br>';
+                        }
+                        $valueOld = $evFeeText;
+                        $evFee = \json_decode($valueNew, true);
+                        $evFeeText = '';
+                        foreach($evFee as $fee) {
+                            $evFeeText .= Utility::FloatToString((float)$fee[0]) . ' ' . $fee[1] . '<br>';
+                        }
+                        $valueNew = $evFeeText;
+                        $changedValues[] = [
+                            'caption' => $field['caption'],
+                            'valueOld' => $valueOld,
+                            'valueNew' => $valueNew
                         ];
                         break;
                     case'default':

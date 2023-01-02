@@ -10,11 +10,11 @@
 */
 
 /**
- * wgSimpleAcc module for xoops
+ * wgEvents - event module for xoops
  *
  * @copyright      2020 XOOPS Project (https://xooops.org)
  * @license        GPL 2.0 or later
- * @package        wgsimpleacc
+ * @package        wgevents
  * @since          1.0
  * @min_xoops      2.5.10
  * @author         Goffy - XOOPS Development Team - Email:<webmaster@wedega.com> - Website:<https://xoops.wedega.com>
@@ -65,7 +65,6 @@ function toggleAllday() {
         xoopsGetElementById('datefrom[time]').removeAttribute("disabled");
         xoopsGetElementById('dateto[time]').removeAttribute("disabled");
     }
-
 }
 
 function toggleAllCats() {
@@ -82,7 +81,6 @@ function toggleAllCats() {
             checkboxes[i].checked = false;
         }
     }
-
 }
 
 function toggleAllEvents() {
@@ -99,7 +97,6 @@ function toggleAllEvents() {
             checkboxes[i].checked = false;
         }
     }
-
 }
 
 function fillInQuestions() {
@@ -134,5 +131,4 @@ function fillInQuestions() {
     } else {
         xoopsGetElementById('placeholder').setAttribute("disabled", "disabled");
     }
-
 }

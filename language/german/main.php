@@ -320,8 +320,12 @@ Eine Teilnahme an der Veranstaltung ohne Zustimmung zu diesen Bestimmungen ist l
 \define('_MA_WGEVENTS_CONTACT_MAILSUBJECT', 'Betreff');
 \define('_MA_WGEVENTS_CONTACT_ALL_MAILSUBJECT_TEXT', 'Information zu: %s');
 \define('_MA_WGEVENTS_CONTACT_MAILBODY', 'Nachricht');
-\define('_MA_WGEVENTS_CONTACT_ALL_SUCCESS', 'Mail an alle Teilnehmer erfolgreich versendet');
+\define('_MA_WGEVENTS_CONTACT_ALL_SUCCESS', 'Mail an %s Teilnehmer erfolgreich versendet');
+\define('_MA_WGEVENTS_CONTACT_ALL_PENDING', 'Mail an %s Teilnehmer sind in Warteschleife und werden demnächst versendet');
 \define('_MA_WGEVENTS_CONTACT_ALL_ERROR', 'Beim Versenden der Mail an alle Teilnehmer ist leider ein Fehler aufgetreten');
+\define('_MA_WGEVENTS_CONTACT_ALL_TEST', 'Mail testen');
+\define('_MA_WGEVENTS_CONTACT_ALL_TEST_BTN', 'Mail testweise nur an aktuellen Absender versenden');
+\define('_MA_WGEVENTS_CONTACT_ALL_TEST_SUCCESS', 'Testmail erfolgreich versendet');
 // calendar
 \define('_MA_WGEVENTS_CAL_ITEMS', 'Kalender Einträge');
 \define('_MA_WGEVENTS_CAL_EDITITEM', 'Eintrag bearbeiten');

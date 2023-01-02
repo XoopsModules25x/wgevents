@@ -320,8 +320,12 @@ Participation without agreement to this conditions is not possible.
 \define('_MA_WGEVENTS_CONTACT_MAILSUBJECT', 'Subject');
 \define('_MA_WGEVENTS_CONTACT_ALL_MAILSUBJECT_TEXT', 'Information for: %s');
 \define('_MA_WGEVENTS_CONTACT_MAILBODY', 'Notification text');
-\define('_MA_WGEVENTS_CONTACT_ALL_SUCCESS', 'Sending mail to all participants successful');
+\define('_MA_WGEVENTS_CONTACT_ALL_SUCCESS', 'Sending mail to %s participants successful');
+\define('_MA_WGEVENTS_CONTACT_ALL_PENDING', 'Sending mail to %s participants are pending and will be sent soon');
 \define('_MA_WGEVENTS_CONTACT_ALL_ERROR', 'Unfortunately an error occurred during sending mail to all participants');
+\define('_MA_WGEVENTS_CONTACT_ALL_TEST', 'Sending test mail');
+\define('_MA_WGEVENTS_CONTACT_ALL_TEST_BTN', 'Sending mail only to current sender for testing');
+\define('_MA_WGEVENTS_CONTACT_ALL_TEST_SUCCESS', 'Sending test mail successful');
 // calendar
 \define('_MA_WGEVENTS_CAL_ITEMS', 'Items Calendar');
 \define('_MA_WGEVENTS_CAL_EDITITEM', 'Edit Item');
