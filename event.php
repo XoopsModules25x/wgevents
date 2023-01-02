@@ -507,6 +507,9 @@ switch ($op) {
                     $crRegistration = new \CriteriaCompo();
                     $crRegistration->add(new \Criteria('evid', $evId));
                     $registrationsCount = $registrationHandler->getCount($crRegistration);
+                    $counterDone = 0;
+                    $mailToArr   = [];
+                    $informModif = Request::getBool('informModif');
                     if ($registrationsCount > 0) {
                         $registrationsAll = $registrationHandler->getAll($crRegistration);
                         foreach (\array_keys($registrationsAll) as $regId) {
@@ -518,25 +521,41 @@ switch ($op) {
                             $notificationHandler->triggerEvent('global', 0, 'global_delete', $tags);
                             $notificationHandler->triggerEvent('registrations', $regId, 'registration_delete', $tags);
                             */
-                            $informModif = Request::getBool('informModif');
+
                             if ($informModif) {
                                 // send notifications emails, only to participants
                                 $regEmail = (string)$registrationsAll[$regId]->getVar('email');
                                 if ('' != $regEmail) {
-                                    // send confirmation
-                                    $mailsHandler = new MailHandler();
-                                    $mailParams = $mailsHandler->getMailParam($evId, $regId);
-                                    $mailParams['infotext'] = $infotext;
-                                    $mailParams['recipients'] = $regEmail;
-                                    $mailsHandler->setParams($mailParams);
-                                    $mailsHandler->setType($typeConfirm);
-                                    $mailsHandler->setHtml(true);
-                                    $mailsHandler->executeReg();
-                                    unset($mailsHandler);
+                                    $mailToArr[$regEmail] = $regEmail;
                                 }
                             }
                         }
                     }
+                    if (\count($mailToArr) > 0) {
+                        $mailParams = [];
+                        $mailParams['evId'] = $evId;
+                        $mailParams['evName'] = $eventObj->getVar('name');
+                        $mailParams['evDatefrom'] = $eventObj->getVar('datefrom');
+                        $mailParams['evLocation'] = $eventObj->getVar('location');
+                        $mailParams['evSubmitter'] = $eventObj->getVar('submitter');
+                        $mailParams['evStatus'] = $eventObj->getVar('status');
+                        $mailParams['evRegister_sendermail'] = $eventObj->getVar('register_sendermail');
+                        $mailParams['evRegister_sendername'] = $eventObj->getVar('register_sendername');
+                        $mailParams['evRegister_signature'] = $eventObj->getVar('register_signature');
+                        $mailParams['mailFrom'] = $eventObj->getVar('register_sendermail');
+                        $mailParams['mailSubject'] = \sprintf(_MA_WGEVENTS_CONTACT_ALL_MAILSUBJECT_TEXT, $eventObj->getVar('name'));
+                        $mailParams['mailBody'] = $infotext;
+
+                        foreach ($mailToArr as $mail) {
+                            $taskHandler->createTask(Constants::MAIL_EVENT_NOTIFY_ALL, $mail, json_encode($mailParams));
+                        }
+
+                        $result = $taskHandler->processTasks();
+                        $counterDone = (int)$result['done'];
+                        $counterPending = (int)$result['pending'];
+
+                    }
+
                 }
             }
             // redirect after insert
@@ -579,6 +598,9 @@ switch ($op) {
                     }
                 }
                 $textFormOK = \_MA_WGEVENTS_FORM_OK . $dateErrors;
+                if ($counterDone > 0) {
+                    $textFormOK .= '<br>' . sprintf( \_MA_WGEVENTS_CONTACT_ALL_SUCCESS, $counterDone);
+                }
                 if (Request::hasVar('continue_questions')) {
                     \redirect_header('question.php?op=list&amp;evid=' . $newEvId . '&amp;start=' . $start . '&amp;limit=' . $limit. '&amp;cats=' . $urlCats, 2, $textFormOK);
                 }

@@ -92,6 +92,7 @@ require_once __DIR__ . '/admin.php';
 \define('_MA_WGEVENTS_EVENT_DATETO', 'Datum bis');
 \define('_MA_WGEVENTS_EVENT_ALLDAY', 'Ganztags');
 \define('_MA_WGEVENTS_EVENT_TODAY', 'Heute');
+\define('_MA_WGEVENTS_EVENT_DATEUNTIL', 'bis');
 \define('_MA_WGEVENTS_EVENT_CONTACT', 'Kontakt');
 \define('_MA_WGEVENTS_EVENT_EMAIL', 'E-Mail');
 \define('_MA_WGEVENTS_EVENT_EMAIL_SENDTO', 'E-Mail an der Veranstalter senden');
@@ -201,6 +202,7 @@ Eine Teilnahme an der Veranstaltung ohne Zustimmung zu diesen Bestimmungen ist l
 \define('_MA_WGEVENTS_REGISTRATION_VERIFKEY', 'Verifizierungsschlüssel');
 \define('_MA_WGEVENTS_REGISTRATION_CONFIRM', 'Teilnahme bestätigen');
 \define('_MA_WGEVENTS_REGISTRATION_CHANGED','Daten Registrierung erfolgreich geändert');
+\define('_MA_WGEVENTS_REGISTRATION_DATECREATED','Datum der Anmeldung');
 // Question
 \define('_MA_WGEVENTS_QUESTION', 'Fragen');
 \define('_MA_WGEVENTS_QUESTION_ADD', 'Frage hinzufügen');
@@ -318,8 +320,12 @@ Eine Teilnahme an der Veranstaltung ohne Zustimmung zu diesen Bestimmungen ist l
 \define('_MA_WGEVENTS_CONTACT_MAILSUBJECT', 'Betreff');
 \define('_MA_WGEVENTS_CONTACT_ALL_MAILSUBJECT_TEXT', 'Information zu: %s');
 \define('_MA_WGEVENTS_CONTACT_MAILBODY', 'Nachricht');
-\define('_MA_WGEVENTS_CONTACT_ALL_SUCCESS', 'Mail an alle Teilnehmer erfolgreich versendet');
+\define('_MA_WGEVENTS_CONTACT_ALL_SUCCESS', 'Mail an %s Teilnehmer erfolgreich versendet');
+\define('_MA_WGEVENTS_CONTACT_ALL_PENDING', 'Mail an %s Teilnehmer sind in Warteschleife und werden demnächst versendet');
 \define('_MA_WGEVENTS_CONTACT_ALL_ERROR', 'Beim Versenden der Mail an alle Teilnehmer ist leider ein Fehler aufgetreten');
+\define('_MA_WGEVENTS_CONTACT_ALL_TEST', 'Mail testen');
+\define('_MA_WGEVENTS_CONTACT_ALL_TEST_BTN', 'Mail testweise nur an aktuellen Absender versenden');
+\define('_MA_WGEVENTS_CONTACT_ALL_TEST_SUCCESS', 'Testmail erfolgreich versendet');
 // calendar
 \define('_MA_WGEVENTS_CAL_ITEMS', 'Kalender Einträge');
 \define('_MA_WGEVENTS_CAL_EDITITEM', 'Eintrag bearbeiten');
@@ -376,6 +382,7 @@ Eine Teilnahme an der Veranstaltung ohne Zustimmung zu diesen Bestimmungen ist l
 \define('_MA_WGEVENTS_MAIL_REG_VERIF_ERROR', "Bei der Bestätigung der Anmeldung für die Veranstaltung '%s' ist leider ein Fehler aufgetreten. Bitte wende Dich an den Veranstalter.");
 \define('_MA_WGEVENTS_MAIL_REG_VERIF_SUCCESS', "Die Anmeldung zur Veranstaltung '%s' wurde erfolgreich bestätigt");
 \define('_MA_WGEVENTS_MAIL_REG_VERIF_INFO', 'Bestätigung der Anmeldung');
+\define('_MA_WGEVENTS_MAIL_REG_SINGLE', 'Zur Anzeige der Registrierung klicke bitte auf folgenden Link: %s');
 // Admin link
 \define('_MA_WGEVENTS_ADMIN', 'Administration');
 // ---------------- End ----------------

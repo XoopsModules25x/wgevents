@@ -7,7 +7,7 @@ Hallo {NAME},
 Die Daten zu Deiner Registrierung für diese Veranstaltung haben sich geändert:
 {INFOTEXT}
 
-Weitere Infos findest Du unter {EVENTURL}
+Weitere Infos zur Veranstaltung findest Du unter {EVENTURL}
 
 {SIGNATURE}
 

@@ -1,7 +1,5 @@
-Reservierung ansehen:
-- bei Reservierung Reservierungnr. anzeigen, mit Reservierungsnummer und Email Reservierung wieder bearbeiten
-- Link in Bestätigungsmail, die Buchung direkt anzeigt (Bild Beispiel_Reservierung_2.JPG)
 
+same time for each day / different times for different days
 
 https://github.com/azuyalabs/yasumi
 

@@ -56,8 +56,8 @@
                     </td>
                     <td colspan="2" class='left'><{$smarty.const._MA_WGEVENTS_SELECT_ALL}></td>
                     <td colspan="5" class='right'>
-                        <input type="submit" onclick="submit();" class="btn btn-default" name="export_excel" id="export_excel" value="<{$smarty.const._MA_WGEVENTS_OUTPUT_EXCEL}>" title="<{$smarty.const._MA_WGEVENTS_OUTPUT_EXCEL}>">
-                        <input type="submit" onclick="submit();" class="btn btn-default" name="export_ics" id="export_ics" value="<{$smarty.const._MA_WGEVENTS_OUTPUT_ICS}>" title="<{$smarty.const._MA_WGEVENTS_OUTPUT_ICS}>">
+                        <input type="submit" onclick="submit();" class="btn btn-primary" name="export_excel" id="export_excel" value="<{$smarty.const._MA_WGEVENTS_OUTPUT_EXCEL}>" title="<{$smarty.const._MA_WGEVENTS_OUTPUT_EXCEL}>">
+                        <input type="submit" onclick="submit();" class="btn btn-primary" name="export_ics" id="export_ics" value="<{$smarty.const._MA_WGEVENTS_OUTPUT_ICS}>" title="<{$smarty.const._MA_WGEVENTS_OUTPUT_ICS}>">
                     </td>
                 </tr>
             </tfoot>

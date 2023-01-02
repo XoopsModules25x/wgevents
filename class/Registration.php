@@ -49,6 +49,11 @@ class Registration extends \XoopsObject
     private $redir = 'list';
 
     /**
+     * @var string
+     */
+    private $verifkeyEdit = '';
+
+    /**
      * Constructor
      *
      * @param null
@@ -339,6 +344,7 @@ class Registration extends \XoopsObject
         $form->addElement(new \XoopsFormHidden('start', $this->start));
         $form->addElement(new \XoopsFormHidden('limit', $this->limit));
         $form->addElement(new \XoopsFormHidden('redir', $this->redir));
+        $form->addElement(new \XoopsFormHidden('verifkeyEdit', $this->verifkeyEdit));
         // button tray
         $buttonTray = new \XoopsFormElementTray('');
         $buttonBack = new Forms\FormButton('', 'cancel', \_CANCEL, 'button');
@@ -409,6 +415,16 @@ class Registration extends \XoopsObject
     public function setRedir($redir)
     {
         $this->redir = $redir;
+    }
+
+    /**
+     * Set verifkeyEdit
+     * @param $verifkey
+     * @return void
+     */
+    public function setVerifkeyEdit($verifkey)
+    {
+        $this->verifkeyEdit = $verifkey;
     }
 
     /**

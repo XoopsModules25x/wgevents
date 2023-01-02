@@ -349,7 +349,7 @@ class EventHandler extends \XoopsPersistableObjectHandler
         $fields[] = ['name' => 'datefrom', 'caption' => \_MA_WGEVENTS_EVENT_DATEFROM, 'type' => 'datetime'];
         $fields[] = ['name' => 'dateto', 'caption' => \_MA_WGEVENTS_EVENT_DATETO, 'type' => 'datetime'];
         $fields[] = ['name' => 'location', 'caption' => \_MA_WGEVENTS_EVENT_LOCATION, 'type' => 'text'];
-        $fields[] = ['name' => 'fee', 'caption' => \_MA_WGEVENTS_EVENT_FEE, 'type' => 'text'];
+        $fields[] = ['name' => 'fee', 'caption' => \_MA_WGEVENTS_EVENT_FEE, 'type' => 'fee'];
 
         foreach ($fields as $field) {
             $valueOld = $versionOld->getVar($field['name']);
@@ -364,6 +364,25 @@ class EventHandler extends \XoopsPersistableObjectHandler
                             'caption' => $field['caption'],
                             'valueOld' => \formatTimestamp($valueOld, 'm'),
                             'valueNew' => \formatTimestamp($valueNew, 'm')
+                        ];
+                        break;
+                    case 'fee':
+                        $evFee = \json_decode($valueOld, true);
+                        $evFeeText = '';
+                        foreach($evFee as $fee) {
+                            $evFeeText .= Utility::FloatToString((float)$fee[0]) . ' ' . $fee[1] . '<br>';
+                        }
+                        $valueOld = $evFeeText;
+                        $evFee = \json_decode($valueNew, true);
+                        $evFeeText = '';
+                        foreach($evFee as $fee) {
+                            $evFeeText .= Utility::FloatToString((float)$fee[0]) . ' ' . $fee[1] . '<br>';
+                        }
+                        $valueNew = $evFeeText;
+                        $changedValues[] = [
+                            'caption' => $field['caption'],
+                            'valueOld' => $valueOld,
+                            'valueNew' => $valueNew
                         ];
                         break;
                     case'default':
@@ -415,15 +434,18 @@ class EventHandler extends \XoopsPersistableObjectHandler
      */
     public function getDateFromToText($datefrom, $dateto, $allday)
     {
-        $text = '';
-        $today = date('d.m.Y', time()) === date('d.m.Y', $datefrom);
-        $multiday = (int)date('j', $dateto) > (int)date('j', $datefrom);
-
-        // currently only used by blocks
-        //if (\defined(\_MB_WGEVENTS_EVENT_TODAY)) {
-            $lng_today = \_MA_WGEVENTS_EVENT_TODAY;
-            $lng_allday = \_MA_WGEVENTS_EVENT_ALLDAY;
-        //}
+        $text       = '';
+        $today      = date('d.m.Y', time()) === date('d.m.Y', $datefrom);
+        $multiday   = (int)date('j', $dateto) !== (int)date('j', $datefrom);
+        /*
+        $days       = 1;
+        if ($multiday) {
+            $days = (1 + date_create(date('d.m.Y', $dateto))->diff(date_create(date('d.m.Y', $datefrom)))->format("%a"));
+        }
+        */
+        $lng_until  = ' ' . \_MA_WGEVENTS_EVENT_DATEUNTIL . ' ';
+        $lng_today  = \_MA_WGEVENTS_EVENT_TODAY;
+        $lng_allday = \_MA_WGEVENTS_EVENT_ALLDAY;
 
         if ($today) {
             // get all types of today
@@ -432,22 +454,23 @@ class EventHandler extends \XoopsPersistableObjectHandler
                 $text = $lng_today . ' ' . $lng_allday;
             } else if ($today && !$allday && !$multiday) {
                 // today, no allday, no multiday
-                $text = $lng_today . ' ' . date('H:i', $datefrom) . ' - ' . date('H:i', $dateto);
+                $text = $lng_today . ' ' . date('H:i', $datefrom) . $lng_until . date('H:i', $dateto);
             } else {
                 // today, no allday, multiday
-                $text = $lng_today . ' ' . date('H:i', $datefrom) . ' - ' . \formatTimestamp($dateto, 'm');
+                $text = $lng_today . ' ' . date('H:i', $datefrom) . $lng_until . \formatTimestamp($dateto, 'm');
             }
         } else {
             // not today
             if ($allday && $multiday) {
                 // allday, multiday
-                $text =  \formatTimestamp($datefrom, 's') . $lng_allday . ' - ' . \formatTimestamp($dateto, 'm') . $lng_allday;
+                $text =  \formatTimestamp($datefrom, 's') . $lng_allday . $lng_until . \formatTimestamp($dateto, 'm') . $lng_allday;
             } else if (!$allday && !$multiday) {
                 // no allday, no multiday
-                $text = \formatTimestamp($datefrom, 's') . ' ' . date('H:i', $datefrom) . ' - ' . date('H:i', $dateto);
+                $text = \formatTimestamp($datefrom, 's') . ' ' . date('H:i', $datefrom) . $lng_until . date('H:i', $dateto);
             } else {
                 // no allday, multiday
-                $text = \formatTimestamp($datefrom, 'm') . ' - ' . \formatTimestamp($dateto, 'm');
+                $text = \formatTimestamp($datefrom, 'm') . $lng_until . \formatTimestamp($dateto, 'm');
+                //TODO: same time for each day / different times for different days
             }
         }
         /*

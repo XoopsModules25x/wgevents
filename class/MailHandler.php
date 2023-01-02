@@ -213,6 +213,10 @@ class MailHandler
             */
             $xoopsMailer = xoops_getMailer();
             $xoopsMailer->useMail();
+            // check whether mail body contains any html tags
+            if (\preg_match('/<\s?[^\>]*\/?\s?>/i', $mailBody)) {
+                $this->isHtml = true;
+            }
             $xoopsMailer->setHTML($this->isHtml);
             //set template path
             if (\file_exists(\WGEVENTS_PATH . '/language/' . $GLOBALS['xoopsConfig']['language'] . '/')) {
@@ -314,7 +318,7 @@ class MailHandler
     /**
      * Function to create mail parameters
      *
-     * @param     $eventObj
+     * @param \XoopsObject $eventObj
      * @param int $regId
      * @return array
      */
@@ -334,7 +338,7 @@ class MailHandler
         $mailParams['evStatus']              = $eventObj->getVar('status');
         $mailParams['evName']                = $eventObj->getVar('name');
         $mailParams['evDatefrom']            = $eventObj->getVar('datefrom');
-        $mailParams['evLocation']            = $this->replaceLinebreaks($eventObj->getVar('location'), ', ');
+        $mailParams['evLocation']            = $this->replaceLinebreaks((string)$eventObj->getVar('location'), ', ');
         $mailParams['evRegister_sendermail'] = $eventObj->getVar('register_sendermail');
         $mailParams['evRegister_sendername'] = $eventObj->getVar('register_sendername');
         $mailParams['evRegister_signature']  = $eventObj->getVar('register_signature');

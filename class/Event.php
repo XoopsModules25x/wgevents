@@ -480,10 +480,14 @@ class Event extends \XoopsObject
 
     /**
      * @public function getFormContactAll
-     * @param bool $action
+     * @param string $mailFrom
+     * @param string $mailSubject
+     * @param string $mailBody
+     * @param int    $mailCopy
+     * @param bool   $action
      * @return \XoopsThemeForm
      */
-    public function getFormContactAll($action = false)
+    public function getFormContactAll($mailFrom, $mailSubject, $mailBody = '', $mailCopy = 1, $action = false)
     {
         $helper = \XoopsModules\Wgevents\Helper::getInstance();
         $registrationHandler = $helper->getHandler('Registration');
@@ -496,11 +500,11 @@ class Event extends \XoopsObject
         $form->setExtra('enctype="multipart/form-data"');
         // Form Text mailFrom
         $emailTray = new Forms\FormElementTray(\_MA_WGEVENTS_CONTACT_MAILFROM, '<br>');
-        $email = new Forms\FormText('', 'mail_from', 50, 255, $this->getVar('email'));
+        $email = new Forms\FormText('', 'mail_from', 50, 255, $mailFrom);
         $email->setPlaceholder(\_MA_WGEVENTS_REGISTRATION_EMAIL_PLACEHOLDER);
         $emailTray->addElement($email, true);
         // Form select mailCopy
-        $emailRadio = new \XoopsFormRadioYN(\_MA_WGEVENTS_CONTACT_MAILCOPY, 'mail_copy', 1);
+        $emailRadio = new \XoopsFormRadioYN(\_MA_WGEVENTS_CONTACT_MAILCOPY, 'mail_copy', $mailCopy);
         $emailTray->addElement($emailRadio);
         $form->addElement($emailTray);
         // Form Editor TextArea mailTo
@@ -522,13 +526,13 @@ class Event extends \XoopsObject
         $mailToTextarea->setExtra(" disabled='disabled'");
         $form->addElement($mailToTextarea);
         // From Text Subject
-        $subject = \sprintf(\_MA_WGEVENTS_CONTACT_ALL_MAILSUBJECT_TEXT, $this->getVar('name'));
+        $subject = \sprintf(\_MA_WGEVENTS_CONTACT_ALL_MAILSUBJECT_TEXT, $mailSubject);
         $form->addElement(new \XoopsFormText(\_MA_WGEVENTS_CONTACT_MAILSUBJECT, 'mail_subject', 50, 255, $subject), true);
         // Form Editor DhtmlTextArea mailBody
         $editorConfigs = [];
         $editor = $helper->getConfig('editor_user');
         $editorConfigs['name'] = 'mail_body';
-        $editorConfigs['value'] = '';
+        $editorConfigs['value'] = $mailBody;
         $editorConfigs['rows'] = 10;
         $editorConfigs['cols'] = 40;
         $editorConfigs['width'] = '100%';
@@ -539,6 +543,7 @@ class Event extends \XoopsObject
         $form->addElement(new \XoopsFormHidden('evid', $this->getVar('id')));
         $form->addElement(new \XoopsFormHidden('op', 'exec_contactall'));
         $form->addElement(new \XoopsFormButtonTray('', \_MA_WGEVENTS_SEND_ALL, 'submit', '', false));
+        $form->addElement(new \XoopsFormButton(\_MA_WGEVENTS_CONTACT_ALL_TEST, 'exec_contactall_test', \sprintf(\_MA_WGEVENTS_CONTACT_ALL_TEST_BTN , $mailFrom), 'submit'));
         return $form;
     }
 
@@ -556,12 +561,13 @@ class Event extends \XoopsObject
         $ret = $this->getValues($keys, $format, $maxDepth);
         $adminMaxchar    = $helper->getConfig('admin_maxchar');
         $userMaxchar     = $helper->getConfig('user_maxchar');
-        $eventDayname     = $helper->getConfig('event_dayname');
+        $eventDayname    = $helper->getConfig('event_dayname');
         $categoryHandler = $helper->getHandler('Category');
-        $catId       = (int)$this->getVar('catid');
-        $categoryObj = $categoryHandler->get($catId);
-        $catName     = '';
-        $catLogo     = '';
+        $eventHandler    = $helper->getHandler('Event');
+        $catId           = (int)$this->getVar('catid');
+        $categoryObj     = $categoryHandler->get($catId);
+        $catName         = '';
+        $catLogo         = '';
         if (\is_object($categoryObj)) {
             $catName = $categoryObj->getVar('name');
             if ('blank.gif' !== (string)$categoryObj->getVar('logo')) {
@@ -610,6 +616,7 @@ class Event extends \XoopsObject
             $ret['datefrom_text']    = \formatTimestamp($this->getVar('datefrom'), 'm');
             $ret['dateto_text']      = \formatTimestamp($this->getVar('dateto'), 'm');
         }
+        $ret['datefromto_text']  = $eventHandler->getDateFromToText($this->getVar('datefrom'), $this->getVar('dateto'), $evAllday);
         $ret['datefrom_dayname'] = $this->getDayname($eventDayname, \formatTimestamp($this->getVar('datefrom'), 'w'));
         $ret['dateto_dayname']   = $this->getDayname($eventDayname, \formatTimestamp($this->getVar('dateto'), 'w'));
         $evLocation              = $this->getVar('location', 'e');

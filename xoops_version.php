@@ -130,6 +130,7 @@ $modversion['templates'] = [
     ['file' => 'wgevents_question_item.tpl', 'description' => ''],
     ['file' => 'wgevents_registration.tpl', 'description' => ''],
     ['file' => 'wgevents_registration_item.tpl', 'description' => ''],
+    ['file' => 'wgevents_registration_single.tpl', 'description' => ''],
     ['file' => 'wgevents_search.tpl', 'description' => ''],
     ['file' => 'wgevents_textblock.tpl', 'description' => ''],
     ['file' => 'wgevents_textblock_item.tpl', 'description' => ''],
