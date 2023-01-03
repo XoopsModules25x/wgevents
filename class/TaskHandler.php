@@ -167,10 +167,9 @@ class TaskHandler extends \XoopsPersistableObjectHandler
     /**
      * process all task if limit is not exceeded
      * @param $log_level
-     * @param $isCron
-     * @return bool
+     * @return array
      */
-    public function processTasks($log_level = 0, $isCron = false)
+    public function processTasks($log_level = 0)
     {
         $helper = \XoopsModules\Wgevents\Helper::getInstance();
 
