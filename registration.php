@@ -38,11 +38,12 @@ if ('show' === $op) {
 }
 require_once \XOOPS_ROOT_PATH . '/header.php';
 
-$regId   = Request::getInt('id');
-$regEvid = Request::getInt('evid');
-$start   = Request::getInt('start');
-$limit   = Request::getInt('limit', $helper->getConfig('userpager'));
-$redir   = Request::getString('redir', 'list');
+$regId    = Request::getInt('id');
+$regEvid  = Request::getInt('evid');
+$start    = Request::getInt('start');
+$limit    = Request::getInt('limit', $helper->getConfig('userpager'));
+$redir    = Request::getString('redir', 'list');
+$showinfo = Request::getInt('showinfo');
 //$sortBy  = Request::getString('sortby', 'datecreated');
 //$orderBy = Request::getString('orderby', 'asc');
 
@@ -50,6 +51,9 @@ $GLOBALS['xoopsTpl']->assign('start', $start);
 $GLOBALS['xoopsTpl']->assign('limit', $limit);
 //$GLOBALS['xoopsTpl']->assign('sort_order', $sortBy . '_' . $orderBy);
 $GLOBALS['xoopsTpl']->assign('evid', $regEvid);
+if (1 === $showinfo) {
+    $GLOBALS['xoopsTpl']->assign('warning', \_MA_WGEVENTS_REGISTRATION_INFO_SPAM);
+}
 
 if (Request::hasVar('cancel')) {
     $op = 'listeventmy';
@@ -480,6 +484,7 @@ switch ($op) {
                 $typeNotify  = Constants::MAIL_REG_NOTIFY_IN;
                 $typeConfirm = Constants::MAIL_REG_CONFIRM_IN;
             }
+            $showinfo = 0;
             if ($newRegistration || '' != $infotextReg) {
                 $mailsHandler = new MailHandler();
                 $mailParams = $mailsHandler->getMailParam($eventObj, $newRegId);
@@ -497,6 +502,7 @@ switch ($op) {
                 }
                 if (('' != $regEmail && Request::getInt('email_send') > 0) || ('' != $previousMail)) {
                     $mailParams['infotext'] = $infotextReg;
+                    $showinfo = 1;
                     // send confirmation, if radio is checked
                     // or inform old email in any case if email changed
                     $recipients = [];
@@ -513,7 +519,7 @@ switch ($op) {
             // excetue mail sending by task handler
             $taskHandler->processTasks();
             // redirect after insert
-            \redirect_header('registration.php?op=' . $redir . '&amp;redir=' . $redir . '&amp;evid=' . $regEvid, 2, \_MA_WGEVENTS_FORM_OK);
+            \redirect_header('registration.php?op=' . $redir . '&amp;redir=' . $redir . '&amp;evid=' . $regEvid. '&amp;showinfo=' . $showinfo, 2, \_MA_WGEVENTS_FORM_OK);
         }
         // Get Form Error
         $GLOBALS['xoopsTpl']->assign('error', $registrationObj->getHtmlErrors());
@@ -586,6 +592,9 @@ switch ($op) {
         }
         // Check permissions
         $registrationObj = $registrationHandler->get($regId);
+        if (!\is_object($registrationObj)) {
+            \redirect_header('index.php?op=list', 3, \_MA_WGEVENTS_INVALID_PARAM);
+        }
         $eventObj = $eventHandler->get($registrationObj->getVar('evid'));
 
         $mailsHandler = new MailHandler();

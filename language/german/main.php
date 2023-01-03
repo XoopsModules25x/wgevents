@@ -203,6 +203,7 @@ Eine Teilnahme an der Veranstaltung ohne Zustimmung zu diesen Bestimmungen ist l
 \define('_MA_WGEVENTS_REGISTRATION_CONFIRM', 'Teilnahme bestätigen');
 \define('_MA_WGEVENTS_REGISTRATION_CHANGED','Daten Registrierung erfolgreich geändert');
 \define('_MA_WGEVENTS_REGISTRATION_DATECREATED','Datum der Anmeldung');
+\define('_MA_WGEVENTS_REGISTRATION_INFO_SPAM','Eine Bestätigung über die Anmeldung wurde per Mail versendet.<br>Sollten Sie die Mail nicht erhalten, dann überprüfen Sie bitte Ihren Spam-Ordner.<br>Sollten Sie die Mail innerhalb von 24 Stunden nicht erhalten, dann kontaktieren Sie bitte den Veranstalter');
 // Question
 \define('_MA_WGEVENTS_QUESTION', 'Fragen');
 \define('_MA_WGEVENTS_QUESTION_ADD', 'Frage hinzufügen');

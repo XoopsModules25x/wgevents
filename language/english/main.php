@@ -203,6 +203,7 @@ Participation without agreement to this conditions is not possible.
 \define('_MA_WGEVENTS_REGISTRATION_CONFIRM', 'Confirm participation');
 \define('_MA_WGEVENTS_REGISTRATION_CHANGED','Registration data successfully changed');
 \define('_MA_WGEVENTS_REGISTRATION_DATECREATED','Registration date');
+\define('_MA_WGEVENTS_REGISTRATION_INFO_SPAM','A confirmation about the registration was sent by mail.<br>If you did not get the mail, then please check your spam folder.<br>If you did not get the mail the next 24 hours then please contact event organizer');
 // Question
 \define('_MA_WGEVENTS_QUESTION', 'Question');
 \define('_MA_WGEVENTS_QUESTION_ADD', 'Add Question');
