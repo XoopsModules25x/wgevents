@@ -30,50 +30,104 @@ use XoopsModules\Wgevents\{
 $currentFile = basename(__FILE__);
 require_once __DIR__ . '/header.php';
 
-echo '<br>start cron.php';
+$cronInfoStart = '';
+$cronInfoResult = '';
+$start    = \formatTimestamp(time(), 'm');
+echo '<br>start cron.php: ' . $start;
 
-//require_once __DIR__ . '/class/TaskHandler.php';
-// log_level
+$helper = \XoopsModules\Wgevents\Helper::getInstance();
+$logHandler = $helper->getHandler('Log');
+
+// log_level (see also Constants)
 // 0 = no log items will be created
-// 1 = log will be created when newsletter sent or an error occurs (recommended)
-// 2 = log will be created for all events (only for testing)
-$log_level = 2;
+// 1 = log will be created when mail sent or an error occurs (recommended)
+// 2 = log with details will be created for all actions (only for testing)
+$log_level = (int)$helper->getConfig('use_logs');
 
-// execute all pending tasks
-$result_exec = $taskHandler->processTasks($log_level);
+// check for open/pending tasks
+$countOpen = $taskHandler->getCountTasksOpen();
 
-if ($log_level > 0) {
-    $helper = \XoopsModules\Wgevents\Helper::getInstance();
-
-    $logHandler = $helper->getHandler('Log');
-    // get limit_hour from primary account
-    $accountHandler = $helper->getHandler('Account');
-    $limitHour = $accountHandler->getLimitHour();
-
-    echo '<br>log_level:' . $log_level;
-    echo '<br>is_object(helper):' . is_object($helper);
-    echo '<br>limit_hour: ' . $limitHour;
-    if (0 === $result_exec['pending']) {
-        echo '<br>status: ' . 'cron no task';
-        if (2 == $log_level) {
-            echo '<br>no mails for sending available';
-            $logObj = $logHandler->create();
-            echo '<br>is_object(logObj):'.is_object($logObj);
-            // Set Vars
-            $logObj->setVar('text', 'cron no pending task');
-            $logObj->setVar('datecreated', time());
-            $logObj->setVar('submitter', 0);
-            // Insert Data
-            if ($logHandler->insert($logObj)) {
-                echo '<br>log successfully created';
-            } else {
-                echo $logObj->getHtmlErrors();
-                echo '<br>errors when creating log';
-            }
+if ($countOpen > 0) {
+    if ($log_level > Constants::LOG_NONE) {
+        $cronInfoStart  .= '<br>Cron task(s) available<br>- Start: ' . $start;
+        $cronInfoStart  .= '<br>- Log level:' . $log_level;
+        $cronInfoStart  .= '<br>- Open tasks at start: ' . $countOpen;
+        $logObj = $logHandler->create();
+        if (!is_object($logObj)) {
+            echo '<br>is_object(logObj): FALSE';
         }
-    } else {
-        echo '<br>status: ' . 'cron task available';
-        echo "<br>result cron: Pending: " . $result_exec['pending'] . " / Done: " . $result_exec['done'];
+        // get limit_hour from primary account
+        $accountHandler = $helper->getHandler('Account');
+        $limitHour = $accountHandler->getLimitHour();
+        if ($log_level > Constants::LOG_SIMPLE) {
+            $cronInfoStart  .= '<br>-- is_object(helper):' . is_object($helper);
+            $cronInfoStart  .= '<br>-- is_object(logObj):' . is_object($logObj);
+            $cronInfoStart  .= '<br>-- limit_hour: ' . $limitHour;
+        }
+        // Set Vars
+        $logObj->setVar('text', $cronInfoStart );
+        $logObj->setVar('datecreated', time());
+        $logObj->setVar('submitter', 0);
+        // Insert Data
+        if ($logHandler->insert($logObj)) {
+            $cronInfoStart .= '<br>- log start successfully created';
+        } else {
+            $cronInfoStart .= '<br>- errors when creating log start';
+            $cronInfoStart .= '<br>-- htmlErrors: ' . $logObj->getHtmlErrors();
+        }
     }
+    // execute all pending tasks
+    $result_exec = $taskHandler->processTasks($log_level, true);
+
+    if ($log_level > Constants::LOG_NONE) {
+        $logObj = $logHandler->create();
+        if (!is_object($logObj)) {
+            echo '<br>is_object(logObj): FALSE';
+        }
+        // get limit_hour from primary account
+        $accountHandler = $helper->getHandler('Account');
+        $limitHour = $accountHandler->getLimitHour();
+        $cronInfoResult = '';
+        if ($log_level > Constants::LOG_SIMPLE) {
+            $cronInfoResult  .= '<br>- Result Process Tasks Detail: ' . $result_exec['resprocess'];
+        }
+        $cronInfoResult  .= '<br>- Result Done: ' . $result_exec['done'];
+        if ((int)$result_exec['still_open'] > 0 ){
+            $cronInfoResult  .= '<br><span style="color:#ff0000;font-weight:700">- Result Still Open: ' . $result_exec['still_open'] . '</span>';
+        } else {
+            $cronInfoResult  .= '<br>- Result Still Open: ' . $result_exec['still_open'];
+        }
+        // Set Vars
+        $logObj->setVar('text', $cronInfoResult );
+        $logObj->setVar('datecreated', time());
+        $logObj->setVar('submitter', 0);
+        // Insert Data
+        if ($logHandler->insert($logObj)) {
+            $cronInfoResult .= '<br>- log result successfully created';
+        } else {
+            $cronInfoResult .= '<br>- errors when creating log result';
+            $cronInfoResult .= '<br>-- htmlErrors: ' . $logObj->getHtmlErrors();
+        }
+        echo $cronInfoStart . $cronInfoResult;
+    }
+} else {
+    $cronInfoResult .= '<br>cron: no task';
+    if ($log_level > Constants::LOG_NONE) {
+        $logObj = $logHandler->create();
+        $cronInfoResult .= '<br>is_object(logObj):'.is_object($logObj);
+        // Set Vars
+        $logObj->setVar('text', 'cron: no pending task');
+        $logObj->setVar('datecreated', time());
+        $logObj->setVar('submitter', 0);
+        // Insert Data
+        if ($logHandler->insert($logObj)) {
+            $cronInfoResult .= '<br>log successfully created';
+        } else {
+            echo $logObj->getHtmlErrors();
+            $cronInfoResult .= '<br>errors when creating log';
+        }
+    }
+    echo $cronInfoResult;
 }
-echo '<br>finished cron.php';
+
+echo '<br>finished cron.php: ' . \formatTimestamp(time(), 'm');

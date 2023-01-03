@@ -44,7 +44,7 @@ $modversion = [
     'help'                => 'page=help',
     'release_info'        => 'release_info',
     'release_file'        => \XOOPS_URL . '/modules/wgevents/docs/release_info file',
-    'release_date'        => '2022/01/11',
+    'release_date'        => '2023/03/01',
     'manual'              => 'link to manual file',
     'manual_file'         => \XOOPS_URL . '/modules/wgevents/docs/install.txt',
     'min_php'             => '7.4',
@@ -64,7 +64,7 @@ $modversion = [
     'support_name'        => 'Support Forum',
     'module_website_url'  => 'www.xoops.org',
     'module_website_name' => 'XOOPS Project',
-    'release'             => '01.11.2022',
+    'release'             => '03.01.2023',
     'module_status'       => 'RC 1',
     'system_menu'         => 1,
     'hasAdmin'            => 1,
@@ -686,9 +686,10 @@ $modversion['config'][] = [
     'name'        => 'use_logs',
     'title'       => '\_MI_WGEVENTS_USE_LOGS',
     'description' => '\_MI_WGEVENTS_USE_LOGS_DESC',
-    'formtype'    => 'yesno',
+    'formtype'    => 'select',
     'valuetype'   => 'int',
-    'default'     => 1,
+    'default'     => 0,
+    'options'     => [\_MI_WGEVENTS_USE_LOG_NONE => Constants::LOG_NONE, \_MI_WGEVENTS_USE_LOG_SIMPLE => Constants::LOG_SIMPLE, \_MI_WGEVENTS_USE_LOG_DETAILS => Constants::LOG_DETAILS]
 ];
 // use wgGallery module
 $modversion['config'][] = [

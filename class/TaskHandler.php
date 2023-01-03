@@ -129,6 +129,18 @@ class TaskHandler extends \XoopsPersistableObjectHandler
     }
 
     /**
+     * Get count open tasks for cron.php
+     * @return int
+     */
+    public function getCountTasksOpen()
+    {
+        $crTask = new \CriteriaCompo();
+        $crTask->add(new \Criteria('status', Constants::STATUS_DONE, '<'));
+
+        return $this->getCount($crTask);
+    }
+
+    /**
      * Create a task
      * @param $type
      * @param $recipient
@@ -155,9 +167,10 @@ class TaskHandler extends \XoopsPersistableObjectHandler
     /**
      * process all task if limit is not exceeded
      * @param $log_level
+     * @param $isCron
      * @return bool
      */
-    public function processTasks($log_level = 0)
+    public function processTasks($log_level = 0, $isCron = false)
     {
         $helper = \XoopsModules\Wgevents\Helper::getInstance();
 
@@ -165,19 +178,31 @@ class TaskHandler extends \XoopsPersistableObjectHandler
         $accountHandler = $helper->getHandler('Account');
         $limitHour = $accountHandler->getLimitHour();
 
+        $resProcess = '';
+
         $crTaskPending = new \CriteriaCompo();
         $crTaskPending->add(new \Criteria('status', Constants::STATUS_PENDING));
+        $tasksCountPending = $this->getCount($crTaskPending);
+
+        // if all works properly there shouldn't be a task type 'processing' left
+        $crTaskProcessing = new \CriteriaCompo();
+        $crTaskProcessing->add(new \Criteria('status', Constants::STATUS_PROCESSING));
+        $tasksCountProcessing = $this->getCount($crTaskProcessing);
+
         $crTaskDone = new \CriteriaCompo();
         $crTaskDone->add(new \Criteria('status', Constants::STATUS_DONE));
         $crTaskDone->add(new \Criteria('datedone', time() - 3600, '>'));
-        $tasksCountPending = $this->getCount($crTaskPending);
         $tasksCountDone = $this->getCount($crTaskDone);
+
         $counterDone = 0;
         if ($log_level > 0) {
-            echo '<br>Start processTasks';
-            echo '<br>time - 3600: ' . \formatTimestamp(time() - 3600, 'm');
-            echo '<br>tasksCountPending: ' . $tasksCountPending;
-            echo '<br>tasksCountDone: ' . $tasksCountDone;
+            $resProcess .=  '<br>Start processTasks';
+            $resProcess .=  '<br>time - 3600: ' . \formatTimestamp(time() - 3600, 'm');
+            if ($tasksCountProcessing > 0) {
+                $resProcess .= '<br><span style="color:#ff0000;font-weight:700">Count processing at start: ' . $tasksCountProcessing . '</span>';
+            }
+            $resProcess .=  '<br>Count pending at start: ' . $tasksCountPending;
+            $resProcess .=  '<br>Count done at start: ' . $tasksCountDone;
         }
         if (($tasksCountPending > 0) && ($tasksCountDone < $limitHour || 0 == $limitHour)) {
             if ($limitHour > 0) {
@@ -187,8 +212,8 @@ class TaskHandler extends \XoopsPersistableObjectHandler
             foreach (\array_keys($tasksAll) as $i) {
                 // check whether task is still pending
                 // ignore it if meanwhile another one started to process the task
-                if ($log_level > 0) {
-                    echo '<br>tasksAll key: ' . $i;
+                if ($log_level > 1) {
+                    $resProcess .=  '<br>Task key: ' . $i;
                 }
                 if ((Constants::STATUS_PENDING == (int)$tasksAll[$i]->getVar('status'))
                     && ($tasksCountDone < $limitHour || 0 == $limitHour)) {
@@ -209,27 +234,33 @@ class TaskHandler extends \XoopsPersistableObjectHandler
                             $taskProcessObj->setVar('status', Constants::STATUS_DONE);
                             $taskProcessObj->setVar('datedone', time());
                             $counterDone++;
-                            if ($log_level > 0) {
-                                echo ' - done';
+                            if ($log_level > 1) {
+                                $resProcess .=  ' - done';
                             }
                         } else {
                             $taskProcessObj->setVar('status', Constants::STATUS_PENDING);
-                            if ($log_level > 0) {
-                                echo ' - failed';
+                            if ($log_level > 1) {
+                                $resProcess .=  ' - failed';
                             }
                         }
                         $this->insert($taskProcessObj);
                     } else {
-                        echo ' - skipped';
+                        $resProcess .=  ' - skipped';
                     }
                 }
                 // check once more number of done
                 $tasksCountDone = $this->getCount($crTaskDone);
             }
         }
+        // check once more number of open tasks
+        $crTaskOpen = new \CriteriaCompo();
+        $crTaskOpen->add(new \Criteria('status', Constants::STATUS_DONE, '<'));
+        $tasksCountOpen = $this->getCount($crTaskOpen);
+
         if ($log_level > 0) {
-            echo '<br>End processTasks';
+            $resProcess .=  '<br>End processTasks';
         }
-        return ['pending' => $tasksCountPending, 'done' => $counterDone];
+
+        return ['pending' => $tasksCountPending, 'done' => $counterDone, 'resprocess' => $resProcess, 'still_open' => $tasksCountOpen];
     }
 }

@@ -48,6 +48,11 @@ class MailHandler
      * @var bool
      */
     public $isHtml = false;
+
+    /**
+     * @var bool
+     */
+    public $isCron = false;
     
     /**
      * Constructor
@@ -81,37 +86,16 @@ class MailHandler
     public function execute()
     {
         $helper = Helper::getInstance();
-        $permissionsHandler = $helper->getHandler('Permission');
         $accountHandler = $helper->getHandler('Account');
-        $useLogs = (bool)$helper->getConfig('use_logs');
+        $useLogs = (bool)($helper->getConfig('use_logs') > Constants::LOG_NONE);
         if ($useLogs) {
             $logHandler = $helper->getHandler('Log');
         }
-
-        if (Constants::MAIL_EVENT_NOTIFY_ALL == $this->type){
-            //current user must have perm to edit event
-            if (!$permissionsHandler->getPermEventsEdit(
-                $this->mailParams['evSubmitter'],
-                $this->mailParams['evStatus'],
-            )) {
-                return false;
-            }
-        } else {
-            //current user must have perm to edit registration
-            if (!$permissionsHandler->getPermRegistrationsEdit(
-                $this->mailParams['regIp'],
-                $this->mailParams['regSubmitter'],
-                $this->mailParams['evSubmitter'],
-                $this->mailParams['evStatus'],
-            )) {
-                return false;
-            }
-        }
-
         $logInfo = '<br>Task ID: ' . $this->mailParams['taskId'];
 
         $errors = 0;
 
+        $eventLink      = '';
         $eventUrl       = \WGEVENTS_URL . '/event.php?op=show&id=' . $this->mailParams['evId'];
         $eventName      = $this->getCleanParam('evName');
         $eventDate      = \formatTimestamp($this->mailParams['evDatefrom'], 'm');
@@ -216,6 +200,8 @@ class MailHandler
             // check whether mail body contains any html tags
             if (\preg_match('/<\s?[^\>]*\/?\s?>/i', $mailBody)) {
                 $this->isHtml = true;
+                $logInfo .= '<br>Check isHtml: true';
+                $eventLink = "<a href='" . $eventUrl . "' title='" . $eventUrl . "'>" . $eventName . '</a>';
             }
             $xoopsMailer->setHTML($this->isHtml);
             //set template path
@@ -271,7 +257,11 @@ class MailHandler
             $xoopsMailer->assign('EVENTDATEFROM', $eventDate);
             $xoopsMailer->assign('EVENTLOCATION', $eventLocation);
             $xoopsMailer->assign('INFOTEXT', $infotext);
-            $xoopsMailer->assign('EVENTURL', $eventUrl);
+            if ('' !== $eventLink) {
+                $xoopsMailer->assign('EVENTURL', $eventLink);
+            } else {
+                $xoopsMailer->assign('EVENTURL', $eventUrl);
+            }
             $xoopsMailer->assign('BODY', $mailBody);
             $xoopsMailer->assign('SIGNATURE', $senderSignatur);
             //set recipient
