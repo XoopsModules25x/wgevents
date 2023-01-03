@@ -130,4 +130,8 @@ interface Constants
     public const REGPROCESSBAR_PI   = 1;
     public const REGPROCESSBAR_TB   = 2;
 
+    // Constants for logging
+    public const LOG_NONE    = 0;
+    public const LOG_SIMPLE  = 1;
+    public const LOG_DETAILS = 2;
 }

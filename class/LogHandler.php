@@ -131,7 +131,7 @@ class LogHandler extends \XoopsPersistableObjectHandler
     {
         $helper = \XoopsModules\Wgevents\Helper::getInstance();
 
-        if ($helper->getConfig('use_logs')) {
+        if ($helper->getConfig('use_logs') > 0) {
             $logSubmitter = \is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->uid() : 0;
             $logObj = $this->create();
             // Set Vars
