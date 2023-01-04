@@ -36,6 +36,26 @@ if (!$permissionsHandler->getPermEventsView()) {
     exit;
 }
 
+
+$errMsg = 'SMTP Error: data not accepted.SMTP server error: DATA END command failed Detail: Your message could not be sent. The limit on the number of allowed outgoing messages was exceeded. Try again later. SMTP code: 554 Additional SMTP info: 5.7.0';
+echo $errMsg . ':';
+$errIds = ['SMTP','554', 'error'];
+$arrMsg = explode(' ', \preg_replace('/[^a-z0-9]/i',' ',$errMsg));
+$countMerge = count(array_intersect($arrMsg, $errIds));
+echo $countMerge;
+
+
+
+
+
+
+
+
+
+
+
+
+
 $op         = Request::getCmd('op', 'coming');
 $start      = Request::getInt('start');
 $limit      = Request::getInt('limit', (int)$helper->getConfig('userpager'));

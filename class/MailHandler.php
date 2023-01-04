@@ -81,7 +81,7 @@ class MailHandler
     /**
      * Function to send mails for new/update registrations
      * 
-     * @return bool
+     * @return int
      */
     public function execute()
     {
@@ -93,7 +93,7 @@ class MailHandler
         }
         $logInfo = '<br>Task ID: ' . $this->mailParams['taskId'];
 
-        $errors = 0;
+        $errorCode = 0;
 
         $eventLink      = '';
         $eventUrl       = \WGEVENTS_URL . '/event.php?op=show&id=' . $this->mailParams['evId'];
@@ -275,19 +275,29 @@ class MailHandler
                 if ($useLogs) {
                     $logHandler->createLog('Result MailHandler/executeReg: failed' .$xoopsMailer->getErrors() . $logInfo);
                 }
-                $errors++;
+                $errorCode = 900; // wgevents internal code for xoopsMailer error
             }
             $xoopsMailer->reset();
             unset($xoopsMailer);
         }
         catch (\Exception $e) {
+            $errMsg = $e->getMessage();
+            // check for SMTP error 554 (maximum number of mails exceeded)
+            $errIds = ['SMTP','554', 'error'];
+            $arrMsg = explode(' ', \preg_replace('/[^a-z0-9]/i',' ',$errMsg));
+            $countMatches = count(array_intersect($arrMsg, $errIds));
+            if ($countMatches > 0) {
+                $errorCode = 554;
+            } else {
+
+                $errorCode = 999; // wgevents internal code for misc error
+            }
             if ($useLogs) {
                 $logHandler->createLog('MailHandler/executeReg failed: Exception - ' . $e->getMessage());
             }
-            $errors++;
         }
 
-        return (0 == $errors);
+        return $errorCode;
     }
 
     /**
