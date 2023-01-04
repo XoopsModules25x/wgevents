@@ -275,23 +275,23 @@ class MailHandler
                 if ($useLogs) {
                     $logHandler->createLog('Result MailHandler/executeReg: failed' .$xoopsMailer->getErrors() . $logInfo);
                 }
-                $errorCode = 900; // wgevents internal code for xoopsMailer error
+                $errMsg = $xoopsMailer->getErrors();
+                // check for SMTP error 554 (maximum number of mails exceeded)
+                $errIds = ['SMTP','554', 'error'];
+                $arrMsg = explode(' ', \preg_replace('/[^a-z0-9]/i',' ',$errMsg));
+                $countMatches = count(array_intersect($arrMsg, $errIds));
+                if ($countMatches > 0) {
+                    $errorCode = 554;
+                } else {
+
+                    $errorCode = 900; // wgevents internal code for misc error
+                }
             }
             $xoopsMailer->reset();
             unset($xoopsMailer);
         }
         catch (\Exception $e) {
-            $errMsg = $e->getMessage();
-            // check for SMTP error 554 (maximum number of mails exceeded)
-            $errIds = ['SMTP','554', 'error'];
-            $arrMsg = explode(' ', \preg_replace('/[^a-z0-9]/i',' ',$errMsg));
-            $countMatches = count(array_intersect($arrMsg, $errIds));
-            if ($countMatches > 0) {
-                $errorCode = 554;
-            } else {
-
-                $errorCode = 999; // wgevents internal code for misc error
-            }
+            $errorCode = 999; // wgevents internal code for misc error
             if ($useLogs) {
                 $logHandler->createLog('MailHandler/executeReg failed: Exception - ' . $e->getMessage());
             }
