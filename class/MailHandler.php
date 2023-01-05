@@ -116,7 +116,7 @@ class MailHandler
         switch ($this->type) {
             case 0:
             default:
-                return false;
+                return 0;
             case Constants::MAIL_REG_CONFIRM_OUT:
                 $template = 'mail_reg_confirm_out.tpl';
                 $subject = \_MA_WGEVENTS_MAIL_REG_OUT_SUBJECT;
@@ -278,8 +278,8 @@ class MailHandler
                 $errMsg = $xoopsMailer->getErrors();
                 // check for SMTP error 554 (maximum number of mails exceeded)
                 $errIds = ['SMTP','554', 'error'];
-                $arrMsg = explode(' ', \preg_replace('/[^a-z0-9]/i',' ',$errMsg));
-                $countMatches = count(array_intersect($arrMsg, $errIds));
+                $arrMsg = \explode(' ', \preg_replace('/[^a-z0-9]/i',' ',$errMsg));
+                $countMatches = \count(\array_intersect($arrMsg, $errIds));
                 if ($countMatches > 0) {
                     $errorCode = 554;
                 } else {
