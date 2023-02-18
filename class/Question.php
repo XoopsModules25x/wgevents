@@ -176,7 +176,7 @@ class Question extends \XoopsObject
         $queValues = (string)$this->getVar('values');
         $queValuesText = '';
         if ('' != $queValues) {
-            $queValuesText = \implode("\n", \unserialize($queValues));
+            $queValuesText = \implode("\n", \unserialize($queValues, ['allowed_classes' => false]));
         }
         $queValuesField = new \XoopsFormTextArea(\_MA_WGEVENTS_QUESTION_VALUE, 'values', $queValuesText, 5, 47);
         $queValuesField->setDescription(\_MA_WGEVENTS_QUESTION_VALUE_DESC);
@@ -253,8 +253,8 @@ class Question extends \XoopsObject
         $ret['value_list'] = '';
         $queValues = $this->getVar('values');
         if ('' != $queValues) {
-            $ret['value_text'] = \implode("\n", \unserialize($queValues));
-            $ret['value_list'] = $utility::truncateHtml(\implode('<br>', \unserialize($queValues)));
+            $ret['value_text'] = \implode("\n", \unserialize($queValues, ['allowed_classes' => false]));
+            $ret['value_list'] = $utility::truncateHtml(\implode('<br>', \unserialize($queValues, ['allowed_classes' => false])));
         }
         $ret['required_text']    = (int)$this->getVar('required') > 0 ? _YES : _NO;
         $ret['print_text']       = (int)$this->getVar('print') > 0 ? _YES : _NO;

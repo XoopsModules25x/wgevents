@@ -205,11 +205,11 @@ class Registration extends \XoopsObject
                                 case Constants::FIELD_COMBOBOX:
                                 case Constants::FIELD_CHECKBOX:
                                     $ansText = $answersAll[$ansId]->getVar('text', 'n');
-                                    $value = \unserialize($ansText);
+                                    $value = \unserialize($ansText, ['allowed_classes' => false]);
                                     break;
                                 case Constants::FIELD_SELECTBOX:
                                     $ansText = $answersAll[$ansId]->getVar('text', 'n');
-                                    $value = (string)\unserialize($ansText);
+                                    $value = (string)\unserialize($ansText, ['allowed_classes' => false]);
                                     break;
                                 case 0:
                                 default:
@@ -226,7 +226,7 @@ class Registration extends \XoopsObject
                     //Constants::FIELD_SELECTBOX == $queType ||
                     Constants::FIELD_CHECKBOX == $queType ||
                     Constants::FIELD_COMBOBOX == $queType) {
-                        $formelementsHandler->optionsArr = \unserialize($addValue);
+                        $formelementsHandler->optionsArr = \unserialize($addValue, ['allowed_classes' => false]);
                 }
                 /**/
                 $required = (bool)$questionsAll[$queId]->getVar('required');
@@ -236,7 +236,7 @@ class Registration extends \XoopsObject
                     if ($required) {
                         $optionsSB[''] = ' ';
                     }
-                    foreach (\unserialize($addValue) as $optSB) {
+                    foreach (\unserialize($addValue, ['allowed_classes' => false]) as $optSB) {
                         $optionsSB[] = $optSB;
                     }
                     $formelementsHandler->optionsArr = $optionsSB;

@@ -95,7 +95,9 @@ class Event extends \XoopsObject
         $this->initVar('register_signature', \XOBJ_DTYPE_TXTAREA);
         $this->initVar('register_forceverif', \XOBJ_DTYPE_INT);
         $this->initVar('status', \XOBJ_DTYPE_INT);
-        $this->initVar('galid', \XOBJ_DTYPE_INT);
+        $this->initVar('galid', \XOBJ_DTYPE_TXTBOX);
+        $this->initVar('url_info', \XOBJ_DTYPE_TXTBOX);
+        $this->initVar('url_registration', \XOBJ_DTYPE_TXTBOX);
         $this->initVar('identifier', \XOBJ_DTYPE_TXTBOX);
         $this->initVar('groups', \XOBJ_DTYPE_TXTBOX);
         $this->initVar('datecreated', \XOBJ_DTYPE_INT);
@@ -117,7 +119,7 @@ class Event extends \XoopsObject
 
     /**
      * The new inserted $Id
-     * @return inserted id
+     * @return int
      */
     public function getNewInsertedId()
     {
@@ -182,7 +184,7 @@ class Event extends \XoopsObject
         // count sub categories
         $catsSubOnline = $categoryHandler->getAllCatsOnline(Constants::CATEGORY_TYPE_SUB);
         if (\count($catsSubOnline) > 0) {
-            $evSubCats = $this->isNew() ? [] : \unserialize($this->getVar('subcats'));
+            $evSubCats = $this->isNew() ? [] : \unserialize($this->getVar('subcats'), ['allowed_classes' => false]);
             $evSubCatsSelect = new \XoopsFormCheckBox(\_MA_WGEVENTS_EVENT_SUBCATS, 'subcats', $evSubCats);
             $evSubCatsSelect->addOptionArray($catsSubOnline);
             $form->addElement($evSubCatsSelect);
@@ -577,7 +579,7 @@ class Event extends \XoopsObject
         $ret['catname'] = $catName;
         $ret['catlogo'] = $catLogo;
         $subcatsArr = [];
-        $subcats = \unserialize($this->getVar('subcats'));
+        $subcats = \unserialize($this->getVar('subcats'), ['allowed_classes' => false]);
         if (\is_array($subcats) && \count($subcats) > 0) {
             foreach ($subcats as $subcat) {
                 $subcategoryObj = $categoryHandler->get($subcat);

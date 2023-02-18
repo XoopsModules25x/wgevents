@@ -172,16 +172,16 @@ class AnswerHandler extends \XoopsPersistableObjectHandler
                     }
                     if (Constants::FIELD_CHECKBOX == $queItem['type'] ||
                         Constants::FIELD_COMBOBOX == $queItem['type']) {
-                        $queValues = \unserialize($queItem['values']);
-                        $ansItems = \unserialize($ansText);
+                        $queValues = \unserialize($queItem['values'], ['allowed_classes' => false]);
+                        $ansItems = \unserialize($ansText, ['allowed_classes' => false]);
                         $ansText = '';
                         foreach ($ansItems as $ansItem) {
                             $ansText .= $queValues[(int)$ansItem] . ' <br>';
                         }
                     }
                     if (Constants::FIELD_SELECTBOX == $queItem['type']) {
-                        $queValues = \unserialize($queItem['values']);
-                        $ansItem = (string)\unserialize($ansText);
+                        $queValues = \unserialize($queItem['values'], ['allowed_classes' => false]);
+                        $ansItem = (string)\unserialize($ansText, ['allowed_classes' => false]);
                         $ansText = $queValues[(int)$ansItem];
                     }
                     if (Constants::FIELD_RADIO == $queItem['type']) {
