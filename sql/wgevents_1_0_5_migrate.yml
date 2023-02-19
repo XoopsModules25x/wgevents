@@ -53,6 +53,9 @@ wgevents_event:
             name: locgmzoom
             attributes: " INT(1)          NOT NULL DEFAULT '0' "
         -
+            name: fee_type
+            attributes: " INT(1)          NOT NULL DEFAULT '0' "
+        -
             name: fee
             attributes: " TEXT            NULL "
         -
@@ -96,10 +99,16 @@ wgevents_event:
             attributes: " INT(1)          NOT NULL DEFAULT '0' "
         -
             name: galid
-            attributes: " INT(10)         NOT NULL DEFAULT '0' "
+            attributes: " VARCHAR(255)    NOT NULL DEFAULT '' "
         -
             name: groups
             attributes: " VARCHAR(255)    NOT NULL DEFAULT '00000' "
+        -
+            name: url_info
+            attributes: " VARCHAR(255)    NOT NULL DEFAULT '' "
+        -
+            name: url_registration
+            attributes: " VARCHAR(255)    NOT NULL DEFAULT '' "
         -
             name: recurr_id
             attributes: " INT(11)         NOT NULL DEFAULT '0' "

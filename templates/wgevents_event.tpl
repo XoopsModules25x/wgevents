@@ -8,7 +8,6 @@
                 <{include file="db:wgevents_category_index_form.tpl"}>
             <{else}>
                 <!-- Start cat loop -->
-
                 <{foreach item=category from=$categories name=categories}>
                     <{include file="db:wgevents_category_index_$event_displaycats.tpl" category=$category}>
                 <{/foreach}>

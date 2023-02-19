@@ -24,6 +24,7 @@
                     <th class="center"><{$smarty.const._MA_WGEVENTS_EVENT_LOCGMLON}></th>
                     <th class="center"><{$smarty.const._MA_WGEVENTS_EVENT_LOCGMZOOM}></th>
                 <{/if}>
+                <th class="center"><{$smarty.const._MA_WGEVENTS_EVENT_FEETYPE}></th>
                 <th class="center"><{$smarty.const._MA_WGEVENTS_EVENT_FEE}></th>
                 <th class="center"><{$smarty.const._MA_WGEVENTS_EVENT_PAYMENTINFO}></th>
                 <{if $use_register|default:''}>
@@ -69,6 +70,7 @@
                     <td class='center'><{$event.locgmlon}></td>
                     <td class='center'><{$event.locgmzoom}></td>
                 <{/if}>
+                <td class='center'><{$event.feetype_text|default:''}></td>
                 <td class='center'><{$event.fee_text|default:''}></td>
                 <td class='center'><{$event.paymentinfo_text|default:''}></td>
                 <{if $use_register|default:''}>

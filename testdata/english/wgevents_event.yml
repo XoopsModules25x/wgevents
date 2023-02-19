@@ -2,11 +2,13 @@
     id: '1'
     identifier: FP2022_1
     catid: '2'
+    subcats: 'a:0:{}'
     name: 'Aktivtag mit den Naturfreunden'
     logo: AktivtagmitdenNaturfreunden.63a4ad83766f5.jpg
     desc: 'Die Naturfreunde Hochburg-Ach veranstalten auch heuer wieder einen Aktivtag. Der Hochseilgarten mit Flying Fox, Jakobsleiter, Pampers Pole, … bietet für jede Altersgruppe und Könnerstufe Spaß und Herausforderung. Außerdem ist eine Wanderung zum Hunt an der Salzach geplant.'
     datefrom: '1691569800'
     dateto: '1691596800'
+    allday: '0'
     contact: 'Gottfried +43 12345678'
     email: gottfried@mydomain.com
     url: ''
@@ -30,20 +32,22 @@
     status: '5'
     galid: '0'
     groups: '00000'
+    url_info: ''
+    url_registration: ''
+    recurr_id: '0'
     datecreated: '1688371283'
     submitter: '1'
-    subcats: 'a:0:{}'
-    allday: '0'
-    recurr_id: '0'
 -
     id: '3'
     identifier: FP2022_2
     catid: '1'
+    subcats: 'a:0:{}'
     name: 'Kinderskikurs Skiing for childs'
     logo: KinderskikursSkiingforchilds.63a4acbabc956.jpg
     desc: "Bei uns können ihre Kinder Skifahren erlernen oder bei Vorkenntnissen das Können verbessern\r\nYour childs can learn skiing, or if they have already some experience, they can improve it"
     datefrom: '1672988400'
     dateto: '1673200800'
+    allday: '0'
     contact: 'Maria Musterfrau +43 7727 123456789'
     email: ''
     url: ''
@@ -67,20 +71,22 @@
     status: '5'
     galid: '0'
     groups: '00000'
+    url_info: ''
+    url_registration: ''
+    recurr_id: '0'
     datecreated: '1688375995'
     submitter: '1'
-    subcats: 'a:0:{}'
-    allday: '0'
-    recurr_id: '0'
 -
     id: '4'
     identifier: FP2022_3
     catid: '2'
+    subcats: 'a:1:{i:0;s:1:"2";}'
     name: Bastelkurs
     logo: Bastelkurs.63a4b2565ec7b.jpg
     desc: 'Wir basteln unsere Schultüte'
     datefrom: '1686294000'
     dateto: '1686330000'
+    allday: '0'
     contact: Gottfried
     email: ''
     url: ''
@@ -104,20 +110,22 @@
     status: '5'
     galid: '0'
     groups: '00000'
+    url_info: ''
+    url_registration: ''
+    recurr_id: '0'
     datecreated: '1689104342'
     submitter: '1'
-    subcats: 'a:1:{i:0;s:1:"2";}'
-    allday: '0'
-    recurr_id: '0'
 -
     id: '6'
     identifier: FP2022_4
     catid: '2'
+    subcats: 'a:0:{}'
     name: Mosaiktag
     logo: Mosaiktag.63a4ab1ce478f.jpg
     desc: 'Gitarrenkurs für jung und alt / Learning playing guitar, for young and old'
     datefrom: '1690639200'
     dateto: '1690644600'
+    allday: '0'
     contact: 'Webmaster Wedega'
     email: webmaster@wedega.com
     url: ''
@@ -141,8 +149,8 @@
     status: '5'
     galid: '0'
     groups: '00000'
+    url_info: ''
+    url_registration: ''
+    recurr_id: '0'
     datecreated: '1690486854'
     submitter: '1'
-    subcats: 'a:0:{}'
-    allday: '0'
-    recurr_id: '0'

@@ -52,12 +52,21 @@ function toggleRegistrationOpts() {
     /* show/hide collection of fields concerning online registration*/
     $( "#registeropttray" ).toggle( "slow", function() {});
     $( "#continue_questions" ).toggle( "slow", function() {});
-    
+}
+
+function toggleFeeFields() {
+    /* show/hide area for fee input */
+    let fee_type = document.querySelector("input[type='radio'][name=fee_type]:checked").value;
+    if (0 == fee_type) {
+        $("#wrapper_fee").show(500);
+    } else {
+        $( "#wrapper_fee" ).hide(500);
+    }
 }
 
 function toggleAllday() {
     /* enable or disable time input field of date related to input of checkbock "Allday" */
-    var cb_allday = document.getElementById('allday1');
+    let cb_allday = document.getElementById('allday1');
     if (cb_allday.checked) {
         xoopsGetElementById('datefrom[time]').setAttribute("disabled", "disabled");
         xoopsGetElementById('dateto[time]').setAttribute("disabled", "disabled");
@@ -70,14 +79,14 @@ function toggleAllday() {
 function toggleAllCats() {
     /* check or uncheck all categeories related to input of checkbock "All cats" */
     /* used in class/CategoryHandler function getFormCatsCb */
-    var cb_all = document.getElementById('all_cats1');
-    var checkboxes = document.getElementsByName('filter_cats[]');
+    let cb_all = document.getElementById('all_cats1');
+    let checkboxes = document.getElementsByName('filter_cats[]');
     if (cb_all.checked) {
-        for (var i in checkboxes){
+        for (let i in checkboxes){
             checkboxes[i].checked = true;
         }
     } else {
-        for (var i in checkboxes){
+        for (let i in checkboxes){
             checkboxes[i].checked = false;
         }
     }
@@ -86,8 +95,8 @@ function toggleAllCats() {
 function toggleAllEvents() {
     /* check or uncheck all events related to input of checkbock "All events" */
     /* used in export.php /wgevents_export.tpl */
-    var cb_all = document.getElementById('all_events');
-    var checkboxes = document.getElementsByName('chk_event[]');
+    let cb_all = document.getElementById('all_events');
+    let checkboxes = document.getElementsByName('chk_event[]');
     if (cb_all.checked) {
         for (var i in checkboxes){
             checkboxes[i].checked = true;
@@ -101,8 +110,8 @@ function toggleAllEvents() {
 
 function fillInQuestions() {
 
-    var select = document.getElementById('type');
-    var vselected = select.options[select.selectedIndex].value;
+    let select = document.getElementById('type');
+    let vselected = select.options[select.selectedIndex].value;
 
     xoopsGetElementById('caption').value = xoopsGetElementById('caption_def[' + vselected +  ']').value;
     xoopsGetElementById('placeholder').value = xoopsGetElementById('placeholder_def[' + vselected +  ']').value;

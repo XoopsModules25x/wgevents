@@ -81,6 +81,7 @@ class Event extends \XoopsObject
         $this->initVar('locgmlat', \XOBJ_DTYPE_FLOAT);
         $this->initVar('locgmlon', \XOBJ_DTYPE_FLOAT);
         $this->initVar('locgmzoom', \XOBJ_DTYPE_INT);
+        $this->initVar('fee_type', \XOBJ_DTYPE_INT);
         $this->initVar('fee', \XOBJ_DTYPE_OTHER);
         $this->initVar('paymentinfo', \XOBJ_DTYPE_OTHER);
         $this->initVar('register_use', \XOBJ_DTYPE_INT);
@@ -296,12 +297,19 @@ class Event extends \XoopsObject
             }
         }
         $evFeeTray = new Forms\FormElementTray(\_MA_WGEVENTS_EVENT_FEE, '<br>');
+        $evFeeType = $this->isNew() ? Constants::FEETYPE_DECLARED : $this->getVar('fee_type');
+        $evFeeTypeRadio = new \XoopsFormRadio('', 'fee_type', $evFeeType);
+        $evFeeTypeRadio->addOption(Constants::FEETYPE_DECLARED, \_MA_WGEVENTS_EVENT_FEETYPE_DECLARED);
+        $evFeeTypeRadio->addOption(Constants::FEETYPE_FREE, \_MA_WGEVENTS_EVENT_FEETYPE_FREE);
+        $evFeeTypeRadio->addOption(Constants::FEETYPE_NONDECL, \_MA_WGEVENTS_EVENT_FEETYPE_NONDECL);
+        $evFeeTypeRadio->setExtra(" onchange='toggleFeeFields()' ");
+        $evFeeTray->addElement($evFeeTypeRadio);
         $evFeeGroup = new Forms\FormTextDouble('', 'fee', 0, 0, '');
         $evFeeGroup->setElements($evFeeArr);
         $evFeeGroup->setPlaceholder1(\_MA_WGEVENTS_EVENT_FEE_VAL_PH);
         $evFeeGroup->setPlaceholder2(\_MA_WGEVENTS_EVENT_FEE_DESC_PH);
+        $evFeeGroup->setVisible(Constants::FEETYPE_DECLARED === $evFeeType);
         $evFeeTray->addElement($evFeeGroup);
-
         $form->addElement($evFeeTray);
         // Form TextArea evPaymentinfo
         $editorConfigs2 = [];
@@ -372,14 +380,13 @@ class Event extends \XoopsObject
             // End block registration options
         }
         // Form Select evGalid
-        if ($helper->getConfig('use_wggallery')) {
-            /*TODO */
-            /*
+        if ($helper->getConfig('use_wggallery') && \class_exists('WggalleryCorePreload')) {
+            $helperGallery = \XoopsModules\Wggallery\Helper::getInstance();
+            $albumsHandler = $helperGallery->getHandler('Albums');
             $evGalidSelect = new \XoopsFormSelect(\_MA_WGEVENTS_EVENT_GALID, 'galid', $this->getVar('galid'));
-            $evGalidSelect->addOption('Empty');
-            $evGalidSelect->addOptionArray($albumHandler->getList());
+            $evGalidSelect->addOption(0, ' ');
+            $evGalidSelect->addOptionArray($albumsHandler->getList());
             $form->addElement($evGalidSelect);
-            */
         }
         // Form Select evGroups
         if ($helper->getConfig('use_groups')) {
@@ -633,13 +640,32 @@ class Event extends \XoopsObject
             $contactLines   = preg_split("/\r\n|\n|\r/", $evContact);
             $ret['contact_text_user']  = \implode('<br>', $contactLines);
         }
-        $evFee = \json_decode($this->getVar('fee'), true);
+        $evFeeType = $this->getVar('fee_type');
         $evFeeText = '';
-        foreach($evFee as $fee) {
-            $evFeeText .= Utility::FloatToString((float)$fee[0]) . ' ' . $fee[1] . '<br>';
+        $evFeeShow = false;
+        switch ($evFeeType) {
+            case Constants::FEETYPE_DECLARED:
+            default:
+                $feetypeText = \_MA_WGEVENTS_EVENT_FEETYPE_DECLARED;
+                $evFee = \json_decode($this->getVar('fee'), true);
+                foreach($evFee as $fee) {
+                    $evFeeText .= Utility::FloatToString((float)$fee[0]) . ' ' . $fee[1] . '<br>';
+                }
+                $evFeeShow = true;
+                break;
+            case Constants::FEETYPE_FREE:
+                $feetypeText = \_MA_WGEVENTS_EVENT_FEETYPE_FREE;
+                $evFeeText   = \_MA_WGEVENTS_EVENT_FEETYPE_FREE;
+                $evFeeShow   = true;
+                break;
+            case Constants::FEETYPE_NONDECL:
+                $feetypeText = \_MA_WGEVENTS_EVENT_FEETYPE_NONDECL;
+                break;
         }
+        $ret['feetype_text']          = $feetypeText;
         $ret['fee_text']              = $evFeeText;
-        $ret['paymentinfo_text']      = $this->getVar('paymentinfo', 'e');
+        $ret['fee_show']              = $evFeeShow;
+        $ret['paymentinfo_text']      = \nl2br($this->getVar('paymentinfo', 'e'));
         $ret['register_use_text']     = (int)$this->getVar('register_use') > 0 ? \_YES : \_NO;
         $ret['register_from_text']    = '';
         $ret['register_from_dayname'] = '';
@@ -660,10 +686,25 @@ class Event extends \XoopsObject
         $evRegisterNotify                = $this->getVar('register_notify', 'e');
         $ret['register_notify_text']     = $evRegisterNotify;
         if ($evRegisterNotify) {
-            $notifyEmails   = preg_split("/\r\n|\n|\r/", $evRegisterNotify);
+            $notifyEmails   = \preg_split("/\r\n|\n|\r/", $evRegisterNotify);
             $ret['register_notify_user']  = \implode('<br>', $notifyEmails);
         }
         $ret['register_forceverif_text'] = (int)$this->getVar('register_forceverif') > 0 ? \_YES : \_NO;
+        $evGalid                         = (int)$this->getVar('galid');
+        if ($evGalid > 0 && $helper->getConfig('use_wggallery') && \class_exists('WggalleryCorePreload')) {
+            $helperGallery = \XoopsModules\Wggallery\Helper::getInstance();
+            $albumsHandler = $helperGallery->getHandler('Albums');
+            $albumObj = $albumsHandler->get($evGalid);
+            if (\is_object($albumObj)) {
+                $ret['gallery_name'] = $albumObj->getVar('alb_name');
+                $albLink = \XOOPS_URL . '/modules/wggallery/gallery.php?op=show&amp;alb_id=' . $evGalid;
+                $albLink .= '&amp;alb_pid=' .$albumObj->getVar('alb_pid');
+                $ret['gallery_link'] = $albLink;
+            } else {
+                $evGalid = 0;
+            }
+        }
+        $ret['gallery_id'] = $evGalid;
         $evGroups                        = $this->getVar('groups', 'e');
         $groups_text                     = '';
         if (0 == (int)$evGroups) {

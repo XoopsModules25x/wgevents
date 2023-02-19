@@ -36,6 +36,12 @@ class FormTextDouble extends \XoopsFormText
 {
 
     /**
+     * param for show/hide fee wrapper
+     * @var bool
+     */
+    private $visible;
+
+    /**
      * placeholder first textbox
      *
      * @var array
@@ -64,7 +70,11 @@ class FormTextDouble extends \XoopsFormText
     public function render()
     {
 
-        $ret =  "<div id='wrapper_fee'style='width:100%'>";
+        $ret =  "<div id='wrapper_fee'";
+        if (!$this->getVisible()) {
+            $ret .=  " style='display:none'";
+        }
+        $ret .=  '>';
 
         foreach($this->getElements() as $key => $ele) {
             $ret .=  "<span><input class='form-control " . $this->getClass() . "' type='text' name='"
@@ -179,4 +189,25 @@ class FormTextDouble extends \XoopsFormText
 
     }
 
+    /**
+     * Set value for show/hide fee wrapper
+     *
+     * @param bool $value
+     */
+    public function setVisible($value) {
+
+        $this->visible = $value;
+
+    }
+
+    /**
+     * Get value for show/hide fee wrapper
+     *
+     * @return bool
+     */
+    public function getVisible() {
+
+        return $this->visible;
+
+    }
 }

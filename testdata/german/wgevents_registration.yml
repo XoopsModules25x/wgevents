@@ -11,10 +11,10 @@
     verifkey: vSRGMnzjfs
     status: '5'
     financial: '1'
+    paidamount: '25.00'
     listwait: '0'
     datecreated: '1682862291'
     submitter: '1'
-    paidamount: '25.00'
 -
     id: '2'
     evid: '4'
@@ -28,10 +28,10 @@
     verifkey: R7MFIs4R30
     status: '5'
     financial: '1'
+    paidamount: '70.10'
     listwait: '0'
     datecreated: '1660572165'
     submitter: '1'
-    paidamount: '70.10'
 -
     id: '3'
     evid: '6'
@@ -45,10 +45,10 @@
     verifkey: dYK9gPkgbi
     status: '5'
     financial: '0'
+    paidamount: '0.00'
     listwait: '1'
     datecreated: '1669987991'
     submitter: '1'
-    paidamount: '0.00'
 -
     id: '4'
     evid: '1'
@@ -62,10 +62,10 @@
     verifkey: 0mcUKYNQkY
     status: '5'
     financial: '1'
+    paidamount: '25.00'
     listwait: '0'
     datecreated: '1689601604'
     submitter: '1'
-    paidamount: '25.00'
 -
     id: '5'
     evid: '1'
@@ -79,10 +79,10 @@
     verifkey: z4NBI7sYn3
     status: '4'
     financial: '1'
+    paidamount: '27.50'
     listwait: '1'
     datecreated: '1662034493'
     submitter: '1'
-    paidamount: '27.50'
 -
     id: '6'
     evid: '4'
@@ -96,10 +96,10 @@
     verifkey: frICU2CXFs
     status: '4'
     financial: '0'
+    paidamount: '0.00'
     listwait: '0'
     datecreated: '1677420047'
     submitter: '1'
-    paidamount: '0.00'
 -
     id: '7'
     evid: '1'
@@ -113,10 +113,10 @@
     verifkey: DdlY89m4QD
     status: '4'
     financial: '1'
+    paidamount: '0.00'
     listwait: '1'
     datecreated: '1669988622'
     submitter: '1'
-    paidamount: '0.00'
 -
     id: '8'
     evid: '4'
@@ -130,10 +130,10 @@
     verifkey: JiYMssuaBl
     status: '2'
     financial: '1'
+    paidamount: '110.05'
     listwait: '0'
     datecreated: '1660485201'
     submitter: '1'
-    paidamount: '110.05'
 -
     id: '9'
     evid: '3'
@@ -147,10 +147,10 @@
     verifkey: iHk6T9BSXT
     status: '5'
     financial: '1'
+    paidamount: '5.00'
     listwait: '1'
     datecreated: '1676111908'
     submitter: '3'
-    paidamount: '5.00'
 -
     id: '10'
     evid: '3'
@@ -164,10 +164,10 @@
     verifkey: p26n9Aypp2
     status: '5'
     financial: '0'
+    paidamount: '0.00'
     listwait: '1'
     datecreated: '1684872922'
     submitter: '2'
-    paidamount: '0.00'
 -
     id: '11'
     evid: '1'
@@ -181,10 +181,10 @@
     verifkey: wLP3aCCsTR
     status: '5'
     financial: '1'
+    paidamount: '25.00'
     listwait: '1'
     datecreated: '1677246268'
     submitter: '1'
-    paidamount: '25.00'
 -
     id: '12'
     evid: '1'
@@ -198,10 +198,10 @@
     verifkey: cSlbTJBzG9
     status: '5'
     financial: '1'
+    paidamount: '25.00'
     listwait: '0'
     datecreated: '1684676713'
     submitter: '1'
-    paidamount: '25.00'
 -
     id: '13'
     evid: '1'
@@ -215,10 +215,10 @@
     verifkey: io4cjlnSep
     status: '5'
     financial: '1'
+    paidamount: '27.50'
     listwait: '0'
     datecreated: '1665668594'
     submitter: '1'
-    paidamount: '27.50'
 -
     id: '14'
     evid: '4'
@@ -232,10 +232,10 @@
     verifkey: b4JWRfRBx
     status: '5'
     financial: '0'
+    paidamount: '0.00'
     listwait: '0'
     datecreated: '1668434394'
     submitter: '1'
-    paidamount: '0.00'
 -
     id: '15'
     evid: '4'
@@ -249,10 +249,10 @@
     verifkey: j3rLbHJNTO
     status: '5'
     financial: '1'
+    paidamount: '50.00'
     listwait: '0'
     datecreated: '1686751293'
     submitter: '1'
-    paidamount: '50.00'
 -
     id: '16'
     evid: '3'
@@ -266,10 +266,10 @@
     verifkey: 3hcfjDar9J
     status: '5'
     financial: '1'
+    paidamount: '5.00'
     listwait: '0'
     datecreated: '1672136263'
     submitter: '2'
-    paidamount: '5.00'
 -
     id: '17'
     evid: '1'
@@ -283,10 +283,10 @@
     verifkey: vnWPThpjjN
     status: '5'
     financial: '1'
+    paidamount: '25.00'
     listwait: '0'
     datecreated: '1673444650'
     submitter: '1'
-    paidamount: '25.00'
 -
     id: '18'
     evid: '1'
@@ -300,10 +300,10 @@
     verifkey: YCGdVKwXbq
     status: '5'
     financial: '0'
+    paidamount: '0.00'
     listwait: '0'
     datecreated: '1687268762'
     submitter: '1'
-    paidamount: '0.00'
 -
     id: '19'
     evid: '6'
@@ -317,10 +317,10 @@
     verifkey: lcaLTtFcKd
     status: '5'
     financial: '1'
+    paidamount: '0.00'
     listwait: '1'
     datecreated: '1688391166'
     submitter: '1'
-    paidamount: '0.00'
 -
     id: '20'
     evid: '4'
@@ -334,7 +334,7 @@
     verifkey: YEJSdrE2JE
     status: '5'
     financial: '1'
+    paidamount: '50.00'
     listwait: '0'
     datecreated: '1664027898'
     submitter: '1'
-    paidamount: '50.00'

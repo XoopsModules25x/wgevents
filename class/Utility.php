@@ -178,8 +178,7 @@ class Utility
         $thnd = $helper->getConfig('sep_thousand');
 
         $str = \preg_replace('[^0-9\,\.\-\+]', '', (string)$str);
-        $str = \str_replace($thnd, '', $str);
-        $str = \str_replace(' ', '', $str);
+        $str = \str_replace([$thnd, ' '], '', $str);
         $str = \str_replace($dec, '.', $str);
 
         return (float)$str;

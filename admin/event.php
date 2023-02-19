@@ -159,15 +159,21 @@ switch ($op) {
         $eventObj->setVar('locgmlat', Request::getFloat('locgmlat'));
         $eventObj->setVar('locgmlon', Request::getFloat('locgmlon'));
         $eventObj->setVar('locgmzoom', Request::getInt('locgmzoom'));
-        $evFeeAmountArr = Request::getArray('fee');
-        $evFeeDescArr = Request::getArray('feedesc');
-        $evFeeArr = [];
-        foreach ($evFeeAmountArr as $key => $evFeeAmount) {
-            $evFeeArr[] = [Utility::StringToFloat($evFeeAmount), $evFeeDescArr[$key]];
+        $evFeeType = Request::getInt('fee_type');
+        $eventObj->setVar('fee_type', $evFeeType);
+        if (Constants::FEETYPE_DECLARED === $evFeeType) {
+            $evFeeAmountArr = Request::getArray('fee');
+            $evFeeDescArr = Request::getArray('feedesc');
+            $evFeeArr = [];
+            foreach ($evFeeAmountArr as $key => $evFeeAmount) {
+                $evFeeArr[] = [Utility::StringToFloat($evFeeAmount), $evFeeDescArr[$key]];
+            }
+            // remove last array item, as this is from hidden group
+            \array_pop($evFeeArr);
+            $evFee = \json_encode($evFeeArr);
+        } else {
+            $evFee = '[[0,""]]';
         }
-        // remove last array item, as this is from hidden group
-        \array_pop($evFeeArr);
-        $evFee = \json_encode($evFeeArr);
         $eventObj->setVar('fee', $evFee);
         $eventObj->setVar('paymentinfo', Request::getText('paymentinfo'));
         $eventObj->setVar('register_use', Request::getInt('register_use'));

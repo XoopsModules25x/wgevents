@@ -104,7 +104,7 @@
                 </div>
             </div>
         <{/if}>
-        <{if $event.fee|default:false}>
+        <{if $event.fee_text|default:false}>
             <div class="row">
                 <div class="col-xs-12 col-sm-3 col-lg-2"><{$smarty.const._MA_WGEVENTS_EVENT_FEE}>: </div>
                 <div class="col-xs-12 col-sm-9 col-lg-10"><{$event.fee_text}></div>
@@ -114,6 +114,14 @@
         <div class="row">
             <div class="col-xs-12 col-sm-3 col-lg-2"><{$smarty.const._MA_WGEVENTS_EVENT_PAYMENTINFO}>: </div>
             <div class="col-xs-12 col-sm-9 col-lg-10"><{$event.paymentinfo_text}></div>
+        </div>
+        <{/if}>
+        <{if $event.gallery_id|default:0 > 0}>
+        <div class="row">
+            <div class="col-xs-12 col-sm-3 col-lg-2"><{$smarty.const._MA_WGEVENTS_EVENT_GALLERY}>: </div>
+            <div class="col-xs-12 col-sm-9 col-lg-10">
+                <a class='btn btn-primary wge-btn' href='<{$event.gallery_link}>' target="_blank" title='<{$event.gallery_name}>'><{$event.gallery_name}></a>
+            </div>
         </div>
         <{/if}>
         <{if $event.permEdit|default:false && $event.status|default:false}>
