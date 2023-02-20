@@ -35,6 +35,8 @@ $limit  = Request::getInt('limit', $helper->getConfig('adminpager'));
 $GLOBALS['xoopsTpl']->assign('start', $start);
 $GLOBALS['xoopsTpl']->assign('limit', $limit);
 
+$moduleDirName = \basename(\dirname(__DIR__));
+
 switch ($op) {
     case 'list':
     default:
@@ -127,7 +129,7 @@ switch ($op) {
         $GLOBALS['xoopsTpl']->assign('navigation', $adminObject->displayNavigation('task.php'));
         $taskObj = $taskHandler->get($taskId);
         $taskEvid = $taskObj->getVar('task_evid');
-        if (isset($_REQUEST['ok']) && 1 == $_REQUEST['ok']) {
+        if (isset($_REQUEST['ok']) && 1 === (int)$_REQUEST['ok']) {
             if (!$GLOBALS['xoopsSecurity']->check()) {
                 \redirect_header('task.php', 3, \implode(', ', $GLOBALS['xoopsSecurity']->getErrors()));
             }
@@ -149,7 +151,7 @@ switch ($op) {
         $delType = Request::getString('deltype', 'done');
         $templateMain = 'wgevents_admin_task.tpl';
         $GLOBALS['xoopsTpl']->assign('navigation', $adminObject->displayNavigation('task.php'));
-        if (isset($_REQUEST['ok']) && 1 == $_REQUEST['ok']) {
+        if (isset($_REQUEST['ok']) && 1 === (int)$_REQUEST['ok']) {
             $crTask = new \CriteriaCompo();
             if ('pending' === $delType) {
                 $crTask->add(new \Criteria('status', Constants::STATUS_PENDING));

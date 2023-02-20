@@ -84,17 +84,7 @@ function wgevents_search($queryarray, $andor, $limit, $offset, $userid)
             'time'   => $eventsAll[$i]->getVar('datecreated')
         ];
     }
-    unset($crKeywords);
-    unset($crKeyword);
-    unset($crUser);
-    unset($crSearch);
-
-
-
-
-
-
-
+    unset($crKeywords, $crKeyword, $crUser, $crSearch);
 
     return $ret;
 

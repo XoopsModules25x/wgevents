@@ -103,10 +103,11 @@ class FormelementsHandler extends \XoopsPersistableObjectHandler
     {
     }
 
+    /**
+     * @return void|\XoopsFormCheckBox|\XoopsFormDateTime|\XoopsFormEditor|\XoopsFormLabel|\XoopsFormRadio|\XoopsFormRadioYN|\XoopsFormSelect|\XoopsFormSelectCountry|\XoopsFormText|\XoopsFormTextArea|\XoopsFormTextDateSelect
+     */
     public function render()
     {
-        $field = null;
-
         switch ($this->type) {
             case Constants::FIELD_LABEL:
                 $field = new \XoopsFormLabel($this->caption, $this->value);

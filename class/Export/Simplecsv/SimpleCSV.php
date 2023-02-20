@@ -30,16 +30,16 @@ class SimpleCSV {
             // detect delimiter
             if ( \strpos($this->_csv, $this->_enclosure . ',' ) !== false ) {
                 $this->_delimiter = ',';
-            } else if (\strpos($this->_csv, $this->_enclosure."\t") !== false ) {
+            } elseif (\strpos($this->_csv, $this->_enclosure."\t") !== false ) {
                 $this->_delimiter = "\t";
-            } else if ( \strpos($this->_csv, $this->_enclosure . ';' ) !== false ) {
+            } elseif ( \strpos($this->_csv, $this->_enclosure . ';' ) !== false ) {
                 $this->_delimiter = ';';
-            } else if ( \strpos($this->_csv, ',' ) !== false ) {
+            } elseif ( \strpos($this->_csv, ',' ) !== false ) {
                 $this->_delimiter = ',';
-            } else if (\strpos($this->_csv, "\t") !== false) {
+            } elseif (\strpos($this->_csv, "\t") !== false) {
                 $this->_delimiter = "\t";
             }
-            else if ( \strpos($this->_csv, ';' ) !== false) {
+            elseif ( \strpos($this->_csv, ';' ) !== false) {
                 $this->_delimiter = ';';
             }
             else {
@@ -57,7 +57,7 @@ class SimpleCSV {
             if (\strpos($this->_csv, '"') !== false) {
                 $this->_enclosure = '"';
             }
-            else if (\strpos($this->_csv, "'") !== false) {
+            elseif (\strpos($this->_csv, "'") !== false) {
                 $this->_enclosure = "'";
             }
             else {
@@ -74,10 +74,10 @@ class SimpleCSV {
             if (\strpos($this->_csv,"\r\n") !== false) {
                 $this->_linebreak = "\r\n";
             }
-            else if (\strpos($this->_csv,"\n") !== false) {
+            elseif (\strpos($this->_csv,"\n") !== false) {
                 $this->_linebreak = "\n";
             }
-            else if (\strpos($this->_csv,"\r") !== false) {
+            elseif (\strpos($this->_csv,"\r") !== false) {
                 $this->_linebreak = "\r";
             }
             else {
@@ -115,7 +115,7 @@ class SimpleCSV {
                     $esc = $escesc = false;
                     $r[$k][$n] = '';
                 }
-            } else if ($chch === $CSV_LINEBREAK) {
+            } elseif ($chch === $CSV_LINEBREAK) {
                 if ($esc) {
                     $r[$k][$n] .= $chch;
                 } else {
@@ -125,7 +125,7 @@ class SimpleCSV {
                     $r[$k][$n] = '';
                 }
                 $i++;
-            } else if ($ch === $CSV_DELIMITER) { 
+            } elseif ($ch === $CSV_DELIMITER) {
                 if ($esc) { 
                     $r[$k][$n] .= $ch; 
                 } else { 
@@ -133,7 +133,7 @@ class SimpleCSV {
                     $r[$k][$n] = '';
                     $esc = $escesc = false; 
                 }
-            } else if ( $chch === $CSV_ENCLOSURE.$CSV_ENCLOSURE && $esc ) {
+            } elseif ( $chch === $CSV_ENCLOSURE.$CSV_ENCLOSURE && $esc ) {
                 $r[$k][$n] .= $CSV_ENCLOSURE;
                 $i++;
             } elseif ($ch === $CSV_ENCLOSURE) {

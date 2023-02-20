@@ -255,15 +255,13 @@ switch ($op) {
             $GLOBALS['xoopsTpl']->assign('start', $start);
             $GLOBALS['xoopsTpl']->assign('limit', $limit);
 
-            if ('show' === $op && '' != $evName) {
+            if ('show' === $op && '' !== $evName) {
                 $GLOBALS['xoopsTpl']->assign('xoops_pagetitle', \strip_tags($evName . ' - ' . $GLOBALS['xoopsModule']->getVar('name')));
             }
+        } elseif (\count($filterCats) > 0) {
+            $GLOBALS['xoopsTpl']->assign('noEventsReason', \_MA_WGEVENTS_INDEX_THEREARENT_EVENTS_FILTER);
         } else {
-            if (\count($filterCats) > 0) {
-                $GLOBALS['xoopsTpl']->assign('noEventsReason', \_MA_WGEVENTS_INDEX_THEREARENT_EVENTS_FILTER);
-            } else {
-                $GLOBALS['xoopsTpl']->assign('noEventsReason', \_MA_WGEVENTS_INDEX_THEREARENT_EVENTS);
-            }
+            $GLOBALS['xoopsTpl']->assign('noEventsReason', \_MA_WGEVENTS_INDEX_THEREARENT_EVENTS);
         }
 
         break;
@@ -516,7 +514,7 @@ switch ($op) {
             if ($evId > 0) {
                 // find changes in table events
                 $infotext = $eventHandler->getEventsCompare($eventObjOld, $eventObj);
-                if ('' != $infotext) {
+                if ('' !== $infotext) {
                     $typeConfirm = Constants::MAIL_EVENT_NOTIFY_MODIFY;
                     $crRegistration = new \CriteriaCompo();
                     $crRegistration->add(new \Criteria('evid', $evId));

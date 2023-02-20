@@ -61,7 +61,7 @@ class TaskHandler extends \XoopsPersistableObjectHandler
      * retrieve a field
      *
      * @param int $id field id
-     * @param null fields
+     * @param $fields
      * @return \XoopsObject|null reference to the {@link Get} object
      */
     public function get($id = null, $fields = null)
@@ -72,7 +72,6 @@ class TaskHandler extends \XoopsPersistableObjectHandler
     /**
      * get inserted id
      *
-     * @param null
      * @return int reference to the {@link Get} object
      */
     public function getInsertId()
@@ -203,7 +202,7 @@ class TaskHandler extends \XoopsPersistableObjectHandler
             $resProcess .=  '<br>Count status PENDING at start: ' . $tasksCountPending;
             $resProcess .=  '<br>Count status DONE at start: ' . $tasksCountDone;
         }
-        if (($tasksCountPending > 0) && ($tasksCountDone < $limitHour || 0 == $limitHour)) {
+        if (($tasksCountPending > 0) && ($tasksCountDone < $limitHour || 0 === $limitHour)) {
             if ($limitHour > 0) {
                 $crTaskPending->setLimit($limitHour);
             }
@@ -217,39 +216,37 @@ class TaskHandler extends \XoopsPersistableObjectHandler
                 }
                 if (554 === $resultMH) {
                     $resProcess .=  '<br>Skipped Error 554: SMTP limit exceeded';
-                } else {
-                    if ((Constants::STATUS_PENDING == (int)$tasksAll[$i]->getVar('status'))
-                        && ($tasksCountDone < $limitHour || 0 == $limitHour)) {
-                        $taskProcessObj = $this->get($i);
-                        $taskProcessObj->setVar('status', Constants::STATUS_PROCESSING);
-                        if ($this->insert($taskProcessObj)) {
-                            $mailsHandler = new MailHandler();
-                            $mailParams = json_decode($tasksAll[$i]->getVar('params', 'n'), true);
-                            $mailParams['recipients'] = $tasksAll[$i]->getVar('recipient');
-                            $mailParams['taskId'] = $i;
-                            $mailsHandler->setParams($mailParams);
-                            $mailsHandler->setType($tasksAll[$i]->getVar('type'));
-                            // send mails
-                            $resultMH = (int)$mailsHandler->execute();
-                            unset($mailsHandler);
-                            //update task list corresponding the result
-                            if (0 === $resultMH) {
-                                $taskProcessObj->setVar('status', Constants::STATUS_DONE);
-                                $taskProcessObj->setVar('datedone', time());
-                                $counterDone++;
-                                if ($log_level > 1) {
-                                    $resProcess .=  ' - done';
-                                }
-                            } else {
-                                $taskProcessObj->setVar('status', Constants::STATUS_PENDING);
-                                if ($log_level > 1) {
-                                    $resProcess .=  ' - failed';
-                                }
+                } elseif ((Constants::STATUS_PENDING == (int)$tasksAll[$i]->getVar('status'))
+                    && ($tasksCountDone < $limitHour || 0 == $limitHour)) {
+                    $taskProcessObj = $this->get($i);
+                    $taskProcessObj->setVar('status', Constants::STATUS_PROCESSING);
+                    if ($this->insert($taskProcessObj)) {
+                        $mailsHandler = new MailHandler();
+                        $mailParams = json_decode($tasksAll[$i]->getVar('params', 'n'), true);
+                        $mailParams['recipients'] = $tasksAll[$i]->getVar('recipient');
+                        $mailParams['taskId'] = $i;
+                        $mailsHandler->setParams($mailParams);
+                        $mailsHandler->setType($tasksAll[$i]->getVar('type'));
+                        // send mails
+                        $resultMH = $mailsHandler->execute();
+                        unset($mailsHandler);
+                        //update task list corresponding the result
+                        if (0 === $resultMH) {
+                            $taskProcessObj->setVar('status', Constants::STATUS_DONE);
+                            $taskProcessObj->setVar('datedone', time());
+                            $counterDone++;
+                            if ($log_level > 1) {
+                                $resProcess .=  ' - done';
                             }
-                            $this->insert($taskProcessObj);
                         } else {
-                            $resProcess .=  ' - error insert taskProcessObj';
+                            $taskProcessObj->setVar('status', Constants::STATUS_PENDING);
+                            if ($log_level > 1) {
+                                $resProcess .=  ' - failed';
+                            }
                         }
+                        $this->insert($taskProcessObj);
+                    } else {
+                        $resProcess .=  ' - error insert taskProcessObj';
                     }
                 }
                 // check once more number of done

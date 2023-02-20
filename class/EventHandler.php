@@ -57,7 +57,7 @@ class EventHandler extends \XoopsPersistableObjectHandler
      * retrieve a field
      *
      * @param int $id field id
-     * @param null fields
+     * @param $fields
      * @return \XoopsObject|null reference to the {@link Get} object
      */
     public function get($id = null, $fields = null)
@@ -68,7 +68,6 @@ class EventHandler extends \XoopsPersistableObjectHandler
     /**
      * get inserted id
      *
-     * @param null
      * @return int reference to the {@link Get} object
      */
     public function getInsertId()
@@ -238,10 +237,8 @@ class EventHandler extends \XoopsPersistableObjectHandler
         $crEvent = new \CriteriaCompo();
         if ($showItem) {
             $crEvent->add(new \Criteria('id', $evId));
-        } else {
-            if ('me' == $filter && $uidCurrent > 0) {
-                $crEvent->add(new \Criteria('submitter', $uidCurrent));
-            }
+        } elseif ('me' === $filter && $uidCurrent > 0) {
+            $crEvent->add(new \Criteria('submitter', $uidCurrent));
         }
         //get only events which are online or from me
         $crEventOnline = new \CriteriaCompo();
@@ -252,29 +249,27 @@ class EventHandler extends \XoopsPersistableObjectHandler
         if ($dateCreated > 0) {
             $crEvent->add(new \Criteria('datecreated', $dateCreated, '>='));
         }
-        if ($useGroups) {
-            // current user
-            // - must have perm to see event or
-            // - must be event owner
-            // - is admin
-            if (!$userIsAdmin) {
-                $crEventGroup = new \CriteriaCompo();
-                $crEventGroup->add(new \Criteria('groups', '%00000%', 'LIKE')); //all users
-                if ($uidCurrent > 0) {
-                    // Get groups
-                    $memberHandler = \xoops_getHandler('member');
-                    $xoopsGroups = $memberHandler->getGroupsByUser($uidCurrent);
-                    foreach ($xoopsGroups as $group) {
-                        $crEventGroup->add(new \Criteria('groups', '%' . substr('00000' . $group, -5) . '%', 'LIKE'), 'OR');
-                    }
+        // current user
+        // - must have perm to see event or
+        // - must be event owner
+        // - is admin
+        if ($useGroups && !$userIsAdmin) {
+            $crEventGroup = new \CriteriaCompo();
+            $crEventGroup->add(new \Criteria('groups', '%00000%', 'LIKE')); //all users
+            if ($uidCurrent > 0) {
+                // Get groups
+                $memberHandler = \xoops_getHandler('member');
+                $xoopsGroups = $memberHandler->getGroupsByUser($uidCurrent);
+                foreach ($xoopsGroups as $group) {
+                    $crEventGroup->add(new \Criteria('groups', '%' . substr('00000' . $group, -5) . '%', 'LIKE'), 'OR');
                 }
-                $crEventGroup->add(new \Criteria('submitter', $uidCurrent), 'OR');
-                $crEvent->add($crEventGroup);
-                unset($crEventGroup);
             }
+            $crEventGroup->add(new \Criteria('submitter', $uidCurrent), 'OR');
+            $crEvent->add($crEventGroup);
+            unset($crEventGroup);
         }
         if (!$showItem) {
-            if ('past' == $op) {
+            if ('past' === $op) {
                 // list events before now
                 $crEvent->add(new \Criteria('datefrom', $dateFrom, '<'));
                 $sortBy  = 'datefrom';
@@ -352,10 +347,10 @@ class EventHandler extends \XoopsPersistableObjectHandler
         $fields[] = ['name' => 'fee', 'caption' => \_MA_WGEVENTS_EVENT_FEE, 'type' => 'fee'];
 
         foreach ($fields as $field) {
-            $valueOld = $versionOld->getVar($field['name']);
-            $valueNew = $versionNew->getVar($field['name']);
-            if ($valueOld != $valueNew) {
-                if ('' == $valueNew) {
+            $valueOld = (string)$versionOld->getVar($field['name']);
+            $valueNew = (string)$versionNew->getVar($field['name']);
+            if ($valueOld !== $valueNew) {
+                if ('' === $valueNew) {
                     $valueNew = _MA_WGEVENTS_MAIL_REG_MODIFICATION_DELETED;
                 }
                 switch ($field['type']) {
@@ -414,7 +409,7 @@ class EventHandler extends \XoopsPersistableObjectHandler
         // no notification to myself
         if (\is_object($GLOBALS['xoopsUser'])) {
             $email = $GLOBALS['xoopsUser']->email();
-            if ('' != $email) {
+            if ('' !== $email) {
                 foreach ($notifyEmails as $key => $value) {
                     if ($value == $email) {
                         unset($notifyEmails[$key]);
@@ -452,26 +447,23 @@ class EventHandler extends \XoopsPersistableObjectHandler
             if ($allday && !$multiday) {
                 // today, allday, no multiday
                 $text = $lng_today . ' ' . $lng_allday;
-            } else if ($today && !$allday && !$multiday) {
+            } elseif (!$allday && !$multiday) {
                 // today, no allday, no multiday
                 $text = $lng_today . ' ' . date('H:i', $datefrom) . $lng_until . date('H:i', $dateto);
             } else {
                 // today, no allday, multiday
                 $text = $lng_today . ' ' . date('H:i', $datefrom) . $lng_until . \formatTimestamp($dateto, 'm');
             }
+        } elseif ($allday && $multiday) {
+            // not today, allday, multiday
+            $text =  \formatTimestamp($datefrom, 's') . $lng_allday . $lng_until . \formatTimestamp($dateto, 'm') . $lng_allday;
+        } elseif (!$allday && !$multiday) {
+            // not today, no allday, no multiday
+            $text = \formatTimestamp($datefrom, 's') . ' ' . date('H:i', $datefrom) . $lng_until . date('H:i', $dateto);
         } else {
-            // not today
-            if ($allday && $multiday) {
-                // allday, multiday
-                $text =  \formatTimestamp($datefrom, 's') . $lng_allday . $lng_until . \formatTimestamp($dateto, 'm') . $lng_allday;
-            } else if (!$allday && !$multiday) {
-                // no allday, no multiday
-                $text = \formatTimestamp($datefrom, 's') . ' ' . date('H:i', $datefrom) . $lng_until . date('H:i', $dateto);
-            } else {
-                // no allday, multiday
-                $text = \formatTimestamp($datefrom, 'm') . $lng_until . \formatTimestamp($dateto, 'm');
-                //TODO: same time for each day / different times for different days
-            }
+            // not today, no allday, multiday
+            $text = \formatTimestamp($datefrom, 'm') . $lng_until . \formatTimestamp($dateto, 'm');
+            //TODO: same time for each day / different times for different days
         }
         /*
         echo '<br>today:'.$today;
@@ -504,7 +496,7 @@ class EventHandler extends \XoopsPersistableObjectHandler
             $cbAll = 1;
             // Form Select categories
             $catsOnline = $categoryHandler->getAllCatsOnline();
-            if (0 == \count($filterCats)) {
+            if (0 === \count($filterCats)) {
                 foreach (\array_keys($catsOnline) as $i) {
                     $filterCats[] = $i;
                 }

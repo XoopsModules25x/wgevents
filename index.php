@@ -43,11 +43,11 @@ $start      = Request::getInt('start');
 $limit      = Request::getInt('limit', (int)$helper->getConfig('userpager'));
 $catId      = Request::getInt('cat_id');
 $filterCats = Request::getArray('filter_cats');
-if ($catId > 0 && 0 == \count($filterCats)) {
+if ($catId > 0 && 0 === \count($filterCats)) {
     $filterCats[] = $catId;
 }
 $urlCats = Request::getString('cats');
-if (0 == \count($filterCats) && '' != $urlCats) {
+if (0 === \count($filterCats) && '' !== $urlCats) {
     $filterCats = \explode(',', $urlCats);
 }
 $GLOBALS['xoopsTpl']->assign('urlCats', \implode(',', $filterCats));
@@ -103,7 +103,7 @@ if (\is_object($GLOBALS['xoopsUser'])) {
 if ('none' !== $indexDisplayCats) {
     $GLOBALS['xoopsTpl']->assign('wgevents_upload_catlogos_url', \WGEVENTS_UPLOAD_CATLOGOS_URL);
     $GLOBALS['xoopsTpl']->assign('wgevents_upload_catimages_url', \WGEVENTS_UPLOAD_CATIMAGES_URL);
-    $categories = $categoryHandler->getCategoriesForFilter($indexDisplayCats, $filterCats, $op, $useGroups, '');
+    $categories = $categoryHandler->getCategoriesForFilter($indexDisplayCats, $filterCats, $op, $useGroups);
     $GLOBALS['xoopsTpl']->assign('categories', $categories);
     if ('form' === $indexDisplayCats) {
         $formCatsCb = $categoryHandler->getFormCatsCb($filterCats, $op);
@@ -221,12 +221,10 @@ if ('none' !== $indexDisplayEvents) {
             $formPageNavCounter = $eventHandler->getFormPageNavCounterSelect($params);
             $GLOBALS['xoopsTpl']->assign('formPageNavCounter', $formPageNavCounter->render());*/
         }
+    } elseif (\count($filterCats) > 0) {
+        $GLOBALS['xoopsTpl']->assign('noEventsReason', \_MA_WGEVENTS_INDEX_THEREARENT_EVENTS_FILTER);
     } else {
-        if (\count($filterCats) > 0) {
-            $GLOBALS['xoopsTpl']->assign('noEventsReason', \_MA_WGEVENTS_INDEX_THEREARENT_EVENTS_FILTER);
-        } else {
-            $GLOBALS['xoopsTpl']->assign('noEventsReason', \_MA_WGEVENTS_INDEX_THEREARENT_EVENTS);
-        }
+        $GLOBALS['xoopsTpl']->assign('noEventsReason', \_MA_WGEVENTS_INDEX_THEREARENT_EVENTS);
     }
 }
 

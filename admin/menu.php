@@ -48,7 +48,7 @@ $adminmenu[] = [
     'link' => 'admin/registration.php',
     'icon' => 'assets/icons/32/registrations.png',
 ];
-if (is_object($helper->getModule()) && null !== $helper->getConfig() && (bool)$helper->getConfig('use_history')) {
+if (is_object($helper->getModule()) && null !== $helper->getConfig() && $helper->getConfig('use_history')) {
     $adminmenu[] = [
         'title' => \_MI_WGEVENTS_ADMENU11,
         'link'  => 'admin/registrationhist.php',
@@ -60,7 +60,7 @@ $adminmenu[] = [
     'link' => 'admin/answer.php',
     'icon' => 'assets/icons/32/answers.png',
 ];
-if (is_object($helper->getModule()) && null !== $helper->getConfig() && (bool)$helper->getConfig('use_history')) {
+if (is_object($helper->getModule()) && null !== $helper->getConfig() && $helper->getConfig('use_history')) {
     $adminmenu[] = [
         'title' => \_MI_WGEVENTS_ADMENU12,
         'link'  => 'admin/answerhist.php',

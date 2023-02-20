@@ -37,7 +37,6 @@ class PermissionHandler extends \XoopsPersistableObjectHandler
     /**
      * Constructor
      *
-     * @param null
      */
     public function __construct()
     {
@@ -66,7 +65,7 @@ class PermissionHandler extends \XoopsPersistableObjectHandler
         $grouppermHandler = \xoops_getHandler('groupperm');
 
         $memberHandler = \xoops_getHandler('member');
-        if (0 == $currentuid) {
+        if (0 === $currentuid) {
             $my_group_ids = [\XOOPS_GROUP_ANONYMOUS];
         } else {
             $my_group_ids = $memberHandler->getGroupsByUser($currentuid);
@@ -125,7 +124,6 @@ class PermissionHandler extends \XoopsPersistableObjectHandler
      * @public function permGlobalApprove
      * returns right for global approve
      *
-     * @param null
      * @return bool
      */
     public function getPermGlobalApprove()
@@ -137,7 +135,6 @@ class PermissionHandler extends \XoopsPersistableObjectHandler
      * @public function permGlobalSubmit
      * returns right for global submit
      *
-     * @param null
      * @return bool
      */
     public function getPermGlobalSubmit()
@@ -152,7 +149,6 @@ class PermissionHandler extends \XoopsPersistableObjectHandler
      * @public function permGlobalView
      * returns right for global view
      *
-     * @param null
      * @return bool
      */
     public function getPermGlobalView()
@@ -166,7 +162,7 @@ class PermissionHandler extends \XoopsPersistableObjectHandler
     /**
      * @public function getPermEventsApprove
      * returns right for approve events
-     * @param null
+     *
      * @return bool
      */
     public function getPermEventsApprove()
@@ -180,7 +176,7 @@ class PermissionHandler extends \XoopsPersistableObjectHandler
     /**
      * @public function getPermEventsApproveAuto
      * returns right for approve events
-     * @param null
+     *
      * @return bool
      */
     public function getPermEventsApproveAuto()
@@ -194,7 +190,7 @@ class PermissionHandler extends \XoopsPersistableObjectHandler
     /**
      * @public function getPermEventsSubmit
      * returns right for submit events
-     * @param null
+     *
      * @return bool
      */
     public function getPermEventsSubmit()
@@ -239,7 +235,7 @@ class PermissionHandler extends \XoopsPersistableObjectHandler
     /**
      * @public function getPermEventsView
      * returns right for view Event
-     * @param null
+     *
      * @return bool
      */
     public function getPermEventsView()
@@ -285,7 +281,7 @@ class PermissionHandler extends \XoopsPersistableObjectHandler
      * @public function getPermRegistrationsVerif
      * returns right for submit registrations without question verification by mail
      *  - User must have perm to submit registrations
-     * @param null
+     *
      * @return bool
      */
     public function getPermRegistrationsVerif()
@@ -296,7 +292,7 @@ class PermissionHandler extends \XoopsPersistableObjectHandler
     /**
      * @public function getPermRegistrationsSubmit
      * returns right for submit registrations
-     * @param null
+     *
      * @return bool
      */
     public function getPermRegistrationsSubmit()
@@ -352,7 +348,7 @@ class PermissionHandler extends \XoopsPersistableObjectHandler
     /**
      * @public function getPermTextblocksSubmit
      * returns right for submit textblocks
-     * @param null
+     *
      * @return bool
      */
     public function getPermTextblocksSubmit()

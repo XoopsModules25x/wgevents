@@ -52,7 +52,7 @@ $dayEnd   = \mktime(23, 59, 59, $month, $lastday, $year);
 
 //$filterCat     = Request::getInt('filterCat');
 $filterSort    = 'datefrom-ASC';
-if (0 == $filterFrom || Request::hasVar('gotoMonth')) {
+if (0 === $filterFrom || Request::hasVar('gotoMonth')) {
     $filterFrom = (int)$dayStart;
     $filterTo   = (int)$dayEnd;
 }
@@ -158,7 +158,7 @@ $gmapsHeight    = false;
 $useGMaps       = (bool)$helper->getConfig('use_gmaps');
 if ($useGMaps) {
     $gmapsPositionList = (string)$helper->getConfig('gmaps_enablecal');
-    $gmapsEnableCal    = ('top' == $gmapsPositionList || 'bottom' == $gmapsPositionList);
+    $gmapsEnableCal    = ('top' === $gmapsPositionList || 'bottom' === $gmapsPositionList);
     $gmapsHeight       = $helper->getConfig('gmaps_height');
 }
 
@@ -211,7 +211,7 @@ if ($eventsCount > 0) {
         $calendar->addDailyHtml($eventLink, $event['datefrom'], $event['dateto'], $linkStyle);
     }
     if ($useGMaps && count($eventsMap) > 0) {
-        if ('show' == $op) {
+        if ('show' === $op) {
             $GLOBALS['xoopsTpl']->assign('gmapsShow', true);
         } else {
             $GLOBALS['xoopsTpl']->assign('gmapsShowList', true);

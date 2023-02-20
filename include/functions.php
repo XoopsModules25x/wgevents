@@ -111,16 +111,14 @@ function wgevents_RewriteUrl($module, $array, $type = 'content')
     $comment = '';
     $helper = \XoopsModules\Wgevents\Helper::getInstance();
     $textblockHandler = $helper->getHandler('textblocks');
-    $lenght_id = $helper->getConfig('lenght_id');
+    $length_id = (int)$helper->getConfig('length_id');
     $rewrite_url = $helper->getConfig('rewrite_url');
 
-    if (0 != $lenght_id) {
-        $id = $array['content_id'];
-        while (\strlen($id) < $lenght_id) {
+    $id = $array['content_id'];
+    if (0 !== $length_id) {
+        while (\strlen($id) < $length_id) {
             $id = '0' . $id;
         }
-    } else {
-        $id = $array['content_id'];
     }
 
     if (isset($array['topic_alias']) && $array['topic_alias']) {

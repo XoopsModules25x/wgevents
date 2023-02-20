@@ -157,7 +157,7 @@ switch ($op) {
         $GLOBALS['xoopsTpl']->assign('navigation', $adminObject->displayNavigation('answer.php'));
         $answerObj = $answerHandler->get($ansId);
         $ansEvid = $answerObj->getVar('evid');
-        if (isset($_REQUEST['ok']) && 1 == $_REQUEST['ok']) {
+        if (isset($_REQUEST['ok']) && 1 === (int)$_REQUEST['ok']) {
             if (!$GLOBALS['xoopsSecurity']->check()) {
                 \redirect_header('answer.php', 3, \implode(', ', $GLOBALS['xoopsSecurity']->getErrors()));
             }

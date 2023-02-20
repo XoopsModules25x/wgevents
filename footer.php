@@ -28,7 +28,7 @@ $GLOBALS['xoopsTpl']->assign('panel_type', $helper->getConfig('panel_type'));
 $GLOBALS['xoopsTpl']->assign('adv', $helper->getConfig('advertise'));
 //
 $GLOBALS['xoopsTpl']->assign('admin', \WGEVENTS_ADMIN);
-if ((bool)$helper->getConfig('show_copyright')) {
+if ($helper->getConfig('show_copyright')) {
     $GLOBALS['xoopsTpl']->assign('copyright', $copyright);
 }
 // 

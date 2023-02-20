@@ -52,6 +52,8 @@ function toggleRegistrationOpts() {
     /* show/hide collection of fields concerning online registration*/
     $( "#registeropttray" ).toggle( "slow", function() {});
     $( "#continue_questions" ).toggle( "slow", function() {});
+    let urlreg = document.getElementById('url_registration');
+    urlreg.disabled = !urlreg.disabled;
 }
 
 function toggleFeeFields() {

@@ -77,7 +77,7 @@ if ($countOpen > 0) {
         }
     }
     // execute all pending tasks
-    $result_exec = $taskHandler->processTasks($log_level, true);
+    $result_exec = $taskHandler->processTasks($log_level);
 
     if ($log_level > Constants::LOG_NONE) {
         $logObj = $logHandler->create();
@@ -87,7 +87,6 @@ if ($countOpen > 0) {
         // get limit_hour from primary account
         $accountHandler = $helper->getHandler('Account');
         $limitHour = $accountHandler->getLimitHour();
-        $cronInfoResult = '';
         if ($log_level > Constants::LOG_SIMPLE) {
             $cronInfoResult  .= '<br>- Result Process Tasks Detail: ' . $result_exec['resprocess'];
         }

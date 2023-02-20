@@ -184,11 +184,14 @@ class Resizer
         return true;
     }
 
+    /**
+     * @return void
+     */
     public function mergeImage()
     {
         $dest = \imagecreatefromjpeg($this->endFile);
         $src  = \imagecreatefromjpeg($this->sourceFile);
-        if (4 == $this->mergeType) {
+        if (4 === $this->mergeType) {
             $imgWidth  = (int)\round($this->maxWidth / 2 - 1);
             $imgHeight = (int)\round($this->maxHeight / 2 - 1);
             $posCol2   = (int)\round($this->maxWidth / 2 + 1);
@@ -208,7 +211,7 @@ class Resizer
                     break;
             }
         }
-        if (6 == $this->mergeType) {
+        if (6 === $this->mergeType) {
             $imgWidth  = (int)\round($this->maxWidth / 3 - 1);
             $imgHeight = (int)\round($this->maxHeight / 2 - 1);
             $posCol2   = (int)\round($this->maxWidth / 3 + 1);

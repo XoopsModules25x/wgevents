@@ -20,17 +20,10 @@ namespace XoopsModules\Wgevents\Forms;
  * @author              Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
  */
 
-use XoopsFormText;
-
 \defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 /**
- * base class
- */
-\xoops_load('\XoopsFormText');
-
-/**
- * Create hidden form button
+ * Create inline form checkboxes
  */
 class FormCheckboxInline extends \XoopsFormCheckbox
 {
@@ -55,7 +48,7 @@ class FormCheckboxInline extends \XoopsFormCheckbox
                 . htmlspecialchars(strip_tags($this->getName()), ENT_QUOTES) . "' value='"
                 . $value . "'";
 
-            if (is_array($elementValue) ? in_array($value, $elementValue): $value == $elementValue) {
+            if (is_array($elementValue) ? in_array($value, $elementValue): (string)$value === (string)$elementValue) {
                 $ret .= ' checked';
             }
             $ret .= $this->getExtra() . ' />' . $name . $this->getDelimeter();

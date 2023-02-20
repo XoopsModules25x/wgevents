@@ -55,7 +55,7 @@ class FieldHandler extends \XoopsPersistableObjectHandler
      * retrieve a field
      *
      * @param int $id field id
-     * @param null fields
+     * @param $fields
      * @return \XoopsObject|null reference to the {@link Get} object
      */
     public function get($id = null, $fields = null)
@@ -66,7 +66,6 @@ class FieldHandler extends \XoopsPersistableObjectHandler
     /**
      * get inserted id
      *
-     * @param null
      * @return int reference to the {@link Get} object
      */
     public function getInsertId()
@@ -124,7 +123,7 @@ class FieldHandler extends \XoopsPersistableObjectHandler
 
     /**
      * @public function to get next value for sorting
-     * @param null
+     *
      * @return int
      */
     public function getNextWeight()

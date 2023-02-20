@@ -78,12 +78,12 @@ if (Request::hasVar('export_ics')) {
 $new = Request::hasVar('new');
 
 $data = [];
-if ('xlsx' == $outType) {
+if ('xlsx' === $outType) {
     //add field names
     $data[0] = [\_MA_WGEVENTS_EVENT_CATID, \_MA_WGEVENTS_EVENT_NAME, \_MA_WGEVENTS_EVENT_DESC, \_MA_WGEVENTS_EVENT_DATEFROM, \_MA_WGEVENTS_EVENT_DATETO, \_MA_WGEVENTS_EVENT_LOCATION];
 }
 $filename = '';
-if ('xlsx' == $outType || 'ics' == $outType) {
+if ('xlsx' === $outType || 'ics' === $outType) {
     $filename = \date('Ymd_H_i_s_') . \_MA_WGEVENTS_EVENTS . '.' . $outType;
 }
 
@@ -127,7 +127,7 @@ if ($eventsCount > 0) {
         }
         if (\in_array($i, $chkEvents)) {
             $events[$i]['checked'] = true;
-            if ('xlsx' == $outType) {
+            if ('xlsx' === $outType) {
                 // prepare data for ouput as excel
                 $data[$i] = [
                     $events[$i]['catname'],
@@ -138,7 +138,7 @@ if ($eventsCount > 0) {
                     $events[$i]['location_text']
                 ];
             }
-            if ('ics' == $outType) {
+            if ('ics' === $outType) {
                 // prepare data for ouput as ics
                 $data[$i] = $eventsAll[$i];
             }
@@ -148,11 +148,11 @@ if ($eventsCount > 0) {
     $GLOBALS['xoopsTpl']->assign('events_list', $events);
 
     // output of data
-    if ('xlsx' == $outType) {
+    if ('xlsx' === $outType) {
         $xlsx = Simplexlsxgen\SimpleXLSXGen::fromArray($data);
         $xlsx->downloadAs($filename);
     }
-    if ('ics' == $outType) {
+    if ('ics' === $outType) {
         $icsText = '';
         $exportICS = new Ics\ExportICS();
         $exportICS->setEvents($data);
@@ -176,12 +176,10 @@ if ($eventsCount > 0) {
 
     $GLOBALS['xoopsTpl']->assign('xoops_pagetitle', \_MA_WGEVENTS_EVENTS_EXPORT . ' - ' . $GLOBALS['xoopsModule']->getVar('name'));
 
+} elseif (\count($filterCats) > 0) {
+    $GLOBALS['xoopsTpl']->assign('noEventsReason', \_MA_WGEVENTS_INDEX_THEREARENT_EVENTS_FILTER);
 } else {
-    if (\count($filterCats) > 0) {
-        $GLOBALS['xoopsTpl']->assign('noEventsReason', \_MA_WGEVENTS_INDEX_THEREARENT_EVENTS_FILTER);
-    } else {
-        $GLOBALS['xoopsTpl']->assign('noEventsReason', \_MA_WGEVENTS_INDEX_THEREARENT_EVENTS);
-    }
+    $GLOBALS['xoopsTpl']->assign('noEventsReason', \_MA_WGEVENTS_INDEX_THEREARENT_EVENTS);
 }
 
 // Keywords

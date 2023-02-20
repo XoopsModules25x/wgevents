@@ -135,7 +135,7 @@ switch ($op) {
         $GLOBALS['xoopsTpl']->assign('navigation', $adminObject->displayNavigation('fee.php'));
         $feeObj = $feeHandler->get($Id);
         $Evid = $feeObj->getVar('evid');
-        if (isset($_REQUEST['ok']) && 1 == $_REQUEST['ok']) {
+        if (isset($_REQUEST['ok']) && 1 === (int)$_REQUEST['ok']) {
             if (!$GLOBALS['xoopsSecurity']->check()) {
                 \redirect_header('fee.php', 3, \implode(', ', $GLOBALS['xoopsSecurity']->getErrors()));
             }

@@ -49,7 +49,6 @@ class MigrateHelper
     /**
      * Create a yaml file based on a sql file
      *
-     * @param null
      * @return bool
      */
     public function createSchemaFromSqlfile(): bool
@@ -99,33 +98,31 @@ class MigrateHelper
                 $tables[$tableName]['options'] = '';
                 $tables[$tableName]['columns'] = [];
                 $tables[$tableName]['keys'] = [];
-            } else {
-                if (false == $skip) {
-                    if (')' === \mb_strtoupper(\substr($line, 0, 1))) {
-                        // end of table definition
-                        // get options
-                        $this->getOptions($line, $options);
-                        $tables[$tableName]['options'] = $options;
-                    } elseif ('ENGINE' === \mb_strtoupper(\substr($line, 0, 6))) {
-                        $this->getOptions($line, $options);
-                        $tables[$tableName]['options'] = $options;
-                    } elseif ('DEFAULT CHARSET ' === \mb_strtoupper(\substr($line, 0, 16))) {
-                        $this->getOptions($line, $options);
-                        $tables[$tableName]['options'] = $options;
-                    } else {
-                        // get keys and fields
-                        switch (\mb_strtoupper(\substr($line, 0, 3))) {
-                            case 'KEY':
-                            case 'PRI':
-                            case 'UNI':
-                                $tables[$tableName]['keys'][] = $this->getKey($line);
-                                break;
-                            case 'else':
-                            default:
-                                $columns = $this->getColumns($line);
-                                $tables[$tableName]['columns'][] = $columns;
-                                break;
-                        }
+            } elseif (!$skip) {
+                if (')' === \mb_strtoupper(\substr($line, 0, 1))) {
+                    // end of table definition
+                    // get options
+                    $this->getOptions($line, $options);
+                    $tables[$tableName]['options'] = $options;
+                } elseif ('ENGINE' === \mb_strtoupper(\substr($line, 0, 6))) {
+                    $this->getOptions($line, $options);
+                    $tables[$tableName]['options'] = $options;
+                } elseif ('DEFAULT CHARSET ' === \mb_strtoupper(\substr($line, 0, 16))) {
+                    $this->getOptions($line, $options);
+                    $tables[$tableName]['options'] = $options;
+                } else {
+                    // get keys and fields
+                    switch (\mb_strtoupper(\substr($line, 0, 3))) {
+                        case 'KEY':
+                        case 'PRI':
+                        case 'UNI':
+                            $tables[$tableName]['keys'][] = $this->getKey($line);
+                            break;
+                        case 'else':
+                        default:
+                            $columns = $this->getColumns($line);
+                            $tables[$tableName]['columns'][] = $columns;
+                            break;
                     }
                 }
             }
@@ -137,9 +134,9 @@ class MigrateHelper
         $level3 = \str_repeat(' ', 12);
 
         foreach ($tables as $tkey => $table) {
-            $schema[] = "{$tkey}:\n";
+            $schema[] = "$tkey:\n";
             foreach ($table as $lkey => $line) {
-                if ('keys' == $lkey) {
+                if ('keys' === (string)$lkey) {
                     $schema[] = $level1 . "keys:\n";
                     foreach ($line as $kkey => $kvalue) {
                         foreach ($kvalue as $kkey2 => $kvalue2) {
@@ -148,14 +145,14 @@ class MigrateHelper
                             $schema[] = $level3 . 'unique: ' . $kvalue2['unique'] . "\n";
                         }
                     }
-                } elseif ('options' == $lkey) {
+                } elseif ('options' === (string)$lkey) {
                     $schema[] = $level1 . 'options: ' . $line . "\n";
                 } else {
                     $schema[] = $level1 . 'columns: ' . "\n";
                     foreach ($line as $kkey => $kvalue) {
                         $schema[] = $level2 . '-' . "\n";
                         foreach ($kvalue as $kkey2 => $kvalue2) {
-                            $schema[] = $level3 . $kkey2 . ": " . $kvalue2 . "\n";
+                            $schema[] = $level3 . $kkey2 . ': ' . $kvalue2 . "\n";
                         }
                     }
                 }
@@ -163,8 +160,8 @@ class MigrateHelper
         }
 
         // create new file and write schema array into this file
-        $myfile = \fopen($this->fileYaml, "w");
-        if (false == $myfile || \is_null($myfile)) {
+        $myfile = \fopen($this->fileYaml, 'w');
+        if (!$myfile || \is_null($myfile)) {
             \xoops_error('Error: Unable to open sql file!');
             return false;
         }
@@ -214,7 +211,7 @@ class MigrateHelper
         }
 
         $attributes = \trim(\str_replace([$name, '`'], '', $line));
-        if (',' == \substr($attributes, - 1)) {
+        if (',' === \substr($attributes, - 1)) {
             $attributes = substr($attributes, 0, strlen($attributes) - 1);
         }
         $columns['name'] = $name;
@@ -245,7 +242,7 @@ class MigrateHelper
         $lineText = \trim(\str_replace([')', ';'], '', $line));
         // remove all existing '
         $options = \str_replace("'", '', $options);
-        if ('' != $options) {
+        if ('' !== $options) {
             $options .= ' ';
         }
         //$options = "'" . $options . $lineText . "'";
@@ -279,7 +276,7 @@ class MigrateHelper
             if (\count($arrName) > 0) {
                 $name = \str_replace(['`', ' '], '', $arrName[0]);
                 $columns = \str_replace(['`', '),', ')'], '', $arrName[1]);
-                if ('' == $name) {
+                if ('' === (string)$name) {
                     $name = $columns;
                 }
                 if (\strpos($name,' ') > 0) {

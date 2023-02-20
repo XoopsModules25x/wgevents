@@ -104,7 +104,7 @@ class SimpleCalendarMini {
     public function setCalendarClasses( array $classes = [] ) {
         foreach( $classes as $key => $value ) {
             if( !isset($this->classes[$key]) ) {
-                throw new \InvalidArgumentException("class '{$key}' not supported");
+                throw new \InvalidArgumentException("class '$key' not supported");
             }
 
             $this->classes[$key] = $value;
@@ -187,9 +187,9 @@ class SimpleCalendarMini {
     /**
      * Sets the first day of the week
      *
-     * @param int|string $offset Day the week starts on. ex: "Monday" or 0-6 where 0 is Sunday
+     * @param $offset Day the week starts on. ex: "Monday" or 0-6 where 0 is Sunday
      */
-    public function setStartOfWeek(int|string $offset) {
+    public function setStartOfWeek($offset) {
         if( \is_int($offset) ) {
             $this->offset = $offset % 7;
         } elseif( $this->weekDayNames !== null && ($weekOffset = \array_search($offset, $this->weekDayNames, true)) !== false ) {
@@ -246,7 +246,7 @@ class SimpleCalendarMini {
 TAG;
 
         foreach( $daysOfWeek as $dayName ) {
-            $out .= "<th>{$dayName}</th>";
+            $out .= "<th>$dayName</th>";
         }
 
         $out .= <<<'TAG'

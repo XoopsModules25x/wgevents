@@ -18,9 +18,8 @@ namespace XoopsModules\Wgevents\Forms;
  * @subpackage          form
  * @since               2.0.0
  * @author              Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
+ * @author              Goffy ( webmaster@wedega.com )
  */
-
-use XoopsFormButton;
 
 \defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
@@ -49,7 +48,7 @@ class FormElementTray extends \XoopsFormElementTray
             $ret .= 'display:none;';
         }
         $ret .= 'width:100%;">';
-        $inline = ('<br>' == $this->getDelimeter());
+        $inline = ('<br>' === $this->getDelimeter());
         foreach ($this->getElements() as $ele) {
             if ($count > 0 && !$inline) {
                 $ret .= $this->getDelimeter();

@@ -49,7 +49,6 @@ class Field extends \XoopsObject
     /**
      * Constructor
      *
-     * @param null
      */
     public function __construct()
     {
@@ -75,7 +74,6 @@ class Field extends \XoopsObject
     /**
      * @static function &getInstance
      *
-     * @param null
      */
     public static function getInstance()
     {
@@ -128,7 +126,7 @@ class Field extends \XoopsObject
         $atValuesText = '';
         if (!$this->isNew()) {
             $fdValues = (string)$this->getVar('values');
-            if ('' != $fdValues) {
+            if ('' !== $fdValues) {
                 $atValuesText = \implode("\n", \unserialize($fdValues, ['allowed_classes' => false]));
             }
         }
@@ -199,7 +197,7 @@ class Field extends \XoopsObject
         $fdValues = $this->getVar('values');
         $ret['value_text']       = '';
         $ret['value_list']   = '';
-        if ('' != $fdValues) {
+        if ('' !== $fdValues) {
             $ret['value_text']     = \implode("\n", \unserialize($fdValues, ['allowed_classes' => false]));
             $ret['value_list'] = \implode('<br>', \unserialize($fdValues, ['allowed_classes' => false]));
         }

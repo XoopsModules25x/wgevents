@@ -57,22 +57,33 @@ class MailHandler
     /**
      * Constructor
      *
-     * @param null
      */
     public function __construct()
     {
     }
 
+    /**
+     * @param $value
+     * @return void
+     */
     public function setParams($value)
     {
         $this->mailParams = $value;
     }
 
+    /**
+     * @param $value
+     * @return void
+     */
     public function setType($value)
     {
         $this->type = $value;
     }
 
+    /**
+     * @param $value
+     * @return void
+     */
     public function setHtml($value)
     {
         $this->isHtml = $value;
@@ -87,7 +98,7 @@ class MailHandler
     {
         $helper = Helper::getInstance();
         $accountHandler = $helper->getHandler('Account');
-        $useLogs = (bool)($helper->getConfig('use_logs') > Constants::LOG_NONE);
+        $useLogs = $helper->getConfig('use_logs') > Constants::LOG_NONE;
         if ($useLogs) {
             $logHandler = $helper->getHandler('Log');
         }
@@ -110,7 +121,7 @@ class MailHandler
         $recipients     = $this->mailParams['recipients'];
         $userName       = $GLOBALS['xoopsConfig']['anonymous'];
         if (\is_object($GLOBALS['xoopsUser'])) {
-            $userName  = ('' != (string)$GLOBALS['xoopsUser']->name()) ? $GLOBALS['xoopsUser']->name() : $GLOBALS['xoopsUser']->uname();
+            $userName  = ('' !== (string)$GLOBALS['xoopsUser']->name()) ? $GLOBALS['xoopsUser']->name() : $GLOBALS['xoopsUser']->uname();
         }
 
         switch ($this->type) {
@@ -239,7 +250,7 @@ class MailHandler
                 $xoopsMailer->Host = $account_server_out; //sometimes necessary to repeat
             }
 
-            if ('' != $account_securetype_out) {
+            if ('' !== $account_securetype_out) {
                 $xoopsMailer->SMTPAuth   = true;
                 $xoopsMailer->SMTPSecure = $account_securetype_out; // sets the prefix to the server
             }
@@ -309,7 +320,7 @@ class MailHandler
     private function getCleanParam($name) {
         $return = ' ';
         if (array_key_exists($name, $this->mailParams)) {
-            $return  = '' == (string)$this->mailParams[$name] ? ' ' : $this->mailParams[$name];
+            $return  = '' === (string)$this->mailParams[$name] ? ' ' : $this->mailParams[$name];
         }
 
         return $return;
@@ -373,7 +384,7 @@ class MailHandler
     public function replaceLinebreaks($string, $replaceBy) {
 
         // replace
-        return str_replace(["\r\n", "\r", "\n", "<br />", "<br>"], $replaceBy, $string);
+        return str_replace(["\r\n", "\r", "\n", '<br />', '<br>'], $replaceBy, $string);
 
     }
 }

@@ -47,7 +47,6 @@ class Category extends \XoopsObject
     /**
      * Constructor
      *
-     * @param null
      */
     public function __construct()
     {
@@ -72,7 +71,6 @@ class Category extends \XoopsObject
     /**
      * @static function &getInstance
      *
-     * @param null
      */
     public static function getInstance()
     {
@@ -138,13 +136,13 @@ class Category extends \XoopsObject
         $catLogo = $getCatLogo ?: 'blank.gif';
         $logoDirectory = '/uploads/wgevents/categories/logos';
         $logoTray = new \XoopsFormElementTray(\_AM_WGEVENTS_CATEGORY_LOGO, '<br>');
-        $logoSelect = new \XoopsFormSelect(\sprintf(\_AM_WGEVENTS_CATEGORY_LOGO_UPLOADS, ".{$logoDirectory}/"), 'logo', $catLogo, 5);
+        $logoSelect = new \XoopsFormSelect(\sprintf(\_AM_WGEVENTS_CATEGORY_LOGO_UPLOADS, ".$logoDirectory/"), 'logo', $catLogo, 5);
         $logoArray = \XoopsLists::getImgListAsArray( \XOOPS_ROOT_PATH . $logoDirectory );
         foreach ($logoArray as $logo1) {
             $logoSelect->addOption($logo1, $logo1);
         }
         $logoSelect->setExtra("onchange='showImgSelected(\"imglabel_cat_logo\", \"logo\", \"" . $logoDirectory . '", "", "' . \XOOPS_URL . "\")'");
-        $logoTray->addElement($logoSelect, false);
+        $logoTray->addElement($logoSelect);
         $logoTray->addElement(new \XoopsFormLabel('', "<br><img src='" . \XOOPS_URL . '/' . $logoDirectory . '/' . $catLogo . "' id='imglabel_cat_logo' alt='' style='max-width:100px' >"));
         // Form Image catLogo: Upload new image
         $maxsize = $helper->getConfig('maxsize_image');
@@ -162,13 +160,13 @@ class Category extends \XoopsObject
         $catImage = $getCatImage ?: 'blank.gif';
         $imageDirectory = '/uploads/wgevents/categories/images';
         $imageTray = new \XoopsFormElementTray(\_AM_WGEVENTS_CATEGORY_IMAGE, '<br>');
-        $imageSelect = new \XoopsFormSelect(\sprintf(\_AM_WGEVENTS_CATEGORY_IMAGE_UPLOADS, ".{$imageDirectory}/"), 'image', $catImage, 5);
+        $imageSelect = new \XoopsFormSelect(\sprintf(\_AM_WGEVENTS_CATEGORY_IMAGE_UPLOADS, ".$imageDirectory/"), 'image', $catImage, 5);
         $imageArray = \XoopsLists::getImgListAsArray( \XOOPS_ROOT_PATH . $imageDirectory );
         foreach ($imageArray as $image1) {
             $imageSelect->addOption(($image1), $image1);
         }
         $imageSelect->setExtra("onchange='showImgSelected(\"imglabel_cat_image\", \"image\", \"" . $imageDirectory . '", "", "' . \XOOPS_URL . "\")'");
-        $imageTray->addElement($imageSelect, false);
+        $imageTray->addElement($imageSelect);
         $imageTray->addElement(new \XoopsFormLabel('', "<br><img src='" . \XOOPS_URL . '/' . $imageDirectory . '/' . $catImage . "' id='imglabel_cat_image' alt='' style='max-width:100px' >"));
         // Form Image catImage: Upload new image
         $imageTray->addElement(new \XoopsFormFile('<br>' . \_AM_WGEVENTS_FORM_UPLOAD_NEW, 'image', $maxsize));

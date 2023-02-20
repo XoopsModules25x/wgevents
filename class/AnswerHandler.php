@@ -55,7 +55,7 @@ class AnswerHandler extends \XoopsPersistableObjectHandler
      * retrieve a field
      *
      * @param int $id field id
-     * @param null fields
+     * @param $fields
      * @return \XoopsObject|null reference to the {@link Get} object
      */
     public function get($id = null, $fields = null)
@@ -66,7 +66,6 @@ class AnswerHandler extends \XoopsPersistableObjectHandler
     /**
      * get inserted id
      *
-     * @param null
      * @return int reference to the {@link Get} object
      */
     public function getInsertId()
@@ -138,7 +137,7 @@ class AnswerHandler extends \XoopsPersistableObjectHandler
             }
             $answersCount = $this->getCount($crAnswer);
             if ($answersCount > 0) {
-                return $this->deleteAll($crAnswer, true);
+                return $this->deleteAll($crAnswer);
             }
         }
         return true;
@@ -216,10 +215,10 @@ class AnswerHandler extends \XoopsPersistableObjectHandler
             if (\is_object($questionObj)) {
                 $caption = $questionObj->getVar('caption');
             }
-            $valueOld = $versionOld[$key];
-            $valueNew = $versionNew[$key];
-            if ($valueOld != $valueNew) {
-                if ('' == $valueNew) {
+            $valueOld = (string)$versionOld[$key];
+            $valueNew = (string)$versionNew[$key];
+            if ($valueOld !== $valueNew) {
+                if ('' === $valueNew) {
                     $infotext .= \sprintf(\_MA_WGEVENTS_MAIL_REG_MODIFICATION_DEL, $caption) . PHP_EOL;
                 } else {
                     $infotext .= \sprintf(\_MA_WGEVENTS_MAIL_REG_MODIFICATION, $caption, $valueOld, $valueNew) . PHP_EOL;

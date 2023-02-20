@@ -47,7 +47,7 @@ $verifKeyArray  = explode('||', base64_decode($verifKey, true));
 $regId = $verifKeyArray[0];
 $registrationObj = $registrationHandler->get($regId);
 $eventName = $eventHandler->get($registrationObj->getVar('evid'))->getVar('name');
-if ($regId > 0 && \is_object($registrationObj) && WGEVENTS_URL == (string)$verifKeyArray[1] &&
+if ($regId > 0 && \is_object($registrationObj) && WGEVENTS_URL === (string)$verifKeyArray[1] &&
     (int)$registrationObj->getVar('evid') == (int)$verifKeyArray[2] &&
     (string)$registrationObj->getVar('email') == (string)$verifKeyArray[3] &&
     (string)$registrationObj->getVar('verifkey') == (string)$verifKeyArray[4]) {

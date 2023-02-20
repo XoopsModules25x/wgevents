@@ -104,6 +104,8 @@ require_once __DIR__ . '/admin.php';
 \define('_MA_WGEVENTS_EVENT_FEE', 'Gebühr');
 \define('_MA_WGEVENTS_EVENT_FEE_VAL_PH', 'Betrag');
 \define('_MA_WGEVENTS_EVENT_FEE_DESC_PH', 'Beschreibung eingeben (z.B. Kinder 0 - 6 Jahre)');
+\define('_MA_WGEVENTS_EVENT_FEE_ADD', 'Eine weitere Gebühr hinzufügen');
+\define('_MA_WGEVENTS_EVENT_FEE_REMOVE', 'Diese Gebühr entfernen');
 \define('_MA_WGEVENTS_EVENT_FEETYPE', 'Art der Gebühr');
 \define('_MA_WGEVENTS_EVENT_FEETYPE_DECLARED', 'Laut Angabe');
 \define('_MA_WGEVENTS_EVENT_FEETYPE_FREE', 'Teilnahme kostenlos');
@@ -146,6 +148,7 @@ require_once __DIR__ . '/admin.php';
 \define('_MA_WGEVENTS_EVENT_DATE_ERROR1', "Das Datum 'Datum bis' war kleiner als 'Datum von' und wurde angepasst!");
 \define('_MA_WGEVENTS_EVENT_DATE_ERROR2', "Das Datum 'Anmeldung bis' war kleiner als 'Anmeldung von' und wurde angepasst!");
 \define('_MA_WGEVENTS_EVENT_URL_REGISTRATION', 'Url für externe Anmeldung');
+\define('_MA_WGEVENTS_EVENT_URL_REGISTRATION_PH', 'Bitte vollständigen Url inklusive http:// eingeben');
 // Categories
 \define('_MA_WGEVENTS_CATEGORY_LOGO', 'Logo');
 \define('_MA_WGEVENTS_CATEGORY_NOEVENTS', 'Keine Veranstaltungen verfügbar');

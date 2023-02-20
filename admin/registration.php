@@ -128,7 +128,8 @@ switch ($op) {
             $registrationObj = $registrationHandler->create();
         }
         // Set Vars
-        $registrationObj->setVar('evid', Request::getInt('evid'));
+        $regEvid = Request::getInt('evid');
+        $registrationObj->setVar('evid', $regEvid);
         $registrationObj->setVar('salutation', Request::getInt('salutation'));
         $registrationObj->setVar('firstname', Request::getString('firstname'));
         $registrationObj->setVar('lastname', Request::getString('lastname'));
@@ -143,7 +144,8 @@ switch ($op) {
         $registrationObj->setVar('listwait', Request::getInt('listwait'));
         $registrationDatecreatedObj = \DateTime::createFromFormat(\_SHORTDATESTRING, Request::getString('datecreated'));
         $registrationObj->setVar('datecreated', $registrationDatecreatedObj->getTimestamp());
-        $registrationObj->setVar('submitter', Request::getInt('submitter'));
+        $regSubmitter = Request::getInt('submitter');
+        $registrationObj->setVar('submitter', $regSubmitter);
         $answersValueArr = [];
         $answersIdArr = Request::getArray('ans_id');
         $answersTypeArr = Request::getArray('type');
@@ -182,7 +184,7 @@ switch ($op) {
             }
             // create items in table answers
             foreach ($answersValueArr as $key => $answer) {
-                if ('' != $answer) {
+                if ('' !== (string)$answer) {
                     $answerObj = $answerHandler->create();
                     $answerObj->setVar('regid', $newRegId);
                     $answerObj->setVar('queid', $key);
@@ -243,7 +245,7 @@ switch ($op) {
         $GLOBALS['xoopsTpl']->assign('navigation', $adminObject->displayNavigation('registration.php'));
         $registrationObj = $registrationHandler->get($regId);
         $regEvid = $registrationObj->getVar('evid');
-        if (isset($_REQUEST['ok']) && 1 == $_REQUEST['ok']) {
+        if (isset($_REQUEST['ok']) && 1 === (int)$_REQUEST['ok']) {
             if (!$GLOBALS['xoopsSecurity']->check()) {
                 \redirect_header('registration.php', 3, \implode(', ', $GLOBALS['xoopsSecurity']->getErrors()));
             }

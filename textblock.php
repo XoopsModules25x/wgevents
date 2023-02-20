@@ -89,7 +89,7 @@ switch ($op) {
             $GLOBALS['xoopsTpl']->assign('panel_type', $helper->getConfig('panel_type'));
             $GLOBALS['xoopsTpl']->assign('divideby', $helper->getConfig('divideby'));
             $GLOBALS['xoopsTpl']->assign('numb_col', $helper->getConfig('numb_col'));
-            if ('show' == $op && '' != $tbName) {
+            if ('show' === $op && '' !== $tbName) {
                 $GLOBALS['xoopsTpl']->assign('xoops_pagetitle', \strip_tags($tbName . ' - ' . $GLOBALS['xoopsModule']->getVar('name')));
             }
         } else {
@@ -173,7 +173,7 @@ switch ($op) {
         // Breadcrumbs
         $xoBreadcrumbs[] = ['title' => \_MA_WGEVENTS_TEXTBLOCK_EDIT];
         // Check params
-        if (0 == $tbId) {
+        if (0 === $tbId) {
             \redirect_header('textblock.php?op=list', 3, \_MA_WGEVENTS_INVALID_PARAM);
         }
         // Get Form
@@ -197,7 +197,7 @@ switch ($op) {
         // Request source
         $tbIdSource = Request::getInt('id_source');
         // Check params
-        if (0 == $tbIdSource) {
+        if (0 === $tbIdSource) {
             \redirect_header('textblock.php?op=list', 3, \_MA_WGEVENTS_INVALID_PARAM);
         }
         // Get Form
@@ -214,12 +214,12 @@ switch ($op) {
             \redirect_header('textblock.php?op=list', 3, \_NOPERM);
         }
         // Check params
-        if (0 == $tbId) {
+        if (0 === $tbId) {
             \redirect_header('textblock.php?op=list', 3, \_MA_WGEVENTS_INVALID_PARAM);
         }
         $textblockObj = $textblockHandler->get($tbId);
         $tbName = $textblockObj->getVar('name');
-        if (isset($_REQUEST['ok']) && 1 == $_REQUEST['ok']) {
+        if (isset($_REQUEST['ok']) && 1 === (int)$_REQUEST['ok']) {
             if (!$GLOBALS['xoopsSecurity']->check()) {
                 \redirect_header('textblock.php', 3, \implode(', ', $GLOBALS['xoopsSecurity']->getErrors()));
             }

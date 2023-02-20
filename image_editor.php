@@ -304,10 +304,8 @@ switch ($op) {
                 $imageObj->setVar($fieldObj, $savedFilename);
                 //$imageObj->setVar($submObj, $uid); // do not change submitter of event
             }
-        } else {
-            if ($fileName > '') {
-                $uploaderErrors = $uploader->getErrors();
-            }
+        } elseif ($fileName > '') {
+            $uploaderErrors = $uploader->getErrors();
         }
         if ('' !== $uploaderErrors) {
             \redirect_header($redir, 5, $uploaderErrors);
@@ -331,8 +329,8 @@ switch ($op) {
         $GLOBALS['xoopsTpl']->assign('nbModals', [1, 2, 3, 4, 5, 6]);
 
         // get form for upload album image
-        $currImage   = $imageObj->getVar($fieldObj);
-        if ('' == $currImage) {
+        $currImage = (string)$imageObj->getVar($fieldObj);
+        if ('' === $currImage) {
             $currImage = 'blank.gif';
         }
         $image_path = $imgPath . $currImage;

@@ -133,11 +133,11 @@ switch ($op) {
                 $uploaderErrors .= '<br>' . $uploader->getErrors();
             }
         } else {
-            if ('' != $filename) {
+            if ('' !== $filename) {
                 $uploaderErrors .= '<br>' . $uploader->getErrors();
             }
             $filename = Request::getString('logo');
-            if ('' != $filename) {
+            if ('' !== $filename) {
                 $eventObj->setVar('logo', $filename);
             }
         }
@@ -199,7 +199,7 @@ switch ($op) {
                 $eventObj->setVar('register_sendermail', Request::getString('register_sendermail'));
                 $eventObj->setVar('register_sendername', Request::getString('register_sendername'));
                 $eventObj->setVar('register_signature', Request::getString('register_signature'));
-            } else if ($evId > 0) {
+            } elseif ($evId > 0) {
                 //reset previous values
                 $eventObj->setVar('register_to', 0);
                 $eventObj->setVar('register_max', 0);
@@ -226,7 +226,7 @@ switch ($op) {
         if (in_array('00000', $arrGroups)) {
             $eventObj->setVar('groups', '00000');
         } else {
-            $eventObj->setVar('groups', implode("|", $arrGroups));
+            $eventObj->setVar('groups', implode('|', $arrGroups));
         }
         $eventObj->setVar('identifier', Request::getString('identifier'));
         $eventDatecreatedObj = \DateTime::createFromFormat(\_SHORTDATESTRING, Request::getString('datecreated'));
@@ -265,7 +265,7 @@ switch ($op) {
         $GLOBALS['xoopsTpl']->assign('navigation', $adminObject->displayNavigation('event.php'));
         $eventObj = $eventHandler->get($evId);
         $evName = $eventObj->getVar('name');
-        if (isset($_REQUEST['ok']) && 1 == $_REQUEST['ok']) {
+        if (isset($_REQUEST['ok']) && 1 === (int)$_REQUEST['ok']) {
             if (!$GLOBALS['xoopsSecurity']->check()) {
                 \redirect_header('event.php', 3, \implode(', ', $GLOBALS['xoopsSecurity']->getErrors()));
             }
