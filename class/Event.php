@@ -262,7 +262,7 @@ class Event extends \XoopsObject
         $evLocation = $this->isNew() ? '' : $this->getVar('location', 'e');
         $form->addElement(new \XoopsFormTextArea(\_MA_WGEVENTS_EVENT_LOCATION, 'location', $evLocation, 4, 50));
 
-        if ($helper->getConfig('use_gmaps')) {
+        if ((bool)$helper->getConfig('use_gmaps')) {
             $gmapsTray = new Forms\FormElementTray('', '<br>');
             // Form Text evLocgmlat
             $evLocgmlat = $this->isNew() ? '0.00' : $this->getVar('locgmlat');
@@ -297,7 +297,7 @@ class Event extends \XoopsObject
             }
         }
         $evFeeTray = new Forms\FormElementTray(\_MA_WGEVENTS_EVENT_FEE, '<br>');
-        $evFeeType = $this->isNew() ? Constants::FEETYPE_DECLARED : $this->getVar('fee_type');
+        $evFeeType = $this->isNew() ? Constants::FEETYPE_DECLARED : (int)$this->getVar('fee_type');
         $evFeeTypeRadio = new \XoopsFormRadio('', 'fee_type', $evFeeType);
         $evFeeTypeRadio->addOption(Constants::FEETYPE_DECLARED, \_MA_WGEVENTS_EVENT_FEETYPE_DECLARED);
         $evFeeTypeRadio->addOption(Constants::FEETYPE_FREE, \_MA_WGEVENTS_EVENT_FEETYPE_FREE);
@@ -323,7 +323,7 @@ class Event extends \XoopsObject
         $form->addElement(new \XoopsFormEditor(\_MA_WGEVENTS_EVENT_PAYMENTINFO, 'paymentinfo', $editorConfigs2));
 
         // Start block registration options
-        if ($helper->getConfig('use_register')) {
+        if ((bool)$helper->getConfig('use_register')) {
             // Form Radio Yes/No evRegister_use
             $evRegister_use = $this->isNew() ? 0 : $this->getVar('register_use');
             $evRegisterUseRadio = new \XoopsFormRadioYN(\_MA_WGEVENTS_EVENT_REGISTER_USE, 'register_use', $evRegister_use);
@@ -379,17 +379,23 @@ class Event extends \XoopsObject
             //$form->addElement(new \XoopsFormLabel('', $evReservUseTray));
             // End block registration options
         }
-        // Form Select evGalid
-        if ($helper->getConfig('use_wggallery') && \class_exists('WggalleryCorePreload')) {
-            $helperGallery = \XoopsModules\Wggallery\Helper::getInstance();
-            $albumsHandler = $helperGallery->getHandler('Albums');
-            $evGalidSelect = new \XoopsFormSelect(\_MA_WGEVENTS_EVENT_GALID, 'galid', $this->getVar('galid'));
-            $evGalidSelect->addOption(0, ' ');
-            $evGalidSelect->addOptionArray($albumsHandler->getList());
-            $form->addElement($evGalidSelect);
+        if ((bool)$helper->getConfig('use_urlregistration')) {
+            // Form Text urlRegistration
+            $evUrlregistration = $this->getVar('url_registration');
+            $evUrlregText = new \XoopsFormText(\_MA_WGEVENTS_EVENT_URL_REGISTRATION, 'url_registration', 50, 255, $evUrlregistration);
+            $form->addElement($evUrlregText);
+            // Form Select evGalid
+            if ((bool)$helper->getConfig('use_wggallery') && \class_exists('WggalleryCorePreload')) {
+                $helperGallery = \XoopsModules\Wggallery\Helper::getInstance();
+                $albumsHandler = $helperGallery->getHandler('Albums');
+                $evGalidSelect = new \XoopsFormSelect(\_MA_WGEVENTS_EVENT_GALID, 'galid', $this->getVar('galid'));
+                $evGalidSelect->addOption(0, ' ');
+                $evGalidSelect->addOptionArray($albumsHandler->getList());
+                $form->addElement($evGalidSelect);
+            }
         }
         // Form Select evGroups
-        if ($helper->getConfig('use_groups')) {
+        if ((bool)$helper->getConfig('use_groups')) {
             if ($this->isNew()) {
                 $groups = ['00000'];
             } else {
@@ -447,7 +453,7 @@ class Event extends \XoopsObject
                 $form->addElement(new \XoopsFormLabel(\_MA_WGEVENTS_SUBMITTER, \XoopsUser::getUnameFromId($evSubmitter)));
             }
         }
-        if ($this->idSource > 0 && $helper->getConfig('use_register')) {
+        if ($this->idSource > 0 && (bool)$helper->getConfig('use_register')) {
             $form->addElement(new \XoopsFormRadioYN(\_MA_WGEVENTS_EVENT_CLONE_QUESTION, 'clone_question', 1));
             $form->addElement(new \XoopsFormHidden('id_source', $this->idSource));
         }
@@ -691,7 +697,7 @@ class Event extends \XoopsObject
         }
         $ret['register_forceverif_text'] = (int)$this->getVar('register_forceverif') > 0 ? \_YES : \_NO;
         $evGalid                         = (int)$this->getVar('galid');
-        if ($evGalid > 0 && $helper->getConfig('use_wggallery') && \class_exists('WggalleryCorePreload')) {
+        if ($evGalid > 0 && (bool)$helper->getConfig('use_wggallery') && \class_exists('WggalleryCorePreload')) {
             $helperGallery = \XoopsModules\Wggallery\Helper::getInstance();
             $albumsHandler = $helperGallery->getHandler('Albums');
             $albumObj = $albumsHandler->get($evGalid);

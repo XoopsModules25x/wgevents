@@ -4,6 +4,7 @@
 - restructured cron jobs (goffy)
 - implementation fee types (goffy)
 - implementation of wggallery (goffy)
+- implementation of external link for registration (goffy)
 
 ==============================================================
 1.0.5 RC1 [2022/11/01]

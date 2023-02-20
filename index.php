@@ -35,26 +35,8 @@ if (!$permissionsHandler->getPermEventsView()) {
     require __DIR__ . '/footer.php';
     exit;
 }
-
-
-$errMsg = 'SMTP Error: data not accepted.SMTP server error: DATA END command failed Detail: Your message could not be sent. The limit on the number of allowed outgoing messages was exceeded. Try again later. SMTP code: 554 Additional SMTP info: 5.7.0';
-echo $errMsg . ':';
-$errIds = ['SMTP','554', 'error'];
-$arrMsg = explode(' ', \preg_replace('/[^a-z0-9]/i',' ',$errMsg));
-$countMerge = count(array_intersect($arrMsg, $errIds));
-echo $countMerge;
-
-
-
-
-
-
-
-
-
-
-
-
+$permRegister = $permissionsHandler->getPermRegistrationsSubmit();
+$GLOBALS['xoopsTpl']->assign('permRegister', $permRegister);
 
 $op         = Request::getCmd('op', 'coming');
 $start      = Request::getInt('start');
@@ -97,11 +79,12 @@ $gmapsHeight      = false;
 $useGMaps         = (bool)$helper->getConfig('use_gmaps');
 if ($useGMaps) {
     $gmapsPositionList = (string)$helper->getConfig('gmaps_enableindex');
-    $gmapsEnableEvent  = ('top' == $gmapsPositionList || 'bottom' == $gmapsPositionList);
+    $gmapsEnableEvent  = ('top' === $gmapsPositionList || 'bottom' === $gmapsPositionList);
     $gmapsHeight       = $helper->getConfig('gmaps_height');
 }
 $eventRegprocessbar = (string)$helper->getConfig('event_regprocessbar');
 $GLOBALS['xoopsTpl']->assign('event_regprocessbar', $eventRegprocessbar);
+$GLOBALS['xoopsTpl']->assign('use_urlregistration', $helper->getConfig('use_urlregistration'));
 
 //misc
 $GLOBALS['xoopsTpl']->assign('categoryCurrent', $catId);
@@ -117,12 +100,12 @@ if (\is_object($GLOBALS['xoopsUser'])) {
     $userIsAdmin = $GLOBALS['xoopsUser']->isAdmin();
 }
 
-if ('none' != $indexDisplayCats) {
+if ('none' !== $indexDisplayCats) {
     $GLOBALS['xoopsTpl']->assign('wgevents_upload_catlogos_url', \WGEVENTS_UPLOAD_CATLOGOS_URL);
     $GLOBALS['xoopsTpl']->assign('wgevents_upload_catimages_url', \WGEVENTS_UPLOAD_CATIMAGES_URL);
     $categories = $categoryHandler->getCategoriesForFilter($indexDisplayCats, $filterCats, $op, $useGroups, '');
     $GLOBALS['xoopsTpl']->assign('categories', $categories);
-    if ('form' == $indexDisplayCats) {
+    if ('form' === $indexDisplayCats) {
         $formCatsCb = $categoryHandler->getFormCatsCb($filterCats, $op);
         $GLOBALS['xoopsTpl']->assign('formCatsCb', $formCatsCb->render());
     }
@@ -131,10 +114,10 @@ if ('none' != $indexDisplayCats) {
 $indexDisplayEvents = (string)$helper->getConfig('index_displayevents');
 $GLOBALS['xoopsTpl']->assign('index_displayevents', $indexDisplayEvents);
 
-if ('none' != $indexDisplayEvents) {
+if ('none' !== $indexDisplayEvents) {
     $GLOBALS['xoopsTpl']->assign('wgevents_upload_eventlogos_url', \WGEVENTS_UPLOAD_EVENTLOGOS_URL);
     $listDescr = '';
-    if ('past' == $op) {
+    if ('past' === $op) {
         $GLOBALS['xoopsTpl']->assign('showBtnComing', true);
         $listDescr = \_MA_WGEVENTS_EVENTS_LISTPAST;
         $xoBreadcrumbs[] = ['title' => \_MA_WGEVENTS_EVENTS_LISTPAST];
@@ -166,8 +149,8 @@ if ('none' != $indexDisplayEvents) {
         // Get All Event
         foreach (\array_keys($eventsAll) as $i) {
             $events[$i] = $eventsAll[$i]->getValuesEvents();
-            $events[$i]['locked'] = (Constants::STATUS_LOCKED == $events[$i]['status']);
-            $events[$i]['canceled'] = (Constants::STATUS_CANCELED == $events[$i]['status']);
+            $events[$i]['locked'] = (Constants::STATUS_LOCKED === (int)$events[$i]['status']);
+            $events[$i]['canceled'] = (Constants::STATUS_CANCELED === (int)$events[$i]['status']);
             $permEdit = $permissionsHandler->getPermEventsEdit($events[$i]['submitter'], $events[$i]['status']) || $uidCurrent == $events[$i]['submitter'];
             $events[$i]['permEdit'] = $permEdit;
 
@@ -210,7 +193,7 @@ if ('none' != $indexDisplayEvents) {
             }
         }
         $GLOBALS['xoopsTpl']->assign('events', $events);
-        if ('show' == $op && $useGMaps) {
+        if ('show' === $op && $useGMaps) {
             $GLOBALS['xoopsTpl']->assign('gmapsShow', true);
         }
         if ($useGMaps && count($eventsMap) > 0) {

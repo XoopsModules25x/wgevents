@@ -59,6 +59,7 @@ switch ($op) {
         $GLOBALS['xoopsTpl']->assign('use_gmaps', $helper->getConfig('use_gmaps'));
         $GLOBALS['xoopsTpl']->assign('use_wggallery', $helper->getConfig('use_wggallery'));
         $GLOBALS['xoopsTpl']->assign('use_register', $helper->getConfig('use_register'));
+        $GLOBALS['xoopsTpl']->assign('use_urlregistration', $helper->getConfig('use_urlregistration'));
         $GLOBALS['xoopsTpl']->assign('use_groups', $helper->getConfig('use_groups'));
         // Table view events
         if ($eventCount > 0) {
@@ -213,6 +214,12 @@ switch ($op) {
                 $answerHandler->cleanupAnswers($evId);
             }
         }
+        if (Request::hasVar('url_registration')) {
+            $urlRegistration = Request::getString('url_registration');
+        } else {
+            $urlRegistration = '';
+        }
+        $eventObj->setVar('url_registration', $urlRegistration);
         $eventObj->setVar('status', Request::getInt('status'));
         $eventObj->setVar('galid', Request::getInt('galid'));
         $arrGroups = Request::getArray('groups');

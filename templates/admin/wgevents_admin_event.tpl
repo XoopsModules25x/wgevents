@@ -37,6 +37,9 @@
                     <th class="center"><{$smarty.const._MA_WGEVENTS_EVENT_REGISTER_NOTIFY}></th>
                     <th class="center"><{$smarty.const._MA_WGEVENTS_EVENT_REGISTER_FORCEVERIF}></th>
                 <{/if}>
+                <{if $use_urlregistration|default:''}>
+                    <th class="center"><{$smarty.const._MA_WGEVENTS_EVENT_URL_REGISTRATION}></th>
+                <{/if}>
                 <{if $use_wggallery|default:''}>
                     <th class="center"><{$smarty.const._MA_WGEVENTS_EVENT_GALID}></th>
                 <{/if}>
@@ -82,6 +85,9 @@
                     <td class='center'><{$event.register_autoaccept_text}></td>
                     <td class='center'><{$event.register_notify_text|default:''}></td>
                     <td class='center'><{$event.register_forceverif_text}></td>
+                <{/if}>
+                <{if $use_urlregistration|default:''}>
+                    <td class='center'><{$event.url_registration}></td>
                 <{/if}>
                 <{if $use_wggallery|default:''}>
                     <td class='center'><{$event.galid}></td>

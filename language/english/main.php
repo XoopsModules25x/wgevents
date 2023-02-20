@@ -145,6 +145,7 @@ require_once __DIR__ . '/admin.php';
 \define('_MA_WGEVENTS_EVENT_CLONE_QUESTION', 'Clone also existing questions');
 \define('_MA_WGEVENTS_EVENT_DATE_ERROR1', "The date 'Date to' was smaller than 'Date from' and was adapted therefore!");
 \define('_MA_WGEVENTS_EVENT_DATE_ERROR2', "The date 'Registration to' was smaller than 'Registration from' and was adapted therefor!");
+\define('_MA_WGEVENTS_EVENT_URL_REGISTRATION', 'Url for external registration');
 // Categories
 \define('_MA_WGEVENTS_CATEGORY_LOGO', 'Logo');
 \define('_MA_WGEVENTS_CATEGORY_NOEVENTS', 'No events available');

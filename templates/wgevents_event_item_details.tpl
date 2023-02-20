@@ -214,6 +214,9 @@
         <{if $event.register_use|default:'' && $permRegister|default:false}>
             <a class='btn btn-<{if !$event.regenabled|default:false}>outline-<{/if}>primary right wge-btn' href='registration.php?op=listeventmy&amp;redir=listeventmy&amp;evid=<{$event.id}>' title='<{$smarty.const._MA_WGEVENTS_GOTO_REGISTRATION}>'><{$smarty.const._MA_WGEVENTS_GOTO_REGISTRATION}></a>
         <{/if}>
+        <{if $use_urlregistration|default:false && $event.url_registration|default:''}>
+            <a class='btn btn-primary right wge-btn' href='<{$event.url_registration}>' title='<{$smarty.const._MA_WGEVENTS_GOTO_REGISTRATION}>' target="_blank"><{$smarty.const._MA_WGEVENTS_GOTO_REGISTRATION}></a>
+        <{/if}>
         <{if $event.permEdit|default:false || $permApprove|default:false}>
             <br><a class='btn btn-primary right wge-btn' href='event.php?op=edit&amp;id=<{$event.id}>&amp;start=<{$start}>&amp;limit=<{$limit}>' title='<{$smarty.const._EDIT}>'><{$smarty.const._EDIT}></a>
             <a class='btn btn-primary right wge-btn' href='image_editor.php?op=list&amp;id=<{$event.id}>&amp;start=<{$start}>&amp;limit=<{$limit}>' title='<{$smarty.const._MA_WGEVENTS_IMG_EDITOR}>'><{$smarty.const._MA_WGEVENTS_IMG_EDITOR}></a>
