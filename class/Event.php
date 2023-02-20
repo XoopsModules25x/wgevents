@@ -745,18 +745,23 @@ class Event extends \XoopsObject
             case 0:
             default:
                 $ret = '';
+                break;
             case Constants::DAYNAME_SHORT:
                 $daynames_short = [\_MA_WGEVENTS_CAL_MIN_SUNDAY, \_MA_WGEVENTS_CAL_MIN_MONDAY, \_MA_WGEVENTS_CAL_MIN_TUESDAY, \_MA_WGEVENTS_CAL_MIN_WEDNESDAY, \_MA_WGEVENTS_CAL_MIN_THURSDAY, \_MA_WGEVENTS_CAL_MIN_FRIDAY, \_MA_WGEVENTS_CAL_MIN_SATURDAY];
                 $ret = $daynames_short[$day] . ' ';
+                break;
             case Constants::DAYNAME_SHORTDOT:
                 $daynames_short = [\_MA_WGEVENTS_CAL_MIN_SUNDAY, \_MA_WGEVENTS_CAL_MIN_MONDAY, \_MA_WGEVENTS_CAL_MIN_TUESDAY, \_MA_WGEVENTS_CAL_MIN_WEDNESDAY, \_MA_WGEVENTS_CAL_MIN_THURSDAY, \_MA_WGEVENTS_CAL_MIN_FRIDAY, \_MA_WGEVENTS_CAL_MIN_SATURDAY];
                 $ret = $daynames_short[$day] . '. ';
+                break;
             case Constants::DAYNAME_SHORTCOMMA:
                 $daynames_short = [\_MA_WGEVENTS_CAL_MIN_SUNDAY, \_MA_WGEVENTS_CAL_MIN_MONDAY, \_MA_WGEVENTS_CAL_MIN_TUESDAY, \_MA_WGEVENTS_CAL_MIN_WEDNESDAY, \_MA_WGEVENTS_CAL_MIN_THURSDAY, \_MA_WGEVENTS_CAL_MIN_FRIDAY, \_MA_WGEVENTS_CAL_MIN_SATURDAY];
                 $ret = $daynames_short[$day] . ', ';
+                break;
             case Constants::DAYNAME_LONG:
                 $daynames_long = [\_MA_WGEVENTS_CAL_SUNDAY, \_MA_WGEVENTS_CAL_MONDAY, \_MA_WGEVENTS_CAL_TUESDAY, \_MA_WGEVENTS_CAL_WEDNESDAY, \_MA_WGEVENTS_CAL_THURSDAY, \_MA_WGEVENTS_CAL_FRIDAY, \_MA_WGEVENTS_CAL_SATURDAY];
                 $ret = $daynames_long[$day] . ' ';
+                break;
         }
 
         return $ret;
