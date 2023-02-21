@@ -43,7 +43,7 @@ switch ($op) {
         echo 'Invalid op';
         break;
     case 'reg_all';
-        if (0 == $evId) {
+        if (0 === $evId) {
             \redirect_header('registration.php?op=list', 3, \_MA_WGEVENTS_INVALID_PARAM);
         }
         $eventObj = $eventHandler->get($evId);
@@ -69,7 +69,7 @@ switch ($op) {
                     // get all questions for this event
                     $questionsArr = $questionHandler->getQuestionsByEvent($evId);
                     //add field names
-                    if ('xlsx' == $outType) {
+                    if ('xlsx' === $outType) {
                         $data[$i] = [\_MA_WGEVENTS_REGISTRATION_SALUTATION, \_MA_WGEVENTS_REGISTRATION_FIRSTNAME, \_MA_WGEVENTS_REGISTRATION_LASTNAME,
                             \_MA_WGEVENTS_REGISTRATION_EMAIL];
                         foreach ($questionsArr as $question) {
@@ -107,7 +107,7 @@ switch ($op) {
                     // Get All Transactions
                     foreach ($registrations as $registration) {
                         $i++;
-                        if ('xlsx' == $outType) {
+                        if ('xlsx' === $outType) {
                             $data[$i] = [
                                 $registration['salutation_text'],
                                 $registration['firstname'],
@@ -147,7 +147,7 @@ switch ($op) {
                     }
                     unset($registrations);
                 }
-                if ('xlsx' == $outType) {
+                if ('xlsx' === $outType) {
                     $xlsx = Simplexlsxgen\SimpleXLSXGen::fromArray($data);
                     $xlsx->downloadAs($filename);
                 } else {

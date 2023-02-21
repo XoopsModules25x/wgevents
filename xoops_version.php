@@ -681,6 +681,15 @@ $modversion['config'][] = [
     'valuetype'   => 'int',
     'default'     => 0,
 ];
+// use url for external registration
+$modversion['config'][] = [
+    'name'        => 'use_urlregistration',
+    'title'       => '\_MI_WGEVENTS_USE_URLREGISTRATION',
+    'description' => '\_MI_WGEVENTS_USE_URLREGISTRATION_DESC',
+    'formtype'    => 'yesno',
+    'valuetype'   => 'int',
+    'default'     => 0,
+];
 // use logs
 $modversion['config'][] = [
     'name'        => 'use_logs',

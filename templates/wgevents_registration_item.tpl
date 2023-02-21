@@ -1,26 +1,4 @@
 <tr>
-    <td><{$smarty.foreach.regdetails.iteration}></td>
-    <td><{$regdetails.salutation_text|default:''}></td>
-    <td><{$regdetails.firstname|default:''}></td>
-    <td><{$regdetails.lastname|default:''}></td>
-    <td><{$regdetails.email|default:''}></td>
-    <{foreach item=answer from=$regdetails.answers}>
-        <td><{$answer|default:''}></td>
-    <{/foreach}>
-    <td>
-        <span id="lbl_status_<{$regdetails.id}>"><{$regdetails.status_text}></span>
-        <{if $registration.event_register_max|default:0 > 0 && $regdetails.listwait|default:false}>
-            <br><span id="lbl_listwait_<{$regdetails.id}>"><img src="<{$wgevents_icons_url_16}>/attention.png" alt="<{$smarty.const._MA_WGEVENTS_REGISTRATION_LISTWAIT}>" title="<{$smarty.const._MA_WGEVENTS_REGISTRATION_LISTWAIT}>"><{$smarty.const._MA_WGEVENTS_REGISTRATION_LISTWAIT}></span>
-        <{/if}>
-    </td>
-    <{if $registration.evfees_count|default:0 > 0}>
-        <td id="financial_<{$regdetails.id}>"><{$regdetails.financial_text}></td>
-        <td id="paidamount_<{$regdetails.id}>"><{$regdetails.paidamount_text}></td>
-    <{/if}>
-    <{if $showSubmitter|default:false}>
-        <td><{$regdetails.submitter_text}></td>
-    <{/if}>
-    <td><{$regdetails.datecreated_text}></td>
     <td>
         <{if $regdetails.permRegistrationApprove|default:''}>
             <{if $registration.evfees_count|default:0 > 1}>
@@ -59,4 +37,27 @@
             <a class='btn btn-danger right wge-btn-1' href='registration.php?op=delete&amp;redir=<{$redir}>&amp;evid=<{$regdetails.evid}>&amp;id=<{$regdetails.id}>' title='<{$smarty.const._DELETE}>'><i class="fa fa-trash fa-fw"></i></a>
         <{/if}>
     </td>
+    <td><{$smarty.foreach.regdetails.iteration}></td>
+    <td><{$regdetails.salutation_text|default:''}></td>
+    <td><{$regdetails.firstname|default:''}></td>
+    <td><{$regdetails.lastname|default:''}></td>
+    <td><{$regdetails.email|default:''}></td>
+    <td>
+        <span id="lbl_status_<{$regdetails.id}>"><{$regdetails.status_text}></span>
+        <{if $registration.event_register_max|default:0 > 0 && $regdetails.listwait|default:false}>
+            <br><span id="lbl_listwait_<{$regdetails.id}>"><img src="<{$wgevents_icons_url_16}>/attention.png" alt="<{$smarty.const._MA_WGEVENTS_REGISTRATION_LISTWAIT}>" title="<{$smarty.const._MA_WGEVENTS_REGISTRATION_LISTWAIT}>"><{$smarty.const._MA_WGEVENTS_REGISTRATION_LISTWAIT}></span>
+        <{/if}>
+    </td>
+    <{if $registration.evfees_count|default:0 > 0}>
+        <td id="financial_<{$regdetails.id}>"><{$regdetails.financial_text}></td>
+        <td id="paidamount_<{$regdetails.id}>"><{$regdetails.paidamount_text}></td>
+    <{/if}>
+    <{foreach item=answer from=$regdetails.answers}>
+        <td><{$answer|default:''}></td>
+    <{/foreach}>
+
+    <{if $showSubmitter|default:false}>
+        <td><{$regdetails.submitter_text}></td>
+    <{/if}>
+    <td><{$regdetails.datecreated_text}></td>
 </tr>

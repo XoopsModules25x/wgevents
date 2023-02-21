@@ -34,9 +34,7 @@ $limit = Request::getInt('limit', $helper->getConfig('adminpager'));
 $GLOBALS['xoopsTpl']->assign('start', $start);
 $GLOBALS['xoopsTpl']->assign('limit', $limit);
 
-
 $moduleDirName = \basename(\dirname(__DIR__));
-
 
 $GLOBALS['xoopsTpl']->assign('mod_url', XOOPS_URL . '/modules/' . $moduleDirName);
 $xoTheme->addStylesheet($helper->url('assets/js/tablesorter/css/theme.blue.css'));
@@ -140,7 +138,7 @@ switch ($op) {
         $questionObj->setVar('desc', Request::getText('desc'));
         $queValuesText = '';
         $queValues = Request::getString('values');
-        if ('' != $queValues) {
+        if ('' !== $queValues) {
             if (Constants::FIELD_COMBOBOX == $queType ||
                 Constants::FIELD_SELECTBOX == $queType ||
                 Constants::FIELD_RADIO == $queType ||
@@ -187,7 +185,7 @@ switch ($op) {
         $GLOBALS['xoopsTpl']->assign('navigation', $adminObject->displayNavigation('question.php'));
         $questionObj = $questionHandler->get($queId);
         $addEvid = $questionObj->getVar('evid');
-        if (isset($_REQUEST['ok']) && 1 == $_REQUEST['ok']) {
+        if (isset($_REQUEST['ok']) && 1 === (int)$_REQUEST['ok']) {
             if (!$GLOBALS['xoopsSecurity']->check()) {
                 \redirect_header('question.php', 3, \implode(', ', $GLOBALS['xoopsSecurity']->getErrors()));
             }

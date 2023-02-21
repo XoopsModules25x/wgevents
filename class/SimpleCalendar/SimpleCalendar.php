@@ -110,7 +110,7 @@ class SimpleCalendar {
     public function setCalendarClasses( array $classes = [] ) {
         foreach( $classes as $key => $value ) {
             if( !isset($this->classes[$key]) ) {
-                throw new \InvalidArgumentException("class '{$key}' not supported");
+                throw new \InvalidArgumentException("class '$key' not supported");
             }
 
             $this->classes[$key] = $value;
@@ -264,7 +264,7 @@ class SimpleCalendar {
 TAG;
 
         foreach( $daysOfWeek as $key => $dayName ) {
-            $out .= "<th class='day{$key}'>{$dayName}</th>";
+            $out .= "<th class='day$key'>$dayName</th>";
         }
 
         $out .= <<<'TAG'

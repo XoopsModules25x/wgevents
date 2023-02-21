@@ -18,6 +18,7 @@
             <th class="center"><{$smarty.const._MA_WGEVENTS_EVENT_LOCGMLON}></th>
             <th class="center"><{$smarty.const._MA_WGEVENTS_EVENT_LOCGMZOOM}></th>
             <th class="center"><{$smarty.const._MA_WGEVENTS_EVENT_FEE}></th>
+            <th class="center"><{$smarty.const._MA_WGEVENTS_EVENT_PAYMENTINFO}></th>
             <th class="center"><{$smarty.const._MA_WGEVENTS_EVENT_GROUPS}></th>
             <th class="center"><{$smarty.const._MA_WGEVENTS_STATUS}></th>
             <th class="center"><{$smarty.const._MA_WGEVENTS_EVENT_GALID}></th>
@@ -39,7 +40,8 @@
             <td class='center'><{$event.locgmlat}></td>
             <td class='center'><{$event.locgmlon}></td>
             <td class='center'><{$event.locgmzoom}></td>
-            <td class='center'><{$event.fee}></td>
+            <td class='center'><{$event.fee_text}></td>
+            <td class='center'><{$event.paymentinfo_text}></td>
             <td class='center'><{$event.groups}></td>
             <td class='center'><img src="<{$modPathIcon16}>status<{$event.status}>.png" alt="<{$event.status_text}>" title="<{$event.status_text}>" ></td>
             <td class='center'><{$event.galid}></td>

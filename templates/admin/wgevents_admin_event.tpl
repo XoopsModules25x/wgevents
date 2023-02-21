@@ -24,6 +24,7 @@
                     <th class="center"><{$smarty.const._MA_WGEVENTS_EVENT_LOCGMLON}></th>
                     <th class="center"><{$smarty.const._MA_WGEVENTS_EVENT_LOCGMZOOM}></th>
                 <{/if}>
+                <th class="center"><{$smarty.const._MA_WGEVENTS_EVENT_FEETYPE}></th>
                 <th class="center"><{$smarty.const._MA_WGEVENTS_EVENT_FEE}></th>
                 <th class="center"><{$smarty.const._MA_WGEVENTS_EVENT_PAYMENTINFO}></th>
                 <{if $use_register|default:''}>
@@ -35,6 +36,9 @@
                     <th class="center"><{$smarty.const._MA_WGEVENTS_EVENT_REGISTER_AUTOACCEPT}></th>
                     <th class="center"><{$smarty.const._MA_WGEVENTS_EVENT_REGISTER_NOTIFY}></th>
                     <th class="center"><{$smarty.const._MA_WGEVENTS_EVENT_REGISTER_FORCEVERIF}></th>
+                <{/if}>
+                <{if $use_urlregistration|default:''}>
+                    <th class="center"><{$smarty.const._MA_WGEVENTS_EVENT_URL_REGISTRATION}></th>
                 <{/if}>
                 <{if $use_wggallery|default:''}>
                     <th class="center"><{$smarty.const._MA_WGEVENTS_EVENT_GALID}></th>
@@ -69,6 +73,7 @@
                     <td class='center'><{$event.locgmlon}></td>
                     <td class='center'><{$event.locgmzoom}></td>
                 <{/if}>
+                <td class='center'><{$event.feetype_text|default:''}></td>
                 <td class='center'><{$event.fee_text|default:''}></td>
                 <td class='center'><{$event.paymentinfo_text|default:''}></td>
                 <{if $use_register|default:''}>
@@ -80,6 +85,9 @@
                     <td class='center'><{$event.register_autoaccept_text}></td>
                     <td class='center'><{$event.register_notify_text|default:''}></td>
                     <td class='center'><{$event.register_forceverif_text}></td>
+                <{/if}>
+                <{if $use_urlregistration|default:''}>
+                    <td class='center'><{$event.url_registration}></td>
                 <{/if}>
                 <{if $use_wggallery|default:''}>
                     <td class='center'><{$event.galid}></td>

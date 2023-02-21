@@ -56,7 +56,7 @@ class CategoryHandler extends \XoopsPersistableObjectHandler
      * retrieve a field
      *
      * @param int $id field id
-     * @param null fields
+     * @param $fields
      * @return \XoopsObject|null reference to the {@link Get} object
      */
     public function get($id = null, $fields = null)
@@ -67,7 +67,6 @@ class CategoryHandler extends \XoopsPersistableObjectHandler
     /**
      * get inserted id
      *
-     * @param null
      * @return int reference to the {@link Get} object
      */
     public function getInsertId()
@@ -155,7 +154,7 @@ class CategoryHandler extends \XoopsPersistableObjectHandler
 
     /**
      * @public function to get next value for sorting
-     * @param null
+     *
      * @return int
      */
     public function getNextWeight()
@@ -180,7 +179,7 @@ class CategoryHandler extends \XoopsPersistableObjectHandler
 
     /**
      * @public function to get a collection of all existing categories
-     * @param null
+     *
      * @return array
      */
     public function getCollection()
@@ -221,7 +220,7 @@ class CategoryHandler extends \XoopsPersistableObjectHandler
         $cbAll = 1;
         // Form Select categories
         $catsOnline = $this->getAllCatsOnline();
-        if (0 == \count($filterCats)) {
+        if (0 === \count($filterCats)) {
             foreach (\array_keys($catsOnline) as $i) {
                 $filterCats[] = $i;
             }
@@ -274,7 +273,7 @@ class CategoryHandler extends \XoopsPersistableObjectHandler
         $categoriesCount = $this->getCount($crCategory);
         $GLOBALS['xoopsTpl']->assign('categoriesCount', $categoriesCount);
         if ($categoriesCount > 0) {
-            if ('form' == $eventDisplayCats) {
+            if ('form' === $eventDisplayCats) {
                 $formCatsCb = $this->getFormCatsCb($filterCats, $op, $filter);
                 $GLOBALS['xoopsTpl']->assign('formCatsCb', $formCatsCb->render());
             } else {
@@ -288,29 +287,26 @@ class CategoryHandler extends \XoopsPersistableObjectHandler
                 // Get All Event
                 foreach (\array_keys($categoriesAll) as $i) {
                     $categories[$i] = $categoriesAll[$i]->getValuesCategories();
-                    $keywords[$i] = $categories[$i]['name'];
                     $crEvent = new \CriteriaCompo();
                     $crEvent->add(new \Criteria('catid',$i));
-                    if ($useGroups) {
-                        // current user
-                        // - must have perm to see event or
-                        // - must be event owner
-                        // - is admin
-                        if (!$userIsAdmin) {
-                            $crEventGroup = new \CriteriaCompo();
-                            $crEventGroup->add(new \Criteria('groups', '%00000%', 'LIKE')); //all users
-                            if ($uidCurrent > 0) {
-                                // Get groups
-                                $memberHandler = \xoops_getHandler('member');
-                                $xoopsGroups = $memberHandler->getGroupsByUser($uidCurrent);
-                                foreach ($xoopsGroups as $group) {
-                                    $crEventGroup->add(new \Criteria('groups', '%' . substr('00000' . $group, -5) . '%', 'LIKE'), 'OR');
-                                }
+                    // current user
+                    // - must have perm to see event or
+                    // - must be event owner
+                    // - is admin
+                    if ($useGroups && !$userIsAdmin) {
+                        $crEventGroup = new \CriteriaCompo();
+                        $crEventGroup->add(new \Criteria('groups', '%00000%', 'LIKE')); //all users
+                        if ($uidCurrent > 0) {
+                            // Get groups
+                            $memberHandler = \xoops_getHandler('member');
+                            $xoopsGroups = $memberHandler->getGroupsByUser($uidCurrent);
+                            foreach ($xoopsGroups as $group) {
+                                $crEventGroup->add(new \Criteria('groups', '%' . substr('00000' . $group, -5) . '%', 'LIKE'), 'OR');
                             }
-                            $crEventGroup->add(new \Criteria('submitter', $uidCurrent), 'OR');
-                            $crEvent->add($crEventGroup);
-                            unset($crEventGroup);
                         }
+                        $crEventGroup->add(new \Criteria('submitter', $uidCurrent), 'OR');
+                        $crEvent->add($crEventGroup);
+                        unset($crEventGroup);
                     }
                     $eventsCount = $eventHandler->getCount($crEvent);
                     $nbEventsText = \_MA_WGEVENTS_CATEGORY_NOEVENTS;

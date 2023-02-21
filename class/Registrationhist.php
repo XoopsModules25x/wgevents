@@ -36,7 +36,6 @@ class Registrationhist extends \XoopsObject
     /**
      * Constructor
      *
-     * @param null
      */
     public function __construct()
     {
@@ -64,7 +63,6 @@ class Registrationhist extends \XoopsObject
     /**
      * @static function &getInstance
      *
-     * @param null
      */
     public static function getInstance()
     {

@@ -34,8 +34,6 @@ $moduleDirName      = $GLOBALS['xoopsModule']->getVar('dirname');
 $moduleDirNameUpper = \mb_strtoupper($moduleDirName);
 \xoops_loadLanguage('feedback', $moduleDirName);
 
-//xoops_cp_header();
-
 switch ($op) {
     case 'list':
     default:

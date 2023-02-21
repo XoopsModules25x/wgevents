@@ -58,8 +58,8 @@ switch ($op) {
             $modsArray[] = $module->getInfo('dirname');
             unset($module);
         }
-        $modulesList[] = ['name' => \_AM_WGEVENTS_IMPORT_APCAL, 'op' => 'apcal', 'installed' => in_array('apcal', $modsArray)];
-        $modulesList[] = ['name' => \_AM_WGEVENTS_IMPORT_EXTCAL, 'op' => 'extcal', 'installed' => in_array('extcal', $modsArray)];
+        $modulesList[] = ['name' => \_AM_WGEVENTS_IMPORT_APCAL, 'op' => 'apcal', 'installed' => \in_array('apcal', $modsArray)];
+        $modulesList[] = ['name' => \_AM_WGEVENTS_IMPORT_EXTCAL, 'op' => 'extcal', 'installed' => \in_array('extcal', $modsArray)];
         //TODO:
         //$modulesList[] = ['name' => \_AM_WGEVENTS_IMPORT_EGUIDE, 'op' => 'eguide', 'installed' => in_array('eguide', $modsArray)]];
         $GLOBALS['xoopsTpl']->assign('navigation', $adminObject->displayNavigation('import.php'));
@@ -327,28 +327,28 @@ switch ($op) {
             $resultLoc  = $GLOBALS['xoopsDB']->queryF('SELECT * FROM ' . $GLOBALS['xoopsDB']->prefix('extcal_location') . ' WHERE id=' . $row['event_location']);
             while ($rowLoc = $GLOBALS['xoopsDB']->fetchArray($resultLoc)) {
                 $location .= $rowLoc['nom'] . PHP_EOL;
-                if ('' != $rowLoc['adresse']) {
+                if ('' !== (string)$rowLoc['adresse']) {
                     $location .= $rowLoc['adresse'] . PHP_EOL;
                 }
-                if ('' != $rowLoc['adresse2']) {
+                if ('' !== (string)$rowLoc['adresse2']) {
                     $location .= $rowLoc['adresse2'] . PHP_EOL;
                 }
-                if ('' != $rowLoc['cp']) {
+                if ('' !== (string)$rowLoc['cp']) {
                     $location .= $rowLoc['cp'] . PHP_EOL;
                 }
-                if ('' != $rowLoc['ville']) {
+                if ('' !== (string)$rowLoc['ville']) {
                     $location .= $rowLoc['ville'] . PHP_EOL;
                 }
-                if ('' != $rowLoc['tel_fixe']) {
+                if ('' !== (string)$rowLoc['tel_fixe']) {
                     $location .= $rowLoc['tel_fixe'] . PHP_EOL;
                 }
-                if ('' != $rowLoc['tel_portable']) {
+                if ('' !== (string)$rowLoc['tel_portable']) {
                     $location .= $rowLoc['tel_portable'] . PHP_EOL;
                 }
-                if ('' != $rowLoc['mail']) {
+                if ('' !== (string)$rowLoc['mail']) {
                     $location .= $rowLoc['mail'] . PHP_EOL;
                 }
-                if ('' != $rowLoc['site']) {
+                if ('' !== (string)$rowLoc['site']) {
                     $location .= $rowLoc['site'] . PHP_EOL;
                 }
             }

@@ -55,7 +55,7 @@ class QuestionHandler extends \XoopsPersistableObjectHandler
      * retrieve a field
      *
      * @param int $id field id
-     * @param null fields
+     * @param $fields
      * @return \XoopsObject|null reference to the {@link Get} object
      */
     public function get($id = null, $fields = null)
@@ -66,7 +66,6 @@ class QuestionHandler extends \XoopsPersistableObjectHandler
     /**
      * get inserted id
      *
-     * @param null
      * @return int reference to the {@link Get} object
      */
     public function getInsertId()
@@ -176,7 +175,7 @@ class QuestionHandler extends \XoopsPersistableObjectHandler
             $crQuestion->add(new \Criteria('evid', $evId));
             $questionsCount = $this->getCount($crQuestion);
             if ($questionsCount > 0) {
-                return $this->deleteAll($crQuestion, true);
+                return $this->deleteAll($crQuestion);
             }
         }
         return true;

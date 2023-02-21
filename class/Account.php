@@ -44,8 +44,8 @@ class Account extends \XoopsObject
 
     public function __construct()
     {
-        $this->initVar('id', XOBJ_DTYPE_INT, null, false);
-        $this->initVar('type', XOBJ_DTYPE_INT, Constants::ACCOUNT_TYPE_VAL_PHP_MAIL, false);
+        $this->initVar('id', XOBJ_DTYPE_INT);
+        $this->initVar('type', XOBJ_DTYPE_INT, Constants::ACCOUNT_TYPE_VAL_PHP_MAIL);
         $this->initVar('name', XOBJ_DTYPE_TXTBOX, null, false, 100);
         $this->initVar('yourname', XOBJ_DTYPE_TXTBOX, null, false, 100);
         $this->initVar('yourmail', XOBJ_DTYPE_TXTBOX, null, false, 100);
@@ -56,11 +56,11 @@ class Account extends \XoopsObject
         $this->initVar('securetype_in', XOBJ_DTYPE_TXTBOX, null, false, 20);
         $this->initVar('server_out', XOBJ_DTYPE_TXTBOX, null, false, 100);
         $this->initVar('port_out', XOBJ_DTYPE_INT, null, false, 100);
-        $this->initVar('securetype_out', XOBJ_DTYPE_TXTBOX, null, false);
-        $this->initVar('limit_hour', XOBJ_DTYPE_INT, null, false);
-        $this->initVar('primary', XOBJ_DTYPE_INT, null, false); // boolean
-        $this->initVar('submitter', XOBJ_DTYPE_INT, null, false);
-        $this->initVar('datecreated', XOBJ_DTYPE_INT, time(), false);
+        $this->initVar('securetype_out', XOBJ_DTYPE_TXTBOX);
+        $this->initVar('limit_hour', XOBJ_DTYPE_INT);
+        $this->initVar('primary', XOBJ_DTYPE_INT); // boolean
+        $this->initVar('submitter', XOBJ_DTYPE_INT);
+        $this->initVar('datecreated', XOBJ_DTYPE_INT, time());
     }
 
     /**
@@ -125,7 +125,7 @@ class Account extends \XoopsObject
         $form->addElement(new \XoopsFormText(\_AM_WGEVENTS_ACCOUNT_YOURMAIL, 'yourmail', 50, 255, $this->getVar('yourmail')));
         // Form RadioYN $primary
         $primary = $this->isNew() ? 0 : $this->getVar('primary');
-        $form->addElement(new \XoopsFormRadioYN(\_AM_WGEVENTS_ACCOUNT_PRIMARY, 'primary', $primary, _YES, _NO), false);
+        $form->addElement(new \XoopsFormRadioYN(\_AM_WGEVENTS_ACCOUNT_PRIMARY, 'primary', $primary, _YES, _NO));
         // Form Text $username
         $username = new \XoopsFormText(\_AM_WGEVENTS_ACCOUNT_USERNAME, 'username', 50, 255, $this->getVar('username'));
         if ($dis_acc_userpass) {
@@ -208,7 +208,7 @@ class Account extends \XoopsObject
         $buttonTray->addElement(new \XoopsFormButtonTray('', \_SUBMIT, 'submit', '', false));
         //$button_check = new \XoopsFormButton('', 'save_and_check', \_AM_WGEVENTS_SAVE_AND_CHECK, 'submit');
         //$buttonTray->addElement($button_check);
-        $form->addElement($buttonTray, false);
+        $form->addElement($buttonTray);
 
         return $form;
     }

@@ -61,7 +61,7 @@ class FormText extends \XoopsFormText
             $ret .= ' placeholder="' . $this->getPlaceholder() . '"';
         }
         $ret .= ' />';
-        if (($desc = $this->getDescription()) != '') {
+        if (($desc = $this->getDescription()) !== '') {
             $ret .= '<p class="form-text text-muted">' . $desc . '</p>';
         }
 

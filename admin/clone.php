@@ -66,7 +66,7 @@ switch ($op) {
         ];
 
         $patKeys   = \array_keys($patterns);
-        $patValuess = \array_values($patterns);
+        $patValues = \array_values($patterns);
         cloneFileFolder(\WGEVENTS_PATH);
         $logocreated = createLogo(\mb_strtolower($clone));
 
@@ -97,10 +97,10 @@ require __DIR__ . '/footer.php';
 function cloneFileFolder($path)
 {
     global $patKeys;
-    global $patValuess;
+    global $patValues;
 
     //remove \XOOPS_ROOT_PATH and add after replace, otherwise there can be a bug if \XOOPS_ROOT_PATH contains same pattern
-    $newPath = \XOOPS_ROOT_PATH . \str_replace($patKeys[0], $patValuess[0], \substr($path, \strlen(\XOOPS_ROOT_PATH)));
+    $newPath = \XOOPS_ROOT_PATH . \str_replace($patKeys[0], $patValues[0], \substr($path, \strlen(\XOOPS_ROOT_PATH)));
 
     if (\is_dir($path)) {
         // create new dir
@@ -113,7 +113,7 @@ function cloneFileFolder($path)
         if ($handle) {
             while (false !== ($file = \readdir($handle))) {
                 if (0 !== \mb_strpos($file, '.')) {
-                    cloneFileFolder("{$path}/{$file}");
+                    cloneFileFolder("$path/$file");
                 }
             }
             \closedir($handle);
@@ -126,7 +126,7 @@ function cloneFileFolder($path)
         } else {
             // file, read it
             $content = \file_get_contents($path);
-            $content = \str_replace($patKeys, $patValuess, $content);
+            $content = \str_replace($patKeys, $patValues, $content);
             \file_put_contents($newPath, $content);
         }
     }

@@ -153,9 +153,11 @@ require_once __DIR__ . '/common.php';
 //Features
 \define('_MI_WGEVENTS_GROUP_FEATURES', 'Features');
 \define('_MI_WGEVENTS_USE_REGISTER', 'Use registration system');
-\define('_MI_WGEVENTS_USE_REGISTER_DESC', 'Use module incuded registration system');
+\define('_MI_WGEVENTS_USE_REGISTER_DESC', 'Use module included registration system');
 \define('_MI_WGEVENTS_USE_HISTORY', 'Use registration history');
 \define('_MI_WGEVENTS_USE_HISTORY_DESC', 'Save data of registrations in a history before updating or deleting');
+\define('_MI_WGEVENTS_USE_URLREGISTRATION', 'Use external registration');
+\define('_MI_WGEVENTS_USE_URLREGISTRATION_DESC', 'Do you want to allow to add a link to an external registration system to an event?');
 \define('_MI_WGEVENTS_USE_LOGS', 'Create Log');
 \define('_MI_WGEVENTS_USE_LOGS_DESC', 'Save tries and results of mail sending in a log table');
 \define('_MI_WGEVENTS_USE_LOG_NONE', 'Create no logs');

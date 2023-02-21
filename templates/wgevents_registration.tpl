@@ -15,24 +15,24 @@
             <{/if}>
                 <thead>
                     <tr class='head wge-reg-list-head'>
+                        <th class="sorter-false filter-false" style="min-width:220px;">&nbsp;</th>
                         <th class="filter-false">&nbsp;</th>
                         <th><{$smarty.const._MA_WGEVENTS_REGISTRATION_SALUTATION}></th>
                         <th><{$smarty.const._MA_WGEVENTS_REGISTRATION_FIRSTNAME}></th>
                         <th><{$smarty.const._MA_WGEVENTS_REGISTRATION_LASTNAME}></th>
                         <th><{$smarty.const._MA_WGEVENTS_REGISTRATION_EMAIL}></th>
-                        <{foreach item=question from=$registration.questions}>
-                            <th><{$question.caption|default:'false'}></th>
-                        <{/foreach}>
                         <th><{$smarty.const._MA_WGEVENTS_STATUS}></th>
                         <{if $registration.evfees_count|default:0 > 0}>
                             <th><{$smarty.const._MA_WGEVENTS_REGISTRATION_FINANCIAL}></th>
                             <th><{$smarty.const._MA_WGEVENTS_REGISTRATION_PAIDAMOUNT}></th>
                         <{/if}>
+                        <{foreach item=question from=$registration.questions}>
+                            <th><{$question.caption|default:'false'}></th>
+                        <{/foreach}>
                         <{if $showSubmitter|default:false}>
                             <th><{$smarty.const._MA_WGEVENTS_SUBMITTER}></th>
                         <{/if}>
                         <th><{$smarty.const._MA_WGEVENTS_DATECREATED}></th>
-                        <th class="sorter-false filter-false" style="min-width:300px;">&nbsp;</th>
                     </tr>
                 </thead>
                 <tbody>

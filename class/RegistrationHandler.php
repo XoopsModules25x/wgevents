@@ -58,7 +58,7 @@ class RegistrationHandler extends \XoopsPersistableObjectHandler
      * retrieve a field
      *
      * @param int $id field id
-     * @param null fields
+     * @param $fields
      * @return \XoopsObject|null reference to the {@link Get} object
      */
     public function get($id = null, $fields = null)
@@ -69,7 +69,6 @@ class RegistrationHandler extends \XoopsPersistableObjectHandler
     /**
      * get inserted id
      *
-     * @param null
      * @return int reference to the {@link Get} object
      */
     public function getInsertId()
@@ -162,7 +161,7 @@ class RegistrationHandler extends \XoopsPersistableObjectHandler
                         $notificationHandler->triggerEvent('registrations', $regId, 'registration_delete', $tags);
                         */
                         // send notifications/confirmation emails
-                        if ('' != $registerNotify) {
+                        if ('' !== $registerNotify) {
                             // send notifications to emails of register_notify
                             $notifyEmails = \pregsplit("/\r\n|\n|\r/", $registerNotify);
                             $mailsHandler = new MailHandler();
@@ -173,7 +172,7 @@ class RegistrationHandler extends \XoopsPersistableObjectHandler
                             unset($mailsHandler);
                         }
                         $regEmail = $regParams['email'];
-                        if ('' != $regEmail) {
+                        if ('' !== $regEmail) {
                             // send confirmation, if radio is checked
                             $mailsHandler = new MailHandler();
                             $mailsHandler->setNotifyEmails($regEmail);

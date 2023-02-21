@@ -39,7 +39,7 @@ $helper->loadLanguage('common');
 
 switch ($op) {
     case 'load':
-        if (\Xmf\Request::hasVar('ok', 'REQUEST') && 1 == $_REQUEST['ok']) {
+        if (\Xmf\Request::hasVar('ok', 'REQUEST') && 1 === (int)$_REQUEST['ok']) {
             if (!$GLOBALS['xoopsSecurity']->check()) {
                 \redirect_header('../admin/index.php', 3, \implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
             }
@@ -56,6 +56,9 @@ switch ($op) {
 }
 
 // XMF TableLoad for SAMPLE data
+/**
+ * @return void
+ */
 function loadSampleData()
 {
     global $xoopsConfig;
@@ -97,6 +100,9 @@ function loadSampleData()
     \redirect_header('../admin/index.php', 1, \constant('CO_' . $moduleDirNameUpper . '_' . 'SAMPLEDATA_SUCCESS'));
 }
 
+/**
+ * @return void
+ */
 function saveSampleData()
 {
     global $xoopsConfig;
@@ -144,6 +150,9 @@ function saveSampleData()
     \redirect_header('../admin/index.php', 1, \constant('CO_' . $moduleDirNameUpper . '_' . 'SAVE_SAMPLEDATA_SUCCESS'));
 }
 
+/**
+ * @return void
+ */
 function exportSchema()
 {
     $moduleDirName      = \basename(\dirname(__DIR__));
@@ -175,7 +184,7 @@ function exportSchema()
  */
 function loadTableFromArrayWithReplace($table, $data, $search, $replace)
 {
-    /** @var \XoopsDatabase */
+    /** @var \XoopsDatabase $db */
     $db = \XoopsDatabaseFactory::getDatabaseConnection();
     $prefixedTable = $db->prefix($table);
     $count = 0;

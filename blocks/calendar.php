@@ -114,20 +114,18 @@ function b_wgevents_calendar_show($options)
     $GLOBALS['xoopsTpl']->assign('events_calendar', $calendar->render());
     $GLOBALS['xoopsTpl']->assign('events_calendar_header', '');
 
-    if($limit > 0) {
-        if ($eventsCount > 0) {
-            $counter = 0;
-            $eventsList = [];
-            // Get All Event
-            foreach($eventsArr['eventsAll'] as $event) {
-                if ($counter < $limit) {
-                    $eventsList[$counter] = $event->getValuesEvents();
-                }
-                $counter++;
+    if($limit > 0 && $eventsCount > 0) {
+        $counter = 0;
+        $eventsList = [];
+        // Get All Event
+        foreach($eventsArr['eventsAll'] as $event) {
+            if ($counter < $limit) {
+                $eventsList[$counter] = $event->getValuesEvents();
             }
-            $GLOBALS['xoopsTpl']->assign('events_list', $eventsList);
-            unset($eventsList);
+            $counter++;
         }
+        $GLOBALS['xoopsTpl']->assign('events_list', $eventsList);
+        unset($eventsList);
     }
 
     $GLOBALS['xoopsTpl']->assign('wgevents_upload_catlogos_url', \WGEVENTS_UPLOAD_CATLOGOS_URL);
@@ -147,7 +145,7 @@ function b_wgevents_calendar_edit($options)
 {
     $GLOBALS['xoopsTpl']->assign('wgevents_upload_url', \WGEVENTS_UPLOAD_URL);
     $form = "<input type='hidden' name='options[0]' value='".$options[0]."' >";
-    $form .= \_MB_WGEVENTS_CAL_DISPLAY_DESC . "<br>";
+    $form .= \_MB_WGEVENTS_CAL_DISPLAY_DESC . '<br>';
     $form .= \_MB_WGEVENTS_CAL_DISPLAY . " : <input type='text' name='options[1]' size='5' maxlength='255' value='" . $options[1] . "' >&nbsp;<br>";
     \array_shift($options);
     \array_shift($options);

@@ -156,6 +156,8 @@ require_once __DIR__ . '/common.php';
 \define('_MI_WGEVENTS_USE_REGISTER_DESC', 'Das modulinterne Anmeldungssystem verwenden');
 \define('_MI_WGEVENTS_USE_HISTORY', 'Anmeldungshistorie verwenden');
 \define('_MI_WGEVENTS_USE_HISTORY_DESC', 'Daten der Anmeldung vor den Löschen oder Aktualisieren in einer Historietabelle speichern');
+\define('_MI_WGEVENTS_USE_URLREGISTRATION', 'Externe Anmeldung zulassen');
+\define('_MI_WGEVENTS_USE_URLREGISTRATION_DESC', 'Wollen Sie zulassen, dass bei einer Veranstaltung ein Link auf eine externe Anmeldung verwendet wird?');
 \define('_MI_WGEVENTS_USE_LOGS', 'Log erstellen');
 \define('_MI_WGEVENTS_USE_LOGS_DESC', 'Versuche und Ergebnisse vom Mailversand in Log-Datei speichern');
 \define('_MI_WGEVENTS_USE_LOG_NONE', 'Keine Logs erstellen');

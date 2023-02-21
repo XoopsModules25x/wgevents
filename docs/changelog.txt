@@ -2,6 +2,10 @@
 1.0.5 RC2 [2023/01/03]
 ==============================================================
 - restructured cron jobs (goffy)
+- implementation fee types (goffy)
+- implementation of wggallery (goffy)
+- implementation of external link for registration (goffy)
+- code cleaning with phpstorm code inspection (goffy)
 
 ==============================================================
 1.0.5 RC1 [2022/11/01]
@@ -10,7 +14,7 @@
  - implementation subcats (goffy)
  - implementation filter events by cats (goffy)
  - merged all "get events" into one function (goffy)
- - created functin to get cats for filters (goffy)
+ - created function to get cats for filters (goffy)
  - created new block templates (goffy)
  - fixed bug in output excel (goffy)
  - removed duplicates of cats (goffy)

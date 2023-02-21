@@ -59,6 +59,7 @@ switch ($op) {
         $GLOBALS['xoopsTpl']->assign('use_gmaps', $helper->getConfig('use_gmaps'));
         $GLOBALS['xoopsTpl']->assign('use_wggallery', $helper->getConfig('use_wggallery'));
         $GLOBALS['xoopsTpl']->assign('use_register', $helper->getConfig('use_register'));
+        $GLOBALS['xoopsTpl']->assign('use_urlregistration', $helper->getConfig('use_urlregistration'));
         $GLOBALS['xoopsTpl']->assign('use_groups', $helper->getConfig('use_groups'));
         // Table view events
         if ($eventCount > 0) {
@@ -132,11 +133,11 @@ switch ($op) {
                 $uploaderErrors .= '<br>' . $uploader->getErrors();
             }
         } else {
-            if ('' != $filename) {
+            if ('' !== $filename) {
                 $uploaderErrors .= '<br>' . $uploader->getErrors();
             }
             $filename = Request::getString('logo');
-            if ('' != $filename) {
+            if ('' !== $filename) {
                 $eventObj->setVar('logo', $filename);
             }
         }
@@ -159,15 +160,21 @@ switch ($op) {
         $eventObj->setVar('locgmlat', Request::getFloat('locgmlat'));
         $eventObj->setVar('locgmlon', Request::getFloat('locgmlon'));
         $eventObj->setVar('locgmzoom', Request::getInt('locgmzoom'));
-        $evFeeAmountArr = Request::getArray('fee');
-        $evFeeDescArr = Request::getArray('feedesc');
-        $evFeeArr = [];
-        foreach ($evFeeAmountArr as $key => $evFeeAmount) {
-            $evFeeArr[] = [Utility::StringToFloat($evFeeAmount), $evFeeDescArr[$key]];
+        $evFeeType = Request::getInt('fee_type');
+        $eventObj->setVar('fee_type', $evFeeType);
+        if (Constants::FEETYPE_DECLARED === $evFeeType) {
+            $evFeeAmountArr = Request::getArray('fee');
+            $evFeeDescArr = Request::getArray('feedesc');
+            $evFeeArr = [];
+            foreach ($evFeeAmountArr as $key => $evFeeAmount) {
+                $evFeeArr[] = [Utility::StringToFloat($evFeeAmount), $evFeeDescArr[$key]];
+            }
+            // remove last array item, as this is from hidden group
+            \array_pop($evFeeArr);
+            $evFee = \json_encode($evFeeArr);
+        } else {
+            $evFee = '[[0,""]]';
         }
-        // remove last array item, as this is from hidden group
-        \array_pop($evFeeArr);
-        $evFee = \json_encode($evFeeArr);
         $eventObj->setVar('fee', $evFee);
         $eventObj->setVar('paymentinfo', Request::getText('paymentinfo'));
         $eventObj->setVar('register_use', Request::getInt('register_use'));
@@ -192,7 +199,7 @@ switch ($op) {
                 $eventObj->setVar('register_sendermail', Request::getString('register_sendermail'));
                 $eventObj->setVar('register_sendername', Request::getString('register_sendername'));
                 $eventObj->setVar('register_signature', Request::getString('register_signature'));
-            } else if ($evId > 0) {
+            } elseif ($evId > 0) {
                 //reset previous values
                 $eventObj->setVar('register_to', 0);
                 $eventObj->setVar('register_max', 0);
@@ -207,13 +214,19 @@ switch ($op) {
                 $answerHandler->cleanupAnswers($evId);
             }
         }
+        if (Request::hasVar('url_registration')) {
+            $urlRegistration = Request::getString('url_registration');
+        } else {
+            $urlRegistration = '';
+        }
+        $eventObj->setVar('url_registration', $urlRegistration);
         $eventObj->setVar('status', Request::getInt('status'));
         $eventObj->setVar('galid', Request::getInt('galid'));
         $arrGroups = Request::getArray('groups');
         if (in_array('00000', $arrGroups)) {
             $eventObj->setVar('groups', '00000');
         } else {
-            $eventObj->setVar('groups', implode("|", $arrGroups));
+            $eventObj->setVar('groups', implode('|', $arrGroups));
         }
         $eventObj->setVar('identifier', Request::getString('identifier'));
         $eventDatecreatedObj = \DateTime::createFromFormat(\_SHORTDATESTRING, Request::getString('datecreated'));
@@ -252,7 +265,7 @@ switch ($op) {
         $GLOBALS['xoopsTpl']->assign('navigation', $adminObject->displayNavigation('event.php'));
         $eventObj = $eventHandler->get($evId);
         $evName = $eventObj->getVar('name');
-        if (isset($_REQUEST['ok']) && 1 == $_REQUEST['ok']) {
+        if (isset($_REQUEST['ok']) && 1 === (int)$_REQUEST['ok']) {
             if (!$GLOBALS['xoopsSecurity']->check()) {
                 \redirect_header('event.php', 3, \implode(', ', $GLOBALS['xoopsSecurity']->getErrors()));
             }

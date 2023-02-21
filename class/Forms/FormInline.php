@@ -18,6 +18,7 @@ namespace XoopsModules\Wgevents\Forms;
  * @subpackage          form
  * @since               2.0.0
  * @author              Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
+ * @author              Goffy ( webmaster@wedega.com )
  */
 
 use XoopsSimpleForm;
@@ -45,7 +46,7 @@ class FormInline extends \XoopsSimpleForm
         foreach ($this->getElements() as $ele) {
             if (!$ele->isHidden()) {
                 $ret .= '<strong>' . $ele->getCaption() . '</strong>&nbsp;' . $ele->render() . "&nbsp;\n";
-            } else if ('linebreak' == $ele->getName()) {
+            } elseif ('linebreak' === $ele->getName()) {
                 $ret .= "<br>\n";
             } else {
                 $ret .= $ele->render() . "\n";
@@ -66,7 +67,7 @@ class FormInline extends \XoopsSimpleForm
         $ret = "<form name='" . $this->getName() . "' id='" . $this->getName() . "' action='" . $this->getAction() . "' method='" . $this->getMethod() . "'" . $this->getExtra() . ">\n";
         foreach ($this->getElements() as $ele) {
             if (!$ele->isHidden()) {
-                $ret .= '<strong>' . $ele->getCaption() . '</strong>&nbsp;' . $ele->render() . "&nbsp;";
+                $ret .= '<strong>' . $ele->getCaption() . '</strong>&nbsp;' . $ele->render() . '&nbsp;';
             } else {
                 $ret .= $ele->render();
             }

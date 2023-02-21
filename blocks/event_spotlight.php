@@ -37,7 +37,7 @@ function b_wgevents_event_spotlight_show($options)
     $block       = [];
     $typeBlock   = $options[0];
     $limit       = $options[1];
-    $lenghtTitle = $options[2];
+    $lengthTitle = $options[2];
     $helper      = Helper::getInstance();
     $eventHandler = $helper->getHandler('Event');
     $crEvent = new \CriteriaCompo();

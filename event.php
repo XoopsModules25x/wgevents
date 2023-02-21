@@ -56,7 +56,7 @@ if ($catId > 0 && 'save' !== $op) {
     $filterCats[$catId] = $catId;
 }
 $urlCats = Request::getString('cats');
-if (0 == \count($filterCats) && '' != $urlCats) {
+if (0 === \count($filterCats) && '' !== $urlCats) {
     $filterCats = \explode(',', $urlCats);
 }
 $GLOBALS['xoopsTpl']->assign('urlCats', \implode(',', $filterCats));
@@ -79,7 +79,7 @@ $gmapsHeight      = false;
 $useGMaps         = (bool)$helper->getConfig('use_gmaps');
 if ($useGMaps) {
     $gmapsPositionList = (string)$helper->getConfig('gmaps_enableevent');
-    $gmapsEnableEvent  = ('top' == $gmapsPositionList || 'bottom' == $gmapsPositionList);
+    $gmapsEnableEvent  = ('top' === $gmapsPositionList || 'bottom' === $gmapsPositionList);
     $gmapsHeight       = $helper->getConfig('gmaps_height');
 }
 $eventDisplayCats = (string)$helper->getConfig('event_displaycats');
@@ -112,9 +112,10 @@ switch ($op) {
         $GLOBALS['xoopsTpl']->assign('user_maxchar', $helper->getConfig('user_maxchar'));
         $useGroups = (bool)$helper->getConfig('use_groups');
         $GLOBALS['xoopsTpl']->assign('use_groups', $useGroups);
+        $GLOBALS['xoopsTpl']->assign('use_urlregistration', $helper->getConfig('use_urlregistration'));
 
         // get categories if they should be displayed
-        if ('none' != $eventDisplayCats && !$showItem) {
+        if ('none' !== $eventDisplayCats && !$showItem) {
             $categories = $categoryHandler->getCategoriesForFilter($eventDisplayCats, $filterCats, $op, $useGroups, $filter);
             $GLOBALS['xoopsTpl']->assign('categories', $categories);
         }
@@ -135,7 +136,7 @@ switch ($op) {
                 unset($crEventArchieve);
                 $GLOBALS['xoopsTpl']->assign('showBtnPast', $eventsCountArchieve > 0);
                 $listDescr = \_MA_WGEVENTS_EVENTS_LISTCOMING;
-                if ('form' == $eventDisplayCats) {
+                if ('form' === $eventDisplayCats) {
                     $formCatsCb = $categoryHandler->getFormCatsCb($filterCats, $op, $filter);
                     $GLOBALS['xoopsTpl']->assign('formCatsCb', $formCatsCb->render());
                 }
@@ -143,7 +144,7 @@ switch ($op) {
             case 'past':
                 $GLOBALS['xoopsTpl']->assign('showBtnComing', true);
                 $listDescr = \_MA_WGEVENTS_EVENTS_LISTPAST;
-                if ('form' == $eventDisplayCats) {
+                if ('form' === $eventDisplayCats) {
                     $formCatsCb = $categoryHandler->getFormCatsCb($filterCats, $op, $filter);
                     $GLOBALS['xoopsTpl']->assign('formCatsCb', $formCatsCb->render());
                 }
@@ -191,7 +192,7 @@ switch ($op) {
                     $proportion = $numberRegCurr / $registerMax;
                     if ($proportion >= 1) {
                         $events[$i]['regcurrent'] = \_MA_WGEVENTS_REGISTRATIONS_FULL;
-                    } else if (0 == $numberRegCurr) {
+                    } elseif (0 === $numberRegCurr) {
                         $events[$i]['regcurrent'] = \_MA_WGEVENTS_REGISTRATIONS_NBCURR_0;
                     } else {
                         $events[$i]['regcurrent'] = \sprintf(\_MA_WGEVENTS_REGISTRATIONS_NBCURR_INDEX, $numberRegCurr, $registerMax);
@@ -207,12 +208,12 @@ switch ($op) {
                         $events[$i]['regcurrent_tip'] = false;
                     }
                     $events[$i]['regpercentage'] = (int)($proportion * 100);
-                } else if ('show' == $op) {
+                } elseif ('show' === $op) {
                     $events[$i]['regcurrent'] = $numberRegCurr;
                 }
                 $events[$i]['regenabled'] = $permEdit || (\time() >= $events[$i]['register_from'] && \time() <= $events[$i]['register_to']);
-                $events[$i]['locked'] = (Constants::STATUS_LOCKED == $events[$i]['status']);
-                $events[$i]['canceled'] = (Constants::STATUS_CANCELED == $events[$i]['status']);
+                $events[$i]['locked'] = (Constants::STATUS_LOCKED === (int)$events[$i]['status']);
+                $events[$i]['canceled'] = (Constants::STATUS_CANCELED === (int)$events[$i]['status']);
                 $evName = $eventsAll[$i]->getVar('name');
                 if ($useGMaps && $gmapsEnableEvent && (float)$eventsAll[$i]->getVar('locgmlat') > 0) {
                     $eventsMap[$i] = [
@@ -227,7 +228,7 @@ switch ($op) {
                 $keywords[$i] = $evName;
             }
             $GLOBALS['xoopsTpl']->assign('events', $events);
-            if ('show' == $op && $useGMaps) {
+            if ('show' === $op && $useGMaps) {
                 $GLOBALS['xoopsTpl']->assign('gmapsShow', true);
             }
             if ($useGMaps && count($eventsMap) > 0) {
@@ -254,15 +255,13 @@ switch ($op) {
             $GLOBALS['xoopsTpl']->assign('start', $start);
             $GLOBALS['xoopsTpl']->assign('limit', $limit);
 
-            if ('show' == $op && '' != $evName) {
+            if ('show' === $op && '' !== $evName) {
                 $GLOBALS['xoopsTpl']->assign('xoops_pagetitle', \strip_tags($evName . ' - ' . $GLOBALS['xoopsModule']->getVar('name')));
             }
+        } elseif (\count($filterCats) > 0) {
+            $GLOBALS['xoopsTpl']->assign('noEventsReason', \_MA_WGEVENTS_INDEX_THEREARENT_EVENTS_FILTER);
         } else {
-            if (\count($filterCats) > 0) {
-                $GLOBALS['xoopsTpl']->assign('noEventsReason', \_MA_WGEVENTS_INDEX_THEREARENT_EVENTS_FILTER);
-            } else {
-                $GLOBALS['xoopsTpl']->assign('noEventsReason', \_MA_WGEVENTS_INDEX_THEREARENT_EVENTS);
-            }
+            $GLOBALS['xoopsTpl']->assign('noEventsReason', \_MA_WGEVENTS_INDEX_THEREARENT_EVENTS);
         }
 
         break;
@@ -333,7 +332,7 @@ switch ($op) {
                 $uploaderErrors .= '<br>' . $uploader->getErrors();
             }
             $filename = Request::getString('logo');
-            if ('' != $filename) {
+            if ('' !== $filename) {
                 $eventObj->setVar('logo', $filename);
             }
         }
@@ -375,15 +374,21 @@ switch ($op) {
         $eventObj->setVar('locgmlat', Request::getFloat('locgmlat'));
         $eventObj->setVar('locgmlon', Request::getFloat('locgmlon'));
         $eventObj->setVar('locgmzoom', Request::getInt('locgmzoom'));
-        $evFeeAmountArr = Request::getArray('fee');
-        $evFeeDescArr = Request::getArray('feedesc');
-        $evFeeArr = [];
-        foreach ($evFeeAmountArr as $key => $evFeeAmount) {
-            $evFeeArr[] = [Utility::StringToFloat($evFeeAmount), $evFeeDescArr[$key]];
+        $evFeeType = Request::getInt('fee_type');
+        $eventObj->setVar('fee_type', $evFeeType);
+        if (Constants::FEETYPE_DECLARED === $evFeeType) {
+            $evFeeAmountArr = Request::getArray('fee');
+            $evFeeDescArr = Request::getArray('feedesc');
+            $evFeeArr = [];
+            foreach ($evFeeAmountArr as $key => $evFeeAmount) {
+                $evFeeArr[] = [Utility::StringToFloat($evFeeAmount), $evFeeDescArr[$key]];
+            }
+            // remove last array item, as this is from hidden group
+            \array_pop($evFeeArr);
+            $evFee = \json_encode($evFeeArr);
+        } else {
+            $evFee = '[[0,""]]';
         }
-        // remove last array item, as this is from hidden group
-        \array_pop($evFeeArr);
-        $evFee = \json_encode($evFeeArr);
         $eventObj->setVar('fee', $evFee);
         $eventObj->setVar('paymentinfo', Request::getText('paymentinfo'));
         $evRegisterUse = Request::getInt('register_use');
@@ -409,7 +414,7 @@ switch ($op) {
             $eventObj->setVar('register_notify', Request::getString('register_notify'));
             $eventObj->setVar('register_forceverif', Request::getInt('register_forceverif'));
             $evRegisterSendermail = Request::getString('register_sendermail');
-            if ('' == $evRegisterSendermail) {
+            if ('' === $evRegisterSendermail) {
                 // Get Form Error
                 $GLOBALS['xoopsTpl']->assign('error', \_MA_WGEVENTS_EVENT_REGISTER_SENDERMAIL_ERR);
                 $form = $eventObj->getForm();
@@ -431,13 +436,19 @@ switch ($op) {
             $eventObj->setVar('register_signature', '');
             $eventObj->setVar('register_forceverif', 0);
         }
+        if (Request::hasVar('url_registration')) {
+            $urlRegistration = Request::getString('url_registration');
+        } else {
+            $urlRegistration = '';
+        }
+        $eventObj->setVar('url_registration', $urlRegistration);
         $eventObj->setVar('status', Request::getInt('status'));
         $eventObj->setVar('galid', Request::getInt('galid'));
         $arrGroups = Request::getArray('groups');
         if (in_array('00000', $arrGroups)) {
             $eventObj->setVar('groups', '00000');
         } else {
-            $eventObj->setVar('groups', implode("|", $arrGroups));
+            $eventObj->setVar('groups', implode('|', $arrGroups));
         }
         if (Request::hasVar('datecreated_int')) {
             $eventObj->setVar('datecreated', Request::getInt('datecreated_int'));
@@ -450,7 +461,7 @@ switch ($op) {
         if ($eventHandler->insert($eventObj)) {
             $newEvId = $evId > 0 ? $evId : $eventObj->getNewInsertedId();
             // create unique identifier if new event and identifier exists
-            if (0 == $evId) {
+            if (0 === $evId) {
                 $categoryObj = $categoryHandler->get($catId);
                 $identifier = (string)$categoryObj->getVar('identifier');
                 if ('' !== $identifier){
@@ -497,17 +508,17 @@ switch ($op) {
             }
             */
 
+            $counterDone = 0;
             // check whether there are important changes of the event
             // if yes then send notifications to all participants
             if ($evId > 0) {
                 // find changes in table events
                 $infotext = $eventHandler->getEventsCompare($eventObjOld, $eventObj);
-                if ('' != $infotext) {
+                if ('' !== $infotext) {
                     $typeConfirm = Constants::MAIL_EVENT_NOTIFY_MODIFY;
                     $crRegistration = new \CriteriaCompo();
                     $crRegistration->add(new \Criteria('evid', $evId));
                     $registrationsCount = $registrationHandler->getCount($crRegistration);
-                    $counterDone = 0;
                     $mailToArr   = [];
                     $informModif = Request::getBool('informModif');
                     if ($registrationsCount > 0) {
@@ -525,7 +536,7 @@ switch ($op) {
                             if ($informModif) {
                                 // send notifications emails, only to participants
                                 $regEmail = (string)$registrationsAll[$regId]->getVar('email');
-                                if ('' != $regEmail) {
+                                if ('' !== $regEmail) {
                                     $mailToArr[$regEmail] = $regEmail;
                                 }
                             }
@@ -561,7 +572,7 @@ switch ($op) {
             // redirect after insert
             if ('' !== $uploaderErrors) {
                 \redirect_header('event.php?op=edit&id=' . $newEvId, 5, $uploaderErrors);
-            } else if ($evRegisterUse) {
+            } elseif ($evRegisterUse) {
                 // clone questions, if event is clone of other event
                 $idEvSource = Request::getInt('id_source');
                 $cloneQuestions = Request::getBool('clone_question');
@@ -658,7 +669,7 @@ switch ($op) {
         // Breadcrumbs
         $xoBreadcrumbs[] = ['title' => \_MA_WGEVENTS_EVENT_EDIT];
         // Check params
-        if (0 == $evId) {
+        if (0 === $evId) {
             \redirect_header('event.php?op=list', 3, \_MA_WGEVENTS_INVALID_PARAM);
         }
         $eventObj = $eventHandler->get($evId);
@@ -685,14 +696,12 @@ switch ($op) {
         if (!$permissionsHandler->getPermEventsSubmit()) {
             \redirect_header('event.php?op=list', 3, \_NOPERM);
         }
-
         // Request source
         $evIdSource = Request::getInt('id_source');
         // Check params
-        if (0 == $evIdSource) {
+        if (0 === $evIdSource) {
             \redirect_header('event.php?op=list', 3, \_MA_WGEVENTS_INVALID_PARAM);
         }
-
         // Breadcrumbs
         $xoBreadcrumbs[] = ['title' => \_MA_WGEVENTS_EVENT_CLONE];
 
@@ -721,7 +730,7 @@ switch ($op) {
             \redirect_header('event.php?op=list', 3, \_NOPERM);
         }
         // Check params
-        if (0 == $evId) {
+        if (0 === $evId) {
             \redirect_header('event.php?op=list', 3, \_MA_WGEVENTS_INVALID_PARAM);
         }
         $crRegistration = new \CriteriaCompo();
@@ -732,7 +741,7 @@ switch ($op) {
         }
         $eventObj = $eventHandler->get($evId);
         $evName = $eventObj->getVar('name');
-        if (isset($_REQUEST['ok']) && 1 == $_REQUEST['ok']) {
+        if (isset($_REQUEST['ok']) && 1 === (int)$_REQUEST['ok']) {
             if (!$GLOBALS['xoopsSecurity']->check()) {
                 \redirect_header('event.php', 3, \implode(', ', $GLOBALS['xoopsSecurity']->getErrors()));
             }
@@ -769,12 +778,12 @@ switch ($op) {
             \redirect_header('event.php?op=list', 3, \_NOPERM);
         }
         // Check params
-        if (0 == $evId) {
+        if (0 === $evId) {
             \redirect_header('event.php?op=list', 3, \_MA_WGEVENTS_INVALID_PARAM);
         }
         $eventObj = $eventHandler->get($evId);
         $evName = $eventObj->getVar('name');
-        if (isset($_REQUEST['ok']) && 1 == $_REQUEST['ok']) {
+        if (isset($_REQUEST['ok']) && 1 === (int)$_REQUEST['ok']) {
             if (!$GLOBALS['xoopsSecurity']->check()) {
                 \redirect_header('event.php', 3, \implode(', ', $GLOBALS['xoopsSecurity']->getErrors()));
             }

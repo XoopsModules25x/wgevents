@@ -52,6 +52,9 @@ ul.menu > li + li:before {
 #lbl_locgmzoom {
     min-width:120px;
 }
+#wrapper_fee {
+    width:100%;
+}
 
 /* styles for registration list */
 .wge-btn-sort {

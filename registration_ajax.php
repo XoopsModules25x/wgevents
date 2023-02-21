@@ -48,7 +48,7 @@ switch ($op) {
     default:
         break;
     case 'change_financial':
-        if (0 == $regEvid) {
+        if (0 === $regEvid) {
             header('Content-Type: application/json');
             echo json_encode(['status'=>'error','message'=>\_MA_WGEVENTS_INVALID_PARAM]);
             break;
@@ -105,7 +105,7 @@ switch ($op) {
 
             // send notifications/confirmation emails
             $registerNotify = (string)$eventObj->getVar('register_notify', 'e');
-            if ('' != $registerNotify) {
+            if ('' !== $registerNotify) {
                 // send notifications to emails of register_notify
                 $notifyEmails = $eventHandler->getRecipientsNotify($registerNotify);
                 if (\count($notifyEmails) > 0) {
@@ -115,7 +115,7 @@ switch ($op) {
                 }
             }
             $regEmail = $registrationObj->getVar('email');
-            if ('' != $regEmail) {
+            if ('' !== $regEmail) {
                 $taskHandler->createTask(Constants::MAIL_REG_CONFIRM_MODIFY, $regEmail, json_encode($mailParams));
             }
             // excetue mail sending by task handler
@@ -125,7 +125,7 @@ switch ($op) {
         }
         break;
     case 'listwait_takeover':
-        if (0 == $regEvid) {
+        if (0 === $regEvid) {
             header('Content-Type: application/json');
             echo json_encode(['status'=>'error','message'=>\_MA_WGEVENTS_INVALID_PARAM]);
             break;
@@ -165,7 +165,7 @@ switch ($op) {
 
             // send notifications/confirmation emails
             $registerNotify = (string)$eventObj->getVar('register_notify', 'e');
-            if ('' != $registerNotify) {
+            if ('' !== $registerNotify) {
                 // send notifications to emails of register_notify
                 $notifyEmails = $eventHandler->getRecipientsNotify($registerNotify);
                 if (\count($notifyEmails) > 0) {
@@ -175,7 +175,7 @@ switch ($op) {
                 }
             }
             $regEmail = $registrationObj->getVar('email');
-            if ('' != $regEmail) {
+            if ('' !== $regEmail) {
                 $taskHandler->createTask(Constants::MAIL_REG_CONFIRM_MODIFY, $regEmail, json_encode($mailParams));
             }
             // excetue mail sending by task handler
@@ -185,7 +185,7 @@ switch ($op) {
         }
         break;
     case 'approve_status':
-        if (0 == $regEvid) {
+        if (0 === $regEvid) {
             header('Content-Type: application/json');
             echo json_encode(['status'=>'error','message'=>\_MA_WGEVENTS_INVALID_PARAM]);
             break;
@@ -226,7 +226,7 @@ switch ($op) {
 
             // send notifications/confirmation emails
             $registerNotify = (string)$eventObj->getVar('register_notify', 'e');
-            if ('' != $registerNotify) {
+            if ('' !== $registerNotify) {
                 // send notifications to emails of register_notify
                 $notifyEmails = $eventHandler->getRecipientsNotify($registerNotify);
                 if (\count($notifyEmails) > 0) {
@@ -236,7 +236,7 @@ switch ($op) {
                 }
             }
             $regEmail = $registrationObj->getVar('email');
-            if ('' != $regEmail) {
+            if ('' !== $regEmail) {
                 $taskHandler->createTask(Constants::MAIL_REG_CONFIRM_MODIFY, $regEmail, json_encode($mailParams));
             }
             // execute mail sending by task handler

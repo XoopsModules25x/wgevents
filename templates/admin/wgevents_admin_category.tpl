@@ -28,7 +28,7 @@
                 <th class="center width5 sorter-false filter-false"><{$smarty.const._MA_WGEVENTS_ACTION}></th>
             </tr>
         </thead>
-        <{if $categorieCount|default:''}>
+        <{if $categoryCount|default:''}>
         <tbody id="categories-list">
             <{foreach item=category from=$categories_list}>
             <tr class='<{cycle values='odd, even'}>' id="order_<{$category.id}>">

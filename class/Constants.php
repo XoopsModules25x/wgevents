@@ -134,4 +134,9 @@ interface Constants
     public const LOG_NONE    = 0;
     public const LOG_SIMPLE  = 1;
     public const LOG_DETAILS = 2;
+    // Constants for fee types
+    public const FEETYPE_DECLARED = 0;
+    public const FEETYPE_FREE     = 1;
+    public const FEETYPE_NONDECL  = 2;
+
 }

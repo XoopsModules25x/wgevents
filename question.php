@@ -167,7 +167,7 @@ switch ($op) {
         $questionObj->setVar('desc', Request::getText('desc'));
         $queValuesText = '';
         $queValues = Request::getString('values');
-        if ('' != $queValues) {
+        if ('' !== $queValues) {
             if (Constants::FIELD_COMBOBOX == $fieldType ||
                 Constants::FIELD_SELECTBOX == $fieldType ||
                 Constants::FIELD_RADIO == $fieldType ||
@@ -238,7 +238,7 @@ switch ($op) {
             }
             $weight++;
         }
-        if ('' == $errors) {
+        if ('' === $errors) {
             // redirect after insert
             \redirect_header('question.php?op=list&amp;evid=' . $queEvid . '&amp;start=' . $start . '&amp;limit=' . $limit, 2, \_MA_WGEVENTS_FORM_OK);
         } else {
@@ -323,7 +323,7 @@ switch ($op) {
         // Breadcrumbs
         $xoBreadcrumbs[] = ['title' => \_MA_WGEVENTS_QUESTION_EDIT];
         // Check params
-        if (0 == $queId) {
+        if (0 === $queId) {
             \redirect_header('question.php?op=list', 3, \_MA_WGEVENTS_INVALID_PARAM);
         }
         // Get Form
@@ -339,7 +339,7 @@ switch ($op) {
         // Request source
         $queIdSource = Request::getInt('id_source');
         // Check params
-        if (0 == $queIdSource) {
+        if (0 === $queIdSource) {
             \redirect_header('question.php?op=list', 3, \_MA_WGEVENTS_INVALID_PARAM);
         }
         // Get Form
@@ -363,12 +363,12 @@ switch ($op) {
         // Breadcrumbs
         $xoBreadcrumbs[] = ['title' => \_MA_WGEVENTS_QUESTION_DELETE];
         // Check params
-        if (0 == $queId) {
+        if (0 === $queId) {
             \redirect_header('question.php?op=list', 3, \_MA_WGEVENTS_INVALID_PARAM);
         }
         $questionObj = $questionHandler->get($queId);
         $queEvid = $questionObj->getVar('evid');
-        if (isset($_REQUEST['ok']) && 1 == $_REQUEST['ok']) {
+        if (isset($_REQUEST['ok']) && 1 === (int)$_REQUEST['ok']) {
             if (!$GLOBALS['xoopsSecurity']->check()) {
                 \redirect_header('question.php', 3, \implode(', ', $GLOBALS['xoopsSecurity']->getErrors()));
             }

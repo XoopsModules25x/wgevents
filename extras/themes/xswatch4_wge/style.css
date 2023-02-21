@@ -108,7 +108,7 @@ a.navbar-brand.xlogo {
 
 .xoops-banner {
     position: relative;
-    top: 0px;
+    top: 0;
 }
 
 .xoops-banner * {
@@ -1354,7 +1354,7 @@ img.avatar {
 .vert .carousel-item-next,
 .vert .active.carousel-item-right {
     -webkit-transform: translate3d(0, 100%, 0);
-    transform: translate3d(0, 100% 0);
+    transform: translate3d(0, 100%, 0);
 }
 
 .vert .carousel-item-prev,
@@ -1373,7 +1373,7 @@ img.avatar {
 }
 
 #xo-pagenav a:last-child {
-    margin-left: 0px;
+    margin-left: 0;
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
 }

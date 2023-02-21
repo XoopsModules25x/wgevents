@@ -39,16 +39,16 @@ require_once __DIR__ . '/main.php';
 \define('_AM_WGEVENTS_THEREARE_TASKS', "Es sind <span class='bold'>%s</span> Aufgaben vorhanden");
 // ---------------- Admin Files ----------------
 // There aren't
-\define('_AM_WGEVENTS_THEREARENT_EVENTS', "Es gibt keine Veranstaltungen");
-\define('_AM_WGEVENTS_THEREARENT_CATEGORIES', "Es gibt keine Kategorien");
-\define('_AM_WGEVENTS_THEREARENT_REGISTRATIONS', "Es gibt keine Anmeldungen");
-\define('_AM_WGEVENTS_THEREARENT_REGISTRATIONHISTS', "Es gibt keine historischen Anmeldungen");
-\define('_AM_WGEVENTS_THEREARENT_QUESTIONS', "Es gibt keine Fragen");
-\define('_AM_WGEVENTS_THEREARENT_ANSWERS', "Es gibt keine Antworten");
-\define('_AM_WGEVENTS_THEREARENT_ANSWERHISTS', "Es gibt keine historischen Antworten");
-\define('_AM_WGEVENTS_THEREARENT_TEXTBLOCKS', "Es gibt keine Textblöcke");
-\define('_AM_WGEVENTS_THEREARENT_FIELDS', "Es gibt keine Felder");
-\define('_AM_WGEVENTS_THEREARENT_LOGS', "Es gibt keine Log-Einträge");
+\define('_AM_WGEVENTS_THEREARENT_EVENTS', 'Es gibt keine Veranstaltungen');
+\define('_AM_WGEVENTS_THEREARENT_CATEGORIES', 'Es gibt keine Kategorien');
+\define('_AM_WGEVENTS_THEREARENT_REGISTRATIONS', 'Es gibt keine Anmeldungen');
+\define('_AM_WGEVENTS_THEREARENT_REGISTRATIONHISTS', 'Es gibt keine historischen Anmeldungen');
+\define('_AM_WGEVENTS_THEREARENT_QUESTIONS', 'Es gibt keine Fragen');
+\define('_AM_WGEVENTS_THEREARENT_ANSWERS', 'Es gibt keine Antworten');
+\define('_AM_WGEVENTS_THEREARENT_ANSWERHISTS', 'Es gibt keine historischen Antworten');
+\define('_AM_WGEVENTS_THEREARENT_TEXTBLOCKS', 'Es gibt keine Textblöcke');
+\define('_AM_WGEVENTS_THEREARENT_FIELDS', 'Es gibt keine Felder');
+\define('_AM_WGEVENTS_THEREARENT_LOGS', 'Es gibt keine Log-Einträge');
 \define('_AM_WGEVENTS_THEREARENT_ACCOUNTS', 'Es ist keine E-Mail-Konten vorhanden.');
 \define('_AM_WGEVENTS_THEREARENT_ACCOUNTS_DESC', 'Es ist kein primäres E-Mail-Konten vorhanden. Die Standardeinstellungen E-Mails vom XOOPS Core werden daher verwendet.');
 \define('_AM_WGEVENTS_THEREARENT_TASKS', 'Es ist keine Aufgaben vorhanden.');

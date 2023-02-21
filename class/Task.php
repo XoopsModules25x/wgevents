@@ -38,7 +38,6 @@ class Task extends \XoopsObject
     /**
      * Constructor
      *
-     * @param null
      */
     public function __construct()
     {
@@ -55,7 +54,6 @@ class Task extends \XoopsObject
     /**
      * @static function &getInstance
      *
-     * @param null
      */
     public static function getInstance()
     {
@@ -93,7 +91,7 @@ class Task extends \XoopsObject
         // Form Select taskType
         $form->addElement(new \XoopsFormText(\_AM_WGEVENTS_TASK_TYPE, 'type', 50, 255, $this->getVar('type')));
         // Form Editor TextArea taskParams
-        $form->addElement(new \XoopsFormTextArea(\_AM_WGEVENTS_TASK_PARAMS, 'params', $this->getVar('params', 'e'), 10, 47), false);
+        $form->addElement(new \XoopsFormTextArea(\_AM_WGEVENTS_TASK_PARAMS, 'params', $this->getVar('params', 'e'), 10, 47));
         // Form Editor TextArea taskRecipient
         $form->addElement(new \XoopsFormText(\_AM_WGEVENTS_TASK_RECIPIENT, 'recipient', 50, 255, $this->getVar('recipient')));
         // Form Text Date Select taskDatecreated

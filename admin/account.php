@@ -50,7 +50,7 @@ switch ($op) {
 
         $GLOBALS['xoopsTpl']->assign('account_check', true);
 
-        if (0 == $accId) {
+        if (0 === $accId) {
             redirect_header('account.php', 3, _MA_WGEVENTS_INVALID_PARAM);
         } else {
             $accountObj = $helper->getHandler('Account')->get($accId);
@@ -78,10 +78,10 @@ switch ($op) {
         $account_username      = $accountObj->getVar('username');
 
         $command = $account_server_in . ':' . $account_port_in;
-        if ('' != $service) {
+        if ('' !== $service) {
             $command .= '/' . $service;
         }
-        if ('' != $account_securetype_in) {
+        if ('' !== $account_securetype_in) {
             $command .= '/' . $account_securetype_in;
         }
         $logDetails .= '<br>command:' . $command;
@@ -89,24 +89,22 @@ switch ($op) {
         $checks = [];
 
         $mbox = @imap_open('{' . $command . '}', $account_username, $account_password);
+        $checks['openmailbox']['check'] = \_AM_WGEVENTS_ACCOUNT_CHECK_OPEN_MAILBOX;
         if (false === $mbox) {
-            $checks['openmailbox']['check'] = \_AM_WGEVENTS_ACCOUNT_CHECK_OPEN_MAILBOX;
             $checks['openmailbox']['result'] = \_AM_WGEVENTS_ACCOUNT_CHECK_FAILED;
             $checks['openmailbox']['result_img'] = $imgFailed;
             $checks['openmailbox']['info'] = \imap_last_error();
         } else {
-            $checks['openmailbox']['check'] = \_AM_WGEVENTS_ACCOUNT_CHECK_OPEN_MAILBOX;
             $checks['openmailbox']['result'] = \_AM_WGEVENTS_ACCOUNT_CHECK_OK;
             $checks['openmailbox']['result_img'] = $imgOK;
 
             $folders = \imap_list($mbox, '{' . $command . '}', '*');
+            $checks['listfolder']['check'] = \_AM_WGEVENTS_ACCOUNT_CHECK_LIST_FOLDERS;
             if (false === $folders) {
-                $checks['listfolder']['check'] = \_AM_WGEVENTS_ACCOUNT_CHECK_LIST_FOLDERS;
                 $checks['listfolder']['result'] = \_AM_WGEVENTS_ACCOUNT_CHECK_FAILED;
                 $checks['listfolder']['result_img'] = $imgFailed;
                 $checks['listfolder']['info'] = \imap_last_error();
             } else {
-                $checks['listfolder']['check'] = \_AM_WGEVENTS_ACCOUNT_CHECK_LIST_FOLDERS;
                 $checks['listfolder']['result'] = \_AM_WGEVENTS_ACCOUNT_CHECK_OK;
                 $checks['listfolder']['result_img'] = $imgOK;
                 $checks['listfolder']['info'] = \implode('<br>', $folders);
@@ -181,15 +179,13 @@ switch ($op) {
                     $logHandler->createLog($logDetails);
 
                     //execute sending
+                    $export = \var_export($xoopsMailer, TRUE);
+                    $export = \preg_replace("/\n/", '<br>', $export);
                     if ($xoopsMailer->send()) {
-                        $export = var_export($xoopsMailer, TRUE);
-                        $export = \preg_replace("/\n/", '<br>', $export);
                         $logHandler->createLog('Result Test send mail to ' . $usermail .': success' . '<br>' . $export);
-                        $result = \_AM_WGEVENTS_ACCOUNT_CHECK_OK . '<br>' . $xoopsMailer->getErrors();;
+                        $result = \_AM_WGEVENTS_ACCOUNT_CHECK_OK . '<br>' . $xoopsMailer->getErrors();
                         $resultImg = $imgOK;
                     } else {
-                        $export = var_export($xoopsMailer, TRUE);
-                        $export = \preg_replace("/\n/", '<br>', $export);
                         $logHandler->createLog('Result Test send mail to ' . $usermail .': failed - ' . $xoopsMailer->getErrors() . '<br>' . $export);
                         $result = \_AM_WGEVENTS_ACCOUNT_CHECK_FAILED . '<br>' . $xoopsMailer->getErrors();
                         $resultImg = $imgFailed;
@@ -222,8 +218,8 @@ switch ($op) {
     default:
         $crAccount = new \CriteriaCompo();
         $crAccount->add(new \Criteria('primary', 1));
-        $primaryCount = $accountHandler->getCount($crAccount);
-        if (0 == $primaryCount) {
+        $accountsCount = $accountHandler->getCount($crAccount);
+        if (0 === $accountsCount) {
             $GLOBALS['xoopsTpl']->assign('info', \_AM_WGEVENTS_THEREARENT_ACCOUNTS_DESC);
         }
         // Define Stylesheet
@@ -335,7 +331,7 @@ switch ($op) {
         $GLOBALS['xoopsTpl']->assign('navigation', $adminObject->displayNavigation('account.php'));
         $accountObj = $accountHandler->get($accId);
         $accType = $accountObj->getVar('type');
-        if (isset($_REQUEST['ok']) && 1 == $_REQUEST['ok']) {
+        if (isset($_REQUEST['ok']) && 1 === (int)$_REQUEST['ok']) {
             if (!$GLOBALS['xoopsSecurity']->check()) {
                 \redirect_header('account.php', 3, \implode(', ', $GLOBALS['xoopsSecurity']->getErrors()));
             }

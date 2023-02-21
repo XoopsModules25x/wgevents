@@ -61,7 +61,6 @@ class Event extends \XoopsObject
     /**
      * Constructor
      *
-     * @param null
      */
     public function __construct()
     {
@@ -81,6 +80,7 @@ class Event extends \XoopsObject
         $this->initVar('locgmlat', \XOBJ_DTYPE_FLOAT);
         $this->initVar('locgmlon', \XOBJ_DTYPE_FLOAT);
         $this->initVar('locgmzoom', \XOBJ_DTYPE_INT);
+        $this->initVar('fee_type', \XOBJ_DTYPE_INT);
         $this->initVar('fee', \XOBJ_DTYPE_OTHER);
         $this->initVar('paymentinfo', \XOBJ_DTYPE_OTHER);
         $this->initVar('register_use', \XOBJ_DTYPE_INT);
@@ -95,7 +95,9 @@ class Event extends \XoopsObject
         $this->initVar('register_signature', \XOBJ_DTYPE_TXTAREA);
         $this->initVar('register_forceverif', \XOBJ_DTYPE_INT);
         $this->initVar('status', \XOBJ_DTYPE_INT);
-        $this->initVar('galid', \XOBJ_DTYPE_INT);
+        $this->initVar('galid', \XOBJ_DTYPE_TXTBOX);
+        $this->initVar('url_info', \XOBJ_DTYPE_TXTBOX);
+        $this->initVar('url_registration', \XOBJ_DTYPE_TXTBOX);
         $this->initVar('identifier', \XOBJ_DTYPE_TXTBOX);
         $this->initVar('groups', \XOBJ_DTYPE_TXTBOX);
         $this->initVar('datecreated', \XOBJ_DTYPE_INT);
@@ -105,7 +107,6 @@ class Event extends \XoopsObject
     /**
      * @static function &getInstance
      *
-     * @param null
      */
     public static function getInstance()
     {
@@ -117,7 +118,7 @@ class Event extends \XoopsObject
 
     /**
      * The new inserted $Id
-     * @return inserted id
+     * @return int
      */
     public function getNewInsertedId()
     {
@@ -151,7 +152,7 @@ class Event extends \XoopsObject
             }
             $userUid   = $GLOBALS['xoopsUser']->uid();
             $userEmail = $GLOBALS['xoopsUser']->email();
-            $userName  = ('' != (string)$GLOBALS['xoopsUser']->name()) ? $GLOBALS['xoopsUser']->name() : $GLOBALS['xoopsUser']->uname();
+            $userName  = ('' !== (string)$GLOBALS['xoopsUser']->name()) ? $GLOBALS['xoopsUser']->name() : $GLOBALS['xoopsUser']->uname();
         }
 
         $imgInfo = '<img class="wge-img-info" src="' . \WGEVENTS_ICONS_URL_24 . '/info.png" alt="img-info" title="%s">';
@@ -182,7 +183,7 @@ class Event extends \XoopsObject
         // count sub categories
         $catsSubOnline = $categoryHandler->getAllCatsOnline(Constants::CATEGORY_TYPE_SUB);
         if (\count($catsSubOnline) > 0) {
-            $evSubCats = $this->isNew() ? [] : \unserialize($this->getVar('subcats'));
+            $evSubCats = $this->isNew() ? [] : \unserialize($this->getVar('subcats'), ['allowed_classes' => false]);
             $evSubCatsSelect = new \XoopsFormCheckBox(\_MA_WGEVENTS_EVENT_SUBCATS, 'subcats', $evSubCats);
             $evSubCatsSelect->addOptionArray($catsSubOnline);
             $form->addElement($evSubCatsSelect);
@@ -224,7 +225,7 @@ class Event extends \XoopsObject
             $imageSelect->addOption(($image1), $image1);
         }
         $imageSelect->setExtra("onchange='showImgSelected(\"imglabel_logo\", \"logo\", \"" . $imageDirectory . '", "", "' . \XOOPS_URL . "\")'");
-        $imageTray->addElement($imageSelect, false);
+        $imageTray->addElement($imageSelect);
         $imageTray->addElement(new \XoopsFormLabel('', "<br><img src='" . \XOOPS_URL . '/' . $imageDirectory . '/' . $evLogo . "' id='imglabel_logo' alt='' style='max-width:100px' >"));
         // Form Image evLogo: Upload new image
         $maxsize = $helper->getConfig('maxsize_image');
@@ -236,7 +237,7 @@ class Event extends \XoopsObject
         // Form Tray Datefrom
         $evDatefromTray = new Forms\FormElementTray(\_MA_WGEVENTS_EVENT_DATEFROM, '&nbsp;');
         // Text Date Select evDatefrom
-        $evDatefrom = ($this->isNew() && 0 == (int)$this->getVar('datefrom')) ? \time() : $this->getVar('datefrom');
+        $evDatefrom = ($this->isNew() && 0 === (int)$this->getVar('datefrom')) ? \time() : $this->getVar('datefrom');
         $evDatefromTray->addElement(new \XoopsFormDateTime('', 'datefrom', '', $evDatefrom), true);
         // Text Date Checkbox evAllday
         $evAllday = $this->isNew() ? 0 : (int)$this->getVar('allday');
@@ -246,7 +247,7 @@ class Event extends \XoopsObject
         $evDatefromTray->addElement($checkAllday);
         $form->addElement($evDatefromTray);
         // Form Text Date Select evDateto
-        $evDateto = ($this->isNew() && 0 == (int)$this->getVar('dateto')) ? \time() : $this->getVar('dateto');
+        $evDateto = ($this->isNew() && 0 === (int)$this->getVar('dateto')) ? \time() : $this->getVar('dateto');
         $form->addElement(new \XoopsFormDateTime(\_MA_WGEVENTS_EVENT_DATETO, 'dateto', '', $evDateto));
         // Form Text evContact
         $form->addElement(new \XoopsFormTextArea(\_MA_WGEVENTS_EVENT_CONTACT, 'contact', $this->getVar('contact', 'e'), 4, 30));
@@ -294,12 +295,19 @@ class Event extends \XoopsObject
             }
         }
         $evFeeTray = new Forms\FormElementTray(\_MA_WGEVENTS_EVENT_FEE, '<br>');
+        $evFeeType = $this->isNew() ? Constants::FEETYPE_DECLARED : (int)$this->getVar('fee_type');
+        $evFeeTypeRadio = new \XoopsFormRadio('', 'fee_type', $evFeeType);
+        $evFeeTypeRadio->addOption(Constants::FEETYPE_DECLARED, \_MA_WGEVENTS_EVENT_FEETYPE_DECLARED);
+        $evFeeTypeRadio->addOption(Constants::FEETYPE_FREE, \_MA_WGEVENTS_EVENT_FEETYPE_FREE);
+        $evFeeTypeRadio->addOption(Constants::FEETYPE_NONDECL, \_MA_WGEVENTS_EVENT_FEETYPE_NONDECL);
+        $evFeeTypeRadio->setExtra(" onchange='toggleFeeFields()' ");
+        $evFeeTray->addElement($evFeeTypeRadio);
         $evFeeGroup = new Forms\FormTextDouble('', 'fee', 0, 0, '');
         $evFeeGroup->setElements($evFeeArr);
         $evFeeGroup->setPlaceholder1(\_MA_WGEVENTS_EVENT_FEE_VAL_PH);
         $evFeeGroup->setPlaceholder2(\_MA_WGEVENTS_EVENT_FEE_DESC_PH);
+        $evFeeGroup->setVisible(Constants::FEETYPE_DECLARED === $evFeeType);
         $evFeeTray->addElement($evFeeGroup);
-
         $form->addElement($evFeeTray);
         // Form TextArea evPaymentinfo
         $editorConfigs2 = [];
@@ -313,9 +321,9 @@ class Event extends \XoopsObject
         $form->addElement(new \XoopsFormEditor(\_MA_WGEVENTS_EVENT_PAYMENTINFO, 'paymentinfo', $editorConfigs2));
 
         // Start block registration options
+        $evRegister_use = $this->isNew() ? 0 : $this->getVar('register_use');
         if ($helper->getConfig('use_register')) {
             // Form Radio Yes/No evRegister_use
-            $evRegister_use = $this->isNew() ? 0 : $this->getVar('register_use');
             $evRegisterUseRadio = new \XoopsFormRadioYN(\_MA_WGEVENTS_EVENT_REGISTER_USE, 'register_use', $evRegister_use);
             $evRegisterUseRadio->setExtra(" onclick='toggleRegistrationOpts()' ");
             $form->addElement($evRegisterUseRadio);
@@ -369,22 +377,31 @@ class Event extends \XoopsObject
             //$form->addElement(new \XoopsFormLabel('', $evReservUseTray));
             // End block registration options
         }
+        if ($helper->getConfig('use_urlregistration')) {
+            // Form Text urlRegistration
+            $evUrlregistration = $this->getVar('url_registration');
+            $evUrlregText = new Forms\FormText(\_MA_WGEVENTS_EVENT_URL_REGISTRATION, 'url_registration', 50, 255, $evUrlregistration);
+            $evUrlregText->setPlaceholder(\_MA_WGEVENTS_EVENT_URL_REGISTRATION_PH);
+            if ($evRegister_use) {
+                $evUrlregText->setExtra('disabled');
+            }
+            $form->addElement($evUrlregText);
+        }
         // Form Select evGalid
-        if ($helper->getConfig('use_wggallery')) {
-            /*TODO */
-            /*
+        if ($helper->getConfig('use_wggallery') && \class_exists('WggalleryCorePreload')) {
+            $helperGallery = \XoopsModules\Wggallery\Helper::getInstance();
+            $albumsHandler = $helperGallery->getHandler('Albums');
             $evGalidSelect = new \XoopsFormSelect(\_MA_WGEVENTS_EVENT_GALID, 'galid', $this->getVar('galid'));
-            $evGalidSelect->addOption('Empty');
-            $evGalidSelect->addOptionArray($albumHandler->getList());
+            $evGalidSelect->addOption(0, ' ');
+            $evGalidSelect->addOptionArray($albumsHandler->getList());
             $form->addElement($evGalidSelect);
-            */
         }
         // Form Select evGroups
         if ($helper->getConfig('use_groups')) {
             if ($this->isNew()) {
                 $groups = ['00000'];
             } else {
-                $groups = \explode("|", $this->getVar('groups'));
+                $groups = \explode('|', $this->getVar('groups'));
             }
             $evGroupsSelect = new \XoopsFormSelect(\_MA_WGEVENTS_EVENT_GROUPS, 'groups', $groups, 5, true);
             $evGroupsSelect->addOption('00000', \_MA_WGEVENTS_EVENT_GROUPS_ALL);
@@ -577,7 +594,7 @@ class Event extends \XoopsObject
         $ret['catname'] = $catName;
         $ret['catlogo'] = $catLogo;
         $subcatsArr = [];
-        $subcats = \unserialize($this->getVar('subcats'));
+        $subcats = \unserialize($this->getVar('subcats'), ['allowed_classes' => false]);
         if (\is_array($subcats) && \count($subcats) > 0) {
             foreach ($subcats as $subcat) {
                 $subcategoryObj = $categoryHandler->get($subcat);
@@ -631,13 +648,32 @@ class Event extends \XoopsObject
             $contactLines   = preg_split("/\r\n|\n|\r/", $evContact);
             $ret['contact_text_user']  = \implode('<br>', $contactLines);
         }
-        $evFee = \json_decode($this->getVar('fee'), true);
+        $evFeeType = $this->getVar('fee_type');
         $evFeeText = '';
-        foreach($evFee as $fee) {
-            $evFeeText .= Utility::FloatToString((float)$fee[0]) . ' ' . $fee[1] . '<br>';
+        $evFeeShow = false;
+        switch ($evFeeType) {
+            case Constants::FEETYPE_DECLARED:
+            default:
+                $feetypeText = \_MA_WGEVENTS_EVENT_FEETYPE_DECLARED;
+                $evFee = \json_decode($this->getVar('fee'), true);
+                foreach($evFee as $fee) {
+                    $evFeeText .= Utility::FloatToString((float)$fee[0]) . ' ' . $fee[1] . '<br>';
+                }
+                $evFeeShow = true;
+                break;
+            case Constants::FEETYPE_FREE:
+                $feetypeText = \_MA_WGEVENTS_EVENT_FEETYPE_FREE;
+                $evFeeText   = \_MA_WGEVENTS_EVENT_FEETYPE_FREE;
+                $evFeeShow   = true;
+                break;
+            case Constants::FEETYPE_NONDECL:
+                $feetypeText = \_MA_WGEVENTS_EVENT_FEETYPE_NONDECL;
+                break;
         }
+        $ret['feetype_text']          = $feetypeText;
         $ret['fee_text']              = $evFeeText;
-        $ret['paymentinfo_text']      = $this->getVar('paymentinfo', 'e');
+        $ret['fee_show']              = $evFeeShow;
+        $ret['paymentinfo_text']      = \nl2br($this->getVar('paymentinfo', 'e'));
         $ret['register_use_text']     = (int)$this->getVar('register_use') > 0 ? \_YES : \_NO;
         $ret['register_from_text']    = '';
         $ret['register_from_dayname'] = '';
@@ -658,20 +694,35 @@ class Event extends \XoopsObject
         $evRegisterNotify                = $this->getVar('register_notify', 'e');
         $ret['register_notify_text']     = $evRegisterNotify;
         if ($evRegisterNotify) {
-            $notifyEmails   = preg_split("/\r\n|\n|\r/", $evRegisterNotify);
+            $notifyEmails   = \preg_split("/\r\n|\n|\r/", $evRegisterNotify);
             $ret['register_notify_user']  = \implode('<br>', $notifyEmails);
         }
         $ret['register_forceverif_text'] = (int)$this->getVar('register_forceverif') > 0 ? \_YES : \_NO;
+        $evGalid                         = (int)$this->getVar('galid');
+        if ($evGalid > 0 && $helper->getConfig('use_wggallery') && \class_exists('WggalleryCorePreload')) {
+            $helperGallery = \XoopsModules\Wggallery\Helper::getInstance();
+            $albumsHandler = $helperGallery->getHandler('Albums');
+            $albumObj = $albumsHandler->get($evGalid);
+            if (\is_object($albumObj)) {
+                $ret['gallery_name'] = $albumObj->getVar('alb_name');
+                $albLink = \XOOPS_URL . '/modules/wggallery/gallery.php?op=show&amp;alb_id=' . $evGalid;
+                $albLink .= '&amp;alb_pid=' .$albumObj->getVar('alb_pid');
+                $ret['gallery_link'] = $albLink;
+            } else {
+                $evGalid = 0;
+            }
+        }
+        $ret['gallery_id'] = $evGalid;
         $evGroups                        = $this->getVar('groups', 'e');
         $groups_text                     = '';
-        if (0 == (int)$evGroups) {
+        if (0 === (int)$evGroups) {
             $groups_text = \_MA_WGEVENTS_EVENT_GROUPS_ALL;
         } else {
             // Get groups
             $groups_text .= '<ul>';
             $memberHandler = \xoops_getHandler('member');
             $xoopsGroups  = $memberHandler->getGroupList();
-            $groups   = explode("|", $evGroups);
+            $groups   = explode('|', $evGroups);
             foreach ($groups as $group) {
                 $groups_text .= '<li>' . $xoopsGroups[(int)$group] .  '</li>' ;
             }
@@ -693,20 +744,27 @@ class Event extends \XoopsObject
         switch ($eventDayname) {
             case 0:
             default:
-                return '';
+                $ret = '';
+                break;
             case Constants::DAYNAME_SHORT:
                 $daynames_short = [\_MA_WGEVENTS_CAL_MIN_SUNDAY, \_MA_WGEVENTS_CAL_MIN_MONDAY, \_MA_WGEVENTS_CAL_MIN_TUESDAY, \_MA_WGEVENTS_CAL_MIN_WEDNESDAY, \_MA_WGEVENTS_CAL_MIN_THURSDAY, \_MA_WGEVENTS_CAL_MIN_FRIDAY, \_MA_WGEVENTS_CAL_MIN_SATURDAY];
-                return $daynames_short[$day] . ' ';
+                $ret = $daynames_short[$day] . ' ';
+                break;
             case Constants::DAYNAME_SHORTDOT:
                 $daynames_short = [\_MA_WGEVENTS_CAL_MIN_SUNDAY, \_MA_WGEVENTS_CAL_MIN_MONDAY, \_MA_WGEVENTS_CAL_MIN_TUESDAY, \_MA_WGEVENTS_CAL_MIN_WEDNESDAY, \_MA_WGEVENTS_CAL_MIN_THURSDAY, \_MA_WGEVENTS_CAL_MIN_FRIDAY, \_MA_WGEVENTS_CAL_MIN_SATURDAY];
-                return $daynames_short[$day] . '. ';
+                $ret = $daynames_short[$day] . '. ';
+                break;
             case Constants::DAYNAME_SHORTCOMMA:
                 $daynames_short = [\_MA_WGEVENTS_CAL_MIN_SUNDAY, \_MA_WGEVENTS_CAL_MIN_MONDAY, \_MA_WGEVENTS_CAL_MIN_TUESDAY, \_MA_WGEVENTS_CAL_MIN_WEDNESDAY, \_MA_WGEVENTS_CAL_MIN_THURSDAY, \_MA_WGEVENTS_CAL_MIN_FRIDAY, \_MA_WGEVENTS_CAL_MIN_SATURDAY];
-                return $daynames_short[$day] . ', ';
+                $ret = $daynames_short[$day] . ', ';
+                break;
             case Constants::DAYNAME_LONG:
                 $daynames_long = [\_MA_WGEVENTS_CAL_SUNDAY, \_MA_WGEVENTS_CAL_MONDAY, \_MA_WGEVENTS_CAL_TUESDAY, \_MA_WGEVENTS_CAL_WEDNESDAY, \_MA_WGEVENTS_CAL_THURSDAY, \_MA_WGEVENTS_CAL_FRIDAY, \_MA_WGEVENTS_CAL_SATURDAY];
-                return $daynames_long[$day] . ' ';
+                $ret = $daynames_long[$day] . ' ';
+                break;
         }
+
+        return $ret;
     }
 
     /**

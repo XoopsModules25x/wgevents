@@ -61,7 +61,7 @@ class TaskHandler extends \XoopsPersistableObjectHandler
      * retrieve a field
      *
      * @param int $id field id
-     * @param null fields
+     * @param $fields
      * @return \XoopsObject|null reference to the {@link Get} object
      */
     public function get($id = null, $fields = null)
@@ -72,7 +72,6 @@ class TaskHandler extends \XoopsPersistableObjectHandler
     /**
      * get inserted id
      *
-     * @param null
      * @return int reference to the {@link Get} object
      */
     public function getInsertId()
@@ -198,23 +197,26 @@ class TaskHandler extends \XoopsPersistableObjectHandler
             $resProcess .=  '<br>Start processTasks';
             $resProcess .=  '<br>time - 3600: ' . \formatTimestamp(time() - 3600, 'm');
             if ($tasksCountProcessing > 0) {
-                $resProcess .= '<br><span style="color:#ff0000;font-weight:700">Count processing at start: ' . $tasksCountProcessing . '</span>';
+                $resProcess .= '<br><span style="color:#ff0000;font-weight:700">Count status PROCESSING at start: ' . $tasksCountProcessing . '</span>';
             }
-            $resProcess .=  '<br>Count pending at start: ' . $tasksCountPending;
-            $resProcess .=  '<br>Count done at start: ' . $tasksCountDone;
+            $resProcess .=  '<br>Count status PENDING at start: ' . $tasksCountPending;
+            $resProcess .=  '<br>Count status DONE at start: ' . $tasksCountDone;
         }
-        if (($tasksCountPending > 0) && ($tasksCountDone < $limitHour || 0 == $limitHour)) {
+        if (($tasksCountPending > 0) && ($tasksCountDone < $limitHour || 0 === $limitHour)) {
             if ($limitHour > 0) {
                 $crTaskPending->setLimit($limitHour);
             }
             $tasksAll = $this->getAll($crTaskPending);
+            $resultMH = 0;
             foreach (\array_keys($tasksAll) as $i) {
                 // check whether task is still pending
                 // ignore it if meanwhile another one started to process the task
                 if ($log_level > 1) {
                     $resProcess .=  '<br>Task key: ' . $i;
                 }
-                if ((Constants::STATUS_PENDING == (int)$tasksAll[$i]->getVar('status'))
+                if (554 === $resultMH) {
+                    $resProcess .=  '<br>Skipped Error 554: SMTP limit exceeded';
+                } elseif ((Constants::STATUS_PENDING == (int)$tasksAll[$i]->getVar('status'))
                     && ($tasksCountDone < $limitHour || 0 == $limitHour)) {
                     $taskProcessObj = $this->get($i);
                     $taskProcessObj->setVar('status', Constants::STATUS_PROCESSING);
@@ -226,10 +228,10 @@ class TaskHandler extends \XoopsPersistableObjectHandler
                         $mailsHandler->setParams($mailParams);
                         $mailsHandler->setType($tasksAll[$i]->getVar('type'));
                         // send mails
-                        $result = $mailsHandler->execute();
+                        $resultMH = $mailsHandler->execute();
                         unset($mailsHandler);
                         //update task list corresponding the result
-                        if ($result) {
+                        if (0 === $resultMH) {
                             $taskProcessObj->setVar('status', Constants::STATUS_DONE);
                             $taskProcessObj->setVar('datedone', time());
                             $counterDone++;
@@ -244,7 +246,7 @@ class TaskHandler extends \XoopsPersistableObjectHandler
                         }
                         $this->insert($taskProcessObj);
                     } else {
-                        $resProcess .=  ' - skipped';
+                        $resProcess .=  ' - error insert taskProcessObj';
                     }
                 }
                 // check once more number of done

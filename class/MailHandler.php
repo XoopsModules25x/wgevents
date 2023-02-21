@@ -57,22 +57,33 @@ class MailHandler
     /**
      * Constructor
      *
-     * @param null
      */
     public function __construct()
     {
     }
 
+    /**
+     * @param $value
+     * @return void
+     */
     public function setParams($value)
     {
         $this->mailParams = $value;
     }
 
+    /**
+     * @param $value
+     * @return void
+     */
     public function setType($value)
     {
         $this->type = $value;
     }
 
+    /**
+     * @param $value
+     * @return void
+     */
     public function setHtml($value)
     {
         $this->isHtml = $value;
@@ -81,19 +92,19 @@ class MailHandler
     /**
      * Function to send mails for new/update registrations
      * 
-     * @return bool
+     * @return int
      */
     public function execute()
     {
         $helper = Helper::getInstance();
         $accountHandler = $helper->getHandler('Account');
-        $useLogs = (bool)($helper->getConfig('use_logs') > Constants::LOG_NONE);
+        $useLogs = $helper->getConfig('use_logs') > Constants::LOG_NONE;
         if ($useLogs) {
             $logHandler = $helper->getHandler('Log');
         }
         $logInfo = '<br>Task ID: ' . $this->mailParams['taskId'];
 
-        $errors = 0;
+        $errorCode = 0;
 
         $eventLink      = '';
         $eventUrl       = \WGEVENTS_URL . '/event.php?op=show&id=' . $this->mailParams['evId'];
@@ -110,13 +121,13 @@ class MailHandler
         $recipients     = $this->mailParams['recipients'];
         $userName       = $GLOBALS['xoopsConfig']['anonymous'];
         if (\is_object($GLOBALS['xoopsUser'])) {
-            $userName  = ('' != (string)$GLOBALS['xoopsUser']->name()) ? $GLOBALS['xoopsUser']->name() : $GLOBALS['xoopsUser']->uname();
+            $userName  = ('' !== (string)$GLOBALS['xoopsUser']->name()) ? $GLOBALS['xoopsUser']->name() : $GLOBALS['xoopsUser']->uname();
         }
 
         switch ($this->type) {
             case 0:
             default:
-                return false;
+                return 0;
             case Constants::MAIL_REG_CONFIRM_OUT:
                 $template = 'mail_reg_confirm_out.tpl';
                 $subject = \_MA_WGEVENTS_MAIL_REG_OUT_SUBJECT;
@@ -239,7 +250,7 @@ class MailHandler
                 $xoopsMailer->Host = $account_server_out; //sometimes necessary to repeat
             }
 
-            if ('' != $account_securetype_out) {
+            if ('' !== $account_securetype_out) {
                 $xoopsMailer->SMTPAuth   = true;
                 $xoopsMailer->SMTPSecure = $account_securetype_out; // sets the prefix to the server
             }
@@ -275,19 +286,29 @@ class MailHandler
                 if ($useLogs) {
                     $logHandler->createLog('Result MailHandler/executeReg: failed' .$xoopsMailer->getErrors() . $logInfo);
                 }
-                $errors++;
+                $errMsg = $xoopsMailer->getErrors();
+                // check for SMTP error 554 (maximum number of mails exceeded)
+                $errIds = ['SMTP','554', 'error'];
+                $arrMsg = \explode(' ', \preg_replace('/[^a-z0-9]/i',' ',$errMsg));
+                $countMatches = \count(\array_intersect($arrMsg, $errIds));
+                if ($countMatches > 0) {
+                    $errorCode = 554;
+                } else {
+
+                    $errorCode = 900; // wgevents internal code for misc error
+                }
             }
             $xoopsMailer->reset();
             unset($xoopsMailer);
         }
         catch (\Exception $e) {
+            $errorCode = 999; // wgevents internal code for misc error
             if ($useLogs) {
                 $logHandler->createLog('MailHandler/executeReg failed: Exception - ' . $e->getMessage());
             }
-            $errors++;
         }
 
-        return (0 == $errors);
+        return $errorCode;
     }
 
     /**
@@ -299,7 +320,7 @@ class MailHandler
     private function getCleanParam($name) {
         $return = ' ';
         if (array_key_exists($name, $this->mailParams)) {
-            $return  = '' == (string)$this->mailParams[$name] ? ' ' : $this->mailParams[$name];
+            $return  = '' === (string)$this->mailParams[$name] ? ' ' : $this->mailParams[$name];
         }
 
         return $return;
@@ -363,7 +384,7 @@ class MailHandler
     public function replaceLinebreaks($string, $replaceBy) {
 
         // replace
-        return str_replace(["\r\n", "\r", "\n", "<br />", "<br>"], $replaceBy, $string);
+        return str_replace(["\r\n", "\r", "\n", '<br />', '<br>'], $replaceBy, $string);
 
     }
 }

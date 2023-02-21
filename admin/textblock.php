@@ -49,13 +49,13 @@ switch ($op) {
         $adminObject->addItemButton(\_AM_WGEVENTS_ADD_TEXTBLOCK, 'textblock.php?op=new');
         $GLOBALS['xoopsTpl']->assign('buttons', $adminObject->displayButton('left'));
         $textblockCount = $textblockHandler->getCountTextblocks();
-        $textblockAll = $textblockHandler->getAllTextblocks();
         $GLOBALS['xoopsTpl']->assign('textblockCount', $textblockCount);
         $GLOBALS['xoopsTpl']->assign('wgevents_url', \WGEVENTS_URL);
         $GLOBALS['xoopsTpl']->assign('wgevents_upload_url', \WGEVENTS_UPLOAD_URL);
         $GLOBALS['xoopsTpl']->assign('wgevents_icons_url_16', \WGEVENTS_ICONS_URL_16);
         // Table view textblocks
         if ($textblockCount > 0) {
+            $textblockAll = $textblockHandler->getAllTextblocks();
             foreach (\array_keys($textblockAll) as $i) {
                 $textblock = $textblockAll[$i]->getValuesTextblocks();
                 $GLOBALS['xoopsTpl']->append('textblocks_list', $textblock);
@@ -135,7 +135,7 @@ switch ($op) {
         $GLOBALS['xoopsTpl']->assign('navigation', $adminObject->displayNavigation('textblock.php'));
         $textblockObj = $textblockHandler->get($tbId);
         $tbName = $textblockObj->getVar('name');
-        if (isset($_REQUEST['ok']) && 1 == $_REQUEST['ok']) {
+        if (isset($_REQUEST['ok']) && 1 === (int)$_REQUEST['ok']) {
             if (!$GLOBALS['xoopsSecurity']->check()) {
                 \redirect_header('textblock.php', 3, \implode(', ', $GLOBALS['xoopsSecurity']->getErrors()));
             }

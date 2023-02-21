@@ -79,7 +79,7 @@ $GLOBALS['xoopsTpl']->assign('tablesorter_allrows', \_AM_WGEVENTS_TABLESORTER_SH
 $GLOBALS['xoopsTpl']->assign('tablesorter_of', \_AM_WGEVENTS_TABLESORTER_OF);
 $GLOBALS['xoopsTpl']->assign('tablesorter_total', \_AM_WGEVENTS_TABLESORTER_TOTALROWS);
 $GLOBALS['xoopsTpl']->assign('tablesorter_pagesize', $helper->getConfig('adminpager'));
-if ('d.m.Y' == _SHORTDATESTRING) {
+if ('d.m.Y' === \_SHORTDATESTRING) {
     $dateformat = 'ddmmyyyy';
 } else {
     $dateformat = 'mmddyyyy';

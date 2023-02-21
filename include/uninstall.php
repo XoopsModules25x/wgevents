@@ -43,14 +43,12 @@ function xoops_module_uninstall_wgevents(\XoopsModule $module)
     //------------------------------------------------------------------
     // Remove uploads folder (and all subfolders) if they exist
     //------------------------------------------------------------------
-    $uploads_dir = $GLOBALS['xoops']->path("uploads/{$moduleDirName}");
+    $uploads_dir = $GLOBALS['xoops']->path("uploads/$moduleDirName");
     $dirInfo = new \SplFileInfo($uploads_dir);
-    if ($dirInfo->isDir()) {
-        // The directory exists so delete it
-        if (!$utility::rrmdir($uploads_dir)) {
-            $module->setErrors(\sprintf(\constant('CO_' . $moduleDirNameUpper . '_ERROR_BAD_DEL_PATH'), $uploads_dir));
-            $success = false;
-        }
+    // if directory exists so delete it
+    if ($dirInfo->isDir() && !$utility::rrmdir($uploads_dir)) {
+        $module->setErrors(\sprintf(\constant('CO_' . $moduleDirNameUpper . '_ERROR_BAD_DEL_PATH'), $uploads_dir));
+        $success = false;
     }
     unset($dirInfo);
 

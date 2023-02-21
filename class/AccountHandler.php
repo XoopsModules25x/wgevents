@@ -55,7 +55,7 @@ class AccountHandler extends \XoopsPersistableObjectHandler
      * retrieve a field
      *
      * @param int $id field id
-     * @param null fields
+     * @param $fields
      * @return \XoopsObject|null reference to the {@link Get} object
      */
     public function get($id = null, $fields = null)
@@ -66,7 +66,6 @@ class AccountHandler extends \XoopsPersistableObjectHandler
     /**
      * get inserted id
      *
-     * @param null
      * @return int reference to the {@link Get} object
      */
     public function getInsertId()
@@ -127,7 +126,6 @@ class AccountHandler extends \XoopsPersistableObjectHandler
      * returns
      * - array with defaults if no primary account found (website email settings will be used)
      * - an array with settings of the primary account
-     * @param null
      *
      * @return array
      */

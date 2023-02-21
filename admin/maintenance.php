@@ -36,7 +36,7 @@ $GLOBALS['xoopsTpl']->assign('wgevents_icon_url_16', \WGEVENTS_ICONS_URL . '16/'
 $formGdpr = new Forms\FormInline('', 'form', '', 'post', true);
 $formGdpr->setExtra('enctype="multipart/form-data"');
 // suggest 6 months before now
-$regDatelimit = strtotime(date("Y-m-t", \time() - (6 * 30 * 24 * 60 * 60 + 5)));
+$regDatelimit = strtotime(date('Y-m-t', \time() - (6 * 30 * 24 * 60 * 60 + 5)));
 $formGdpr->addElement(new \XoopsFormTextDateSelect(\_AM_WGEVENTS_MAINTENANCE_ANON_DATA_DATELIMIT, 'datelimit', '', $regDatelimit));
 $formGdpr->addElement(new \XoopsFormButton('', 'submit', \_MA_WGEVENTS_EXEC, 'submit'));
 $formGdpr->addElement(new \XoopsFormHidden('op', 'anon_data_exec'));
@@ -163,12 +163,12 @@ switch ($op) {
                 if($registrationHandler->insert($regUpdateObj, true)) {
                     $crAnswer = new \CriteriaCompo();
                     $crAnswer->add(new \Criteria('regid', $i));
-                    $answerHandler->deleteAll($crAnswer,true);
-                    $answerhistHandler->deleteAll($crAnswer,true);
+                    $answerHandler->deleteAll($crAnswer);
+                    $answerhistHandler->deleteAll($crAnswer);
                 }
                 unset($regUpdateObj, $crAnswer);
             }
-            $registrationhistHandler->deleteAll($crRegistration,true);
+            $registrationhistHandler->deleteAll($crRegistration);
         }
 
 
@@ -266,11 +266,10 @@ function getUnusedImages(&$unused, $directory)
                             $crAlbums    = new \CriteriaCompo();
                             $crAlbums->add(new \Criteria('alb_image', $entry));
                             $imageCount += $albumsHandler->getCount($crAlbums);
-                            if (0 == $imageCount) {
+                            if (0 === $imageCount) {
                                 $unused[] = ['name' => $entry, 'path' => $directory . '/' . $entry];
                             }
-                            unset($crImages);
-                            unset($crAlbums);
+                            unset($crImages, $crAlbums);
                         }
                         break;
                 }
@@ -298,9 +297,8 @@ function wgg_foldersize($path)
 
     foreach ($files as $t) {
         if (\is_dir(\rtrim($path, '/') . '/' . $t)) {
-            if ('.' != $t && '..' != $t) {
+            if ('.' !== (string)$t && '..' !== (string)$t) {
                 $size = wgg_foldersize(\rtrim($path, '/') . '/' . $t);
-
                 $total_size += $size;
             }
         } else {

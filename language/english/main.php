@@ -104,6 +104,12 @@ require_once __DIR__ . '/admin.php';
 \define('_MA_WGEVENTS_EVENT_FEE', 'Fee');
 \define('_MA_WGEVENTS_EVENT_FEE_VAL_PH', 'Please enter amount');
 \define('_MA_WGEVENTS_EVENT_FEE_DESC_PH', 'Enter fee description (e.g. childs 0 - 6 years)');
+\define('_MA_WGEVENTS_EVENT_FEE_ADD', 'Add a new fee');
+\define('_MA_WGEVENTS_EVENT_FEE_REMOVE', 'Remove this fee line');
+\define('_MA_WGEVENTS_EVENT_FEETYPE', 'Type of fee');
+\define('_MA_WGEVENTS_EVENT_FEETYPE_DECLARED', 'As declared');
+\define('_MA_WGEVENTS_EVENT_FEETYPE_FREE', 'Participation free of charge');
+\define('_MA_WGEVENTS_EVENT_FEETYPE_NONDECL', 'No direct declaration');
 \define('_MA_WGEVENTS_EVENT_PAYMENTINFO', 'Payment Info');
 \define('_MA_WGEVENTS_EVENT_REGISTER_USE', 'Use Registration');
 \define('_MA_WGEVENTS_EVENT_REGISTER_FROM', 'Registration from');
@@ -128,6 +134,7 @@ require_once __DIR__ . '/admin.php';
 \define('_MA_WGEVENTS_EVENT_REGISTER_FORCEVERIF_DESC', 'If you choose this option the registrar must enter an email address and he get an email with verification code, which he has to send back.');
 \define('_MA_WGEVENTS_EVENT_REGISTER_FORCEVERIF_INFO', 'The organizer request mail verification, therefore the input of an email address is mandatory. You will get an email with verification link which you have to confirm.');
 \define('_MA_WGEVENTS_EVENT_GALID', 'Gallery Id');
+\define('_MA_WGEVENTS_EVENT_GALLERY', 'Image gallery');
 \define('_MA_WGEVENTS_EVENT_GM_SHOW', 'Show location on map');
 \define('_MA_WGEVENTS_EVENT_GM_GETCOORDS', 'Get location coordinates');
 \define('_MA_WGEVENTS_EVENT_GM_APPLYCOORDS', 'Apply coordinates');
@@ -140,6 +147,8 @@ require_once __DIR__ . '/admin.php';
 \define('_MA_WGEVENTS_EVENT_CLONE_QUESTION', 'Clone also existing questions');
 \define('_MA_WGEVENTS_EVENT_DATE_ERROR1', "The date 'Date to' was smaller than 'Date from' and was adapted therefore!");
 \define('_MA_WGEVENTS_EVENT_DATE_ERROR2', "The date 'Registration to' was smaller than 'Registration from' and was adapted therefor!");
+\define('_MA_WGEVENTS_EVENT_URL_REGISTRATION', 'Url for external registration');
+\define('_MA_WGEVENTS_EVENT_URL_REGISTRATION_PH', 'Please enter full url including https://');
 // Categories
 \define('_MA_WGEVENTS_CATEGORY_LOGO', 'Logo');
 \define('_MA_WGEVENTS_CATEGORY_NOEVENTS', 'No events available');
@@ -203,6 +212,7 @@ Participation without agreement to this conditions is not possible.
 \define('_MA_WGEVENTS_REGISTRATION_CONFIRM', 'Confirm participation');
 \define('_MA_WGEVENTS_REGISTRATION_CHANGED','Registration data successfully changed');
 \define('_MA_WGEVENTS_REGISTRATION_DATECREATED','Registration date');
+\define('_MA_WGEVENTS_REGISTRATION_INFO_SPAM','A confirmation about the registration was sent by mail.<br>If you did not get the mail, then please check your spam folder.<br>If you did not get the mail the next 24 hours then please contact event organizer');
 // Question
 \define('_MA_WGEVENTS_QUESTION', 'Question');
 \define('_MA_WGEVENTS_QUESTION_ADD', 'Add Question');

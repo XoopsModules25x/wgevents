@@ -18,6 +18,7 @@ namespace XoopsModules\Wgevents\Forms;
  * @subpackage          form
  * @since               2.0.0
  * @author              Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
+ * @author              Goffy ( webmaster@wedega.com )
  */
 
 use XoopsFormText;
@@ -34,6 +35,12 @@ use XoopsFormText;
  */
 class FormTextDouble extends \XoopsFormText
 {
+
+    /**
+     * param for show/hide fee wrapper
+     * @var bool
+     */
+    private $visible;
 
     /**
      * placeholder first textbox
@@ -64,7 +71,11 @@ class FormTextDouble extends \XoopsFormText
     public function render()
     {
 
-        $ret =  "<div id='wrapper_fee'style='width:100%'>";
+        $ret =  "<div id='wrapper_fee'";
+        if (!$this->getVisible()) {
+            $ret .=  " style='display:none'";
+        }
+        $ret .=  '>';
 
         foreach($this->getElements() as $key => $ele) {
             $ret .=  "<span><input class='form-control " . $this->getClass() . "' type='text' name='"
@@ -81,9 +92,9 @@ class FormTextDouble extends \XoopsFormText
 
             if (0 === (int)$key) {
                 // button to add new group
-                $ret .= '<a class="btn_fee_add btn btn-xs" href="javascript:void(0);" ><img src="' . \WGEVENTS_ICONS_URL_32 . '/add.png"/></a>';
+                $ret .= '<a class="btn_fee_add btn btn-xs" href="javascript:void(0);" ><img src="' . \WGEVENTS_ICONS_URL_32 . '/add.png" alt="' . \_MA_WGEVENTS_EVENT_FEE_ADD . '" title="' . \_MA_WGEVENTS_EVENT_FEE_ADD . '"/></a>';
             } else {
-                $ret .= '<a class="btn_fee_remove btn btn-xs" href="javascript:void(0);"><img src="' . \WGEVENTS_ICONS_URL_32 . '/remove.png"/></a>';
+                $ret .= '<a class="btn_fee_remove btn btn-xs" href="javascript:void(0);"><img src="' . \WGEVENTS_ICONS_URL_32 . '/remove.png" alt="' . \_MA_WGEVENTS_EVENT_FEE_REMOVE . '" title="' . \_MA_WGEVENTS_EVENT_FEE_REMOVE . '"/></a>';
             }
 
             $ret .= '</span>';
@@ -105,7 +116,7 @@ class FormTextDouble extends \XoopsFormText
             $ret .= ' placeholder="' . $this->getPlaceholder2() . '"';
         }
         $ret .= ' />';
-        $ret .= '<a class="btn_fee_remove btn btn-xs" href="javascript:void(0);"><img src="' . \WGEVENTS_ICONS_URL_32 . '/remove.png"/></a>';
+        $ret .= '<a class="btn_fee_remove btn btn-xs" href="javascript:void(0);"><img src="' . \WGEVENTS_ICONS_URL_32 . '/remove.png" alt="' . \_MA_WGEVENTS_EVENT_FEE_REMOVE . '" title="' . \_MA_WGEVENTS_EVENT_FEE_REMOVE . '"/></a>';
         $ret .= '</span></div>';
         // end hidden group
 
@@ -179,4 +190,25 @@ class FormTextDouble extends \XoopsFormText
 
     }
 
+    /**
+     * Set value for show/hide fee wrapper
+     *
+     * @param bool $value
+     */
+    public function setVisible($value) {
+
+        $this->visible = $value;
+
+    }
+
+    /**
+     * Get value for show/hide fee wrapper
+     *
+     * @return bool
+     */
+    public function getVisible() {
+
+        return $this->visible;
+
+    }
 }

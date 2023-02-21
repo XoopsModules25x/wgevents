@@ -49,7 +49,6 @@ class Field extends \XoopsObject
     /**
      * Constructor
      *
-     * @param null
      */
     public function __construct()
     {
@@ -75,7 +74,6 @@ class Field extends \XoopsObject
     /**
      * @static function &getInstance
      *
-     * @param null
      */
     public static function getInstance()
     {
@@ -128,8 +126,8 @@ class Field extends \XoopsObject
         $atValuesText = '';
         if (!$this->isNew()) {
             $fdValues = (string)$this->getVar('values');
-            if ('' != $fdValues) {
-                $atValuesText = \implode("\n", unserialize($fdValues));
+            if ('' !== $fdValues) {
+                $atValuesText = \implode("\n", \unserialize($fdValues, ['allowed_classes' => false]));
             }
         }
         $form->addElement(new \XoopsFormTextArea(\_AM_WGEVENTS_FIELD_VALUE, 'values', $atValuesText, 5, 47));
@@ -199,9 +197,9 @@ class Field extends \XoopsObject
         $fdValues = $this->getVar('values');
         $ret['value_text']       = '';
         $ret['value_list']   = '';
-        if ('' != $fdValues) {
-            $ret['value_text']     = \implode("\n", unserialize($fdValues));
-            $ret['value_list'] = \implode('<br>', unserialize($fdValues));
+        if ('' !== $fdValues) {
+            $ret['value_text']     = \implode("\n", \unserialize($fdValues, ['allowed_classes' => false]));
+            $ret['value_list'] = \implode('<br>', \unserialize($fdValues, ['allowed_classes' => false]));
         }
         $ret['required_text']            = (int)$this->getVar('required') > 0 ? _YES : _NO;
         $ret['default_text']             = (int)$this->getVar('default') > 0 ? _YES : _NO;

@@ -18,6 +18,7 @@ namespace XoopsModules\Wgevents\Forms;
  * @subpackage          form
  * @since               2.0.0
  * @author              Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
+ * @author              Goffy ( webmaster@wedega.com )
  */
 
 use XoopsFormButton;

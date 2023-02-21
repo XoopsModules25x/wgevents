@@ -38,11 +38,12 @@ if ('show' === $op) {
 }
 require_once \XOOPS_ROOT_PATH . '/header.php';
 
-$regId   = Request::getInt('id');
-$regEvid = Request::getInt('evid');
-$start   = Request::getInt('start');
-$limit   = Request::getInt('limit', $helper->getConfig('userpager'));
-$redir   = Request::getString('redir', 'list');
+$regId    = Request::getInt('id');
+$regEvid  = Request::getInt('evid');
+$start    = Request::getInt('start');
+$limit    = Request::getInt('limit', $helper->getConfig('userpager'));
+$redir    = Request::getString('redir', 'list');
+$showinfo = Request::getInt('showinfo');
 //$sortBy  = Request::getString('sortby', 'datecreated');
 //$orderBy = Request::getString('orderby', 'asc');
 
@@ -50,6 +51,9 @@ $GLOBALS['xoopsTpl']->assign('start', $start);
 $GLOBALS['xoopsTpl']->assign('limit', $limit);
 //$GLOBALS['xoopsTpl']->assign('sort_order', $sortBy . '_' . $orderBy);
 $GLOBALS['xoopsTpl']->assign('evid', $regEvid);
+if (1 === $showinfo) {
+    $GLOBALS['xoopsTpl']->assign('warning', \_MA_WGEVENTS_REGISTRATION_INFO_SPAM);
+}
 
 if (Request::hasVar('cancel')) {
     $op = 'listeventmy';
@@ -169,7 +173,7 @@ switch ($op) {
     case 'listeventmy': // list all registrations of current user of given event
     case 'listeventall': // list all registrations of all users of given event
         // Check params
-        if (0 == $regEvid) {
+        if (0 === $regEvid) {
             \redirect_header('index.php?op=list', 3, \_MA_WGEVENTS_INVALID_PARAM);
         }
         // Check permissions
@@ -179,7 +183,7 @@ switch ($op) {
 
         $captionList = \_MA_WGEVENTS_REGISTRATIONS_MYLIST;
         $currentUserOnly = true;
-        if ('listeventall' == $op) {
+        if ('listeventall' === $op) {
             $captionList = \_MA_WGEVENTS_REGISTRATIONS_LIST;
             $currentUserOnly = false;
             $GLOBALS['xoopsTpl']->assign('showSubmitter', true);
@@ -198,13 +202,11 @@ switch ($op) {
         $eventObj = $eventHandler->get($regEvid);
         $evSubmitter = (int)$eventObj->getVar('submitter');
         $permEdit = $permissionsHandler->getPermEventsEdit($evSubmitter, $eventObj->getVar('status')) || $uidCurrent == $evSubmitter;
-        if ('listeventall' == $op && $uidCurrent !== $evSubmitter) {
-            // list all registrations of all users of given event
-            // user must have perm to edit event
-            if ($uidCurrent !== $evSubmitter && !$permEdit) {
-                \redirect_header('registration.php?op=list', 3, \_NOPERM);
-            }
-        }
+    // list all registrations of all users of given event
+    // user must have perm to edit event
+    if ('listeventall' === $op && $uidCurrent !== $evSubmitter && !$permEdit) {
+        \redirect_header('registration.php?op=list', 3, \_NOPERM);
+    }
         $event_name = $eventObj->getVar('name');
         $registrations[$regEvid]['event_id'] = $regEvid;
         $registrations[$regEvid]['event_name'] = $event_name;
@@ -226,7 +228,7 @@ switch ($op) {
             $GLOBALS['xoopsTpl']->assign('registrations', $registrations);
             unset($registrations);
         }
-        if ('listeventall' == $op) {
+        if ('listeventall' === $op) {
             $GLOBALS['xoopsTpl']->assign('showHandleList', true);
         } else {
             //$permEdit = $permissionsHandler->getPermEventsEdit($evSubmitter, $eventObj->getVar('status'));
@@ -267,7 +269,7 @@ switch ($op) {
         $GLOBALS['xoopsTpl']->assign('tablesorter_of', \_AM_WGEVENTS_TABLESORTER_OF);
         $GLOBALS['xoopsTpl']->assign('tablesorter_total', \_AM_WGEVENTS_TABLESORTER_TOTALROWS);
         $GLOBALS['xoopsTpl']->assign('tablesorter_pagesize', $helper->getConfig('userpager'));
-        if ('d.m.Y' == _SHORTDATESTRING) {
+        if ('d.m.Y' === \_SHORTDATESTRING) {
             $dateformat = 'ddmmyyyy';
         } else {
             $dateformat = 'mmddyyyy';
@@ -290,7 +292,7 @@ switch ($op) {
             \redirect_header('registration.php', 3, \implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
         }
         // Check params
-        if (0 == $regEvid) {
+        if (0 === $regEvid) {
             \redirect_header('index.php?op=list', 3, \_MA_WGEVENTS_INVALID_PARAM);
         }
         $eventObj           = $eventHandler->get($regEvid);
@@ -306,10 +308,10 @@ switch ($op) {
                 // check for valid verifKey
                 $verifKeyEdit = Request::getString('verifkeyEdit');
                 $verifKeyArray  = explode('||', base64_decode($verifKeyEdit, true));
-                if ($regId > 0 && \is_object($registrationObj) && \WGEVENTS_URL == (string)$verifKeyArray[1] &&
-                    (int)$registrationObj->getVar('evid') == (int)$verifKeyArray[2] &&
-                    (string)$registrationObj->getVar('email') == (string)$verifKeyArray[3] &&
-                    (string)$registrationObj->getVar('verifkey') == (string)$verifKeyArray[4]) {
+                if (\is_object($registrationObj) && \WGEVENTS_URL === (string)$verifKeyArray[1] &&
+                    (int)$registrationObj->getVar('evid') === (int)$verifKeyArray[2] &&
+                    (string)$registrationObj->getVar('email') === (string)$verifKeyArray[3] &&
+                    (string)$registrationObj->getVar('verifkey') === (string)$verifKeyArray[4]) {
                     $permEdit = true;
                 }
             }
@@ -406,7 +408,7 @@ switch ($op) {
 
             // create items in table answers
             foreach ($answersValueArr as $key => $answer) {
-                if ('' != $answer) {
+                if ('' !== (string)$answer) {
                     $answerObj = $answerHandler->create();
                     $answerObj->setVar('regid', $newRegId);
                     $answerObj->setVar('queid', $key);
@@ -436,7 +438,7 @@ switch ($op) {
             if ($regId > 0) {
                 // find changes in table registrations
                 $infotextReg = $registrationHandler->getRegistrationsCompare($registrationObjOld, $registrationObj);
-                if ('' != $infotextReg) {
+                if ('' !== $infotextReg) {
                     // create history
                     if ($registrationObjOld->getVar('email') != $registrationObj->getVar('email')) {
                         $previousMail = $registrationObjOld->getVar('email');
@@ -448,7 +450,7 @@ switch ($op) {
                     // get new answers for this questions
                     $answersNew = $answerHandler->getAnswersDetailsByRegistration($newRegId, $questionsArr);
                     $result = $answerHandler->getAnswersCompare($answersOld, $answersNew);
-                    if ('' != $result) {
+                    if ('' !== $result) {
                         // create history
                         $answerhistHandler->createHistory($regEvid, $regId, 'update');
                     }
@@ -462,7 +464,7 @@ switch ($op) {
                 $typeConfirm = Constants::MAIL_REG_CONFIRM_MODIFY;
             } else {
                 $newRegistration = true;
-                if (1 == $regListwait) {
+                if (1 === $regListwait) {
                     // registration was put on a waiting list
                     $infotextReg .= \_MA_WGEVENTS_MAIL_REG_IN_LISTWAIT . PHP_EOL;
                 }
@@ -471,7 +473,7 @@ switch ($op) {
                     $verifLink     = \WGEVENTS_URL . '/verification.php?verifkey=' . $code;
                     $infotextReg   .= \sprintf(\_MA_WGEVENTS_MAIL_REG_IN_VERIF, $verifLink) . PHP_EOL;
                 }
-                if (1 == $regListwait || Constants::STATUS_SUBMITTED == $regStatus) {
+                if (1 === $regListwait || Constants::STATUS_SUBMITTED == $regStatus) {
                     // registration was put on a waiting list
                     $infotextReg .= \_MA_WGEVENTS_MAIL_REG_IN_FINAL . PHP_EOL;
                 }
@@ -480,12 +482,13 @@ switch ($op) {
                 $typeNotify  = Constants::MAIL_REG_NOTIFY_IN;
                 $typeConfirm = Constants::MAIL_REG_CONFIRM_IN;
             }
-            if ($newRegistration || '' != $infotextReg) {
+            $showinfo = 0;
+            if ($newRegistration || '' !== $infotextReg) {
                 $mailsHandler = new MailHandler();
                 $mailParams = $mailsHandler->getMailParam($eventObj, $newRegId);
                 unset($mailsHandler);
                 $registerNotify = (string)$eventObj->getVar('register_notify', 'e');
-                if ('' != $registerNotify) {
+                if ('' !== $registerNotify) {
                     $mailParams['infotext'] = $infotextOrg;
                     // send notifications to emails of register_notify
                     $notifyEmails = $eventHandler->getRecipientsNotify($registerNotify);
@@ -495,13 +498,14 @@ switch ($op) {
                         }
                     }
                 }
-                if (('' != $regEmail && Request::getInt('email_send') > 0) || ('' != $previousMail)) {
+                if (('' !== $regEmail && Request::getInt('email_send') > 0) || ('' !== $previousMail)) {
                     $mailParams['infotext'] = $infotextReg;
+                    $showinfo = 1;
                     // send confirmation, if radio is checked
                     // or inform old email in any case if email changed
                     $recipients = [];
                     $recipients[] = $regEmail;
-                    if ('' != $previousMail) {
+                    if ('' !== $previousMail) {
                         // add old email address if it changed in order to inform old mail address
                         $recipients[] = $previousMail;
                     }
@@ -513,7 +517,7 @@ switch ($op) {
             // excetue mail sending by task handler
             $taskHandler->processTasks();
             // redirect after insert
-            \redirect_header('registration.php?op=' . $redir . '&amp;redir=' . $redir . '&amp;evid=' . $regEvid, 2, \_MA_WGEVENTS_FORM_OK);
+            \redirect_header('registration.php?op=' . $redir . '&amp;redir=' . $redir . '&amp;evid=' . $regEvid. '&amp;showinfo=' . $showinfo, 2, \_MA_WGEVENTS_FORM_OK);
         }
         // Get Form Error
         $GLOBALS['xoopsTpl']->assign('error', $registrationObj->getHtmlErrors());
@@ -524,7 +528,7 @@ switch ($op) {
         // Breadcrumbs
         $xoBreadcrumbs[] = ['title' => \_MA_WGEVENTS_REGISTRATION_EDIT];
         // Check params
-        if (0 == $regId) {
+        if (0 === $regId) {
             \redirect_header('registration.php?op=list', 3, \_MA_WGEVENTS_INVALID_PARAM);
         }
         $verifKey = Request::getString('verifkey');
@@ -535,10 +539,10 @@ switch ($op) {
         if (!$permEdit) {
             // check for valid verifKey
             $verifKeyArray  = explode('||', base64_decode($verifKey, true));
-            if ($regId > 0 && \is_object($registrationObj) && \WGEVENTS_URL == (string)$verifKeyArray[1] &&
-                (int)$registrationObj->getVar('evid') == (int)$verifKeyArray[2] &&
-                (string)$registrationObj->getVar('email') == (string)$verifKeyArray[3] &&
-                (string)$registrationObj->getVar('verifkey') == (string)$verifKeyArray[4]) {
+            if ($regId > 0 && \is_object($registrationObj) && \WGEVENTS_URL === (string)$verifKeyArray[1] &&
+                (int)$registrationObj->getVar('evid') === (int)$verifKeyArray[2] &&
+                (string)$registrationObj->getVar('email') === (string)$verifKeyArray[3] &&
+                (string)$registrationObj->getVar('verifkey') === (string)$verifKeyArray[4]) {
                 $permEdit = true;
             }
         }
@@ -568,7 +572,7 @@ switch ($op) {
         // Request source
         $regIdSource = Request::getInt('id_source');
         // Check params
-        if (0 == $regIdSource) {
+        if (0 === $regIdSource) {
             \redirect_header('registration.php?op=list', 3, \_MA_WGEVENTS_INVALID_PARAM);
         }
         // Get Form
@@ -581,11 +585,14 @@ switch ($op) {
         // Breadcrumbs
         $xoBreadcrumbs[] = ['title' => \_MA_WGEVENTS_REGISTRATION_DELETE];
         // Check params
-        if (0 == $regId) {
+        if (0 === $regId) {
             \redirect_header('index.php?op=list', 3, \_MA_WGEVENTS_INVALID_PARAM);
         }
         // Check permissions
         $registrationObj = $registrationHandler->get($regId);
+        if (!\is_object($registrationObj)) {
+            \redirect_header('index.php?op=list', 3, \_MA_WGEVENTS_INVALID_PARAM);
+        }
         $eventObj = $eventHandler->get($registrationObj->getVar('evid'));
 
         $mailsHandler = new MailHandler();
@@ -593,7 +600,7 @@ switch ($op) {
         unset($mailsHandler);
 
         $mailParams['email'] = $registrationObj->getVar('email');
-        if (isset($_REQUEST['ok']) && 1 == $_REQUEST['ok']) {
+        if (isset($_REQUEST['ok']) && 1 === (int)$_REQUEST['ok']) {
             if (!$GLOBALS['xoopsSecurity']->check()) {
                 \redirect_header('registration.php', 3, \implode(', ', $GLOBALS['xoopsSecurity']->getErrors()));
             }
@@ -607,7 +614,7 @@ switch ($op) {
                 // TODO:  Event delete notification
                 // send notifications/confirmation emails
                 $registerNotify = (string)$eventObj->getVar('register_notify', 'e');
-                if ('' != $registerNotify) {
+                if ('' !== $registerNotify) {
                     // send notifications to emails of register_notify
                     $notifyEmails = $eventHandler->getRecipientsNotify($registerNotify);
                     if (\count($notifyEmails) > 0) {
@@ -617,7 +624,7 @@ switch ($op) {
                     }
                 }
                 // send email in any case if email is available
-                if ('' != $mailParams['regEmail']) {
+                if ('' !== (string)$mailParams['regEmail']) {
                     // send confirmation
                     $taskHandler->createTask(Constants::MAIL_REG_CONFIRM_OUT, $mailParams['regEmail'], json_encode($mailParams));
                 }
@@ -655,7 +662,7 @@ switch ($op) {
         // Breadcrumbs
         $xoBreadcrumbs[] = ['title' => \_MA_WGEVENTS_CONTACT_ALL];
         // Check params
-        if (0 == $regEvid) {
+        if (0 === $regEvid) {
             \redirect_header('registration.php?op=list', 3, \_MA_WGEVENTS_INVALID_PARAM);
         }
         // Get Form
@@ -670,7 +677,7 @@ switch ($op) {
             \redirect_header('registration.php', 3, \implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
         }
         // Check params
-        if (0 == $regEvid) {
+        if (0 === $regEvid) {
             \redirect_header('index.php?op=list', 3, \_MA_WGEVENTS_INVALID_PARAM);
         }
 

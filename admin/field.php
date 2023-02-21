@@ -50,7 +50,7 @@ switch ($op) {
         $adminObject->addItemButton(\_AM_WGEVENTS_FIELD_CREATE_DEFAULT, 'field.php?op=default_set');
         $GLOBALS['xoopsTpl']->assign('buttons', $adminObject->displayButton('left'));
         $fieldCount = $fieldHandler->getCountFields();
-        if (0 == $fieldCount) {
+        if (0 === $fieldCount) {
             // load default set
             \redirect_header('field.php?op=default_set', 0);
         }
@@ -111,7 +111,7 @@ switch ($op) {
         $fieldObj->setVar('desc', Request::getText('desc'));
         $atValuesText = '';
         $fdValues = Request::getString('values');
-        if ('' != $fdValues) {
+        if ('' !== $fdValues) {
             if (Constants::FIELD_COMBOBOX == $fdType || Constants::FIELD_SELECTBOX == $fdType || Constants::FIELD_RADIO == $fdType) {
                 $atValuesText = \serialize(\preg_split('/\r\n|\r|\n/', $fdValues));
             } else {
@@ -160,7 +160,7 @@ switch ($op) {
         $GLOBALS['xoopsTpl']->assign('navigation', $adminObject->displayNavigation('field.php'));
         $fieldObj = $fieldHandler->get($atId);
         $atName = $fieldObj->getVar('caption');
-        if (isset($_REQUEST['ok']) && 1 == $_REQUEST['ok']) {
+        if (isset($_REQUEST['ok']) && 1 === (int)$_REQUEST['ok']) {
             if (!$GLOBALS['xoopsSecurity']->check()) {
                 \redirect_header('field.php', 3, \implode(', ', $GLOBALS['xoopsSecurity']->getErrors()));
             }
@@ -181,7 +181,7 @@ switch ($op) {
     case 'default_set':
         $templateMain = 'wgevents_admin_field.tpl';
         $GLOBALS['xoopsTpl']->assign('navigation', $adminObject->displayNavigation('field.php'));
-        if (isset($_REQUEST['ok']) && 1 == $_REQUEST['ok']) {
+        if (isset($_REQUEST['ok']) && 1 === (int)$_REQUEST['ok']) {
             if (!$GLOBALS['xoopsSecurity']->check()) {
                 \redirect_header('field.php', 3, \implode(', ', $GLOBALS['xoopsSecurity']->getErrors()));
             }
@@ -199,7 +199,7 @@ switch ($op) {
                 $fieldObj->setVar('desc', $item['desc']);
                 $fdValues = (string)$item['values'];
                 $atValuesText = '';
-                if ('' != $fdValues) {
+                if ('' !== $fdValues) {
                     $tmpArr[] = $fdValues;
                     $atValuesText = \serialize($tmpArr);
                 }
@@ -250,10 +250,11 @@ switch ($op) {
 }
 require __DIR__ . '/footer.php';
 
+/**
+ * @return array
+ */
 function BuildDefaultSet () {
     $defaultSet = [];
-    $i = 0;
-
     $defaultSet[] = [
         'type' => Constants::FIELD_LABEL,
         'caption' => \_MA_WGEVENTS_FIELD_LABEL,

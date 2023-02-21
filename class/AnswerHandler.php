@@ -55,7 +55,7 @@ class AnswerHandler extends \XoopsPersistableObjectHandler
      * retrieve a field
      *
      * @param int $id field id
-     * @param null fields
+     * @param $fields
      * @return \XoopsObject|null reference to the {@link Get} object
      */
     public function get($id = null, $fields = null)
@@ -66,7 +66,6 @@ class AnswerHandler extends \XoopsPersistableObjectHandler
     /**
      * get inserted id
      *
-     * @param null
      * @return int reference to the {@link Get} object
      */
     public function getInsertId()
@@ -138,7 +137,7 @@ class AnswerHandler extends \XoopsPersistableObjectHandler
             }
             $answersCount = $this->getCount($crAnswer);
             if ($answersCount > 0) {
-                return $this->deleteAll($crAnswer, true);
+                return $this->deleteAll($crAnswer);
             }
         }
         return true;
@@ -172,16 +171,16 @@ class AnswerHandler extends \XoopsPersistableObjectHandler
                     }
                     if (Constants::FIELD_CHECKBOX == $queItem['type'] ||
                         Constants::FIELD_COMBOBOX == $queItem['type']) {
-                        $queValues = \unserialize($queItem['values']);
-                        $ansItems = \unserialize($ansText);
+                        $queValues = \unserialize($queItem['values'], ['allowed_classes' => false]);
+                        $ansItems = \unserialize($ansText, ['allowed_classes' => false]);
                         $ansText = '';
                         foreach ($ansItems as $ansItem) {
                             $ansText .= $queValues[(int)$ansItem] . ' <br>';
                         }
                     }
                     if (Constants::FIELD_SELECTBOX == $queItem['type']) {
-                        $queValues = \unserialize($queItem['values']);
-                        $ansItem = (string)\unserialize($ansText);
+                        $queValues = \unserialize($queItem['values'], ['allowed_classes' => false]);
+                        $ansItem = (string)\unserialize($ansText, ['allowed_classes' => false]);
                         $ansText = $queValues[(int)$ansItem];
                     }
                     if (Constants::FIELD_RADIO == $queItem['type']) {
@@ -216,10 +215,10 @@ class AnswerHandler extends \XoopsPersistableObjectHandler
             if (\is_object($questionObj)) {
                 $caption = $questionObj->getVar('caption');
             }
-            $valueOld = $versionOld[$key];
-            $valueNew = $versionNew[$key];
-            if ($valueOld != $valueNew) {
-                if ('' == $valueNew) {
+            $valueOld = (string)$versionOld[$key];
+            $valueNew = (string)$versionNew[$key];
+            if ($valueOld !== $valueNew) {
+                if ('' === $valueNew) {
                     $infotext .= \sprintf(\_MA_WGEVENTS_MAIL_REG_MODIFICATION_DEL, $caption) . PHP_EOL;
                 } else {
                     $infotext .= \sprintf(\_MA_WGEVENTS_MAIL_REG_MODIFICATION, $caption, $valueOld, $valueNew) . PHP_EOL;
