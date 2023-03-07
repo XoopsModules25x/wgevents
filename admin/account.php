@@ -54,6 +54,9 @@ switch ($op) {
             redirect_header('account.php', 3, _MA_WGEVENTS_INVALID_PARAM);
         } else {
             $accountObj = $helper->getHandler('Account')->get($accId);
+            if (!\is_object($accountObj)) {
+                redirect_header('account.php', 3, _MA_WGEVENTS_INVALID_PARAM);
+            }
         }
 
         $account_server_in = $accountObj->getVar('server_in');
