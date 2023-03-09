@@ -27,6 +27,8 @@ require_once __DIR__ . '/main.php';
 \define('_MB_WGEVENTS_TITLE_LENGTH', 'Titellänge');
 \define('_MB_WGEVENTS_CATTODISPLAY', 'Anzuzeigende Kategorien');
 \define('_MB_WGEVENTS_ALLCAT', 'Alle Kategorien');
+\define('_MB_WGEVENTS_EVENTS_TO_DISPLAY', 'Anzuzeigende Veranstaltungen');
+\define('_MB_WGEVENTS_ALL_EVENTS', 'Alle Veranstaltungen');
 // Event
 \define('_MB_WGEVENTS_EVENT_SHOWMORE', 'Weitere Veranstaltungen anzeigen');
 \define('_MB_WGEVENTS_BLOCKTYPE', 'Blocktyp');
