@@ -35,9 +35,9 @@
                         </div>
                     <{/if}>
                     <div class="wge-block-bcard-itemFooter col-xs-12">
-                        <a class='btn btn-success' href='<{$wgevents_url|default:false}>/event.php?op=show&amp;id=<{$event.id}>' title='<{$event.summary}>'><{$smarty.const._MA_WGEVENTS_EVENT_DETAILS}></a>
+                        <a class='btn btn-success' href='<{$wgevents_url|default:false}>/event.php?op=show&amp;id=<{$event.id}>' title='<{$smarty.const._MA_WGEVENTS_EVENT_DETAILS}>'><{$smarty.const._MA_WGEVENTS_EVENT_DETAILS}></a>
                         <{if $block.permEdit|default:false}>
-                            <a class='btn btn-success' href='<{$wgevents_url|default:false}>/event.php?op=edit&amp;id=<{$event.id}>' title='<{$event.summary}>'><{$smarty.const._MA_WGEVENTS_EVENT_EDIT}></a>
+                            <a class='btn btn-success' href='<{$wgevents_url|default:false}>/event.php?op=edit&amp;id=<{$event.id}>' title='<{$smarty.const._MA_WGEVENTS_EVENT_EDIT}>'><{$smarty.const._MA_WGEVENTS_EVENT_EDIT}></a>
                         <{/if}>
                     </div>
                 </div>
@@ -51,7 +51,7 @@
     <div class="wge-block-bcard-footer center">
         <a class="btn btn-success" href="<{$wgevents_url|default:false}>/event.php?op=list"><{$smarty.const._MB_WGEVENTS_EVENT_SHOWMORE}></a>
         <{if $wgevents_permAdd|default:false}>
-            <a class='btn btn-success' href='<{$wgevents_url|default:false}>/event.php?op=new' title='<{$event.summary}>'><{$smarty.const._MA_WGEVENTS_EVENT_ADD}></a>
+            <a class='btn btn-success' href='<{$wgevents_url|default:false}>/event.php?op=new' title='<{$smarty.const._MA_WGEVENTS_EVENT_ADD}>'><{$smarty.const._MA_WGEVENTS_EVENT_ADD}></a>
         <{/if}>
     </div>
 <{/if}>
