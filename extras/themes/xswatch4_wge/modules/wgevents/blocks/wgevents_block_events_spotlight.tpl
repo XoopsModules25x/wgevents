@@ -2,8 +2,8 @@
     <thead>
         <tr class='head'>
             <th>&nbsp;</th>
-            <th class='center'><{$smarty.const._MB_WGEVENTS_EV_NAME}></th>
-            <th class='center'><{$smarty.const._MB_WGEVENTS_EV_LOGO}></th>
+            <th class='center'><{$smarty.const._MB_WGEVENTS_EVENT_NAME}></th>
+            <th class='center'><{$smarty.const._MB_WGEVENTS_EVENT_LOGO}></th>
         </tr>
     </thead>
     <{if count($block)}>
