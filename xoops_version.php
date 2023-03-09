@@ -32,7 +32,8 @@ $moduleDirNameUpper = \mb_strtoupper($moduleDirName);
 // ------------------- Information ------------------- //
 $modversion = [
     'name'                => \_MI_WGEVENTS_NAME,
-    'version'             => '1.0.5',
+    'version'             => '1.0.6',
+    'module_status'       => 'Stable',
     'description'         => \_MI_WGEVENTS_DESC,
     'author'              => 'Goffy - Wedega',
     'author_mail'         => 'webmaster@wedega.com',
@@ -65,7 +66,6 @@ $modversion = [
     'module_website_url'  => 'www.xoops.org',
     'module_website_name' => 'XOOPS Project',
     'release'             => '28.02.2023',
-    'module_status'       => 'Stable',
     'system_menu'         => 1,
     'hasAdmin'            => 1,
     'hasMain'             => 1,
@@ -224,7 +224,7 @@ $modversion['blocks'][] = [
     'show_func'   => 'b_wgevents_event_show',
     'edit_func'   => 'b_wgevents_event_edit',
     'template'    => 'wgevents_block_events.tpl',
-    'options'     => 'last|5|25|0',
+    'options'     => 'last|5|25|simple',
 ];
 // Event new
 $modversion['blocks'][] = [
@@ -234,7 +234,7 @@ $modversion['blocks'][] = [
     'show_func'   => 'b_wgevents_event_show',
     'edit_func'   => 'b_wgevents_event_edit',
     'template'    => 'wgevents_block_events.tpl',
-    'options'     => 'new|5|25|0',
+    'options'     => 'new|5|25|simple',
 ];
 /*
 

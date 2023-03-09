@@ -120,7 +120,7 @@
         <div class="row">
             <div class="col-xs-12 col-sm-3 col-lg-2"><{$smarty.const._MA_WGEVENTS_EVENT_GALLERY}>: </div>
             <div class="col-xs-12 col-sm-9 col-lg-10">
-                <a class='btn btn-primary wge-btn' href='<{$event.gallery_link}>' target="_blank" title='<{$event.gallery_name}>'><{$event.gallery_name}></a>
+                <a class='btn btn-primary wge-btn' href='<{$event.gallery_link|default:''}>' target="_blank" title='<{$event.gallery_name|default:''}>'><{$event.gallery_name|default:''}></a>
             </div>
         </div>
         <{/if}>
