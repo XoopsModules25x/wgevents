@@ -54,7 +54,7 @@ function b_wgevents_event_show($options)
     $typeBlock   = $options[0];
     $limit       = (int)$options[1];
     $lengthTitle = (int)$options[2];
-    $blockType   = (string)$options[3];
+    $blockType   = '0' === (string)$options[3] ? 'simple' : (string)$options[3] ;
     \array_shift($options);
     \array_shift($options);
     \array_shift($options);
@@ -67,6 +67,7 @@ function b_wgevents_event_show($options)
         case 'last':
         default:
             // For the block: events last
+            $dateFrom = 0;
             $sortBy  = 'datecreated';
             $orderBy = 'DESC';
             break;
@@ -74,11 +75,13 @@ function b_wgevents_event_show($options)
             // For the block: events new
             // new since last week: 7 * 24 * 60 * 60 = 604800
             $dateCreated = \time() - 604800;
+            $dateFrom = 0;
             $sortBy      = 'datecreated';
             $orderBy     = 'ASC';
             break;
         case 'random':
             // For the block: events random
+            $dateFrom = 0;
             $sortBy  = 'RAND()';
             $orderBy = '';
             break;

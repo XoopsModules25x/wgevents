@@ -31,6 +31,9 @@ require_once __DIR__ . '/main.php';
 \define('_MB_WGEVENTS_ALL_EVENTS', 'All events');
 // Event
 \define('_MB_WGEVENTS_EVENT_SHOWMORE', 'Show more events');
+\define('_MB_WGEVENTS_EVENT_NAME', 'Event name');
+\define('_MB_WGEVENTS_EVENT_LOGO', 'Event logo');
+\define('_MB_WGEVENTS_EVENT_GOTO', 'Goto Event');
 \define('_MB_WGEVENTS_BLOCKTYPE', 'Block type');
 \define('_MB_WGEVENTS_BLOCKTYPE_TABLE', 'Table');
 \define('_MB_WGEVENTS_BLOCKTYPE_SIMPLE', 'Simple');
