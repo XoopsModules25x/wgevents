@@ -38,8 +38,16 @@
                 <td class='center'><{$category.identifier}></td>
                 <td class='center'><{$category.name}></td>
                 <td class='center'><{$category.desc_short}></td>
-                <td class='center'><img src="<{$wgevents_upload_url|default:false}>/categories/logos/<{$category.logo}>" alt="category logo" style="max-width:100px" ></td>
-                <td class='center'><img src="<{$wgevents_upload_url|default:false}>/categories/images/<{$category.image}>" alt="category image" style="max-width:100px" ></td>
+                <td class='center'>
+                    <{if !empty($category.logo)}>
+                        <img src="<{$wgevents_upload_url|default:false}>/categories/logos/<{$category.logo}>" alt="category logo" style="max-width:100px" >
+                    <{/if}>
+                </td>
+                <td class='center'>
+                    <{if !empty($category.image)}>
+                        <img src="<{$wgevents_upload_url|default:false}>/categories/images/<{$category.image}>" alt="category image" style="max-width:100px" >
+                    <{/if}>
+                </td>
                 <td class='center'><span style='background-color:<{$category.color}>;'>&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
                 <td class='center'><span style='background-color:<{$category.bordercolor}>;'>&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
                 <td class='center'><span style='background-color:<{$category.bgcolor}>;'>&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
@@ -49,9 +57,9 @@
                 <td class='center'><{$category.datecreated_text}></td>
                 <td class='center'><{$category.submitter_text}></td>
                 <td class="center width5 sorter-false filter-false">
-                    <a href="category.php?op=edit&amp;id=<{$category.id}>&amp;start=<{$start}>&amp;limit=<{$limit}>" title="<{$smarty.const._EDIT}>"><img src="<{xoModuleIcons16 edit.png}>" alt="<{$smarty.const._EDIT}> categories" ></a>
-                    <a href="category.php?op=clone&amp;id_source=<{$category.id}>" title="<{$smarty.const._CLONE}>"><img src="<{xoModuleIcons16 editcopy.png}>" alt="<{$smarty.const._CLONE}> categories" ></a>
-                    <a href="category.php?op=delete&amp;id=<{$category.id}>" title="<{$smarty.const._DELETE}>"><img src="<{xoModuleIcons16 delete.png}>" alt="<{$smarty.const._DELETE}> categories" ></a>
+                    <a href="category.php?op=edit&amp;id=<{$category.id}>&amp;start=<{$start}>&amp;limit=<{$limit}>" title="<{$smarty.const._EDIT}>"><img src="<{xoModuleIcons16 'edit.png'}>" alt="<{$smarty.const._EDIT}> categories" ></a>
+                    <a href="category.php?op=clone&amp;id_source=<{$category.id}>" title="<{$smarty.const._CLONE}>"><img src="<{xoModuleIcons16 'editcopy.png'}>" alt="<{$smarty.const._CLONE}> categories" ></a>
+                    <a href="category.php?op=delete&amp;id=<{$category.id}>" title="<{$smarty.const._DELETE}>"><img src="<{xoModuleIcons16 'delete.png'}>" alt="<{$smarty.const._DELETE}> categories" ></a>
                 </td>
             </tr>
             <{/foreach}>

@@ -21,7 +21,7 @@
                 <td class='center'><{$event.registrationhists}></td>
                 <td class="center ">
                     <{if $event.registrationhists|default:0 > 0}>
-                        <a href="registrationhist.php?op=list&amp;evid=<{$event.id}>&amp;start=<{$start}>&amp;limit=<{$limit}>" title="<{$smarty.const._MA_WGEVENTS_DETAILS}>"><img src="<{xoModuleIcons16 view.png}>" alt="<{$smarty.const._MA_WGEVENTS_DETAILS}> events" ></a>
+                        <a href="registrationhist.php?op=list&amp;evid=<{$event.id}>&amp;start=<{$start}>&amp;limit=<{$limit}>" title="<{$smarty.const._MA_WGEVENTS_DETAILS}>"><img src="<{xoModuleIcons16 'view.png'}>" alt="<{$smarty.const._MA_WGEVENTS_DETAILS}> events" ></a>
                     <{/if}>
                 </td>
             </tr>
@@ -80,7 +80,7 @@
                 <td class='center'><{$registration.datecreated_text}></td>
                 <td class='center'><{$registration.submitter_text}></td>
                 <td class="center width5 sorter-false filter-false">
-                    <a href="registrationhist.php?op=delete&amp;id=<{$registration.id}>" title="<{$smarty.const._DELETE}>"><img src="<{xoModuleIcons16 delete.png}>" alt="<{$smarty.const._DELETE}> registrationhists" ></a>
+                    <a href="registrationhist.php?op=delete&amp;id=<{$registration.id}>" title="<{$smarty.const._DELETE}>"><img src="<{xoModuleIcons16 'delete.png'}>" alt="<{$smarty.const._DELETE}> registrationhists" ></a>
                 </td>
             </tr>
             <{/foreach}>

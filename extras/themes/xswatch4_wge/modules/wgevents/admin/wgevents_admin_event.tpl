@@ -91,8 +91,8 @@
                 <td class='center'><{$event.datecreated_text}></td>
                 <td class='center'><{$event.submitter_text}></td>
                 <td class="center  width5">
-                    <a href="event.php?op=edit&amp;id=<{$event.id}>&amp;start=<{$start}>&amp;limit=<{$limit}>" title="<{$smarty.const._EDIT}>"><img src="<{xoModuleIcons16 edit.png}>" alt="<{$smarty.const._EDIT}> events" ></a>
-                    <a href="event.php?op=delete&amp;id=<{$event.id}>" title="<{$smarty.const._DELETE}>"><img src="<{xoModuleIcons16 delete.png}>" alt="<{$smarty.const._DELETE}> events" ></a>
+                    <a href="event.php?op=edit&amp;id=<{$event.id}>&amp;start=<{$start}>&amp;limit=<{$limit}>" title="<{$smarty.const._EDIT}>"><img src="<{xoModuleIcons16 'edit.png'}>" alt="<{$smarty.const._EDIT}> events" ></a>
+                    <a href="event.php?op=delete&amp;id=<{$event.id}>" title="<{$smarty.const._DELETE}>"><img src="<{xoModuleIcons16 'delete.png'}>" alt="<{$smarty.const._DELETE}> events" ></a>
                 </td>
             </tr>
             <{/foreach}>

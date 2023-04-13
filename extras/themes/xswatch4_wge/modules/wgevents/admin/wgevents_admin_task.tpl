@@ -30,8 +30,8 @@
                 <td class='center'><img src="<{$modPathIcon16}>status<{$task.status}>.png" alt="<{$task.status_text}>" title="<{$task.status_text}>" ></td>
                 <td class='center'><{$task.datedone_text}></td>
                 <td class="center  width5">
-                    <a href="task.php?op=edit&amp;id=<{$task.id}>&amp;start=<{$start}>&amp;limit=<{$limit}>" title="<{$smarty.const._EDIT}>"><img src="<{xoModuleIcons16 edit.png}>" alt="<{$smarty.const._EDIT}> tasks" ></a>
-                    <a href="task.php?op=delete&amp;id=<{$task.id}>" title="<{$smarty.const._DELETE}>"><img src="<{xoModuleIcons16 delete.png}>" alt="<{$smarty.const._DELETE}> tasks" ></a>
+                    <a href="task.php?op=edit&amp;id=<{$task.id}>&amp;start=<{$start}>&amp;limit=<{$limit}>" title="<{$smarty.const._EDIT}>"><img src="<{xoModuleIcons16 'edit.png'}>" alt="<{$smarty.const._EDIT}> tasks" ></a>
+                    <a href="task.php?op=delete&amp;id=<{$task.id}>" title="<{$smarty.const._DELETE}>"><img src="<{xoModuleIcons16 'delete.png'}>" alt="<{$smarty.const._DELETE}> tasks" ></a>
                 </td>
             </tr>
             <{/foreach}>
