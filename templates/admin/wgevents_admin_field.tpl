@@ -83,10 +83,10 @@
                 <td class='center'><{$field.datecreated_text}></td>
                 <td class='center'><{$field.submitter_text}></td>
                 <td class="center  width5">
-                    <a href="field.php?op=edit&amp;id=<{$field.id}>&amp;start=<{$start}>&amp;limit=<{$limit}>" title="<{$smarty.const._EDIT}>"><img src="<{xoModuleIcons16 edit.png}>" alt="<{$smarty.const._EDIT}> fields" ></a>
+                    <a href="field.php?op=edit&amp;id=<{$field.id}>&amp;start=<{$start}>&amp;limit=<{$limit}>" title="<{$smarty.const._EDIT}>"><img src="<{xoModuleIcons16 'edit.png'}>" alt="<{$smarty.const._EDIT}> fields" ></a>
                     <{if $field.custom|default:false}>
-                        <a href="field.php?op=clone&amp;id_source=<{$field.id}>" title="<{$smarty.const._CLONE}>"><img src="<{xoModuleIcons16 editcopy.png}>" alt="<{$smarty.const._CLONE}> fields" ></a>
-                        <a href="field.php?op=delete&amp;id=<{$field.id}>" title="<{$smarty.const._DELETE}>"><img src="<{xoModuleIcons16 delete.png}>" alt="<{$smarty.const._DELETE}> fields" ></a>
+                        <a href="field.php?op=clone&amp;id_source=<{$field.id}>" title="<{$smarty.const._CLONE}>"><img src="<{xoModuleIcons16 'editcopy.png'}>" alt="<{$smarty.const._CLONE}> fields" ></a>
+                        <a href="field.php?op=delete&amp;id=<{$field.id}>" title="<{$smarty.const._DELETE}>"><img src="<{xoModuleIcons16 'delete.png'}>" alt="<{$smarty.const._DELETE}> fields" ></a>
                     <{/if}>
                 </td>
             </tr>

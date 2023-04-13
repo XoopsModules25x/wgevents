@@ -21,7 +21,7 @@
                 <td class='center'><{$event.answerhists}></td>
                 <td class="center ">
                     <{if $event.answerhists|default:0 > 0}>
-                        <a href="answerhist.php?op=list&amp;evid=<{$event.id}>&amp;start=<{$start}>&amp;limit=<{$limit}>" title="<{$smarty.const._MA_WGEVENTS_DETAILS}>"><img src="<{xoModuleIcons16 view.png}>" alt="<{$smarty.const._MA_WGEVENTS_DETAILS}> events" ></a>
+                        <a href="answerhist.php?op=list&amp;evid=<{$event.id}>&amp;start=<{$start}>&amp;limit=<{$limit}>" title="<{$smarty.const._MA_WGEVENTS_DETAILS}>"><img src="<{xoModuleIcons16 'view.png'}>" alt="<{$smarty.const._MA_WGEVENTS_DETAILS}> events" ></a>
                     <{/if}>
                 </td>
             </tr>
@@ -68,7 +68,7 @@
                 <td class='center'><{$answer.datecreated_text}></td>
                 <td class='center'><{$answer.submitter_text}></td>
                 <td class="center  width5">
-                    <a href="answerhist.php?op=delete&amp;id=<{$answer.id}>" title="<{$smarty.const._DELETE}>"><img src="<{xoModuleIcons16 delete.png}>" alt="<{$smarty.const._DELETE}> answers" ></a>
+                    <a href="answerhist.php?op=delete&amp;id=<{$answer.id}>" title="<{$smarty.const._DELETE}>"><img src="<{xoModuleIcons16 'delete.png'}>" alt="<{$smarty.const._DELETE}> answers" ></a>
                 </td>
             </tr>
             <{/foreach}>

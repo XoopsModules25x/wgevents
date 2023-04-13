@@ -21,7 +21,7 @@
                 <td class='center'><{$event.answers}></td>
                 <td class="center ">
                     <{if $event.answers|default:0 > 0}>
-                        <a href="answer.php?op=list&amp;evid=<{$event.id}>&amp;start=<{$start}>&amp;limit=<{$limit}>" title="<{$smarty.const._MA_WGEVENTS_DETAILS}>"><img src="<{xoModuleIcons16 view.png}>" alt="<{$smarty.const._MA_WGEVENTS_DETAILS}> events" ></a>
+                        <a href="answer.php?op=list&amp;evid=<{$event.id}>&amp;start=<{$start}>&amp;limit=<{$limit}>" title="<{$smarty.const._MA_WGEVENTS_DETAILS}>"><img src="<{xoModuleIcons16 'view.png'}>" alt="<{$smarty.const._MA_WGEVENTS_DETAILS}> events" ></a>
                     <{/if}>
                 </td>
             </tr>
@@ -60,9 +60,9 @@
                 <td class='center'><{$answer.datecreated_text}></td>
                 <td class='center'><{$answer.submitter_text}></td>
                 <td class="center  width5">
-                    <a href="answer.php?op=edit&amp;id=<{$answer.id}>&amp;start=<{$start}>&amp;limit=<{$limit}>" title="<{$smarty.const._EDIT}>"><img src="<{xoModuleIcons16 edit.png}>" alt="<{$smarty.const._EDIT}> answers" ></a>
-                    <a href="answer.php?op=clone&amp;id_source=<{$answer.id}>" title="<{$smarty.const._CLONE}>"><img src="<{xoModuleIcons16 editcopy.png}>" alt="<{$smarty.const._CLONE}> answers" ></a>
-                    <a href="answer.php?op=delete&amp;id=<{$answer.id}>" title="<{$smarty.const._DELETE}>"><img src="<{xoModuleIcons16 delete.png}>" alt="<{$smarty.const._DELETE}> answers" ></a>
+                    <a href="answer.php?op=edit&amp;id=<{$answer.id}>&amp;start=<{$start}>&amp;limit=<{$limit}>" title="<{$smarty.const._EDIT}>"><img src="<{xoModuleIcons16 'edit.png'}>" alt="<{$smarty.const._EDIT}> answers" ></a>
+                    <a href="answer.php?op=clone&amp;id_source=<{$answer.id}>" title="<{$smarty.const._CLONE}>"><img src="<{xoModuleIcons16 'editcopy.png'}>" alt="<{$smarty.const._CLONE}> answers" ></a>
+                    <a href="answer.php?op=delete&amp;id=<{$answer.id}>" title="<{$smarty.const._DELETE}>"><img src="<{xoModuleIcons16 'delete.png'}>" alt="<{$smarty.const._DELETE}> answers" ></a>
                 </td>
             </tr>
             <{/foreach}>

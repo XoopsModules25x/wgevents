@@ -84,8 +84,8 @@
                 <td class='center'><{$account.datecreated_text}></td>
                 <td class='center'><{$account.submitter_text}></td>
                 <td class="center  width5">
-                    <a href="account.php?op=edit&amp;id=<{$account.id}>&amp;start=<{$start}>&amp;limit=<{$limit}>" title="<{$smarty.const._EDIT}>"><img src="<{xoModuleIcons16 edit.png}>" alt="<{$smarty.const._EDIT}> accounts" ></a>
-                    <a href="account.php?op=delete&amp;id=<{$account.id}>" title="<{$smarty.const._DELETE}>"><img src="<{xoModuleIcons16 delete.png}>" alt="<{$smarty.const._DELETE}> accounts" ></a>
+                    <a href="account.php?op=edit&amp;id=<{$account.id}>&amp;start=<{$start}>&amp;limit=<{$limit}>" title="<{$smarty.const._EDIT}>"><img src="<{xoModuleIcons16 'edit.png'}>" alt="<{$smarty.const._EDIT}> accounts" ></a>
+                    <a href="account.php?op=delete&amp;id=<{$account.id}>" title="<{$smarty.const._DELETE}>"><img src="<{xoModuleIcons16 'delete.png'}>" alt="<{$smarty.const._DELETE}> accounts" ></a>
                     <{if $account.show_check|default:false}>
                     <a href='<{$wgevents_url}>/admin/account.php?op=check_account&amp;id=<{$account.id}>' title='<{$smarty.const._AM_WGEVENTS_ACCOUNT_TYPE_CHECK}>'>
                         <img src='<{$wgevents_icons_url_16}>/acc_check.png' alt='<{$smarty.const._AM_WGEVENTS_ACCOUNT_TYPE_CHECK}>'></a>

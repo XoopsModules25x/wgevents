@@ -21,7 +21,7 @@
                 <td class='center'><{$event.registrations}></td>
                 <td class="center ">
                     <{if $event.registrations|default:0 > 0}>
-                        <a href="registration.php?op=list&amp;evid=<{$event.id}>&amp;start=<{$start}>&amp;limit=<{$limit}>" title="<{$smarty.const._MA_WGEVENTS_DETAILS}>"><img src="<{xoModuleIcons16 view.png}>" alt="<{$smarty.const._MA_WGEVENTS_DETAILS}> events" ></a>
+                        <a href="registration.php?op=list&amp;evid=<{$event.id}>&amp;start=<{$start}>&amp;limit=<{$limit}>" title="<{$smarty.const._MA_WGEVENTS_DETAILS}>"><img src="<{xoModuleIcons16 'view.png'}>" alt="<{$smarty.const._MA_WGEVENTS_DETAILS}> events" ></a>
                     <{/if}>
                 </td>
             </tr>
@@ -72,9 +72,9 @@
                 <td class='center'><{$registration.datecreated_text}></td>
                 <td class='center'><{$registration.submitter_text}></td>
                 <td class="center width5 sorter-false filter-false">
-                    <a href="registration.php?op=edit&amp;id=<{$registration.id}>&amp;start=<{$start}>&amp;limit=<{$limit}>" title="<{$smarty.const._EDIT}>"><img src="<{xoModuleIcons16 edit.png}>" alt="<{$smarty.const._EDIT}> registrations" ></a>
-                    <a href="registration.php?op=clone&amp;id_source=<{$registration.id}>" title="<{$smarty.const._CLONE}>"><img src="<{xoModuleIcons16 editcopy.png}>" alt="<{$smarty.const._CLONE}> registrations" ></a>
-                    <a href="registration.php?op=delete&amp;id=<{$registration.id}>" title="<{$smarty.const._DELETE}>"><img src="<{xoModuleIcons16 delete.png}>" alt="<{$smarty.const._DELETE}> registrations" ></a>
+                    <a href="registration.php?op=edit&amp;id=<{$registration.id}>&amp;start=<{$start}>&amp;limit=<{$limit}>" title="<{$smarty.const._EDIT}>"><img src="<{xoModuleIcons16 'edit.png'}>" alt="<{$smarty.const._EDIT}> registrations" ></a>
+                    <a href="registration.php?op=clone&amp;id_source=<{$registration.id}>" title="<{$smarty.const._CLONE}>"><img src="<{xoModuleIcons16 'editcopy.png'}>" alt="<{$smarty.const._CLONE}> registrations" ></a>
+                    <a href="registration.php?op=delete&amp;id=<{$registration.id}>" title="<{$smarty.const._DELETE}>"><img src="<{xoModuleIcons16 'delete.png'}>" alt="<{$smarty.const._DELETE}> registrations" ></a>
                 </td>
             </tr>
             <{/foreach}>
