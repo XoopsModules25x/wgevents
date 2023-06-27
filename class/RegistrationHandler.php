@@ -134,6 +134,7 @@ class RegistrationHandler extends \XoopsPersistableObjectHandler
         if ($evId > 0) {
             $helper = Helper::getInstance();
             $eventHandler = $helper->getHandler('Event');
+            $taskHandler = $helper->getHandler('Task');
 
             $crRegistration = new \CriteriaCompo();
             $crRegistration->add(new \Criteria('evid', $evId));
@@ -141,16 +142,16 @@ class RegistrationHandler extends \XoopsPersistableObjectHandler
             if ($registrationsCount > 0) {
                 // declare types
                 $typeNotify = Constants::MAIL_REG_NOTIFY_OUT;
+                $typeConfirm = Constants::MAIL_REG_CONFIRM_OUT;
                 // get mail addresses from register_notify
                 $eventObj = $eventHandler->get($evId);
                 $registerNotify = (string)$eventObj->getVar('register_notify', 'e');
                 //get all registrations
                 $registrationsAll = $this->getAll($crRegistration);
                 foreach (\array_keys($registrationsAll) as $i) {
-                    $regParams['evid'] = $registrationsAll[$i]->getVar('evid');
-                    $regParams['firstname'] = $registrationsAll[$i]->getVar('firstname');
-                    $regParams['lastname'] = $registrationsAll[$i]->getVar('lastname');
-                    $regParams['email'] = $registrationsAll[$i]->getVar('email');
+                    $mailsHandler = new MailHandler();
+                    $mailParams = $mailsHandler->getMailParam($eventObj, $i);
+                    unset($mailsHandler);
                     if ($this->delete($registrationsAll[$i])) {
                         // Event delete notification
                         /*
@@ -163,24 +164,18 @@ class RegistrationHandler extends \XoopsPersistableObjectHandler
                         // send notifications/confirmation emails
                         if ('' !== $registerNotify) {
                             // send notifications to emails of register_notify
-                            $notifyEmails = \pregsplit("/\r\n|\n|\r/", $registerNotify);
-                            $mailsHandler = new MailHandler();
-                            $mailsHandler->setNotifyEmails($notifyEmails);
-                            $mailsHandler->setParams($regParams);
-                            $mailsHandler->setType($typeNotify);
-                            $mailsHandler->executeRegDelete();
-                            unset($mailsHandler);
+                            $notifyEmails = \preg_split("/\r\n|\n|\r/", $registerNotify);
+                            foreach ($notifyEmails as $recipient) {
+                                $taskHandler->createTask($typeNotify, $recipient, json_encode($mailParams));
+                            }
                         }
-                        $regEmail = $regParams['email'];
+                        $regEmail = $registrationsAll[$i]->getVar('email');
                         if ('' !== $regEmail) {
                             // send confirmation, if radio is checked
-                            $mailsHandler = new MailHandler();
-                            $mailsHandler->setNotifyEmails($regEmail);
-                            $mailsHandler->setParams($regParams);
-                            $mailsHandler->setType($typeNotify);
-                            $mailsHandler->executeRegDelete();
-                            unset($mailsHandler);
+                            $taskHandler->createTask($typeConfirm, $regEmail, json_encode($mailParams));
                         }
+                        // execute mail sending by task handler
+                        $taskHandler->processTasks();
                     } else {
                         $GLOBALS['xoopsTpl']->assign('error', $registrationsAll[$i]->getHtmlErrors());
                     }

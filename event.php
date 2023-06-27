@@ -824,7 +824,7 @@ wgeventsMetaKeywords($helper->getConfig('keywords') . ', ' . \implode(',', $keyw
 unset($keywords);
 
 // Description
-wgeventsMetaDescription(\_MA_WGEVENTS_EVENTS_DESC);
+//wgeventsMetaDescription(\_MA_WGEVENTS_EVENTS_DESC);
 $GLOBALS['xoopsTpl']->assign('xoops_mpageurl', \WGEVENTS_URL.'/event.php');
 $GLOBALS['xoopsTpl']->assign('wgevents_upload_url', \WGEVENTS_UPLOAD_URL);
 

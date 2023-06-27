@@ -514,7 +514,7 @@ switch ($op) {
                     }
                 }
             }
-            // excetue mail sending by task handler
+            // execute mail sending by task handler
             $taskHandler->processTasks();
             // redirect after insert
             \redirect_header('registration.php?op=' . $redir . '&amp;redir=' . $redir . '&amp;evid=' . $regEvid. '&amp;showinfo=' . $showinfo, 2, \_MA_WGEVENTS_FORM_OK);
