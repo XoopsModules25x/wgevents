@@ -99,8 +99,10 @@ interface Constants
     public const MAIL_REG_NOTIFY_IN       = 4;
     public const MAIL_REG_NOTIFY_OUT      = 5;
     public const MAIL_REG_NOTIFY_MODIFY   = 6;
-    public const MAIL_EVENT_NOTIFY_ALL      = 7;
+    public const MAIL_EVENT_NOTIFY_ALL    = 7;
     public const MAIL_EVENT_NOTIFY_MODIFY = 8;
+    public const MAIL_REG_NOTIFY_CANCEL   = 9;
+    public const MAIL_REG_CONFIRM_CANCEL  = 10;
 
     // constants for accounts
     public const ACCOUNT_TYPE_VAL_PHP_MAIL      = 1;

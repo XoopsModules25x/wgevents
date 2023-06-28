@@ -393,6 +393,7 @@ Participation without agreement to this conditions is not possible.
 \define('_MA_WGEVENTS_MAIL_REG_VERIF_SUCCESS', "The registration for the event '%s' was verified successfully");
 \define('_MA_WGEVENTS_MAIL_REG_VERIF_INFO', 'Verification of registration');
 \define('_MA_WGEVENTS_MAIL_REG_SINGLE', 'For showing your registration please click on following link: %s');
+\define('_MA_WGEVENTS_MAIL_EVENT_CANCEL_SUBJECT', 'Notification about event cancellation');
 // Admin link
 \define('_MA_WGEVENTS_ADMIN', 'Admin');
 // ---------------- End ----------------

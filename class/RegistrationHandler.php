@@ -141,8 +141,8 @@ class RegistrationHandler extends \XoopsPersistableObjectHandler
             $registrationsCount = $this->getCount($crRegistration);
             if ($registrationsCount > 0) {
                 // declare types
-                $typeNotify = Constants::MAIL_REG_NOTIFY_OUT;
-                $typeConfirm = Constants::MAIL_REG_CONFIRM_OUT;
+                $typeNotify = Constants::MAIL_REG_NOTIFY_CANCEL;
+                $typeConfirm = Constants::MAIL_REG_CONFIRM_CANCEL;
                 // get mail addresses from register_notify
                 $eventObj = $eventHandler->get($evId);
                 $registerNotify = (string)$eventObj->getVar('register_notify', 'e');

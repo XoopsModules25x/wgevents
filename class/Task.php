@@ -172,6 +172,12 @@ class Task extends \XoopsObject
             case Constants::MAIL_EVENT_NOTIFY_ALL:
                 $const_text = 'MAIL_EVENT_NOTIFY_ALL';
                 break;
+            case Constants::MAIL_REG_NOTIFY_CANCEL:
+                $const_text = 'MAIL_REG_NOTIFY_CANCEL';
+                break;
+            case Constants::MAIL_REG_CONFIRM_CANCEL:
+                $const_text = 'MAIL_REG_CONFIRM_CANCEL';
+                break;
             case 0:
             default:
                 $const_text = 'invalid constant text';

@@ -160,6 +160,14 @@ class MailHandler
                 $template = 'mail_event_notify_all.tpl';
                 $subject = $this->mailParams['mailSubject'];
                 break;
+            case Constants::MAIL_REG_NOTIFY_CANCEL:
+                $template = 'mail_reg_notify_cancel.tpl';
+                $subject = \_MA_WGEVENTS_MAIL_EVENT_CANCEL_SUBJECT;
+                break;
+            case Constants::MAIL_REG_CONFIRM_CANCEL:
+                $template = 'mail_reg_confirm_cancel.tpl';
+                $subject = \_MA_WGEVENTS_MAIL_EVENT_CANCEL_SUBJECT;
+                break;
         }
 
         // get settings of primary account

@@ -2,6 +2,7 @@
 1.0.7 RC1 [2023/06/27]
 ==============================================================
  - fixed bugs in event cancellation (goffy)
+ - new mail templates for event cancellation (goffy)
 
 ==============================================================
 1.0.6 Stable [2023/03/09]
