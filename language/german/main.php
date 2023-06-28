@@ -148,7 +148,7 @@ require_once __DIR__ . '/admin.php';
 \define('_MA_WGEVENTS_EVENT_DATE_ERROR1', "Das Datum 'Datum bis' war kleiner als 'Datum von' und wurde angepasst!");
 \define('_MA_WGEVENTS_EVENT_DATE_ERROR2', "Das Datum 'Anmeldung bis' war kleiner als 'Anmeldung von' und wurde angepasst!");
 \define('_MA_WGEVENTS_EVENT_URL_REGISTRATION', 'Url für externe Anmeldung');
-\define('_MA_WGEVENTS_EVENT_URL_REGISTRATION_PH', 'Bitte vollständigen Url inklusive http:// eingeben');
+\define('_MA_WGEVENTS_EVENT_URL_REGISTRATION_PH', 'Bitte vollständigen Url inklusive https:// eingeben');
 // Categories
 \define('_MA_WGEVENTS_CATEGORY_LOGO', 'Logo');
 \define('_MA_WGEVENTS_CATEGORY_NOEVENTS', 'Keine Veranstaltungen verfügbar');
@@ -393,6 +393,7 @@ Eine Teilnahme an der Veranstaltung ohne Zustimmung zu diesen Bestimmungen ist l
 \define('_MA_WGEVENTS_MAIL_REG_VERIF_SUCCESS', "Die Anmeldung zur Veranstaltung '%s' wurde erfolgreich bestätigt");
 \define('_MA_WGEVENTS_MAIL_REG_VERIF_INFO', 'Bestätigung der Anmeldung');
 \define('_MA_WGEVENTS_MAIL_REG_SINGLE', 'Zur Anzeige der Registrierung klicke bitte auf folgenden Link: %s');
+\define('_MA_WGEVENTS_MAIL_EVENT_CANCEL_SUBJECT', 'Benachrichtigung über Veranstaltungsabsage');
 // Admin link
 \define('_MA_WGEVENTS_ADMIN', 'Administration');
 // ---------------- End ----------------
