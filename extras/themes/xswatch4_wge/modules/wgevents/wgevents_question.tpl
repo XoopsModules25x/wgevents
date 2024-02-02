@@ -18,16 +18,16 @@
             </tr>
         </thead>
         <tbody>
-            <{foreach item=regdefaults from=$regdefaults}>
+            <{foreach item=regdefault from=$regdefaults}>
                 <tr>
                     <td>&nbsp;</td>
-                    <td><{$regdefaults.type_text|default:''}></td>
-                    <td><{$regdefaults.caption|default:''}></td>
-                    <td><{$regdefaults.desc_text|default:''}></td>
-                    <td><{$regdefaults.value_list|default:''}></td>
-                    <td><{$regdefaults.placeholder|default:''}></td>
-                    <td><{$regdefaults.required_text|default:''}></td>
-                    <td><{$regdefaults.print_text|default:''}></td>
+                    <td><{$regdefault.type_text|default:''}></td>
+                    <td><{$regdefault.caption|default:''}></td>
+                    <td><{$regdefault.desc_text|default:''}></td>
+                    <td><{$regdefault.value_list|default:''}></td>
+                    <td><{$regdefault.placeholder|default:''}></td>
+                    <td><{$regdefault.required_text|default:''}></td>
+                    <td><{$regdefault.print_text|default:''}></td>
                     <td style="min-width:200px;">&nbsp;</td>
                 </tr>
             <{/foreach}>
