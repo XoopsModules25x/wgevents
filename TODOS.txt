@@ -1,3 +1,9 @@
+Events mit Status eingesendet werden an Gast angezeigt
+Mailadressse Absender auf Gültigkeit prüfen
+
+
+
+
 
 same time for each day / different times for different days
 
