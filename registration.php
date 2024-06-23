@@ -64,6 +64,8 @@ if (Request::hasVar('exec_contactall_test')) {
 
 // Define Stylesheet
 $GLOBALS['xoTheme']->addStylesheet($style, null);
+// JS
+$GLOBALS['xoTheme']->addScript(\WGEVENTS_URL . '/assets/js/forms.js');
 // Paths
 $GLOBALS['xoopsTpl']->assign('xoops_icons32_url', \XOOPS_ICONS32_URL);
 $GLOBALS['xoopsTpl']->assign('wgevents_url', \WGEVENTS_URL);

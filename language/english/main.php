@@ -437,3 +437,5 @@ Participation without agreement to this conditions is not possible.
 \define('_MA_WGEVENTS_IMG_MAXSIZE', 'Maximum image size');
 \define('_MA_WGEVENTS_IMG_MIMETYPES', 'Allowed mimetypes');
 \define('_MA_WGEVENTS_SIZE_MB', 'MB');
+//1.0.7
+\define('_MA_WGEVENTS_INVALID_EMAIL', 'Invalid email address in: %s');
