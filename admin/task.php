@@ -180,5 +180,12 @@ switch ($op) {
             $GLOBALS['xoopsTpl']->assign('form', $form->render());
         }
         break;
+    case 'setprocessingtopending':
+        // if there are no pending tasks, but there are processing tasks (which should not be) then set processing tasks to pending
+        $crTaskProcessing = new \CriteriaCompo();
+        $crTaskProcessing->add(new \Criteria('status', Constants::STATUS_PROCESSING));
+        $taskHandler->updateAll('status', Constants::STATUS_PENDING, $crTaskProcessing,true);
+        echo "setprocessingtopending done";
+        break;
 }
 require __DIR__ . '/footer.php';

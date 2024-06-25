@@ -105,11 +105,11 @@ interface Constants
     public const MAIL_REG_CONFIRM_CANCEL  = 10;
 
     // constants for accounts
-    public const ACCOUNT_TYPE_VAL_PHP_MAIL      = 1;
-    public const ACCOUNT_TYPE_VAL_PHP_SENDMAIL     = 2;
-    public const ACCOUNT_TYPE_VAL_POP3  = 3;
-    public const ACCOUNT_TYPE_VAL_SMTP       = 4;
-    public const ACCOUNT_TYPE_VAL_GMAIL      = 5;
+    public const ACCOUNT_TYPE_VAL_PHP_MAIL     = 1;
+    public const ACCOUNT_TYPE_VAL_PHP_SENDMAIL = 2;
+    public const ACCOUNT_TYPE_VAL_POP3         = 3;
+    public const ACCOUNT_TYPE_VAL_SMTP         = 4;
+    public const ACCOUNT_TYPE_VAL_GMAIL        = 5;
 
     // Constants for financial
     public const TEXTBLOCK_CLASS_PRIVATE = 0;
