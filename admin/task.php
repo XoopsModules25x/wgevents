@@ -48,7 +48,31 @@ switch ($op) {
         $adminObject->addItemButton(\_AM_WGEVENTS_DELETE_TASKS_PENDING, 'task.php?op=delete_all&amp;deltype=pending');
         $adminObject->addItemButton(\_AM_WGEVENTS_DELETE_TASKS_DONE, 'task.php?op=delete_all&amp;deltype=done');
         $GLOBALS['xoopsTpl']->assign('buttons', $adminObject->displayButton('left'));
+        // get statistics
+        $statisticsText = '';
+        // get waiting
+        $crTaskStats = new \CriteriaCompo();
+        $crTaskStats->add(new \Criteria('status', Constants::STATUS_PENDING));
+        $tasksStatCount = $taskHandler->getCount($crTaskStats);
+        $statisticsText .= \sprintf(\_AM_WGEVENTS_THEREARE_TASKS_PENDING, $tasksStatCount) . '<br>';
+        unset($crTaskStats);
+        // get processing
+        $crTaskStats = new \CriteriaCompo();
+        $crTaskStats->add(new \Criteria('status', Constants::STATUS_PROCESSING));
+        $tasksStatCount = $taskHandler->getCount($crTaskStats);
+        $statisticsText .= \sprintf(\_AM_WGEVENTS_THEREARE_TASKS_PROCESSING, $tasksStatCount) . '<br>';
+        unset($crTaskStats);
+        // get done
+        $crTaskStats = new \CriteriaCompo();
+        $crTaskStats->add(new \Criteria('status', Constants::STATUS_DONE));
+        $tasksStatCount = $taskHandler->getCount($crTaskStats);
+        $statisticsText .= \sprintf(\_AM_WGEVENTS_THEREARE_TASKS_DONE, $tasksStatCount) . '<br><br>';
+        unset($crTaskStats);
+
         $tasksCount = $taskHandler->getCountTasks();
+        $statisticsText .= \sprintf(\_AM_WGEVENTS_THEREARE_TASKS, $tasksCount) . '<br><br>';
+        $GLOBALS['xoopsTpl']->assign('statisticsText', $statisticsText);
+
         $tasksAll = $taskHandler->getAllTasks();
         $GLOBALS['xoopsTpl']->assign('tasks_count', $tasksCount);
         $GLOBALS['xoopsTpl']->assign('wgevents_url', \WGEVENTS_URL);

@@ -1,6 +1,6 @@
 <!-- Header -->
 <{include file='db:wgevents_admin_header.tpl' }>
-
+<div><{$statisticsText|default:''}></div>
 <{if $tasks_list|default:''}>
     <{include file='db:tablesorter_pagertop.tpl' }>
     <table id="sortTable" class="tablesorter-<{$tablesorter_theme}>">
