@@ -351,3 +351,7 @@ Please define, until which date all data should be anonymized.');
 \define('_AM_WGEVENTS_IMPORT_APCAL', 'Import APCal');
 \define('_AM_WGEVENTS_IMPORT_EXTCAL', 'Import ExtCal');
 \define('_AM_WGEVENTS_IMPORT_DELETE_ORIGIN', 'Do you want to delete the events from source table after successful import');
+//1.0.7
+\define('_AM_WGEVENTS_THEREARE_TASKS_PENDING', "There are <span class='bold'>%s</span> pending tasks in the Database");
+\define('_AM_WGEVENTS_THEREARE_TASKS_PROCESSING', "There are <span class='bold'>%s</span> processing tasks in the Database");
+\define('_AM_WGEVENTS_THEREARE_TASKS_DONE', "There are <span class='bold'>%s</span> done tasks in the Database");
