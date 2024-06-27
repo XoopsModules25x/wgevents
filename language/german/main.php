@@ -57,7 +57,7 @@ require_once __DIR__ . '/admin.php';
 \define('_MA_WGEVENTS_STATUS_LOCKED', 'Gesperrt');
 \define('_MA_WGEVENTS_STATUS_CANCELED', 'Abgesagt');
 \define('_MA_WGEVENTS_STATUS_PENDING', 'Wartend');
-\define('_MA_WGEVENTS_STATUS_PROCESSING', 'Processing');
+\define('_MA_WGEVENTS_STATUS_PROCESSING', 'In Bearbeitung');
 \define('_MA_WGEVENTS_STATUS_DONE', 'Erledigt');
 // ---------------- Contents ----------------
 // Event

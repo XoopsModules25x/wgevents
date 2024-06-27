@@ -351,7 +351,3 @@ Bitte definiere das Datum, bis zu dem alle Daten anonymisiert werden sollen.');
 \define('_AM_WGEVENTS_IMPORT_APCAL', 'Importiere APCal');
 \define('_AM_WGEVENTS_IMPORT_EXTCAL', 'Importiere ExtCal');
 \define('_AM_WGEVENTS_IMPORT_DELETE_ORIGIN', 'Möchtest Du die Einträge nach einem erfolgreichen Import aus der Quelltabelle löschen');
-//1.0.7
-\define('_AM_WGEVENTS_THEREARE_TASKS_PENDING', "Es sind <span class='bold'>%s</span> wartende Aufgaben vorhanden");
-\define('_AM_WGEVENTS_THEREARE_TASKS_PROCESSING', "Es sind <span class='bold'>%s</span> Aufgaben zur Verarbeitung vorhanden");
-\define('_AM_WGEVENTS_THEREARE_TASKS_DONE', "Es sind <span class='bold'>%s</span> erledigte Aufgaben vorhanden");

@@ -47,32 +47,10 @@ switch ($op) {
         $adminObject->addItemButton(\_AM_WGEVENTS_ADD_TASK, 'task.php?op=new');
         $adminObject->addItemButton(\_AM_WGEVENTS_DELETE_TASKS_PENDING, 'task.php?op=delete_all&amp;deltype=pending');
         $adminObject->addItemButton(\_AM_WGEVENTS_DELETE_TASKS_DONE, 'task.php?op=delete_all&amp;deltype=done');
+        $adminObject->addItemButton(\_AM_WGEVENTS_STATISTICS, 'task.php?op=statistics');
         $GLOBALS['xoopsTpl']->assign('buttons', $adminObject->displayButton('left'));
-        // get statistics
-        $statisticsText = '';
-        // get waiting
-        $crTaskStats = new \CriteriaCompo();
-        $crTaskStats->add(new \Criteria('status', Constants::STATUS_PENDING));
-        $tasksStatCount = $taskHandler->getCount($crTaskStats);
-        $statisticsText .= \sprintf(\_AM_WGEVENTS_THEREARE_TASKS_PENDING, $tasksStatCount) . '<br>';
-        unset($crTaskStats);
-        // get processing
-        $crTaskStats = new \CriteriaCompo();
-        $crTaskStats->add(new \Criteria('status', Constants::STATUS_PROCESSING));
-        $tasksStatCount = $taskHandler->getCount($crTaskStats);
-        $statisticsText .= \sprintf(\_AM_WGEVENTS_THEREARE_TASKS_PROCESSING, $tasksStatCount) . '<br>';
-        unset($crTaskStats);
-        // get done
-        $crTaskStats = new \CriteriaCompo();
-        $crTaskStats->add(new \Criteria('status', Constants::STATUS_DONE));
-        $tasksStatCount = $taskHandler->getCount($crTaskStats);
-        $statisticsText .= \sprintf(\_AM_WGEVENTS_THEREARE_TASKS_DONE, $tasksStatCount) . '<br><br>';
-        unset($crTaskStats);
 
         $tasksCount = $taskHandler->getCountTasks();
-        $statisticsText .= \sprintf(\_AM_WGEVENTS_THEREARE_TASKS, $tasksCount) . '<br><br>';
-        $GLOBALS['xoopsTpl']->assign('statisticsText', $statisticsText);
-
         $tasksAll = $taskHandler->getAllTasks();
         $GLOBALS['xoopsTpl']->assign('tasks_count', $tasksCount);
         $GLOBALS['xoopsTpl']->assign('wgevents_url', \WGEVENTS_URL);
@@ -89,6 +67,47 @@ switch ($op) {
         } else {
             $GLOBALS['xoopsTpl']->assign('error', \_AM_WGEVENTS_THEREARENT_TASKS);
         }
+        break;
+    case 'statistics':
+        $templateMain = 'wgevents_admin_task.tpl';
+        $GLOBALS['xoopsTpl']->assign('navigation', $adminObject->displayNavigation('task.php'));
+        $adminObject->addItemButton(\_AM_WGEVENTS_LIST_TASKS, 'task.php', 'list');
+        $GLOBALS['xoopsTpl']->assign('buttons', $adminObject->displayButton('left'));
+        // get statistics
+        $statistics = [];
+        $taskObj = $taskHandler->create();
+        // loop all mail types
+        for ($i = 1; $i <= 10; $i++) {
+            $statistics[$i]['mailtype'] = $taskObj->getMailNotificationText($i);
+            // loop all status types
+            for ($j = 0; $j <= 10; $j++) {
+                if (Constants::STATUS_NONE === $j || Constants::STATUS_DONE === $j || Constants::STATUS_PROCESSING === $j || Constants::STATUS_PENDING === $j) {
+                    $crTaskStats = new \CriteriaCompo();
+                    $crTaskStats->add(new \Criteria('status', $j));
+                    $crTaskStats->add(new \Criteria('type', $i));
+                    $tasksStatCount = $taskHandler->getCount($crTaskStats);
+                    switch ($j) {
+                        case Constants::STATUS_PENDING:
+                            $statistics[$i]['pending'] = $tasksStatCount;
+                            break;
+                        case Constants::STATUS_PROCESSING:
+                            $statistics[$i]['processing'] = $tasksStatCount;
+                            break;
+                        case Constants::STATUS_DONE:
+                            $statistics[$i]['done'] = $tasksStatCount;
+                            break;
+                        case Constants::STATUS_NONE:
+                            $statistics[$i]['none'] = $tasksStatCount;
+                            break;
+                        default:
+                            break;
+                    }
+                    unset($crTaskStats);
+                }
+            }
+        }
+        unset($taskObj);
+        $GLOBALS['xoopsTpl']->assign('statistics', $statistics);
         break;
     case 'new':
         $templateMain = 'wgevents_admin_task.tpl';

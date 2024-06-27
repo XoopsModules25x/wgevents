@@ -181,7 +181,7 @@ class TaskHandler extends \XoopsPersistableObjectHandler
         $crTaskPending = new \CriteriaCompo();
         $crTaskPending->add(new \Criteria('status', Constants::STATUS_PENDING));
         $tasksCountPending = $this->getCount($crTaskPending);
-        $crTaskPending->setSort('type');
+        $crTaskPending->setSort('type ASC, id');
         $crTaskPending->setOrder('ASC');
 
         // if all works properly there shouldn't be a task type 'processing' left
