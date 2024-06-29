@@ -23,8 +23,6 @@
         <{/foreach}>
         </tbody>
     </table>
-<{else}>
-    <{$smarty.const._AM_WGEVENTS_THEREARENT_TASKS}>
 <{/if}>
 <{if $tasks_list|default:''}>
     <{include file='db:tablesorter_pagertop.tpl' }>

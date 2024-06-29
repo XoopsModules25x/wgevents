@@ -439,7 +439,7 @@ switch ($op) {
             $code = base64_encode(implode('||', $codeArr));
             if ($regId > 0) {
                 // find changes in table registrations
-                $infotextReg = $registrationHandler->getRegistrationsCompare($registrationObjOld, $registrationObj);
+                $infotextReg = $registrationHandler->getRegistrationsCompare($registrationObjOld, $regId);
                 if ('' !== $infotextReg) {
                     // create history
                     if ($registrationObjOld->getVar('email') != $registrationObj->getVar('email')) {
