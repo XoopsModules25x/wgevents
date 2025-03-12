@@ -40,6 +40,7 @@ $GLOBALS['xoopsTpl']->assign('mod_url', XOOPS_URL . '/modules/' . $moduleDirName
 switch ($op) {
     case 'list':
     default:
+        $GLOBALS['xoTheme']->addScript('browse.php?Frameworks/jquery/jquery.js');
         $GLOBALS['xoTheme']->addScript(\WGEVENTS_URL . '/assets/js/jquery-ui.min.js');
         $GLOBALS['xoTheme']->addScript(\WGEVENTS_URL . '/assets/js/sortables.js');
         // Define Stylesheet
