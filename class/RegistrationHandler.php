@@ -259,11 +259,12 @@ class RegistrationHandler extends \XoopsPersistableObjectHandler
     /**
      * compare two versions of registration
      * @param  $versionOld
-     * @param  $versionNew
+     * @param  $regIdNew
      * @return string
      */
-    public function getRegistrationsCompare($versionOld, $versionNew)
+    public function getRegistrationsCompare($versionOld, $regIdNew)
     {
+        $versionNew = $this->get($regIdNew);
         $infotext = '';
         $fields = [];
         $fields[] = ['name' => 'firstname', 'caption' => \_MA_WGEVENTS_REGISTRATION_FIRSTNAME, 'type' => 'text'];

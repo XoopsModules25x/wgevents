@@ -232,7 +232,7 @@ if ('none' !== $indexDisplayEvents) {
 wgeventsMetaKeywords($helper->getConfig('keywords') . ', ' . \implode(',', $keywords));
 unset($keywords);
 // Description
-wgeventsMetaDescription(\_MA_WGEVENTS_INDEX_DESC);
+//wgeventsMetaDescription(\_MA_WGEVENTS_INDEX_DESC);
 $GLOBALS['xoopsTpl']->assign('xoops_mpageurl', \WGEVENTS_URL.'/index.php');
 $GLOBALS['xoopsTpl']->assign('xoops_icons32_url', \XOOPS_ICONS32_URL);
 $GLOBALS['xoopsTpl']->assign('wgevents_upload_url', \WGEVENTS_UPLOAD_URL);

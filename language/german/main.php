@@ -57,7 +57,7 @@ require_once __DIR__ . '/admin.php';
 \define('_MA_WGEVENTS_STATUS_LOCKED', 'Gesperrt');
 \define('_MA_WGEVENTS_STATUS_CANCELED', 'Abgesagt');
 \define('_MA_WGEVENTS_STATUS_PENDING', 'Wartend');
-\define('_MA_WGEVENTS_STATUS_PROCESSING', 'Processing');
+\define('_MA_WGEVENTS_STATUS_PROCESSING', 'In Bearbeitung');
 \define('_MA_WGEVENTS_STATUS_DONE', 'Erledigt');
 // ---------------- Contents ----------------
 // Event
@@ -437,3 +437,5 @@ Eine Teilnahme an der Veranstaltung ohne Zustimmung zu diesen Bestimmungen ist l
 \define('_MA_WGEVENTS_IMG_MAXSIZE', 'Maximale Bildgröße');
 \define('_MA_WGEVENTS_IMG_MIMETYPES', 'Erlaubte Mimetypes');
 \define('_MA_WGEVENTS_SIZE_MB', 'MB');
+//1.0.7
+\define('_MA_WGEVENTS_INVALID_EMAIL', 'Ungültige E-Mail-Adresse in: %s');

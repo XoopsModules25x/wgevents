@@ -1,6 +1,29 @@
 <!-- Header -->
 <{include file='db:wgevents_admin_header.tpl' }>
-
+<{if $statistics|default:''}>
+    <table id="sortTable" class="tablesorter-<{$tablesorter_theme}>">
+        <thead>
+            <tr class='head'>
+                <th>&nbsp;</th>
+                <th><{$smarty.const._MA_WGEVENTS_STATUS_PENDING}></th>
+                <th><{$smarty.const._MA_WGEVENTS_STATUS_PROCESSING}></th>
+                <th><{$smarty.const._MA_WGEVENTS_STATUS_DONE}></th>
+                <th><{$smarty.const._MA_WGEVENTS_STATUS_NONE}></th>
+            </tr>
+        </thead>
+        <tbody>
+        <{foreach item=stat from=$statistics}>
+            <tr class='<{cycle values='odd, even'}>'>
+                <td><{$stat.mailtype}></td>
+                <td><{$stat.pending}></td>
+                <td><{$stat.processing}></td>
+                <td><{$stat.done}></td>
+                <td><{$stat.none}></td>
+            </tr>
+        <{/foreach}>
+        </tbody>
+    </table>
+<{/if}>
 <{if $tasks_list|default:''}>
     <{include file='db:tablesorter_pagertop.tpl' }>
     <table id="sortTable" class="tablesorter-<{$tablesorter_theme}>">

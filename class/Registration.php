@@ -164,6 +164,7 @@ class Registration extends \XoopsObject
         if ($eventRegisterForceverif) {
             $regEmail->setDescription(_MA_WGEVENTS_EVENT_REGISTER_FORCEVERIF_INFO);
         }
+        $regEmail->setExtra("onfocusout='emailValidation(\"email\", \"" . \sprintf(\_MA_WGEVENTS_INVALID_EMAIL, \_MA_WGEVENTS_REGISTRATION_EMAIL) . "\")'");
         $regEmailTray->addElement($regEmail, $eventRegisterForceverif);
         // Form select regEmailSend
         $regEmailSend = $this->isNew() ? 1 : $this->getVar('email_send');

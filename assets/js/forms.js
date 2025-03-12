@@ -143,3 +143,24 @@ function fillInQuestions() {
         xoopsGetElementById('placeholder').setAttribute("disabled", "disabled");
     }
 }
+
+function emailValidation(textboxName, errorInfo)
+{
+    textEmail = document.getElementById(textboxName).value;
+    if (textEmail.length > 0) {
+        apos = textEmail.indexOf("@");
+        dotpos = textEmail.lastIndexOf(".");
+        lastpos = textEmail.length - 1;
+        if (apos < 1 || dotpos - apos < 2 || lastpos - dotpos > 3 || lastpos - dotpos < 2) {
+            window.alert(errorInfo);
+            window.setTimeout(function () {
+                document.getElementById(textboxName).focus();
+            }, 0);
+            return false;
+        } else {
+            return true;
+        }
+    } else {
+        return true;
+    }
+}

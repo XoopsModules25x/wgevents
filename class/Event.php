@@ -252,7 +252,9 @@ class Event extends \XoopsObject
         // Form Text evContact
         $form->addElement(new \XoopsFormTextArea(\_MA_WGEVENTS_EVENT_CONTACT, 'contact', $this->getVar('contact', 'e'), 4, 30));
         // Form Text evEmail
-        $form->addElement(new \XoopsFormText(\_MA_WGEVENTS_EVENT_EMAIL, 'email', 50, 255, $this->getVar('email')));
+        $evEmail = new \XoopsFormText(\_MA_WGEVENTS_EVENT_EMAIL, 'email', 50, 255, $this->getVar('email'));
+        $evEmail->setExtra("onfocusout='emailValidation(\"email\", \"" . \sprintf(\_MA_WGEVENTS_INVALID_EMAIL, \_MA_WGEVENTS_EVENT_EMAIL) . "\")'");
+        $form->addElement($evEmail);
         // Form Text evUrl
         $form->addElement(new \XoopsFormText(\_MA_WGEVENTS_EVENT_URL, 'url', 50, 255, $this->getVar('url')));
         // Location
@@ -356,9 +358,11 @@ class Event extends \XoopsObject
             $captionRegisterNotify = \_MA_WGEVENTS_EVENT_REGISTER_NOTIFY . \sprintf($imgInfo, \_MA_WGEVENTS_EVENT_REGISTER_NOTIFY_DESC);
             $evRegisterOptsTray->addElement(new \XoopsFormTextArea($captionRegisterNotify, 'register_notify', $evRegisterNotify, 4, 30));
             // Form Text evRegisterSendermail
-            $evRegisterSendermail = $this->isNew() ? $userEmail : $this->getVar('register_sendermail');
+            $evRegisterSendermailText = $this->isNew() ? $userEmail : $this->getVar('register_sendermail');
             $captionRegisterSendermail = \_MA_WGEVENTS_EVENT_REGISTER_SENDERMAIL . \sprintf($imgInfo, \_MA_WGEVENTS_EVENT_REGISTER_SENDERMAIL_DESC);
-            $evRegisterOptsTray->addElement(new \XoopsFormText($captionRegisterSendermail, 'register_sendermail', 35, 255, $evRegisterSendermail));
+            $evRegisterSendermail = new \XoopsFormText($captionRegisterSendermail, 'register_sendermail', 35, 255, $evRegisterSendermailText);
+            $evRegisterSendermail->setExtra("onfocusout='emailValidation(\"register_sendermail\", \"" . \sprintf(\_MA_WGEVENTS_INVALID_EMAIL, \_MA_WGEVENTS_EVENT_REGISTER_SENDERMAIL) . "\")'");
+            $evRegisterOptsTray->addElement($evRegisterSendermail);
             // Form Text evRegisterSendername
             $evRegisterSendername = $this->isNew() ? $userName : $this->getVar('register_sendername');
             $captionRegisterSendername = \_MA_WGEVENTS_EVENT_REGISTER_SENDERNAME . \sprintf($imgInfo, \_MA_WGEVENTS_EVENT_REGISTER_SENDERNAME_DESC);

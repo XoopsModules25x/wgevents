@@ -181,6 +181,8 @@ class TaskHandler extends \XoopsPersistableObjectHandler
         $crTaskPending = new \CriteriaCompo();
         $crTaskPending->add(new \Criteria('status', Constants::STATUS_PENDING));
         $tasksCountPending = $this->getCount($crTaskPending);
+        $crTaskPending->setSort('type ASC, id');
+        $crTaskPending->setOrder('ASC');
 
         // if all works properly there shouldn't be a task type 'processing' left
         $crTaskProcessing = new \CriteriaCompo();
@@ -248,6 +250,13 @@ class TaskHandler extends \XoopsPersistableObjectHandler
                     } else {
                         $resProcess .=  ' - error insert taskProcessObj';
                     }
+                }
+                unset($taskProcessObj);
+                $taskProcessObj = $this->get($i);
+                //check whether process is still pending, what should not be
+                if (Constants::STATUS_PROCESSING === (int)$taskProcessObj->getVar('status')) {
+                    $taskProcessObj->setVar('status', Constants::STATUS_PENDING);
+                    $this->insert($taskProcessObj);
                 }
                 // check once more number of done
                 $tasksCountDone = $this->getCount($crTaskDone);

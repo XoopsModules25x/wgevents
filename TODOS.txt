@@ -1,3 +1,11 @@
+Wartung Anonymisierung: leeren "Antworten Historie" durchführen
+
+Events mit Status eingesendet werden an Gast angezeigt
+Adminbereich: Liste der Anmeldungen wird immer auf 50 limitiert
+Als Veranstalter bei Änderungen der Anmeldung entscheiden, ob Teilnehmer per Mail verständigt wird bzw. Ändern der Anmeldung im Adminbereich funktioniert nicht
+
+
+
 
 same time for each day / different times for different days
 

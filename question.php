@@ -54,6 +54,7 @@ switch ($op) {
     case 'show':
     case 'list':
     default:
+        $GLOBALS['xoTheme']->addScript('browse.php?Frameworks/jquery/jquery.js');
         $GLOBALS['xoTheme']->addScript(\WGEVENTS_URL . '/assets/js/jquery-ui.min.js');
         $GLOBALS['xoTheme']->addScript(\WGEVENTS_URL . '/assets/js/sortables.js');
 

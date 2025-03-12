@@ -141,11 +141,11 @@ class Task extends \XoopsObject
     }
 
     /**
-     * @private function to get text constants mail notification
+     * @public function to get text constants mail notification
      * @param $const
      * @return string
      */
-    private function getMailNotificationText($const)
+    public function getMailNotificationText($const)
     {
         switch ($const) {
             case Constants::MAIL_REG_CONFIRM_IN:

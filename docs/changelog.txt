@@ -4,6 +4,9 @@
  - fixed bugs in event cancellation (goffy)
  - new mail templates for event cancellation (goffy)
  - updates for XOOPS 2.5.11 Stable (goffy)
+ - added email validation (goffy)
+ - added check for pending tasks (goffy)
+ - added statistics for tasks (goffy)
 
 ==============================================================
 1.0.6 Stable [2023/03/09]

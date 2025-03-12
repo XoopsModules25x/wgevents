@@ -64,6 +64,8 @@ if (Request::hasVar('exec_contactall_test')) {
 
 // Define Stylesheet
 $GLOBALS['xoTheme']->addStylesheet($style, null);
+// JS
+$GLOBALS['xoTheme']->addScript(\WGEVENTS_URL . '/assets/js/forms.js');
 // Paths
 $GLOBALS['xoopsTpl']->assign('xoops_icons32_url', \XOOPS_ICONS32_URL);
 $GLOBALS['xoopsTpl']->assign('wgevents_url', \WGEVENTS_URL);
@@ -437,7 +439,7 @@ switch ($op) {
             $code = base64_encode(implode('||', $codeArr));
             if ($regId > 0) {
                 // find changes in table registrations
-                $infotextReg = $registrationHandler->getRegistrationsCompare($registrationObjOld, $registrationObj);
+                $infotextReg = $registrationHandler->getRegistrationsCompare($registrationObjOld, $regId);
                 if ('' !== $infotextReg) {
                     // create history
                     if ($registrationObjOld->getVar('email') != $registrationObj->getVar('email')) {
