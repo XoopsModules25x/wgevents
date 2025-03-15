@@ -26,7 +26,7 @@ If you like the wgEvents module and thanks to the long process for giving the op
 
 ## Info
 
-**wgEvents is ready for PHP 8.0**
+**wgEvents is ready for PHP 8.4**
 
 ## Features
 - Creation of events
