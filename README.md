@@ -2,12 +2,6 @@
 
 ![alt XOOPS CMS](https://xoops.org/images/logoXoopsPhp8.png)
 
-# wgEvents
-A XOOPS module for handling events, including online registrations.
-
-## Support
-
-If you like the wgEvents module and thanks to the long process for giving the opportunity to the new module to be created in a moment, consider making a donation to <a href="https://xoops.org/modules/xdonations/" target="_blank" title="Donate to Xoops">Xoops.org</a>
 
 ## wgEvents version 1.x
 
@@ -17,6 +11,16 @@ If you like the wgEvents module and thanks to the long process for giving the op
 [![Quality Score](https://img.shields.io/scrutinizer/g/ggoffy/wgblocks.svg?style=flat)](https://scrutinizer-ci.com/g/ggoffy/wgevents)
 [![Gem](https://img.shields.io/gem/dt/rails.svg)](XoopsModules25x/wgevents)
 [![Latest Version](https://img.shields.io/github/release/XoopsModules25x/wgevents.svg?style=flat)](https://github.com/XoopsModules25x/wgevents/releases/latest)
+
+# wgEvents
+
+![module image](./assets/images/wgevents.jpg)
+
+A XOOPS module for handling events, including online registrations.
+
+## Support
+
+If you like the wgEvents module and thanks to the long process for giving the opportunity to the new module to be created in a moment, consider making a donation to <a href="https://xoops.org/modules/xdonations/" target="_blank" title="Donate to Xoops">Xoops.org</a>
 
 ## Require:
 - XOOPS 2.5.11;
