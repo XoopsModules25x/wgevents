@@ -1,1 +1,18 @@
-{}
+-
+    id: '1'
+    type: '4'
+    name: smtp-account
+    yourname: my_name
+    yourmail: myemail@domain.com
+    username: my_smtp_username
+    password: my_smtp_pwd
+    server_in: moon.ssl.domain.eu
+    port_in: '993'
+    securetype_in: ssl
+    server_out: moon.ssl.domain.eu
+    port_out: '587'
+    securetype_out: tls
+    limit_hour: '0'
+    primary: '1'
+    datecreated: '1742041516'
+    submitter: '1'
