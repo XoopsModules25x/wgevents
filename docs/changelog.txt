@@ -1,4 +1,9 @@
 ==============================================================
+1.0.7 [2025/06/07] Stable: XOOPS 2.5.11 Stable, PHP 7.4.25, PHP 8.0.1
+==============================================================
+- last stable version for PHP 7 (goffy)
+
+==============================================================
 1.0.7 RC1 [2023/06/27]
 ==============================================================
  - fixed bugs in event cancellation (goffy)
@@ -7,6 +12,8 @@
  - added email validation (goffy)
  - added check for pending tasks (goffy)
  - added statistics for tasks (goffy)
+ - fixed bugs in event clone (goffy)
+ - fixed bugs in modulemenu (goffy)
 
 ==============================================================
 1.0.6 Stable [2023/03/09]

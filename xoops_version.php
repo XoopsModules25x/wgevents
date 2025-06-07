@@ -33,7 +33,7 @@ $moduleDirNameUpper = \mb_strtoupper($moduleDirName);
 $modversion = [
     'name'                => \_MI_WGEVENTS_NAME,
     'version'             => '1.0.7',
-    'module_status'       => 'RC1',
+    'module_status'       => 'Stable',
     'description'         => \_MI_WGEVENTS_DESC,
     'author'              => 'Goffy - Wedega',
     'author_mail'         => 'webmaster@wedega.com',
@@ -45,7 +45,7 @@ $modversion = [
     'help'                => 'page=help',
     'release_info'        => 'release_info',
     'release_file'        => \XOOPS_URL . '/modules/wgevents/docs/release_info file',
-    'release_date'        => '2023/04/13', // format: yyyy/mm/dd
+    'release_date'        => '2025/06/07', // format: yyyy/mm/dd
     'manual'              => 'link to manual file',
     'manual_file'         => \XOOPS_URL . '/modules/wgevents/docs/install.txt',
     'min_php'             => '7.4',
@@ -65,7 +65,7 @@ $modversion = [
     'support_name'        => 'Support Forum',
     'module_website_url'  => 'www.xoops.org',
     'module_website_name' => 'XOOPS Project',
-    'release'             => '13.04.2023',
+    'release'             => '07.06.2025',
     'system_menu'         => 1,
     'hasAdmin'            => 1,
     'hasMain'             => 1,
@@ -166,54 +166,12 @@ $permissionsHandler = $helper->getHandler('Permission');
 // ------------------- Menu ------------------- //
 $currdirname  = isset($GLOBALS['xoopsModule']) && \is_object($GLOBALS['xoopsModule']) ? $GLOBALS['xoopsModule']->getVar('dirname') : 'system';
 if ($currdirname == $moduleDirName) {
-    $modversion['sub'][] = [
-        'name' => \_MI_WGEVENTS_SMNAME1,
-        'url'  => 'index.php',
-    ];
-    // Sub events
-    $modversion['sub'][] = [
-        'name' => \_MI_WGEVENTS_SMNAME2,
-        'url'  => 'event.php',
-    ];
-    if ($permissionsHandler->getPermEventsSubmit()) {
-        // Sub Submit
-        $modversion['sub'][] = [
-            'name' => \_MI_WGEVENTS_SMNAME10,
-            'url' => 'event.php?op=list&amp;filter=me',
-        ];
+    $submenu = new \XoopsModules\Wgevents\Modulemenu;
+    $menuItems = $submenu->getMenuitemsDefault();
+    foreach ($menuItems as $key => $menuItem) {
+        $modversion['sub'][$key]['name'] = $menuItem['name'];
+        $modversion['sub'][$key]['url'] = $menuItem['url'];
     }
-    if ($permissionsHandler->getPermEventsSubmit()) {
-        // Sub Submit
-        $modversion['sub'][] = [
-            'name' => \_MI_WGEVENTS_SMNAME3,
-            'url' => 'event.php?op=new',
-        ];
-    }
-    if ($permissionsHandler->getPermEventsSubmit()) {
-        // Sub Submit
-        $modversion['sub'][] = [
-            'name' => \_MI_WGEVENTS_SMNAME8,
-            'url' => 'textblock.php?op=list',
-        ];
-    }
-    if ($permissionsHandler->getPermRegistrationsSubmit()) {
-        $modversion['sub'][] = [
-            'name' => \_MI_WGEVENTS_SMNAME5,
-            'url'  => 'registration.php?op=listmy',
-        ];
-    }
-    if ($helper->getConfig('cal_page')) {
-        // calendar
-        $modversion['sub'][] = [
-            'name' => \_MI_WGEVENTS_SMNAME6,
-            'url' => 'calendar.php',
-        ];
-    }
-    // export
-    $modversion['sub'][] = [
-        'name' => \_MI_WGEVENTS_SMNAME11,
-        'url' => 'export.php?op=list&amp;new=1',
-    ];
 }
 // ------------------- Default Blocks ------------------- //
 // Event last
