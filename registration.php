@@ -557,8 +557,8 @@ switch ($op) {
         // Get Form
         $registrationObj->setRedir($redir);
         $registrationObj->setVerifkeyEdit($verifKey);
-        $registrationObj->setStart = $start;
-        $registrationObj->setLimit = $limit;
+        $registrationObj->setStart($start);
+        $registrationObj->setLimit($limit);
         $form = $registrationObj->getForm();
         $GLOBALS['xoopsTpl']->assign('form', $form->render());
         break;

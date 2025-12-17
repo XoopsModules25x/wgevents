@@ -81,7 +81,7 @@ class LogHandler extends \XoopsPersistableObjectHandler
      * @param string $order
      * @return int
      */
-    public function getCountLogs($start = 0, $limit = 0, $sort = 'id ASC, text', $order = 'ASC')
+    public function getCountLogs($start = 0, $limit = 0, $sort = 'id', $order = 'DESC')
     {
         $crCountLogs = new \CriteriaCompo();
         $crCountLogs = $this->getLogsCriteria($crCountLogs, $start, $limit, $sort, $order);
@@ -96,7 +96,7 @@ class LogHandler extends \XoopsPersistableObjectHandler
      * @param string $order
      * @return array
      */
-    public function getAllLogs($start = 0, $limit = 0, $sort = 'id ASC, text', $order = 'ASC')
+    public function getAllLogs($start = 0, $limit = 0, $sort = 'id', $order = 'DESC')
     {
         $crAllLogs = new \CriteriaCompo();
         $crAllLogs = $this->getLogsCriteria($crAllLogs, $start, $limit, $sort, $order);

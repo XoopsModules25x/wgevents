@@ -10,6 +10,7 @@
         <thead>
         <tr class='head'>
             <th class="center"><{$smarty.const._MA_WGEVENTS_EVENT_NAME}></th>
+            <th class="center"><{$smarty.const._MA_WGEVENTS_EVENT_DATEFROM}>/<{$smarty.const._MA_WGEVENTS_EVENT_DATETO}></th>
             <th class="center"><{$smarty.const._MA_WGEVENTS_ANSWERS_CURR}></th>
             <th class="center sorter-false filter-false"><{$smarty.const._MA_WGEVENTS_ACTION}></th>
         </tr>
@@ -18,6 +19,7 @@
         <{foreach item=event from=$events_list}>
             <tr class='<{cycle values='odd, even'}>'>
                 <td class='center'><{$event.name}></td>
+                <td class='center'><{$event.datefromto_text}></td>
                 <td class='center'><{$event.answers}></td>
                 <td class="center ">
                     <{if $event.answers|default:0 > 0}>

@@ -84,7 +84,7 @@ class RegistrationHandler extends \XoopsPersistableObjectHandler
      * @param string $order
      * @return int
      */
-    public function getCountRegistrations($start = 0, $limit = 0, $sort = 'id ASC, evid', $order = 'ASC')
+    public function getCountRegistrations($start = 0, $limit = 0, $sort = 'id', $order = 'DESC')
     {
         $crCountRegistrations = new \CriteriaCompo();
         $crCountRegistrations = $this->getRegistrationsCriteria($crCountRegistrations, $start, $limit, $sort, $order);
@@ -99,7 +99,7 @@ class RegistrationHandler extends \XoopsPersistableObjectHandler
      * @param string $order
      * @return array
      */
-    public function getAllRegistrations($start = 0, $limit = 0, $sort = 'id ASC, evid', $order = 'ASC')
+    public function getAllRegistrations($start = 0, $limit = 0, $sort = 'id', $order = 'DESC')
     {
         $crAllRegistrations = new \CriteriaCompo();
         $crAllRegistrations = $this->getRegistrationsCriteria($crAllRegistrations, $start, $limit, $sort, $order);

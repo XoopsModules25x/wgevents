@@ -1,8 +1,14 @@
+Anzeige im Adminbereich: 10.01.2026Ganztags bis 11.01.2026 00:00Ganztags
+=> Leerzeichen vor Ganztags fehlt
+
+
 Wartung Anonymisierung: leeren "Antworten Historie" durchführen
 
 Events mit Status eingesendet werden an Gast angezeigt
 Adminbereich: Liste der Anmeldungen wird immer auf 50 limitiert
 Als Veranstalter bei Änderungen der Anmeldung entscheiden, ob Teilnehmer per Mail verständigt wird bzw. Ändern der Anmeldung im Adminbereich funktioniert nicht
+
+Bei Anmeldung durch Basaranmelder: Möglichkeit machen dass keine Mail gesendet wird
 
 
 

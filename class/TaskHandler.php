@@ -102,7 +102,7 @@ class TaskHandler extends \XoopsPersistableObjectHandler
      * @param string $order
      * @return array
      */
-    public function getAllTasks($start = 0, $limit = 0, $sort = 'id', $order = 'ASC')
+    public function getAllTasks($start = 0, $limit = 0, $sort = 'id', $order = 'DESC')
     {
         $crAllTasks = new \CriteriaCompo();
         $crAllTasks = $this->getTasksCriteria($crAllTasks, $start, $limit, $sort, $order);

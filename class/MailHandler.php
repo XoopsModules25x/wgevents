@@ -120,7 +120,7 @@ class MailHandler
         $mailBody       = $this->getCleanParam('mailBody');
         $recipients     = $this->mailParams['recipients'];
         $userName       = $GLOBALS['xoopsConfig']['anonymous'];
-        if (\is_object($GLOBALS['xoopsUser'])) {
+        if (isset($GLOBALS['xoopsUser']) && \is_object($GLOBALS['xoopsUser']) && (int)$GLOBALS['xoopsUser']->getVar('uid') > 0) {
             $userName  = ('' !== (string)$GLOBALS['xoopsUser']->name()) ? $GLOBALS['xoopsUser']->name() : $GLOBALS['xoopsUser']->uname();
         }
 

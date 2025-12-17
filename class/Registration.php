@@ -229,6 +229,9 @@ class Registration extends \XoopsObject
                 }
                 /**/
                 $required = (bool)$questionsAll[$queId]->getVar('required');
+                if ($isAdmin) {
+                    $required = false;
+                }
                 if (Constants::FIELD_SELECTBOX == $queType) {
                     //required selectboxes get a blank link in order to force user to input
                     $optionsSB = [];

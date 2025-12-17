@@ -74,7 +74,7 @@ switch ($op) {
             $GLOBALS['xoopsTpl']->append('eventCount', $eventCount);
             // Table view events
             if ($eventCount > 0) {
-                $eventAll = $eventHandler->getAllEvents($start, $limit);
+                $eventAll = $eventHandler->getAllEvents();
                 foreach (\array_keys($eventAll) as $i) {
                     $event = $eventAll[$i]->getValuesEvents();
                     $crAnswer = new \CriteriaCompo();

@@ -79,7 +79,7 @@ switch ($op) {
             $GLOBALS['xoopsTpl']->append('eventCount', $eventCount);
             // Table view events
             if ($eventCount > 0) {
-                $eventAll = $eventHandler->getAllEvents($start, $limit);
+                $eventAll = $eventHandler->getAllEvents();
                 foreach (\array_keys($eventAll) as $i) {
                     $event = $eventAll[$i]->getValuesEvents();
                     $crRegistration = new \CriteriaCompo();
@@ -196,31 +196,7 @@ switch ($op) {
                     $answerHandler->insert($answerObj);
                 }
             }
-            $permId = isset($_REQUEST['id']) ? $regId : $newRegId;
-            $grouppermHandler = \xoops_getHandler('groupperm');
-            $mid = $GLOBALS['xoopsModule']->getVar('mid');
-            // Permission to view_registrations
-            $grouppermHandler->deleteByModule($mid, 'wgevents_view_registrations', $permId);
-            if (isset($_POST['groups_view_registrations'])) {
-                foreach ($_POST['groups_view_registrations'] as $onegroupId) {
-                    $grouppermHandler->addRight('wgevents_view_registrations', $permId, $onegroupId, $mid);
-                }
-            }
-            // Permission to submit_registrations
-            $grouppermHandler->deleteByModule($mid, 'wgevents_submit_registrations', $permId);
-            if (isset($_POST['groups_submit_registrations'])) {
-                foreach ($_POST['groups_submit_registrations'] as $onegroupId) {
-                    $grouppermHandler->addRight('wgevents_submit_registrations', $permId, $onegroupId, $mid);
-                }
-            }
-            // Permission to approve_registrations
-            $grouppermHandler->deleteByModule($mid, 'wgevents_approve_registrations', $permId);
-            if (isset($_POST['groups_approve_registrations'])) {
-                foreach ($_POST['groups_approve_registrations'] as $onegroupId) {
-                    $grouppermHandler->addRight('wgevents_approve_registrations', $permId, $onegroupId, $mid);
-                }
-            }
-                \redirect_header('registration.php?op=list&amp;start=' . $start . '&amp;limit=' . $limit, 2, \_MA_WGEVENTS_FORM_OK);
+            \redirect_header('registration.php?op=list&amp;evid=' . $regEvid, 2, \_MA_WGEVENTS_FORM_OK);
         }
         // Get Form
         $GLOBALS['xoopsTpl']->assign('error', $registrationObj->getHtmlErrors());
@@ -249,10 +225,14 @@ switch ($op) {
             if (!$GLOBALS['xoopsSecurity']->check()) {
                 \redirect_header('registration.php', 3, \implode(', ', $GLOBALS['xoopsSecurity']->getErrors()));
             }
+            // create history
+            $registrationhistHandler->createHistory($registrationObj, 'delete');
             if ($registrationHandler->delete($registrationObj)) {
+                // create history
+                $answerhistHandler->createHistory($regEvid, $regId, 'delete');
                 //delete existing answers
                 $answerHandler->cleanupAnswers($regEvid, $regId);
-                \redirect_header('registration.php', 3, \_MA_WGEVENTS_FORM_DELETE_OK);
+                \redirect_header('registration.php?op=list&evid=' . $regEvid, 3, \_MA_WGEVENTS_FORM_DELETE_OK);
             } else {
                 $GLOBALS['xoopsTpl']->assign('error', $registrationObj->getHtmlErrors());
             }

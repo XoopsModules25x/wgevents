@@ -91,15 +91,32 @@ switch ($op) {
 
         $checks = [];
 
-        $mbox = @imap_open('{' . $command . '}', $account_username, $account_password);
+        try {
+            $mbox = @imap_open('{' . $command . '}', $account_username, $account_password);
+        }
+        catch (phpmailerException $e) {
+            // IN PROGRESS
+            $logHandler->createLog(\_AM_WGEVENTS_ACCOUNT_CHECK_FAILED. 'Result Test account: phpmailerException -' . $e->errorMessage());
+            $result = \_AM_WGEVENTS_ACCOUNT_CHECK_FAILED . '<br>' . imap_last_error() . $e->errorMessage();
+            $resultImg = $imgFailed;
+        }
+        catch (\Exception $e) {
+            // IN PROGRESS
+            $logHandler->createLog(\_AM_WGEVENTS_ACCOUNT_CHECK_FAILED. 'Result Test account: Exception -' . $e->getMessage());
+            $result = \_AM_WGEVENTS_ACCOUNT_CHECK_FAILED . '<br>' . imap_last_error() . $e->getMessage();
+            $resultImg = $imgFailed;
+        }
+
         $checks['openmailbox']['check'] = \_AM_WGEVENTS_ACCOUNT_CHECK_OPEN_MAILBOX;
         if (false === $mbox) {
             $checks['openmailbox']['result'] = \_AM_WGEVENTS_ACCOUNT_CHECK_FAILED;
             $checks['openmailbox']['result_img'] = $imgFailed;
             $checks['openmailbox']['info'] = \imap_last_error();
+            $logDetails .= '<br>imap_open > imap_last_error:' . \imap_last_error();
         } else {
             $checks['openmailbox']['result'] = \_AM_WGEVENTS_ACCOUNT_CHECK_OK;
             $checks['openmailbox']['result_img'] = $imgOK;
+            $logDetails .= '<br>imap_open: OK';
 
             $folders = \imap_list($mbox, '{' . $command . '}', '*');
             $checks['listfolder']['check'] = \_AM_WGEVENTS_ACCOUNT_CHECK_LIST_FOLDERS;
@@ -107,10 +124,12 @@ switch ($op) {
                 $checks['listfolder']['result'] = \_AM_WGEVENTS_ACCOUNT_CHECK_FAILED;
                 $checks['listfolder']['result_img'] = $imgFailed;
                 $checks['listfolder']['info'] = \imap_last_error();
+                $logDetails .= '<br>imap_list > imap_last_error:' . \imap_last_error();
             } else {
                 $checks['listfolder']['result'] = \_AM_WGEVENTS_ACCOUNT_CHECK_OK;
                 $checks['listfolder']['result_img'] = $imgOK;
                 $checks['listfolder']['info'] = \implode('<br>', $folders);
+                $logDetails .= '<br>imap_list: OK';
 
                 // send test mail
                 // read data of account
@@ -125,11 +144,11 @@ switch ($op) {
                         $pop = new POP3();
                         $pop->authorise($account_server_out, $account_port_out, 30, $account_username, $account_password, 1);
                     }
+
                     $xoopsMailer = xoops_getMailer();
                     $logDetails .= '<br>xoopsMailer is_object:' . \is_object($xoopsMailer);
 
                     //$xoopsMailer->useMail();
-
                     $xoopsMailer->CharSet = _CHARSET; //use xoops default character set
 
                     //if (Constants::ACCOUNT_TYPE_VAL_PHP_SENDMAIL == $account_type) {
