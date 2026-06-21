@@ -127,12 +127,16 @@ class Task extends \XoopsObject
     public function getValuesTasks($keys = null, $format = null, $maxDepth = null)
     {
         $helper  = \XoopsModules\Wgevents\Helper::getInstance();
-        $utility = new \XoopsModules\Wgevents\Utility();
-        $editorMaxchar = $helper->getConfig('editor_maxchar');
+
+        $editorMaxchar = $helper->getConfig('admin_maxchar');
         $ret = $this->getValues($keys, $format, $maxDepth);
-        $ret['type_text']    = $this->getMailNotificationText($this->getVar('type'));
-        $ret['params_text']    = $this->getVar('params', 'e');
-        $ret['params_short']   = $utility::truncateHtml($ret['params'], $editorMaxchar);
+        $ret['type_text']   = $this->getMailNotificationText($this->getVar('type'));
+        $ret['params_text'] = $this->getVar('params', 'e');
+        $paramsShort = '';
+        if (strlen($ret['params_text']) > $editorMaxchar) {
+            $paramsShort = substr($ret['params_text'], 0, $editorMaxchar) . '...';
+        }
+        $ret['params_short']     = $paramsShort;
         $ret['datecreated_text'] = \formatTimestamp($this->getVar('datecreated'), 'm');
         $ret['submitter_text']   = \XoopsUser::getUnameFromId($this->getVar('submitter'));
         $ret['status_text']      = Utility::getStatusText($this->getVar('status'));
