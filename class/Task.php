@@ -132,9 +132,9 @@ class Task extends \XoopsObject
         $ret = $this->getValues($keys, $format, $maxDepth);
         $ret['type_text']   = $this->getMailNotificationText($this->getVar('type'));
         $ret['params_text'] = $this->getVar('params', 'e');
-        $paramsShort = '';
-        if (strlen($ret['params_text']) > $editorMaxchar) {
-            $paramsShort = substr($ret['params_text'], 0, $editorMaxchar) . '...';
+        $paramsShort        = $ret['params_text'];
+        if (mb_strlen($ret['params_text']) > $editorMaxchar) {
+            $paramsShort = mb_substr($ret['params_text'], 0, $editorMaxchar) . '...';
         }
         $ret['params_short']     = $paramsShort;
         $ret['datecreated_text'] = \formatTimestamp($this->getVar('datecreated'), 'm');
