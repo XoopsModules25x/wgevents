@@ -119,9 +119,6 @@ switch ($op) {
         if ($questionsCount > 0) {
             $questionsAll = $questionHandler->getAll($crQuestion);
             $questions = [];
-            $evName = '';
-            $evSubmitter = 0;
-            $evStatus = 0;
             // Get All Question
             foreach (\array_keys($questionsAll) as $i) {
                 $questions[$i] = $questionsAll[$i]->getValuesQuestions();
